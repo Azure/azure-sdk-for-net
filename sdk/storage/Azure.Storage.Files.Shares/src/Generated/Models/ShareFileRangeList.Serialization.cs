@@ -5,30 +5,174 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.IO;
+using System.Xml;
 using System.Xml.Linq;
+using Azure;
+using Azure.Core;
+using Azure.Storage.Files.Shares;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    internal partial class ShareFileRangeList
+    internal partial class ShareFileRangeList : IPersistableModel<ShareFileRangeList>, IXmlSerializable
     {
-        internal static ShareFileRangeList DeserializeShareFileRangeList(XElement element)
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ShareFileRangeList PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            IReadOnlyList<FileRange> ranges = default;
-            IReadOnlyList<ClearRange> clearRanges = default;
-            var array = new List<FileRange>();
-            foreach (var e in element.Elements("Range"))
+            string format = options.Format == "W" ? ((IPersistableModel<ShareFileRangeList>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
             {
-                array.Add(FileRange.DeserializeFileRange(e));
+                case "X":
+                    using (Stream dataStream = data.ToStream())
+                    {
+                        return DeserializeShareFileRangeList(XElement.Load(dataStream, LoadOptions.PreserveWhitespace), options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ShareFileRangeList)} does not support reading '{options.Format}' format.");
             }
-            ranges = array;
-            var array0 = new List<ClearRange>();
-            foreach (var e in element.Elements("ClearRange"))
-            {
-                array0.Add(ClearRange.DeserializeClearRange(e));
-            }
-            clearRanges = array0;
-            return new ShareFileRangeList(ranges, clearRanges);
         }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ShareFileRangeList>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "X":
+                    using (MemoryStream stream = new MemoryStream(256))
+                    {
+                        using (XmlWriter writer = XmlWriter.Create(stream, ModelSerializationExtensions.XmlWriterSettings))
+                        {
+                            WriteXml(writer, options, "Ranges");
+                        }
+                        if (stream.Position > int.MaxValue)
+                        {
+                            return BinaryData.FromStream(stream);
+                        }
+                        else
+                        {
+                            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+                        }
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ShareFileRangeList)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ShareFileRangeList>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ShareFileRangeList IPersistableModel<ShareFileRangeList>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ShareFileRangeList>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ShareFileRangeList"/> from. </param>
+        public static explicit operator ShareFileRangeList(Response response)
+        {
+            using Stream stream = response.ContentStream;
+            if (stream == null)
+            {
+                return default;
+            }
+
+            return DeserializeShareFileRangeList(XElement.Load(stream, LoadOptions.PreserveWhitespace), ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The XML writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        /// <param name="nameHint"> An optional name hint. </param>
+        private void WriteXml(XmlWriter writer, ModelReaderWriterOptions options, string nameHint)
+        {
+            if (nameHint != null)
+            {
+                writer.WriteStartElement(nameHint);
+            }
+
+            XmlModelWriteCore(writer, options);
+
+            if (nameHint != null)
+            {
+                writer.WriteEndElement();
+            }
+        }
+
+        /// <param name="writer"> The XML writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal virtual void XmlModelWriteCore(XmlWriter writer, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ShareFileRangeList>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "X")
+            {
+                throw new FormatException($"The model {nameof(ShareFileRangeList)} does not support writing '{format}' format.");
+            }
+
+            if (Optional.IsCollectionDefined(Ranges))
+            {
+                foreach (FileRange item in Ranges)
+                {
+                    writer.WriteStartElement("Range");
+                    writer.WriteObjectValue(item, options);
+                    writer.WriteEndElement();
+                }
+            }
+            if (Optional.IsCollectionDefined(ClearRanges))
+            {
+                foreach (ClearRange item in ClearRanges)
+                {
+                    writer.WriteStartElement("ClearRange");
+                    writer.WriteObjectValue(item, options);
+                    writer.WriteEndElement();
+                }
+            }
+        }
+
+        /// <param name="element"> The xml element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ShareFileRangeList DeserializeShareFileRangeList(XElement element, ModelReaderWriterOptions options)
+        {
+            if (element == null)
+            {
+                return null;
+            }
+
+            IList<FileRange> ranges = default;
+            IList<ClearRange> clearRanges = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+
+            foreach (var child in element.Elements())
+            {
+                string localName = child.Name.LocalName;
+                if (localName == "Range")
+                {
+                    if (ranges == null)
+                    {
+                        ranges = new List<FileRange>();
+                    }
+                    ranges.Add(FileRange.DeserializeFileRange(child, options));
+                    continue;
+                }
+                if (localName == "ClearRange")
+                {
+                    if (clearRanges == null)
+                    {
+                        clearRanges = new List<ClearRange>();
+                    }
+                    clearRanges.Add(ClearRange.DeserializeClearRange(child, options));
+                    continue;
+                }
+            }
+            return new ShareFileRangeList(ranges ?? new ChangeTrackingList<FileRange>(), clearRanges ?? new ChangeTrackingList<ClearRange>(), additionalBinaryDataProperties);
+        }
+
+        /// <param name="writer"> The XML writer. </param>
+        /// <param name="nameHint"> An optional name hint. </param>
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => WriteXml(writer, ModelSerializationExtensions.WireOptions, nameHint);
     }
 }

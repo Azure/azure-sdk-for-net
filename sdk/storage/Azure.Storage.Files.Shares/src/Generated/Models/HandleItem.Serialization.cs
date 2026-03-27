@@ -6,16 +6,160 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.IO;
+using System.Xml;
 using System.Xml.Linq;
 using Azure.Core;
+using Azure.Storage.Files.Shares;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    internal partial class HandleItem
+    internal partial class HandleItem : IPersistableModel<HandleItem>, IXmlSerializable
     {
-        internal static HandleItem DeserializeHandleItem(XElement element)
+        /// <summary> Initializes a new instance of <see cref="HandleItem"/> for deserialization. </summary>
+        internal HandleItem()
         {
+        }
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual HandleItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HandleItem>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "X":
+                    using (Stream dataStream = data.ToStream())
+                    {
+                        return DeserializeHandleItem(XElement.Load(dataStream, LoadOptions.PreserveWhitespace), options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HandleItem)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HandleItem>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "X":
+                    using (MemoryStream stream = new MemoryStream(256))
+                    {
+                        using (XmlWriter writer = XmlWriter.Create(stream, ModelSerializationExtensions.XmlWriterSettings))
+                        {
+                            WriteXml(writer, options, "Handle");
+                        }
+                        if (stream.Position > int.MaxValue)
+                        {
+                            return BinaryData.FromStream(stream);
+                        }
+                        else
+                        {
+                            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+                        }
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HandleItem)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<HandleItem>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HandleItem IPersistableModel<HandleItem>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<HandleItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
+
+        /// <param name="writer"> The XML writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        /// <param name="nameHint"> An optional name hint. </param>
+        private void WriteXml(XmlWriter writer, ModelReaderWriterOptions options, string nameHint)
+        {
+            if (nameHint != null)
+            {
+                writer.WriteStartElement(nameHint);
+            }
+
+            XmlModelWriteCore(writer, options);
+
+            if (nameHint != null)
+            {
+                writer.WriteEndElement();
+            }
+        }
+
+        /// <param name="writer"> The XML writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal virtual void XmlModelWriteCore(XmlWriter writer, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HandleItem>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "X")
+            {
+                throw new FormatException($"The model {nameof(HandleItem)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartElement("HandleId");
+            writer.WriteValue(HandleId);
+            writer.WriteEndElement();
+            writer.WriteStartElement("Path");
+            writer.WriteObjectValue(Path, options);
+            writer.WriteEndElement();
+            writer.WriteStartElement("FileId");
+            writer.WriteValue(FileId);
+            writer.WriteEndElement();
+            if (Optional.IsDefined(ParentId))
+            {
+                writer.WriteStartElement("ParentId");
+                writer.WriteValue(ParentId);
+                writer.WriteEndElement();
+            }
+            writer.WriteStartElement("SessionId");
+            writer.WriteValue(SessionId);
+            writer.WriteEndElement();
+            writer.WriteStartElement("ClientIp");
+            writer.WriteValue(ClientIp);
+            writer.WriteEndElement();
+            writer.WriteStartElement("ClientName");
+            writer.WriteValue(ClientName);
+            writer.WriteEndElement();
+            writer.WriteStartElement("OpenTime");
+            writer.WriteStringValue(OpenTime, "R");
+            writer.WriteEndElement();
+            if (Optional.IsDefined(LastReconnectTime))
+            {
+                writer.WriteStartElement("LastReconnectTime");
+                writer.WriteStringValue(LastReconnectTime.Value, "R");
+                writer.WriteEndElement();
+            }
+            if (Optional.IsCollectionDefined(AccessRightList))
+            {
+                writer.WriteStartElement("AccessRightList");
+                foreach (AccessRight item in AccessRightList)
+                {
+                    writer.WriteStartElement("AccessRight");
+                    writer.WriteValue(item.ToSerialString());
+                    writer.WriteEndElement();
+                }
+                writer.WriteEndElement();
+            }
+        }
+
+        /// <param name="element"> The xml element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static HandleItem DeserializeHandleItem(XElement element, ModelReaderWriterOptions options)
+        {
+            if (element == null)
+            {
+                return null;
+            }
+
             string handleId = default;
             StringEncoded path = default;
             string fileId = default;
@@ -25,51 +169,67 @@ namespace Azure.Storage.Files.Shares.Models
             string clientName = default;
             DateTimeOffset openTime = default;
             DateTimeOffset? lastReconnectTime = default;
-            IReadOnlyList<AccessRight> accessRightList = default;
-            if (element.Element("HandleId") is XElement handleIdElement)
+            IList<AccessRight> accessRightList = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+
+            foreach (var child in element.Elements())
             {
-                handleId = (string)handleIdElement;
-            }
-            if (element.Element("Path") is XElement pathElement)
-            {
-                path = StringEncoded.DeserializeStringEncoded(pathElement);
-            }
-            if (element.Element("FileId") is XElement fileIdElement)
-            {
-                fileId = (string)fileIdElement;
-            }
-            if (element.Element("ParentId") is XElement parentIdElement)
-            {
-                parentId = (string)parentIdElement;
-            }
-            if (element.Element("SessionId") is XElement sessionIdElement)
-            {
-                sessionId = (string)sessionIdElement;
-            }
-            if (element.Element("ClientIp") is XElement clientIpElement)
-            {
-                clientIp = (string)clientIpElement;
-            }
-            if (element.Element("ClientName") is XElement clientNameElement)
-            {
-                clientName = (string)clientNameElement;
-            }
-            if (element.Element("OpenTime") is XElement openTimeElement)
-            {
-                openTime = openTimeElement.GetDateTimeOffsetValue("R");
-            }
-            if (element.Element("LastReconnectTime") is XElement lastReconnectTimeElement)
-            {
-                lastReconnectTime = lastReconnectTimeElement.GetDateTimeOffsetValue("R");
-            }
-            if (element.Element("AccessRightList") is XElement accessRightListElement)
-            {
-                var array = new List<AccessRight>();
-                foreach (var e in accessRightListElement.Elements("AccessRight"))
+                string localName = child.Name.LocalName;
+                if (localName == "HandleId")
                 {
-                    array.Add(e.Value.ToAccessRight());
+                    handleId = (string)child;
+                    continue;
                 }
-                accessRightList = array;
+                if (localName == "Path")
+                {
+                    path = StringEncoded.DeserializeStringEncoded(child, options);
+                    continue;
+                }
+                if (localName == "FileId")
+                {
+                    fileId = (string)child;
+                    continue;
+                }
+                if (localName == "ParentId")
+                {
+                    parentId = (string)child;
+                    continue;
+                }
+                if (localName == "SessionId")
+                {
+                    sessionId = (string)child;
+                    continue;
+                }
+                if (localName == "ClientIp")
+                {
+                    clientIp = (string)child;
+                    continue;
+                }
+                if (localName == "ClientName")
+                {
+                    clientName = (string)child;
+                    continue;
+                }
+                if (localName == "OpenTime")
+                {
+                    openTime = child.GetDateTimeOffset("R");
+                    continue;
+                }
+                if (localName == "LastReconnectTime")
+                {
+                    lastReconnectTime = child.GetDateTimeOffset("R");
+                    continue;
+                }
+                if (localName == "AccessRightList")
+                {
+                    List<AccessRight> array = new List<AccessRight>();
+                    foreach (var e in child.Elements("AccessRight"))
+                    {
+                        array.Add(((string)e).ToAccessRight());
+                    }
+                    accessRightList = array;
+                    continue;
+                }
             }
             return new HandleItem(
                 handleId,
@@ -81,7 +241,12 @@ namespace Azure.Storage.Files.Shares.Models
                 clientName,
                 openTime,
                 lastReconnectTime,
-                accessRightList);
+                accessRightList ?? new ChangeTrackingList<AccessRight>(),
+                additionalBinaryDataProperties);
         }
+
+        /// <param name="writer"> The XML writer. </param>
+        /// <param name="nameHint"> An optional name hint. </param>
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => WriteXml(writer, ModelSerializationExtensions.WireOptions, nameHint);
     }
 }

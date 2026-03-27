@@ -5,31 +5,38 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Storage.Common;
 
 namespace Azure.Storage.Files.Shares.Models
 {
     /// <summary> Storage service properties. </summary>
     public partial class ShareServiceProperties
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="ShareServiceProperties"/>. </summary>
         /// <param name="hourMetrics"> A summary of request statistics grouped by API in hourly aggregates for files. </param>
         /// <param name="minuteMetrics"> A summary of request statistics grouped by API in minute aggregates for files. </param>
-        /// <param name="cors"> The set of CORS rules. </param>
         /// <param name="protocol"> Protocol settings. </param>
-        internal ShareServiceProperties(ShareMetrics hourMetrics, ShareMetrics minuteMetrics, IList<ShareCorsRule> cors, ShareProtocolSettings protocol)
+        /// <param name="cors"> The set of CORS rules. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ShareServiceProperties(ShareMetrics hourMetrics, ShareMetrics minuteMetrics, ShareProtocolSettings protocol, IList<ShareCorsRule> cors, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             HourMetrics = hourMetrics;
             MinuteMetrics = minuteMetrics;
-            Cors = cors;
             Protocol = protocol;
+            Cors = cors;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> A summary of request statistics grouped by API in hourly aggregates for files. </summary>
         public ShareMetrics HourMetrics { get; set; }
+
         /// <summary> A summary of request statistics grouped by API in minute aggregates for files. </summary>
         public ShareMetrics MinuteMetrics { get; set; }
+
         /// <summary> Protocol settings. </summary>
         public ShareProtocolSettings Protocol { get; set; }
     }

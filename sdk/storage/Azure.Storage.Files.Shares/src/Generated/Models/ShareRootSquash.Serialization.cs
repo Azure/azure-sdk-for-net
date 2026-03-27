@@ -11,6 +11,7 @@ namespace Azure.Storage.Files.Shares.Models
 {
     internal static partial class ShareRootSquashExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ShareRootSquash value) => value switch
         {
             ShareRootSquash.NoRootSquash => "NoRootSquash",
@@ -19,11 +20,21 @@ namespace Azure.Storage.Files.Shares.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ShareRootSquash value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static ShareRootSquash ToShareRootSquash(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NoRootSquash")) return ShareRootSquash.NoRootSquash;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "RootSquash")) return ShareRootSquash.RootSquash;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AllSquash")) return ShareRootSquash.AllSquash;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NoRootSquash"))
+            {
+                return ShareRootSquash.NoRootSquash;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "RootSquash"))
+            {
+                return ShareRootSquash.RootSquash;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AllSquash"))
+            {
+                return ShareRootSquash.AllSquash;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ShareRootSquash value.");
         }
     }

@@ -5,22 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Storage.Files.Shares.Models
 {
     /// <summary> Protocol settings. </summary>
     public partial class ShareProtocolSettings
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="ShareProtocolSettings"/>. </summary>
         /// <param name="smb"> Settings for SMB protocol. </param>
         /// <param name="nfs"> Settings for NFS protocol. </param>
-        internal ShareProtocolSettings(ShareSmbSettings smb, ShareNfsSettings nfs)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ShareProtocolSettings(ShareSmbSettings smb, ShareNfsSettings nfs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Smb = smb;
             Nfs = nfs;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Settings for SMB protocol. </summary>
         public ShareSmbSettings Smb { get; set; }
+
         /// <summary> Settings for NFS protocol. </summary>
         public ShareNfsSettings Nfs { get; set; }
     }

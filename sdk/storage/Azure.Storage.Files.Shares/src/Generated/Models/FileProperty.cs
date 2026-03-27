@@ -6,28 +6,42 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    /// <summary> File properties. </summary>
     internal partial class FileProperty
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="FileProperty"/>. </summary>
-        /// <param name="contentLength"> Content length of the file. This value may not be up-to-date since an SMB client may have modified the file locally. The value of Content-Length may not reflect that fact until the handle is closed or the op-lock is broken. To retrieve current property values, call Get File Properties. </param>
+        /// <param name="contentLength">
+        /// Content length of the file. This value may not be up-to-date since an SMB
+        /// client may have modified the file locally. The value of Content-Length may not
+        /// reflect that fact until the handle is closed or the op-lock is broken. To
+        /// retrieve current property values, call Get File Properties.
+        /// </param>
         internal FileProperty(long contentLength)
         {
             ContentLength = contentLength;
         }
 
         /// <summary> Initializes a new instance of <see cref="FileProperty"/>. </summary>
-        /// <param name="contentLength"> Content length of the file. This value may not be up-to-date since an SMB client may have modified the file locally. The value of Content-Length may not reflect that fact until the handle is closed or the op-lock is broken. To retrieve current property values, call Get File Properties. </param>
-        /// <param name="creationTime"></param>
-        /// <param name="lastAccessTime"></param>
-        /// <param name="lastWriteTime"></param>
-        /// <param name="changeTime"></param>
-        /// <param name="lastModified"></param>
-        /// <param name="etag"></param>
-        internal FileProperty(long contentLength, DateTimeOffset? creationTime, DateTimeOffset? lastAccessTime, DateTimeOffset? lastWriteTime, DateTimeOffset? changeTime, DateTimeOffset? lastModified, string etag)
+        /// <param name="contentLength">
+        /// Content length of the file. This value may not be up-to-date since an SMB
+        /// client may have modified the file locally. The value of Content-Length may not
+        /// reflect that fact until the handle is closed or the op-lock is broken. To
+        /// retrieve current property values, call Get File Properties.
+        /// </param>
+        /// <param name="creationTime"> The creation time. </param>
+        /// <param name="lastAccessTime"> The last access time. </param>
+        /// <param name="lastWriteTime"> The last write time. </param>
+        /// <param name="changeTime"> The change time. </param>
+        /// <param name="lastModified"> The last modified time. </param>
+        /// <param name="eTag"> The ETag of the file. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal FileProperty(long contentLength, DateTimeOffset? creationTime, DateTimeOffset? lastAccessTime, DateTimeOffset? lastWriteTime, DateTimeOffset? changeTime, DateTimeOffset? lastModified, string eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ContentLength = contentLength;
             CreationTime = creationTime;
@@ -35,22 +49,34 @@ namespace Azure.Storage.Files.Shares.Models
             LastWriteTime = lastWriteTime;
             ChangeTime = changeTime;
             LastModified = lastModified;
-            Etag = etag;
+            ETag = eTag;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Content length of the file. This value may not be up-to-date since an SMB client may have modified the file locally. The value of Content-Length may not reflect that fact until the handle is closed or the op-lock is broken. To retrieve current property values, call Get File Properties. </summary>
+        /// <summary>
+        /// Content length of the file. This value may not be up-to-date since an SMB
+        /// client may have modified the file locally. The value of Content-Length may not
+        /// reflect that fact until the handle is closed or the op-lock is broken. To
+        /// retrieve current property values, call Get File Properties.
+        /// </summary>
         public long ContentLength { get; }
-        /// <summary> Gets the creation time. </summary>
+
+        /// <summary> The creation time. </summary>
         public DateTimeOffset? CreationTime { get; }
-        /// <summary> Gets the last access time. </summary>
+
+        /// <summary> The last access time. </summary>
         public DateTimeOffset? LastAccessTime { get; }
-        /// <summary> Gets the last write time. </summary>
+
+        /// <summary> The last write time. </summary>
         public DateTimeOffset? LastWriteTime { get; }
-        /// <summary> Gets the change time. </summary>
+
+        /// <summary> The change time. </summary>
         public DateTimeOffset? ChangeTime { get; }
-        /// <summary> Gets the last modified. </summary>
+
+        /// <summary> The last modified time. </summary>
         public DateTimeOffset? LastModified { get; }
-        /// <summary> Gets the etag. </summary>
-        public string Etag { get; }
+
+        /// <summary> The ETag of the file. </summary>
+        public string ETag { get; }
     }
 }

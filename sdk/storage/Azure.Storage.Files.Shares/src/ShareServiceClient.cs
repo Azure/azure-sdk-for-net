@@ -341,8 +341,9 @@ namespace Azure.Storage.Files.Shares
             => new ServiceRestClient(
                 _clientConfiguration.ClientDiagnostics,
                 _clientConfiguration.Pipeline,
-                _uri.AbsoluteUri,
-                _clientConfiguration.ClientOptions.Version.ToVersionString());
+                _uri,
+                _clientConfiguration.ClientOptions.Version.ToVersionString(),
+                fileRequestIntent: null);
         #endregion ctors
 
         /// <summary>
@@ -517,13 +518,13 @@ namespace Azure.Storage.Files.Shares
 
                 try
                 {
-                    ResponseWithHeaders<ListSharesResponse, ServiceListSharesSegmentHeaders> response;
+                    Response<ListSharesResponse> response;
 
                     scope.Start();
 
                     if (async)
                     {
-                        response = await ServiceRestClient.ListSharesSegmentAsync(
+                        response = await ServiceRestClient.GetSharesSegmentAsync(
                             prefix: prefix,
                             marker: marker,
                             maxresults: pageSizeHint,
@@ -533,7 +534,7 @@ namespace Azure.Storage.Files.Shares
                     }
                     else
                     {
-                        response = ServiceRestClient.ListSharesSegment(
+                        response = ServiceRestClient.GetSharesSegment(
                             prefix: prefix,
                             marker: marker,
                             maxresults: pageSizeHint,
@@ -551,7 +552,8 @@ namespace Azure.Storage.Files.Shares
                             r.Deleted,
                             r.Version,
                             r.Properties,
-                            metadata: null))
+                            metadata: null,
+                            additionalBinaryDataProperties: null))
                             .ToList();
 
                         listSharesResponse = new ListSharesResponse(
@@ -560,7 +562,8 @@ namespace Azure.Storage.Files.Shares
                             response.Value.Marker,
                             response.Value.MaxResults,
                             shareItemInternals.AsReadOnly(),
-                            response.Value.NextMarker);
+                            response.Value.NextMarker,
+                            additionalBinaryDataProperties: null);
                     }
                     return Response.FromValue(
                         listSharesResponse,
@@ -682,7 +685,7 @@ namespace Azure.Storage.Files.Shares
 
                 try
                 {
-                    ResponseWithHeaders<ShareServiceProperties, ServiceGetPropertiesHeaders> response;
+                    Response<ShareServiceProperties> response;
 
                     scope.Start();
 
@@ -834,25 +837,25 @@ namespace Azure.Storage.Files.Shares
 
                 try
                 {
-                    ResponseWithHeaders<ServiceSetPropertiesHeaders> response;
+                    Response response;
 
                     scope.Start();
 
                     if (async)
                     {
                         response = await ServiceRestClient.SetPropertiesAsync(
-                            shareServiceProperties: properties,
+                            storageServiceProperties: properties,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
                     else
                     {
                         response = ServiceRestClient.SetProperties(
-                            shareServiceProperties: properties,
+                            storageServiceProperties: properties,
                             cancellationToken: cancellationToken);
                     }
 
-                    return response.GetRawResponse();
+                    return response;
                 }
                 catch (Exception ex)
                 {
@@ -1399,7 +1402,7 @@ namespace Azure.Storage.Files.Shares
                     scope.Start();
                     ShareClient shareClient = GetShareClient(deletedShareName);
 
-                    ResponseWithHeaders<ShareRestoreHeaders> response;
+                    Response response;
 
                     if (async)
                     {
@@ -1417,7 +1420,7 @@ namespace Azure.Storage.Files.Shares
                             cancellationToken: cancellationToken);
                     }
 
-                    return Response.FromValue(shareClient, response.GetRawResponse());
+                    return Response.FromValue(shareClient, response);
                 }
                 catch (Exception ex)
                 {
@@ -1676,7 +1679,7 @@ namespace Azure.Storage.Files.Shares
                         DelegatedUserTid = delegatedUserTenantId
                     };
 
-                    ResponseWithHeaders<UserDelegationKey, ServiceGetUserDelegationKeyHeaders> response;
+                    Response<UserDelegationKey> response;
 
                     if (async)
                     {

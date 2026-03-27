@@ -6,12 +6,16 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Storage.Files.Shares.Models
 {
     /// <summary> An Access policy. </summary>
     public partial class ShareAccessPolicy
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="ShareAccessPolicy"/>. </summary>
         public ShareAccessPolicy()
         {
@@ -21,11 +25,22 @@ namespace Azure.Storage.Files.Shares.Models
         /// <param name="policyStartsOn"> The date-time the policy is active. </param>
         /// <param name="policyExpiresOn"> The date-time the policy expires. </param>
         /// <param name="permissions"> The permissions for the ACL policy. </param>
-        internal ShareAccessPolicy(DateTimeOffset? policyStartsOn, DateTimeOffset? policyExpiresOn, string permissions)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ShareAccessPolicy(DateTimeOffset? policyStartsOn, DateTimeOffset? policyExpiresOn, string permissions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PolicyStartsOn = policyStartsOn;
             PolicyExpiresOn = policyExpiresOn;
             Permissions = permissions;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> The date-time the policy is active. </summary>
+        public DateTimeOffset? PolicyStartsOn { get; set; }
+
+        /// <summary> The date-time the policy expires. </summary>
+        public DateTimeOffset? PolicyExpiresOn { get; set; }
+
+        /// <summary> The permissions for the ACL policy. </summary>
+        public string Permissions { get; set; }
     }
 }

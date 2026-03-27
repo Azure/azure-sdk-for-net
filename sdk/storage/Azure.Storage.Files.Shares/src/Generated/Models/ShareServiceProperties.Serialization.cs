@@ -5,71 +5,207 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.IO;
 using System.Xml;
 using System.Xml.Linq;
+using Azure;
 using Azure.Core;
-using Azure.Storage.Common;
+using Azure.Storage.Files.Shares;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    public partial class ShareServiceProperties : IXmlSerializable
+    /// <summary> Storage service properties. </summary>
+    public partial class ShareServiceProperties : IPersistableModel<ShareServiceProperties>, IXmlSerializable
     {
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ShareServiceProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            writer.WriteStartElement(nameHint ?? "StorageServiceProperties");
-            if (Common.Optional.IsDefined(HourMetrics))
+            string format = options.Format == "W" ? ((IPersistableModel<ShareServiceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
             {
-                writer.WriteObjectValue(HourMetrics, "HourMetrics");
+                case "X":
+                    using (Stream dataStream = data.ToStream())
+                    {
+                        return DeserializeShareServiceProperties(XElement.Load(dataStream, LoadOptions.PreserveWhitespace), options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ShareServiceProperties)} does not support reading '{options.Format}' format.");
             }
-            if (Common.Optional.IsDefined(MinuteMetrics))
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ShareServiceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
             {
-                writer.WriteObjectValue(MinuteMetrics, "MinuteMetrics");
+                case "X":
+                    using (MemoryStream stream = new MemoryStream(256))
+                    {
+                        using (XmlWriter writer = XmlWriter.Create(stream, ModelSerializationExtensions.XmlWriterSettings))
+                        {
+                            WriteXml(writer, options, "StorageServiceProperties");
+                        }
+                        if (stream.Position > int.MaxValue)
+                        {
+                            return BinaryData.FromStream(stream);
+                        }
+                        else
+                        {
+                            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+                        }
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ShareServiceProperties)} does not support writing '{options.Format}' format.");
             }
-            if (Common.Optional.IsDefined(Protocol))
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ShareServiceProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ShareServiceProperties IPersistableModel<ShareServiceProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ShareServiceProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
+
+        /// <param name="shareServiceProperties"> The <see cref="ShareServiceProperties"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(ShareServiceProperties shareServiceProperties)
+        {
+            if (shareServiceProperties == null)
             {
-                writer.WriteObjectValue(Protocol, "ProtocolSettings");
+                return null;
             }
-            if (Common.Optional.IsCollectionDefined(Cors))
+            XmlWriterContent content = new XmlWriterContent();
+            content.XmlWriter.WriteObjectValue(shareServiceProperties, ModelSerializationExtensions.WireOptions, "StorageServiceProperties");
+            return content;
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ShareServiceProperties"/> from. </param>
+        public static explicit operator ShareServiceProperties(Response response)
+        {
+            using Stream stream = response.ContentStream;
+            if (stream == null)
+            {
+                return default;
+            }
+
+            return DeserializeShareServiceProperties(XElement.Load(stream, LoadOptions.PreserveWhitespace), ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The XML writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        /// <param name="nameHint"> An optional name hint. </param>
+        private void WriteXml(XmlWriter writer, ModelReaderWriterOptions options, string nameHint)
+        {
+            if (nameHint != null)
+            {
+                writer.WriteStartElement(nameHint);
+            }
+
+            XmlModelWriteCore(writer, options);
+
+            if (nameHint != null)
+            {
+                writer.WriteEndElement();
+            }
+        }
+
+        /// <param name="writer"> The XML writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal virtual void XmlModelWriteCore(XmlWriter writer, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ShareServiceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "X")
+            {
+                throw new FormatException($"The model {nameof(ShareServiceProperties)} does not support writing '{format}' format.");
+            }
+
+            if (Optional.IsDefined(HourMetrics))
+            {
+                writer.WriteStartElement("HourMetrics");
+                writer.WriteObjectValue(HourMetrics, options);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(MinuteMetrics))
+            {
+                writer.WriteStartElement("MinuteMetrics");
+                writer.WriteObjectValue(MinuteMetrics, options);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(Protocol))
+            {
+                writer.WriteStartElement("ProtocolSettings");
+                writer.WriteObjectValue(Protocol, options);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsCollectionDefined(Cors))
             {
                 writer.WriteStartElement("Cors");
-                foreach (var item in Cors)
+                foreach (ShareCorsRule item in Cors)
                 {
-                    writer.WriteObjectValue(item, "CorsRule");
+                    writer.WriteStartElement("CorsRule");
+                    writer.WriteObjectValue(item, options);
+                    writer.WriteEndElement();
                 }
                 writer.WriteEndElement();
             }
-            writer.WriteEndElement();
         }
 
-        internal static ShareServiceProperties DeserializeShareServiceProperties(XElement element)
+        /// <param name="element"> The xml element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ShareServiceProperties DeserializeShareServiceProperties(XElement element, ModelReaderWriterOptions options)
         {
+            if (element == null)
+            {
+                return null;
+            }
+
             ShareMetrics hourMetrics = default;
             ShareMetrics minuteMetrics = default;
             ShareProtocolSettings protocol = default;
             IList<ShareCorsRule> cors = default;
-            if (element.Element("HourMetrics") is XElement hourMetricsElement)
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+
+            foreach (var child in element.Elements())
             {
-                hourMetrics = ShareMetrics.DeserializeShareMetrics(hourMetricsElement);
-            }
-            if (element.Element("MinuteMetrics") is XElement minuteMetricsElement)
-            {
-                minuteMetrics = ShareMetrics.DeserializeShareMetrics(minuteMetricsElement);
-            }
-            if (element.Element("ProtocolSettings") is XElement protocolSettingsElement)
-            {
-                protocol = ShareProtocolSettings.DeserializeShareProtocolSettings(protocolSettingsElement);
-            }
-            if (element.Element("Cors") is XElement corsElement)
-            {
-                var array = new List<ShareCorsRule>();
-                foreach (var e in corsElement.Elements("CorsRule"))
+                string localName = child.Name.LocalName;
+                if (localName == "HourMetrics")
                 {
-                    array.Add(ShareCorsRule.DeserializeShareCorsRule(e));
+                    hourMetrics = ShareMetrics.DeserializeShareMetrics(child, options);
+                    continue;
                 }
-                cors = array;
+                if (localName == "MinuteMetrics")
+                {
+                    minuteMetrics = ShareMetrics.DeserializeShareMetrics(child, options);
+                    continue;
+                }
+                if (localName == "ProtocolSettings")
+                {
+                    protocol = ShareProtocolSettings.DeserializeShareProtocolSettings(child, options);
+                    continue;
+                }
+                if (localName == "Cors")
+                {
+                    List<ShareCorsRule> array = new List<ShareCorsRule>();
+                    foreach (var e in child.Elements("CorsRule"))
+                    {
+                        array.Add(ShareCorsRule.DeserializeShareCorsRule(e, options));
+                    }
+                    cors = array;
+                    continue;
+                }
             }
-            return new ShareServiceProperties(hourMetrics, minuteMetrics, cors, protocol);
+            return new ShareServiceProperties(hourMetrics, minuteMetrics, protocol, cors ?? new ChangeTrackingList<ShareCorsRule>(), additionalBinaryDataProperties);
         }
+
+        /// <param name="writer"> The XML writer. </param>
+        /// <param name="nameHint"> An optional name hint. </param>
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => WriteXml(writer, ModelSerializationExtensions.WireOptions, nameHint);
     }
 }

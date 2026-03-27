@@ -6,17 +6,272 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.IO;
+using System.Xml;
 using System.Xml.Linq;
+using Azure;
 using Azure.Core;
+using Azure.Storage.Files.Shares;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    internal partial class SharePropertiesInternal
+    internal partial class SharePropertiesInternal : IPersistableModel<SharePropertiesInternal>, IXmlSerializable
     {
-        internal static SharePropertiesInternal DeserializeSharePropertiesInternal(XElement element)
+        /// <summary> Initializes a new instance of <see cref="SharePropertiesInternal"/> for deserialization. </summary>
+        internal SharePropertiesInternal()
         {
+        }
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SharePropertiesInternal PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SharePropertiesInternal>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "X":
+                    using (Stream dataStream = data.ToStream())
+                    {
+                        return DeserializeSharePropertiesInternal(XElement.Load(dataStream, LoadOptions.PreserveWhitespace), options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SharePropertiesInternal)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SharePropertiesInternal>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "X":
+                    using (MemoryStream stream = new MemoryStream(256))
+                    {
+                        using (XmlWriter writer = XmlWriter.Create(stream, ModelSerializationExtensions.XmlWriterSettings))
+                        {
+                            WriteXml(writer, options, "SharePropertiesInternal");
+                        }
+                        if (stream.Position > int.MaxValue)
+                        {
+                            return BinaryData.FromStream(stream);
+                        }
+                        else
+                        {
+                            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+                        }
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SharePropertiesInternal)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SharePropertiesInternal>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SharePropertiesInternal IPersistableModel<SharePropertiesInternal>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SharePropertiesInternal>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
+
+        /// <param name="writer"> The XML writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        /// <param name="nameHint"> An optional name hint. </param>
+        private void WriteXml(XmlWriter writer, ModelReaderWriterOptions options, string nameHint)
+        {
+            if (nameHint != null)
+            {
+                writer.WriteStartElement(nameHint);
+            }
+
+            XmlModelWriteCore(writer, options);
+
+            if (nameHint != null)
+            {
+                writer.WriteEndElement();
+            }
+        }
+
+        /// <param name="writer"> The XML writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal virtual void XmlModelWriteCore(XmlWriter writer, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SharePropertiesInternal>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "X")
+            {
+                throw new FormatException($"The model {nameof(SharePropertiesInternal)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartElement("Last-Modified");
+            writer.WriteStringValue(LastModified, "R");
+            writer.WriteEndElement();
+            writer.WriteStartElement("Etag");
+            writer.WriteValue(ETag.ToString());
+            writer.WriteEndElement();
+            writer.WriteStartElement("Quota");
+            writer.WriteValue(Quota);
+            writer.WriteEndElement();
+            if (Optional.IsDefined(ProvisionedIops))
+            {
+                writer.WriteStartElement("ProvisionedIops");
+                writer.WriteValue(ProvisionedIops.Value);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(ProvisionedIngressMBps))
+            {
+                writer.WriteStartElement("ProvisionedIngressMBps");
+                writer.WriteValue(ProvisionedIngressMBps.Value);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(ProvisionedEgressMBps))
+            {
+                writer.WriteStartElement("ProvisionedEgressMBps");
+                writer.WriteValue(ProvisionedEgressMBps.Value);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(ProvisionedBandwidthMiBps))
+            {
+                writer.WriteStartElement("ProvisionedBandwidthMiBps");
+                writer.WriteValue(ProvisionedBandwidthMiBps.Value);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(NextAllowedQuotaDowngradeTime))
+            {
+                writer.WriteStartElement("NextAllowedQuotaDowngradeTime");
+                writer.WriteStringValue(NextAllowedQuotaDowngradeTime.Value, "R");
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(DeletedTime))
+            {
+                writer.WriteStartElement("DeletedTime");
+                writer.WriteStringValue(DeletedTime.Value, "R");
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(RemainingRetentionDays))
+            {
+                writer.WriteStartElement("RemainingRetentionDays");
+                writer.WriteValue(RemainingRetentionDays.Value);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(AccessTier))
+            {
+                writer.WriteStartElement("AccessTier");
+                writer.WriteValue(AccessTier);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(AccessTierChangeTime))
+            {
+                writer.WriteStartElement("AccessTierChangeTime");
+                writer.WriteStringValue(AccessTierChangeTime.Value, "R");
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(AccessTierTransitionState))
+            {
+                writer.WriteStartElement("AccessTierTransitionState");
+                writer.WriteValue(AccessTierTransitionState);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(LeaseStatus))
+            {
+                writer.WriteStartElement("LeaseStatus");
+                writer.WriteValue(LeaseStatus.Value.ToSerialString());
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(LeaseState))
+            {
+                writer.WriteStartElement("LeaseState");
+                writer.WriteValue(LeaseState.Value.ToSerialString());
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(LeaseDuration))
+            {
+                writer.WriteStartElement("LeaseDuration");
+                writer.WriteValue(LeaseDuration.Value.ToSerialString());
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(EnabledProtocols))
+            {
+                writer.WriteStartElement("EnabledProtocols");
+                writer.WriteValue(EnabledProtocols);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(RootSquash))
+            {
+                writer.WriteStartElement("RootSquash");
+                writer.WriteValue(RootSquash.Value.ToSerialString());
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(EnableSnapshotVirtualDirectoryAccess))
+            {
+                writer.WriteStartElement("EnableSnapshotVirtualDirectoryAccess");
+                writer.WriteValue(EnableSnapshotVirtualDirectoryAccess.Value);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(PaidBurstingEnabled))
+            {
+                writer.WriteStartElement("PaidBurstingEnabled");
+                writer.WriteValue(PaidBurstingEnabled.Value);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(PaidBurstingMaxIops))
+            {
+                writer.WriteStartElement("PaidBurstingMaxIops");
+                writer.WriteValue(PaidBurstingMaxIops.Value);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(PaidBurstingMaxBandwidthMibps))
+            {
+                writer.WriteStartElement("PaidBurstingMaxBandwidthMibps");
+                writer.WriteValue(PaidBurstingMaxBandwidthMibps.Value);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(IncludedBurstIops))
+            {
+                writer.WriteStartElement("IncludedBurstIops");
+                writer.WriteValue(IncludedBurstIops.Value);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(MaxBurstCreditsForIops))
+            {
+                writer.WriteStartElement("MaxBurstCreditsForIops");
+                writer.WriteValue(MaxBurstCreditsForIops.Value);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(NextAllowedProvisionedIopsDowngradeTime))
+            {
+                writer.WriteStartElement("NextAllowedProvisionedIopsDowngradeTime");
+                writer.WriteStringValue(NextAllowedProvisionedIopsDowngradeTime.Value, "R");
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(NextAllowedProvisionedBandwidthDowngradeTime))
+            {
+                writer.WriteStartElement("NextAllowedProvisionedBandwidthDowngradeTime");
+                writer.WriteStringValue(NextAllowedProvisionedBandwidthDowngradeTime.Value, "R");
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(EnableSmbDirectoryLease))
+            {
+                writer.WriteStartElement("EnableSmbDirectoryLease");
+                writer.WriteValue(EnableSmbDirectoryLease.Value);
+                writer.WriteEndElement();
+            }
+        }
+
+        /// <param name="element"> The xml element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static SharePropertiesInternal DeserializeSharePropertiesInternal(XElement element, ModelReaderWriterOptions options)
+        {
+            if (element == null)
+            {
+                return null;
+            }
+
             DateTimeOffset lastModified = default;
-            string etag = default;
+            ETag eTag = default;
             int quota = default;
             int? provisionedIops = default;
             int? provisionedIngressMBps = default;
@@ -42,117 +297,150 @@ namespace Azure.Storage.Files.Shares.Models
             DateTimeOffset? nextAllowedProvisionedIopsDowngradeTime = default;
             DateTimeOffset? nextAllowedProvisionedBandwidthDowngradeTime = default;
             bool? enableSmbDirectoryLease = default;
-            if (element.Element("Last-Modified") is XElement lastModifiedElement)
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+
+            foreach (var child in element.Elements())
             {
-                lastModified = lastModifiedElement.GetDateTimeOffsetValue("R");
-            }
-            if (element.Element("Etag") is XElement etagElement)
-            {
-                etag = (string)etagElement;
-            }
-            if (element.Element("Quota") is XElement quotaElement)
-            {
-                quota = (int)quotaElement;
-            }
-            if (element.Element("ProvisionedIops") is XElement provisionedIopsElement)
-            {
-                provisionedIops = (int?)provisionedIopsElement;
-            }
-            if (element.Element("ProvisionedIngressMBps") is XElement provisionedIngressMBpsElement)
-            {
-                provisionedIngressMBps = (int?)provisionedIngressMBpsElement;
-            }
-            if (element.Element("ProvisionedEgressMBps") is XElement provisionedEgressMBpsElement)
-            {
-                provisionedEgressMBps = (int?)provisionedEgressMBpsElement;
-            }
-            if (element.Element("ProvisionedBandwidthMiBps") is XElement provisionedBandwidthMiBpsElement)
-            {
-                provisionedBandwidthMiBps = (int?)provisionedBandwidthMiBpsElement;
-            }
-            if (element.Element("NextAllowedQuotaDowngradeTime") is XElement nextAllowedQuotaDowngradeTimeElement)
-            {
-                nextAllowedQuotaDowngradeTime = nextAllowedQuotaDowngradeTimeElement.GetDateTimeOffsetValue("R");
-            }
-            if (element.Element("DeletedTime") is XElement deletedTimeElement)
-            {
-                deletedTime = deletedTimeElement.GetDateTimeOffsetValue("R");
-            }
-            if (element.Element("RemainingRetentionDays") is XElement remainingRetentionDaysElement)
-            {
-                remainingRetentionDays = (int?)remainingRetentionDaysElement;
-            }
-            if (element.Element("AccessTier") is XElement accessTierElement)
-            {
-                accessTier = (string)accessTierElement;
-            }
-            if (element.Element("AccessTierChangeTime") is XElement accessTierChangeTimeElement)
-            {
-                accessTierChangeTime = accessTierChangeTimeElement.GetDateTimeOffsetValue("R");
-            }
-            if (element.Element("AccessTierTransitionState") is XElement accessTierTransitionStateElement)
-            {
-                accessTierTransitionState = (string)accessTierTransitionStateElement;
-            }
-            if (element.Element("LeaseStatus") is XElement leaseStatusElement)
-            {
-                leaseStatus = leaseStatusElement.Value.ToShareLeaseStatus();
-            }
-            if (element.Element("LeaseState") is XElement leaseStateElement)
-            {
-                leaseState = leaseStateElement.Value.ToShareLeaseState();
-            }
-            if (element.Element("LeaseDuration") is XElement leaseDurationElement)
-            {
-                leaseDuration = leaseDurationElement.Value.ToShareLeaseDuration();
-            }
-            if (element.Element("EnabledProtocols") is XElement enabledProtocolsElement)
-            {
-                enabledProtocols = (string)enabledProtocolsElement;
-            }
-            if (element.Element("RootSquash") is XElement rootSquashElement)
-            {
-                rootSquash = rootSquashElement.Value.ToShareRootSquash();
-            }
-            if (element.Element("EnableSnapshotVirtualDirectoryAccess") is XElement enableSnapshotVirtualDirectoryAccessElement)
-            {
-                enableSnapshotVirtualDirectoryAccess = (bool?)enableSnapshotVirtualDirectoryAccessElement;
-            }
-            if (element.Element("PaidBurstingEnabled") is XElement paidBurstingEnabledElement)
-            {
-                paidBurstingEnabled = (bool?)paidBurstingEnabledElement;
-            }
-            if (element.Element("PaidBurstingMaxIops") is XElement paidBurstingMaxIopsElement)
-            {
-                paidBurstingMaxIops = (long?)paidBurstingMaxIopsElement;
-            }
-            if (element.Element("PaidBurstingMaxBandwidthMibps") is XElement paidBurstingMaxBandwidthMibpsElement)
-            {
-                paidBurstingMaxBandwidthMibps = (long?)paidBurstingMaxBandwidthMibpsElement;
-            }
-            if (element.Element("IncludedBurstIops") is XElement includedBurstIopsElement)
-            {
-                includedBurstIops = (long?)includedBurstIopsElement;
-            }
-            if (element.Element("MaxBurstCreditsForIops") is XElement maxBurstCreditsForIopsElement)
-            {
-                maxBurstCreditsForIops = (long?)maxBurstCreditsForIopsElement;
-            }
-            if (element.Element("NextAllowedProvisionedIopsDowngradeTime") is XElement nextAllowedProvisionedIopsDowngradeTimeElement)
-            {
-                nextAllowedProvisionedIopsDowngradeTime = nextAllowedProvisionedIopsDowngradeTimeElement.GetDateTimeOffsetValue("R");
-            }
-            if (element.Element("NextAllowedProvisionedBandwidthDowngradeTime") is XElement nextAllowedProvisionedBandwidthDowngradeTimeElement)
-            {
-                nextAllowedProvisionedBandwidthDowngradeTime = nextAllowedProvisionedBandwidthDowngradeTimeElement.GetDateTimeOffsetValue("R");
-            }
-            if (element.Element("EnableSmbDirectoryLease") is XElement enableSmbDirectoryLeaseElement)
-            {
-                enableSmbDirectoryLease = (bool?)enableSmbDirectoryLeaseElement;
+                string localName = child.Name.LocalName;
+                if (localName == "Last-Modified")
+                {
+                    lastModified = child.GetDateTimeOffset("R");
+                    continue;
+                }
+                if (localName == "Etag")
+                {
+                    eTag = new ETag(child.Value);
+                    continue;
+                }
+                if (localName == "Quota")
+                {
+                    quota = (int)child;
+                    continue;
+                }
+                if (localName == "ProvisionedIops")
+                {
+                    provisionedIops = (int?)child;
+                    continue;
+                }
+                if (localName == "ProvisionedIngressMBps")
+                {
+                    provisionedIngressMBps = (int?)child;
+                    continue;
+                }
+                if (localName == "ProvisionedEgressMBps")
+                {
+                    provisionedEgressMBps = (int?)child;
+                    continue;
+                }
+                if (localName == "ProvisionedBandwidthMiBps")
+                {
+                    provisionedBandwidthMiBps = (int?)child;
+                    continue;
+                }
+                if (localName == "NextAllowedQuotaDowngradeTime")
+                {
+                    nextAllowedQuotaDowngradeTime = child.GetDateTimeOffset("R");
+                    continue;
+                }
+                if (localName == "DeletedTime")
+                {
+                    deletedTime = child.GetDateTimeOffset("R");
+                    continue;
+                }
+                if (localName == "RemainingRetentionDays")
+                {
+                    remainingRetentionDays = (int?)child;
+                    continue;
+                }
+                if (localName == "AccessTier")
+                {
+                    accessTier = (string)child;
+                    continue;
+                }
+                if (localName == "AccessTierChangeTime")
+                {
+                    accessTierChangeTime = child.GetDateTimeOffset("R");
+                    continue;
+                }
+                if (localName == "AccessTierTransitionState")
+                {
+                    accessTierTransitionState = (string)child;
+                    continue;
+                }
+                if (localName == "LeaseStatus")
+                {
+                    leaseStatus = ((string)child).ToShareLeaseStatus();
+                    continue;
+                }
+                if (localName == "LeaseState")
+                {
+                    leaseState = ((string)child).ToShareLeaseState();
+                    continue;
+                }
+                if (localName == "LeaseDuration")
+                {
+                    leaseDuration = ((string)child).ToShareLeaseDuration();
+                    continue;
+                }
+                if (localName == "EnabledProtocols")
+                {
+                    enabledProtocols = (string)child;
+                    continue;
+                }
+                if (localName == "RootSquash")
+                {
+                    rootSquash = ((string)child).ToShareRootSquash();
+                    continue;
+                }
+                if (localName == "EnableSnapshotVirtualDirectoryAccess")
+                {
+                    enableSnapshotVirtualDirectoryAccess = (bool?)child;
+                    continue;
+                }
+                if (localName == "PaidBurstingEnabled")
+                {
+                    paidBurstingEnabled = (bool?)child;
+                    continue;
+                }
+                if (localName == "PaidBurstingMaxIops")
+                {
+                    paidBurstingMaxIops = (long?)child;
+                    continue;
+                }
+                if (localName == "PaidBurstingMaxBandwidthMibps")
+                {
+                    paidBurstingMaxBandwidthMibps = (long?)child;
+                    continue;
+                }
+                if (localName == "IncludedBurstIops")
+                {
+                    includedBurstIops = (long?)child;
+                    continue;
+                }
+                if (localName == "MaxBurstCreditsForIops")
+                {
+                    maxBurstCreditsForIops = (long?)child;
+                    continue;
+                }
+                if (localName == "NextAllowedProvisionedIopsDowngradeTime")
+                {
+                    nextAllowedProvisionedIopsDowngradeTime = child.GetDateTimeOffset("R");
+                    continue;
+                }
+                if (localName == "NextAllowedProvisionedBandwidthDowngradeTime")
+                {
+                    nextAllowedProvisionedBandwidthDowngradeTime = child.GetDateTimeOffset("R");
+                    continue;
+                }
+                if (localName == "EnableSmbDirectoryLease")
+                {
+                    enableSmbDirectoryLease = (bool?)child;
+                    continue;
+                }
             }
             return new SharePropertiesInternal(
                 lastModified,
-                etag,
+                eTag,
                 quota,
                 provisionedIops,
                 provisionedIngressMBps,
@@ -177,7 +465,12 @@ namespace Azure.Storage.Files.Shares.Models
                 maxBurstCreditsForIops,
                 nextAllowedProvisionedIopsDowngradeTime,
                 nextAllowedProvisionedBandwidthDowngradeTime,
-                enableSmbDirectoryLease);
+                enableSmbDirectoryLease,
+                additionalBinaryDataProperties);
         }
+
+        /// <param name="writer"> The XML writer. </param>
+        /// <param name="nameHint"> An optional name hint. </param>
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => WriteXml(writer, ModelSerializationExtensions.WireOptions, nameHint);
     }
 }

@@ -5,60 +5,166 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.IO;
 using System.Xml;
 using System.Xml.Linq;
 using Azure.Core;
-using Azure.Storage.Common;
+using Azure.Storage.Files.Shares;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    public partial class ShareMetrics : IXmlSerializable
+    /// <summary> Storage Analytics metrics for file service. </summary>
+    public partial class ShareMetrics : IPersistableModel<ShareMetrics>, IXmlSerializable
     {
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ShareMetrics PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            writer.WriteStartElement(nameHint ?? "Metrics");
+            string format = options.Format == "W" ? ((IPersistableModel<ShareMetrics>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "X":
+                    using (Stream dataStream = data.ToStream())
+                    {
+                        return DeserializeShareMetrics(XElement.Load(dataStream, LoadOptions.PreserveWhitespace), options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ShareMetrics)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ShareMetrics>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "X":
+                    using (MemoryStream stream = new MemoryStream(256))
+                    {
+                        using (XmlWriter writer = XmlWriter.Create(stream, ModelSerializationExtensions.XmlWriterSettings))
+                        {
+                            WriteXml(writer, options, "Metrics");
+                        }
+                        if (stream.Position > int.MaxValue)
+                        {
+                            return BinaryData.FromStream(stream);
+                        }
+                        else
+                        {
+                            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+                        }
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ShareMetrics)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ShareMetrics>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ShareMetrics IPersistableModel<ShareMetrics>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ShareMetrics>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
+
+        /// <param name="writer"> The XML writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        /// <param name="nameHint"> An optional name hint. </param>
+        private void WriteXml(XmlWriter writer, ModelReaderWriterOptions options, string nameHint)
+        {
+            if (nameHint != null)
+            {
+                writer.WriteStartElement(nameHint);
+            }
+
+            XmlModelWriteCore(writer, options);
+
+            if (nameHint != null)
+            {
+                writer.WriteEndElement();
+            }
+        }
+
+        /// <param name="writer"> The XML writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal virtual void XmlModelWriteCore(XmlWriter writer, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ShareMetrics>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "X")
+            {
+                throw new FormatException($"The model {nameof(ShareMetrics)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartElement("Version");
             writer.WriteValue(Version);
             writer.WriteEndElement();
             writer.WriteStartElement("Enabled");
             writer.WriteValue(Enabled);
             writer.WriteEndElement();
-            if (Common.Optional.IsDefined(IncludeApis))
+            if (Optional.IsDefined(IncludeApis))
             {
                 writer.WriteStartElement("IncludeAPIs");
                 writer.WriteValue(IncludeApis.Value);
                 writer.WriteEndElement();
             }
-            if (Common.Optional.IsDefined(RetentionPolicy))
+            if (Optional.IsDefined(RetentionPolicy))
             {
-                writer.WriteObjectValue(RetentionPolicy, "RetentionPolicy");
+                writer.WriteStartElement("RetentionPolicy");
+                writer.WriteObjectValue(RetentionPolicy, options);
+                writer.WriteEndElement();
             }
-            writer.WriteEndElement();
         }
 
-        internal static ShareMetrics DeserializeShareMetrics(XElement element)
+        /// <param name="element"> The xml element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ShareMetrics DeserializeShareMetrics(XElement element, ModelReaderWriterOptions options)
         {
+            if (element == null)
+            {
+                return null;
+            }
+
             string version = default;
             bool enabled = default;
             bool? includeApis = default;
             ShareRetentionPolicy retentionPolicy = default;
-            if (element.Element("Version") is XElement versionElement)
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+
+            foreach (var child in element.Elements())
             {
-                version = (string)versionElement;
+                string localName = child.Name.LocalName;
+                if (localName == "Version")
+                {
+                    version = (string)child;
+                    continue;
+                }
+                if (localName == "Enabled")
+                {
+                    enabled = (bool)child;
+                    continue;
+                }
+                if (localName == "IncludeAPIs")
+                {
+                    includeApis = (bool?)child;
+                    continue;
+                }
+                if (localName == "RetentionPolicy")
+                {
+                    retentionPolicy = ShareRetentionPolicy.DeserializeShareRetentionPolicy(child, options);
+                    continue;
+                }
             }
-            if (element.Element("Enabled") is XElement enabledElement)
-            {
-                enabled = (bool)enabledElement;
-            }
-            if (element.Element("IncludeAPIs") is XElement includeAPIsElement)
-            {
-                includeApis = (bool?)includeAPIsElement;
-            }
-            if (element.Element("RetentionPolicy") is XElement retentionPolicyElement)
-            {
-                retentionPolicy = ShareRetentionPolicy.DeserializeShareRetentionPolicy(retentionPolicyElement);
-            }
-            return new ShareMetrics(version, enabled, includeApis, retentionPolicy);
+            return new ShareMetrics(version, enabled, includeApis, retentionPolicy, additionalBinaryDataProperties);
         }
+
+        /// <param name="writer"> The XML writer. </param>
+        /// <param name="nameHint"> An optional name hint. </param>
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => WriteXml(writer, ModelSerializationExtensions.WireOptions, nameHint);
     }
 }

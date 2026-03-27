@@ -66,6 +66,7 @@
     <Compile Include="$(AzureStorageSharedSources)SasQueryParametersInternals.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)SharedAccessSignatureCredentials.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)StorageClientConfiguration.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)RangeHeaderPolicy.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)StorageClientOptions.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)StorageConnectionString.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)StorageCollectionEnumerator.cs" LinkBase="Shared" />
@@ -79,7 +80,9 @@
     <Compile Include="$(AzureStorageSharedSources)StorageSharedKeyCredentialInternals.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)StorageSharedKeyPipelinePolicy.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)StorageTelemetryPolicy.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)StorageClassifierPolicy.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)StorageResponseClassifier.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)StorageRetriableClassifier.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)StorageServerTimeoutPolicy.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)StorageVersionExtensions.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)StructuredMessage.cs" LinkBase="Shared" />

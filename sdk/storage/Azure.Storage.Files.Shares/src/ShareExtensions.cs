@@ -96,37 +96,93 @@ namespace Azure.Storage.Files.Shares
             return (ShareProtocols)result;
         }
 
-        internal static ShareDirectoryInfo ToShareDirectoryInfo(this ResponseWithHeaders<DirectoryCreateHeaders> response)
+        internal enum ShareDirectoryInfoHeaderType
+        {
+            Create,
+            SetProperties,
+            SetMetadata
+        }
+
+        internal static ShareDirectoryInfo ToShareDirectoryInfo(this Response response, ShareDirectoryInfoHeaderType headerType)
         {
             if (response == null)
             {
                 return null;
             }
-            return new ShareDirectoryInfo
+
+            const string FileAttributesHeader = "x-ms-file-attributes";
+            const string FilePermissionKeyHeader = "x-ms-file-permission-key";
+            const string FileCreationTimeHeader = "x-ms-file-creation-time";
+            const string FileLastWriteTimeHeader = "x-ms-file-last-write-time";
+            const string FileChangeTimeHeader = "x-ms-file-change-time";
+            const string FileIdHeader = "x-ms-file-id";
+            const string FileParentIdHeader = "x-ms-file-parent-id";
+            const string FileModeHeader = "x-ms-mode";
+            const string OwnerHeader = "x-ms-owner";
+            const string GroupHeader = "x-ms-group";
+            const string NfsFileTypeHeader = "x-ms-file-file-type";
+
+            switch (headerType)
             {
-                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
-                LastModified = response.Headers.LastModified.GetValueOrDefault(),
-                SmbProperties = new FileSmbProperties
-                {
-                    FileAttributes = ShareModelExtensions.ToFileAttributes(response.Headers.FileAttributes),
-                    FilePermissionKey = response.Headers.FilePermissionKey,
-                    FileCreatedOn = response.Headers.FileCreationTime,
-                    FileLastWrittenOn = response.Headers.FileLastWriteTime,
-                    FileChangedOn = response.Headers.FileChangeTime,
-                    FileId = response.Headers.FileId,
-                    ParentId = response.Headers.FileParentId
-                },
-                PosixProperties = new FilePosixProperties
-                {
-                    FileMode = NfsFileMode.ParseOctalFileMode(response.Headers.FileMode),
-                    Owner = response.Headers.Owner,
-                    Group = response.Headers.Group,
-                    FileType = response.Headers.NfsFileType,
-                }
-            };
+                case ShareDirectoryInfoHeaderType.Create:
+                    return new ShareDirectoryInfo
+                    {
+                        ETag = response.Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
+                        LastModified = response.Headers.TryGetValue(Constants.HeaderNames.LastModified, out DateTimeOffset? lastModified) ? lastModified.GetValueOrDefault() : default,
+                        SmbProperties = new FileSmbProperties
+                        {
+                            FileAttributes = ShareModelExtensions.ToFileAttributes(response.Headers.TryGetValue(FileAttributesHeader, out string fileAttributes) ? fileAttributes : null),
+                            FilePermissionKey = response.Headers.TryGetValue(FilePermissionKeyHeader, out string filePermissionKey) ? filePermissionKey : null,
+                            FileCreatedOn = response.Headers.TryGetValue(FileCreationTimeHeader, out DateTimeOffset? fileCreationTime) ? fileCreationTime : null,
+                            FileLastWrittenOn = response.Headers.TryGetValue(FileLastWriteTimeHeader, out DateTimeOffset? fileLastWriteTime) ? fileLastWriteTime : null,
+                            FileChangedOn = response.Headers.TryGetValue(FileChangeTimeHeader, out DateTimeOffset? fileChangeTime) ? fileChangeTime : null,
+                            FileId = response.Headers.TryGetValue(FileIdHeader, out string fileId) ? fileId : null,
+                            ParentId = response.Headers.TryGetValue(FileParentIdHeader, out string fileParentId) ? fileParentId : null
+                        },
+                        PosixProperties = new FilePosixProperties
+                        {
+                            FileMode = NfsFileMode.ParseOctalFileMode(response.Headers.TryGetValue(FileModeHeader, out string fileMode) ? fileMode : null),
+                            Owner = response.Headers.TryGetValue(OwnerHeader, out string owner) ? owner : null,
+                            Group = response.Headers.TryGetValue(GroupHeader, out string group) ? group : null,
+                            FileType = response.Headers.TryGetValue(NfsFileTypeHeader, out string nfsFileType) ? (NfsFileType?)nfsFileType : null,
+                        }
+                    };
+                case ShareDirectoryInfoHeaderType.SetProperties:
+                    return new ShareDirectoryInfo
+                    {
+                        ETag = response.Headers.TryGetValue(Constants.HeaderNames.ETag, out string spValue) ? new ETag(spValue) : default,
+                        LastModified = response.Headers.TryGetValue(Constants.HeaderNames.LastModified, out DateTimeOffset? spLastModified) ? spLastModified.GetValueOrDefault() : default,
+                        SmbProperties = new FileSmbProperties
+                        {
+                            FileAttributes = ShareModelExtensions.ToFileAttributes(response.Headers.TryGetValue(FileAttributesHeader, out string spFileAttributes) ? spFileAttributes : null),
+                            FilePermissionKey = response.Headers.TryGetValue(FilePermissionKeyHeader, out string spFilePermissionKey) ? spFilePermissionKey : null,
+                            FileCreatedOn = response.Headers.TryGetValue(FileCreationTimeHeader, out DateTimeOffset? spFileCreationTime) ? spFileCreationTime : null,
+                            FileLastWrittenOn = response.Headers.TryGetValue(FileLastWriteTimeHeader, out DateTimeOffset? spFileLastWriteTime) ? spFileLastWriteTime : null,
+                            FileChangedOn = response.Headers.TryGetValue(FileChangeTimeHeader, out DateTimeOffset? spFileChangeTime) ? spFileChangeTime : null,
+                            FileId = response.Headers.TryGetValue(FileIdHeader, out string spFileId) ? spFileId : null,
+                            ParentId = response.Headers.TryGetValue(FileParentIdHeader, out string spFileParentId) ? spFileParentId : null
+                        },
+                        PosixProperties = new FilePosixProperties
+                        {
+                            FileMode = NfsFileMode.ParseOctalFileMode(response.Headers.TryGetValue(FileModeHeader, out string spFileMode) ? spFileMode : null),
+                            Owner = response.Headers.TryGetValue(OwnerHeader, out string spOwner) ? spOwner : null,
+                            Group = response.Headers.TryGetValue(GroupHeader, out string spGroup) ? spGroup : null
+                        }
+                    };
+                case ShareDirectoryInfoHeaderType.SetMetadata:
+                    // Set Directory metadata returns limited response headers - https://docs.microsoft.com/en-us/rest/api/storageservices/set-directory-metadata.
+                    return new ShareDirectoryInfo
+                    {
+                        ETag = response.Headers.TryGetValue(Constants.HeaderNames.ETag, out string smdValue) ? new ETag(smdValue) : default,
+                        SmbProperties = new FileSmbProperties(),
+                        LastModified = response.Headers.ExtractLastModified()
+                    };
+                default:
+                    throw new ArgumentException($"Unknown {nameof(ShareDirectoryInfoHeaderType)}: {headerType}", nameof(headerType));
+            }
         }
 
-        internal static ShareDirectoryProperties ToShareDirectoryProperties(this ResponseWithHeaders<DirectoryGetPropertiesHeaders> response)
+        internal static ShareDirectoryProperties ToShareDirectoryProperties(this Response response)
         {
             if (response == null)
             {
@@ -134,72 +190,27 @@ namespace Azure.Storage.Files.Shares
             }
             return new ShareDirectoryProperties()
             {
-                Metadata = response.Headers.Metadata,
-                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
-                LastModified = response.Headers.LastModified.GetValueOrDefault(),
-                IsServerEncrypted = response.Headers.IsServerEncrypted.GetValueOrDefault(),
+                Metadata = response.Headers.TryGetValue(Constants.HeaderNames.MetadataPrefix, out IDictionary<string, string> metadata) ? metadata : null,
+                ETag = response.Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
+                LastModified = response.Headers.TryGetValue(Constants.HeaderNames.LastModified, out DateTimeOffset? lastModified) ? lastModified.GetValueOrDefault() : default,
+                IsServerEncrypted = response.Headers.TryGetValue("x-ms-server-encrypted", out bool? isServerEncrypted) && isServerEncrypted.GetValueOrDefault(),
                 SmbProperties = new FileSmbProperties()
                 {
-                    FileAttributes = ShareModelExtensions.ToFileAttributes(response.Headers.FileAttributes),
-                    FilePermissionKey = response.Headers.FilePermissionKey,
-                    FileCreatedOn = response.Headers.FileCreationTime,
-                    FileLastWrittenOn = response.Headers.FileLastWriteTime,
-                    FileChangedOn = response.Headers.FileChangeTime,
-                    FileId = response.Headers.FileId,
-                    ParentId = response.Headers.FileParentId
+                    FileAttributes = ShareModelExtensions.ToFileAttributes(response.Headers.TryGetValue("x-ms-file-attributes", out string fileAttributes) ? fileAttributes : null),
+                    FilePermissionKey = response.Headers.TryGetValue("x-ms-file-permission-key", out string filePermissionKey) ? filePermissionKey : null,
+                    FileCreatedOn = response.Headers.TryGetValue("x-ms-file-creation-time", out DateTimeOffset? fileCreationTime) ? fileCreationTime : null,
+                    FileLastWrittenOn = response.Headers.TryGetValue("x-ms-file-last-write-time", out DateTimeOffset? fileLastWriteTime) ? fileLastWriteTime : null,
+                    FileChangedOn = response.Headers.TryGetValue("x-ms-file-change-time", out DateTimeOffset? fileChangeTime) ? fileChangeTime : null,
+                    FileId = response.Headers.TryGetValue("x-ms-file-id", out string fileId) ? fileId : null,
+                    ParentId = response.Headers.TryGetValue("x-ms-file-parent-id", out string fileParentId) ? fileParentId : null
                 },
                 PosixProperties = new FilePosixProperties()
                 {
-                    FileMode = NfsFileMode.ParseOctalFileMode(response.Headers.FileMode),
-                    Owner = response.Headers.Owner,
-                    Group = response.Headers.Group,
-                    FileType = response.Headers.NfsFileType,
+                    FileMode = NfsFileMode.ParseOctalFileMode(response.Headers.TryGetValue("x-ms-mode", out string fileMode) ? fileMode : null),
+                    Owner = response.Headers.TryGetValue("x-ms-owner", out string owner) ? owner : null,
+                    Group = response.Headers.TryGetValue("x-ms-group", out string group) ? group : null,
+                    FileType = response.Headers.TryGetValue("x-ms-file-file-type", out string nfsFileType) ? (NfsFileType?)nfsFileType : null,
                 }
-            };
-        }
-
-        internal static ShareDirectoryInfo ToShareDirectoryInfo(this ResponseWithHeaders<DirectorySetPropertiesHeaders> response)
-        {
-            if (response == null)
-            {
-                return null;
-            }
-            return new ShareDirectoryInfo
-            {
-                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
-                LastModified = response.Headers.LastModified.GetValueOrDefault(),
-                SmbProperties = new FileSmbProperties
-                {
-                    FileAttributes = ShareModelExtensions.ToFileAttributes(response.Headers.FileAttributes),
-                    FilePermissionKey = response.Headers.FilePermissionKey,
-                    FileCreatedOn = response.Headers.FileCreationTime,
-                    FileLastWrittenOn = response.Headers.FileLastWriteTime,
-                    FileChangedOn = response.Headers.FileChangeTime,
-                    FileId = response.Headers.FileId,
-                    ParentId = response.Headers.FileParentId
-                },
-                PosixProperties = new FilePosixProperties
-                {
-                    FileMode = NfsFileMode.ParseOctalFileMode(response.Headers.FileMode),
-                    Owner = response.Headers.Owner,
-                    Group = response.Headers.Group
-                }
-            };
-        }
-
-        internal static ShareDirectoryInfo ToShareDirectoryInfo(this ResponseWithHeaders<DirectorySetMetadataHeaders> response)
-        {
-            if (response == null)
-            {
-                return null;
-            }
-
-            // Set Directory metadata returns limited response headers - https://docs.microsoft.com/en-us/rest/api/storageservices/set-directory-metadata.
-            return new ShareDirectoryInfo
-            {
-                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
-                SmbProperties = new FileSmbProperties(),
-                LastModified = response.GetRawResponse().Headers.ExtractLastModified()
             };
         }
 
@@ -213,7 +224,7 @@ namespace Azure.Storage.Files.Shares
             return new StorageHandlesSegment()
             {
                 NextMarker = listHandlesResponse.NextMarker,
-                Handles = listHandlesResponse.HandleList.ToShareFileHandles()
+                Handles = ((IReadOnlyList<HandleItem>)listHandlesResponse.HandleList).ToShareFileHandles()
             };
         }
 
@@ -248,7 +259,7 @@ namespace Azure.Storage.Files.Shares
                 clientName: handleItem.ClientName,
                 openedOn: handleItem.OpenTime,
                 lastReconnectedOn: handleItem.LastReconnectTime,
-                accessRights: handleItem.AccessRightList.ToShareFileHandleAccessRight());
+                accessRights: ((IReadOnlyList<AccessRight>)handleItem.AccessRightList).ToShareFileHandleAccessRight());
         }
 
         internal static ShareFileHandleAccessRights? ToShareFileHandleAccessRight(this IReadOnlyList<AccessRight> accessRightList)
@@ -279,7 +290,7 @@ namespace Azure.Storage.Files.Shares
             return accessRights;
         }
 
-        internal static StorageClosedHandlesSegment ToStorageClosedHandlesSegment(this ResponseWithHeaders<DirectoryForceCloseHandlesHeaders> response)
+        internal static StorageClosedHandlesSegment ToStorageClosedHandlesSegment(this Response response)
         {
             if (response == null)
             {
@@ -288,48 +299,150 @@ namespace Azure.Storage.Files.Shares
 
             return new StorageClosedHandlesSegment
             {
-                Marker = response.Headers.Marker,
-                NumberOfHandlesClosed = response.Headers.NumberOfHandlesClosed.GetValueOrDefault(),
-                NumberOfHandlesFailedToClose = response.Headers.NumberOfHandlesFailedToClose.GetValueOrDefault()
+                Marker = response.Headers.TryGetValue("x-ms-marker", out string marker) ? marker : null,
+                NumberOfHandlesClosed = response.Headers.TryGetValue("x-ms-number-of-handles-closed", out int? handlesClosed) ? handlesClosed.GetValueOrDefault() : default,
+                NumberOfHandlesFailedToClose = response.Headers.TryGetValue("x-ms-number-of-handles-failed", out int? handlesFailed) ? handlesFailed.GetValueOrDefault() : default
             };
         }
 
-        internal static ShareFileInfo ToShareFileInfo(this ResponseWithHeaders<FileCreateHeaders> response)
+        internal enum ShareFileInfoHeaderType
+        {
+            Create,
+            SetHttpHeaders,
+            SetMetadata,
+            CreateSymbolicLink,
+            CreateHardLink
+        }
+
+        internal static ShareFileInfo ToShareFileInfo(this Response response, ShareFileInfoHeaderType headerType)
         {
             if (response == null)
             {
                 return null;
             }
 
-            ShareFileInfo shareFileInfo = new ShareFileInfo
-            {
-                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
-                LastModified = response.Headers.LastModified.GetValueOrDefault(),
-                IsServerEncrypted = response.Headers.IsServerEncrypted.GetValueOrDefault(),
-                SmbProperties = new FileSmbProperties()
-                {
-                    FileAttributes = ShareModelExtensions.ToFileAttributes(response.Headers.FileAttributes),
-                    FilePermissionKey = response.Headers.FilePermissionKey,
-                    FileCreatedOn = response.Headers.FileCreationTime,
-                    FileLastWrittenOn = response.Headers.FileLastWriteTime,
-                    FileChangedOn = response.Headers.FileChangeTime,
-                    FileId = response.Headers.FileId,
-                    ParentId = response.Headers.FileParentId
-                },
-                PosixProperties = new FilePosixProperties()
-                {
-                    FileMode = NfsFileMode.ParseOctalFileMode(response.Headers.FileMode),
-                    Owner = response.Headers.Owner,
-                    Group = response.Headers.Group,
-                    FileType = response.Headers.NfsFileType,
-                },
-                ContentHash = response.Headers.ContentMD5,
-            };
+            const string ServerEncryptedHeader = "x-ms-request-server-encrypted";
+            const string FilePermissionKeyHeader = "x-ms-file-permission-key";
+            const string FileAttributesHeader = "x-ms-file-attributes";
+            const string FileCreationTimeHeader = "x-ms-file-creation-time";
+            const string FileLastWriteTimeHeader = "x-ms-file-last-write-time";
+            const string FileChangeTimeHeader = "x-ms-file-change-time";
+            const string FileIdHeader = "x-ms-file-id";
+            const string FileParentIdHeader = "x-ms-file-parent-id";
+            const string FileModeHeader = "x-ms-mode";
+            const string OwnerHeader = "x-ms-owner";
+            const string GroupHeader = "x-ms-group";
+            const string NfsFileTypeHeader = "x-ms-file-file-type";
+            const string LinkCountHeader = "x-ms-link-count";
 
-            return shareFileInfo;
+            switch (headerType)
+            {
+                case ShareFileInfoHeaderType.Create:
+                    return new ShareFileInfo
+                    {
+                        ETag = response.Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
+                        LastModified = response.Headers.TryGetValue(Constants.HeaderNames.LastModified, out DateTimeOffset? lastModified) ? lastModified.GetValueOrDefault() : default,
+                        IsServerEncrypted = response.Headers.TryGetValue(ServerEncryptedHeader, out bool? isServerEncrypted) && isServerEncrypted.GetValueOrDefault(),
+                        SmbProperties = new FileSmbProperties()
+                        {
+                            FileAttributes = ShareModelExtensions.ToFileAttributes(response.Headers.TryGetValue(FileAttributesHeader, out string fileAttributes) ? fileAttributes : null),
+                            FilePermissionKey = response.Headers.TryGetValue(FilePermissionKeyHeader, out string filePermissionKey) ? filePermissionKey : null,
+                            FileCreatedOn = response.Headers.TryGetValue(FileCreationTimeHeader, out DateTimeOffset? fileCreationTime) ? fileCreationTime : null,
+                            FileLastWrittenOn = response.Headers.TryGetValue(FileLastWriteTimeHeader, out DateTimeOffset? fileLastWriteTime) ? fileLastWriteTime : null,
+                            FileChangedOn = response.Headers.TryGetValue(FileChangeTimeHeader, out DateTimeOffset? fileChangeTime) ? fileChangeTime : null,
+                            FileId = response.Headers.TryGetValue(FileIdHeader, out string fileId) ? fileId : null,
+                            ParentId = response.Headers.TryGetValue(FileParentIdHeader, out string fileParentId) ? fileParentId : null
+                        },
+                        PosixProperties = new FilePosixProperties()
+                        {
+                            FileMode = NfsFileMode.ParseOctalFileMode(response.Headers.TryGetValue(FileModeHeader, out string fileMode) ? fileMode : null),
+                            Owner = response.Headers.TryGetValue(OwnerHeader, out string owner) ? owner : null,
+                            Group = response.Headers.TryGetValue(GroupHeader, out string group) ? group : null,
+                            FileType = response.Headers.TryGetValue(NfsFileTypeHeader, out string nfsFileType) ? (NfsFileType?)nfsFileType : null,
+                        },
+                        ContentHash = response.Headers.TryGetValue("Content-MD5", out byte[] contentMD5) ? contentMD5 : null,
+                    };
+                case ShareFileInfoHeaderType.SetHttpHeaders:
+                    return new ShareFileInfo
+                    {
+                        ETag = response.Headers.TryGetValue(Constants.HeaderNames.ETag, out string shValue) ? new ETag(shValue) : default,
+                        LastModified = response.Headers.TryGetValue(Constants.HeaderNames.LastModified, out DateTimeOffset? shLastModified) ? shLastModified.GetValueOrDefault() : default,
+                        IsServerEncrypted = response.Headers.TryGetValue(ServerEncryptedHeader, out bool? shServerEncrypted) && shServerEncrypted.GetValueOrDefault(),
+                        SmbProperties = new FileSmbProperties
+                        {
+                            FileAttributes = ShareModelExtensions.ToFileAttributes(response.Headers.TryGetValue(FileAttributesHeader, out string shFileAttributes) ? shFileAttributes : null),
+                            FilePermissionKey = response.Headers.TryGetValue(FilePermissionKeyHeader, out string shFilePermissionKey) ? shFilePermissionKey : null,
+                            FileCreatedOn = response.Headers.TryGetValue(FileCreationTimeHeader, out DateTimeOffset? shFileCreationTime) ? shFileCreationTime : null,
+                            FileLastWrittenOn = response.Headers.TryGetValue(FileLastWriteTimeHeader, out DateTimeOffset? shFileLastWriteTime) ? shFileLastWriteTime : null,
+                            FileChangedOn = response.Headers.TryGetValue(FileChangeTimeHeader, out DateTimeOffset? shFileChangeTime) ? shFileChangeTime : null,
+                            FileId = response.Headers.TryGetValue(FileIdHeader, out string shFileId) ? shFileId : null,
+                            ParentId = response.Headers.TryGetValue(FileParentIdHeader, out string shFileParentId) ? shFileParentId : null
+                        },
+                        PosixProperties = new FilePosixProperties()
+                        {
+                            FileMode = NfsFileMode.ParseOctalFileMode(response.Headers.TryGetValue(FileModeHeader, out string shFileMode) ? shFileMode : null),
+                            Owner = response.Headers.TryGetValue(OwnerHeader, out string shOwner) ? shOwner : null,
+                            Group = response.Headers.TryGetValue(GroupHeader, out string shGroup) ? shGroup : null,
+                            LinkCount = response.Headers.TryGetValue(LinkCountHeader, out long? shLinkCount) ? shLinkCount : null
+                        }
+                    };
+                case ShareFileInfoHeaderType.SetMetadata:
+                    return new ShareFileInfo
+                    {
+                        ETag = response.Headers.TryGetValue(Constants.HeaderNames.ETag, out string smValue) ? new ETag(smValue) : default,
+                        LastModified = response.Headers.TryGetValue(Constants.HeaderNames.LastModified, out DateTimeOffset? smLastModified) ? smLastModified.GetValueOrDefault() : default,
+                        IsServerEncrypted = response.Headers.TryGetValue(ServerEncryptedHeader, out bool? smServerEncrypted) && smServerEncrypted.GetValueOrDefault(),
+                        SmbProperties = new FileSmbProperties { }
+                    };
+                case ShareFileInfoHeaderType.CreateSymbolicLink:
+                    return new ShareFileInfo
+                    {
+                        ETag = response.Headers.TryGetValue(Constants.HeaderNames.ETag, out string slValue) ? new ETag(slValue) : default,
+                        LastModified = response.Headers.TryGetValue(Constants.HeaderNames.LastModified, out DateTimeOffset? slLastModified) ? slLastModified.GetValueOrDefault() : default,
+                        SmbProperties = new FileSmbProperties
+                        {
+                            FileCreatedOn = response.Headers.TryGetValue(FileCreationTimeHeader, out DateTimeOffset? slFileCreationTime) ? slFileCreationTime : null,
+                            FileLastWrittenOn = response.Headers.TryGetValue(FileLastWriteTimeHeader, out DateTimeOffset? slFileLastWriteTime) ? slFileLastWriteTime : null,
+                            FileChangedOn = response.Headers.TryGetValue(FileChangeTimeHeader, out DateTimeOffset? slFileChangeTime) ? slFileChangeTime : null,
+                            FileId = response.Headers.TryGetValue(FileIdHeader, out string slFileId) ? slFileId : null,
+                            ParentId = response.Headers.TryGetValue(FileParentIdHeader, out string slFileParentId) ? slFileParentId : null
+                        },
+                        PosixProperties = new FilePosixProperties()
+                        {
+                            FileType = response.Headers.TryGetValue(NfsFileTypeHeader, out string slNfsFileType) ? (NfsFileType?)slNfsFileType : null,
+                            FileMode = NfsFileMode.ParseOctalFileMode(response.Headers.TryGetValue(FileModeHeader, out string slFileMode) ? slFileMode : null),
+                            Owner = response.Headers.TryGetValue(OwnerHeader, out string slOwner) ? slOwner : null,
+                            Group = response.Headers.TryGetValue(GroupHeader, out string slGroup) ? slGroup : null
+                        }
+                    };
+                case ShareFileInfoHeaderType.CreateHardLink:
+                    return new ShareFileInfo
+                    {
+                        ETag = response.Headers.TryGetValue(Constants.HeaderNames.ETag, out string hlValue) ? new ETag(hlValue) : default,
+                        LastModified = response.Headers.TryGetValue(Constants.HeaderNames.LastModified, out DateTimeOffset? hlLastModified) ? hlLastModified.GetValueOrDefault() : default,
+                        SmbProperties = new FileSmbProperties
+                        {
+                            FileCreatedOn = response.Headers.TryGetValue(FileCreationTimeHeader, out DateTimeOffset? hlFileCreationTime) ? hlFileCreationTime : null,
+                            FileLastWrittenOn = response.Headers.TryGetValue(FileLastWriteTimeHeader, out DateTimeOffset? hlFileLastWriteTime) ? hlFileLastWriteTime : null,
+                            FileChangedOn = response.Headers.TryGetValue(FileChangeTimeHeader, out DateTimeOffset? hlFileChangeTime) ? hlFileChangeTime : null,
+                            FileId = response.Headers.TryGetValue(FileIdHeader, out string hlFileId) ? hlFileId : null,
+                            ParentId = response.Headers.TryGetValue(FileParentIdHeader, out string hlFileParentId) ? hlFileParentId : null
+                        },
+                        PosixProperties = new FilePosixProperties()
+                        {
+                            FileMode = NfsFileMode.ParseOctalFileMode(response.Headers.TryGetValue(FileModeHeader, out string hlFileMode) ? hlFileMode : null),
+                            Owner = response.Headers.TryGetValue(OwnerHeader, out string hlOwner) ? hlOwner : null,
+                            Group = response.Headers.TryGetValue(GroupHeader, out string hlGroup) ? hlGroup : null,
+                            LinkCount = response.Headers.TryGetValue(LinkCountHeader, out long? hlLinkCount) ? hlLinkCount : null,
+                            FileType = response.Headers.TryGetValue(NfsFileTypeHeader, out string hlNfsFileType) ? (NfsFileType?)hlNfsFileType : null
+                        }
+                    };
+                default:
+                    throw new ArgumentException($"Unknown {nameof(ShareFileInfoHeaderType)}: {headerType}", nameof(headerType));
+            }
         }
 
-        internal static ShareFileCopyInfo ToShareFileCopyInfo(this ResponseWithHeaders<FileStartCopyHeaders> response)
+        internal static ShareFileCopyInfo ToShareFileCopyInfo(this Response response)
         {
             if (response == null)
             {
@@ -337,119 +450,87 @@ namespace Azure.Storage.Files.Shares
             }
             return new ShareFileCopyInfo
             {
-                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
-                LastModified = response.Headers.LastModified.GetValueOrDefault(),
-                CopyId = response.Headers.CopyId,
-                CopyStatus = response.Headers.CopyStatus.GetValueOrDefault()
+                ETag = response.Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
+                LastModified = response.Headers.TryGetValue(Constants.HeaderNames.LastModified, out DateTimeOffset? lastModified) ? lastModified.GetValueOrDefault() : default,
+                CopyId = response.Headers.TryGetValue("x-ms-copy-id", out string copyId) ? copyId : null,
+                CopyStatus = response.Headers.TryGetValue("x-ms-copy-status", out string copyStatus) ? copyStatus.ToCopyStatus() : default
             };
         }
 
-        internal static ShareFileProperties ToShareFileProperties(this ResponseWithHeaders<FileGetPropertiesHeaders> response)
+        internal static ShareFileProperties ToShareFileProperties(this Response response)
         {
             if (response == null)
             {
                 return null;
             }
+
+            const string FileAttributesHeader = "x-ms-file-attributes";
+            const string FilePermissionKeyHeader = "x-ms-file-permission-key";
+            const string FileCreationTimeHeader = "x-ms-file-creation-time";
+            const string FileLastWriteTimeHeader = "x-ms-file-last-write-time";
+            const string FileChangeTimeHeader = "x-ms-file-change-time";
+            const string FileIdHeader = "x-ms-file-id";
+            const string FileParentIdHeader = "x-ms-file-parent-id";
+            const string FileModeHeader = "x-ms-mode";
+            const string OwnerHeader = "x-ms-owner";
+            const string GroupHeader = "x-ms-group";
+            const string NfsFileTypeHeader = "x-ms-file-file-type";
+            const string LinkCountHeader = "x-ms-link-count";
+
             ShareFileProperties shareFileProperties = new ShareFileProperties
             {
-                LastModified = response.Headers.LastModified.GetValueOrDefault(),
-                Metadata = response.Headers.Metadata,
-                ContentLength = response.Headers.ContentLength.GetValueOrDefault(),
-                ContentType = response.Headers.ContentType,
-                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
-                ContentHash = response.Headers.ContentMD5,
-                CacheControl = response.Headers.CacheControl,
-                ContentDisposition = response.Headers.ContentDisposition,
-                CopyCompletedOn = response.Headers.CopyCompletionTime.GetValueOrDefault(),
-                CopyStatusDescription = response.Headers.CopyStatusDescription,
-                CopyId = response.Headers.CopyId,
-                CopyProgress = response.Headers.CopyProgress,
-                CopySource = response.Headers.CopySource,
-                CopyStatus = response.Headers.CopyStatus.GetValueOrDefault(),
-                IsServerEncrypted = response.Headers.IsServerEncrypted.GetValueOrDefault(),
+                LastModified = response.Headers.TryGetValue(Constants.HeaderNames.LastModified, out DateTimeOffset? lastModified) ? lastModified.GetValueOrDefault() : default,
+                Metadata = response.Headers.TryGetValue(Constants.HeaderNames.MetadataPrefix, out IDictionary<string, string> metadata) ? metadata : null,
+                ContentLength = response.Headers.TryGetValue(Constants.HeaderNames.ContentLength, out long? contentLength) ? contentLength.GetValueOrDefault() : default,
+                ContentType = response.Headers.TryGetValue(Constants.HeaderNames.ContentType, out string contentType) ? contentType : null,
+                ETag = response.Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
+                ContentHash = response.Headers.TryGetValue("Content-MD5", out byte[] contentMD5) ? contentMD5 : null,
+                CacheControl = response.Headers.TryGetValue("Cache-Control", out string cacheControl) ? cacheControl : null,
+                ContentDisposition = response.Headers.TryGetValue("Content-Disposition", out string contentDisposition) ? contentDisposition : null,
+                CopyCompletedOn = response.Headers.TryGetValue("x-ms-copy-completion-time", out DateTimeOffset? copyCompletionTime) ? copyCompletionTime.GetValueOrDefault() : default,
+                CopyStatusDescription = response.Headers.TryGetValue("x-ms-copy-status-description", out string copyStatusDescription) ? copyStatusDescription : null,
+                CopyId = response.Headers.TryGetValue("x-ms-copy-id", out string copyId) ? copyId : null,
+                CopyProgress = response.Headers.TryGetValue("x-ms-copy-progress", out string copyProgress) ? copyProgress : null,
+                CopySource = response.Headers.TryGetValue("x-ms-copy-source", out string copySource) ? copySource : null,
+                CopyStatus = response.Headers.TryGetValue("x-ms-copy-status", out string copyStatus) ? copyStatus.ToCopyStatus() : default,
+                IsServerEncrypted = response.Headers.TryGetValue("x-ms-server-encrypted", out bool? isServerEncrypted) && isServerEncrypted.GetValueOrDefault(),
                 SmbProperties = new FileSmbProperties
                 {
-                    FileAttributes = ShareModelExtensions.ToFileAttributes(response.Headers.FileAttributes),
-                    FilePermissionKey = response.Headers.FilePermissionKey,
-                    FileCreatedOn = response.Headers.FileCreationTime,
-                    FileLastWrittenOn = response.Headers.FileLastWriteTime,
-                    FileChangedOn = response.Headers.FileChangeTime,
-                    FileId = response.Headers.FileId,
-                    ParentId = response.Headers.FileParentId
+                    FileAttributes = ShareModelExtensions.ToFileAttributes(response.Headers.TryGetValue(FileAttributesHeader, out string fileAttributes) ? fileAttributes : null),
+                    FilePermissionKey = response.Headers.TryGetValue(FilePermissionKeyHeader, out string filePermissionKey) ? filePermissionKey : null,
+                    FileCreatedOn = response.Headers.TryGetValue(FileCreationTimeHeader, out DateTimeOffset? fileCreationTime) ? fileCreationTime : null,
+                    FileLastWrittenOn = response.Headers.TryGetValue(FileLastWriteTimeHeader, out DateTimeOffset? fileLastWriteTime) ? fileLastWriteTime : null,
+                    FileChangedOn = response.Headers.TryGetValue(FileChangeTimeHeader, out DateTimeOffset? fileChangeTime) ? fileChangeTime : null,
+                    FileId = response.Headers.TryGetValue(FileIdHeader, out string fileId) ? fileId : null,
+                    ParentId = response.Headers.TryGetValue(FileParentIdHeader, out string fileParentId) ? fileParentId : null
                 },
-                LeaseDuration = response.Headers.LeaseDuration.GetValueOrDefault(),
-                LeaseState = response.Headers.LeaseState.GetValueOrDefault(),
-                LeaseStatus = response.Headers.LeaseStatus.GetValueOrDefault(),
+                LeaseDuration = response.Headers.TryGetValue("x-ms-lease-duration", out string leaseDuration) ? leaseDuration.ToShareLeaseDuration() : default,
+                LeaseState = response.Headers.TryGetValue("x-ms-lease-state", out string leaseState) ? leaseState.ToShareLeaseState() : default,
+                LeaseStatus = response.Headers.TryGetValue("x-ms-lease-status", out string leaseStatus) ? leaseStatus.ToShareLeaseStatus() : default,
                 PosixProperties = new FilePosixProperties()
                 {
-                    FileMode = NfsFileMode.ParseOctalFileMode(response.Headers.FileMode),
-                    Owner = response.Headers.Owner,
-                    Group = response.Headers.Group,
-                    FileType = response.Headers.NfsFileType,
-                    LinkCount = response.Headers.LinkCount
+                    FileMode = NfsFileMode.ParseOctalFileMode(response.Headers.TryGetValue(FileModeHeader, out string fileMode) ? fileMode : null),
+                    Owner = response.Headers.TryGetValue(OwnerHeader, out string owner) ? owner : null,
+                    Group = response.Headers.TryGetValue(GroupHeader, out string group) ? group : null,
+                    FileType = response.Headers.TryGetValue(NfsFileTypeHeader, out string nfsFileType) ? (NfsFileType?)nfsFileType : null,
+                    LinkCount = response.Headers.TryGetValue(LinkCountHeader, out long? linkCount) ? linkCount : null
                 }
             };
 
-            if (response.Headers.ContentEncoding != null)
+            if (response.Headers.TryGetValue(Constants.HeaderNames.ContentEncoding, out string contentEncoding) && contentEncoding != null)
             {
-                shareFileProperties.ContentEncoding = response.Headers.ContentEncoding.Split(Constants.CommaChar);
+                shareFileProperties.ContentEncoding = contentEncoding.Split(Constants.CommaChar);
             }
 
-            if (response.Headers.ContentLanguage != null)
+            if (response.Headers.TryGetValue(Constants.HeaderNames.ContentLanguage, out string contentLanguage) && contentLanguage != null)
             {
-                shareFileProperties.ContentLanguage = response.Headers.ContentLanguage.Split(Constants.CommaChar);
+                shareFileProperties.ContentLanguage = contentLanguage.Split(Constants.CommaChar);
             }
 
             return shareFileProperties;
         }
 
-        internal static ShareFileInfo ToShareFileInfo(this ResponseWithHeaders<FileSetHttpHeadersHeaders> response)
-        {
-            if (response == null)
-            {
-                return null;
-            }
-            return new ShareFileInfo
-            {
-                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
-                LastModified = response.Headers.LastModified.GetValueOrDefault(),
-                IsServerEncrypted = response.Headers.IsServerEncrypted.GetValueOrDefault(),
-                SmbProperties = new FileSmbProperties
-                {
-                    FileAttributes = ShareModelExtensions.ToFileAttributes(response.Headers.FileAttributes),
-                    FilePermissionKey = response.Headers.FilePermissionKey,
-                    FileCreatedOn = response.Headers.FileCreationTime,
-                    FileLastWrittenOn = response.Headers.FileLastWriteTime,
-                    FileChangedOn = response.Headers.FileChangeTime,
-                    FileId = response.Headers.FileId,
-                    ParentId = response.Headers.FileParentId
-                },
-                PosixProperties = new FilePosixProperties()
-                {
-                    FileMode = NfsFileMode.ParseOctalFileMode(response.Headers.FileMode),
-                    Owner = response.Headers.Owner,
-                    Group = response.Headers.Group,
-                    LinkCount = response.Headers.LinkCount
-                }
-            };
-        }
-
-        internal static ShareFileInfo ToShareFileInfo(this ResponseWithHeaders<FileSetMetadataHeaders> response)
-        {
-            if (response == null)
-            {
-                return null;
-            }
-            return new ShareFileInfo
-            {
-                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
-                LastModified = response.Headers.LastModified.GetValueOrDefault(),
-                IsServerEncrypted = response.Headers.IsServerEncrypted.GetValueOrDefault(),
-                SmbProperties = new FileSmbProperties { }
-            };
-        }
-
-        internal static ShareFileUploadInfo ToShareFileUploadInfo(this ResponseWithHeaders<FileUploadRangeHeaders> response)
+        internal static ShareFileUploadInfo ToShareFileUploadInfo(this Response response)
         {
             if (response == null)
             {
@@ -457,29 +538,14 @@ namespace Azure.Storage.Files.Shares
             }
             return new ShareFileUploadInfo()
             {
-                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
-                LastModified = response.Headers.LastModified.GetValueOrDefault(),
-                ContentHash = response.Headers.ContentMD5,
-                IsServerEncrypted = response.Headers.IsServerEncrypted.GetValueOrDefault()
+                ETag = response.Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
+                LastModified = response.Headers.TryGetValue(Constants.HeaderNames.LastModified, out DateTimeOffset? lastModified) ? lastModified.GetValueOrDefault() : default,
+                ContentHash = response.Headers.TryGetValue("Content-MD5", out byte[] contentMD5) ? contentMD5 : null,
+                IsServerEncrypted = response.Headers.TryGetValue("x-ms-request-server-encrypted", out bool? isServerEncrypted) && isServerEncrypted.GetValueOrDefault()
             };
         }
 
-        internal static ShareFileUploadInfo ToShareFileUploadInfo(this ResponseWithHeaders<FileUploadRangeFromURLHeaders> response)
-        {
-            if (response == null)
-            {
-                return null;
-            }
-            return new ShareFileUploadInfo
-            {
-                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
-                LastModified = response.Headers.LastModified.GetValueOrDefault(),
-                ContentHash = response.Headers.ContentMD5,
-                IsServerEncrypted = response.Headers.IsServerEncrypted.GetValueOrDefault(),
-            };
-        }
-
-        internal static ShareFileRangeInfo ToShareFileRangeInfo(this ResponseWithHeaders<ShareFileRangeList, FileGetRangeListHeaders> response)
+        internal static ShareFileRangeInfo ToShareFileRangeInfo(this Response<ShareFileRangeList> response)
         {
             if (response == null)
             {
@@ -487,9 +553,9 @@ namespace Azure.Storage.Files.Shares
             }
             return new ShareFileRangeInfo
             {
-                LastModified = response.Headers.LastModified.GetValueOrDefault(),
+                LastModified = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.LastModified, out DateTimeOffset? lastModified) ? lastModified.GetValueOrDefault() : default,
                 ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
-                FileContentLength = response.Headers.FileContentLength.GetValueOrDefault(),
+                FileContentLength = response.GetRawResponse().Headers.TryGetValue("x-ms-content-length", out long? fileContentLength) ? fileContentLength.GetValueOrDefault() : default,
                 Ranges = response.Value.Ranges.Select(r => r.ToHttpRange()).ToList(),
                 ClearRanges = response.Value.ClearRanges.Select(r => r.ToHttpRange()).ToList(),
             };
@@ -501,59 +567,78 @@ namespace Azure.Storage.Files.Shares
         internal static HttpRange ToHttpRange(this ClearRange clearRange)
             => new HttpRange(clearRange.Start, clearRange.End - clearRange.Start + 1);
 
-        internal static StorageClosedHandlesSegment ToStorageClosedHandlesSegment(this ResponseWithHeaders<FileForceCloseHandlesHeaders> response)
+        // ToStorageClosedHandlesSegment for File is consolidated into the single method above.
+
+        internal enum ShareLeaseHeaderType
+        {
+            FileAcquire,
+            ShareAcquire,
+            FileChange,
+            ShareRenew,
+            ShareChange,
+            FileBreak,
+            ShareBreak,
+            FileRelease
+        }
+
+        internal static ShareFileLease ToShareFileLease(this Response response, ShareLeaseHeaderType headerType)
         {
             if (response == null)
             {
                 return null;
             }
-            return new StorageClosedHandlesSegment
+
+            switch (headerType)
             {
-                Marker = response.Headers.Marker,
-                NumberOfHandlesClosed = response.Headers.NumberOfHandlesClosed.GetValueOrDefault(),
-                NumberOfHandlesFailedToClose = response.Headers.NumberOfHandlesFailedToClose.GetValueOrDefault()
-            };
+                case ShareLeaseHeaderType.FileAcquire:
+                case ShareLeaseHeaderType.FileChange:
+                case ShareLeaseHeaderType.ShareRenew:
+                case ShareLeaseHeaderType.ShareChange:
+                    return new ShareFileLease
+                    {
+                        ETag = response.Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
+                        LastModified = response.Headers.TryGetValue(Constants.HeaderNames.LastModified, out DateTimeOffset? lastModified) ? lastModified.GetValueOrDefault() : default,
+                        LeaseId = response.Headers.TryGetValue("x-ms-lease-id", out string leaseId) ? leaseId : null,
+                        LeaseTime = response.Headers.ExtractLeaseTime()
+                    };
+                case ShareLeaseHeaderType.ShareAcquire:
+                    return new ShareFileLease
+                    {
+                        ETag = response.Headers.TryGetValue(Constants.HeaderNames.ETag, out string saValue) ? new ETag(saValue) : default,
+                        LastModified = response.Headers.TryGetValue(Constants.HeaderNames.LastModified, out DateTimeOffset? saLastModified) ? saLastModified.GetValueOrDefault() : default,
+                        LeaseId = response.Headers.TryGetValue("x-ms-lease-id", out string saLeaseId) ? saLeaseId : null,
+                        // File Aquire Lease does not return LeastTime.
+                    };
+                case ShareLeaseHeaderType.FileBreak:
+                    return new ShareFileLease
+                    {
+                        ETag = response.Headers.TryGetValue(Constants.HeaderNames.ETag, out string fbValue) ? new ETag(fbValue) : default,
+                        LastModified = response.Headers.TryGetValue(Constants.HeaderNames.LastModified, out DateTimeOffset? fbLastModified) ? fbLastModified.GetValueOrDefault() : default,
+                        // Break lease does not return lease Id.
+                        LeaseId = null,
+                        LeaseTime = response.Headers.ExtractLeaseTime()
+                    };
+                case ShareLeaseHeaderType.ShareBreak:
+                    return new ShareFileLease
+                    {
+                        ETag = response.Headers.TryGetValue(Constants.HeaderNames.ETag, out string sbValue) ? new ETag(sbValue) : default,
+                        LastModified = response.Headers.TryGetValue(Constants.HeaderNames.LastModified, out DateTimeOffset? sbLastModified) ? sbLastModified.GetValueOrDefault() : default,
+                        LeaseId = response.Headers.TryGetValue("x-ms-lease-id", out string sbLeaseId) ? sbLeaseId : null,
+                        LeaseTime = response.Headers.TryGetValue("x-ms-lease-time", out int? sbLeaseTime) ? sbLeaseTime : null
+                    };
+                case ShareLeaseHeaderType.FileRelease:
+                    // File Release Lease does not return LeaseId or LeaseTime.
+                    return new ShareFileLease
+                    {
+                        ETag = response.Headers.TryGetValue(Constants.HeaderNames.ETag, out string frValue) ? new ETag(frValue) : default,
+                        LastModified = response.Headers.TryGetValue(Constants.HeaderNames.LastModified, out DateTimeOffset? frLastModified) ? frLastModified.GetValueOrDefault() : default,
+                    };
+                default:
+                    throw new ArgumentException($"Unknown {nameof(ShareLeaseHeaderType)}: {headerType}", nameof(headerType));
+            }
         }
 
-        internal static ShareFileLease ToShareFileLease(this ResponseWithHeaders<FileAcquireLeaseHeaders> response)
-        {
-            if (response == null)
-            {
-                return null;
-            }
-
-            int? leaseTime = null;
-
-            if (response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.LeaseTime, out string leaseTimeString))
-            {
-                leaseTime = int.Parse(leaseTimeString, CultureInfo.InvariantCulture);
-            }
-
-            return new ShareFileLease()
-            {
-                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
-                LastModified = response.Headers.LastModified.GetValueOrDefault(),
-                LeaseId = response.Headers.LeaseId,
-                LeaseTime = leaseTime
-            };
-        }
-
-        internal static ShareFileLease ToShareFileLease(this ResponseWithHeaders<ShareAcquireLeaseHeaders> response)
-        {
-            if (response == null)
-            {
-                return null;
-            }
-            return new ShareFileLease
-            {
-                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
-                LastModified = response.Headers.LastModified.GetValueOrDefault(),
-                LeaseId = response.Headers.LeaseId,
-                // File Aquire Lease does not return LeastTime.
-            };
-        }
-
-        internal static FileLeaseReleaseInfo ToFileLeaseReleaseInfo(this ResponseWithHeaders<FileReleaseLeaseHeaders> response)
+        internal static FileLeaseReleaseInfo ToFileLeaseReleaseInfo(this Response response)
         {
             if (response == null)
             {
@@ -561,160 +646,43 @@ namespace Azure.Storage.Files.Shares
             }
             return new FileLeaseReleaseInfo
             {
-                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
-                LastModified = response.Headers.LastModified.GetValueOrDefault()
+                ETag = response.Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
+                LastModified = response.Headers.TryGetValue(Constants.HeaderNames.LastModified, out DateTimeOffset? lastModified) ? lastModified.GetValueOrDefault() : default
             };
         }
 
-        internal static FileLeaseReleaseInfo ToFileLeaseReleaseInfo(this ResponseWithHeaders<ShareReleaseLeaseHeaders> response)
+        internal enum ShareInfoHeaderType
         {
-            if (response == null)
-            {
-                return null;
-            }
-            return new FileLeaseReleaseInfo
-            {
-                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
-                LastModified = response.Headers.LastModified.GetValueOrDefault(),
-            };
+            Create,
+            SetProperties,
+            SetMetadata,
+            SetAccessPolicy
         }
 
-        internal static ShareFileLease ToShareFileLease(this ResponseWithHeaders<FileChangeLeaseHeaders> response)
-        {
-            if (response == null)
-            {
-                return null;
-            }
-
-            int? leaseTime = null;
-
-            if (response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.LeaseTime, out string leaseTimeString))
-            {
-                leaseTime = int.Parse(leaseTimeString, CultureInfo.InvariantCulture);
-            }
-
-            return new ShareFileLease
-            {
-                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
-                LastModified = response.Headers.LastModified.GetValueOrDefault(),
-                LeaseId = response.Headers.LeaseId,
-                LeaseTime = leaseTime,
-            };
-        }
-
-        internal static ShareFileLease ToShareFileLease(this ResponseWithHeaders<ShareRenewLeaseHeaders> response)
+        internal static ShareInfo ToShareInfo(this Response response, ShareInfoHeaderType headerType)
         {
             if (response == null)
             {
                 return null;
             }
 
-            int? leaseTime = null;
-
-            if (response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.LeaseTime, out string leaseTimeString))
+            switch (headerType)
             {
-                leaseTime = int.Parse(leaseTimeString, CultureInfo.InvariantCulture);
+                case ShareInfoHeaderType.Create:
+                case ShareInfoHeaderType.SetProperties:
+                case ShareInfoHeaderType.SetMetadata:
+                case ShareInfoHeaderType.SetAccessPolicy:
+                    return new ShareInfo
+                    {
+                        ETag = response.Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
+                        LastModified = response.Headers.TryGetValue(Constants.HeaderNames.LastModified, out DateTimeOffset? lastModified) ? lastModified.GetValueOrDefault() : default
+                    };
+                default:
+                    throw new ArgumentException($"Unknown {nameof(ShareInfoHeaderType)}: {headerType}", nameof(headerType));
             }
-
-            return new ShareFileLease
-            {
-                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
-                LastModified = response.Headers.LastModified.GetValueOrDefault(),
-                LeaseId = response.Headers.LeaseId,
-                LeaseTime = leaseTime
-            };
         }
 
-        internal static ShareFileLease ToShareFileLease(this ResponseWithHeaders<ShareChangeLeaseHeaders> response)
-        {
-            if (response == null)
-            {
-                return null;
-            }
-
-            int? leaseTime = null;
-
-            if (response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.LeaseTime, out string leaseTimeString))
-            {
-                leaseTime = int.Parse(leaseTimeString, CultureInfo.InvariantCulture);
-            }
-
-            return new ShareFileLease
-            {
-                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
-                LastModified = response.Headers.LastModified.GetValueOrDefault(),
-                LeaseId = response.Headers.LeaseId,
-                LeaseTime = leaseTime,
-            };
-        }
-
-        internal static ShareFileLease ToShareFileLease(this ResponseWithHeaders<FileBreakLeaseHeaders> response)
-        {
-            if (response == null)
-            {
-                return null;
-            }
-
-            int? leaseTime = null;
-
-            if (response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.LeaseTime, out string leaseTimeString))
-            {
-                leaseTime = int.Parse(leaseTimeString, CultureInfo.InvariantCulture);
-            }
-
-            return new ShareFileLease
-            {
-                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
-                LastModified = response.Headers.LastModified.GetValueOrDefault(),
-                // Break lease does not return lease Id.
-                LeaseId = null,
-                LeaseTime = leaseTime
-            };
-        }
-
-        internal static ShareFileLease ToShareFileLease(this ResponseWithHeaders<ShareBreakLeaseHeaders> response)
-        {
-            if (response == null)
-            {
-                return null;
-            }
-            return new ShareFileLease
-            {
-                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
-                LastModified = response.Headers.LastModified.GetValueOrDefault(),
-                LeaseId = response.Headers.LeaseId,
-                LeaseTime = response.Headers.LeaseTime
-            };
-        }
-
-        internal static ShareFileLease ToShareFileLease(this ResponseWithHeaders<FileReleaseLeaseHeaders> response)
-        {
-            if (response == null)
-            {
-                return null;
-            }
-            return new ShareFileLease
-            {
-                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
-                LastModified = response.Headers.LastModified.GetValueOrDefault(),
-                // File Release Lease does not return LeaseId or LeaseTime
-            };
-        }
-
-        internal static ShareInfo ToShareInfo(this ResponseWithHeaders<ShareCreateHeaders> response)
-        {
-            if (response == null)
-            {
-                return null;
-            }
-            return new ShareInfo
-            {
-                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
-                LastModified = response.Headers.LastModified.GetValueOrDefault()
-            };
-        }
-
-        internal static ShareSnapshotInfo ToShareSnapshotInfo(this ResponseWithHeaders<ShareCreateSnapshotHeaders> response)
+        internal static ShareSnapshotInfo ToShareSnapshotInfo(this Response response)
         {
             if (response == null)
             {
@@ -723,13 +691,13 @@ namespace Azure.Storage.Files.Shares
 
             return new ShareSnapshotInfo
             {
-                Snapshot = response.Headers.Snapshot,
-                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
-                LastModified = response.Headers.LastModified.GetValueOrDefault()
+                Snapshot = response.Headers.TryGetValue("x-ms-snapshot", out string snapshot) ? snapshot : null,
+                ETag = response.Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
+                LastModified = response.Headers.TryGetValue(Constants.HeaderNames.LastModified, out DateTimeOffset? lastModified) ? lastModified.GetValueOrDefault() : default
             };
         }
 
-        internal static ShareProperties ToShareProperties(this ResponseWithHeaders<ShareGetPropertiesHeaders> response)
+        internal static ShareProperties ToShareProperties(this Response response)
         {
             if (response == null)
             {
@@ -738,78 +706,38 @@ namespace Azure.Storage.Files.Shares
 
             return new ShareProperties
             {
-                LastModified = response.Headers.LastModified,
-                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
-                ProvisionedIops = response.Headers.ProvisionedIops,
-                ProvisionedIngressMBps = response.Headers.ProvisionedIngressMBps,
-                ProvisionedEgressMBps = response.Headers.ProvisionedEgressMBps,
-                ProvisionedBandwidthMiBps = response.Headers.ProvisionedBandwidthMibps,
-                NextAllowedQuotaDowngradeTime = response.Headers.NextAllowedQuotaDowngradeTime,
+                LastModified = response.Headers.TryGetValue(Constants.HeaderNames.LastModified, out DateTimeOffset? lastModified) ? lastModified : null,
+                ETag = response.Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
+                ProvisionedIops = response.Headers.TryGetValue("x-ms-share-provisioned-iops", out int? provisionedIops) ? provisionedIops : null,
+                ProvisionedIngressMBps = response.Headers.TryGetValue("x-ms-share-provisioned-ingress-mbps", out int? provisionedIngressMBps) ? provisionedIngressMBps : null,
+                ProvisionedEgressMBps = response.Headers.TryGetValue("x-ms-share-provisioned-egress-mbps", out int? provisionedEgressMBps) ? provisionedEgressMBps : null,
+                ProvisionedBandwidthMiBps = response.Headers.TryGetValue("x-ms-share-provisioned-bandwidth-mibps", out int? provisionedBandwidthMiBps) ? provisionedBandwidthMiBps : null,
+                NextAllowedQuotaDowngradeTime = response.Headers.TryGetValue("x-ms-share-next-allowed-quota-downgrade-time", out DateTimeOffset? quotaDowngradeTime) ? quotaDowngradeTime : null,
                 DeletedOn = null,
                 RemainingRetentionDays = null,
-                AccessTier = response.Headers.AccessTier,
-                AccessTierChangeTime = response.Headers.AccessTierChangeTime,
-                AccessTierTransitionState = response.Headers.AccessTierTransitionState,
-                LeaseStatus = response.Headers.LeaseStatus,
-                LeaseState = response.Headers.LeaseState,
-                LeaseDuration = response.Headers.LeaseDuration,
-                Protocols = ToShareEnabledProtocols(response.Headers.EnabledProtocols),
-                RootSquash = response.Headers.RootSquash,
-                Metadata = response.Headers.Metadata,
-                EnableSnapshotVirtualDirectoryAccess = response.Headers.EnableSnapshotVirtualDirectoryAccess,
-                QuotaInGB = response.Headers.Quota,
-                EnablePaidBursting = response.Headers.PaidBurstingEnabled,
-                PaidBurstingMaxIops = response.Headers.PaidBurstingMaxIops,
-                PaidBurstingMaxBandwidthMibps = response.Headers.PaidBurstingMaxBandwidthMibps,
-                IncludedBurstIops = response.Headers.IncludedBurstIops,
-                MaxBurstCreditsForIops = response.Headers.MaxBurstCreditsForIops,
-                NextAllowedProvisionedIopsDowngradeTime = response.Headers.NextAllowedProvisionedIopsDowngradeTime,
-                NextAllowedProvisionedBandwidthDowngradeTime = response.Headers.NextAllowedProvisionedBandwidthDowngradeTime,
+                AccessTier = response.Headers.TryGetValue("x-ms-access-tier", out string accessTier) ? accessTier : null,
+                AccessTierChangeTime = response.Headers.TryGetValue("x-ms-access-tier-change-time", out DateTimeOffset? accessTierChangeTime) ? accessTierChangeTime : null,
+                AccessTierTransitionState = response.Headers.TryGetValue("x-ms-access-tier-transition-state", out string accessTierTransitionState) ? accessTierTransitionState : null,
+                LeaseStatus = response.Headers.TryGetValue("x-ms-lease-status", out string leaseStatus) ? leaseStatus.ToShareLeaseStatus() : null,
+                LeaseState = response.Headers.TryGetValue("x-ms-lease-state", out string leaseState) ? leaseState.ToShareLeaseState() : null,
+                LeaseDuration = response.Headers.TryGetValue("x-ms-lease-duration", out string leaseDuration) ? leaseDuration.ToShareLeaseDuration() : null,
+                Protocols = ToShareEnabledProtocols(response.Headers.TryGetValue("x-ms-enabled-protocols", out string enabledProtocols) ? enabledProtocols : null),
+                RootSquash = response.Headers.TryGetValue("x-ms-root-squash", out string rootSquash) ? rootSquash.ToShareRootSquash() : null,
+                Metadata = response.Headers.TryGetValue(Constants.HeaderNames.MetadataPrefix, out IDictionary<string, string> metadata) ? metadata : null,
+                EnableSnapshotVirtualDirectoryAccess = response.Headers.TryGetValue("x-ms-enable-snapshot-virtual-directory-access", out bool? enableSnapshotVda) ? enableSnapshotVda : null,
+                QuotaInGB = response.Headers.TryGetValue("x-ms-share-quota", out int? quota) ? quota : null,
+                EnablePaidBursting = response.Headers.TryGetValue("x-ms-share-paid-bursting-enabled", out bool? paidBurstingEnabled) ? paidBurstingEnabled : null,
+                PaidBurstingMaxIops = response.Headers.TryGetValue("x-ms-share-paid-bursting-max-iops", out long? paidBurstingMaxIops) ? paidBurstingMaxIops : null,
+                PaidBurstingMaxBandwidthMibps = response.Headers.TryGetValue("x-ms-share-paid-bursting-max-bandwidth-mibps", out long? paidBurstingMaxBandwidthMibps) ? paidBurstingMaxBandwidthMibps : null,
+                IncludedBurstIops = response.Headers.TryGetValue("x-ms-share-included-burst-iops", out long? includedBurstIops) ? includedBurstIops : null,
+                MaxBurstCreditsForIops = response.Headers.TryGetValue("x-ms-share-max-burst-credits-for-iops", out long? maxBurstCreditsForIops) ? maxBurstCreditsForIops : null,
+                NextAllowedProvisionedIopsDowngradeTime = response.Headers.TryGetValue("x-ms-share-next-allowed-provisioned-iops-downgrade-time", out DateTimeOffset? nextIopsDowngrade) ? nextIopsDowngrade : null,
+                NextAllowedProvisionedBandwidthDowngradeTime = response.Headers.TryGetValue("x-ms-share-next-allowed-provisioned-bandwidth-downgrade-time", out DateTimeOffset? nextBwDowngrade) ? nextBwDowngrade : null,
                 //EnableDirectoryLease = response.Headers.EnableSmbDirectoryLease,
             };
         }
 
-        internal static ShareInfo ToShareInfo(this ResponseWithHeaders<ShareSetPropertiesHeaders> response)
-        {
-            if (response == null)
-            {
-                return null;
-            }
-
-            return new ShareInfo
-            {
-                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
-                LastModified = response.Headers.LastModified.GetValueOrDefault()
-            };
-        }
-
-        internal static ShareInfo ToShareInfo(this ResponseWithHeaders<ShareSetMetadataHeaders> response)
-        {
-            if (response == null)
-            {
-                return null;
-            }
-            return new ShareInfo
-            {
-                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
-                LastModified = response.Headers.LastModified.GetValueOrDefault()
-            };
-        }
-
-        internal static ShareInfo ToShareInfo(this ResponseWithHeaders<ShareSetAccessPolicyHeaders> response)
-        {
-            if (response == null)
-            {
-                return null;
-            }
-            return new ShareInfo
-            {
-                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
-                LastModified = response.Headers.LastModified.GetValueOrDefault()
-            };
-        }
-
-        internal static PermissionInfo ToPermissionInfo(this ResponseWithHeaders<ShareCreatePermissionHeaders> response)
+        internal static PermissionInfo ToPermissionInfo(this Response response)
         {
             if (response == null)
             {
@@ -818,7 +746,7 @@ namespace Azure.Storage.Files.Shares
 
             return new PermissionInfo
             {
-                FilePermissionKey = response.Headers.FilePermissionKey
+                FilePermissionKey = response.Headers.TryGetValue("x-ms-file-permission-key", out string filePermissionKey) ? filePermissionKey : null
             };
         }
 
@@ -845,7 +773,7 @@ namespace Azure.Storage.Files.Shares
                 Snapshot = shareItemInternal.Snapshot,
                 IsDeleted = shareItemInternal.Deleted,
                 VersionId = shareItemInternal.Version,
-                Properties = ToShareProperties(shareItemInternal.Properties, shareItemInternal.Metadata),
+                Properties = ToShareProperties(shareItemInternal.Properties, (IReadOnlyDictionary<string, string>)shareItemInternal.Metadata),
             };
         }
 
@@ -861,7 +789,7 @@ namespace Azure.Storage.Files.Shares
             return new ShareProperties
             {
                 LastModified = sharePropertiesInternal.LastModified,
-                ETag = new ETag(sharePropertiesInternal.Etag),
+                ETag = sharePropertiesInternal.ETag,
                 ProvisionedIops = sharePropertiesInternal.ProvisionedIops,
                 ProvisionedIngressMBps = sharePropertiesInternal.ProvisionedIngressMBps,
                 ProvisionedEgressMBps = sharePropertiesInternal.ProvisionedEgressMBps,
@@ -891,96 +819,84 @@ namespace Azure.Storage.Files.Shares
             };
         }
 
-        internal static ShareFileDownloadInfo ToShareFileDownloadInfo(this ResponseWithHeaders<Stream, FileDownloadHeaders> response)
+        internal static ShareFileDownloadInfo ToShareFileDownloadInfo(this Response<Stream> response)
         {
             if (response == null)
             {
                 return null;
             }
+
+            var rawResponse = response.GetRawResponse();
+
+            const string FileAttributesHeader = "x-ms-file-attributes";
+            const string FilePermissionKeyHeader = "x-ms-file-permission-key";
+            const string FileCreationTimeHeader = "x-ms-file-creation-time";
+            const string FileLastWriteTimeHeader = "x-ms-file-last-write-time";
+            const string FileChangeTimeHeader = "x-ms-file-change-time";
+            const string FileIdHeader = "x-ms-file-id";
+            const string FileParentIdHeader = "x-ms-file-parent-id";
+            const string FileModeHeader = "x-ms-mode";
+            const string OwnerHeader = "x-ms-owner";
+            const string GroupHeader = "x-ms-group";
+            const string LinkCountHeader = "x-ms-link-count";
+
             ShareFileDownloadInfo shareFileDownloadInfo = new ShareFileDownloadInfo
             {
-                ContentLength = response.Headers.ContentLength.GetValueOrDefault(),
+                ContentLength = rawResponse.Headers.TryGetValue(Constants.HeaderNames.ContentLength, out long? contentLength) ? contentLength.GetValueOrDefault() : default,
                 Content = response.Value,
-                ContentType = response.Headers.ContentType,
-                ContentHash = response.Headers.ContentMD5,
+                ContentType = rawResponse.Headers.TryGetValue(Constants.HeaderNames.ContentType, out string contentType) ? contentType : null,
+                ContentHash = rawResponse.Headers.TryGetValue("Content-MD5", out byte[] contentMD5) ? contentMD5 : null,
                 Details = new ShareFileDownloadDetails
                 {
-                    LastModified = response.Headers.LastModified.GetValueOrDefault(),
-                    Metadata = response.Headers.Metadata,
-                    ContentRange = response.Headers.ContentRange,
-                    ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
-                    CacheControl = response.Headers.CacheControl,
-                    ContentDisposition = response.Headers.ContentDisposition,
-                    AcceptRanges = response.Headers.AcceptRanges,
-                    CopyCompletedOn = response.Headers.CopyCompletionTime.GetValueOrDefault(),
-                    CopyStatusDescription = response.Headers.CopyStatusDescription,
-                    CopyId = response.Headers.CopyId,
-                    CopyProgress = response.Headers.CopyProgress,
-                    CopySource = response.Headers.CopySource == null ? null : new Uri(response.Headers.CopySource),
-                    CopyStatus = response.Headers.CopyStatus.GetValueOrDefault(),
-                    FileContentHash = response.Headers.FileContentMD5,
-                    IsServerEncrypted = response.Headers.IsServerEncrypted.GetValueOrDefault(),
-                    LeaseDuration = response.Headers.LeaseDuration.GetValueOrDefault(),
-                    LeaseState = response.Headers.LeaseState.GetValueOrDefault(),
-                    LeaseStatus = response.Headers.LeaseStatus.GetValueOrDefault(),
+                    LastModified = rawResponse.Headers.TryGetValue(Constants.HeaderNames.LastModified, out DateTimeOffset? lastModified) ? lastModified.GetValueOrDefault() : default,
+                    Metadata = rawResponse.Headers.TryGetValue(Constants.HeaderNames.MetadataPrefix, out IDictionary<string, string> metadata) ? metadata : null,
+                    ContentRange = rawResponse.Headers.TryGetValue(Constants.HeaderNames.ContentRange, out string contentRange) ? contentRange : null,
+                    ETag = rawResponse.Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
+                    CacheControl = rawResponse.Headers.TryGetValue("Cache-Control", out string cacheControl) ? cacheControl : null,
+                    ContentDisposition = rawResponse.Headers.TryGetValue("Content-Disposition", out string contentDisposition) ? contentDisposition : null,
+                    AcceptRanges = rawResponse.Headers.TryGetValue("Accept-Ranges", out string acceptRanges) ? acceptRanges : null,
+                    CopyCompletedOn = rawResponse.Headers.TryGetValue("x-ms-copy-completion-time", out DateTimeOffset? copyCompletionTime) ? copyCompletionTime.GetValueOrDefault() : default,
+                    CopyStatusDescription = rawResponse.Headers.TryGetValue("x-ms-copy-status-description", out string copyStatusDescription) ? copyStatusDescription : null,
+                    CopyId = rawResponse.Headers.TryGetValue("x-ms-copy-id", out string copyId) ? copyId : null,
+                    CopyProgress = rawResponse.Headers.TryGetValue("x-ms-copy-progress", out string copyProgress) ? copyProgress : null,
+                    CopySource = rawResponse.Headers.TryGetValue("x-ms-copy-source", out string copySource) ? (copySource == null ? null : new Uri(copySource)) : null,
+                    CopyStatus = rawResponse.Headers.TryGetValue("x-ms-copy-status", out string copyStatus) ? copyStatus.ToCopyStatus() : default,
+                    FileContentHash = rawResponse.Headers.TryGetValue("x-ms-content-md5", out byte[] fileContentMD5) ? fileContentMD5 : null,
+                    IsServerEncrypted = rawResponse.Headers.TryGetValue("x-ms-server-encrypted", out bool? isServerEncrypted) && isServerEncrypted.GetValueOrDefault(),
+                    LeaseDuration = rawResponse.Headers.TryGetValue("x-ms-lease-duration", out string leaseDuration) ? leaseDuration.ToShareLeaseDuration() : default,
+                    LeaseState = rawResponse.Headers.TryGetValue("x-ms-lease-state", out string leaseState) ? leaseState.ToShareLeaseState() : default,
+                    LeaseStatus = rawResponse.Headers.TryGetValue("x-ms-lease-status", out string leaseStatus) ? leaseStatus.ToShareLeaseStatus() : default,
                     SmbProperties = new FileSmbProperties
                     {
-                        FileAttributes = ShareModelExtensions.ToFileAttributes(response.Headers.FileAttributes),
-                        FilePermissionKey = response.Headers.FilePermissionKey,
-                        FileCreatedOn = response.Headers.FileCreationTime,
-                        FileLastWrittenOn = response.Headers.FileLastWriteTime,
-                        FileChangedOn = response.Headers.FileChangeTime,
-                        FileId = response.Headers.FileId,
-                        ParentId = response.Headers.FileParentId
+                        FileAttributes = ShareModelExtensions.ToFileAttributes(rawResponse.Headers.TryGetValue(FileAttributesHeader, out string fileAttributes) ? fileAttributes : null),
+                        FilePermissionKey = rawResponse.Headers.TryGetValue(FilePermissionKeyHeader, out string filePermissionKey) ? filePermissionKey : null,
+                        FileCreatedOn = rawResponse.Headers.TryGetValue(FileCreationTimeHeader, out DateTimeOffset? fileCreationTime) ? fileCreationTime : null,
+                        FileLastWrittenOn = rawResponse.Headers.TryGetValue(FileLastWriteTimeHeader, out DateTimeOffset? fileLastWriteTime) ? fileLastWriteTime : null,
+                        FileChangedOn = rawResponse.Headers.TryGetValue(FileChangeTimeHeader, out DateTimeOffset? fileChangeTime) ? fileChangeTime : null,
+                        FileId = rawResponse.Headers.TryGetValue(FileIdHeader, out string fileId) ? fileId : null,
+                        ParentId = rawResponse.Headers.TryGetValue(FileParentIdHeader, out string fileParentId) ? fileParentId : null
                     },
                     PosixProperties = new FilePosixProperties
                     {
-                        FileMode = NfsFileMode.ParseOctalFileMode(response.Headers.FileMode),
-                        Owner = response.Headers.Owner,
-                        Group = response.Headers.Group,
-                        LinkCount = response.Headers.LinkCount,
+                        FileMode = NfsFileMode.ParseOctalFileMode(rawResponse.Headers.TryGetValue(FileModeHeader, out string fileMode) ? fileMode : null),
+                        Owner = rawResponse.Headers.TryGetValue(OwnerHeader, out string owner) ? owner : null,
+                        Group = rawResponse.Headers.TryGetValue(GroupHeader, out string group) ? group : null,
+                        LinkCount = rawResponse.Headers.TryGetValue(LinkCountHeader, out long? linkCount) ? linkCount : null,
                     }
                 }
             };
 
-            if (response.Headers.ContentEncoding != null)
+            if (rawResponse.Headers.TryGetValue(Constants.HeaderNames.ContentEncoding, out string contentEncoding) && contentEncoding != null)
             {
-                shareFileDownloadInfo.Details.ContentEncoding = response.Headers.ContentEncoding.Split(Constants.CommaChar);
+                shareFileDownloadInfo.Details.ContentEncoding = contentEncoding.Split(Constants.CommaChar);
             }
 
-            if (response.Headers.ContentLanguage != null)
+            if (rawResponse.Headers.TryGetValue(Constants.HeaderNames.ContentLanguage, out string contentLanguage) && contentLanguage != null)
             {
-                shareFileDownloadInfo.Details.ContentLanguage = response.Headers.ContentLanguage.Split(Constants.CommaChar);
+                shareFileDownloadInfo.Details.ContentLanguage = contentLanguage.Split(Constants.CommaChar);
             }
 
             return shareFileDownloadInfo;
-        }
-
-        internal static FileHttpHeaders ToFileHttpHeaders(this ShareFileHttpHeaders shareFileHttpHeaders)
-        {
-            if (shareFileHttpHeaders == null)
-            {
-                return null;
-            }
-            FileHttpHeaders httpHeaders = new FileHttpHeaders
-            {
-                FileContentType = shareFileHttpHeaders.ContentType,
-                FileContentDisposition = shareFileHttpHeaders.ContentDisposition,
-                FileCacheControl = shareFileHttpHeaders.CacheControl,
-                FileContentMD5 = shareFileHttpHeaders.ContentHash
-            };
-
-            if (shareFileHttpHeaders.ContentEncoding != null)
-            {
-                httpHeaders.FileContentEncoding = string.Join(Constants.CommaString, shareFileHttpHeaders.ContentEncoding);
-            }
-
-            if (shareFileHttpHeaders.ContentLanguage != null)
-            {
-                httpHeaders.FileContentLanguage = string.Join(Constants.CommaString, shareFileHttpHeaders.ContentLanguage);
-            }
-
-            return httpHeaders;
         }
 
         internal static ShareFileItem ToShareFileItem(this DirectoryItem directoryItem)
@@ -1030,7 +946,7 @@ namespace Azure.Storage.Files.Shares
                 lastWrittenOn: fileProperty.LastWriteTime,
                 changedOn: fileProperty.ChangeTime,
                 lastModified: fileProperty.LastModified,
-                eTag: fileProperty.Etag == null ? null : new ETag(fileProperty.Etag));
+                eTag: fileProperty.ETag == null ? null : new ETag(fileProperty.ETag));
         }
 
         internal static DateTimeOffset ExtractLastModified(this ResponseHeaders responseHeaders)
@@ -1045,7 +961,19 @@ namespace Azure.Storage.Files.Shares
             return lastModified;
         }
 
-        internal static Response<ShareFilePermission> ToShareFilePermission(this ResponseWithHeaders<SharePermission, ShareGetPermissionHeaders> response)
+        private static int? ExtractLeaseTime(this ResponseHeaders responseHeaders)
+        {
+            int? leaseTime = null;
+
+            if (responseHeaders.TryGetValue(Constants.HeaderNames.LeaseTime, out string leaseTimeString))
+            {
+                leaseTime = int.Parse(leaseTimeString, CultureInfo.InvariantCulture);
+            }
+
+            return leaseTime;
+        }
+
+        internal static Response<ShareFilePermission> ToShareFilePermission(this Response<SharePermission> response)
         {
             return Response.FromValue(
                 new ShareFilePermission
@@ -1056,7 +984,7 @@ namespace Azure.Storage.Files.Shares
                 response.GetRawResponse());
         }
 
-        internal static ShareFileSymbolicLinkInfo ToFileSymbolicLinkInfo(this ResponseWithHeaders<FileGetSymbolicLinkHeaders> response)
+        internal static ShareFileSymbolicLinkInfo ToFileSymbolicLinkInfo(this Response response)
         {
             if (response == null)
             {
@@ -1065,66 +993,9 @@ namespace Azure.Storage.Files.Shares
 
             return new ShareFileSymbolicLinkInfo
             {
-                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
-                LastModified = response.Headers.LastModified.GetValueOrDefault(),
-                LinkText = response.Headers.LinkText
-            };
-        }
-
-        internal static ShareFileInfo ToShareFileInfo(this ResponseWithHeaders<FileCreateSymbolicLinkHeaders> response)
-        {
-            if (response == null)
-            {
-                return null;
-            }
-            return new ShareFileInfo
-            {
-                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
-                LastModified = response.Headers.LastModified.GetValueOrDefault(),
-                SmbProperties = new FileSmbProperties
-                {
-                    FileCreatedOn = response.Headers.FileCreationTime,
-                    FileLastWrittenOn = response.Headers.FileLastWriteTime,
-                    FileChangedOn = response.Headers.FileChangeTime,
-                    FileId = response.Headers.FileId,
-                    ParentId = response.Headers.FileParentId
-                },
-                PosixProperties = new FilePosixProperties()
-                {
-                    FileType = response.Headers.NfsFileType,
-                    FileMode = NfsFileMode.ParseOctalFileMode(response.Headers.FileMode),
-                    Owner = response.Headers.Owner,
-                    Group = response.Headers.Group
-                }
-            };
-        }
-
-        internal static ShareFileInfo ToShareFileInfo(this ResponseWithHeaders<FileCreateHardLinkHeaders> response)
-        {
-            if (response == null)
-            {
-                return null;
-            }
-            return new ShareFileInfo
-            {
-                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
-                LastModified = response.Headers.LastModified.GetValueOrDefault(),
-                SmbProperties = new FileSmbProperties
-                {
-                    FileCreatedOn = response.Headers.FileCreationTime,
-                    FileLastWrittenOn = response.Headers.FileLastWriteTime,
-                    FileChangedOn = response.Headers.FileChangeTime,
-                    FileId = response.Headers.FileId,
-                    ParentId = response.Headers.FileParentId
-                },
-                PosixProperties = new FilePosixProperties()
-                {
-                    FileMode = NfsFileMode.ParseOctalFileMode(response.Headers.FileMode),
-                    Owner = response.Headers.Owner,
-                    Group = response.Headers.Group,
-                    LinkCount = response.Headers.LinkCount,
-                    FileType = response.Headers.NfsFileType
-                }
+                ETag = response.Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
+                LastModified = response.Headers.TryGetValue(Constants.HeaderNames.LastModified, out DateTimeOffset? lastModified) ? lastModified.GetValueOrDefault() : default,
+                LinkText = response.Headers.TryGetValue("x-ms-link-text", out string linkText) ? linkText : null
             };
         }
     }

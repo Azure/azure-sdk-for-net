@@ -6,30 +6,24 @@
 #nullable disable
 
 using System;
-using Azure.Storage.Common;
+using System.Collections.Generic;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    /// <summary> An enumeration of directories and files. </summary>
     internal partial class ListFilesAndDirectoriesSegmentResponse
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="ListFilesAndDirectoriesSegmentResponse"/>. </summary>
-        /// <param name="serviceEndpoint"></param>
-        /// <param name="shareName"></param>
-        /// <param name="directoryPath"></param>
-        /// <param name="prefix"></param>
+        /// <param name="serviceEndpoint"> The service endpoint. </param>
+        /// <param name="shareName"> The share name. </param>
+        /// <param name="directoryPath"> The directory path. </param>
+        /// <param name="prefix"> The prefix. </param>
         /// <param name="segment"> Abstract for entries that can be listed from Directory. </param>
-        /// <param name="nextMarker"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="serviceEndpoint"/>, <paramref name="shareName"/>, <paramref name="directoryPath"/>, <paramref name="prefix"/>, <paramref name="segment"/> or <paramref name="nextMarker"/> is null. </exception>
+        /// <param name="nextMarker"> The next marker. </param>
         internal ListFilesAndDirectoriesSegmentResponse(string serviceEndpoint, string shareName, string directoryPath, StringEncoded prefix, FilesAndDirectoriesListSegment segment, string nextMarker)
         {
-            Argument.AssertNotNull(serviceEndpoint, nameof(serviceEndpoint));
-            Argument.AssertNotNull(shareName, nameof(shareName));
-            Argument.AssertNotNull(directoryPath, nameof(directoryPath));
-            Argument.AssertNotNull(prefix, nameof(prefix));
-            Argument.AssertNotNull(segment, nameof(segment));
-            Argument.AssertNotNull(nextMarker, nameof(nextMarker));
-
             ServiceEndpoint = serviceEndpoint;
             ShareName = shareName;
             DirectoryPath = directoryPath;
@@ -39,18 +33,19 @@ namespace Azure.Storage.Files.Shares.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ListFilesAndDirectoriesSegmentResponse"/>. </summary>
-        /// <param name="serviceEndpoint"></param>
-        /// <param name="shareName"></param>
-        /// <param name="shareSnapshot"></param>
-        /// <param name="encoded"></param>
-        /// <param name="directoryPath"></param>
-        /// <param name="prefix"></param>
-        /// <param name="marker"></param>
-        /// <param name="maxResults"></param>
+        /// <param name="serviceEndpoint"> The service endpoint. </param>
+        /// <param name="shareName"> The share name. </param>
+        /// <param name="shareSnapshot"> The share snapshot. </param>
+        /// <param name="encoded"> Whether the listing is encoded. </param>
+        /// <param name="directoryPath"> The directory path. </param>
+        /// <param name="prefix"> The prefix. </param>
+        /// <param name="marker"> The marker. </param>
+        /// <param name="maxResults"> The max results. </param>
         /// <param name="segment"> Abstract for entries that can be listed from Directory. </param>
-        /// <param name="nextMarker"></param>
-        /// <param name="directoryId"></param>
-        internal ListFilesAndDirectoriesSegmentResponse(string serviceEndpoint, string shareName, string shareSnapshot, bool? encoded, string directoryPath, StringEncoded prefix, string marker, int? maxResults, FilesAndDirectoriesListSegment segment, string nextMarker, string directoryId)
+        /// <param name="nextMarker"> The next marker. </param>
+        /// <param name="directoryId"> The directory ID. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ListFilesAndDirectoriesSegmentResponse(string serviceEndpoint, string shareName, string shareSnapshot, bool? encoded, string directoryPath, StringEncoded prefix, string marker, int? maxResults, FilesAndDirectoriesListSegment segment, string nextMarker, string directoryId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ServiceEndpoint = serviceEndpoint;
             ShareName = shareName;
@@ -63,29 +58,40 @@ namespace Azure.Storage.Files.Shares.Models
             Segment = segment;
             NextMarker = nextMarker;
             DirectoryId = directoryId;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets the service endpoint. </summary>
+        /// <summary> The service endpoint. </summary>
         public string ServiceEndpoint { get; }
-        /// <summary> Gets the share name. </summary>
+
+        /// <summary> The share name. </summary>
         public string ShareName { get; }
-        /// <summary> Gets the share snapshot. </summary>
+
+        /// <summary> The share snapshot. </summary>
         public string ShareSnapshot { get; }
-        /// <summary> Gets the encoded. </summary>
+
+        /// <summary> Whether the listing is encoded. </summary>
         public bool? Encoded { get; }
-        /// <summary> Gets the directory path. </summary>
+
+        /// <summary> The directory path. </summary>
         public string DirectoryPath { get; }
-        /// <summary> Gets the prefix. </summary>
+
+        /// <summary> The prefix. </summary>
         public StringEncoded Prefix { get; }
-        /// <summary> Gets the marker. </summary>
+
+        /// <summary> The marker. </summary>
         public string Marker { get; }
-        /// <summary> Gets the max results. </summary>
+
+        /// <summary> The max results. </summary>
         public int? MaxResults { get; }
+
         /// <summary> Abstract for entries that can be listed from Directory. </summary>
         public FilesAndDirectoriesListSegment Segment { get; }
-        /// <summary> Gets the next marker. </summary>
+
+        /// <summary> The next marker. </summary>
         public string NextMarker { get; }
-        /// <summary> Gets the directory id. </summary>
+
+        /// <summary> The directory ID. </summary>
         public string DirectoryId { get; }
     }
 }

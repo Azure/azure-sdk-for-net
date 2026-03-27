@@ -7,35 +7,34 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Storage.Common;
+using Azure.Storage.Files.Shares;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    /// <summary> A listed Azure Storage share item. </summary>
     internal partial class ShareItemInternal
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="ShareItemInternal"/>. </summary>
-        /// <param name="name"></param>
+        /// <param name="name"> The share name. </param>
         /// <param name="properties"> Properties of a share. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="properties"/> is null. </exception>
         internal ShareItemInternal(string name, SharePropertiesInternal properties)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(properties, nameof(properties));
-
             Name = name;
             Properties = properties;
             Metadata = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ShareItemInternal"/>. </summary>
-        /// <param name="name"></param>
-        /// <param name="snapshot"></param>
-        /// <param name="deleted"></param>
-        /// <param name="version"></param>
+        /// <param name="name"> The share name. </param>
+        /// <param name="snapshot"> The share snapshot. </param>
+        /// <param name="deleted"> Whether the share is deleted. </param>
+        /// <param name="version"> The share version. </param>
         /// <param name="properties"> Properties of a share. </param>
         /// <param name="metadata"> Dictionary of &lt;string&gt;. </param>
-        internal ShareItemInternal(string name, string snapshot, bool? deleted, string version, SharePropertiesInternal properties, IReadOnlyDictionary<string, string> metadata)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ShareItemInternal(string name, string snapshot, bool? deleted, string version, SharePropertiesInternal properties, IDictionary<string, string> metadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Snapshot = snapshot;
@@ -43,19 +42,25 @@ namespace Azure.Storage.Files.Shares.Models
             Version = version;
             Properties = properties;
             Metadata = metadata;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets the name. </summary>
+        /// <summary> The share name. </summary>
         public string Name { get; }
-        /// <summary> Gets the snapshot. </summary>
+
+        /// <summary> The share snapshot. </summary>
         public string Snapshot { get; }
-        /// <summary> Gets the deleted. </summary>
+
+        /// <summary> Whether the share is deleted. </summary>
         public bool? Deleted { get; }
-        /// <summary> Gets the version. </summary>
+
+        /// <summary> The share version. </summary>
         public string Version { get; }
+
         /// <summary> Properties of a share. </summary>
         public SharePropertiesInternal Properties { get; }
+
         /// <summary> Dictionary of &lt;string&gt;. </summary>
-        public IReadOnlyDictionary<string, string> Metadata { get; }
+        public IDictionary<string, string> Metadata { get; }
     }
 }

@@ -6,20 +6,19 @@
 #nullable disable
 
 using System;
-using Azure.Storage.Common;
+using System.Collections.Generic;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    /// <summary> Key information. </summary>
     internal partial class KeyInfo
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="KeyInfo"/>. </summary>
         /// <param name="expiry"> The date-time the key expires in ISO 8601 UTC time. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="expiry"/> is null. </exception>
         public KeyInfo(string expiry)
         {
-            Argument.AssertNotNull(expiry, nameof(expiry));
-
             Expiry = expiry;
         }
 
@@ -27,17 +26,21 @@ namespace Azure.Storage.Files.Shares.Models
         /// <param name="start"> The date-time the key is active in ISO 8601 UTC time. </param>
         /// <param name="expiry"> The date-time the key expires in ISO 8601 UTC time. </param>
         /// <param name="delegatedUserTid"> The delegated user tenant id in Azure AD. </param>
-        internal KeyInfo(string start, string expiry, string delegatedUserTid)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal KeyInfo(string start, string expiry, string delegatedUserTid, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Start = start;
             Expiry = expiry;
             DelegatedUserTid = delegatedUserTid;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The date-time the key is active in ISO 8601 UTC time. </summary>
         public string Start { get; set; }
+
         /// <summary> The date-time the key expires in ISO 8601 UTC time. </summary>
         public string Expiry { get; }
+
         /// <summary> The delegated user tenant id in Azure AD. </summary>
         public string DelegatedUserTid { get; set; }
     }

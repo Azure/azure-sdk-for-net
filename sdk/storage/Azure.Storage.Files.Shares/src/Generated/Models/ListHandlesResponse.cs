@@ -7,36 +7,38 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Storage.Common;
+using Azure.Storage.Files.Shares;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    /// <summary> An enumeration of handles. </summary>
     internal partial class ListHandlesResponse
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="ListHandlesResponse"/>. </summary>
-        /// <param name="nextMarker"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextMarker"/> is null. </exception>
+        /// <param name="nextMarker"> The next marker. </param>
         internal ListHandlesResponse(string nextMarker)
         {
-            Argument.AssertNotNull(nextMarker, nameof(nextMarker));
-
             HandleList = new ChangeTrackingList<HandleItem>();
             NextMarker = nextMarker;
         }
 
         /// <summary> Initializes a new instance of <see cref="ListHandlesResponse"/>. </summary>
-        /// <param name="handleList"></param>
-        /// <param name="nextMarker"></param>
-        internal ListHandlesResponse(IReadOnlyList<HandleItem> handleList, string nextMarker)
+        /// <param name="handleList"> The handle list. </param>
+        /// <param name="nextMarker"> The next marker. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ListHandlesResponse(IList<HandleItem> handleList, string nextMarker, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             HandleList = handleList;
             NextMarker = nextMarker;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets the handle list. </summary>
-        public IReadOnlyList<HandleItem> HandleList { get; }
-        /// <summary> Gets the next marker. </summary>
+        /// <summary> The handle list. </summary>
+        public IList<HandleItem> HandleList { get; }
+
+        /// <summary> The next marker. </summary>
         public string NextMarker { get; }
     }
 }

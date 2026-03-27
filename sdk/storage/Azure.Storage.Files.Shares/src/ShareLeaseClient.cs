@@ -10,6 +10,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Shared;
+using static Azure.Storage.Files.Shares.ShareExtensions;
 
 #pragma warning disable SA1402  // File may only contain a single type
 
@@ -341,12 +342,12 @@ namespace Azure.Storage.Files.Shares.Specialized
                     Response<ShareFileLease> response;
                     if (FileClient != null)
                     {
-                        ResponseWithHeaders<FileAcquireLeaseHeaders> fileResponse;
+                        Response fileResponse;
 
                         if (async)
                         {
                             fileResponse = await FileClient.FileRestClient.AcquireLeaseAsync(
-                                duration: (int)Constants.File.Lease.InfiniteLeaseDuration,
+                                leaseDuration: (int)Constants.File.Lease.InfiniteLeaseDuration,
                                 proposedLeaseId: LeaseId,
                                 cancellationToken: cancellationToken)
                                 .ConfigureAwait(false);
@@ -354,14 +355,14 @@ namespace Azure.Storage.Files.Shares.Specialized
                         else
                         {
                             fileResponse = FileClient.FileRestClient.AcquireLease(
-                                duration: (int)Constants.File.Lease.InfiniteLeaseDuration,
+                                leaseDuration: (int)Constants.File.Lease.InfiniteLeaseDuration,
                                 proposedLeaseId: LeaseId,
                                 cancellationToken: cancellationToken);
                         }
 
                         response = Response.FromValue(
-                            fileResponse.ToShareFileLease(),
-                            fileResponse.GetRawResponse());
+                            fileResponse.ToShareFileLease(ShareLeaseHeaderType.FileAcquire),
+                            fileResponse);
                     }
                     else
                     {
@@ -377,12 +378,12 @@ namespace Azure.Storage.Files.Shares.Specialized
                             serviceDuration = Constants.File.Lease.InfiniteLeaseDuration;
                         }
 
-                        ResponseWithHeaders<ShareAcquireLeaseHeaders> shareResponse;
+                        Response shareResponse;
 
                         if (async)
                         {
                             shareResponse = await ShareClient.ShareRestClient.AcquireLeaseAsync(
-                                duration: (int)serviceDuration,
+                                leaseDuration: (int)serviceDuration,
                                 proposedLeaseId: LeaseId,
                                 cancellationToken: cancellationToken)
                                 .ConfigureAwait(false);
@@ -390,14 +391,14 @@ namespace Azure.Storage.Files.Shares.Specialized
                         else
                         {
                             shareResponse = ShareClient.ShareRestClient.AcquireLease(
-                                duration: (int)serviceDuration,
+                                leaseDuration: (int)serviceDuration,
                                 proposedLeaseId: LeaseId,
                                 cancellationToken: cancellationToken);
                         }
 
                         response = Response.FromValue(
-                            shareResponse.ToShareFileLease(),
-                            shareResponse.GetRawResponse());
+                            shareResponse.ToShareFileLease(ShareLeaseHeaderType.ShareAcquire),
+                            shareResponse);
                     }
                     LeaseId = response.Value.LeaseId;
                     return response;
@@ -527,7 +528,7 @@ namespace Azure.Storage.Files.Shares.Specialized
                     scope.Start();
                     if (FileClient != null)
                     {
-                        ResponseWithHeaders<FileReleaseLeaseHeaders> response;
+                        Response response;
 
                         if (async)
                         {
@@ -545,11 +546,11 @@ namespace Azure.Storage.Files.Shares.Specialized
 
                         return Response.FromValue(
                             response.ToFileLeaseReleaseInfo(),
-                            response.GetRawResponse());
+                            response);
                     }
                     else
                     {
-                        ResponseWithHeaders<ShareReleaseLeaseHeaders> response;
+                        Response response;
 
                         if (async)
                         {
@@ -567,7 +568,7 @@ namespace Azure.Storage.Files.Shares.Specialized
 
                         return Response.FromValue(
                             response.ToFileLeaseReleaseInfo(),
-                            response.GetRawResponse());
+                            response);
                     }
                 }
                 catch (Exception ex)
@@ -702,7 +703,7 @@ namespace Azure.Storage.Files.Shares.Specialized
                     Response<ShareFileLease> response;
                     if (FileClient != null)
                     {
-                        ResponseWithHeaders<FileChangeLeaseHeaders> fileResponse;
+                        Response fileResponse;
 
                         if (async)
                         {
@@ -721,12 +722,12 @@ namespace Azure.Storage.Files.Shares.Specialized
                         }
 
                         response = Response.FromValue(
-                            fileResponse.ToShareFileLease(),
-                            fileResponse.GetRawResponse());
+                            fileResponse.ToShareFileLease(ShareLeaseHeaderType.FileChange),
+                            fileResponse);
                     }
                     else
                     {
-                        ResponseWithHeaders<ShareChangeLeaseHeaders> shareResponse;
+                        Response shareResponse;
 
                         if (async)
                         {
@@ -745,8 +746,8 @@ namespace Azure.Storage.Files.Shares.Specialized
                         }
 
                         response = Response.FromValue(
-                            shareResponse.ToShareFileLease(),
-                            shareResponse.GetRawResponse());
+                            shareResponse.ToShareFileLease(ShareLeaseHeaderType.ShareChange),
+                            shareResponse);
                     }
 
                     LeaseId = response.Value.LeaseId;
@@ -884,35 +885,32 @@ namespace Azure.Storage.Files.Shares.Specialized
 
                     if (FileClient != null)
                     {
-                        ResponseWithHeaders<FileBreakLeaseHeaders> response;
+                        Response response;
 
                         if (async)
                         {
                             response = await FileClient.FileRestClient.BreakLeaseAsync(
-                                shareFileRequestConditions: null,
                                 cancellationToken: cancellationToken)
                                 .ConfigureAwait(false);
                         }
                         else
                         {
                             response = FileClient.FileRestClient.BreakLease(
-                                shareFileRequestConditions: null,
                                 cancellationToken: cancellationToken);
                         }
 
                         return Response.FromValue(
-                            response.ToShareFileLease(),
-                            response.GetRawResponse());
+                            response.ToShareFileLease(ShareLeaseHeaderType.FileBreak),
+                            response);
                     }
                     else
                     {
-                        ResponseWithHeaders<ShareBreakLeaseHeaders> response;
+                        Response response;
 
                         if (async)
                         {
                             response = await ShareClient.ShareRestClient.BreakLeaseAsync(
                                 breakPeriod: null,
-                                shareFileRequestConditions: null,
                                 cancellationToken: cancellationToken)
                                 .ConfigureAwait(false);
                         }
@@ -920,13 +918,12 @@ namespace Azure.Storage.Files.Shares.Specialized
                         {
                             response = ShareClient.ShareRestClient.BreakLease(
                                 breakPeriod: null,
-                                shareFileRequestConditions: null,
                                 cancellationToken: cancellationToken);
                         }
 
                         return Response.FromValue(
-                            response.ToShareFileLease(),
-                            response.GetRawResponse());
+                            response.ToShareFileLease(ShareLeaseHeaderType.ShareBreak),
+                            response);
                     }
                 }
                 catch (Exception ex)
@@ -1062,7 +1059,7 @@ namespace Azure.Storage.Files.Shares.Specialized
                     }
                     else
                     {
-                        ResponseWithHeaders<ShareRenewLeaseHeaders> shareResponse;
+                        Response shareResponse;
 
                         if (async)
                         {
@@ -1079,8 +1076,8 @@ namespace Azure.Storage.Files.Shares.Specialized
                         }
 
                         response = Response.FromValue(
-                            shareResponse.ToShareFileLease(),
-                            shareResponse.GetRawResponse());
+                            shareResponse.ToShareFileLease(ShareLeaseHeaderType.ShareRenew),
+                            shareResponse);
                     }
 
                     LeaseId = response.Value.LeaseId;

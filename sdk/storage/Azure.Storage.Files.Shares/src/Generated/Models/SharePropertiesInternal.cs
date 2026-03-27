@@ -6,59 +6,63 @@
 #nullable disable
 
 using System;
-using Azure.Storage.Common;
+using System.Collections.Generic;
+using Azure;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    /// <summary> Properties of a share. </summary>
     internal partial class SharePropertiesInternal
     {
-        /// <summary> Initializes a new instance of <see cref="SharePropertiesInternal"/>. </summary>
-        /// <param name="lastModified"></param>
-        /// <param name="etag"></param>
-        /// <param name="quota"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="etag"/> is null. </exception>
-        internal SharePropertiesInternal(DateTimeOffset lastModified, string etag, int quota)
-        {
-            Argument.AssertNotNull(etag, nameof(etag));
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
+        /// <summary> Initializes a new instance of <see cref="SharePropertiesInternal"/>. </summary>
+        /// <param name="lastModified"> The last modified time. </param>
+        /// <param name="eTag"> The ETag of the share. </param>
+        /// <param name="quota"> The share quota. </param>
+        internal SharePropertiesInternal(DateTimeOffset lastModified, ETag eTag, int quota)
+        {
             LastModified = lastModified;
-            Etag = etag;
+            ETag = eTag;
             Quota = quota;
         }
 
         /// <summary> Initializes a new instance of <see cref="SharePropertiesInternal"/>. </summary>
-        /// <param name="lastModified"></param>
-        /// <param name="etag"></param>
-        /// <param name="quota"></param>
-        /// <param name="provisionedIops"></param>
-        /// <param name="provisionedIngressMBps"></param>
-        /// <param name="provisionedEgressMBps"></param>
-        /// <param name="provisionedBandwidthMiBps"></param>
-        /// <param name="nextAllowedQuotaDowngradeTime"></param>
-        /// <param name="deletedTime"></param>
-        /// <param name="remainingRetentionDays"></param>
-        /// <param name="accessTier"></param>
-        /// <param name="accessTierChangeTime"></param>
-        /// <param name="accessTierTransitionState"></param>
+        /// <param name="lastModified"> The last modified time. </param>
+        /// <param name="eTag"> The ETag of the share. </param>
+        /// <param name="quota"> The share quota. </param>
+        /// <param name="provisionedIops"> The provisioned IOPS. </param>
+        /// <param name="provisionedIngressMBps"> The provisioned ingress in MBps. </param>
+        /// <param name="provisionedEgressMBps"> The provisioned egress in MBps. </param>
+        /// <param name="provisionedBandwidthMiBps"> The provisioned bandwidth in MiBps. </param>
+        /// <param name="nextAllowedQuotaDowngradeTime"> The next allowed quota downgrade time. </param>
+        /// <param name="deletedTime"> The deleted time. </param>
+        /// <param name="remainingRetentionDays"> The remaining retention days. </param>
+        /// <param name="accessTier"> The access tier. </param>
+        /// <param name="accessTierChangeTime"> The access tier change time. </param>
+        /// <param name="accessTierTransitionState"> The access tier transition state. </param>
         /// <param name="leaseStatus"> The current lease status of the share. </param>
         /// <param name="leaseState"> Lease state of the share. </param>
-        /// <param name="leaseDuration"> When a share is leased, specifies whether the lease is of infinite or fixed duration. </param>
-        /// <param name="enabledProtocols"></param>
-        /// <param name="rootSquash"></param>
-        /// <param name="enableSnapshotVirtualDirectoryAccess"></param>
-        /// <param name="paidBurstingEnabled"></param>
-        /// <param name="paidBurstingMaxIops"></param>
-        /// <param name="paidBurstingMaxBandwidthMibps"></param>
-        /// <param name="includedBurstIops"></param>
-        /// <param name="maxBurstCreditsForIops"></param>
-        /// <param name="nextAllowedProvisionedIopsDowngradeTime"></param>
-        /// <param name="nextAllowedProvisionedBandwidthDowngradeTime"></param>
-        /// <param name="enableSmbDirectoryLease"></param>
-        internal SharePropertiesInternal(DateTimeOffset lastModified, string etag, int quota, int? provisionedIops, int? provisionedIngressMBps, int? provisionedEgressMBps, int? provisionedBandwidthMiBps, DateTimeOffset? nextAllowedQuotaDowngradeTime, DateTimeOffset? deletedTime, int? remainingRetentionDays, string accessTier, DateTimeOffset? accessTierChangeTime, string accessTierTransitionState, ShareLeaseStatus? leaseStatus, ShareLeaseState? leaseState, ShareLeaseDuration? leaseDuration, string enabledProtocols, ShareRootSquash? rootSquash, bool? enableSnapshotVirtualDirectoryAccess, bool? paidBurstingEnabled, long? paidBurstingMaxIops, long? paidBurstingMaxBandwidthMibps, long? includedBurstIops, long? maxBurstCreditsForIops, DateTimeOffset? nextAllowedProvisionedIopsDowngradeTime, DateTimeOffset? nextAllowedProvisionedBandwidthDowngradeTime, bool? enableSmbDirectoryLease)
+        /// <param name="leaseDuration">
+        /// When a share is leased, specifies whether the lease is of infinite or fixed
+        /// duration.
+        /// </param>
+        /// <param name="enabledProtocols"> The enabled protocols. </param>
+        /// <param name="rootSquash"> The root squash setting. </param>
+        /// <param name="enableSnapshotVirtualDirectoryAccess"> Whether snapshot virtual directory access is enabled. </param>
+        /// <param name="paidBurstingEnabled"> Whether paid bursting is enabled. </param>
+        /// <param name="paidBurstingMaxIops"> The maximum IOPS for paid bursting. </param>
+        /// <param name="paidBurstingMaxBandwidthMibps"> The maximum bandwidth for paid bursting in MiBps. </param>
+        /// <param name="includedBurstIops"> The included burst IOPS. </param>
+        /// <param name="maxBurstCreditsForIops"> The maximum burst credits for IOPS. </param>
+        /// <param name="nextAllowedProvisionedIopsDowngradeTime"> The next allowed provisioned IOPS downgrade time. </param>
+        /// <param name="nextAllowedProvisionedBandwidthDowngradeTime"> The next allowed provisioned bandwidth downgrade time. </param>
+        /// <param name="enableSmbDirectoryLease"> Whether SMB directory lease is enabled. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SharePropertiesInternal(DateTimeOffset lastModified, ETag eTag, int quota, int? provisionedIops, int? provisionedIngressMBps, int? provisionedEgressMBps, int? provisionedBandwidthMiBps, DateTimeOffset? nextAllowedQuotaDowngradeTime, DateTimeOffset? deletedTime, int? remainingRetentionDays, string accessTier, DateTimeOffset? accessTierChangeTime, string accessTierTransitionState, ShareLeaseStatus? leaseStatus, ShareLeaseState? leaseState, ShareLeaseDuration? leaseDuration, string enabledProtocols, ShareRootSquash? rootSquash, bool? enableSnapshotVirtualDirectoryAccess, bool? paidBurstingEnabled, long? paidBurstingMaxIops, long? paidBurstingMaxBandwidthMibps, long? includedBurstIops, long? maxBurstCreditsForIops, DateTimeOffset? nextAllowedProvisionedIopsDowngradeTime, DateTimeOffset? nextAllowedProvisionedBandwidthDowngradeTime, bool? enableSmbDirectoryLease, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             LastModified = lastModified;
-            Etag = etag;
+            ETag = eTag;
             Quota = quota;
             ProvisionedIops = provisionedIops;
             ProvisionedIngressMBps = provisionedIngressMBps;
@@ -84,61 +88,91 @@ namespace Azure.Storage.Files.Shares.Models
             NextAllowedProvisionedIopsDowngradeTime = nextAllowedProvisionedIopsDowngradeTime;
             NextAllowedProvisionedBandwidthDowngradeTime = nextAllowedProvisionedBandwidthDowngradeTime;
             EnableSmbDirectoryLease = enableSmbDirectoryLease;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets the last modified. </summary>
+        /// <summary> The last modified time. </summary>
         public DateTimeOffset LastModified { get; }
-        /// <summary> Gets the etag. </summary>
-        public string Etag { get; }
-        /// <summary> Gets the quota. </summary>
+
+        /// <summary> The ETag of the share. </summary>
+        public ETag ETag { get; }
+
+        /// <summary> The share quota. </summary>
         public int Quota { get; }
-        /// <summary> Gets the provisioned iops. </summary>
+
+        /// <summary> The provisioned IOPS. </summary>
         public int? ProvisionedIops { get; }
-        /// <summary> Gets the provisioned ingress m bps. </summary>
+
+        /// <summary> The provisioned ingress in MBps. </summary>
         public int? ProvisionedIngressMBps { get; }
-        /// <summary> Gets the provisioned egress m bps. </summary>
+
+        /// <summary> The provisioned egress in MBps. </summary>
         public int? ProvisionedEgressMBps { get; }
-        /// <summary> Gets the provisioned bandwidth mi bps. </summary>
+
+        /// <summary> The provisioned bandwidth in MiBps. </summary>
         public int? ProvisionedBandwidthMiBps { get; }
-        /// <summary> Gets the next allowed quota downgrade time. </summary>
+
+        /// <summary> The next allowed quota downgrade time. </summary>
         public DateTimeOffset? NextAllowedQuotaDowngradeTime { get; }
-        /// <summary> Gets the deleted time. </summary>
+
+        /// <summary> The deleted time. </summary>
         public DateTimeOffset? DeletedTime { get; }
-        /// <summary> Gets the remaining retention days. </summary>
+
+        /// <summary> The remaining retention days. </summary>
         public int? RemainingRetentionDays { get; }
-        /// <summary> Gets the access tier. </summary>
+
+        /// <summary> The access tier. </summary>
         public string AccessTier { get; }
-        /// <summary> Gets the access tier change time. </summary>
+
+        /// <summary> The access tier change time. </summary>
         public DateTimeOffset? AccessTierChangeTime { get; }
-        /// <summary> Gets the access tier transition state. </summary>
+
+        /// <summary> The access tier transition state. </summary>
         public string AccessTierTransitionState { get; }
+
         /// <summary> The current lease status of the share. </summary>
         public ShareLeaseStatus? LeaseStatus { get; }
+
         /// <summary> Lease state of the share. </summary>
         public ShareLeaseState? LeaseState { get; }
-        /// <summary> When a share is leased, specifies whether the lease is of infinite or fixed duration. </summary>
+
+        /// <summary>
+        /// When a share is leased, specifies whether the lease is of infinite or fixed
+        /// duration.
+        /// </summary>
         public ShareLeaseDuration? LeaseDuration { get; }
-        /// <summary> Gets the enabled protocols. </summary>
+
+        /// <summary> The enabled protocols. </summary>
         public string EnabledProtocols { get; }
-        /// <summary> Gets the root squash. </summary>
+
+        /// <summary> The root squash setting. </summary>
         public ShareRootSquash? RootSquash { get; }
-        /// <summary> Gets the enable snapshot virtual directory access. </summary>
+
+        /// <summary> Whether snapshot virtual directory access is enabled. </summary>
         public bool? EnableSnapshotVirtualDirectoryAccess { get; }
-        /// <summary> Gets the paid bursting enabled. </summary>
+
+        /// <summary> Whether paid bursting is enabled. </summary>
         public bool? PaidBurstingEnabled { get; }
-        /// <summary> Gets the paid bursting max iops. </summary>
+
+        /// <summary> The maximum IOPS for paid bursting. </summary>
         public long? PaidBurstingMaxIops { get; }
-        /// <summary> Gets the paid bursting max bandwidth mibps. </summary>
+
+        /// <summary> The maximum bandwidth for paid bursting in MiBps. </summary>
         public long? PaidBurstingMaxBandwidthMibps { get; }
-        /// <summary> Gets the included burst iops. </summary>
+
+        /// <summary> The included burst IOPS. </summary>
         public long? IncludedBurstIops { get; }
-        /// <summary> Gets the max burst credits for iops. </summary>
+
+        /// <summary> The maximum burst credits for IOPS. </summary>
         public long? MaxBurstCreditsForIops { get; }
-        /// <summary> Gets the next allowed provisioned iops downgrade time. </summary>
+
+        /// <summary> The next allowed provisioned IOPS downgrade time. </summary>
         public DateTimeOffset? NextAllowedProvisionedIopsDowngradeTime { get; }
-        /// <summary> Gets the next allowed provisioned bandwidth downgrade time. </summary>
+
+        /// <summary> The next allowed provisioned bandwidth downgrade time. </summary>
         public DateTimeOffset? NextAllowedProvisionedBandwidthDowngradeTime { get; }
-        /// <summary> Gets the enable smb directory lease. </summary>
+
+        /// <summary> Whether SMB directory lease is enabled. </summary>
         public bool? EnableSmbDirectoryLease { get; }
     }
 }

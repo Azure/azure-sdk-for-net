@@ -7,31 +7,28 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Storage.Common;
+using Azure.Storage.Files.Shares;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    /// <summary> A listed Azure Storage handle item. </summary>
     internal partial class HandleItem
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="HandleItem"/>. </summary>
         /// <param name="handleId"> XSMB service handle ID. </param>
-        /// <param name="path"></param>
+        /// <param name="path"> The path. </param>
         /// <param name="fileId"> FileId uniquely identifies the file or directory. </param>
         /// <param name="sessionId"> SMB session ID in context of which the file handle was opened. </param>
         /// <param name="clientIp"> Client IP that opened the handle. </param>
         /// <param name="clientName"> Name of the client machine where the share is being mounted. </param>
-        /// <param name="openTime"> Time when the session that previously opened the handle has last been reconnected. (UTC). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="handleId"/>, <paramref name="path"/>, <paramref name="fileId"/>, <paramref name="sessionId"/>, <paramref name="clientIp"/> or <paramref name="clientName"/> is null. </exception>
+        /// <param name="openTime">
+        /// Time when the session that previously opened the handle has last been
+        /// reconnected. (UTC)
+        /// </param>
         internal HandleItem(string handleId, StringEncoded path, string fileId, string sessionId, string clientIp, string clientName, DateTimeOffset openTime)
         {
-            Argument.AssertNotNull(handleId, nameof(handleId));
-            Argument.AssertNotNull(path, nameof(path));
-            Argument.AssertNotNull(fileId, nameof(fileId));
-            Argument.AssertNotNull(sessionId, nameof(sessionId));
-            Argument.AssertNotNull(clientIp, nameof(clientIp));
-            Argument.AssertNotNull(clientName, nameof(clientName));
-
             HandleId = handleId;
             Path = path;
             FileId = fileId;
@@ -44,16 +41,20 @@ namespace Azure.Storage.Files.Shares.Models
 
         /// <summary> Initializes a new instance of <see cref="HandleItem"/>. </summary>
         /// <param name="handleId"> XSMB service handle ID. </param>
-        /// <param name="path"></param>
+        /// <param name="path"> The path. </param>
         /// <param name="fileId"> FileId uniquely identifies the file or directory. </param>
         /// <param name="parentId"> ParentId uniquely identifies the parent directory of the object. </param>
         /// <param name="sessionId"> SMB session ID in context of which the file handle was opened. </param>
         /// <param name="clientIp"> Client IP that opened the handle. </param>
         /// <param name="clientName"> Name of the client machine where the share is being mounted. </param>
-        /// <param name="openTime"> Time when the session that previously opened the handle has last been reconnected. (UTC). </param>
+        /// <param name="openTime">
+        /// Time when the session that previously opened the handle has last been
+        /// reconnected. (UTC)
+        /// </param>
         /// <param name="lastReconnectTime"> Time handle was last connected to (UTC). </param>
-        /// <param name="accessRightList"></param>
-        internal HandleItem(string handleId, StringEncoded path, string fileId, string parentId, string sessionId, string clientIp, string clientName, DateTimeOffset openTime, DateTimeOffset? lastReconnectTime, IReadOnlyList<AccessRight> accessRightList)
+        /// <param name="accessRightList"> The access rights. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal HandleItem(string handleId, StringEncoded path, string fileId, string parentId, string sessionId, string clientIp, string clientName, DateTimeOffset openTime, DateTimeOffset? lastReconnectTime, IList<AccessRight> accessRightList, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             HandleId = handleId;
             Path = path;
@@ -65,27 +66,40 @@ namespace Azure.Storage.Files.Shares.Models
             OpenTime = openTime;
             LastReconnectTime = lastReconnectTime;
             AccessRightList = accessRightList;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> XSMB service handle ID. </summary>
         public string HandleId { get; }
-        /// <summary> Gets the path. </summary>
+
+        /// <summary> The path. </summary>
         public StringEncoded Path { get; }
+
         /// <summary> FileId uniquely identifies the file or directory. </summary>
         public string FileId { get; }
+
         /// <summary> ParentId uniquely identifies the parent directory of the object. </summary>
         public string ParentId { get; }
+
         /// <summary> SMB session ID in context of which the file handle was opened. </summary>
         public string SessionId { get; }
+
         /// <summary> Client IP that opened the handle. </summary>
         public string ClientIp { get; }
+
         /// <summary> Name of the client machine where the share is being mounted. </summary>
         public string ClientName { get; }
-        /// <summary> Time when the session that previously opened the handle has last been reconnected. (UTC). </summary>
+
+        /// <summary>
+        /// Time when the session that previously opened the handle has last been
+        /// reconnected. (UTC)
+        /// </summary>
         public DateTimeOffset OpenTime { get; }
+
         /// <summary> Time handle was last connected to (UTC). </summary>
         public DateTimeOffset? LastReconnectTime { get; }
-        /// <summary> Gets the access right list. </summary>
-        public IReadOnlyList<AccessRight> AccessRightList { get; }
+
+        /// <summary> The access rights. </summary>
+        public IList<AccessRight> AccessRightList { get; }
     }
 }

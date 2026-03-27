@@ -5,31 +5,172 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.IO;
+using System.Xml;
 using System.Xml.Linq;
+using Azure;
+using Azure.Core;
+using Azure.Storage.Files.Shares;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    internal partial class ListHandlesResponse
+    internal partial class ListHandlesResponse : IPersistableModel<ListHandlesResponse>, IXmlSerializable
     {
-        internal static ListHandlesResponse DeserializeListHandlesResponse(XElement element)
+        /// <summary> Initializes a new instance of <see cref="ListHandlesResponse"/> for deserialization. </summary>
+        internal ListHandlesResponse()
         {
-            string nextMarker = default;
-            IReadOnlyList<HandleItem> handleList = default;
-            if (element.Element("NextMarker") is XElement nextMarkerElement)
-            {
-                nextMarker = (string)nextMarkerElement;
-            }
-            if (element.Element("Entries") is XElement entriesElement)
-            {
-                var array = new List<HandleItem>();
-                foreach (var e in entriesElement.Elements("Handle"))
-                {
-                    array.Add(HandleItem.DeserializeHandleItem(e));
-                }
-                handleList = array;
-            }
-            return new ListHandlesResponse(handleList, nextMarker);
         }
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ListHandlesResponse PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ListHandlesResponse>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "X":
+                    using (Stream dataStream = data.ToStream())
+                    {
+                        return DeserializeListHandlesResponse(XElement.Load(dataStream, LoadOptions.PreserveWhitespace), options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ListHandlesResponse)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ListHandlesResponse>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "X":
+                    using (MemoryStream stream = new MemoryStream(256))
+                    {
+                        using (XmlWriter writer = XmlWriter.Create(stream, ModelSerializationExtensions.XmlWriterSettings))
+                        {
+                            WriteXml(writer, options, "EnumerationResults");
+                        }
+                        if (stream.Position > int.MaxValue)
+                        {
+                            return BinaryData.FromStream(stream);
+                        }
+                        else
+                        {
+                            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+                        }
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ListHandlesResponse)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ListHandlesResponse>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ListHandlesResponse IPersistableModel<ListHandlesResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ListHandlesResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ListHandlesResponse"/> from. </param>
+        public static explicit operator ListHandlesResponse(Response response)
+        {
+            using Stream stream = response.ContentStream;
+            if (stream == null)
+            {
+                return default;
+            }
+
+            return DeserializeListHandlesResponse(XElement.Load(stream, LoadOptions.PreserveWhitespace), ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The XML writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        /// <param name="nameHint"> An optional name hint. </param>
+        private void WriteXml(XmlWriter writer, ModelReaderWriterOptions options, string nameHint)
+        {
+            if (nameHint != null)
+            {
+                writer.WriteStartElement(nameHint);
+            }
+
+            XmlModelWriteCore(writer, options);
+
+            if (nameHint != null)
+            {
+                writer.WriteEndElement();
+            }
+        }
+
+        /// <param name="writer"> The XML writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal virtual void XmlModelWriteCore(XmlWriter writer, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ListHandlesResponse>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "X")
+            {
+                throw new FormatException($"The model {nameof(ListHandlesResponse)} does not support writing '{format}' format.");
+            }
+
+            if (Optional.IsCollectionDefined(HandleList))
+            {
+                writer.WriteStartElement("Entries");
+                foreach (HandleItem item in HandleList)
+                {
+                    writer.WriteStartElement("Handle");
+                    writer.WriteObjectValue(item, options);
+                    writer.WriteEndElement();
+                }
+                writer.WriteEndElement();
+            }
+            writer.WriteStartElement("NextMarker");
+            writer.WriteValue(NextMarker);
+            writer.WriteEndElement();
+        }
+
+        /// <param name="element"> The xml element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ListHandlesResponse DeserializeListHandlesResponse(XElement element, ModelReaderWriterOptions options)
+        {
+            if (element == null)
+            {
+                return null;
+            }
+
+            IList<HandleItem> handleList = default;
+            string nextMarker = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+
+            foreach (var child in element.Elements())
+            {
+                string localName = child.Name.LocalName;
+                if (localName == "Entries")
+                {
+                    List<HandleItem> array = new List<HandleItem>();
+                    foreach (var e in child.Elements("Handle"))
+                    {
+                        array.Add(HandleItem.DeserializeHandleItem(e, options));
+                    }
+                    handleList = array;
+                    continue;
+                }
+                if (localName == "NextMarker")
+                {
+                    nextMarker = (string)child;
+                    continue;
+                }
+            }
+            return new ListHandlesResponse(handleList ?? new ChangeTrackingList<HandleItem>(), nextMarker, additionalBinaryDataProperties);
+        }
+
+        /// <param name="writer"> The XML writer. </param>
+        /// <param name="nameHint"> An optional name hint. </param>
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => WriteXml(writer, ModelSerializationExtensions.WireOptions, nameHint);
     }
 }

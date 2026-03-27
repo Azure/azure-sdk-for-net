@@ -7,1438 +7,1521 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Xml.Linq;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Storage.Common;
 using Azure.Storage.Files.Shares.Models;
 
 namespace Azure.Storage.Files.Shares
 {
     internal partial class ShareRestClient
     {
-        private readonly HttpPipeline _pipeline;
-        private readonly string _url;
+        private readonly Uri _endpoint;
         private readonly string _version;
         private readonly ShareTokenIntent? _fileRequestIntent;
+
+        /// <summary> Initializes a new instance of ShareRestClient for mocking. </summary>
+        protected ShareRestClient()
+        {
+        }
+
+        /// <summary> Initializes a new instance of ShareRestClient. </summary>
+        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
+        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="version"></param>
+        /// <param name="fileRequestIntent"></param>
+        internal ShareRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string version, ShareTokenIntent? fileRequestIntent)
+        {
+            ClientDiagnostics = clientDiagnostics;
+            _endpoint = endpoint;
+            Pipeline = pipeline;
+            _version = version;
+            _fileRequestIntent = fileRequestIntent;
+        }
+
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        /// <summary> Initializes a new instance of ShareRestClient. </summary>
-        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
-        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="url"> The URL of the service account, share, directory or file that is the target of the desired operation. </param>
-        /// <param name="version"> Specifies the version of the operation to use for this request. </param>
-        /// <param name="fileRequestIntent"> Valid value is backup. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="url"/> or <paramref name="version"/> is null. </exception>
-        public ShareRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version, ShareTokenIntent? fileRequestIntent = null)
-        {
-            ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
-            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
-            _url = url ?? throw new ArgumentNullException(nameof(url));
-            _version = version ?? throw new ArgumentNullException(nameof(version));
-            _fileRequestIntent = fileRequestIntent;
-        }
-
-        internal HttpMessage CreateCreateRequest(int? timeout, IDictionary<string, string> metadata, int? quota, ShareAccessTier? accessTier, string enabledProtocols, ShareRootSquash? rootSquash, bool? enableSnapshotVirtualDirectoryAccess, bool? paidBurstingEnabled, long? paidBurstingMaxBandwidthMibps, long? paidBurstingMaxIops, long? shareProvisionedIops, long? shareProvisionedBandwidthMibps, bool? enableSmbDirectoryLease)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_url, false);
-            uri.AppendQuery("restype", "share", true);
-            if (timeout != null)
-            {
-                uri.AppendQuery("timeout", timeout.Value, true);
-            }
-            request.Uri = uri;
-            if (metadata != null)
-            {
-                request.Headers.Add("x-ms-meta-", metadata);
-            }
-            if (quota != null)
-            {
-                request.Headers.Add("x-ms-share-quota", quota.Value);
-            }
-            if (accessTier != null)
-            {
-                request.Headers.Add("x-ms-access-tier", accessTier.Value.ToString());
-            }
-            request.Headers.Add("x-ms-version", _version);
-            if (enabledProtocols != null)
-            {
-                request.Headers.Add("x-ms-enabled-protocols", enabledProtocols);
-            }
-            if (rootSquash != null)
-            {
-                request.Headers.Add("x-ms-root-squash", rootSquash.Value.ToSerialString());
-            }
-            if (enableSnapshotVirtualDirectoryAccess != null)
-            {
-                request.Headers.Add("x-ms-enable-snapshot-virtual-directory-access", enableSnapshotVirtualDirectoryAccess.Value);
-            }
-            if (paidBurstingEnabled != null)
-            {
-                request.Headers.Add("x-ms-share-paid-bursting-enabled", paidBurstingEnabled.Value);
-            }
-            if (paidBurstingMaxBandwidthMibps != null)
-            {
-                request.Headers.Add("x-ms-share-paid-bursting-max-bandwidth-mibps", paidBurstingMaxBandwidthMibps.Value);
-            }
-            if (paidBurstingMaxIops != null)
-            {
-                request.Headers.Add("x-ms-share-paid-bursting-max-iops", paidBurstingMaxIops.Value);
-            }
-            if (_fileRequestIntent != null)
-            {
-                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
-            }
-            if (shareProvisionedIops != null)
-            {
-                request.Headers.Add("x-ms-share-provisioned-iops", shareProvisionedIops.Value);
-            }
-            if (shareProvisionedBandwidthMibps != null)
-            {
-                request.Headers.Add("x-ms-share-provisioned-bandwidth-mibps", shareProvisionedBandwidthMibps.Value);
-            }
-            if (enableSmbDirectoryLease != null)
-            {
-                request.Headers.Add("x-ms-enable-smb-directory-lease", enableSmbDirectoryLease.Value);
-            }
-            request.Headers.Add("Accept", "application/xml");
-            return message;
-        }
-
-        /// <summary> Creates a new share under the specified account. If the share with the same name already exists, the operation fails. </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
-        /// <param name="metadata"> A name-value pair to associate with a file storage object. </param>
+        /// <summary>
+        /// [Protocol Method] Creates a new share under the specified account. If the share with the same name already exists, the operation fails.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="metadata"> Optional. User-defined metadata for the resource. </param>
         /// <param name="quota"> Specifies the maximum size of the share, in gigabytes. </param>
         /// <param name="accessTier"> Specifies the access tier of the share. </param>
         /// <param name="enabledProtocols"> Protocols to enable on the share. </param>
-        /// <param name="rootSquash"> Root squash to set on the share.  Only valid for NFS shares. </param>
-        /// <param name="enableSnapshotVirtualDirectoryAccess"> The <see cref="bool"/>? to use. </param>
+        /// <param name="rootSquash"> Root squash to set on the share. Only valid for NFS shares. </param>
+        /// <param name="enableSnapshotVirtualDirectoryAccess"> Optional. Used to enable snapshot virtual directory access. </param>
         /// <param name="paidBurstingEnabled"> Optional. Boolean. Default if not specified is false. This property enables paid bursting. </param>
-        /// <param name="paidBurstingMaxBandwidthMibps"> Optional. Integer. Default if not specified is the maximum throughput the file share can support. Current maximum for a file share is 10,340  MiB/sec. </param>
         /// <param name="paidBurstingMaxIops"> Optional. Integer. Default if not specified is the maximum IOPS the file share can support. Current maximum for a file share is 102,400 IOPS. </param>
-        /// <param name="shareProvisionedIops"> Optional. Supported in version 2025-01-05 and later. Only allowed for provisioned v2 file shares. Specifies the provisioned number of input/output operations per second (IOPS) of the share. If this is not specified, the provisioned IOPS is set to value calculated based on recommendation formula. </param>
-        /// <param name="shareProvisionedBandwidthMibps"> Optional. Supported in version 2025-01-05 and later. Only allowed for provisioned v2 file shares. Specifies the provisioned bandwidth of the share, in mebibytes per second (MiBps). If this is not specified, the provisioned bandwidth is set to value calculated based on recommendation formula. </param>
-        /// <param name="enableSmbDirectoryLease"> SMB only, default is true.  Specifies whether granting of new directory leases for directories present in a share are to be enabled or disabled. An input of true specifies that granting of new directory leases is to be allowed. An input of false specifies that granting of new directory leases is to be blocked. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<ShareCreateHeaders>> CreateAsync(int? timeout = null, IDictionary<string, string> metadata = null, int? quota = null, ShareAccessTier? accessTier = null, string enabledProtocols = null, ShareRootSquash? rootSquash = null, bool? enableSnapshotVirtualDirectoryAccess = null, bool? paidBurstingEnabled = null, long? paidBurstingMaxBandwidthMibps = null, long? paidBurstingMaxIops = null, long? shareProvisionedIops = null, long? shareProvisionedBandwidthMibps = null, bool? enableSmbDirectoryLease = null, CancellationToken cancellationToken = default)
+        /// <param name="paidBurstingMaxBandwidthMibps"> Optional. Integer. Default if not specified is the maximum throughput the file share can support. Current maximum for a file share is 10,340 MiB/sec. </param>
+        /// <param name="shareProvisionedIops"> Optional. Specifies the provisioned IOPS of the share. </param>
+        /// <param name="shareProvisionedBandwidthMibps"> Optional. Specifies the provisioned bandwidth of the share, in MiBps. </param>
+        /// <param name="enableSmbDirectoryLease"> Optional. Used to enable SMB directory lease. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response Create(int? timeout, IDictionary<string, string> metadata, int? quota, string accessTier, string enabledProtocols, string rootSquash, bool? enableSnapshotVirtualDirectoryAccess, bool? paidBurstingEnabled, long? paidBurstingMaxIops, long? paidBurstingMaxBandwidthMibps, long? shareProvisionedIops, long? shareProvisionedBandwidthMibps, bool? enableSmbDirectoryLease, RequestContext context)
         {
-            using var message = CreateCreateRequest(timeout, metadata, quota, accessTier, enabledProtocols, rootSquash, enableSnapshotVirtualDirectoryAccess, paidBurstingEnabled, paidBurstingMaxBandwidthMibps, paidBurstingMaxIops, shareProvisionedIops, shareProvisionedBandwidthMibps, enableSmbDirectoryLease);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new ShareCreateHeaders(message.Response);
-            switch (message.Response.Status)
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ShareRestClient.Create");
+            scope.Start();
+            try
             {
-                case 201:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
+                using HttpMessage message = CreateCreateRequest(timeout, metadata, quota, accessTier, enabledProtocols, rootSquash, enableSnapshotVirtualDirectoryAccess, paidBurstingEnabled, paidBurstingMaxIops, paidBurstingMaxBandwidthMibps, shareProvisionedIops, shareProvisionedBandwidthMibps, enableSmbDirectoryLease, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Creates a new share under the specified account. If the share with the same name already exists, the operation fails.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="metadata"> Optional. User-defined metadata for the resource. </param>
+        /// <param name="quota"> Specifies the maximum size of the share, in gigabytes. </param>
+        /// <param name="accessTier"> Specifies the access tier of the share. </param>
+        /// <param name="enabledProtocols"> Protocols to enable on the share. </param>
+        /// <param name="rootSquash"> Root squash to set on the share. Only valid for NFS shares. </param>
+        /// <param name="enableSnapshotVirtualDirectoryAccess"> Optional. Used to enable snapshot virtual directory access. </param>
+        /// <param name="paidBurstingEnabled"> Optional. Boolean. Default if not specified is false. This property enables paid bursting. </param>
+        /// <param name="paidBurstingMaxIops"> Optional. Integer. Default if not specified is the maximum IOPS the file share can support. Current maximum for a file share is 102,400 IOPS. </param>
+        /// <param name="paidBurstingMaxBandwidthMibps"> Optional. Integer. Default if not specified is the maximum throughput the file share can support. Current maximum for a file share is 10,340 MiB/sec. </param>
+        /// <param name="shareProvisionedIops"> Optional. Specifies the provisioned IOPS of the share. </param>
+        /// <param name="shareProvisionedBandwidthMibps"> Optional. Specifies the provisioned bandwidth of the share, in MiBps. </param>
+        /// <param name="enableSmbDirectoryLease"> Optional. Used to enable SMB directory lease. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> CreateAsync(int? timeout, IDictionary<string, string> metadata, int? quota, string accessTier, string enabledProtocols, string rootSquash, bool? enableSnapshotVirtualDirectoryAccess, bool? paidBurstingEnabled, long? paidBurstingMaxIops, long? paidBurstingMaxBandwidthMibps, long? shareProvisionedIops, long? shareProvisionedBandwidthMibps, bool? enableSmbDirectoryLease, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ShareRestClient.Create");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCreateRequest(timeout, metadata, quota, accessTier, enabledProtocols, rootSquash, enableSnapshotVirtualDirectoryAccess, paidBurstingEnabled, paidBurstingMaxIops, paidBurstingMaxBandwidthMibps, shareProvisionedIops, shareProvisionedBandwidthMibps, enableSmbDirectoryLease, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
             }
         }
 
         /// <summary> Creates a new share under the specified account. If the share with the same name already exists, the operation fails. </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
-        /// <param name="metadata"> A name-value pair to associate with a file storage object. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="metadata"> Optional. User-defined metadata for the resource. </param>
         /// <param name="quota"> Specifies the maximum size of the share, in gigabytes. </param>
         /// <param name="accessTier"> Specifies the access tier of the share. </param>
         /// <param name="enabledProtocols"> Protocols to enable on the share. </param>
-        /// <param name="rootSquash"> Root squash to set on the share.  Only valid for NFS shares. </param>
-        /// <param name="enableSnapshotVirtualDirectoryAccess"> The <see cref="bool"/>? to use. </param>
+        /// <param name="rootSquash"> Root squash to set on the share. Only valid for NFS shares. </param>
+        /// <param name="enableSnapshotVirtualDirectoryAccess"> Optional. Used to enable snapshot virtual directory access. </param>
         /// <param name="paidBurstingEnabled"> Optional. Boolean. Default if not specified is false. This property enables paid bursting. </param>
-        /// <param name="paidBurstingMaxBandwidthMibps"> Optional. Integer. Default if not specified is the maximum throughput the file share can support. Current maximum for a file share is 10,340  MiB/sec. </param>
         /// <param name="paidBurstingMaxIops"> Optional. Integer. Default if not specified is the maximum IOPS the file share can support. Current maximum for a file share is 102,400 IOPS. </param>
-        /// <param name="shareProvisionedIops"> Optional. Supported in version 2025-01-05 and later. Only allowed for provisioned v2 file shares. Specifies the provisioned number of input/output operations per second (IOPS) of the share. If this is not specified, the provisioned IOPS is set to value calculated based on recommendation formula. </param>
-        /// <param name="shareProvisionedBandwidthMibps"> Optional. Supported in version 2025-01-05 and later. Only allowed for provisioned v2 file shares. Specifies the provisioned bandwidth of the share, in mebibytes per second (MiBps). If this is not specified, the provisioned bandwidth is set to value calculated based on recommendation formula. </param>
-        /// <param name="enableSmbDirectoryLease"> SMB only, default is true.  Specifies whether granting of new directory leases for directories present in a share are to be enabled or disabled. An input of true specifies that granting of new directory leases is to be allowed. An input of false specifies that granting of new directory leases is to be blocked. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<ShareCreateHeaders> Create(int? timeout = null, IDictionary<string, string> metadata = null, int? quota = null, ShareAccessTier? accessTier = null, string enabledProtocols = null, ShareRootSquash? rootSquash = null, bool? enableSnapshotVirtualDirectoryAccess = null, bool? paidBurstingEnabled = null, long? paidBurstingMaxBandwidthMibps = null, long? paidBurstingMaxIops = null, long? shareProvisionedIops = null, long? shareProvisionedBandwidthMibps = null, bool? enableSmbDirectoryLease = null, CancellationToken cancellationToken = default)
+        /// <param name="paidBurstingMaxBandwidthMibps"> Optional. Integer. Default if not specified is the maximum throughput the file share can support. Current maximum for a file share is 10,340 MiB/sec. </param>
+        /// <param name="shareProvisionedIops"> Optional. Specifies the provisioned IOPS of the share. </param>
+        /// <param name="shareProvisionedBandwidthMibps"> Optional. Specifies the provisioned bandwidth of the share, in MiBps. </param>
+        /// <param name="enableSmbDirectoryLease"> Optional. Used to enable SMB directory lease. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response Create(int? timeout = default, IDictionary<string, string> metadata = default, int? quota = default, ShareAccessTier? accessTier = default, string enabledProtocols = default, ShareRootSquash? rootSquash = default, bool? enableSnapshotVirtualDirectoryAccess = default, bool? paidBurstingEnabled = default, long? paidBurstingMaxIops = default, long? paidBurstingMaxBandwidthMibps = default, long? shareProvisionedIops = default, long? shareProvisionedBandwidthMibps = default, bool? enableSmbDirectoryLease = default, CancellationToken cancellationToken = default)
         {
-            using var message = CreateCreateRequest(timeout, metadata, quota, accessTier, enabledProtocols, rootSquash, enableSnapshotVirtualDirectoryAccess, paidBurstingEnabled, paidBurstingMaxBandwidthMibps, paidBurstingMaxIops, shareProvisionedIops, shareProvisionedBandwidthMibps, enableSmbDirectoryLease);
-            _pipeline.Send(message, cancellationToken);
-            var headers = new ShareCreateHeaders(message.Response);
-            switch (message.Response.Status)
+            return Create(timeout, metadata, quota, accessTier?.ToString(), enabledProtocols, rootSquash?.ToSerialString(), enableSnapshotVirtualDirectoryAccess, paidBurstingEnabled, paidBurstingMaxIops, paidBurstingMaxBandwidthMibps, shareProvisionedIops, shareProvisionedBandwidthMibps, enableSmbDirectoryLease, cancellationToken.ToRequestContext());
+        }
+
+        /// <summary> Creates a new share under the specified account. If the share with the same name already exists, the operation fails. </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="metadata"> Optional. User-defined metadata for the resource. </param>
+        /// <param name="quota"> Specifies the maximum size of the share, in gigabytes. </param>
+        /// <param name="accessTier"> Specifies the access tier of the share. </param>
+        /// <param name="enabledProtocols"> Protocols to enable on the share. </param>
+        /// <param name="rootSquash"> Root squash to set on the share. Only valid for NFS shares. </param>
+        /// <param name="enableSnapshotVirtualDirectoryAccess"> Optional. Used to enable snapshot virtual directory access. </param>
+        /// <param name="paidBurstingEnabled"> Optional. Boolean. Default if not specified is false. This property enables paid bursting. </param>
+        /// <param name="paidBurstingMaxIops"> Optional. Integer. Default if not specified is the maximum IOPS the file share can support. Current maximum for a file share is 102,400 IOPS. </param>
+        /// <param name="paidBurstingMaxBandwidthMibps"> Optional. Integer. Default if not specified is the maximum throughput the file share can support. Current maximum for a file share is 10,340 MiB/sec. </param>
+        /// <param name="shareProvisionedIops"> Optional. Specifies the provisioned IOPS of the share. </param>
+        /// <param name="shareProvisionedBandwidthMibps"> Optional. Specifies the provisioned bandwidth of the share, in MiBps. </param>
+        /// <param name="enableSmbDirectoryLease"> Optional. Used to enable SMB directory lease. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> CreateAsync(int? timeout = default, IDictionary<string, string> metadata = default, int? quota = default, ShareAccessTier? accessTier = default, string enabledProtocols = default, ShareRootSquash? rootSquash = default, bool? enableSnapshotVirtualDirectoryAccess = default, bool? paidBurstingEnabled = default, long? paidBurstingMaxIops = default, long? paidBurstingMaxBandwidthMibps = default, long? shareProvisionedIops = default, long? shareProvisionedBandwidthMibps = default, bool? enableSmbDirectoryLease = default, CancellationToken cancellationToken = default)
+        {
+            return await CreateAsync(timeout, metadata, quota, accessTier?.ToString(), enabledProtocols, rootSquash?.ToSerialString(), enableSnapshotVirtualDirectoryAccess, paidBurstingEnabled, paidBurstingMaxIops, paidBurstingMaxBandwidthMibps, shareProvisionedIops, shareProvisionedBandwidthMibps, enableSmbDirectoryLease, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Returns all user-defined metadata and system properties for the specified share or share snapshot.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetProperties(string sharesnapshot, int? timeout, string leaseId, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ShareRestClient.GetProperties");
+            scope.Start();
+            try
             {
-                case 201:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
+                using HttpMessage message = CreateGetPropertiesRequest(sharesnapshot, timeout, leaseId, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
             }
         }
 
-        internal HttpMessage CreateGetPropertiesRequest(string sharesnapshot, int? timeout, ShareFileRequestConditions shareFileRequestConditions)
+        /// <summary>
+        /// [Protocol Method] Returns all user-defined metadata and system properties for the specified share or share snapshot.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetPropertiesAsync(string sharesnapshot, int? timeout, string leaseId, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_url, false);
-            uri.AppendQuery("restype", "share", true);
-            if (sharesnapshot != null)
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ShareRestClient.GetProperties");
+            scope.Start();
+            try
             {
-                uri.AppendQuery("sharesnapshot", sharesnapshot, true);
+                using HttpMessage message = CreateGetPropertiesRequest(sharesnapshot, timeout, leaseId, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
-            if (timeout != null)
+            catch (Exception e)
             {
-                uri.AppendQuery("timeout", timeout.Value, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("x-ms-version", _version);
-            if (shareFileRequestConditions?.LeaseId != null)
-            {
-                request.Headers.Add("x-ms-lease-id", shareFileRequestConditions.LeaseId);
-            }
-            if (_fileRequestIntent != null)
-            {
-                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
-            }
-            request.Headers.Add("Accept", "application/xml");
-            return message;
-        }
-
-        /// <summary> Returns all user-defined metadata and system properties for the specified share or share snapshot. The data returned does not include the share's list of files. </summary>
-        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
-        /// <param name="shareFileRequestConditions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<ShareGetPropertiesHeaders>> GetPropertiesAsync(string sharesnapshot = null, int? timeout = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
-        {
-            using var message = CreateGetPropertiesRequest(sharesnapshot, timeout, shareFileRequestConditions);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new ShareGetPropertiesHeaders(message.Response);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
+                scope.Failed(e);
+                throw;
             }
         }
 
-        /// <summary> Returns all user-defined metadata and system properties for the specified share or share snapshot. The data returned does not include the share's list of files. </summary>
-        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
-        /// <param name="shareFileRequestConditions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<ShareGetPropertiesHeaders> GetProperties(string sharesnapshot = null, int? timeout = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
+        /// <summary> Returns all user-defined metadata and system properties for the specified share or share snapshot. </summary>
+        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response GetProperties(string sharesnapshot = default, int? timeout = default, string leaseId = default, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetPropertiesRequest(sharesnapshot, timeout, shareFileRequestConditions);
-            _pipeline.Send(message, cancellationToken);
-            var headers = new ShareGetPropertiesHeaders(message.Response);
-            switch (message.Response.Status)
+            return GetProperties(sharesnapshot, timeout, leaseId, cancellationToken.ToRequestContext());
+        }
+
+        /// <summary> Returns all user-defined metadata and system properties for the specified share or share snapshot. </summary>
+        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> GetPropertiesAsync(string sharesnapshot = default, int? timeout = default, string leaseId = default, CancellationToken cancellationToken = default)
+        {
+            return await GetPropertiesAsync(sharesnapshot, timeout, leaseId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Operation marks the specified share or share snapshot for deletion. The share or share snapshot and any files contained within it are later deleted during garbage collection.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="deleteSnapshots"> Specifies the option include to delete the base share and all of its snapshots. </param>
+        /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response Delete(string sharesnapshot, int? timeout, string deleteSnapshots, string leaseId, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ShareRestClient.Delete");
+            scope.Start();
+            try
             {
-                case 200:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
+                using HttpMessage message = CreateDeleteRequest(sharesnapshot, timeout, deleteSnapshots, leaseId, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(string sharesnapshot, int? timeout, DeleteSnapshotsOptionType? deleteSnapshots, ShareFileRequestConditions shareFileRequestConditions)
+        /// <summary>
+        /// [Protocol Method] Operation marks the specified share or share snapshot for deletion. The share or share snapshot and any files contained within it are later deleted during garbage collection.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="deleteSnapshots"> Specifies the option include to delete the base share and all of its snapshots. </param>
+        /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> DeleteAsync(string sharesnapshot, int? timeout, string deleteSnapshots, string leaseId, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_url, false);
-            uri.AppendQuery("restype", "share", true);
-            if (sharesnapshot != null)
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ShareRestClient.Delete");
+            scope.Start();
+            try
             {
-                uri.AppendQuery("sharesnapshot", sharesnapshot, true);
+                using HttpMessage message = CreateDeleteRequest(sharesnapshot, timeout, deleteSnapshots, leaseId, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
-            if (timeout != null)
+            catch (Exception e)
             {
-                uri.AppendQuery("timeout", timeout.Value, true);
+                scope.Failed(e);
+                throw;
             }
-            request.Uri = uri;
-            request.Headers.Add("x-ms-version", _version);
-            if (deleteSnapshots != null)
-            {
-                request.Headers.Add("x-ms-delete-snapshots", deleteSnapshots.Value.ToSerialString());
-            }
-            if (shareFileRequestConditions?.LeaseId != null)
-            {
-                request.Headers.Add("x-ms-lease-id", shareFileRequestConditions.LeaseId);
-            }
-            if (_fileRequestIntent != null)
-            {
-                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
-            }
-            request.Headers.Add("Accept", "application/xml");
-            return message;
         }
 
         /// <summary> Operation marks the specified share or share snapshot for deletion. The share or share snapshot and any files contained within it are later deleted during garbage collection. </summary>
-        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
+        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="deleteSnapshots"> Specifies the option include to delete the base share and all of its snapshots. </param>
-        /// <param name="shareFileRequestConditions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<ShareDeleteHeaders>> DeleteAsync(string sharesnapshot = null, int? timeout = null, DeleteSnapshotsOptionType? deleteSnapshots = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
+        /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response Delete(string sharesnapshot = default, int? timeout = default, DeleteSnapshotsOptionType? deleteSnapshots = default, string leaseId = default, CancellationToken cancellationToken = default)
         {
-            using var message = CreateDeleteRequest(sharesnapshot, timeout, deleteSnapshots, shareFileRequestConditions);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new ShareDeleteHeaders(message.Response);
-            switch (message.Response.Status)
-            {
-                case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
+            return Delete(sharesnapshot, timeout, deleteSnapshots?.ToSerialString(), leaseId, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Operation marks the specified share or share snapshot for deletion. The share or share snapshot and any files contained within it are later deleted during garbage collection. </summary>
-        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
+        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="deleteSnapshots"> Specifies the option include to delete the base share and all of its snapshots. </param>
-        /// <param name="shareFileRequestConditions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<ShareDeleteHeaders> Delete(string sharesnapshot = null, int? timeout = null, DeleteSnapshotsOptionType? deleteSnapshots = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
+        /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> DeleteAsync(string sharesnapshot = default, int? timeout = default, DeleteSnapshotsOptionType? deleteSnapshots = default, string leaseId = default, CancellationToken cancellationToken = default)
         {
-            using var message = CreateDeleteRequest(sharesnapshot, timeout, deleteSnapshots, shareFileRequestConditions);
-            _pipeline.Send(message, cancellationToken);
-            var headers = new ShareDeleteHeaders(message.Response);
-            switch (message.Response.Status)
-            {
-                case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
+            return await DeleteAsync(sharesnapshot, timeout, deleteSnapshots?.ToSerialString(), leaseId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
-        internal HttpMessage CreateAcquireLeaseRequest(int? timeout, int? duration, string proposedLeaseId, string sharesnapshot)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_url, false);
-            uri.AppendQuery("comp", "lease", true);
-            uri.AppendQuery("restype", "share", true);
-            if (timeout != null)
-            {
-                uri.AppendQuery("timeout", timeout.Value, true);
-            }
-            if (sharesnapshot != null)
-            {
-                uri.AppendQuery("sharesnapshot", sharesnapshot, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("x-ms-lease-action", "acquire");
-            if (duration != null)
-            {
-                request.Headers.Add("x-ms-lease-duration", duration.Value);
-            }
-            if (proposedLeaseId != null)
-            {
-                request.Headers.Add("x-ms-proposed-lease-id", proposedLeaseId);
-            }
-            request.Headers.Add("x-ms-version", _version);
-            if (_fileRequestIntent != null)
-            {
-                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
-            }
-            request.Headers.Add("Accept", "application/xml");
-            return message;
-        }
-
-        /// <summary> The Lease Share operation establishes and manages a lock on a share, or the specified snapshot for set and delete share operations. </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
-        /// <param name="duration"> Specifies the duration of the lease, in seconds, or negative one (-1) for a lease that never expires. A non-infinite lease can be between 15 and 60 seconds. A lease duration cannot be changed using renew or change. </param>
+        /// <summary>
+        /// [Protocol Method] The Lease Share operation establishes and manages a lock on a share for delete operations. The lock duration can be 15 to 60 seconds, or can be infinite.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="leaseDuration"> Specifies the duration of the lease, in seconds, or negative one (-1) for a lease that never expires. A non-infinite lease can be between 15 and 60 seconds. A lease duration cannot be changed using renew or change. </param>
         /// <param name="proposedLeaseId"> Proposed lease ID, in a GUID string format. The File service returns 400 (Invalid request) if the proposed lease ID is not in the correct format. See Guid Constructor (String) for a list of valid GUID string formats. </param>
-        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<ShareAcquireLeaseHeaders>> AcquireLeaseAsync(int? timeout = null, int? duration = null, string proposedLeaseId = null, string sharesnapshot = null, CancellationToken cancellationToken = default)
+        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response AcquireLease(int? timeout, int? leaseDuration, string proposedLeaseId, string sharesnapshot, RequestContext context)
         {
-            using var message = CreateAcquireLeaseRequest(timeout, duration, proposedLeaseId, sharesnapshot);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new ShareAcquireLeaseHeaders(message.Response);
-            switch (message.Response.Status)
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ShareRestClient.AcquireLease");
+            scope.Start();
+            try
             {
-                case 201:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
+                using HttpMessage message = CreateAcquireLeaseRequest(timeout, leaseDuration, proposedLeaseId, sharesnapshot, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
             }
         }
 
-        /// <summary> The Lease Share operation establishes and manages a lock on a share, or the specified snapshot for set and delete share operations. </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
-        /// <param name="duration"> Specifies the duration of the lease, in seconds, or negative one (-1) for a lease that never expires. A non-infinite lease can be between 15 and 60 seconds. A lease duration cannot be changed using renew or change. </param>
+        /// <summary>
+        /// [Protocol Method] The Lease Share operation establishes and manages a lock on a share for delete operations. The lock duration can be 15 to 60 seconds, or can be infinite.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="leaseDuration"> Specifies the duration of the lease, in seconds, or negative one (-1) for a lease that never expires. A non-infinite lease can be between 15 and 60 seconds. A lease duration cannot be changed using renew or change. </param>
         /// <param name="proposedLeaseId"> Proposed lease ID, in a GUID string format. The File service returns 400 (Invalid request) if the proposed lease ID is not in the correct format. See Guid Constructor (String) for a list of valid GUID string formats. </param>
-        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<ShareAcquireLeaseHeaders> AcquireLease(int? timeout = null, int? duration = null, string proposedLeaseId = null, string sharesnapshot = null, CancellationToken cancellationToken = default)
+        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> AcquireLeaseAsync(int? timeout, int? leaseDuration, string proposedLeaseId, string sharesnapshot, RequestContext context)
         {
-            using var message = CreateAcquireLeaseRequest(timeout, duration, proposedLeaseId, sharesnapshot);
-            _pipeline.Send(message, cancellationToken);
-            var headers = new ShareAcquireLeaseHeaders(message.Response);
-            switch (message.Response.Status)
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ShareRestClient.AcquireLease");
+            scope.Start();
+            try
             {
-                case 201:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
+                using HttpMessage message = CreateAcquireLeaseRequest(timeout, leaseDuration, proposedLeaseId, sharesnapshot, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
             }
         }
 
-        internal HttpMessage CreateReleaseLeaseRequest(string leaseId, int? timeout, string sharesnapshot)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_url, false);
-            uri.AppendQuery("comp", "lease", true);
-            uri.AppendQuery("restype", "share", true);
-            if (timeout != null)
-            {
-                uri.AppendQuery("timeout", timeout.Value, true);
-            }
-            if (sharesnapshot != null)
-            {
-                uri.AppendQuery("sharesnapshot", sharesnapshot, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("x-ms-lease-action", "release");
-            request.Headers.Add("x-ms-lease-id", leaseId);
-            request.Headers.Add("x-ms-version", _version);
-            if (_fileRequestIntent != null)
-            {
-                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
-            }
-            request.Headers.Add("Accept", "application/xml");
-            return message;
-        }
-
-        /// <summary> The Lease Share operation establishes and manages a lock on a share, or the specified snapshot for set and delete share operations. </summary>
-        /// <param name="leaseId"> Specifies the current lease ID on the resource. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
-        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="leaseId"/> is null. </exception>
-        public async Task<ResponseWithHeaders<ShareReleaseLeaseHeaders>> ReleaseLeaseAsync(string leaseId, int? timeout = null, string sharesnapshot = null, CancellationToken cancellationToken = default)
-        {
-            if (leaseId == null)
-            {
-                throw new ArgumentNullException(nameof(leaseId));
-            }
-
-            using var message = CreateReleaseLeaseRequest(leaseId, timeout, sharesnapshot);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new ShareReleaseLeaseHeaders(message.Response);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> The Lease Share operation establishes and manages a lock on a share, or the specified snapshot for set and delete share operations. </summary>
-        /// <param name="leaseId"> Specifies the current lease ID on the resource. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
-        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="leaseId"/> is null. </exception>
-        public ResponseWithHeaders<ShareReleaseLeaseHeaders> ReleaseLease(string leaseId, int? timeout = null, string sharesnapshot = null, CancellationToken cancellationToken = default)
-        {
-            if (leaseId == null)
-            {
-                throw new ArgumentNullException(nameof(leaseId));
-            }
-
-            using var message = CreateReleaseLeaseRequest(leaseId, timeout, sharesnapshot);
-            _pipeline.Send(message, cancellationToken);
-            var headers = new ShareReleaseLeaseHeaders(message.Response);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateChangeLeaseRequest(string leaseId, int? timeout, string proposedLeaseId, string sharesnapshot)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_url, false);
-            uri.AppendQuery("comp", "lease", true);
-            uri.AppendQuery("restype", "share", true);
-            if (timeout != null)
-            {
-                uri.AppendQuery("timeout", timeout.Value, true);
-            }
-            if (sharesnapshot != null)
-            {
-                uri.AppendQuery("sharesnapshot", sharesnapshot, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("x-ms-lease-action", "change");
-            request.Headers.Add("x-ms-lease-id", leaseId);
-            if (proposedLeaseId != null)
-            {
-                request.Headers.Add("x-ms-proposed-lease-id", proposedLeaseId);
-            }
-            request.Headers.Add("x-ms-version", _version);
-            if (_fileRequestIntent != null)
-            {
-                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
-            }
-            request.Headers.Add("Accept", "application/xml");
-            return message;
-        }
-
-        /// <summary> The Lease Share operation establishes and manages a lock on a share, or the specified snapshot for set and delete share operations. </summary>
-        /// <param name="leaseId"> Specifies the current lease ID on the resource. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
+        /// <summary> The Lease Share operation establishes and manages a lock on a share for delete operations. The lock duration can be 15 to 60 seconds, or can be infinite. </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="leaseDuration"> Specifies the duration of the lease, in seconds, or negative one (-1) for a lease that never expires. A non-infinite lease can be between 15 and 60 seconds. A lease duration cannot be changed using renew or change. </param>
         /// <param name="proposedLeaseId"> Proposed lease ID, in a GUID string format. The File service returns 400 (Invalid request) if the proposed lease ID is not in the correct format. See Guid Constructor (String) for a list of valid GUID string formats. </param>
-        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="leaseId"/> is null. </exception>
-        public async Task<ResponseWithHeaders<ShareChangeLeaseHeaders>> ChangeLeaseAsync(string leaseId, int? timeout = null, string proposedLeaseId = null, string sharesnapshot = null, CancellationToken cancellationToken = default)
+        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response AcquireLease(int? timeout = default, int? leaseDuration = default, string proposedLeaseId = default, string sharesnapshot = default, CancellationToken cancellationToken = default)
         {
-            if (leaseId == null)
-            {
-                throw new ArgumentNullException(nameof(leaseId));
-            }
-
-            using var message = CreateChangeLeaseRequest(leaseId, timeout, proposedLeaseId, sharesnapshot);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new ShareChangeLeaseHeaders(message.Response);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
+            return AcquireLease(timeout, leaseDuration, proposedLeaseId, sharesnapshot, cancellationToken.ToRequestContext());
         }
 
-        /// <summary> The Lease Share operation establishes and manages a lock on a share, or the specified snapshot for set and delete share operations. </summary>
-        /// <param name="leaseId"> Specifies the current lease ID on the resource. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
+        /// <summary> The Lease Share operation establishes and manages a lock on a share for delete operations. The lock duration can be 15 to 60 seconds, or can be infinite. </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="leaseDuration"> Specifies the duration of the lease, in seconds, or negative one (-1) for a lease that never expires. A non-infinite lease can be between 15 and 60 seconds. A lease duration cannot be changed using renew or change. </param>
         /// <param name="proposedLeaseId"> Proposed lease ID, in a GUID string format. The File service returns 400 (Invalid request) if the proposed lease ID is not in the correct format. See Guid Constructor (String) for a list of valid GUID string formats. </param>
-        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="leaseId"/> is null. </exception>
-        public ResponseWithHeaders<ShareChangeLeaseHeaders> ChangeLease(string leaseId, int? timeout = null, string proposedLeaseId = null, string sharesnapshot = null, CancellationToken cancellationToken = default)
+        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> AcquireLeaseAsync(int? timeout = default, int? leaseDuration = default, string proposedLeaseId = default, string sharesnapshot = default, CancellationToken cancellationToken = default)
         {
-            if (leaseId == null)
-            {
-                throw new ArgumentNullException(nameof(leaseId));
-            }
-
-            using var message = CreateChangeLeaseRequest(leaseId, timeout, proposedLeaseId, sharesnapshot);
-            _pipeline.Send(message, cancellationToken);
-            var headers = new ShareChangeLeaseHeaders(message.Response);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
+            return await AcquireLeaseAsync(timeout, leaseDuration, proposedLeaseId, sharesnapshot, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
-        internal HttpMessage CreateRenewLeaseRequest(string leaseId, int? timeout, string sharesnapshot)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_url, false);
-            uri.AppendQuery("comp", "lease", true);
-            uri.AppendQuery("restype", "share", true);
-            if (timeout != null)
-            {
-                uri.AppendQuery("timeout", timeout.Value, true);
-            }
-            if (sharesnapshot != null)
-            {
-                uri.AppendQuery("sharesnapshot", sharesnapshot, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("x-ms-lease-action", "renew");
-            request.Headers.Add("x-ms-lease-id", leaseId);
-            request.Headers.Add("x-ms-version", _version);
-            if (_fileRequestIntent != null)
-            {
-                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
-            }
-            request.Headers.Add("Accept", "application/xml");
-            return message;
-        }
-
-        /// <summary> The Lease Share operation establishes and manages a lock on a share, or the specified snapshot for set and delete share operations. </summary>
+        /// <summary>
+        /// [Protocol Method] The Lease Share operation establishes and manages a lock on a share for delete operations. The lock duration can be 15 to 60 seconds, or can be infinite.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="leaseId"> Specifies the current lease ID on the resource. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
-        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="leaseId"/> is null. </exception>
-        public async Task<ResponseWithHeaders<ShareRenewLeaseHeaders>> RenewLeaseAsync(string leaseId, int? timeout = null, string sharesnapshot = null, CancellationToken cancellationToken = default)
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response ReleaseLease(string leaseId, int? timeout, string sharesnapshot, RequestContext context)
         {
-            if (leaseId == null)
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ShareRestClient.ReleaseLease");
+            scope.Start();
+            try
             {
-                throw new ArgumentNullException(nameof(leaseId));
+                using HttpMessage message = CreateReleaseLeaseRequest(leaseId, timeout, sharesnapshot, context);
+                return Pipeline.ProcessMessage(message, context);
             }
-
-            using var message = CreateRenewLeaseRequest(leaseId, timeout, sharesnapshot);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new ShareRenewLeaseHeaders(message.Response);
-            switch (message.Response.Status)
+            catch (Exception e)
             {
-                case 200:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
+                scope.Failed(e);
+                throw;
             }
         }
 
-        /// <summary> The Lease Share operation establishes and manages a lock on a share, or the specified snapshot for set and delete share operations. </summary>
+        /// <summary>
+        /// [Protocol Method] The Lease Share operation establishes and manages a lock on a share for delete operations. The lock duration can be 15 to 60 seconds, or can be infinite.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="leaseId"> Specifies the current lease ID on the resource. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
-        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="leaseId"/> is null. </exception>
-        public ResponseWithHeaders<ShareRenewLeaseHeaders> RenewLease(string leaseId, int? timeout = null, string sharesnapshot = null, CancellationToken cancellationToken = default)
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> ReleaseLeaseAsync(string leaseId, int? timeout, string sharesnapshot, RequestContext context)
         {
-            if (leaseId == null)
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ShareRestClient.ReleaseLease");
+            scope.Start();
+            try
             {
-                throw new ArgumentNullException(nameof(leaseId));
+                using HttpMessage message = CreateReleaseLeaseRequest(leaseId, timeout, sharesnapshot, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
-
-            using var message = CreateRenewLeaseRequest(leaseId, timeout, sharesnapshot);
-            _pipeline.Send(message, cancellationToken);
-            var headers = new ShareRenewLeaseHeaders(message.Response);
-            switch (message.Response.Status)
+            catch (Exception e)
             {
-                case 200:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
+                scope.Failed(e);
+                throw;
             }
         }
 
-        internal HttpMessage CreateBreakLeaseRequest(int? timeout, int? breakPeriod, string sharesnapshot, ShareFileRequestConditions shareFileRequestConditions)
+        /// <summary> The Lease Share operation establishes and manages a lock on a share for delete operations. The lock duration can be 15 to 60 seconds, or can be infinite. </summary>
+        /// <param name="leaseId"> Specifies the current lease ID on the resource. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response ReleaseLease(string leaseId, int? timeout = default, string sharesnapshot = default, CancellationToken cancellationToken = default)
         {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_url, false);
-            uri.AppendQuery("comp", "lease", true);
-            uri.AppendQuery("restype", "share", true);
-            if (timeout != null)
-            {
-                uri.AppendQuery("timeout", timeout.Value, true);
-            }
-            if (sharesnapshot != null)
-            {
-                uri.AppendQuery("sharesnapshot", sharesnapshot, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("x-ms-lease-action", "break");
-            if (breakPeriod != null)
-            {
-                request.Headers.Add("x-ms-lease-break-period", breakPeriod.Value);
-            }
-            if (shareFileRequestConditions?.LeaseId != null)
-            {
-                request.Headers.Add("x-ms-lease-id", shareFileRequestConditions.LeaseId);
-            }
-            request.Headers.Add("x-ms-version", _version);
-            if (_fileRequestIntent != null)
-            {
-                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
-            }
-            request.Headers.Add("Accept", "application/xml");
-            return message;
+            return ReleaseLease(leaseId, timeout, sharesnapshot, cancellationToken.ToRequestContext());
         }
 
-        /// <summary> The Lease Share operation establishes and manages a lock on a share, or the specified snapshot for set and delete share operations. </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
+        /// <summary> The Lease Share operation establishes and manages a lock on a share for delete operations. The lock duration can be 15 to 60 seconds, or can be infinite. </summary>
+        /// <param name="leaseId"> Specifies the current lease ID on the resource. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> ReleaseLeaseAsync(string leaseId, int? timeout = default, string sharesnapshot = default, CancellationToken cancellationToken = default)
+        {
+            return await ReleaseLeaseAsync(leaseId, timeout, sharesnapshot, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// [Protocol Method] The Lease Share operation establishes and manages a lock on a share for delete operations. The lock duration can be 15 to 60 seconds, or can be infinite.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="leaseId"> Specifies the current lease ID on the resource. </param>
+        /// <param name="proposedLeaseId"> Proposed lease ID, in a GUID string format. The File service returns 400 (Invalid request) if the proposed lease ID is not in the correct format. See Guid Constructor (String) for a list of valid GUID string formats. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response ChangeLease(string leaseId, string proposedLeaseId, int? timeout, string sharesnapshot, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ShareRestClient.ChangeLease");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateChangeLeaseRequest(leaseId, proposedLeaseId, timeout, sharesnapshot, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] The Lease Share operation establishes and manages a lock on a share for delete operations. The lock duration can be 15 to 60 seconds, or can be infinite.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="leaseId"> Specifies the current lease ID on the resource. </param>
+        /// <param name="proposedLeaseId"> Proposed lease ID, in a GUID string format. The File service returns 400 (Invalid request) if the proposed lease ID is not in the correct format. See Guid Constructor (String) for a list of valid GUID string formats. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> ChangeLeaseAsync(string leaseId, string proposedLeaseId, int? timeout, string sharesnapshot, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ShareRestClient.ChangeLease");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateChangeLeaseRequest(leaseId, proposedLeaseId, timeout, sharesnapshot, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> The Lease Share operation establishes and manages a lock on a share for delete operations. The lock duration can be 15 to 60 seconds, or can be infinite. </summary>
+        /// <param name="leaseId"> Specifies the current lease ID on the resource. </param>
+        /// <param name="proposedLeaseId"> Proposed lease ID, in a GUID string format. The File service returns 400 (Invalid request) if the proposed lease ID is not in the correct format. See Guid Constructor (String) for a list of valid GUID string formats. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response ChangeLease(string leaseId, string proposedLeaseId = default, int? timeout = default, string sharesnapshot = default, CancellationToken cancellationToken = default)
+        {
+            return ChangeLease(leaseId, proposedLeaseId, timeout, sharesnapshot, cancellationToken.ToRequestContext());
+        }
+
+        /// <summary> The Lease Share operation establishes and manages a lock on a share for delete operations. The lock duration can be 15 to 60 seconds, or can be infinite. </summary>
+        /// <param name="leaseId"> Specifies the current lease ID on the resource. </param>
+        /// <param name="proposedLeaseId"> Proposed lease ID, in a GUID string format. The File service returns 400 (Invalid request) if the proposed lease ID is not in the correct format. See Guid Constructor (String) for a list of valid GUID string formats. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> ChangeLeaseAsync(string leaseId, string proposedLeaseId = default, int? timeout = default, string sharesnapshot = default, CancellationToken cancellationToken = default)
+        {
+            return await ChangeLeaseAsync(leaseId, proposedLeaseId, timeout, sharesnapshot, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// [Protocol Method] The Lease Share operation establishes and manages a lock on a share for delete operations. The lock duration can be 15 to 60 seconds, or can be infinite.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="leaseId"> Specifies the current lease ID on the resource. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response RenewLease(string leaseId, int? timeout, string sharesnapshot, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ShareRestClient.RenewLease");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateRenewLeaseRequest(leaseId, timeout, sharesnapshot, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] The Lease Share operation establishes and manages a lock on a share for delete operations. The lock duration can be 15 to 60 seconds, or can be infinite.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="leaseId"> Specifies the current lease ID on the resource. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> RenewLeaseAsync(string leaseId, int? timeout, string sharesnapshot, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ShareRestClient.RenewLease");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateRenewLeaseRequest(leaseId, timeout, sharesnapshot, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> The Lease Share operation establishes and manages a lock on a share for delete operations. The lock duration can be 15 to 60 seconds, or can be infinite. </summary>
+        /// <param name="leaseId"> Specifies the current lease ID on the resource. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response RenewLease(string leaseId, int? timeout = default, string sharesnapshot = default, CancellationToken cancellationToken = default)
+        {
+            return RenewLease(leaseId, timeout, sharesnapshot, cancellationToken.ToRequestContext());
+        }
+
+        /// <summary> The Lease Share operation establishes and manages a lock on a share for delete operations. The lock duration can be 15 to 60 seconds, or can be infinite. </summary>
+        /// <param name="leaseId"> Specifies the current lease ID on the resource. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> RenewLeaseAsync(string leaseId, int? timeout = default, string sharesnapshot = default, CancellationToken cancellationToken = default)
+        {
+            return await RenewLeaseAsync(leaseId, timeout, sharesnapshot, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// [Protocol Method] The Lease Share operation establishes and manages a lock on a share for delete operations. The lock duration can be 15 to 60 seconds, or can be infinite.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="breakPeriod"> For a break operation, proposed duration the lease should continue before it is broken, in seconds, between 0 and 60. This break period is only used if it is shorter than the time remaining on the lease. If longer, the time remaining on the lease is used. A new lease will not be available before the break period has expired, but the lease may be held for longer than the break period. If this header does not appear with a break operation, a fixed-duration lease breaks after the remaining lease period elapses, and an infinite lease breaks immediately. </param>
-        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query. </param>
-        /// <param name="shareFileRequestConditions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<ShareBreakLeaseHeaders>> BreakLeaseAsync(int? timeout = null, int? breakPeriod = null, string sharesnapshot = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
+        /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
+        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response BreakLease(int? timeout, int? breakPeriod, string leaseId, string sharesnapshot, RequestContext context)
         {
-            using var message = CreateBreakLeaseRequest(timeout, breakPeriod, sharesnapshot, shareFileRequestConditions);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new ShareBreakLeaseHeaders(message.Response);
-            switch (message.Response.Status)
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ShareRestClient.BreakLease");
+            scope.Start();
+            try
             {
-                case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
+                using HttpMessage message = CreateBreakLeaseRequest(timeout, breakPeriod, leaseId, sharesnapshot, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
             }
         }
 
-        /// <summary> The Lease Share operation establishes and manages a lock on a share, or the specified snapshot for set and delete share operations. </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
+        /// <summary>
+        /// [Protocol Method] The Lease Share operation establishes and manages a lock on a share for delete operations. The lock duration can be 15 to 60 seconds, or can be infinite.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="breakPeriod"> For a break operation, proposed duration the lease should continue before it is broken, in seconds, between 0 and 60. This break period is only used if it is shorter than the time remaining on the lease. If longer, the time remaining on the lease is used. A new lease will not be available before the break period has expired, but the lease may be held for longer than the break period. If this header does not appear with a break operation, a fixed-duration lease breaks after the remaining lease period elapses, and an infinite lease breaks immediately. </param>
-        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query. </param>
-        /// <param name="shareFileRequestConditions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<ShareBreakLeaseHeaders> BreakLease(int? timeout = null, int? breakPeriod = null, string sharesnapshot = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
+        /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
+        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> BreakLeaseAsync(int? timeout, int? breakPeriod, string leaseId, string sharesnapshot, RequestContext context)
         {
-            using var message = CreateBreakLeaseRequest(timeout, breakPeriod, sharesnapshot, shareFileRequestConditions);
-            _pipeline.Send(message, cancellationToken);
-            var headers = new ShareBreakLeaseHeaders(message.Response);
-            switch (message.Response.Status)
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ShareRestClient.BreakLease");
+            scope.Start();
+            try
             {
-                case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
+                using HttpMessage message = CreateBreakLeaseRequest(timeout, breakPeriod, leaseId, sharesnapshot, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
             }
         }
 
-        internal HttpMessage CreateCreateSnapshotRequest(int? timeout, IDictionary<string, string> metadata)
+        /// <summary> The Lease Share operation establishes and manages a lock on a share for delete operations. The lock duration can be 15 to 60 seconds, or can be infinite. </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="breakPeriod"> For a break operation, proposed duration the lease should continue before it is broken, in seconds, between 0 and 60. This break period is only used if it is shorter than the time remaining on the lease. If longer, the time remaining on the lease is used. A new lease will not be available before the break period has expired, but the lease may be held for longer than the break period. If this header does not appear with a break operation, a fixed-duration lease breaks after the remaining lease period elapses, and an infinite lease breaks immediately. </param>
+        /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
+        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response BreakLease(int? timeout = default, int? breakPeriod = default, string leaseId = default, string sharesnapshot = default, CancellationToken cancellationToken = default)
         {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_url, false);
-            uri.AppendQuery("restype", "share", true);
-            uri.AppendQuery("comp", "snapshot", true);
-            if (timeout != null)
+            return BreakLease(timeout, breakPeriod, leaseId, sharesnapshot, cancellationToken.ToRequestContext());
+        }
+
+        /// <summary> The Lease Share operation establishes and manages a lock on a share for delete operations. The lock duration can be 15 to 60 seconds, or can be infinite. </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="breakPeriod"> For a break operation, proposed duration the lease should continue before it is broken, in seconds, between 0 and 60. This break period is only used if it is shorter than the time remaining on the lease. If longer, the time remaining on the lease is used. A new lease will not be available before the break period has expired, but the lease may be held for longer than the break period. If this header does not appear with a break operation, a fixed-duration lease breaks after the remaining lease period elapses, and an infinite lease breaks immediately. </param>
+        /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
+        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> BreakLeaseAsync(int? timeout = default, int? breakPeriod = default, string leaseId = default, string sharesnapshot = default, CancellationToken cancellationToken = default)
+        {
+            return await BreakLeaseAsync(timeout, breakPeriod, leaseId, sharesnapshot, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Creates a read-only snapshot of a share.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="metadata"> Optional. User-defined metadata for the resource. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response CreateSnapshot(int? timeout, IDictionary<string, string> metadata, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ShareRestClient.CreateSnapshot");
+            scope.Start();
+            try
             {
-                uri.AppendQuery("timeout", timeout.Value, true);
+                using HttpMessage message = CreateCreateSnapshotRequest(timeout, metadata, context);
+                return Pipeline.ProcessMessage(message, context);
             }
-            request.Uri = uri;
-            if (metadata != null)
+            catch (Exception e)
             {
-                request.Headers.Add("x-ms-meta-", metadata);
+                scope.Failed(e);
+                throw;
             }
-            request.Headers.Add("x-ms-version", _version);
-            if (_fileRequestIntent != null)
+        }
+
+        /// <summary>
+        /// [Protocol Method] Creates a read-only snapshot of a share.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="metadata"> Optional. User-defined metadata for the resource. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> CreateSnapshotAsync(int? timeout, IDictionary<string, string> metadata, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ShareRestClient.CreateSnapshot");
+            scope.Start();
+            try
             {
-                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
+                using HttpMessage message = CreateCreateSnapshotRequest(timeout, metadata, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
-            request.Headers.Add("Accept", "application/xml");
-            return message;
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Creates a read-only snapshot of a share. </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
-        /// <param name="metadata"> A name-value pair to associate with a file storage object. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<ShareCreateSnapshotHeaders>> CreateSnapshotAsync(int? timeout = null, IDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="metadata"> Optional. User-defined metadata for the resource. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response CreateSnapshot(int? timeout = default, IDictionary<string, string> metadata = default, CancellationToken cancellationToken = default)
         {
-            using var message = CreateCreateSnapshotRequest(timeout, metadata);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new ShareCreateSnapshotHeaders(message.Response);
-            switch (message.Response.Status)
-            {
-                case 201:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
+            return CreateSnapshot(timeout, metadata, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Creates a read-only snapshot of a share. </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
-        /// <param name="metadata"> A name-value pair to associate with a file storage object. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<ShareCreateSnapshotHeaders> CreateSnapshot(int? timeout = null, IDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="metadata"> Optional. User-defined metadata for the resource. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> CreateSnapshotAsync(int? timeout = default, IDictionary<string, string> metadata = default, CancellationToken cancellationToken = default)
         {
-            using var message = CreateCreateSnapshotRequest(timeout, metadata);
-            _pipeline.Send(message, cancellationToken);
-            var headers = new ShareCreateSnapshotHeaders(message.Response);
-            switch (message.Response.Status)
+            return await CreateSnapshotAsync(timeout, metadata, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create a permission (a security descriptor). This is used to support file level ACLs for SMB shares.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response CreatePermission(RequestContent content, int? timeout = default, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ShareRestClient.CreatePermission");
+            scope.Start();
+            try
             {
-                case 201:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
+                using HttpMessage message = CreateCreatePermissionRequest(content, timeout, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
             }
         }
 
-        internal HttpMessage CreateCreatePermissionRequest(SharePermission sharePermission, int? timeout)
+        /// <summary>
+        /// [Protocol Method] Create a permission (a security descriptor). This is used to support file level ACLs for SMB shares.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> CreatePermissionAsync(RequestContent content, int? timeout = default, RequestContext context = null)
         {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_url, false);
-            uri.AppendQuery("restype", "share", true);
-            uri.AppendQuery("comp", "filepermission", true);
-            if (timeout != null)
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ShareRestClient.CreatePermission");
+            scope.Start();
+            try
             {
-                uri.AppendQuery("timeout", timeout.Value, true);
+                using HttpMessage message = CreateCreatePermissionRequest(content, timeout, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
-            request.Uri = uri;
-            request.Headers.Add("x-ms-version", _version);
-            if (_fileRequestIntent != null)
+            catch (Exception e)
             {
-                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
-            }
-            request.Headers.Add("Accept", "application/xml");
-            request.Headers.Add("Content-Type", "application/json");
-            var content = new Common.Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(sharePermission);
-            request.Content = content;
-            return message;
-        }
-
-        /// <summary> Create a permission (a security descriptor). </summary>
-        /// <param name="sharePermission"> A permission (a security descriptor) at the share level. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sharePermission"/> is null. </exception>
-        public async Task<ResponseWithHeaders<ShareCreatePermissionHeaders>> CreatePermissionAsync(SharePermission sharePermission, int? timeout = null, CancellationToken cancellationToken = default)
-        {
-            if (sharePermission == null)
-            {
-                throw new ArgumentNullException(nameof(sharePermission));
-            }
-
-            using var message = CreateCreatePermissionRequest(sharePermission, timeout);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new ShareCreatePermissionHeaders(message.Response);
-            switch (message.Response.Status)
-            {
-                case 201:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
+                scope.Failed(e);
+                throw;
             }
         }
 
-        /// <summary> Create a permission (a security descriptor). </summary>
-        /// <param name="sharePermission"> A permission (a security descriptor) at the share level. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sharePermission"/> is null. </exception>
-        public ResponseWithHeaders<ShareCreatePermissionHeaders> CreatePermission(SharePermission sharePermission, int? timeout = null, CancellationToken cancellationToken = default)
+        /// <summary> Create a permission (a security descriptor). This is used to support file level ACLs for SMB shares. </summary>
+        /// <param name="permission"> A permission (a security descriptor) at the share level. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response CreatePermission(SharePermission permission, int? timeout = default, CancellationToken cancellationToken = default)
         {
-            if (sharePermission == null)
-            {
-                throw new ArgumentNullException(nameof(sharePermission));
-            }
+            return CreatePermission(permission, timeout, cancellationToken.ToRequestContext());
+        }
 
-            using var message = CreateCreatePermissionRequest(sharePermission, timeout);
-            _pipeline.Send(message, cancellationToken);
-            var headers = new ShareCreatePermissionHeaders(message.Response);
-            switch (message.Response.Status)
+        /// <summary> Create a permission (a security descriptor). This is used to support file level ACLs for SMB shares. </summary>
+        /// <param name="permission"> A permission (a security descriptor) at the share level. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> CreatePermissionAsync(SharePermission permission, int? timeout = default, CancellationToken cancellationToken = default)
+        {
+            return await CreatePermissionAsync(permission, timeout, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Returns the permission (security descriptor) for a given permission key. This is used to support file level ACLs for SMB shares.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filePermissionKey"> Key of the permission to be set for the directory/file. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="filePermissionFormat"> Optional. Specifies the format in which the permission is returned. Acceptable values are SDDL or binary. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetPermission(string filePermissionKey, int? timeout, string filePermissionFormat, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ShareRestClient.GetPermission");
+            scope.Start();
+            try
             {
-                case 201:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
+                using HttpMessage message = CreateGetPermissionRequest(filePermissionKey, timeout, filePermissionFormat, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
             }
         }
 
-        internal HttpMessage CreateGetPermissionRequest(string filePermissionKey, FilePermissionFormat? filePermissionFormat, int? timeout)
+        /// <summary>
+        /// [Protocol Method] Returns the permission (security descriptor) for a given permission key. This is used to support file level ACLs for SMB shares.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filePermissionKey"> Key of the permission to be set for the directory/file. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="filePermissionFormat"> Optional. Specifies the format in which the permission is returned. Acceptable values are SDDL or binary. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetPermissionAsync(string filePermissionKey, int? timeout, string filePermissionFormat, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_url, false);
-            uri.AppendQuery("restype", "share", true);
-            uri.AppendQuery("comp", "filepermission", true);
-            if (timeout != null)
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ShareRestClient.GetPermission");
+            scope.Start();
+            try
             {
-                uri.AppendQuery("timeout", timeout.Value, true);
+                using HttpMessage message = CreateGetPermissionRequest(filePermissionKey, timeout, filePermissionFormat, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
-            request.Uri = uri;
-            request.Headers.Add("x-ms-file-permission-key", filePermissionKey);
-            if (filePermissionFormat != null)
+            catch (Exception e)
             {
-                request.Headers.Add("x-ms-file-permission-format", filePermissionFormat.Value.ToSerialString());
-            }
-            request.Headers.Add("x-ms-version", _version);
-            if (_fileRequestIntent != null)
-            {
-                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
-            }
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        /// <summary> Returns the permission (security descriptor) for a given key. </summary>
-        /// <param name="filePermissionKey"> Key of the permission to be set for the directory/file. </param>
-        /// <param name="filePermissionFormat"> Optional. Available for version 2023-06-01 and later. Specifies the format in which the permission is returned. Acceptable values are SDDL or binary. If x-ms-file-permission-format is unspecified or explicitly set to SDDL, the permission is returned in SDDL format. If x-ms-file-permission-format is explicitly set to binary, the permission is returned as a base64 string representing the binary encoding of the permission. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="filePermissionKey"/> is null. </exception>
-        public async Task<ResponseWithHeaders<SharePermission, ShareGetPermissionHeaders>> GetPermissionAsync(string filePermissionKey, FilePermissionFormat? filePermissionFormat = null, int? timeout = null, CancellationToken cancellationToken = default)
-        {
-            if (filePermissionKey == null)
-            {
-                throw new ArgumentNullException(nameof(filePermissionKey));
-            }
-
-            using var message = CreateGetPermissionRequest(filePermissionKey, filePermissionFormat, timeout);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new ShareGetPermissionHeaders(message.Response);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        SharePermission value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = SharePermission.DeserializeSharePermission(document.RootElement);
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
+                scope.Failed(e);
+                throw;
             }
         }
 
-        /// <summary> Returns the permission (security descriptor) for a given key. </summary>
-        /// <param name="filePermissionKey"> Key of the permission to be set for the directory/file. </param>
-        /// <param name="filePermissionFormat"> Optional. Available for version 2023-06-01 and later. Specifies the format in which the permission is returned. Acceptable values are SDDL or binary. If x-ms-file-permission-format is unspecified or explicitly set to SDDL, the permission is returned in SDDL format. If x-ms-file-permission-format is explicitly set to binary, the permission is returned as a base64 string representing the binary encoding of the permission. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="filePermissionKey"/> is null. </exception>
-        public ResponseWithHeaders<SharePermission, ShareGetPermissionHeaders> GetPermission(string filePermissionKey, FilePermissionFormat? filePermissionFormat = null, int? timeout = null, CancellationToken cancellationToken = default)
+        /// <summary> Returns the permission (security descriptor) for a given permission key. This is used to support file level ACLs for SMB shares. </summary>
+        /// <param name="filePermissionKey"> Key of the permission to be set for the directory/file. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="filePermissionFormat"> Optional. Specifies the format in which the permission is returned. Acceptable values are SDDL or binary. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<SharePermission> GetPermission(string filePermissionKey, int? timeout = default, FilePermissionFormat? filePermissionFormat = default, CancellationToken cancellationToken = default)
         {
-            if (filePermissionKey == null)
-            {
-                throw new ArgumentNullException(nameof(filePermissionKey));
-            }
-
-            using var message = CreateGetPermissionRequest(filePermissionKey, filePermissionFormat, timeout);
-            _pipeline.Send(message, cancellationToken);
-            var headers = new ShareGetPermissionHeaders(message.Response);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        SharePermission value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = SharePermission.DeserializeSharePermission(document.RootElement);
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
+            Response result = GetPermission(filePermissionKey, timeout, filePermissionFormat?.ToSerialString(), cancellationToken.ToRequestContext());
+            return Response.FromValue((SharePermission)result, result);
         }
 
-        internal HttpMessage CreateSetPropertiesRequest(int? timeout, int? quota, ShareAccessTier? accessTier, ShareRootSquash? rootSquash, bool? enableSnapshotVirtualDirectoryAccess, bool? paidBurstingEnabled, long? paidBurstingMaxBandwidthMibps, long? paidBurstingMaxIops, long? shareProvisionedIops, long? shareProvisionedBandwidthMibps, bool? enableSmbDirectoryLease, ShareFileRequestConditions shareFileRequestConditions)
+        /// <summary> Returns the permission (security descriptor) for a given permission key. This is used to support file level ACLs for SMB shares. </summary>
+        /// <param name="filePermissionKey"> Key of the permission to be set for the directory/file. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="filePermissionFormat"> Optional. Specifies the format in which the permission is returned. Acceptable values are SDDL or binary. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<SharePermission>> GetPermissionAsync(string filePermissionKey, int? timeout = default, FilePermissionFormat? filePermissionFormat = default, CancellationToken cancellationToken = default)
         {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_url, false);
-            uri.AppendQuery("restype", "share", true);
-            uri.AppendQuery("comp", "properties", true);
-            if (timeout != null)
-            {
-                uri.AppendQuery("timeout", timeout.Value, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("x-ms-version", _version);
-            if (quota != null)
-            {
-                request.Headers.Add("x-ms-share-quota", quota.Value);
-            }
-            if (accessTier != null)
-            {
-                request.Headers.Add("x-ms-access-tier", accessTier.Value.ToString());
-            }
-            if (shareFileRequestConditions?.LeaseId != null)
-            {
-                request.Headers.Add("x-ms-lease-id", shareFileRequestConditions.LeaseId);
-            }
-            if (rootSquash != null)
-            {
-                request.Headers.Add("x-ms-root-squash", rootSquash.Value.ToSerialString());
-            }
-            if (enableSnapshotVirtualDirectoryAccess != null)
-            {
-                request.Headers.Add("x-ms-enable-snapshot-virtual-directory-access", enableSnapshotVirtualDirectoryAccess.Value);
-            }
-            if (paidBurstingEnabled != null)
-            {
-                request.Headers.Add("x-ms-share-paid-bursting-enabled", paidBurstingEnabled.Value);
-            }
-            if (paidBurstingMaxBandwidthMibps != null)
-            {
-                request.Headers.Add("x-ms-share-paid-bursting-max-bandwidth-mibps", paidBurstingMaxBandwidthMibps.Value);
-            }
-            if (paidBurstingMaxIops != null)
-            {
-                request.Headers.Add("x-ms-share-paid-bursting-max-iops", paidBurstingMaxIops.Value);
-            }
-            if (_fileRequestIntent != null)
-            {
-                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
-            }
-            if (shareProvisionedIops != null)
-            {
-                request.Headers.Add("x-ms-share-provisioned-iops", shareProvisionedIops.Value);
-            }
-            if (shareProvisionedBandwidthMibps != null)
-            {
-                request.Headers.Add("x-ms-share-provisioned-bandwidth-mibps", shareProvisionedBandwidthMibps.Value);
-            }
-            if (enableSmbDirectoryLease != null)
-            {
-                request.Headers.Add("x-ms-enable-smb-directory-lease", enableSmbDirectoryLease.Value);
-            }
-            request.Headers.Add("Accept", "application/xml");
-            return message;
+            Response result = await GetPermissionAsync(filePermissionKey, timeout, filePermissionFormat?.ToSerialString(), cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((SharePermission)result, result);
         }
 
-        /// <summary> Sets properties for the specified share. </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
+        /// <summary>
+        /// [Protocol Method] Sets properties for the specified share.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="quota"> Specifies the maximum size of the share, in gigabytes. </param>
         /// <param name="accessTier"> Specifies the access tier of the share. </param>
-        /// <param name="rootSquash"> Root squash to set on the share.  Only valid for NFS shares. </param>
-        /// <param name="enableSnapshotVirtualDirectoryAccess"> The <see cref="bool"/>? to use. </param>
+        /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
+        /// <param name="rootSquash"> Root squash to set on the share. Only valid for NFS shares. </param>
+        /// <param name="enableSnapshotVirtualDirectoryAccess"> Optional. Used to enable snapshot virtual directory access. </param>
         /// <param name="paidBurstingEnabled"> Optional. Boolean. Default if not specified is false. This property enables paid bursting. </param>
-        /// <param name="paidBurstingMaxBandwidthMibps"> Optional. Integer. Default if not specified is the maximum throughput the file share can support. Current maximum for a file share is 10,340  MiB/sec. </param>
         /// <param name="paidBurstingMaxIops"> Optional. Integer. Default if not specified is the maximum IOPS the file share can support. Current maximum for a file share is 102,400 IOPS. </param>
-        /// <param name="shareProvisionedIops"> Optional. Supported in version 2025-01-05 and later. Only allowed for provisioned v2 file shares. Specifies the provisioned number of input/output operations per second (IOPS) of the share. If this is not specified, the provisioned IOPS is set to value calculated based on recommendation formula. </param>
-        /// <param name="shareProvisionedBandwidthMibps"> Optional. Supported in version 2025-01-05 and later. Only allowed for provisioned v2 file shares. Specifies the provisioned bandwidth of the share, in mebibytes per second (MiBps). If this is not specified, the provisioned bandwidth is set to value calculated based on recommendation formula. </param>
-        /// <param name="enableSmbDirectoryLease"> SMB only, default is true.  Specifies whether granting of new directory leases for directories present in a share are to be enabled or disabled. An input of true specifies that granting of new directory leases is to be allowed. An input of false specifies that granting of new directory leases is to be blocked. </param>
-        /// <param name="shareFileRequestConditions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<ShareSetPropertiesHeaders>> SetPropertiesAsync(int? timeout = null, int? quota = null, ShareAccessTier? accessTier = null, ShareRootSquash? rootSquash = null, bool? enableSnapshotVirtualDirectoryAccess = null, bool? paidBurstingEnabled = null, long? paidBurstingMaxBandwidthMibps = null, long? paidBurstingMaxIops = null, long? shareProvisionedIops = null, long? shareProvisionedBandwidthMibps = null, bool? enableSmbDirectoryLease = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
+        /// <param name="paidBurstingMaxBandwidthMibps"> Optional. Integer. Default if not specified is the maximum throughput the file share can support. Current maximum for a file share is 10,340 MiB/sec. </param>
+        /// <param name="shareProvisionedIops"> Optional. Specifies the provisioned IOPS of the share. </param>
+        /// <param name="shareProvisionedBandwidthMibps"> Optional. Specifies the provisioned bandwidth of the share, in MiBps. </param>
+        /// <param name="enableSmbDirectoryLease"> Optional. Used to enable SMB directory lease. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response SetProperties(int? timeout, int? quota, string accessTier, string leaseId, string rootSquash, bool? enableSnapshotVirtualDirectoryAccess, bool? paidBurstingEnabled, long? paidBurstingMaxIops, long? paidBurstingMaxBandwidthMibps, long? shareProvisionedIops, long? shareProvisionedBandwidthMibps, bool? enableSmbDirectoryLease, RequestContext context)
         {
-            using var message = CreateSetPropertiesRequest(timeout, quota, accessTier, rootSquash, enableSnapshotVirtualDirectoryAccess, paidBurstingEnabled, paidBurstingMaxBandwidthMibps, paidBurstingMaxIops, shareProvisionedIops, shareProvisionedBandwidthMibps, enableSmbDirectoryLease, shareFileRequestConditions);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new ShareSetPropertiesHeaders(message.Response);
-            switch (message.Response.Status)
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ShareRestClient.SetProperties");
+            scope.Start();
+            try
             {
-                case 200:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
+                using HttpMessage message = CreateSetPropertiesRequest(timeout, quota, accessTier, leaseId, rootSquash, enableSnapshotVirtualDirectoryAccess, paidBurstingEnabled, paidBurstingMaxIops, paidBurstingMaxBandwidthMibps, shareProvisionedIops, shareProvisionedBandwidthMibps, enableSmbDirectoryLease, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Sets properties for the specified share.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="quota"> Specifies the maximum size of the share, in gigabytes. </param>
+        /// <param name="accessTier"> Specifies the access tier of the share. </param>
+        /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
+        /// <param name="rootSquash"> Root squash to set on the share. Only valid for NFS shares. </param>
+        /// <param name="enableSnapshotVirtualDirectoryAccess"> Optional. Used to enable snapshot virtual directory access. </param>
+        /// <param name="paidBurstingEnabled"> Optional. Boolean. Default if not specified is false. This property enables paid bursting. </param>
+        /// <param name="paidBurstingMaxIops"> Optional. Integer. Default if not specified is the maximum IOPS the file share can support. Current maximum for a file share is 102,400 IOPS. </param>
+        /// <param name="paidBurstingMaxBandwidthMibps"> Optional. Integer. Default if not specified is the maximum throughput the file share can support. Current maximum for a file share is 10,340 MiB/sec. </param>
+        /// <param name="shareProvisionedIops"> Optional. Specifies the provisioned IOPS of the share. </param>
+        /// <param name="shareProvisionedBandwidthMibps"> Optional. Specifies the provisioned bandwidth of the share, in MiBps. </param>
+        /// <param name="enableSmbDirectoryLease"> Optional. Used to enable SMB directory lease. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> SetPropertiesAsync(int? timeout, int? quota, string accessTier, string leaseId, string rootSquash, bool? enableSnapshotVirtualDirectoryAccess, bool? paidBurstingEnabled, long? paidBurstingMaxIops, long? paidBurstingMaxBandwidthMibps, long? shareProvisionedIops, long? shareProvisionedBandwidthMibps, bool? enableSmbDirectoryLease, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ShareRestClient.SetProperties");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateSetPropertiesRequest(timeout, quota, accessTier, leaseId, rootSquash, enableSnapshotVirtualDirectoryAccess, paidBurstingEnabled, paidBurstingMaxIops, paidBurstingMaxBandwidthMibps, shareProvisionedIops, shareProvisionedBandwidthMibps, enableSmbDirectoryLease, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
             }
         }
 
         /// <summary> Sets properties for the specified share. </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="quota"> Specifies the maximum size of the share, in gigabytes. </param>
         /// <param name="accessTier"> Specifies the access tier of the share. </param>
-        /// <param name="rootSquash"> Root squash to set on the share.  Only valid for NFS shares. </param>
-        /// <param name="enableSnapshotVirtualDirectoryAccess"> The <see cref="bool"/>? to use. </param>
+        /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
+        /// <param name="rootSquash"> Root squash to set on the share. Only valid for NFS shares. </param>
+        /// <param name="enableSnapshotVirtualDirectoryAccess"> Optional. Used to enable snapshot virtual directory access. </param>
         /// <param name="paidBurstingEnabled"> Optional. Boolean. Default if not specified is false. This property enables paid bursting. </param>
-        /// <param name="paidBurstingMaxBandwidthMibps"> Optional. Integer. Default if not specified is the maximum throughput the file share can support. Current maximum for a file share is 10,340  MiB/sec. </param>
         /// <param name="paidBurstingMaxIops"> Optional. Integer. Default if not specified is the maximum IOPS the file share can support. Current maximum for a file share is 102,400 IOPS. </param>
-        /// <param name="shareProvisionedIops"> Optional. Supported in version 2025-01-05 and later. Only allowed for provisioned v2 file shares. Specifies the provisioned number of input/output operations per second (IOPS) of the share. If this is not specified, the provisioned IOPS is set to value calculated based on recommendation formula. </param>
-        /// <param name="shareProvisionedBandwidthMibps"> Optional. Supported in version 2025-01-05 and later. Only allowed for provisioned v2 file shares. Specifies the provisioned bandwidth of the share, in mebibytes per second (MiBps). If this is not specified, the provisioned bandwidth is set to value calculated based on recommendation formula. </param>
-        /// <param name="enableSmbDirectoryLease"> SMB only, default is true.  Specifies whether granting of new directory leases for directories present in a share are to be enabled or disabled. An input of true specifies that granting of new directory leases is to be allowed. An input of false specifies that granting of new directory leases is to be blocked. </param>
-        /// <param name="shareFileRequestConditions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<ShareSetPropertiesHeaders> SetProperties(int? timeout = null, int? quota = null, ShareAccessTier? accessTier = null, ShareRootSquash? rootSquash = null, bool? enableSnapshotVirtualDirectoryAccess = null, bool? paidBurstingEnabled = null, long? paidBurstingMaxBandwidthMibps = null, long? paidBurstingMaxIops = null, long? shareProvisionedIops = null, long? shareProvisionedBandwidthMibps = null, bool? enableSmbDirectoryLease = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
+        /// <param name="paidBurstingMaxBandwidthMibps"> Optional. Integer. Default if not specified is the maximum throughput the file share can support. Current maximum for a file share is 10,340 MiB/sec. </param>
+        /// <param name="shareProvisionedIops"> Optional. Specifies the provisioned IOPS of the share. </param>
+        /// <param name="shareProvisionedBandwidthMibps"> Optional. Specifies the provisioned bandwidth of the share, in MiBps. </param>
+        /// <param name="enableSmbDirectoryLease"> Optional. Used to enable SMB directory lease. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response SetProperties(int? timeout = default, int? quota = default, ShareAccessTier? accessTier = default, string leaseId = default, ShareRootSquash? rootSquash = default, bool? enableSnapshotVirtualDirectoryAccess = default, bool? paidBurstingEnabled = default, long? paidBurstingMaxIops = default, long? paidBurstingMaxBandwidthMibps = default, long? shareProvisionedIops = default, long? shareProvisionedBandwidthMibps = default, bool? enableSmbDirectoryLease = default, CancellationToken cancellationToken = default)
         {
-            using var message = CreateSetPropertiesRequest(timeout, quota, accessTier, rootSquash, enableSnapshotVirtualDirectoryAccess, paidBurstingEnabled, paidBurstingMaxBandwidthMibps, paidBurstingMaxIops, shareProvisionedIops, shareProvisionedBandwidthMibps, enableSmbDirectoryLease, shareFileRequestConditions);
-            _pipeline.Send(message, cancellationToken);
-            var headers = new ShareSetPropertiesHeaders(message.Response);
-            switch (message.Response.Status)
+            return SetProperties(timeout, quota, accessTier?.ToString(), leaseId, rootSquash?.ToSerialString(), enableSnapshotVirtualDirectoryAccess, paidBurstingEnabled, paidBurstingMaxIops, paidBurstingMaxBandwidthMibps, shareProvisionedIops, shareProvisionedBandwidthMibps, enableSmbDirectoryLease, cancellationToken.ToRequestContext());
+        }
+
+        /// <summary> Sets properties for the specified share. </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="quota"> Specifies the maximum size of the share, in gigabytes. </param>
+        /// <param name="accessTier"> Specifies the access tier of the share. </param>
+        /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
+        /// <param name="rootSquash"> Root squash to set on the share. Only valid for NFS shares. </param>
+        /// <param name="enableSnapshotVirtualDirectoryAccess"> Optional. Used to enable snapshot virtual directory access. </param>
+        /// <param name="paidBurstingEnabled"> Optional. Boolean. Default if not specified is false. This property enables paid bursting. </param>
+        /// <param name="paidBurstingMaxIops"> Optional. Integer. Default if not specified is the maximum IOPS the file share can support. Current maximum for a file share is 102,400 IOPS. </param>
+        /// <param name="paidBurstingMaxBandwidthMibps"> Optional. Integer. Default if not specified is the maximum throughput the file share can support. Current maximum for a file share is 10,340 MiB/sec. </param>
+        /// <param name="shareProvisionedIops"> Optional. Specifies the provisioned IOPS of the share. </param>
+        /// <param name="shareProvisionedBandwidthMibps"> Optional. Specifies the provisioned bandwidth of the share, in MiBps. </param>
+        /// <param name="enableSmbDirectoryLease"> Optional. Used to enable SMB directory lease. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> SetPropertiesAsync(int? timeout = default, int? quota = default, ShareAccessTier? accessTier = default, string leaseId = default, ShareRootSquash? rootSquash = default, bool? enableSnapshotVirtualDirectoryAccess = default, bool? paidBurstingEnabled = default, long? paidBurstingMaxIops = default, long? paidBurstingMaxBandwidthMibps = default, long? shareProvisionedIops = default, long? shareProvisionedBandwidthMibps = default, bool? enableSmbDirectoryLease = default, CancellationToken cancellationToken = default)
+        {
+            return await SetPropertiesAsync(timeout, quota, accessTier?.ToString(), leaseId, rootSquash?.ToSerialString(), enableSnapshotVirtualDirectoryAccess, paidBurstingEnabled, paidBurstingMaxIops, paidBurstingMaxBandwidthMibps, shareProvisionedIops, shareProvisionedBandwidthMibps, enableSmbDirectoryLease, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Sets one or more user-defined name-value pairs for the specified share.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="metadata"> Optional. User-defined metadata for the resource. </param>
+        /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response SetMetadata(int? timeout, IDictionary<string, string> metadata, string leaseId, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ShareRestClient.SetMetadata");
+            scope.Start();
+            try
             {
-                case 200:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
+                using HttpMessage message = CreateSetMetadataRequest(timeout, metadata, leaseId, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
             }
         }
 
-        internal HttpMessage CreateSetMetadataRequest(int? timeout, IDictionary<string, string> metadata, ShareFileRequestConditions shareFileRequestConditions)
+        /// <summary>
+        /// [Protocol Method] Sets one or more user-defined name-value pairs for the specified share.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="metadata"> Optional. User-defined metadata for the resource. </param>
+        /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> SetMetadataAsync(int? timeout, IDictionary<string, string> metadata, string leaseId, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_url, false);
-            uri.AppendQuery("restype", "share", true);
-            uri.AppendQuery("comp", "metadata", true);
-            if (timeout != null)
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ShareRestClient.SetMetadata");
+            scope.Start();
+            try
             {
-                uri.AppendQuery("timeout", timeout.Value, true);
+                using HttpMessage message = CreateSetMetadataRequest(timeout, metadata, leaseId, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
-            request.Uri = uri;
-            if (metadata != null)
+            catch (Exception e)
             {
-                request.Headers.Add("x-ms-meta-", metadata);
+                scope.Failed(e);
+                throw;
             }
-            request.Headers.Add("x-ms-version", _version);
-            if (shareFileRequestConditions?.LeaseId != null)
-            {
-                request.Headers.Add("x-ms-lease-id", shareFileRequestConditions.LeaseId);
-            }
-            if (_fileRequestIntent != null)
-            {
-                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
-            }
-            request.Headers.Add("Accept", "application/xml");
-            return message;
         }
 
         /// <summary> Sets one or more user-defined name-value pairs for the specified share. </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
-        /// <param name="metadata"> A name-value pair to associate with a file storage object. </param>
-        /// <param name="shareFileRequestConditions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<ShareSetMetadataHeaders>> SetMetadataAsync(int? timeout = null, IDictionary<string, string> metadata = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="metadata"> Optional. User-defined metadata for the resource. </param>
+        /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response SetMetadata(int? timeout = default, IDictionary<string, string> metadata = default, string leaseId = default, CancellationToken cancellationToken = default)
         {
-            using var message = CreateSetMetadataRequest(timeout, metadata, shareFileRequestConditions);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new ShareSetMetadataHeaders(message.Response);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
+            return SetMetadata(timeout, metadata, leaseId, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Sets one or more user-defined name-value pairs for the specified share. </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
-        /// <param name="metadata"> A name-value pair to associate with a file storage object. </param>
-        /// <param name="shareFileRequestConditions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<ShareSetMetadataHeaders> SetMetadata(int? timeout = null, IDictionary<string, string> metadata = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="metadata"> Optional. User-defined metadata for the resource. </param>
+        /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> SetMetadataAsync(int? timeout = default, IDictionary<string, string> metadata = default, string leaseId = default, CancellationToken cancellationToken = default)
         {
-            using var message = CreateSetMetadataRequest(timeout, metadata, shareFileRequestConditions);
-            _pipeline.Send(message, cancellationToken);
-            var headers = new ShareSetMetadataHeaders(message.Response);
-            switch (message.Response.Status)
+            return await SetMetadataAsync(timeout, metadata, leaseId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Returns information about stored access policies specified on the share that may be used with Shared Access Signatures.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetAccessPolicy(int? timeout, string leaseId, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ShareRestClient.GetAccessPolicy");
+            scope.Start();
+            try
             {
-                case 200:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
+                using HttpMessage message = CreateGetAccessPolicyRequest(timeout, leaseId, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
             }
         }
 
-        internal HttpMessage CreateGetAccessPolicyRequest(int? timeout, ShareFileRequestConditions shareFileRequestConditions)
+        /// <summary>
+        /// [Protocol Method] Returns information about stored access policies specified on the share that may be used with Shared Access Signatures.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetAccessPolicyAsync(int? timeout, string leaseId, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_url, false);
-            uri.AppendQuery("restype", "share", true);
-            uri.AppendQuery("comp", "acl", true);
-            if (timeout != null)
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ShareRestClient.GetAccessPolicy");
+            scope.Start();
+            try
             {
-                uri.AppendQuery("timeout", timeout.Value, true);
+                using HttpMessage message = CreateGetAccessPolicyRequest(timeout, leaseId, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
-            request.Uri = uri;
-            request.Headers.Add("x-ms-version", _version);
-            if (shareFileRequestConditions?.LeaseId != null)
+            catch (Exception e)
             {
-                request.Headers.Add("x-ms-lease-id", shareFileRequestConditions.LeaseId);
-            }
-            if (_fileRequestIntent != null)
-            {
-                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
-            }
-            request.Headers.Add("Accept", "application/xml");
-            return message;
-        }
-
-        /// <summary> Returns information about stored access policies specified on the share. </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
-        /// <param name="shareFileRequestConditions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<IReadOnlyList<ShareSignedIdentifier>, ShareGetAccessPolicyHeaders>> GetAccessPolicyAsync(int? timeout = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
-        {
-            using var message = CreateGetAccessPolicyRequest(timeout, shareFileRequestConditions);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new ShareGetAccessPolicyHeaders(message.Response);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        IReadOnlyList<ShareSignedIdentifier> value = default;
-                        var document = XDocument.Load(message.Response.ContentStream, LoadOptions.PreserveWhitespace);
-                        if (document.Element("SignedIdentifiers") is XElement signedIdentifiersElement)
-                        {
-                            var array = new List<ShareSignedIdentifier>();
-                            foreach (var e in signedIdentifiersElement.Elements("SignedIdentifier"))
-                            {
-                                array.Add(ShareSignedIdentifier.DeserializeShareSignedIdentifier(e));
-                            }
-                            value = array;
-                        }
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
+                scope.Failed(e);
+                throw;
             }
         }
 
-        /// <summary> Returns information about stored access policies specified on the share. </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
-        /// <param name="shareFileRequestConditions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<IReadOnlyList<ShareSignedIdentifier>, ShareGetAccessPolicyHeaders> GetAccessPolicy(int? timeout = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
+        /// <summary> Returns information about stored access policies specified on the share that may be used with Shared Access Signatures. </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<SignedIdentifiers> GetAccessPolicy(int? timeout = default, string leaseId = default, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetAccessPolicyRequest(timeout, shareFileRequestConditions);
-            _pipeline.Send(message, cancellationToken);
-            var headers = new ShareGetAccessPolicyHeaders(message.Response);
-            switch (message.Response.Status)
+            Response result = GetAccessPolicy(timeout, leaseId, cancellationToken.ToRequestContext());
+            return Response.FromValue((SignedIdentifiers)result, result);
+        }
+
+        /// <summary> Returns information about stored access policies specified on the share that may be used with Shared Access Signatures. </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<SignedIdentifiers>> GetAccessPolicyAsync(int? timeout = default, string leaseId = default, CancellationToken cancellationToken = default)
+        {
+            Response result = await GetAccessPolicyAsync(timeout, leaseId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((SignedIdentifiers)result, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Sets stored access policies for the share that may be used with Shared Access Signatures.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response SetAccessPolicy(RequestContent content, int? timeout = default, string leaseId = default, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ShareRestClient.SetAccessPolicy");
+            scope.Start();
+            try
             {
-                case 200:
-                    {
-                        IReadOnlyList<ShareSignedIdentifier> value = default;
-                        var document = XDocument.Load(message.Response.ContentStream, LoadOptions.PreserveWhitespace);
-                        if (document.Element("SignedIdentifiers") is XElement signedIdentifiersElement)
-                        {
-                            var array = new List<ShareSignedIdentifier>();
-                            foreach (var e in signedIdentifiersElement.Elements("SignedIdentifier"))
-                            {
-                                array.Add(ShareSignedIdentifier.DeserializeShareSignedIdentifier(e));
-                            }
-                            value = array;
-                        }
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
+                using HttpMessage message = CreateSetAccessPolicyRequest(content, timeout, leaseId, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
             }
         }
 
-        internal HttpMessage CreateSetAccessPolicyRequest(int? timeout, IEnumerable<ShareSignedIdentifier> shareAcl, ShareFileRequestConditions shareFileRequestConditions)
+        /// <summary>
+        /// [Protocol Method] Sets stored access policies for the share that may be used with Shared Access Signatures.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> SetAccessPolicyAsync(RequestContent content, int? timeout = default, string leaseId = default, RequestContext context = null)
         {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_url, false);
-            uri.AppendQuery("restype", "share", true);
-            uri.AppendQuery("comp", "acl", true);
-            if (timeout != null)
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ShareRestClient.SetAccessPolicy");
+            scope.Start();
+            try
             {
-                uri.AppendQuery("timeout", timeout.Value, true);
+                using HttpMessage message = CreateSetAccessPolicyRequest(content, timeout, leaseId, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
-            request.Uri = uri;
-            request.Headers.Add("x-ms-version", _version);
-            if (shareFileRequestConditions?.LeaseId != null)
+            catch (Exception e)
             {
-                request.Headers.Add("x-ms-lease-id", shareFileRequestConditions.LeaseId);
+                scope.Failed(e);
+                throw;
             }
-            if (_fileRequestIntent != null)
-            {
-                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
-            }
-            request.Headers.Add("Accept", "application/xml");
-            if (shareAcl != null)
-            {
-                request.Headers.Add("Content-Type", "application/xml");
-                var content = new XmlWriterContent();
-                content.XmlWriter.WriteStartElement("SignedIdentifiers");
-                foreach (var item in shareAcl)
-                {
-                    content.XmlWriter.WriteObjectValue(item, "SignedIdentifier");
-                }
-                content.XmlWriter.WriteEndElement();
-                request.Content = content;
-            }
-            return message;
         }
 
-        /// <summary> Sets a stored access policy for use with shared access signatures. </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
+        /// <summary> Sets stored access policies for the share that may be used with Shared Access Signatures. </summary>
         /// <param name="shareAcl"> The ACL for the share. </param>
-        /// <param name="shareFileRequestConditions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<ShareSetAccessPolicyHeaders>> SetAccessPolicyAsync(int? timeout = null, IEnumerable<ShareSignedIdentifier> shareAcl = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response SetAccessPolicy(SignedIdentifiers shareAcl = default, int? timeout = default, string leaseId = default, CancellationToken cancellationToken = default)
         {
-            using var message = CreateSetAccessPolicyRequest(timeout, shareAcl, shareFileRequestConditions);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new ShareSetAccessPolicyHeaders(message.Response);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
+            return SetAccessPolicy(shareAcl, timeout, leaseId, cancellationToken.ToRequestContext());
         }
 
-        /// <summary> Sets a stored access policy for use with shared access signatures. </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
+        /// <summary> Sets stored access policies for the share that may be used with Shared Access Signatures. </summary>
         /// <param name="shareAcl"> The ACL for the share. </param>
-        /// <param name="shareFileRequestConditions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<ShareSetAccessPolicyHeaders> SetAccessPolicy(int? timeout = null, IEnumerable<ShareSignedIdentifier> shareAcl = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> SetAccessPolicyAsync(SignedIdentifiers shareAcl = default, int? timeout = default, string leaseId = default, CancellationToken cancellationToken = default)
         {
-            using var message = CreateSetAccessPolicyRequest(timeout, shareAcl, shareFileRequestConditions);
-            _pipeline.Send(message, cancellationToken);
-            var headers = new ShareSetAccessPolicyHeaders(message.Response);
-            switch (message.Response.Status)
+            return await SetAccessPolicyAsync(shareAcl, timeout, leaseId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Retrieves statistics related to the share.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetStatistics(int? timeout, string leaseId, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ShareRestClient.GetStatistics");
+            scope.Start();
+            try
             {
-                case 200:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
+                using HttpMessage message = CreateGetStatisticsRequest(timeout, leaseId, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
             }
         }
 
-        internal HttpMessage CreateGetStatisticsRequest(int? timeout, ShareFileRequestConditions shareFileRequestConditions)
+        /// <summary>
+        /// [Protocol Method] Retrieves statistics related to the share.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetStatisticsAsync(int? timeout, string leaseId, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_url, false);
-            uri.AppendQuery("restype", "share", true);
-            uri.AppendQuery("comp", "stats", true);
-            if (timeout != null)
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ShareRestClient.GetStatistics");
+            scope.Start();
+            try
             {
-                uri.AppendQuery("timeout", timeout.Value, true);
+                using HttpMessage message = CreateGetStatisticsRequest(timeout, leaseId, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
-            request.Uri = uri;
-            request.Headers.Add("x-ms-version", _version);
-            if (shareFileRequestConditions?.LeaseId != null)
+            catch (Exception e)
             {
-                request.Headers.Add("x-ms-lease-id", shareFileRequestConditions.LeaseId);
-            }
-            if (_fileRequestIntent != null)
-            {
-                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
-            }
-            request.Headers.Add("Accept", "application/xml");
-            return message;
-        }
-
-        /// <summary> Retrieves statistics related to the share. </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
-        /// <param name="shareFileRequestConditions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<ShareStatistics, ShareGetStatisticsHeaders>> GetStatisticsAsync(int? timeout = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
-        {
-            using var message = CreateGetStatisticsRequest(timeout, shareFileRequestConditions);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new ShareGetStatisticsHeaders(message.Response);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ShareStatistics value = default;
-                        var document = XDocument.Load(message.Response.ContentStream, LoadOptions.PreserveWhitespace);
-                        if (document.Element("ShareStats") is XElement shareStatsElement)
-                        {
-                            value = ShareStatistics.DeserializeShareStatistics(shareStatsElement);
-                        }
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
+                scope.Failed(e);
+                throw;
             }
         }
 
         /// <summary> Retrieves statistics related to the share. </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
-        /// <param name="shareFileRequestConditions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<ShareStatistics, ShareGetStatisticsHeaders> GetStatistics(int? timeout = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<ShareStatistics> GetStatistics(int? timeout = default, string leaseId = default, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetStatisticsRequest(timeout, shareFileRequestConditions);
-            _pipeline.Send(message, cancellationToken);
-            var headers = new ShareGetStatisticsHeaders(message.Response);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ShareStatistics value = default;
-                        var document = XDocument.Load(message.Response.ContentStream, LoadOptions.PreserveWhitespace);
-                        if (document.Element("ShareStats") is XElement shareStatsElement)
-                        {
-                            value = ShareStatistics.DeserializeShareStatistics(shareStatsElement);
-                        }
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
+            Response result = GetStatistics(timeout, leaseId, cancellationToken.ToRequestContext());
+            return Response.FromValue((ShareStatistics)result, result);
         }
 
-        internal HttpMessage CreateRestoreRequest(int? timeout, string deletedShareName, string deletedShareVersion)
+        /// <summary> Retrieves statistics related to the share. </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<ShareStatistics>> GetStatisticsAsync(int? timeout = default, string leaseId = default, CancellationToken cancellationToken = default)
         {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_url, false);
-            uri.AppendQuery("restype", "share", true);
-            uri.AppendQuery("comp", "undelete", true);
-            if (timeout != null)
-            {
-                uri.AppendQuery("timeout", timeout.Value, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("x-ms-version", _version);
-            if (deletedShareName != null)
-            {
-                request.Headers.Add("x-ms-deleted-share-name", deletedShareName);
-            }
-            if (deletedShareVersion != null)
-            {
-                request.Headers.Add("x-ms-deleted-share-version", deletedShareVersion);
-            }
-            if (_fileRequestIntent != null)
-            {
-                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
-            }
-            request.Headers.Add("Accept", "application/xml");
-            return message;
+            Response result = await GetStatisticsAsync(timeout, leaseId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((ShareStatistics)result, result);
         }
 
-        /// <summary> Restores a previously deleted Share. </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
+        /// <summary>
+        /// [Protocol Method] Restores a previously deleted share.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="deletedShareName"> Specifies the name of the previously-deleted share. </param>
         /// <param name="deletedShareVersion"> Specifies the version of the previously-deleted share. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<ShareRestoreHeaders>> RestoreAsync(int? timeout = null, string deletedShareName = null, string deletedShareVersion = null, CancellationToken cancellationToken = default)
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response Restore(int? timeout, string deletedShareName, string deletedShareVersion, RequestContext context)
         {
-            using var message = CreateRestoreRequest(timeout, deletedShareName, deletedShareVersion);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new ShareRestoreHeaders(message.Response);
-            switch (message.Response.Status)
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ShareRestClient.Restore");
+            scope.Start();
+            try
             {
-                case 201:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
+                using HttpMessage message = CreateRestoreRequest(timeout, deletedShareName, deletedShareVersion, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
             }
         }
 
-        /// <summary> Restores a previously deleted Share. </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
+        /// <summary>
+        /// [Protocol Method] Restores a previously deleted share.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="deletedShareName"> Specifies the name of the previously-deleted share. </param>
         /// <param name="deletedShareVersion"> Specifies the version of the previously-deleted share. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<ShareRestoreHeaders> Restore(int? timeout = null, string deletedShareName = null, string deletedShareVersion = null, CancellationToken cancellationToken = default)
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> RestoreAsync(int? timeout, string deletedShareName, string deletedShareVersion, RequestContext context)
         {
-            using var message = CreateRestoreRequest(timeout, deletedShareName, deletedShareVersion);
-            _pipeline.Send(message, cancellationToken);
-            var headers = new ShareRestoreHeaders(message.Response);
-            switch (message.Response.Status)
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ShareRestClient.Restore");
+            scope.Start();
+            try
             {
-                case 201:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
+                using HttpMessage message = CreateRestoreRequest(timeout, deletedShareName, deletedShareVersion, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Restores a previously deleted share. </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="deletedShareName"> Specifies the name of the previously-deleted share. </param>
+        /// <param name="deletedShareVersion"> Specifies the version of the previously-deleted share. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response Restore(int? timeout = default, string deletedShareName = default, string deletedShareVersion = default, CancellationToken cancellationToken = default)
+        {
+            return Restore(timeout, deletedShareName, deletedShareVersion, cancellationToken.ToRequestContext());
+        }
+
+        /// <summary> Restores a previously deleted share. </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="deletedShareName"> Specifies the name of the previously-deleted share. </param>
+        /// <param name="deletedShareVersion"> Specifies the version of the previously-deleted share. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> RestoreAsync(int? timeout = default, string deletedShareName = default, string deletedShareVersion = default, CancellationToken cancellationToken = default)
+        {
+            return await RestoreAsync(timeout, deletedShareName, deletedShareVersion, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
     }
 }

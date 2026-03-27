@@ -1,8 +1,15 @@
 namespace Azure.Storage.Files.Shares
 {
+    public partial class AzureStorageFilesSharesContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureStorageFilesSharesContext() { }
+        public static Azure.Storage.Files.Shares.AzureStorageFilesSharesContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class ShareClient
     {
         protected ShareClient() { }
+        public ShareClient(Azure.Storage.Files.Shares.ShareClientSettings settings) { }
         public ShareClient(string connectionString, string shareName) { }
         public ShareClient(string connectionString, string shareName, Azure.Storage.Files.Shares.ShareClientOptions options) { }
         public ShareClient(System.Uri shareUri, Azure.AzureSasCredential credential, Azure.Storage.Files.Shares.ShareClientOptions options = null) { }
@@ -129,6 +136,13 @@ namespace Azure.Storage.Files.Shares
             V2026_04_06 = 30,
             V2026_06_06 = 31,
         }
+    }
+    public partial class ShareClientSettings : System.ClientModel.Primitives.ClientSettings
+    {
+        public ShareClientSettings() { }
+        public Azure.Storage.Files.Shares.ShareClientOptions Options { get { throw null; } set { } }
+        public System.Uri Url { get { throw null; } set { } }
+        protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
     }
     public partial class ShareDirectoryClient
     {
@@ -446,6 +460,7 @@ namespace Azure.Storage.Files.Shares.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Storage.Files.Shares.Models.FilePropertySemantics left, Azure.Storage.Files.Shares.Models.FilePropertySemantics right) { throw null; }
         public static implicit operator Azure.Storage.Files.Shares.Models.FilePropertySemantics (string value) { throw null; }
+        public static implicit operator Azure.Storage.Files.Shares.Models.FilePropertySemantics? (string value) { throw null; }
         public static bool operator !=(Azure.Storage.Files.Shares.Models.FilePropertySemantics left, Azure.Storage.Files.Shares.Models.FilePropertySemantics right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -515,6 +530,7 @@ namespace Azure.Storage.Files.Shares.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Storage.Files.Shares.Models.NfsFileType left, Azure.Storage.Files.Shares.Models.NfsFileType right) { throw null; }
         public static implicit operator Azure.Storage.Files.Shares.Models.NfsFileType (string value) { throw null; }
+        public static implicit operator Azure.Storage.Files.Shares.Models.NfsFileType? (string value) { throw null; }
         public static bool operator !=(Azure.Storage.Files.Shares.Models.NfsFileType left, Azure.Storage.Files.Shares.Models.NfsFileType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -555,7 +571,7 @@ namespace Azure.Storage.Files.Shares.Models
         Write = 2,
         Read = 4,
     }
-    public partial class ShareAccessPolicy
+    public partial class ShareAccessPolicy : System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Files.Shares.Models.ShareAccessPolicy>
     {
         public ShareAccessPolicy() { }
         public System.DateTimeOffset ExpiresOn { get { throw null; } set { } }
@@ -563,6 +579,11 @@ namespace Azure.Storage.Files.Shares.Models
         public System.DateTimeOffset? PolicyExpiresOn { get { throw null; } set { } }
         public System.DateTimeOffset? PolicyStartsOn { get { throw null; } set { } }
         public System.DateTimeOffset StartsOn { get { throw null; } set { } }
+        protected virtual Azure.Storage.Files.Shares.Models.ShareAccessPolicy PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.Storage.Files.Shares.Models.ShareAccessPolicy System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Files.Shares.Models.ShareAccessPolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Files.Shares.Models.ShareAccessPolicy>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Files.Shares.Models.ShareAccessPolicy>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ShareAccessTier : System.IEquatable<Azure.Storage.Files.Shares.Models.ShareAccessTier>
@@ -579,6 +600,7 @@ namespace Azure.Storage.Files.Shares.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Storage.Files.Shares.Models.ShareAccessTier left, Azure.Storage.Files.Shares.Models.ShareAccessTier right) { throw null; }
         public static implicit operator Azure.Storage.Files.Shares.Models.ShareAccessTier (string value) { throw null; }
+        public static implicit operator Azure.Storage.Files.Shares.Models.ShareAccessTier? (string value) { throw null; }
         public static bool operator !=(Azure.Storage.Files.Shares.Models.ShareAccessTier left, Azure.Storage.Files.Shares.Models.ShareAccessTier right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -598,7 +620,7 @@ namespace Azure.Storage.Files.Shares.Models
         public static bool operator !=(Azure.Storage.Files.Shares.Models.ShareAudience left, Azure.Storage.Files.Shares.Models.ShareAudience right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ShareCorsRule
+    public partial class ShareCorsRule : System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Files.Shares.Models.ShareCorsRule>
     {
         public ShareCorsRule() { }
         public string AllowedHeaders { get { throw null; } set { } }
@@ -606,6 +628,11 @@ namespace Azure.Storage.Files.Shares.Models
         public string AllowedOrigins { get { throw null; } set { } }
         public string ExposedHeaders { get { throw null; } set { } }
         public int MaxAgeInSeconds { get { throw null; } set { } }
+        protected virtual Azure.Storage.Files.Shares.Models.ShareCorsRule PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.Storage.Files.Shares.Models.ShareCorsRule System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Files.Shares.Models.ShareCorsRule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Files.Shares.Models.ShareCorsRule>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Files.Shares.Models.ShareCorsRule>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ShareCreateOptions
     {
@@ -760,6 +787,7 @@ namespace Azure.Storage.Files.Shares.Models
         public static bool operator ==(Azure.Storage.Files.Shares.Models.ShareErrorCode code, string value) { throw null; }
         public static bool operator ==(string value, Azure.Storage.Files.Shares.Models.ShareErrorCode code) { throw null; }
         public static implicit operator Azure.Storage.Files.Shares.Models.ShareErrorCode (string value) { throw null; }
+        public static implicit operator Azure.Storage.Files.Shares.Models.ShareErrorCode? (string value) { throw null; }
         public static bool operator !=(Azure.Storage.Files.Shares.Models.ShareErrorCode left, Azure.Storage.Files.Shares.Models.ShareErrorCode right) { throw null; }
         public static bool operator !=(Azure.Storage.Files.Shares.Models.ShareErrorCode code, string value) { throw null; }
         public static bool operator !=(string value, Azure.Storage.Files.Shares.Models.ShareErrorCode code) { throw null; }
@@ -1135,18 +1163,25 @@ namespace Azure.Storage.Files.Shares.Models
         Locked = 0,
         Unlocked = 1,
     }
-    public partial class ShareMetrics
+    public partial class ShareMetrics : System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Files.Shares.Models.ShareMetrics>
     {
         public ShareMetrics() { }
         public bool Enabled { get { throw null; } set { } }
         public bool? IncludeApis { get { throw null; } set { } }
         public Azure.Storage.Files.Shares.Models.ShareRetentionPolicy RetentionPolicy { get { throw null; } set { } }
         public string Version { get { throw null; } set { } }
+        protected virtual Azure.Storage.Files.Shares.Models.ShareMetrics PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.Storage.Files.Shares.Models.ShareMetrics System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Files.Shares.Models.ShareMetrics>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Files.Shares.Models.ShareMetrics>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Files.Shares.Models.ShareMetrics>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public static partial class ShareModelFactory
     {
         public static Azure.Storage.Files.Shares.Models.FileLeaseReleaseInfo FileLeaseReleaseInfo(Azure.ETag eTag, System.DateTimeOffset lastModified) { throw null; }
         public static Azure.Storage.Files.Shares.Models.PermissionInfo PermissionInfo(string filePermissionKey) { throw null; }
+        public static Azure.Storage.Files.Shares.Models.ShareAccessPolicy ShareAccessPolicy(System.DateTimeOffset? policyStartsOn = default(System.DateTimeOffset?), System.DateTimeOffset? policyExpiresOn = default(System.DateTimeOffset?), string permissions = null) { throw null; }
+        public static Azure.Storage.Files.Shares.Models.ShareCorsRule ShareCorsRule(string allowedOrigins = null, string allowedMethods = null, string allowedHeaders = null, string exposedHeaders = null, int maxAgeInSeconds = 0) { throw null; }
         public static Azure.Storage.Files.Shares.Models.ShareFileCopyInfo ShareFileCopyInfo(Azure.ETag eTag, System.DateTimeOffset lastModified, string copyId, Azure.Storage.Files.Shares.Models.CopyStatus copyStatus) { throw null; }
         public static Azure.Storage.Files.Shares.Models.ShareFileHandle ShareFileHandle(string handleId, string path, string fileId, string sessionId, string clientIp, string parentId = null, System.DateTimeOffset? openedOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastReconnectedOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.Storage.Files.Shares.Models.ShareFileHandle ShareFileHandle(string handleId, string path, string fileId, string sessionId, string clientIp, string parentId = null, System.DateTimeOffset? openedOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastReconnectedOn = default(System.DateTimeOffset?), Azure.Storage.Files.Shares.Models.ShareFileHandleAccessRights? accessRights = default(Azure.Storage.Files.Shares.Models.ShareFileHandleAccessRights?)) { throw null; }
@@ -1158,6 +1193,9 @@ namespace Azure.Storage.Files.Shares.Models
         public static Azure.Storage.Files.Shares.Models.ShareInfo ShareInfo(Azure.ETag eTag, System.DateTimeOffset lastModified) { throw null; }
         public static Azure.Storage.Files.Shares.Models.ShareItem ShareItem(string name, Azure.Storage.Files.Shares.Models.ShareProperties properties, string snapshot) { throw null; }
         public static Azure.Storage.Files.Shares.Models.ShareItem ShareItem(string name, Azure.Storage.Files.Shares.Models.ShareProperties properties, string snapshot = null, bool? isDeleted = default(bool?), string versionId = null) { throw null; }
+        public static Azure.Storage.Files.Shares.Models.ShareMetrics ShareMetrics(string version = null, bool enabled = false, bool? includeApis = default(bool?), Azure.Storage.Files.Shares.Models.ShareRetentionPolicy retentionPolicy = null) { throw null; }
+        public static Azure.Storage.Files.Shares.Models.ShareNfsSettings ShareNfsSettings(Azure.Storage.Files.Shares.Models.ShareNfsSettingsEncryptionInTransit encryptionInTransit = null) { throw null; }
+        public static Azure.Storage.Files.Shares.Models.ShareNfsSettingsEncryptionInTransit ShareNfsSettingsEncryptionInTransit(bool? required = default(bool?)) { throw null; }
         public static Azure.Storage.Files.Shares.Models.ShareProperties ShareProperties(System.DateTimeOffset? lastModified, Azure.ETag? eTag, int? quotaInGB, System.Collections.Generic.IDictionary<string, string> metadata) { throw null; }
         public static Azure.Storage.Files.Shares.Models.ShareProperties ShareProperties(System.DateTimeOffset? lastModified, Azure.ETag? eTag, int? provisionedIops, int? provisionedIngressMBps, int? provisionedEgressMBps, System.DateTimeOffset? nextAllowedQuotaDowngradeTime, System.DateTimeOffset? deletedOn, int? remainingRetentionDays, int? quotaInGB, System.Collections.Generic.IDictionary<string, string> metadata) { throw null; }
         public static Azure.Storage.Files.Shares.Models.ShareProperties ShareProperties(System.DateTimeOffset? lastModified, Azure.ETag? eTag, int? provisionedIops, int? provisionedIngressMBps, int? provisionedEgressMBps, System.DateTimeOffset? nextAllowedQuotaDowngradeTime, int? quotaInGB, System.Collections.Generic.IDictionary<string, string> metadata) { throw null; }
@@ -1166,23 +1204,40 @@ namespace Azure.Storage.Files.Shares.Models
         public static Azure.Storage.Files.Shares.Models.ShareProperties ShareProperties(string accessTier, System.DateTimeOffset? lastModified, int? provisionedIops, int? provisionedIngressMBps, int? provisionedEgressMBps, System.DateTimeOffset? nextAllowedQuotaDowngradeTime, System.DateTimeOffset? deletedOn, int? remainingRetentionDays, Azure.ETag? eTag, System.DateTimeOffset? accessTierChangeTime, string accessTierTransitionState, Azure.Storage.Files.Shares.Models.ShareLeaseStatus? leaseStatus, Azure.Storage.Files.Shares.Models.ShareLeaseState? leaseState, Azure.Storage.Files.Shares.Models.ShareLeaseDuration? leaseDuration, int? quotaInGB, System.Collections.Generic.IDictionary<string, string> metadata, Azure.Storage.Files.Shares.Models.ShareProtocols? protocols, Azure.Storage.Files.Shares.Models.ShareRootSquash? rootSquash, bool? enableSnapshotVirtualDirectoryAccess) { throw null; }
         public static Azure.Storage.Files.Shares.Models.ShareProperties ShareProperties(string accessTier, System.DateTimeOffset? lastModified, int? provisionedIops, int? provisionedIngressMBps, int? provisionedEgressMBps, System.DateTimeOffset? nextAllowedQuotaDowngradeTime, System.DateTimeOffset? deletedOn, int? remainingRetentionDays, Azure.ETag? eTag, System.DateTimeOffset? accessTierChangeTime, string accessTierTransitionState, Azure.Storage.Files.Shares.Models.ShareLeaseStatus? leaseStatus, Azure.Storage.Files.Shares.Models.ShareLeaseState? leaseState, Azure.Storage.Files.Shares.Models.ShareLeaseDuration? leaseDuration, int? quotaInGB, System.Collections.Generic.IDictionary<string, string> metadata, Azure.Storage.Files.Shares.Models.ShareProtocols? protocols, Azure.Storage.Files.Shares.Models.ShareRootSquash? rootSquash, bool? enableSnapshotVirtualDirectoryAccess, bool? enablePaidBursting, long? paidBurstingMaxIops, long? paidBustingMaxBandwidthMibps) { throw null; }
         public static Azure.Storage.Files.Shares.Models.ShareProperties ShareProperties(string accessTier = null, System.DateTimeOffset? lastModified = default(System.DateTimeOffset?), int? provisionedIops = default(int?), int? provisionedIngressMBps = default(int?), int? provisionedEgressMBps = default(int?), System.DateTimeOffset? nextAllowedQuotaDowngradeTime = default(System.DateTimeOffset?), System.DateTimeOffset? deletedOn = default(System.DateTimeOffset?), int? remainingRetentionDays = default(int?), Azure.ETag? eTag = default(Azure.ETag?), System.DateTimeOffset? accessTierChangeTime = default(System.DateTimeOffset?), string accessTierTransitionState = null, Azure.Storage.Files.Shares.Models.ShareLeaseStatus? leaseStatus = default(Azure.Storage.Files.Shares.Models.ShareLeaseStatus?), Azure.Storage.Files.Shares.Models.ShareLeaseState? leaseState = default(Azure.Storage.Files.Shares.Models.ShareLeaseState?), Azure.Storage.Files.Shares.Models.ShareLeaseDuration? leaseDuration = default(Azure.Storage.Files.Shares.Models.ShareLeaseDuration?), int? quotaInGB = default(int?), System.Collections.Generic.IDictionary<string, string> metadata = null, Azure.Storage.Files.Shares.Models.ShareProtocols? protocols = default(Azure.Storage.Files.Shares.Models.ShareProtocols?), Azure.Storage.Files.Shares.Models.ShareRootSquash? rootSquash = default(Azure.Storage.Files.Shares.Models.ShareRootSquash?), bool? enableSnapshotVirtualDirectoryAccess = default(bool?), bool? enablePaidBursting = default(bool?), long? paidBurstingMaxIops = default(long?), long? paidBustingMaxBandwidthMibps = default(long?), long? includedBurstIops = default(long?), long? maxBurstCreditsForIops = default(long?), System.DateTimeOffset? nextAllowedProvisionedIopsDowngradeTime = default(System.DateTimeOffset?), System.DateTimeOffset? nextAllowedProvisionedBandwidthDowngradeTime = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.Storage.Files.Shares.Models.ShareProtocolSettings ShareProtocolSettings(Azure.Storage.Files.Shares.Models.ShareSmbSettings smb = null, Azure.Storage.Files.Shares.Models.ShareNfsSettings nfs = null) { throw null; }
+        public static Azure.Storage.Files.Shares.Models.ShareRetentionPolicy ShareRetentionPolicy(bool enabled = false, int? days = default(int?)) { throw null; }
+        public static Azure.Storage.Files.Shares.Models.ShareServiceProperties ShareServiceProperties(Azure.Storage.Files.Shares.Models.ShareMetrics hourMetrics = null, Azure.Storage.Files.Shares.Models.ShareMetrics minuteMetrics = null, Azure.Storage.Files.Shares.Models.ShareProtocolSettings protocol = null, System.Collections.Generic.IEnumerable<Azure.Storage.Files.Shares.Models.ShareCorsRule> cors = null) { throw null; }
+        public static Azure.Storage.Files.Shares.Models.ShareSignedIdentifier ShareSignedIdentifier(string id = null, Azure.Storage.Files.Shares.Models.ShareAccessPolicy accessPolicy = null) { throw null; }
+        public static Azure.Storage.Files.Shares.Models.ShareSmbSettings ShareSmbSettings(Azure.Storage.Files.Shares.Models.SmbMultichannel multichannel = null, Azure.Storage.Files.Shares.Models.ShareSmbSettingsEncryptionInTransit encryptionInTransit = null) { throw null; }
+        public static Azure.Storage.Files.Shares.Models.ShareSmbSettingsEncryptionInTransit ShareSmbSettingsEncryptionInTransit(bool? required = default(bool?)) { throw null; }
         public static Azure.Storage.Files.Shares.Models.ShareSnapshotInfo ShareSnapshotInfo(string snapshot, Azure.ETag eTag, System.DateTimeOffset lastModified) { throw null; }
         public static Azure.Storage.Files.Shares.Models.ShareStatistics ShareStatistics(int shareUsageBytes) { throw null; }
         public static Azure.Storage.Files.Shares.Models.ShareStatistics ShareStatistics(long shareUsageInBytes) { throw null; }
+        public static Azure.Storage.Files.Shares.Models.SmbMultichannel SmbMultichannel(bool? enabled = default(bool?)) { throw null; }
         public static Azure.Storage.Files.Shares.Models.StorageClosedHandlesSegment StorageClosedHandlesSegment(string marker, int numberOfHandlesClosed) { throw null; }
         public static Azure.Storage.Files.Shares.Models.StorageClosedHandlesSegment StorageClosedHandlesSegment(string marker, int numberOfHandlesClosed, int numberOfHandlesFailedToClose) { throw null; }
         public static Azure.Storage.Files.Shares.Models.UserDelegationKey UserDelegationKey(string signedObjectId, string signedTenantId, System.DateTimeOffset signedStartsOn, System.DateTimeOffset signedExpiresOn, string signedService, string signedVersion, string value) { throw null; }
         public static Azure.Storage.Files.Shares.Models.UserDelegationKey UserDelegationKey(string signedObjectId = null, string signedTenantId = null, System.DateTimeOffset signedStartsOn = default(System.DateTimeOffset), System.DateTimeOffset signedExpiresOn = default(System.DateTimeOffset), string signedService = null, string signedVersion = null, string signedDelegatedUserTenantId = null, string value = null) { throw null; }
     }
-    public partial class ShareNfsSettings
+    public partial class ShareNfsSettings : System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Files.Shares.Models.ShareNfsSettings>
     {
         public ShareNfsSettings() { }
         public Azure.Storage.Files.Shares.Models.ShareNfsSettingsEncryptionInTransit EncryptionInTransit { get { throw null; } set { } }
+        protected virtual Azure.Storage.Files.Shares.Models.ShareNfsSettings PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.Storage.Files.Shares.Models.ShareNfsSettings System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Files.Shares.Models.ShareNfsSettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Files.Shares.Models.ShareNfsSettings>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Files.Shares.Models.ShareNfsSettings>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ShareNfsSettingsEncryptionInTransit
+    public partial class ShareNfsSettingsEncryptionInTransit : System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Files.Shares.Models.ShareNfsSettingsEncryptionInTransit>
     {
         public ShareNfsSettingsEncryptionInTransit() { }
         public bool? Required { get { throw null; } set { } }
+        protected virtual Azure.Storage.Files.Shares.Models.ShareNfsSettingsEncryptionInTransit PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.Storage.Files.Shares.Models.ShareNfsSettingsEncryptionInTransit System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Files.Shares.Models.ShareNfsSettingsEncryptionInTransit>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Files.Shares.Models.ShareNfsSettingsEncryptionInTransit>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Files.Shares.Models.ShareNfsSettingsEncryptionInTransit>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ShareProperties
     {
@@ -1221,17 +1276,27 @@ namespace Azure.Storage.Files.Shares.Models
         Smb = 1,
         Nfs = 2,
     }
-    public partial class ShareProtocolSettings
+    public partial class ShareProtocolSettings : System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Files.Shares.Models.ShareProtocolSettings>
     {
         public ShareProtocolSettings() { }
         public Azure.Storage.Files.Shares.Models.ShareNfsSettings Nfs { get { throw null; } set { } }
         public Azure.Storage.Files.Shares.Models.ShareSmbSettings Smb { get { throw null; } set { } }
+        protected virtual Azure.Storage.Files.Shares.Models.ShareProtocolSettings PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.Storage.Files.Shares.Models.ShareProtocolSettings System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Files.Shares.Models.ShareProtocolSettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Files.Shares.Models.ShareProtocolSettings>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Files.Shares.Models.ShareProtocolSettings>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ShareRetentionPolicy
+    public partial class ShareRetentionPolicy : System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Files.Shares.Models.ShareRetentionPolicy>
     {
         public ShareRetentionPolicy() { }
         public int? Days { get { throw null; } set { } }
         public bool Enabled { get { throw null; } set { } }
+        protected virtual Azure.Storage.Files.Shares.Models.ShareRetentionPolicy PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.Storage.Files.Shares.Models.ShareRetentionPolicy System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Files.Shares.Models.ShareRetentionPolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Files.Shares.Models.ShareRetentionPolicy>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Files.Shares.Models.ShareRetentionPolicy>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public enum ShareRootSquash
     {
@@ -1239,13 +1304,20 @@ namespace Azure.Storage.Files.Shares.Models
         RootSquash = 1,
         AllSquash = 2,
     }
-    public partial class ShareServiceProperties
+    public partial class ShareServiceProperties : System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Files.Shares.Models.ShareServiceProperties>
     {
         public ShareServiceProperties() { }
         public System.Collections.Generic.IList<Azure.Storage.Files.Shares.Models.ShareCorsRule> Cors { get { throw null; } set { } }
         public Azure.Storage.Files.Shares.Models.ShareMetrics HourMetrics { get { throw null; } set { } }
         public Azure.Storage.Files.Shares.Models.ShareMetrics MinuteMetrics { get { throw null; } set { } }
         public Azure.Storage.Files.Shares.Models.ShareProtocolSettings Protocol { get { throw null; } set { } }
+        public static explicit operator Azure.Storage.Files.Shares.Models.ShareServiceProperties (Azure.Response response) { throw null; }
+        public static implicit operator Azure.Core.RequestContent (Azure.Storage.Files.Shares.Models.ShareServiceProperties shareServiceProperties) { throw null; }
+        protected virtual Azure.Storage.Files.Shares.Models.ShareServiceProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.Storage.Files.Shares.Models.ShareServiceProperties System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Files.Shares.Models.ShareServiceProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Files.Shares.Models.ShareServiceProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Files.Shares.Models.ShareServiceProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ShareSetPropertiesOptions
     {
@@ -1261,22 +1333,37 @@ namespace Azure.Storage.Files.Shares.Models
         public int? QuotaInGB { get { throw null; } set { } }
         public Azure.Storage.Files.Shares.Models.ShareRootSquash? RootSquash { get { throw null; } set { } }
     }
-    public partial class ShareSignedIdentifier
+    public partial class ShareSignedIdentifier : System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Files.Shares.Models.ShareSignedIdentifier>
     {
         public ShareSignedIdentifier() { }
         public Azure.Storage.Files.Shares.Models.ShareAccessPolicy AccessPolicy { get { throw null; } set { } }
         public string Id { get { throw null; } set { } }
+        protected virtual Azure.Storage.Files.Shares.Models.ShareSignedIdentifier PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.Storage.Files.Shares.Models.ShareSignedIdentifier System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Files.Shares.Models.ShareSignedIdentifier>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Files.Shares.Models.ShareSignedIdentifier>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Files.Shares.Models.ShareSignedIdentifier>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ShareSmbSettings
+    public partial class ShareSmbSettings : System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Files.Shares.Models.ShareSmbSettings>
     {
         public ShareSmbSettings() { }
         public Azure.Storage.Files.Shares.Models.ShareSmbSettingsEncryptionInTransit EncryptionInTransit { get { throw null; } set { } }
         public Azure.Storage.Files.Shares.Models.SmbMultichannel Multichannel { get { throw null; } set { } }
+        protected virtual Azure.Storage.Files.Shares.Models.ShareSmbSettings PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.Storage.Files.Shares.Models.ShareSmbSettings System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Files.Shares.Models.ShareSmbSettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Files.Shares.Models.ShareSmbSettings>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Files.Shares.Models.ShareSmbSettings>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ShareSmbSettingsEncryptionInTransit
+    public partial class ShareSmbSettingsEncryptionInTransit : System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Files.Shares.Models.ShareSmbSettingsEncryptionInTransit>
     {
         public ShareSmbSettingsEncryptionInTransit() { }
         public bool? Required { get { throw null; } set { } }
+        protected virtual Azure.Storage.Files.Shares.Models.ShareSmbSettingsEncryptionInTransit PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.Storage.Files.Shares.Models.ShareSmbSettingsEncryptionInTransit System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Files.Shares.Models.ShareSmbSettingsEncryptionInTransit>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Files.Shares.Models.ShareSmbSettingsEncryptionInTransit>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Files.Shares.Models.ShareSmbSettingsEncryptionInTransit>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public static partial class SharesModelFactory
     {
@@ -1304,11 +1391,17 @@ namespace Azure.Storage.Files.Shares.Models
         Snapshots = 1,
         Deleted = 2,
     }
-    public partial class ShareStatistics
+    public partial class ShareStatistics : System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Files.Shares.Models.ShareStatistics>
     {
         internal ShareStatistics() { }
         public int ShareUsageBytes { get { throw null; } }
         public long ShareUsageInBytes { get { throw null; } }
+        public static explicit operator Azure.Storage.Files.Shares.Models.ShareStatistics (Azure.Response response) { throw null; }
+        protected virtual Azure.Storage.Files.Shares.Models.ShareStatistics PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.Storage.Files.Shares.Models.ShareStatistics System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Files.Shares.Models.ShareStatistics>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Files.Shares.Models.ShareStatistics>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Files.Shares.Models.ShareStatistics>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ShareTokenIntent : System.IEquatable<Azure.Storage.Files.Shares.Models.ShareTokenIntent>
@@ -1322,6 +1415,7 @@ namespace Azure.Storage.Files.Shares.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Storage.Files.Shares.Models.ShareTokenIntent left, Azure.Storage.Files.Shares.Models.ShareTokenIntent right) { throw null; }
         public static implicit operator Azure.Storage.Files.Shares.Models.ShareTokenIntent (string value) { throw null; }
+        public static implicit operator Azure.Storage.Files.Shares.Models.ShareTokenIntent? (string value) { throw null; }
         public static bool operator !=(Azure.Storage.Files.Shares.Models.ShareTokenIntent left, Azure.Storage.Files.Shares.Models.ShareTokenIntent right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1332,10 +1426,15 @@ namespace Azure.Storage.Files.Shares.Models
         None = 0,
         Metadata = 1,
     }
-    public partial class SmbMultichannel
+    public partial class SmbMultichannel : System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Files.Shares.Models.SmbMultichannel>
     {
         public SmbMultichannel() { }
         public bool? Enabled { get { throw null; } set { } }
+        protected virtual Azure.Storage.Files.Shares.Models.SmbMultichannel PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.Storage.Files.Shares.Models.SmbMultichannel System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Files.Shares.Models.SmbMultichannel>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Files.Shares.Models.SmbMultichannel>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Files.Shares.Models.SmbMultichannel>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class StorageClosedHandlesSegment
     {
@@ -1344,7 +1443,7 @@ namespace Azure.Storage.Files.Shares.Models
         public int NumberOfHandlesClosed { get { throw null; } }
         public int NumberOfHandlesFailedToClose { get { throw null; } }
     }
-    public partial class UserDelegationKey
+    public partial class UserDelegationKey : System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Files.Shares.Models.UserDelegationKey>
     {
         internal UserDelegationKey() { }
         public string SignedDelegatedUserTenantId { get { throw null; } }
@@ -1355,6 +1454,12 @@ namespace Azure.Storage.Files.Shares.Models
         public string SignedTenantId { get { throw null; } }
         public string SignedVersion { get { throw null; } }
         public string Value { get { throw null; } }
+        public static explicit operator Azure.Storage.Files.Shares.Models.UserDelegationKey (Azure.Response response) { throw null; }
+        protected virtual Azure.Storage.Files.Shares.Models.UserDelegationKey PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.Storage.Files.Shares.Models.UserDelegationKey System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Files.Shares.Models.UserDelegationKey>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Files.Shares.Models.UserDelegationKey>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Storage.Files.Shares.Models.UserDelegationKey>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
 }
 namespace Azure.Storage.Files.Shares.Specialized
@@ -1484,6 +1589,11 @@ namespace Microsoft.Extensions.Azure
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Storage.Files.Shares.ShareServiceClient, Azure.Storage.Files.Shares.ShareClientOptions> AddFileServiceClient<TBuilder>(this TBuilder builder, System.Uri serviceUri) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Storage.Files.Shares.ShareServiceClient, Azure.Storage.Files.Shares.ShareClientOptions> AddFileServiceClient<TBuilder>(this TBuilder builder, System.Uri serviceUri, Azure.Storage.StorageSharedKeyCredential sharedKeyCredential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Storage.Files.Shares.ShareServiceClient, Azure.Storage.Files.Shares.ShareClientOptions> AddFileServiceClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Storage.Files.Shares.ShareClient, Azure.Storage.Files.Shares.ShareClientOptions> AddShareClient<TBuilder>(this TBuilder builder, string connectionString, string shareName) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Storage.Files.Shares.ShareClient, Azure.Storage.Files.Shares.ShareClientOptions> AddShareClient<TBuilder>(this TBuilder builder, System.Uri shareUri) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Storage.Files.Shares.ShareClient, Azure.Storage.Files.Shares.ShareClientOptions> AddShareClient<TBuilder>(this TBuilder builder, System.Uri shareUri, Azure.AzureSasCredential credential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Storage.Files.Shares.ShareClient, Azure.Storage.Files.Shares.ShareClientOptions> AddShareClient<TBuilder>(this TBuilder builder, System.Uri shareUri, Azure.Storage.StorageSharedKeyCredential credential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Storage.Files.Shares.ShareClient, Azure.Storage.Files.Shares.ShareClientOptions> AddShareClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Storage.Files.Shares.ShareServiceClient, Azure.Storage.Files.Shares.ShareClientOptions> AddShareServiceClient<TBuilder>(this TBuilder builder, System.Uri serviceUri, Azure.AzureSasCredential sasCredential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Storage.Files.Shares.ShareServiceClient, Azure.Storage.Files.Shares.ShareClientOptions> AddShareServiceClient<TBuilder>(this TBuilder builder, System.Uri serviceUri, Azure.Core.TokenCredential tokenCredential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
     }

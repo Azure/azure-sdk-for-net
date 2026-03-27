@@ -9,1044 +9,923 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Xml.Linq;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Storage.Common;
 using Azure.Storage.Files.Shares.Models;
 
 namespace Azure.Storage.Files.Shares
 {
     internal partial class DirectoryRestClient
     {
-        private readonly HttpPipeline _pipeline;
-        private readonly string _url;
+        private readonly Uri _endpoint;
         private readonly string _version;
-        private readonly bool? _allowTrailingDot;
         private readonly ShareTokenIntent? _fileRequestIntent;
+        private readonly bool? _allowTrailingDot;
         private readonly bool? _allowSourceTrailingDot;
+
+        /// <summary> Initializes a new instance of DirectoryRestClient for mocking. </summary>
+        protected DirectoryRestClient()
+        {
+        }
+
+        /// <summary> Initializes a new instance of DirectoryRestClient. </summary>
+        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
+        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="version"></param>
+        /// <param name="fileRequestIntent"></param>
+        /// <param name="allowTrailingDot"></param>
+        /// <param name="allowSourceTrailingDot"></param>
+        internal DirectoryRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string version, ShareTokenIntent? fileRequestIntent, bool? allowTrailingDot, bool? allowSourceTrailingDot)
+        {
+            ClientDiagnostics = clientDiagnostics;
+            _endpoint = endpoint;
+            Pipeline = pipeline;
+            _version = version;
+            _fileRequestIntent = fileRequestIntent;
+            _allowTrailingDot = allowTrailingDot;
+            _allowSourceTrailingDot = allowSourceTrailingDot;
+        }
+
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        /// <summary> Initializes a new instance of DirectoryRestClient. </summary>
-        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
-        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="url"> The URL of the service account, share, directory or file that is the target of the desired operation. </param>
-        /// <param name="version"> Specifies the version of the operation to use for this request. </param>
-        /// <param name="allowTrailingDot"> If true, the trailing dot will not be trimmed from the target URI. </param>
-        /// <param name="fileRequestIntent"> Valid value is backup. </param>
-        /// <param name="allowSourceTrailingDot"> If true, the trailing dot will not be trimmed from the source URI. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="url"/> or <paramref name="version"/> is null. </exception>
-        public DirectoryRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version, bool? allowTrailingDot = null, ShareTokenIntent? fileRequestIntent = null, bool? allowSourceTrailingDot = null)
-        {
-            ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
-            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
-            _url = url ?? throw new ArgumentNullException(nameof(url));
-            _version = version ?? throw new ArgumentNullException(nameof(version));
-            _allowTrailingDot = allowTrailingDot;
-            _fileRequestIntent = fileRequestIntent;
-            _allowSourceTrailingDot = allowSourceTrailingDot;
-        }
-
-        internal HttpMessage CreateCreateRequest(int? timeout, IDictionary<string, string> metadata, string filePermission, FilePermissionFormat? filePermissionFormat, string filePermissionKey, string fileAttributes, string fileCreationTime, string fileLastWriteTime, string fileChangeTime, string owner, string group, string fileMode, FilePropertySemantics? filePropertySemantics)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_url, false);
-            uri.AppendQuery("restype", "directory", true);
-            if (timeout != null)
-            {
-                uri.AppendQuery("timeout", timeout.Value, true);
-            }
-            request.Uri = uri;
-            if (_allowTrailingDot != null)
-            {
-                request.Headers.Add("x-ms-allow-trailing-dot", _allowTrailingDot.Value);
-            }
-            if (metadata != null)
-            {
-                request.Headers.Add("x-ms-meta-", metadata);
-            }
-            request.Headers.Add("x-ms-version", _version);
-            if (filePermission != null)
-            {
-                request.Headers.Add("x-ms-file-permission", filePermission);
-            }
-            if (filePermissionFormat != null)
-            {
-                request.Headers.Add("x-ms-file-permission-format", filePermissionFormat.Value.ToSerialString());
-            }
-            if (filePermissionKey != null)
-            {
-                request.Headers.Add("x-ms-file-permission-key", filePermissionKey);
-            }
-            if (fileAttributes != null)
-            {
-                request.Headers.Add("x-ms-file-attributes", fileAttributes);
-            }
-            if (fileCreationTime != null)
-            {
-                request.Headers.Add("x-ms-file-creation-time", fileCreationTime);
-            }
-            if (fileLastWriteTime != null)
-            {
-                request.Headers.Add("x-ms-file-last-write-time", fileLastWriteTime);
-            }
-            if (fileChangeTime != null)
-            {
-                request.Headers.Add("x-ms-file-change-time", fileChangeTime);
-            }
-            if (_fileRequestIntent != null)
-            {
-                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
-            }
-            if (owner != null)
-            {
-                request.Headers.Add("x-ms-owner", owner);
-            }
-            if (group != null)
-            {
-                request.Headers.Add("x-ms-group", group);
-            }
-            if (fileMode != null)
-            {
-                request.Headers.Add("x-ms-mode", fileMode);
-            }
-            if (filePropertySemantics != null)
-            {
-                request.Headers.Add("x-ms-file-property-semantics", filePropertySemantics.Value.ToString());
-            }
-            request.Headers.Add("Accept", "application/xml");
-            return message;
-        }
-
-        /// <summary> Creates a new directory under the specified share or parent directory. </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
-        /// <param name="metadata"> A name-value pair to associate with a file storage object. </param>
+        /// <summary>
+        /// [Protocol Method] Creates a new directory under the specified share or parent directory.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="metadata"> Optional. User-defined metadata for the resource. </param>
         /// <param name="filePermission"> If specified the permission (security descriptor) shall be set for the directory/file. This header can be used if Permission size is &lt;= 8KB, else x-ms-file-permission-key header shall be used. Default value: Inherit. If SDDL is specified as input, it must have owner, group and dacl. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
-        /// <param name="filePermissionFormat"> Optional. Available for version 2023-06-01 and later. Specifies the format in which the permission is returned. Acceptable values are SDDL or binary. If x-ms-file-permission-format is unspecified or explicitly set to SDDL, the permission is returned in SDDL format. If x-ms-file-permission-format is explicitly set to binary, the permission is returned as a base64 string representing the binary encoding of the permission. </param>
         /// <param name="filePermissionKey"> Key of the permission to be set for the directory/file. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
-        /// <param name="fileAttributes"> If specified, the provided file attributes shall be set. Default value: ‘Archive’ for file and ‘Directory’ for directory. ‘None’ can also be specified as default. </param>
+        /// <param name="fileAttributes"> If specified, the provided file attributes shall be set. Default value: 'Archive' for file and 'Directory' for directory. 'None' can also be specified as default. </param>
         /// <param name="fileCreationTime"> Creation time for the file/directory. Default value: Now. </param>
         /// <param name="fileLastWriteTime"> Last write time for the file/directory. Default value: Now. </param>
         /// <param name="fileChangeTime"> Change time for the file/directory. Default value: Now. </param>
+        /// <param name="filePermissionFormat"> Optional. Used to set permission format. </param>
         /// <param name="owner"> Optional, NFS only. The owner of the file or directory. </param>
         /// <param name="group"> Optional, NFS only. The owning group of the file or directory. </param>
         /// <param name="fileMode"> Optional, NFS only. The file mode of the file or directory. </param>
-        /// <param name="filePropertySemantics"> SMB only, default value is New.  New will forcefully add the ARCHIVE attribute flag and alter the permissions specified in x-ms-file-permission to inherit missing permissions from the parent.  Restore will apply changes without further modification. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<DirectoryCreateHeaders>> CreateAsync(int? timeout = null, IDictionary<string, string> metadata = null, string filePermission = null, FilePermissionFormat? filePermissionFormat = null, string filePermissionKey = null, string fileAttributes = null, string fileCreationTime = null, string fileLastWriteTime = null, string fileChangeTime = null, string owner = null, string group = null, string fileMode = null, FilePropertySemantics? filePropertySemantics = null, CancellationToken cancellationToken = default)
+        /// <param name="filePropertySemantics"> SMB only. Default value is New. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response Create(int? timeout, IDictionary<string, string> metadata, string filePermission, string filePermissionKey, string fileAttributes, string fileCreationTime, string fileLastWriteTime, string fileChangeTime, string filePermissionFormat, string owner, string @group, string fileMode, string filePropertySemantics, RequestContext context)
         {
-            using var message = CreateCreateRequest(timeout, metadata, filePermission, filePermissionFormat, filePermissionKey, fileAttributes, fileCreationTime, fileLastWriteTime, fileChangeTime, owner, group, fileMode, filePropertySemantics);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new DirectoryCreateHeaders(message.Response);
-            switch (message.Response.Status)
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DirectoryRestClient.Create");
+            scope.Start();
+            try
             {
-                case 201:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
+                using HttpMessage message = CreateCreateRequest(timeout, metadata, filePermission, filePermissionKey, fileAttributes, fileCreationTime, fileLastWriteTime, fileChangeTime, filePermissionFormat, owner, @group, fileMode, filePropertySemantics, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Creates a new directory under the specified share or parent directory.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="metadata"> Optional. User-defined metadata for the resource. </param>
+        /// <param name="filePermission"> If specified the permission (security descriptor) shall be set for the directory/file. This header can be used if Permission size is &lt;= 8KB, else x-ms-file-permission-key header shall be used. Default value: Inherit. If SDDL is specified as input, it must have owner, group and dacl. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
+        /// <param name="filePermissionKey"> Key of the permission to be set for the directory/file. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
+        /// <param name="fileAttributes"> If specified, the provided file attributes shall be set. Default value: 'Archive' for file and 'Directory' for directory. 'None' can also be specified as default. </param>
+        /// <param name="fileCreationTime"> Creation time for the file/directory. Default value: Now. </param>
+        /// <param name="fileLastWriteTime"> Last write time for the file/directory. Default value: Now. </param>
+        /// <param name="fileChangeTime"> Change time for the file/directory. Default value: Now. </param>
+        /// <param name="filePermissionFormat"> Optional. Used to set permission format. </param>
+        /// <param name="owner"> Optional, NFS only. The owner of the file or directory. </param>
+        /// <param name="group"> Optional, NFS only. The owning group of the file or directory. </param>
+        /// <param name="fileMode"> Optional, NFS only. The file mode of the file or directory. </param>
+        /// <param name="filePropertySemantics"> SMB only. Default value is New. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> CreateAsync(int? timeout, IDictionary<string, string> metadata, string filePermission, string filePermissionKey, string fileAttributes, string fileCreationTime, string fileLastWriteTime, string fileChangeTime, string filePermissionFormat, string owner, string @group, string fileMode, string filePropertySemantics, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DirectoryRestClient.Create");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCreateRequest(timeout, metadata, filePermission, filePermissionKey, fileAttributes, fileCreationTime, fileLastWriteTime, fileChangeTime, filePermissionFormat, owner, @group, fileMode, filePropertySemantics, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
             }
         }
 
         /// <summary> Creates a new directory under the specified share or parent directory. </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
-        /// <param name="metadata"> A name-value pair to associate with a file storage object. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="metadata"> Optional. User-defined metadata for the resource. </param>
         /// <param name="filePermission"> If specified the permission (security descriptor) shall be set for the directory/file. This header can be used if Permission size is &lt;= 8KB, else x-ms-file-permission-key header shall be used. Default value: Inherit. If SDDL is specified as input, it must have owner, group and dacl. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
-        /// <param name="filePermissionFormat"> Optional. Available for version 2023-06-01 and later. Specifies the format in which the permission is returned. Acceptable values are SDDL or binary. If x-ms-file-permission-format is unspecified or explicitly set to SDDL, the permission is returned in SDDL format. If x-ms-file-permission-format is explicitly set to binary, the permission is returned as a base64 string representing the binary encoding of the permission. </param>
         /// <param name="filePermissionKey"> Key of the permission to be set for the directory/file. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
-        /// <param name="fileAttributes"> If specified, the provided file attributes shall be set. Default value: ‘Archive’ for file and ‘Directory’ for directory. ‘None’ can also be specified as default. </param>
+        /// <param name="fileAttributes"> If specified, the provided file attributes shall be set. Default value: 'Archive' for file and 'Directory' for directory. 'None' can also be specified as default. </param>
         /// <param name="fileCreationTime"> Creation time for the file/directory. Default value: Now. </param>
         /// <param name="fileLastWriteTime"> Last write time for the file/directory. Default value: Now. </param>
         /// <param name="fileChangeTime"> Change time for the file/directory. Default value: Now. </param>
+        /// <param name="filePermissionFormat"> Optional. Used to set permission format. </param>
         /// <param name="owner"> Optional, NFS only. The owner of the file or directory. </param>
         /// <param name="group"> Optional, NFS only. The owning group of the file or directory. </param>
         /// <param name="fileMode"> Optional, NFS only. The file mode of the file or directory. </param>
-        /// <param name="filePropertySemantics"> SMB only, default value is New.  New will forcefully add the ARCHIVE attribute flag and alter the permissions specified in x-ms-file-permission to inherit missing permissions from the parent.  Restore will apply changes without further modification. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<DirectoryCreateHeaders> Create(int? timeout = null, IDictionary<string, string> metadata = null, string filePermission = null, FilePermissionFormat? filePermissionFormat = null, string filePermissionKey = null, string fileAttributes = null, string fileCreationTime = null, string fileLastWriteTime = null, string fileChangeTime = null, string owner = null, string group = null, string fileMode = null, FilePropertySemantics? filePropertySemantics = null, CancellationToken cancellationToken = default)
+        /// <param name="filePropertySemantics"> SMB only. Default value is New. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response Create(int? timeout = default, IDictionary<string, string> metadata = default, string filePermission = default, string filePermissionKey = default, string fileAttributes = default, string fileCreationTime = default, string fileLastWriteTime = default, string fileChangeTime = default, FilePermissionFormat? filePermissionFormat = default, string owner = default, string @group = default, string fileMode = default, FilePropertySemantics? filePropertySemantics = default, CancellationToken cancellationToken = default)
         {
-            using var message = CreateCreateRequest(timeout, metadata, filePermission, filePermissionFormat, filePermissionKey, fileAttributes, fileCreationTime, fileLastWriteTime, fileChangeTime, owner, group, fileMode, filePropertySemantics);
-            _pipeline.Send(message, cancellationToken);
-            var headers = new DirectoryCreateHeaders(message.Response);
-            switch (message.Response.Status)
+            return Create(timeout, metadata, filePermission, filePermissionKey, fileAttributes, fileCreationTime, fileLastWriteTime, fileChangeTime, filePermissionFormat?.ToSerialString(), owner, @group, fileMode, filePropertySemantics?.ToString(), cancellationToken.ToRequestContext());
+        }
+
+        /// <summary> Creates a new directory under the specified share or parent directory. </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="metadata"> Optional. User-defined metadata for the resource. </param>
+        /// <param name="filePermission"> If specified the permission (security descriptor) shall be set for the directory/file. This header can be used if Permission size is &lt;= 8KB, else x-ms-file-permission-key header shall be used. Default value: Inherit. If SDDL is specified as input, it must have owner, group and dacl. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
+        /// <param name="filePermissionKey"> Key of the permission to be set for the directory/file. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
+        /// <param name="fileAttributes"> If specified, the provided file attributes shall be set. Default value: 'Archive' for file and 'Directory' for directory. 'None' can also be specified as default. </param>
+        /// <param name="fileCreationTime"> Creation time for the file/directory. Default value: Now. </param>
+        /// <param name="fileLastWriteTime"> Last write time for the file/directory. Default value: Now. </param>
+        /// <param name="fileChangeTime"> Change time for the file/directory. Default value: Now. </param>
+        /// <param name="filePermissionFormat"> Optional. Used to set permission format. </param>
+        /// <param name="owner"> Optional, NFS only. The owner of the file or directory. </param>
+        /// <param name="group"> Optional, NFS only. The owning group of the file or directory. </param>
+        /// <param name="fileMode"> Optional, NFS only. The file mode of the file or directory. </param>
+        /// <param name="filePropertySemantics"> SMB only. Default value is New. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> CreateAsync(int? timeout = default, IDictionary<string, string> metadata = default, string filePermission = default, string filePermissionKey = default, string fileAttributes = default, string fileCreationTime = default, string fileLastWriteTime = default, string fileChangeTime = default, FilePermissionFormat? filePermissionFormat = default, string owner = default, string @group = default, string fileMode = default, FilePropertySemantics? filePropertySemantics = default, CancellationToken cancellationToken = default)
+        {
+            return await CreateAsync(timeout, metadata, filePermission, filePermissionKey, fileAttributes, fileCreationTime, fileLastWriteTime, fileChangeTime, filePermissionFormat?.ToSerialString(), owner, @group, fileMode, filePropertySemantics?.ToString(), cancellationToken.ToRequestContext()).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Returns all system properties for the specified directory, and can also be used to check the existence of a directory.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetProperties(string sharesnapshot, int? timeout, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DirectoryRestClient.GetProperties");
+            scope.Start();
+            try
             {
-                case 201:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
+                using HttpMessage message = CreateGetPropertiesRequest(sharesnapshot, timeout, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
             }
         }
 
-        internal HttpMessage CreateGetPropertiesRequest(string sharesnapshot, int? timeout)
+        /// <summary>
+        /// [Protocol Method] Returns all system properties for the specified directory, and can also be used to check the existence of a directory.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetPropertiesAsync(string sharesnapshot, int? timeout, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_url, false);
-            uri.AppendQuery("restype", "directory", true);
-            if (sharesnapshot != null)
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DirectoryRestClient.GetProperties");
+            scope.Start();
+            try
             {
-                uri.AppendQuery("sharesnapshot", sharesnapshot, true);
+                using HttpMessage message = CreateGetPropertiesRequest(sharesnapshot, timeout, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
-            if (timeout != null)
+            catch (Exception e)
             {
-                uri.AppendQuery("timeout", timeout.Value, true);
-            }
-            request.Uri = uri;
-            if (_allowTrailingDot != null)
-            {
-                request.Headers.Add("x-ms-allow-trailing-dot", _allowTrailingDot.Value);
-            }
-            request.Headers.Add("x-ms-version", _version);
-            if (_fileRequestIntent != null)
-            {
-                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
-            }
-            request.Headers.Add("Accept", "application/xml");
-            return message;
-        }
-
-        /// <summary> Returns all system properties for the specified directory, and can also be used to check the existence of a directory. The data returned does not include the files in the directory or any subdirectories. </summary>
-        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<DirectoryGetPropertiesHeaders>> GetPropertiesAsync(string sharesnapshot = null, int? timeout = null, CancellationToken cancellationToken = default)
-        {
-            using var message = CreateGetPropertiesRequest(sharesnapshot, timeout);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new DirectoryGetPropertiesHeaders(message.Response);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
+                scope.Failed(e);
+                throw;
             }
         }
 
-        /// <summary> Returns all system properties for the specified directory, and can also be used to check the existence of a directory. The data returned does not include the files in the directory or any subdirectories. </summary>
-        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<DirectoryGetPropertiesHeaders> GetProperties(string sharesnapshot = null, int? timeout = null, CancellationToken cancellationToken = default)
+        /// <summary> Returns all system properties for the specified directory, and can also be used to check the existence of a directory. </summary>
+        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response GetProperties(string sharesnapshot = default, int? timeout = default, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetPropertiesRequest(sharesnapshot, timeout);
-            _pipeline.Send(message, cancellationToken);
-            var headers = new DirectoryGetPropertiesHeaders(message.Response);
-            switch (message.Response.Status)
+            return GetProperties(sharesnapshot, timeout, cancellationToken.ToRequestContext());
+        }
+
+        /// <summary> Returns all system properties for the specified directory, and can also be used to check the existence of a directory. </summary>
+        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> GetPropertiesAsync(string sharesnapshot = default, int? timeout = default, CancellationToken cancellationToken = default)
+        {
+            return await GetPropertiesAsync(sharesnapshot, timeout, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Removes the specified empty directory. Note that the directory must be empty before it can be deleted.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response Delete(int? timeout, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DirectoryRestClient.Delete");
+            scope.Start();
+            try
             {
-                case 200:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
+                using HttpMessage message = CreateDeleteRequest(timeout, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(int? timeout)
+        /// <summary>
+        /// [Protocol Method] Removes the specified empty directory. Note that the directory must be empty before it can be deleted.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> DeleteAsync(int? timeout, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_url, false);
-            uri.AppendQuery("restype", "directory", true);
-            if (timeout != null)
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DirectoryRestClient.Delete");
+            scope.Start();
+            try
             {
-                uri.AppendQuery("timeout", timeout.Value, true);
+                using HttpMessage message = CreateDeleteRequest(timeout, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
-            request.Uri = uri;
-            if (_allowTrailingDot != null)
+            catch (Exception e)
             {
-                request.Headers.Add("x-ms-allow-trailing-dot", _allowTrailingDot.Value);
+                scope.Failed(e);
+                throw;
             }
-            request.Headers.Add("x-ms-version", _version);
-            if (_fileRequestIntent != null)
-            {
-                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
-            }
-            request.Headers.Add("Accept", "application/xml");
-            return message;
         }
 
         /// <summary> Removes the specified empty directory. Note that the directory must be empty before it can be deleted. </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<DirectoryDeleteHeaders>> DeleteAsync(int? timeout = null, CancellationToken cancellationToken = default)
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response Delete(int? timeout = default, CancellationToken cancellationToken = default)
         {
-            using var message = CreateDeleteRequest(timeout);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new DirectoryDeleteHeaders(message.Response);
-            switch (message.Response.Status)
-            {
-                case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
+            return Delete(timeout, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Removes the specified empty directory. Note that the directory must be empty before it can be deleted. </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<DirectoryDeleteHeaders> Delete(int? timeout = null, CancellationToken cancellationToken = default)
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> DeleteAsync(int? timeout = default, CancellationToken cancellationToken = default)
         {
-            using var message = CreateDeleteRequest(timeout);
-            _pipeline.Send(message, cancellationToken);
-            var headers = new DirectoryDeleteHeaders(message.Response);
-            switch (message.Response.Status)
-            {
-                case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
+            return await DeleteAsync(timeout, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
-        internal HttpMessage CreateSetPropertiesRequest(int? timeout, string filePermission, FilePermissionFormat? filePermissionFormat, string filePermissionKey, string fileAttributes, string fileCreationTime, string fileLastWriteTime, string fileChangeTime, string owner, string group, string fileMode)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_url, false);
-            uri.AppendQuery("restype", "directory", true);
-            uri.AppendQuery("comp", "properties", true);
-            if (timeout != null)
-            {
-                uri.AppendQuery("timeout", timeout.Value, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("x-ms-version", _version);
-            if (filePermission != null)
-            {
-                request.Headers.Add("x-ms-file-permission", filePermission);
-            }
-            if (filePermissionFormat != null)
-            {
-                request.Headers.Add("x-ms-file-permission-format", filePermissionFormat.Value.ToSerialString());
-            }
-            if (filePermissionKey != null)
-            {
-                request.Headers.Add("x-ms-file-permission-key", filePermissionKey);
-            }
-            if (fileAttributes != null)
-            {
-                request.Headers.Add("x-ms-file-attributes", fileAttributes);
-            }
-            if (fileCreationTime != null)
-            {
-                request.Headers.Add("x-ms-file-creation-time", fileCreationTime);
-            }
-            if (fileLastWriteTime != null)
-            {
-                request.Headers.Add("x-ms-file-last-write-time", fileLastWriteTime);
-            }
-            if (fileChangeTime != null)
-            {
-                request.Headers.Add("x-ms-file-change-time", fileChangeTime);
-            }
-            if (_allowTrailingDot != null)
-            {
-                request.Headers.Add("x-ms-allow-trailing-dot", _allowTrailingDot.Value);
-            }
-            if (_fileRequestIntent != null)
-            {
-                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
-            }
-            if (owner != null)
-            {
-                request.Headers.Add("x-ms-owner", owner);
-            }
-            if (group != null)
-            {
-                request.Headers.Add("x-ms-group", group);
-            }
-            if (fileMode != null)
-            {
-                request.Headers.Add("x-ms-mode", fileMode);
-            }
-            request.Headers.Add("Accept", "application/xml");
-            return message;
-        }
-
-        /// <summary> Sets properties on the directory. </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
+        /// <summary>
+        /// [Protocol Method] Sets properties for the specified directory.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="filePermission"> If specified the permission (security descriptor) shall be set for the directory/file. This header can be used if Permission size is &lt;= 8KB, else x-ms-file-permission-key header shall be used. Default value: Inherit. If SDDL is specified as input, it must have owner, group and dacl. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
-        /// <param name="filePermissionFormat"> Optional. Available for version 2023-06-01 and later. Specifies the format in which the permission is returned. Acceptable values are SDDL or binary. If x-ms-file-permission-format is unspecified or explicitly set to SDDL, the permission is returned in SDDL format. If x-ms-file-permission-format is explicitly set to binary, the permission is returned as a base64 string representing the binary encoding of the permission. </param>
         /// <param name="filePermissionKey"> Key of the permission to be set for the directory/file. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
-        /// <param name="fileAttributes"> If specified, the provided file attributes shall be set. Default value: ‘Archive’ for file and ‘Directory’ for directory. ‘None’ can also be specified as default. </param>
+        /// <param name="fileAttributes"> If specified, the provided file attributes shall be set. Default value: 'Archive' for file and 'Directory' for directory. 'None' can also be specified as default. </param>
         /// <param name="fileCreationTime"> Creation time for the file/directory. Default value: Now. </param>
         /// <param name="fileLastWriteTime"> Last write time for the file/directory. Default value: Now. </param>
         /// <param name="fileChangeTime"> Change time for the file/directory. Default value: Now. </param>
+        /// <param name="filePermissionFormat"> Optional. Used to set permission format. </param>
         /// <param name="owner"> Optional, NFS only. The owner of the file or directory. </param>
         /// <param name="group"> Optional, NFS only. The owning group of the file or directory. </param>
         /// <param name="fileMode"> Optional, NFS only. The file mode of the file or directory. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<DirectorySetPropertiesHeaders>> SetPropertiesAsync(int? timeout = null, string filePermission = null, FilePermissionFormat? filePermissionFormat = null, string filePermissionKey = null, string fileAttributes = null, string fileCreationTime = null, string fileLastWriteTime = null, string fileChangeTime = null, string owner = null, string group = null, string fileMode = null, CancellationToken cancellationToken = default)
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response SetProperties(int? timeout, string filePermission, string filePermissionKey, string fileAttributes, string fileCreationTime, string fileLastWriteTime, string fileChangeTime, string filePermissionFormat, string owner, string @group, string fileMode, RequestContext context)
         {
-            using var message = CreateSetPropertiesRequest(timeout, filePermission, filePermissionFormat, filePermissionKey, fileAttributes, fileCreationTime, fileLastWriteTime, fileChangeTime, owner, group, fileMode);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new DirectorySetPropertiesHeaders(message.Response);
-            switch (message.Response.Status)
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DirectoryRestClient.SetProperties");
+            scope.Start();
+            try
             {
-                case 200:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
+                using HttpMessage message = CreateSetPropertiesRequest(timeout, filePermission, filePermissionKey, fileAttributes, fileCreationTime, fileLastWriteTime, fileChangeTime, filePermissionFormat, owner, @group, fileMode, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
             }
         }
 
-        /// <summary> Sets properties on the directory. </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
+        /// <summary>
+        /// [Protocol Method] Sets properties for the specified directory.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="filePermission"> If specified the permission (security descriptor) shall be set for the directory/file. This header can be used if Permission size is &lt;= 8KB, else x-ms-file-permission-key header shall be used. Default value: Inherit. If SDDL is specified as input, it must have owner, group and dacl. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
-        /// <param name="filePermissionFormat"> Optional. Available for version 2023-06-01 and later. Specifies the format in which the permission is returned. Acceptable values are SDDL or binary. If x-ms-file-permission-format is unspecified or explicitly set to SDDL, the permission is returned in SDDL format. If x-ms-file-permission-format is explicitly set to binary, the permission is returned as a base64 string representing the binary encoding of the permission. </param>
         /// <param name="filePermissionKey"> Key of the permission to be set for the directory/file. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
-        /// <param name="fileAttributes"> If specified, the provided file attributes shall be set. Default value: ‘Archive’ for file and ‘Directory’ for directory. ‘None’ can also be specified as default. </param>
+        /// <param name="fileAttributes"> If specified, the provided file attributes shall be set. Default value: 'Archive' for file and 'Directory' for directory. 'None' can also be specified as default. </param>
         /// <param name="fileCreationTime"> Creation time for the file/directory. Default value: Now. </param>
         /// <param name="fileLastWriteTime"> Last write time for the file/directory. Default value: Now. </param>
         /// <param name="fileChangeTime"> Change time for the file/directory. Default value: Now. </param>
+        /// <param name="filePermissionFormat"> Optional. Used to set permission format. </param>
         /// <param name="owner"> Optional, NFS only. The owner of the file or directory. </param>
         /// <param name="group"> Optional, NFS only. The owning group of the file or directory. </param>
         /// <param name="fileMode"> Optional, NFS only. The file mode of the file or directory. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<DirectorySetPropertiesHeaders> SetProperties(int? timeout = null, string filePermission = null, FilePermissionFormat? filePermissionFormat = null, string filePermissionKey = null, string fileAttributes = null, string fileCreationTime = null, string fileLastWriteTime = null, string fileChangeTime = null, string owner = null, string group = null, string fileMode = null, CancellationToken cancellationToken = default)
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> SetPropertiesAsync(int? timeout, string filePermission, string filePermissionKey, string fileAttributes, string fileCreationTime, string fileLastWriteTime, string fileChangeTime, string filePermissionFormat, string owner, string @group, string fileMode, RequestContext context)
         {
-            using var message = CreateSetPropertiesRequest(timeout, filePermission, filePermissionFormat, filePermissionKey, fileAttributes, fileCreationTime, fileLastWriteTime, fileChangeTime, owner, group, fileMode);
-            _pipeline.Send(message, cancellationToken);
-            var headers = new DirectorySetPropertiesHeaders(message.Response);
-            switch (message.Response.Status)
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DirectoryRestClient.SetProperties");
+            scope.Start();
+            try
             {
-                case 200:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
+                using HttpMessage message = CreateSetPropertiesRequest(timeout, filePermission, filePermissionKey, fileAttributes, fileCreationTime, fileLastWriteTime, fileChangeTime, filePermissionFormat, owner, @group, fileMode, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
             }
         }
 
-        internal HttpMessage CreateSetMetadataRequest(int? timeout, IDictionary<string, string> metadata)
+        /// <summary> Sets properties for the specified directory. </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="filePermission"> If specified the permission (security descriptor) shall be set for the directory/file. This header can be used if Permission size is &lt;= 8KB, else x-ms-file-permission-key header shall be used. Default value: Inherit. If SDDL is specified as input, it must have owner, group and dacl. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
+        /// <param name="filePermissionKey"> Key of the permission to be set for the directory/file. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
+        /// <param name="fileAttributes"> If specified, the provided file attributes shall be set. Default value: 'Archive' for file and 'Directory' for directory. 'None' can also be specified as default. </param>
+        /// <param name="fileCreationTime"> Creation time for the file/directory. Default value: Now. </param>
+        /// <param name="fileLastWriteTime"> Last write time for the file/directory. Default value: Now. </param>
+        /// <param name="fileChangeTime"> Change time for the file/directory. Default value: Now. </param>
+        /// <param name="filePermissionFormat"> Optional. Used to set permission format. </param>
+        /// <param name="owner"> Optional, NFS only. The owner of the file or directory. </param>
+        /// <param name="group"> Optional, NFS only. The owning group of the file or directory. </param>
+        /// <param name="fileMode"> Optional, NFS only. The file mode of the file or directory. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response SetProperties(int? timeout = default, string filePermission = default, string filePermissionKey = default, string fileAttributes = default, string fileCreationTime = default, string fileLastWriteTime = default, string fileChangeTime = default, FilePermissionFormat? filePermissionFormat = default, string owner = default, string @group = default, string fileMode = default, CancellationToken cancellationToken = default)
         {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_url, false);
-            uri.AppendQuery("restype", "directory", true);
-            uri.AppendQuery("comp", "metadata", true);
-            if (timeout != null)
-            {
-                uri.AppendQuery("timeout", timeout.Value, true);
-            }
-            request.Uri = uri;
-            if (metadata != null)
-            {
-                request.Headers.Add("x-ms-meta-", metadata);
-            }
-            request.Headers.Add("x-ms-version", _version);
-            if (_allowTrailingDot != null)
-            {
-                request.Headers.Add("x-ms-allow-trailing-dot", _allowTrailingDot.Value);
-            }
-            if (_fileRequestIntent != null)
-            {
-                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
-            }
-            request.Headers.Add("Accept", "application/xml");
-            return message;
+            return SetProperties(timeout, filePermission, filePermissionKey, fileAttributes, fileCreationTime, fileLastWriteTime, fileChangeTime, filePermissionFormat?.ToSerialString(), owner, @group, fileMode, cancellationToken.ToRequestContext());
         }
 
-        /// <summary> Updates user defined metadata for the specified directory. </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
-        /// <param name="metadata"> A name-value pair to associate with a file storage object. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<DirectorySetMetadataHeaders>> SetMetadataAsync(int? timeout = null, IDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
+        /// <summary> Sets properties for the specified directory. </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="filePermission"> If specified the permission (security descriptor) shall be set for the directory/file. This header can be used if Permission size is &lt;= 8KB, else x-ms-file-permission-key header shall be used. Default value: Inherit. If SDDL is specified as input, it must have owner, group and dacl. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
+        /// <param name="filePermissionKey"> Key of the permission to be set for the directory/file. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
+        /// <param name="fileAttributes"> If specified, the provided file attributes shall be set. Default value: 'Archive' for file and 'Directory' for directory. 'None' can also be specified as default. </param>
+        /// <param name="fileCreationTime"> Creation time for the file/directory. Default value: Now. </param>
+        /// <param name="fileLastWriteTime"> Last write time for the file/directory. Default value: Now. </param>
+        /// <param name="fileChangeTime"> Change time for the file/directory. Default value: Now. </param>
+        /// <param name="filePermissionFormat"> Optional. Used to set permission format. </param>
+        /// <param name="owner"> Optional, NFS only. The owner of the file or directory. </param>
+        /// <param name="group"> Optional, NFS only. The owning group of the file or directory. </param>
+        /// <param name="fileMode"> Optional, NFS only. The file mode of the file or directory. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> SetPropertiesAsync(int? timeout = default, string filePermission = default, string filePermissionKey = default, string fileAttributes = default, string fileCreationTime = default, string fileLastWriteTime = default, string fileChangeTime = default, FilePermissionFormat? filePermissionFormat = default, string owner = default, string @group = default, string fileMode = default, CancellationToken cancellationToken = default)
         {
-            using var message = CreateSetMetadataRequest(timeout, metadata);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new DirectorySetMetadataHeaders(message.Response);
-            switch (message.Response.Status)
+            return await SetPropertiesAsync(timeout, filePermission, filePermissionKey, fileAttributes, fileCreationTime, fileLastWriteTime, fileChangeTime, filePermissionFormat?.ToSerialString(), owner, @group, fileMode, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Sets one or more user-defined name-value pairs for the specified directory.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="metadata"> Optional. User-defined metadata for the resource. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response SetMetadata(int? timeout, IDictionary<string, string> metadata, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DirectoryRestClient.SetMetadata");
+            scope.Start();
+            try
             {
-                case 200:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
+                using HttpMessage message = CreateSetMetadataRequest(timeout, metadata, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
             }
         }
 
-        /// <summary> Updates user defined metadata for the specified directory. </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
-        /// <param name="metadata"> A name-value pair to associate with a file storage object. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<DirectorySetMetadataHeaders> SetMetadata(int? timeout = null, IDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
+        /// <summary>
+        /// [Protocol Method] Sets one or more user-defined name-value pairs for the specified directory.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="metadata"> Optional. User-defined metadata for the resource. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> SetMetadataAsync(int? timeout, IDictionary<string, string> metadata, RequestContext context)
         {
-            using var message = CreateSetMetadataRequest(timeout, metadata);
-            _pipeline.Send(message, cancellationToken);
-            var headers = new DirectorySetMetadataHeaders(message.Response);
-            switch (message.Response.Status)
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DirectoryRestClient.SetMetadata");
+            scope.Start();
+            try
             {
-                case 200:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
+                using HttpMessage message = CreateSetMetadataRequest(timeout, metadata, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
             }
         }
 
-        internal HttpMessage CreateListFilesAndDirectoriesSegmentRequest(string prefix, string sharesnapshot, string marker, int? maxresults, int? timeout, IEnumerable<ListFilesIncludeType> include, bool? includeExtendedInfo)
+        /// <summary> Sets one or more user-defined name-value pairs for the specified directory. </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="metadata"> Optional. User-defined metadata for the resource. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response SetMetadata(int? timeout = default, IDictionary<string, string> metadata = default, CancellationToken cancellationToken = default)
         {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_url, false);
-            uri.AppendQuery("restype", "directory", true);
-            uri.AppendQuery("comp", "list", true);
-            if (prefix != null)
-            {
-                uri.AppendQuery("prefix", prefix, true);
-            }
-            if (sharesnapshot != null)
-            {
-                uri.AppendQuery("sharesnapshot", sharesnapshot, true);
-            }
-            if (marker != null)
-            {
-                uri.AppendQuery("marker", marker, true);
-            }
-            if (maxresults != null)
-            {
-                uri.AppendQuery("maxresults", maxresults.Value, true);
-            }
-            if (timeout != null)
-            {
-                uri.AppendQuery("timeout", timeout.Value, true);
-            }
-            if (include != null && !(include is Common.ChangeTrackingList<ListFilesIncludeType> changeTrackingList && changeTrackingList.IsUndefined))
-            {
-                uri.AppendQueryDelimited("include", include, ",", true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("x-ms-version", _version);
-            if (includeExtendedInfo != null)
-            {
-                request.Headers.Add("x-ms-file-extended-info", includeExtendedInfo.Value);
-            }
-            if (_allowTrailingDot != null)
-            {
-                request.Headers.Add("x-ms-allow-trailing-dot", _allowTrailingDot.Value);
-            }
-            if (_fileRequestIntent != null)
-            {
-                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
-            }
-            request.Headers.Add("Accept", "application/xml");
-            return message;
+            return SetMetadata(timeout, metadata, cancellationToken.ToRequestContext());
         }
 
-        /// <summary> Returns a list of files or directories under the specified share or directory. It lists the contents only for a single level of the directory hierarchy. </summary>
-        /// <param name="prefix"> Filters the results to return only entries whose name begins with the specified prefix. </param>
-        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query. </param>
-        /// <param name="marker"> A string value that identifies the portion of the list to be returned with the next list operation. The operation returns a marker value within the response body if the list returned was not complete. The marker value may then be used in a subsequent call to request the next set of list items. The marker value is opaque to the client. </param>
-        /// <param name="maxresults"> Specifies the maximum number of entries to return. If the request does not specify maxresults, or specifies a value greater than 5,000, the server will return up to 5,000 items. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
+        /// <summary> Sets one or more user-defined name-value pairs for the specified directory. </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="metadata"> Optional. User-defined metadata for the resource. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> SetMetadataAsync(int? timeout = default, IDictionary<string, string> metadata = default, CancellationToken cancellationToken = default)
+        {
+            return await SetMetadataAsync(timeout, metadata, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Returns a list of files and directories under the specified share or directory. It lists the contents only for a single level of the directory hierarchy.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="prefix"> Filters the results to return only items whose name begins with the specified prefix. </param>
+        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
+        /// <param name="marker"> A string value that identifies the portion of the list to be returned with the next listing operation. </param>
+        /// <param name="maxresults"> Specifies the maximum number of items to return. </param>
         /// <param name="include"> Include this parameter to specify one or more datasets to include in the response. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="includeExtendedInfo"> Include extended information. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<ListFilesAndDirectoriesSegmentResponse, DirectoryListFilesAndDirectoriesSegmentHeaders>> ListFilesAndDirectoriesSegmentAsync(string prefix = null, string sharesnapshot = null, string marker = null, int? maxresults = null, int? timeout = null, IEnumerable<ListFilesIncludeType> include = null, bool? includeExtendedInfo = null, CancellationToken cancellationToken = default)
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetFilesAndDirectoriesSegment(string prefix, string sharesnapshot, string marker, int? maxresults, IEnumerable<ListFilesIncludeType> include, int? timeout, bool? includeExtendedInfo, RequestContext context)
         {
-            using var message = CreateListFilesAndDirectoriesSegmentRequest(prefix, sharesnapshot, marker, maxresults, timeout, include, includeExtendedInfo);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new DirectoryListFilesAndDirectoriesSegmentHeaders(message.Response);
-            switch (message.Response.Status)
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DirectoryRestClient.GetFilesAndDirectoriesSegment");
+            scope.Start();
+            try
             {
-                case 200:
-                    {
-                        ListFilesAndDirectoriesSegmentResponse value = default;
-                        var document = XDocument.Load(message.Response.ContentStream, LoadOptions.PreserveWhitespace);
-                        if (document.Element("EnumerationResults") is XElement enumerationResultsElement)
-                        {
-                            value = ListFilesAndDirectoriesSegmentResponse.DeserializeListFilesAndDirectoriesSegmentResponse(enumerationResultsElement);
-                        }
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
+                using HttpMessage message = CreateGetFilesAndDirectoriesSegmentRequest(prefix, sharesnapshot, marker, maxresults, include, timeout, includeExtendedInfo, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
             }
         }
 
-        /// <summary> Returns a list of files or directories under the specified share or directory. It lists the contents only for a single level of the directory hierarchy. </summary>
-        /// <param name="prefix"> Filters the results to return only entries whose name begins with the specified prefix. </param>
-        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query. </param>
-        /// <param name="marker"> A string value that identifies the portion of the list to be returned with the next list operation. The operation returns a marker value within the response body if the list returned was not complete. The marker value may then be used in a subsequent call to request the next set of list items. The marker value is opaque to the client. </param>
-        /// <param name="maxresults"> Specifies the maximum number of entries to return. If the request does not specify maxresults, or specifies a value greater than 5,000, the server will return up to 5,000 items. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
+        /// <summary>
+        /// [Protocol Method] Returns a list of files and directories under the specified share or directory. It lists the contents only for a single level of the directory hierarchy.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="prefix"> Filters the results to return only items whose name begins with the specified prefix. </param>
+        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
+        /// <param name="marker"> A string value that identifies the portion of the list to be returned with the next listing operation. </param>
+        /// <param name="maxresults"> Specifies the maximum number of items to return. </param>
         /// <param name="include"> Include this parameter to specify one or more datasets to include in the response. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="includeExtendedInfo"> Include extended information. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<ListFilesAndDirectoriesSegmentResponse, DirectoryListFilesAndDirectoriesSegmentHeaders> ListFilesAndDirectoriesSegment(string prefix = null, string sharesnapshot = null, string marker = null, int? maxresults = null, int? timeout = null, IEnumerable<ListFilesIncludeType> include = null, bool? includeExtendedInfo = null, CancellationToken cancellationToken = default)
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetFilesAndDirectoriesSegmentAsync(string prefix, string sharesnapshot, string marker, int? maxresults, IEnumerable<ListFilesIncludeType> include, int? timeout, bool? includeExtendedInfo, RequestContext context)
         {
-            using var message = CreateListFilesAndDirectoriesSegmentRequest(prefix, sharesnapshot, marker, maxresults, timeout, include, includeExtendedInfo);
-            _pipeline.Send(message, cancellationToken);
-            var headers = new DirectoryListFilesAndDirectoriesSegmentHeaders(message.Response);
-            switch (message.Response.Status)
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DirectoryRestClient.GetFilesAndDirectoriesSegment");
+            scope.Start();
+            try
             {
-                case 200:
-                    {
-                        ListFilesAndDirectoriesSegmentResponse value = default;
-                        var document = XDocument.Load(message.Response.ContentStream, LoadOptions.PreserveWhitespace);
-                        if (document.Element("EnumerationResults") is XElement enumerationResultsElement)
-                        {
-                            value = ListFilesAndDirectoriesSegmentResponse.DeserializeListFilesAndDirectoriesSegmentResponse(enumerationResultsElement);
-                        }
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
+                using HttpMessage message = CreateGetFilesAndDirectoriesSegmentRequest(prefix, sharesnapshot, marker, maxresults, include, timeout, includeExtendedInfo, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
             }
         }
 
-        internal HttpMessage CreateListHandlesRequest(string marker, int? maxresults, int? timeout, string sharesnapshot, bool? recursive)
+        /// <summary> Returns a list of files and directories under the specified share or directory. It lists the contents only for a single level of the directory hierarchy. </summary>
+        /// <param name="prefix"> Filters the results to return only items whose name begins with the specified prefix. </param>
+        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
+        /// <param name="marker"> A string value that identifies the portion of the list to be returned with the next listing operation. </param>
+        /// <param name="maxresults"> Specifies the maximum number of items to return. </param>
+        /// <param name="include"> Include this parameter to specify one or more datasets to include in the response. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="includeExtendedInfo"> Include extended information. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<ListFilesAndDirectoriesSegmentResponse> GetFilesAndDirectoriesSegment(string prefix = default, string sharesnapshot = default, string marker = default, int? maxresults = default, IEnumerable<ListFilesIncludeType> include = default, int? timeout = default, bool? includeExtendedInfo = default, CancellationToken cancellationToken = default)
         {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_url, false);
-            uri.AppendQuery("comp", "listhandles", true);
-            if (marker != null)
-            {
-                uri.AppendQuery("marker", marker, true);
-            }
-            if (maxresults != null)
-            {
-                uri.AppendQuery("maxresults", maxresults.Value, true);
-            }
-            if (timeout != null)
-            {
-                uri.AppendQuery("timeout", timeout.Value, true);
-            }
-            if (sharesnapshot != null)
-            {
-                uri.AppendQuery("sharesnapshot", sharesnapshot, true);
-            }
-            request.Uri = uri;
-            if (recursive != null)
-            {
-                request.Headers.Add("x-ms-recursive", recursive.Value);
-            }
-            request.Headers.Add("x-ms-version", _version);
-            if (_allowTrailingDot != null)
-            {
-                request.Headers.Add("x-ms-allow-trailing-dot", _allowTrailingDot.Value);
-            }
-            if (_fileRequestIntent != null)
-            {
-                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
-            }
-            request.Headers.Add("Accept", "application/xml");
-            return message;
+            Response result = GetFilesAndDirectoriesSegment(prefix, sharesnapshot, marker, maxresults, include, timeout, includeExtendedInfo, cancellationToken.ToRequestContext());
+            return Response.FromValue((ListFilesAndDirectoriesSegmentResponse)result, result);
         }
 
-        /// <summary> Lists handles for directory. </summary>
-        /// <param name="marker"> A string value that identifies the portion of the list to be returned with the next list operation. The operation returns a marker value within the response body if the list returned was not complete. The marker value may then be used in a subsequent call to request the next set of list items. The marker value is opaque to the client. </param>
-        /// <param name="maxresults"> Specifies the maximum number of entries to return. If the request does not specify maxresults, or specifies a value greater than 5,000, the server will return up to 5,000 items. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
-        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query. </param>
+        /// <summary> Returns a list of files and directories under the specified share or directory. It lists the contents only for a single level of the directory hierarchy. </summary>
+        /// <param name="prefix"> Filters the results to return only items whose name begins with the specified prefix. </param>
+        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
+        /// <param name="marker"> A string value that identifies the portion of the list to be returned with the next listing operation. </param>
+        /// <param name="maxresults"> Specifies the maximum number of items to return. </param>
+        /// <param name="include"> Include this parameter to specify one or more datasets to include in the response. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="includeExtendedInfo"> Include extended information. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<ListFilesAndDirectoriesSegmentResponse>> GetFilesAndDirectoriesSegmentAsync(string prefix = default, string sharesnapshot = default, string marker = default, int? maxresults = default, IEnumerable<ListFilesIncludeType> include = default, int? timeout = default, bool? includeExtendedInfo = default, CancellationToken cancellationToken = default)
+        {
+            Response result = await GetFilesAndDirectoriesSegmentAsync(prefix, sharesnapshot, marker, maxresults, include, timeout, includeExtendedInfo, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((ListFilesAndDirectoriesSegmentResponse)result, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Lists handles for directory.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="marker"> A string value that identifies the portion of the list to be returned with the next listing operation. </param>
+        /// <param name="maxresults"> Specifies the maximum number of items to return. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
         /// <param name="recursive"> Specifies operation should apply to the directory specified in the URI, its files, its subdirectories and their files. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<ListHandlesResponse, DirectoryListHandlesHeaders>> ListHandlesAsync(string marker = null, int? maxresults = null, int? timeout = null, string sharesnapshot = null, bool? recursive = null, CancellationToken cancellationToken = default)
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetHandles(string marker, int? maxresults, int? timeout, string sharesnapshot, bool? recursive, RequestContext context)
         {
-            using var message = CreateListHandlesRequest(marker, maxresults, timeout, sharesnapshot, recursive);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new DirectoryListHandlesHeaders(message.Response);
-            switch (message.Response.Status)
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DirectoryRestClient.GetHandles");
+            scope.Start();
+            try
             {
-                case 200:
-                    {
-                        ListHandlesResponse value = default;
-                        var document = XDocument.Load(message.Response.ContentStream, LoadOptions.PreserveWhitespace);
-                        if (document.Element("EnumerationResults") is XElement enumerationResultsElement)
-                        {
-                            value = ListHandlesResponse.DeserializeListHandlesResponse(enumerationResultsElement);
-                        }
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
+                using HttpMessage message = CreateGetHandlesRequest(marker, maxresults, timeout, sharesnapshot, recursive, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Lists handles for directory.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="marker"> A string value that identifies the portion of the list to be returned with the next listing operation. </param>
+        /// <param name="maxresults"> Specifies the maximum number of items to return. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
+        /// <param name="recursive"> Specifies operation should apply to the directory specified in the URI, its files, its subdirectories and their files. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetHandlesAsync(string marker, int? maxresults, int? timeout, string sharesnapshot, bool? recursive, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DirectoryRestClient.GetHandles");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetHandlesRequest(marker, maxresults, timeout, sharesnapshot, recursive, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
             }
         }
 
         /// <summary> Lists handles for directory. </summary>
-        /// <param name="marker"> A string value that identifies the portion of the list to be returned with the next list operation. The operation returns a marker value within the response body if the list returned was not complete. The marker value may then be used in a subsequent call to request the next set of list items. The marker value is opaque to the client. </param>
-        /// <param name="maxresults"> Specifies the maximum number of entries to return. If the request does not specify maxresults, or specifies a value greater than 5,000, the server will return up to 5,000 items. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
-        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query. </param>
+        /// <param name="marker"> A string value that identifies the portion of the list to be returned with the next listing operation. </param>
+        /// <param name="maxresults"> Specifies the maximum number of items to return. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
         /// <param name="recursive"> Specifies operation should apply to the directory specified in the URI, its files, its subdirectories and their files. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<ListHandlesResponse, DirectoryListHandlesHeaders> ListHandles(string marker = null, int? maxresults = null, int? timeout = null, string sharesnapshot = null, bool? recursive = null, CancellationToken cancellationToken = default)
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<ListHandlesResponse> GetHandles(string marker = default, int? maxresults = default, int? timeout = default, string sharesnapshot = default, bool? recursive = default, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListHandlesRequest(marker, maxresults, timeout, sharesnapshot, recursive);
-            _pipeline.Send(message, cancellationToken);
-            var headers = new DirectoryListHandlesHeaders(message.Response);
-            switch (message.Response.Status)
+            Response result = GetHandles(marker, maxresults, timeout, sharesnapshot, recursive, cancellationToken.ToRequestContext());
+            return Response.FromValue((ListHandlesResponse)result, result);
+        }
+
+        /// <summary> Lists handles for directory. </summary>
+        /// <param name="marker"> A string value that identifies the portion of the list to be returned with the next listing operation. </param>
+        /// <param name="maxresults"> Specifies the maximum number of items to return. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
+        /// <param name="recursive"> Specifies operation should apply to the directory specified in the URI, its files, its subdirectories and their files. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<ListHandlesResponse>> GetHandlesAsync(string marker = default, int? maxresults = default, int? timeout = default, string sharesnapshot = default, bool? recursive = default, CancellationToken cancellationToken = default)
+        {
+            Response result = await GetHandlesAsync(marker, maxresults, timeout, sharesnapshot, recursive, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((ListHandlesResponse)result, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Closes all handles open for given directory.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="handleId"> Specifies handle ID opened on the file or directory to be closed. Asterisk ('*') is a wildcard that specifies all handles. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="marker"> A string value that identifies the portion of the list to be returned with the next listing operation. </param>
+        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
+        /// <param name="recursive"> Specifies operation should apply to the directory specified in the URI, its files, its subdirectories and their files. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response ForceCloseHandles(string handleId, int? timeout, string marker, string sharesnapshot, bool? recursive, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DirectoryRestClient.ForceCloseHandles");
+            scope.Start();
+            try
             {
-                case 200:
-                    {
-                        ListHandlesResponse value = default;
-                        var document = XDocument.Load(message.Response.ContentStream, LoadOptions.PreserveWhitespace);
-                        if (document.Element("EnumerationResults") is XElement enumerationResultsElement)
-                        {
-                            value = ListHandlesResponse.DeserializeListHandlesResponse(enumerationResultsElement);
-                        }
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
+                using HttpMessage message = CreateForceCloseHandlesRequest(handleId, timeout, marker, sharesnapshot, recursive, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
             }
         }
 
-        internal HttpMessage CreateForceCloseHandlesRequest(string handleId, int? timeout, string marker, string sharesnapshot, bool? recursive)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_url, false);
-            uri.AppendQuery("comp", "forceclosehandles", true);
-            if (timeout != null)
-            {
-                uri.AppendQuery("timeout", timeout.Value, true);
-            }
-            if (marker != null)
-            {
-                uri.AppendQuery("marker", marker, true);
-            }
-            if (sharesnapshot != null)
-            {
-                uri.AppendQuery("sharesnapshot", sharesnapshot, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("x-ms-handle-id", handleId);
-            if (recursive != null)
-            {
-                request.Headers.Add("x-ms-recursive", recursive.Value);
-            }
-            request.Headers.Add("x-ms-version", _version);
-            if (_allowTrailingDot != null)
-            {
-                request.Headers.Add("x-ms-allow-trailing-dot", _allowTrailingDot.Value);
-            }
-            if (_fileRequestIntent != null)
-            {
-                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
-            }
-            request.Headers.Add("Accept", "application/xml");
-            return message;
-        }
-
-        /// <summary> Closes all handles open for given directory. </summary>
-        /// <param name="handleId"> Specifies handle ID opened on the file or directory to be closed. Asterisk (‘*’) is a wildcard that specifies all handles. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
-        /// <param name="marker"> A string value that identifies the portion of the list to be returned with the next list operation. The operation returns a marker value within the response body if the list returned was not complete. The marker value may then be used in a subsequent call to request the next set of list items. The marker value is opaque to the client. </param>
-        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query. </param>
+        /// <summary>
+        /// [Protocol Method] Closes all handles open for given directory.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="handleId"> Specifies handle ID opened on the file or directory to be closed. Asterisk ('*') is a wildcard that specifies all handles. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="marker"> A string value that identifies the portion of the list to be returned with the next listing operation. </param>
+        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
         /// <param name="recursive"> Specifies operation should apply to the directory specified in the URI, its files, its subdirectories and their files. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="handleId"/> is null. </exception>
-        public async Task<ResponseWithHeaders<DirectoryForceCloseHandlesHeaders>> ForceCloseHandlesAsync(string handleId, int? timeout = null, string marker = null, string sharesnapshot = null, bool? recursive = null, CancellationToken cancellationToken = default)
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> ForceCloseHandlesAsync(string handleId, int? timeout, string marker, string sharesnapshot, bool? recursive, RequestContext context)
         {
-            if (handleId == null)
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DirectoryRestClient.ForceCloseHandles");
+            scope.Start();
+            try
             {
-                throw new ArgumentNullException(nameof(handleId));
+                using HttpMessage message = CreateForceCloseHandlesRequest(handleId, timeout, marker, sharesnapshot, recursive, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
-
-            using var message = CreateForceCloseHandlesRequest(handleId, timeout, marker, sharesnapshot, recursive);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new DirectoryForceCloseHandlesHeaders(message.Response);
-            switch (message.Response.Status)
+            catch (Exception e)
             {
-                case 200:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
+                scope.Failed(e);
+                throw;
             }
         }
 
         /// <summary> Closes all handles open for given directory. </summary>
-        /// <param name="handleId"> Specifies handle ID opened on the file or directory to be closed. Asterisk (‘*’) is a wildcard that specifies all handles. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
-        /// <param name="marker"> A string value that identifies the portion of the list to be returned with the next list operation. The operation returns a marker value within the response body if the list returned was not complete. The marker value may then be used in a subsequent call to request the next set of list items. The marker value is opaque to the client. </param>
-        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query. </param>
+        /// <param name="handleId"> Specifies handle ID opened on the file or directory to be closed. Asterisk ('*') is a wildcard that specifies all handles. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="marker"> A string value that identifies the portion of the list to be returned with the next listing operation. </param>
+        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
         /// <param name="recursive"> Specifies operation should apply to the directory specified in the URI, its files, its subdirectories and their files. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="handleId"/> is null. </exception>
-        public ResponseWithHeaders<DirectoryForceCloseHandlesHeaders> ForceCloseHandles(string handleId, int? timeout = null, string marker = null, string sharesnapshot = null, bool? recursive = null, CancellationToken cancellationToken = default)
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response ForceCloseHandles(string handleId, int? timeout = default, string marker = default, string sharesnapshot = default, bool? recursive = default, CancellationToken cancellationToken = default)
         {
-            if (handleId == null)
-            {
-                throw new ArgumentNullException(nameof(handleId));
-            }
-
-            using var message = CreateForceCloseHandlesRequest(handleId, timeout, marker, sharesnapshot, recursive);
-            _pipeline.Send(message, cancellationToken);
-            var headers = new DirectoryForceCloseHandlesHeaders(message.Response);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
+            return ForceCloseHandles(handleId, timeout, marker, sharesnapshot, recursive, cancellationToken.ToRequestContext());
         }
 
-        internal HttpMessage CreateRenameRequest(string renameSource, int? timeout, bool? replaceIfExists, bool? ignoreReadOnly, string sourceLeaseId, string destinationLeaseId, string filePermission, FilePermissionFormat? filePermissionFormat, string filePermissionKey, IDictionary<string, string> metadata, CopyFileSmbInfo copyFileSmbInfo)
+        /// <summary> Closes all handles open for given directory. </summary>
+        /// <param name="handleId"> Specifies handle ID opened on the file or directory to be closed. Asterisk ('*') is a wildcard that specifies all handles. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="marker"> A string value that identifies the portion of the list to be returned with the next listing operation. </param>
+        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
+        /// <param name="recursive"> Specifies operation should apply to the directory specified in the URI, its files, its subdirectories and their files. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> ForceCloseHandlesAsync(string handleId, int? timeout = default, string marker = default, string sharesnapshot = default, bool? recursive = default, CancellationToken cancellationToken = default)
         {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_url, false);
-            uri.AppendQuery("restype", "directory", true);
-            uri.AppendQuery("comp", "rename", true);
-            if (timeout != null)
-            {
-                uri.AppendQuery("timeout", timeout.Value, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("x-ms-version", _version);
-            request.Headers.Add("x-ms-file-rename-source", renameSource);
-            if (replaceIfExists != null)
-            {
-                request.Headers.Add("x-ms-file-rename-replace-if-exists", replaceIfExists.Value);
-            }
-            if (ignoreReadOnly != null)
-            {
-                request.Headers.Add("x-ms-file-rename-ignore-readonly", ignoreReadOnly.Value);
-            }
-            if (sourceLeaseId != null)
-            {
-                request.Headers.Add("x-ms-source-lease-id", sourceLeaseId);
-            }
-            if (destinationLeaseId != null)
-            {
-                request.Headers.Add("x-ms-destination-lease-id", destinationLeaseId);
-            }
-            if (copyFileSmbInfo?.FileAttributes != null)
-            {
-                request.Headers.Add("x-ms-file-attributes", copyFileSmbInfo.FileAttributes);
-            }
-            if (copyFileSmbInfo?.FileCreationTime != null)
-            {
-                request.Headers.Add("x-ms-file-creation-time", copyFileSmbInfo.FileCreationTime);
-            }
-            if (copyFileSmbInfo?.FileLastWriteTime != null)
-            {
-                request.Headers.Add("x-ms-file-last-write-time", copyFileSmbInfo.FileLastWriteTime);
-            }
-            if (copyFileSmbInfo?.FileChangeTime != null)
-            {
-                request.Headers.Add("x-ms-file-change-time", copyFileSmbInfo.FileChangeTime);
-            }
-            if (filePermission != null)
-            {
-                request.Headers.Add("x-ms-file-permission", filePermission);
-            }
-            if (filePermissionFormat != null)
-            {
-                request.Headers.Add("x-ms-file-permission-format", filePermissionFormat.Value.ToSerialString());
-            }
-            if (filePermissionKey != null)
-            {
-                request.Headers.Add("x-ms-file-permission-key", filePermissionKey);
-            }
-            if (metadata != null)
-            {
-                request.Headers.Add("x-ms-meta-", metadata);
-            }
-            if (_allowTrailingDot != null)
-            {
-                request.Headers.Add("x-ms-allow-trailing-dot", _allowTrailingDot.Value);
-            }
-            if (_allowSourceTrailingDot != null)
-            {
-                request.Headers.Add("x-ms-source-allow-trailing-dot", _allowSourceTrailingDot.Value);
-            }
-            if (_fileRequestIntent != null)
-            {
-                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
-            }
-            request.Headers.Add("Accept", "application/xml");
-            return message;
+            return await ForceCloseHandlesAsync(handleId, timeout, marker, sharesnapshot, recursive, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
-        /// <summary> Renames a directory. </summary>
+        /// <summary>
+        /// [Protocol Method] Renames a directory. By default, the destination is overwritten and if the destination already exists and has a read-only attribute set, the operation will fail.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="renameSource"> Required. Specifies the URI-style path of the source file, up to 2 KB in length. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
-        /// <param name="replaceIfExists"> Optional. A boolean value for if the destination file already exists, whether this request will overwrite the file or not. If true, the rename will succeed and will overwrite the destination file. If not provided or if false and the destination file does exist, the request will not overwrite the destination file. If provided and the destination file doesn’t exist, the rename will succeed. Note: This value does not override the x-ms-file-copy-ignore-read-only header value. </param>
-        /// <param name="ignoreReadOnly"> Optional. A boolean value that specifies whether the ReadOnly attribute on a preexisting destination file should be respected. If true, the rename will succeed, otherwise, a previous file at the destination with the ReadOnly attribute set will cause the rename to fail. </param>
-        /// <param name="sourceLeaseId"> Required if the source file has an active infinite lease. </param>
-        /// <param name="destinationLeaseId"> Required if the destination file has an active infinite lease. The lease ID specified for this header must match the lease ID of the destination file. If the request does not include the lease ID or it is not valid, the operation fails with status code 412 (Precondition Failed). If this header is specified and the destination file does not currently have an active lease, the operation will also fail with status code 412 (Precondition Failed). </param>
-        /// <param name="filePermission"> If specified the permission (security descriptor) shall be set for the directory/file. This header can be used if Permission size is &lt;= 8KB, else x-ms-file-permission-key header shall be used. Default value: Inherit. If SDDL is specified as input, it must have owner, group and dacl. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
-        /// <param name="filePermissionFormat"> Optional. Available for version 2023-06-01 and later. Specifies the format in which the permission is returned. Acceptable values are SDDL or binary. If x-ms-file-permission-format is unspecified or explicitly set to SDDL, the permission is returned in SDDL format. If x-ms-file-permission-format is explicitly set to binary, the permission is returned as a base64 string representing the binary encoding of the permission. </param>
-        /// <param name="filePermissionKey"> Key of the permission to be set for the directory/file. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
-        /// <param name="metadata"> A name-value pair to associate with a file storage object. </param>
-        /// <param name="copyFileSmbInfo"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="renameSource"/> is null. </exception>
-        public async Task<ResponseWithHeaders<DirectoryRenameHeaders>> RenameAsync(string renameSource, int? timeout = null, bool? replaceIfExists = null, bool? ignoreReadOnly = null, string sourceLeaseId = null, string destinationLeaseId = null, string filePermission = null, FilePermissionFormat? filePermissionFormat = null, string filePermissionKey = null, IDictionary<string, string> metadata = null, CopyFileSmbInfo copyFileSmbInfo = null, CancellationToken cancellationToken = default)
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="replaceIfExists"> Boolean. Default value is false. Set to true to indicate that the destination should be overwritten. </param>
+        /// <param name="ignoreReadOnly"> Boolean. Default value is false. Set to true to overwrite the destination even if it has the read-only attribute set. </param>
+        /// <param name="sourceLeaseId"> Required if the source file has an active lease. </param>
+        /// <param name="destinationLeaseId"> Required if the destination has an active lease. </param>
+        /// <param name="fileAttributes"> If specified, the provided file attributes shall be set. </param>
+        /// <param name="fileCreationTime"> Creation time for the directory. </param>
+        /// <param name="fileLastWriteTime"> Last write time for the directory. </param>
+        /// <param name="fileChangeTime"> Change time for the directory. </param>
+        /// <param name="filePermission"> If specified the permission shall be set for the directory. </param>
+        /// <param name="filePermissionFormat"> Optional. Used to set permission format. </param>
+        /// <param name="filePermissionKey"> Key of the permission to be set. </param>
+        /// <param name="metadata"> Optional. User-defined metadata for the resource. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response Rename(string renameSource, int? timeout, bool? replaceIfExists, bool? ignoreReadOnly, string sourceLeaseId, string destinationLeaseId, string fileAttributes, string fileCreationTime, string fileLastWriteTime, string fileChangeTime, string filePermission, string filePermissionFormat, string filePermissionKey, IDictionary<string, string> metadata, RequestContext context)
         {
-            if (renameSource == null)
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DirectoryRestClient.Rename");
+            scope.Start();
+            try
             {
-                throw new ArgumentNullException(nameof(renameSource));
+                using HttpMessage message = CreateRenameRequest(renameSource, timeout, replaceIfExists, ignoreReadOnly, sourceLeaseId, destinationLeaseId, fileAttributes, fileCreationTime, fileLastWriteTime, fileChangeTime, filePermission, filePermissionFormat, filePermissionKey, metadata, context);
+                return Pipeline.ProcessMessage(message, context);
             }
-
-            using var message = CreateRenameRequest(renameSource, timeout, replaceIfExists, ignoreReadOnly, sourceLeaseId, destinationLeaseId, filePermission, filePermissionFormat, filePermissionKey, metadata, copyFileSmbInfo);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new DirectoryRenameHeaders(message.Response);
-            switch (message.Response.Status)
+            catch (Exception e)
             {
-                case 200:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
+                scope.Failed(e);
+                throw;
             }
         }
 
-        /// <summary> Renames a directory. </summary>
+        /// <summary>
+        /// [Protocol Method] Renames a directory. By default, the destination is overwritten and if the destination already exists and has a read-only attribute set, the operation will fail.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="renameSource"> Required. Specifies the URI-style path of the source file, up to 2 KB in length. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
-        /// <param name="replaceIfExists"> Optional. A boolean value for if the destination file already exists, whether this request will overwrite the file or not. If true, the rename will succeed and will overwrite the destination file. If not provided or if false and the destination file does exist, the request will not overwrite the destination file. If provided and the destination file doesn’t exist, the rename will succeed. Note: This value does not override the x-ms-file-copy-ignore-read-only header value. </param>
-        /// <param name="ignoreReadOnly"> Optional. A boolean value that specifies whether the ReadOnly attribute on a preexisting destination file should be respected. If true, the rename will succeed, otherwise, a previous file at the destination with the ReadOnly attribute set will cause the rename to fail. </param>
-        /// <param name="sourceLeaseId"> Required if the source file has an active infinite lease. </param>
-        /// <param name="destinationLeaseId"> Required if the destination file has an active infinite lease. The lease ID specified for this header must match the lease ID of the destination file. If the request does not include the lease ID or it is not valid, the operation fails with status code 412 (Precondition Failed). If this header is specified and the destination file does not currently have an active lease, the operation will also fail with status code 412 (Precondition Failed). </param>
-        /// <param name="filePermission"> If specified the permission (security descriptor) shall be set for the directory/file. This header can be used if Permission size is &lt;= 8KB, else x-ms-file-permission-key header shall be used. Default value: Inherit. If SDDL is specified as input, it must have owner, group and dacl. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
-        /// <param name="filePermissionFormat"> Optional. Available for version 2023-06-01 and later. Specifies the format in which the permission is returned. Acceptable values are SDDL or binary. If x-ms-file-permission-format is unspecified or explicitly set to SDDL, the permission is returned in SDDL format. If x-ms-file-permission-format is explicitly set to binary, the permission is returned as a base64 string representing the binary encoding of the permission. </param>
-        /// <param name="filePermissionKey"> Key of the permission to be set for the directory/file. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
-        /// <param name="metadata"> A name-value pair to associate with a file storage object. </param>
-        /// <param name="copyFileSmbInfo"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="renameSource"/> is null. </exception>
-        public ResponseWithHeaders<DirectoryRenameHeaders> Rename(string renameSource, int? timeout = null, bool? replaceIfExists = null, bool? ignoreReadOnly = null, string sourceLeaseId = null, string destinationLeaseId = null, string filePermission = null, FilePermissionFormat? filePermissionFormat = null, string filePermissionKey = null, IDictionary<string, string> metadata = null, CopyFileSmbInfo copyFileSmbInfo = null, CancellationToken cancellationToken = default)
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="replaceIfExists"> Boolean. Default value is false. Set to true to indicate that the destination should be overwritten. </param>
+        /// <param name="ignoreReadOnly"> Boolean. Default value is false. Set to true to overwrite the destination even if it has the read-only attribute set. </param>
+        /// <param name="sourceLeaseId"> Required if the source file has an active lease. </param>
+        /// <param name="destinationLeaseId"> Required if the destination has an active lease. </param>
+        /// <param name="fileAttributes"> If specified, the provided file attributes shall be set. </param>
+        /// <param name="fileCreationTime"> Creation time for the directory. </param>
+        /// <param name="fileLastWriteTime"> Last write time for the directory. </param>
+        /// <param name="fileChangeTime"> Change time for the directory. </param>
+        /// <param name="filePermission"> If specified the permission shall be set for the directory. </param>
+        /// <param name="filePermissionFormat"> Optional. Used to set permission format. </param>
+        /// <param name="filePermissionKey"> Key of the permission to be set. </param>
+        /// <param name="metadata"> Optional. User-defined metadata for the resource. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> RenameAsync(string renameSource, int? timeout, bool? replaceIfExists, bool? ignoreReadOnly, string sourceLeaseId, string destinationLeaseId, string fileAttributes, string fileCreationTime, string fileLastWriteTime, string fileChangeTime, string filePermission, string filePermissionFormat, string filePermissionKey, IDictionary<string, string> metadata, RequestContext context)
         {
-            if (renameSource == null)
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DirectoryRestClient.Rename");
+            scope.Start();
+            try
             {
-                throw new ArgumentNullException(nameof(renameSource));
+                using HttpMessage message = CreateRenameRequest(renameSource, timeout, replaceIfExists, ignoreReadOnly, sourceLeaseId, destinationLeaseId, fileAttributes, fileCreationTime, fileLastWriteTime, fileChangeTime, filePermission, filePermissionFormat, filePermissionKey, metadata, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
-
-            using var message = CreateRenameRequest(renameSource, timeout, replaceIfExists, ignoreReadOnly, sourceLeaseId, destinationLeaseId, filePermission, filePermissionFormat, filePermissionKey, metadata, copyFileSmbInfo);
-            _pipeline.Send(message, cancellationToken);
-            var headers = new DirectoryRenameHeaders(message.Response);
-            switch (message.Response.Status)
+            catch (Exception e)
             {
-                case 200:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
+                scope.Failed(e);
+                throw;
             }
         }
 
-        internal HttpMessage CreateListFilesAndDirectoriesSegmentNextPageRequest(string nextLink, string prefix, string sharesnapshot, string marker, int? maxresults, int? timeout, IEnumerable<ListFilesIncludeType> include, bool? includeExtendedInfo)
+        /// <summary> Renames a directory. By default, the destination is overwritten and if the destination already exists and has a read-only attribute set, the operation will fail. </summary>
+        /// <param name="renameSource"> Required. Specifies the URI-style path of the source file, up to 2 KB in length. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="replaceIfExists"> Boolean. Default value is false. Set to true to indicate that the destination should be overwritten. </param>
+        /// <param name="ignoreReadOnly"> Boolean. Default value is false. Set to true to overwrite the destination even if it has the read-only attribute set. </param>
+        /// <param name="sourceLeaseId"> Required if the source file has an active lease. </param>
+        /// <param name="destinationLeaseId"> Required if the destination has an active lease. </param>
+        /// <param name="fileAttributes"> If specified, the provided file attributes shall be set. </param>
+        /// <param name="fileCreationTime"> Creation time for the directory. </param>
+        /// <param name="fileLastWriteTime"> Last write time for the directory. </param>
+        /// <param name="fileChangeTime"> Change time for the directory. </param>
+        /// <param name="filePermission"> If specified the permission shall be set for the directory. </param>
+        /// <param name="filePermissionFormat"> Optional. Used to set permission format. </param>
+        /// <param name="filePermissionKey"> Key of the permission to be set. </param>
+        /// <param name="metadata"> Optional. User-defined metadata for the resource. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response Rename(string renameSource, int? timeout = default, bool? replaceIfExists = default, bool? ignoreReadOnly = default, string sourceLeaseId = default, string destinationLeaseId = default, string fileAttributes = default, string fileCreationTime = default, string fileLastWriteTime = default, string fileChangeTime = default, string filePermission = default, FilePermissionFormat? filePermissionFormat = default, string filePermissionKey = default, IDictionary<string, string> metadata = default, CancellationToken cancellationToken = default)
         {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_url, false);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            request.Headers.Add("x-ms-version", _version);
-            if (includeExtendedInfo != null)
-            {
-                request.Headers.Add("x-ms-file-extended-info", includeExtendedInfo.Value);
-            }
-            if (_allowTrailingDot != null)
-            {
-                request.Headers.Add("x-ms-allow-trailing-dot", _allowTrailingDot.Value);
-            }
-            if (_fileRequestIntent != null)
-            {
-                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
-            }
-            request.Headers.Add("Accept", "application/xml");
-            return message;
+            return Rename(renameSource, timeout, replaceIfExists, ignoreReadOnly, sourceLeaseId, destinationLeaseId, fileAttributes, fileCreationTime, fileLastWriteTime, fileChangeTime, filePermission, filePermissionFormat?.ToSerialString(), filePermissionKey, metadata, cancellationToken.ToRequestContext());
         }
 
-        /// <summary> Returns a list of files or directories under the specified share or directory. It lists the contents only for a single level of the directory hierarchy. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="prefix"> Filters the results to return only entries whose name begins with the specified prefix. </param>
-        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query. </param>
-        /// <param name="marker"> A string value that identifies the portion of the list to be returned with the next list operation. The operation returns a marker value within the response body if the list returned was not complete. The marker value may then be used in a subsequent call to request the next set of list items. The marker value is opaque to the client. </param>
-        /// <param name="maxresults"> Specifies the maximum number of entries to return. If the request does not specify maxresults, or specifies a value greater than 5,000, the server will return up to 5,000 items. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
-        /// <param name="include"> Include this parameter to specify one or more datasets to include in the response. </param>
-        /// <param name="includeExtendedInfo"> Include extended information. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<ResponseWithHeaders<ListFilesAndDirectoriesSegmentResponse, DirectoryListFilesAndDirectoriesSegmentHeaders>> ListFilesAndDirectoriesSegmentNextPageAsync(string nextLink, string prefix = null, string sharesnapshot = null, string marker = null, int? maxresults = null, int? timeout = null, IEnumerable<ListFilesIncludeType> include = null, bool? includeExtendedInfo = null, CancellationToken cancellationToken = default)
+        /// <summary> Renames a directory. By default, the destination is overwritten and if the destination already exists and has a read-only attribute set, the operation will fail. </summary>
+        /// <param name="renameSource"> Required. Specifies the URI-style path of the source file, up to 2 KB in length. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="replaceIfExists"> Boolean. Default value is false. Set to true to indicate that the destination should be overwritten. </param>
+        /// <param name="ignoreReadOnly"> Boolean. Default value is false. Set to true to overwrite the destination even if it has the read-only attribute set. </param>
+        /// <param name="sourceLeaseId"> Required if the source file has an active lease. </param>
+        /// <param name="destinationLeaseId"> Required if the destination has an active lease. </param>
+        /// <param name="fileAttributes"> If specified, the provided file attributes shall be set. </param>
+        /// <param name="fileCreationTime"> Creation time for the directory. </param>
+        /// <param name="fileLastWriteTime"> Last write time for the directory. </param>
+        /// <param name="fileChangeTime"> Change time for the directory. </param>
+        /// <param name="filePermission"> If specified the permission shall be set for the directory. </param>
+        /// <param name="filePermissionFormat"> Optional. Used to set permission format. </param>
+        /// <param name="filePermissionKey"> Key of the permission to be set. </param>
+        /// <param name="metadata"> Optional. User-defined metadata for the resource. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> RenameAsync(string renameSource, int? timeout = default, bool? replaceIfExists = default, bool? ignoreReadOnly = default, string sourceLeaseId = default, string destinationLeaseId = default, string fileAttributes = default, string fileCreationTime = default, string fileLastWriteTime = default, string fileChangeTime = default, string filePermission = default, FilePermissionFormat? filePermissionFormat = default, string filePermissionKey = default, IDictionary<string, string> metadata = default, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-
-            using var message = CreateListFilesAndDirectoriesSegmentNextPageRequest(nextLink, prefix, sharesnapshot, marker, maxresults, timeout, include, includeExtendedInfo);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new DirectoryListFilesAndDirectoriesSegmentHeaders(message.Response);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ListFilesAndDirectoriesSegmentResponse value = default;
-                        var document = XDocument.Load(message.Response.ContentStream, LoadOptions.PreserveWhitespace);
-                        if (document.Element("EnumerationResults") is XElement enumerationResultsElement)
-                        {
-                            value = ListFilesAndDirectoriesSegmentResponse.DeserializeListFilesAndDirectoriesSegmentResponse(enumerationResultsElement);
-                        }
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Returns a list of files or directories under the specified share or directory. It lists the contents only for a single level of the directory hierarchy. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="prefix"> Filters the results to return only entries whose name begins with the specified prefix. </param>
-        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query. </param>
-        /// <param name="marker"> A string value that identifies the portion of the list to be returned with the next list operation. The operation returns a marker value within the response body if the list returned was not complete. The marker value may then be used in a subsequent call to request the next set of list items. The marker value is opaque to the client. </param>
-        /// <param name="maxresults"> Specifies the maximum number of entries to return. If the request does not specify maxresults, or specifies a value greater than 5,000, the server will return up to 5,000 items. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
-        /// <param name="include"> Include this parameter to specify one or more datasets to include in the response. </param>
-        /// <param name="includeExtendedInfo"> Include extended information. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public ResponseWithHeaders<ListFilesAndDirectoriesSegmentResponse, DirectoryListFilesAndDirectoriesSegmentHeaders> ListFilesAndDirectoriesSegmentNextPage(string nextLink, string prefix = null, string sharesnapshot = null, string marker = null, int? maxresults = null, int? timeout = null, IEnumerable<ListFilesIncludeType> include = null, bool? includeExtendedInfo = null, CancellationToken cancellationToken = default)
-        {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-
-            using var message = CreateListFilesAndDirectoriesSegmentNextPageRequest(nextLink, prefix, sharesnapshot, marker, maxresults, timeout, include, includeExtendedInfo);
-            _pipeline.Send(message, cancellationToken);
-            var headers = new DirectoryListFilesAndDirectoriesSegmentHeaders(message.Response);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ListFilesAndDirectoriesSegmentResponse value = default;
-                        var document = XDocument.Load(message.Response.ContentStream, LoadOptions.PreserveWhitespace);
-                        if (document.Element("EnumerationResults") is XElement enumerationResultsElement)
-                        {
-                            value = ListFilesAndDirectoriesSegmentResponse.DeserializeListFilesAndDirectoriesSegmentResponse(enumerationResultsElement);
-                        }
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
+            return await RenameAsync(renameSource, timeout, replaceIfExists, ignoreReadOnly, sourceLeaseId, destinationLeaseId, fileAttributes, fileCreationTime, fileLastWriteTime, fileChangeTime, filePermission, filePermissionFormat?.ToSerialString(), filePermissionKey, metadata, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
     }
 }

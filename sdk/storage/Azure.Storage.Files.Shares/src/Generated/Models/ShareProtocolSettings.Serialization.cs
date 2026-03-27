@@ -5,42 +5,148 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.IO;
 using System.Xml;
 using System.Xml.Linq;
 using Azure.Core;
-using Azure.Storage.Common;
+using Azure.Storage.Files.Shares;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    public partial class ShareProtocolSettings : IXmlSerializable
+    /// <summary> Protocol settings. </summary>
+    public partial class ShareProtocolSettings : IPersistableModel<ShareProtocolSettings>, IXmlSerializable
     {
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ShareProtocolSettings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            writer.WriteStartElement(nameHint ?? "ProtocolSettings");
-            if (Common.Optional.IsDefined(Smb))
+            string format = options.Format == "W" ? ((IPersistableModel<ShareProtocolSettings>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
             {
-                writer.WriteObjectValue(Smb, "SMB");
+                case "X":
+                    using (Stream dataStream = data.ToStream())
+                    {
+                        return DeserializeShareProtocolSettings(XElement.Load(dataStream, LoadOptions.PreserveWhitespace), options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ShareProtocolSettings)} does not support reading '{options.Format}' format.");
             }
-            if (Common.Optional.IsDefined(Nfs))
-            {
-                writer.WriteObjectValue(Nfs, "NFS");
-            }
-            writer.WriteEndElement();
         }
 
-        internal static ShareProtocolSettings DeserializeShareProtocolSettings(XElement element)
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
+            string format = options.Format == "W" ? ((IPersistableModel<ShareProtocolSettings>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "X":
+                    using (MemoryStream stream = new MemoryStream(256))
+                    {
+                        using (XmlWriter writer = XmlWriter.Create(stream, ModelSerializationExtensions.XmlWriterSettings))
+                        {
+                            WriteXml(writer, options, "ProtocolSettings");
+                        }
+                        if (stream.Position > int.MaxValue)
+                        {
+                            return BinaryData.FromStream(stream);
+                        }
+                        else
+                        {
+                            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+                        }
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ShareProtocolSettings)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ShareProtocolSettings>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ShareProtocolSettings IPersistableModel<ShareProtocolSettings>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ShareProtocolSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
+
+        /// <param name="writer"> The XML writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        /// <param name="nameHint"> An optional name hint. </param>
+        private void WriteXml(XmlWriter writer, ModelReaderWriterOptions options, string nameHint)
+        {
+            if (nameHint != null)
+            {
+                writer.WriteStartElement(nameHint);
+            }
+
+            XmlModelWriteCore(writer, options);
+
+            if (nameHint != null)
+            {
+                writer.WriteEndElement();
+            }
+        }
+
+        /// <param name="writer"> The XML writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal virtual void XmlModelWriteCore(XmlWriter writer, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ShareProtocolSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "X")
+            {
+                throw new FormatException($"The model {nameof(ShareProtocolSettings)} does not support writing '{format}' format.");
+            }
+
+            if (Optional.IsDefined(Smb))
+            {
+                writer.WriteStartElement("SMB");
+                writer.WriteObjectValue(Smb, options);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(Nfs))
+            {
+                writer.WriteStartElement("NFS");
+                writer.WriteObjectValue(Nfs, options);
+                writer.WriteEndElement();
+            }
+        }
+
+        /// <param name="element"> The xml element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ShareProtocolSettings DeserializeShareProtocolSettings(XElement element, ModelReaderWriterOptions options)
+        {
+            if (element == null)
+            {
+                return null;
+            }
+
             ShareSmbSettings smb = default;
             ShareNfsSettings nfs = default;
-            if (element.Element("SMB") is XElement smbElement)
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+
+            foreach (var child in element.Elements())
             {
-                smb = ShareSmbSettings.DeserializeShareSmbSettings(smbElement);
+                string localName = child.Name.LocalName;
+                if (localName == "SMB")
+                {
+                    smb = ShareSmbSettings.DeserializeShareSmbSettings(child, options);
+                    continue;
+                }
+                if (localName == "NFS")
+                {
+                    nfs = ShareNfsSettings.DeserializeShareNfsSettings(child, options);
+                    continue;
+                }
             }
-            if (element.Element("NFS") is XElement nfsElement)
-            {
-                nfs = ShareNfsSettings.DeserializeShareNfsSettings(nfsElement);
-            }
-            return new ShareProtocolSettings(smb, nfs);
+            return new ShareProtocolSettings(smb, nfs, additionalBinaryDataProperties);
         }
+
+        /// <param name="writer"> The XML writer. </param>
+        /// <param name="nameHint"> An optional name hint. </param>
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => WriteXml(writer, ModelSerializationExtensions.WireOptions, nameHint);
     }
 }

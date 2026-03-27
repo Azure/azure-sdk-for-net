@@ -7,10 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Xml.Linq;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Files.Shares.Models;
@@ -19,2181 +18,2107 @@ namespace Azure.Storage.Files.Shares
 {
     internal partial class FileRestClient
     {
-        private readonly HttpPipeline _pipeline;
-        private readonly string _url;
+        private readonly Uri _endpoint;
         private readonly string _version;
-        private readonly string _fileRangeWriteFromUrl;
-        private readonly bool? _allowTrailingDot;
         private readonly ShareTokenIntent? _fileRequestIntent;
+        private readonly bool? _allowTrailingDot;
         private readonly bool? _allowSourceTrailingDot;
+        private readonly FileRangeWriteFromUrlType _fileRangeWriteFromUrl;
+
+        /// <summary> Initializes a new instance of FileRestClient for mocking. </summary>
+        protected FileRestClient()
+        {
+        }
+
+        /// <summary> Initializes a new instance of FileRestClient. </summary>
+        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
+        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="version"></param>
+        /// <param name="fileRequestIntent"></param>
+        /// <param name="allowTrailingDot"></param>
+        /// <param name="allowSourceTrailingDot"></param>
+        /// <param name="fileRangeWriteFromUrl"></param>
+        internal FileRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string version, ShareTokenIntent? fileRequestIntent, bool? allowTrailingDot, bool? allowSourceTrailingDot, FileRangeWriteFromUrlType fileRangeWriteFromUrl)
+        {
+            ClientDiagnostics = clientDiagnostics;
+            _endpoint = endpoint;
+            Pipeline = pipeline;
+            _version = version;
+            _fileRequestIntent = fileRequestIntent;
+            _allowTrailingDot = allowTrailingDot;
+            _allowSourceTrailingDot = allowSourceTrailingDot;
+            _fileRangeWriteFromUrl = fileRangeWriteFromUrl;
+        }
+
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        /// <summary> Initializes a new instance of FileRestClient. </summary>
-        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
-        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="url"> The URL of the service account, share, directory or file that is the target of the desired operation. </param>
-        /// <param name="version"> Specifies the version of the operation to use for this request. </param>
-        /// <param name="fileRangeWriteFromUrl"> Only update is supported: - Update: Writes the bytes downloaded from the source url into the specified range. The default value is "update". </param>
-        /// <param name="allowTrailingDot"> If true, the trailing dot will not be trimmed from the target URI. </param>
-        /// <param name="fileRequestIntent"> Valid value is backup. </param>
-        /// <param name="allowSourceTrailingDot"> If true, the trailing dot will not be trimmed from the source URI. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="url"/>, <paramref name="version"/> or <paramref name="fileRangeWriteFromUrl"/> is null. </exception>
-        public FileRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version, string fileRangeWriteFromUrl, bool? allowTrailingDot = null, ShareTokenIntent? fileRequestIntent = null, bool? allowSourceTrailingDot = null)
-        {
-            ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
-            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
-            _url = url ?? throw new ArgumentNullException(nameof(url));
-            _version = version ?? throw new ArgumentNullException(nameof(version));
-            _fileRangeWriteFromUrl = fileRangeWriteFromUrl ?? throw new ArgumentNullException(nameof(fileRangeWriteFromUrl));
-            _allowTrailingDot = allowTrailingDot;
-            _fileRequestIntent = fileRequestIntent;
-            _allowSourceTrailingDot = allowSourceTrailingDot;
-        }
-
-        internal HttpMessage CreateCreateRequest(long fileContentLength, int? timeout, IDictionary<string, string> metadata, string filePermission, FilePermissionFormat? filePermissionFormat, string filePermissionKey, string fileAttributes, string fileCreationTime, string fileLastWriteTime, string fileChangeTime, string owner, string group, string fileMode, NfsFileType? nfsFileType, byte[] contentMD5, FilePropertySemantics? filePropertySemantics, long? contentLength, string structuredBodyType, long? structuredContentLength, Stream optionalbody, FileHttpHeaders fileHttpHeaders, ShareFileRequestConditions shareFileRequestConditions)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_url, false);
-            if (timeout != null)
-            {
-                uri.AppendQuery("timeout", timeout.Value, true);
-            }
-            request.Uri = uri;
-            if (_allowTrailingDot != null)
-            {
-                request.Headers.Add("x-ms-allow-trailing-dot", _allowTrailingDot.Value);
-            }
-            request.Headers.Add("x-ms-version", _version);
-            request.Headers.Add("x-ms-content-length", fileContentLength);
-            request.Headers.Add("x-ms-type", "file");
-            if (fileHttpHeaders?.FileContentType != null)
-            {
-                request.Headers.Add("x-ms-content-type", fileHttpHeaders.FileContentType);
-            }
-            if (fileHttpHeaders?.FileContentEncoding != null)
-            {
-                request.Headers.Add("x-ms-content-encoding", fileHttpHeaders.FileContentEncoding);
-            }
-            if (fileHttpHeaders?.FileContentLanguage != null)
-            {
-                request.Headers.Add("x-ms-content-language", fileHttpHeaders.FileContentLanguage);
-            }
-            if (fileHttpHeaders?.FileCacheControl != null)
-            {
-                request.Headers.Add("x-ms-cache-control", fileHttpHeaders.FileCacheControl);
-            }
-            if (fileHttpHeaders?.FileContentMD5 != null)
-            {
-                request.Headers.Add("x-ms-content-md5", fileHttpHeaders.FileContentMD5, "D");
-            }
-            if (fileHttpHeaders?.FileContentDisposition != null)
-            {
-                request.Headers.Add("x-ms-content-disposition", fileHttpHeaders.FileContentDisposition);
-            }
-            if (metadata != null)
-            {
-                request.Headers.Add("x-ms-meta-", metadata);
-            }
-            if (filePermission != null)
-            {
-                request.Headers.Add("x-ms-file-permission", filePermission);
-            }
-            if (filePermissionFormat != null)
-            {
-                request.Headers.Add("x-ms-file-permission-format", filePermissionFormat.Value.ToSerialString());
-            }
-            if (filePermissionKey != null)
-            {
-                request.Headers.Add("x-ms-file-permission-key", filePermissionKey);
-            }
-            if (fileAttributes != null)
-            {
-                request.Headers.Add("x-ms-file-attributes", fileAttributes);
-            }
-            if (fileCreationTime != null)
-            {
-                request.Headers.Add("x-ms-file-creation-time", fileCreationTime);
-            }
-            if (fileLastWriteTime != null)
-            {
-                request.Headers.Add("x-ms-file-last-write-time", fileLastWriteTime);
-            }
-            if (fileChangeTime != null)
-            {
-                request.Headers.Add("x-ms-file-change-time", fileChangeTime);
-            }
-            if (shareFileRequestConditions?.LeaseId != null)
-            {
-                request.Headers.Add("x-ms-lease-id", shareFileRequestConditions.LeaseId);
-            }
-            if (_fileRequestIntent != null)
-            {
-                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
-            }
-            if (owner != null)
-            {
-                request.Headers.Add("x-ms-owner", owner);
-            }
-            if (group != null)
-            {
-                request.Headers.Add("x-ms-group", group);
-            }
-            if (fileMode != null)
-            {
-                request.Headers.Add("x-ms-mode", fileMode);
-            }
-            if (nfsFileType != null)
-            {
-                request.Headers.Add("x-ms-file-file-type", nfsFileType.Value.ToString());
-            }
-            if (filePropertySemantics != null)
-            {
-                request.Headers.Add("x-ms-file-property-semantics", filePropertySemantics.Value.ToString());
-            }
-            if (structuredBodyType != null)
-            {
-                request.Headers.Add("x-ms-structured-body", structuredBodyType);
-            }
-            if (structuredContentLength != null)
-            {
-                request.Headers.Add("x-ms-structured-content-length", structuredContentLength.Value);
-            }
-            request.Headers.Add("Accept", "application/xml");
-            if (optionalbody != null)
-            {
-                if (contentMD5 != null)
-                {
-                    request.Headers.Add("Content-MD5", contentMD5, "D");
-                }
-                if (contentLength != null)
-                {
-                    request.Headers.Add("Content-Length", contentLength.Value);
-                }
-                request.Headers.Add("Content-Type", "application/octet-stream");
-                request.Content = RequestContent.Create(optionalbody);
-            }
-            return message;
-        }
-
-        /// <summary> Creates a new file or replaces a file. Can also initialize the file with content. </summary>
-        /// <param name="fileContentLength"> Specifies the maximum size for the file, up to 4 TB. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
-        /// <param name="metadata"> A name-value pair to associate with a file storage object. </param>
+        /// <summary>
+        /// [Protocol Method] Creates a new file or replaces a file. Note it only initializes the file with no content.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="contentLength"> Specifies the number of bytes being transmitted in the request body. When the x-ms-write header is set to clear, the value of this header must be set to zero. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="fileContentType"> Sets the MIME content type of the file. The default type is 'application/octet-stream'. </param>
+        /// <param name="fileContentEncoding"> Specifies which content encodings have been applied to the file. </param>
+        /// <param name="fileContentLanguage"> Specifies the natural languages used by this resource. </param>
+        /// <param name="fileCacheControl"> Sets the file's cache control. The File service stores this value but does not use or modify it. </param>
+        /// <param name="fileContentMD5"> An MD5 hash of the file content. This hash is used to verify the integrity of the file during transport. </param>
+        /// <param name="fileContentDisposition"> Sets the file's Content-Disposition header. </param>
+        /// <param name="metadata"> Optional. User-defined metadata for the resource. </param>
         /// <param name="filePermission"> If specified the permission (security descriptor) shall be set for the directory/file. This header can be used if Permission size is &lt;= 8KB, else x-ms-file-permission-key header shall be used. Default value: Inherit. If SDDL is specified as input, it must have owner, group and dacl. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
-        /// <param name="filePermissionFormat"> Optional. Available for version 2023-06-01 and later. Specifies the format in which the permission is returned. Acceptable values are SDDL or binary. If x-ms-file-permission-format is unspecified or explicitly set to SDDL, the permission is returned in SDDL format. If x-ms-file-permission-format is explicitly set to binary, the permission is returned as a base64 string representing the binary encoding of the permission. </param>
         /// <param name="filePermissionKey"> Key of the permission to be set for the directory/file. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
-        /// <param name="fileAttributes"> If specified, the provided file attributes shall be set. Default value: ‘Archive’ for file and ‘Directory’ for directory. ‘None’ can also be specified as default. </param>
+        /// <param name="fileAttributes"> If specified, the provided file attributes shall be set. Default value: 'Archive' for file and 'Directory' for directory. 'None' can also be specified as default. </param>
         /// <param name="fileCreationTime"> Creation time for the file/directory. Default value: Now. </param>
         /// <param name="fileLastWriteTime"> Last write time for the file/directory. Default value: Now. </param>
         /// <param name="fileChangeTime"> Change time for the file/directory. Default value: Now. </param>
+        /// <param name="filePermissionFormat"> Optional. Used to set permission format. </param>
+        /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
         /// <param name="owner"> Optional, NFS only. The owner of the file or directory. </param>
         /// <param name="group"> Optional, NFS only. The owning group of the file or directory. </param>
         /// <param name="fileMode"> Optional, NFS only. The file mode of the file or directory. </param>
         /// <param name="nfsFileType"> Optional, NFS only. Type of the file or directory. </param>
-        /// <param name="contentMD5"> An MD5 hash of the content. This hash is used to verify the integrity of the data during transport. When the Content-MD5 header is specified, the File service compares the hash of the content that has arrived with the header value that was sent. If the two hashes do not match, the operation will fail with error code 400 (Bad Request). </param>
-        /// <param name="filePropertySemantics"> SMB only, default value is New.  New will forcefully add the ARCHIVE attribute flag and alter the permissions specified in x-ms-file-permission to inherit missing permissions from the parent.  Restore will apply changes without further modification. </param>
-        /// <param name="contentLength"> Specifies the number of bytes being transmitted in the request body. When the x-ms-write header is set to clear, the value of this header must be set to zero. </param>
-        /// <param name="structuredBodyType"> Required if the request body is a structured message. Specifies the message schema version and properties. </param>
+        /// <param name="contentMD5"> An MD5 hash of the content. This hash is used to verify the integrity of the data during transport. </param>
+        /// <param name="filePropertySemantics"> SMB only. Default value is New. </param>
+        /// <param name="optionalContentLength"> Optional. Specifies the content length of the file. </param>
+        /// <param name="structuredBodyType"> Specifies the response content should be returned as a structured message and specifies the message schema version and properties. </param>
         /// <param name="structuredContentLength"> Required if the request body is a structured message. Specifies the length of the blob/file content inside the message body. Will always be smaller than Content-Length. </param>
-        /// <param name="optionalbody"> Initial data. </param>
-        /// <param name="fileHttpHeaders"> Parameter group. </param>
-        /// <param name="shareFileRequestConditions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<FileCreateHeaders>> CreateAsync(long fileContentLength, int? timeout = null, IDictionary<string, string> metadata = null, string filePermission = null, FilePermissionFormat? filePermissionFormat = null, string filePermissionKey = null, string fileAttributes = null, string fileCreationTime = null, string fileLastWriteTime = null, string fileChangeTime = null, string owner = null, string group = null, string fileMode = null, NfsFileType? nfsFileType = null, byte[] contentMD5 = null, FilePropertySemantics? filePropertySemantics = null, long? contentLength = null, string structuredBodyType = null, long? structuredContentLength = null, Stream optionalbody = null, FileHttpHeaders fileHttpHeaders = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response Create(long contentLength, RequestContent content, int? timeout = default, string fileContentType = default, string fileContentEncoding = default, string fileContentLanguage = default, string fileCacheControl = default, BinaryData fileContentMD5 = default, string fileContentDisposition = default, IDictionary<string, string> metadata = default, string filePermission = default, string filePermissionKey = default, string fileAttributes = default, string fileCreationTime = default, string fileLastWriteTime = default, string fileChangeTime = default, string filePermissionFormat = default, string leaseId = default, string owner = default, string @group = default, string fileMode = default, string nfsFileType = default, BinaryData contentMD5 = default, string filePropertySemantics = default, long? optionalContentLength = default, string structuredBodyType = default, long? structuredContentLength = default, RequestContext context = null)
         {
-            using var message = CreateCreateRequest(fileContentLength, timeout, metadata, filePermission, filePermissionFormat, filePermissionKey, fileAttributes, fileCreationTime, fileLastWriteTime, fileChangeTime, owner, group, fileMode, nfsFileType, contentMD5, filePropertySemantics, contentLength, structuredBodyType, structuredContentLength, optionalbody, fileHttpHeaders, shareFileRequestConditions);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new FileCreateHeaders(message.Response);
-            switch (message.Response.Status)
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("FileRestClient.Create");
+            scope.Start();
+            try
             {
-                case 201:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
+                using HttpMessage message = CreateCreateRequest(contentLength, content, timeout, fileContentType, fileContentEncoding, fileContentLanguage, fileCacheControl, fileContentMD5, fileContentDisposition, metadata, filePermission, filePermissionKey, fileAttributes, fileCreationTime, fileLastWriteTime, fileChangeTime, filePermissionFormat, leaseId, owner, @group, fileMode, nfsFileType, contentMD5, filePropertySemantics, optionalContentLength, structuredBodyType, structuredContentLength, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
             }
         }
 
-        /// <summary> Creates a new file or replaces a file. Can also initialize the file with content. </summary>
-        /// <param name="fileContentLength"> Specifies the maximum size for the file, up to 4 TB. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
-        /// <param name="metadata"> A name-value pair to associate with a file storage object. </param>
+        /// <summary>
+        /// [Protocol Method] Creates a new file or replaces a file. Note it only initializes the file with no content.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="contentLength"> Specifies the number of bytes being transmitted in the request body. When the x-ms-write header is set to clear, the value of this header must be set to zero. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="fileContentType"> Sets the MIME content type of the file. The default type is 'application/octet-stream'. </param>
+        /// <param name="fileContentEncoding"> Specifies which content encodings have been applied to the file. </param>
+        /// <param name="fileContentLanguage"> Specifies the natural languages used by this resource. </param>
+        /// <param name="fileCacheControl"> Sets the file's cache control. The File service stores this value but does not use or modify it. </param>
+        /// <param name="fileContentMD5"> An MD5 hash of the file content. This hash is used to verify the integrity of the file during transport. </param>
+        /// <param name="fileContentDisposition"> Sets the file's Content-Disposition header. </param>
+        /// <param name="metadata"> Optional. User-defined metadata for the resource. </param>
         /// <param name="filePermission"> If specified the permission (security descriptor) shall be set for the directory/file. This header can be used if Permission size is &lt;= 8KB, else x-ms-file-permission-key header shall be used. Default value: Inherit. If SDDL is specified as input, it must have owner, group and dacl. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
-        /// <param name="filePermissionFormat"> Optional. Available for version 2023-06-01 and later. Specifies the format in which the permission is returned. Acceptable values are SDDL or binary. If x-ms-file-permission-format is unspecified or explicitly set to SDDL, the permission is returned in SDDL format. If x-ms-file-permission-format is explicitly set to binary, the permission is returned as a base64 string representing the binary encoding of the permission. </param>
         /// <param name="filePermissionKey"> Key of the permission to be set for the directory/file. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
-        /// <param name="fileAttributes"> If specified, the provided file attributes shall be set. Default value: ‘Archive’ for file and ‘Directory’ for directory. ‘None’ can also be specified as default. </param>
+        /// <param name="fileAttributes"> If specified, the provided file attributes shall be set. Default value: 'Archive' for file and 'Directory' for directory. 'None' can also be specified as default. </param>
         /// <param name="fileCreationTime"> Creation time for the file/directory. Default value: Now. </param>
         /// <param name="fileLastWriteTime"> Last write time for the file/directory. Default value: Now. </param>
         /// <param name="fileChangeTime"> Change time for the file/directory. Default value: Now. </param>
+        /// <param name="filePermissionFormat"> Optional. Used to set permission format. </param>
+        /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
         /// <param name="owner"> Optional, NFS only. The owner of the file or directory. </param>
         /// <param name="group"> Optional, NFS only. The owning group of the file or directory. </param>
         /// <param name="fileMode"> Optional, NFS only. The file mode of the file or directory. </param>
         /// <param name="nfsFileType"> Optional, NFS only. Type of the file or directory. </param>
-        /// <param name="contentMD5"> An MD5 hash of the content. This hash is used to verify the integrity of the data during transport. When the Content-MD5 header is specified, the File service compares the hash of the content that has arrived with the header value that was sent. If the two hashes do not match, the operation will fail with error code 400 (Bad Request). </param>
-        /// <param name="filePropertySemantics"> SMB only, default value is New.  New will forcefully add the ARCHIVE attribute flag and alter the permissions specified in x-ms-file-permission to inherit missing permissions from the parent.  Restore will apply changes without further modification. </param>
-        /// <param name="contentLength"> Specifies the number of bytes being transmitted in the request body. When the x-ms-write header is set to clear, the value of this header must be set to zero. </param>
-        /// <param name="structuredBodyType"> Required if the request body is a structured message. Specifies the message schema version and properties. </param>
+        /// <param name="contentMD5"> An MD5 hash of the content. This hash is used to verify the integrity of the data during transport. </param>
+        /// <param name="filePropertySemantics"> SMB only. Default value is New. </param>
+        /// <param name="optionalContentLength"> Optional. Specifies the content length of the file. </param>
+        /// <param name="structuredBodyType"> Specifies the response content should be returned as a structured message and specifies the message schema version and properties. </param>
         /// <param name="structuredContentLength"> Required if the request body is a structured message. Specifies the length of the blob/file content inside the message body. Will always be smaller than Content-Length. </param>
-        /// <param name="optionalbody"> Initial data. </param>
-        /// <param name="fileHttpHeaders"> Parameter group. </param>
-        /// <param name="shareFileRequestConditions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<FileCreateHeaders> Create(long fileContentLength, int? timeout = null, IDictionary<string, string> metadata = null, string filePermission = null, FilePermissionFormat? filePermissionFormat = null, string filePermissionKey = null, string fileAttributes = null, string fileCreationTime = null, string fileLastWriteTime = null, string fileChangeTime = null, string owner = null, string group = null, string fileMode = null, NfsFileType? nfsFileType = null, byte[] contentMD5 = null, FilePropertySemantics? filePropertySemantics = null, long? contentLength = null, string structuredBodyType = null, long? structuredContentLength = null, Stream optionalbody = null, FileHttpHeaders fileHttpHeaders = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> CreateAsync(long contentLength, RequestContent content, int? timeout = default, string fileContentType = default, string fileContentEncoding = default, string fileContentLanguage = default, string fileCacheControl = default, BinaryData fileContentMD5 = default, string fileContentDisposition = default, IDictionary<string, string> metadata = default, string filePermission = default, string filePermissionKey = default, string fileAttributes = default, string fileCreationTime = default, string fileLastWriteTime = default, string fileChangeTime = default, string filePermissionFormat = default, string leaseId = default, string owner = default, string @group = default, string fileMode = default, string nfsFileType = default, BinaryData contentMD5 = default, string filePropertySemantics = default, long? optionalContentLength = default, string structuredBodyType = default, long? structuredContentLength = default, RequestContext context = null)
         {
-            using var message = CreateCreateRequest(fileContentLength, timeout, metadata, filePermission, filePermissionFormat, filePermissionKey, fileAttributes, fileCreationTime, fileLastWriteTime, fileChangeTime, owner, group, fileMode, nfsFileType, contentMD5, filePropertySemantics, contentLength, structuredBodyType, structuredContentLength, optionalbody, fileHttpHeaders, shareFileRequestConditions);
-            _pipeline.Send(message, cancellationToken);
-            var headers = new FileCreateHeaders(message.Response);
-            switch (message.Response.Status)
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("FileRestClient.Create");
+            scope.Start();
+            try
             {
-                case 201:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
+                using HttpMessage message = CreateCreateRequest(contentLength, content, timeout, fileContentType, fileContentEncoding, fileContentLanguage, fileCacheControl, fileContentMD5, fileContentDisposition, metadata, filePermission, filePermissionKey, fileAttributes, fileCreationTime, fileLastWriteTime, fileChangeTime, filePermissionFormat, leaseId, owner, @group, fileMode, nfsFileType, contentMD5, filePropertySemantics, optionalContentLength, structuredBodyType, structuredContentLength, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
             }
         }
 
-        internal HttpMessage CreateDownloadRequest(int? timeout, string range, bool? rangeGetContentMD5, string structuredBodyType, ShareFileRequestConditions shareFileRequestConditions)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            message.BufferResponse = false;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_url, false);
-            if (timeout != null)
-            {
-                uri.AppendQuery("timeout", timeout.Value, true);
-            }
-            request.Uri = uri;
-            if (_allowTrailingDot != null)
-            {
-                request.Headers.Add("x-ms-allow-trailing-dot", _allowTrailingDot.Value);
-            }
-            request.Headers.Add("x-ms-version", _version);
-            if (range != null)
-            {
-                request.Headers.Add("x-ms-range", range);
-            }
-            if (rangeGetContentMD5 != null)
-            {
-                request.Headers.Add("x-ms-range-get-content-md5", rangeGetContentMD5.Value);
-            }
-            if (structuredBodyType != null)
-            {
-                request.Headers.Add("x-ms-structured-body", structuredBodyType);
-            }
-            if (shareFileRequestConditions?.LeaseId != null)
-            {
-                request.Headers.Add("x-ms-lease-id", shareFileRequestConditions.LeaseId);
-            }
-            if (_fileRequestIntent != null)
-            {
-                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
-            }
-            request.Headers.Add("Accept", "application/xml");
-            return message;
-        }
-
-        /// <summary> Reads or downloads a file from the system, including its metadata and properties. </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
-        /// <param name="range"> Return file data only from the specified byte range. </param>
-        /// <param name="rangeGetContentMD5"> When this header is set to true and specified together with the Range header, the service returns the MD5 hash for the range, as long as the range is less than or equal to 4 MB in size. </param>
-        /// <param name="structuredBodyType"> Specifies the response content should be returned as a structured message and specifies the message schema version and properties. </param>
-        /// <param name="shareFileRequestConditions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<Stream, FileDownloadHeaders>> DownloadAsync(int? timeout = null, string range = null, bool? rangeGetContentMD5 = null, string structuredBodyType = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
-        {
-            using var message = CreateDownloadRequest(timeout, range, rangeGetContentMD5, structuredBodyType, shareFileRequestConditions);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new FileDownloadHeaders(message.Response);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 206:
-                    {
-                        var value = message.ExtractResponseContent();
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Reads or downloads a file from the system, including its metadata and properties. </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
-        /// <param name="range"> Return file data only from the specified byte range. </param>
-        /// <param name="rangeGetContentMD5"> When this header is set to true and specified together with the Range header, the service returns the MD5 hash for the range, as long as the range is less than or equal to 4 MB in size. </param>
-        /// <param name="structuredBodyType"> Specifies the response content should be returned as a structured message and specifies the message schema version and properties. </param>
-        /// <param name="shareFileRequestConditions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<Stream, FileDownloadHeaders> Download(int? timeout = null, string range = null, bool? rangeGetContentMD5 = null, string structuredBodyType = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
-        {
-            using var message = CreateDownloadRequest(timeout, range, rangeGetContentMD5, structuredBodyType, shareFileRequestConditions);
-            _pipeline.Send(message, cancellationToken);
-            var headers = new FileDownloadHeaders(message.Response);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 206:
-                    {
-                        var value = message.ExtractResponseContent();
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateGetPropertiesRequest(string sharesnapshot, int? timeout, ShareFileRequestConditions shareFileRequestConditions)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Head;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_url, false);
-            if (sharesnapshot != null)
-            {
-                uri.AppendQuery("sharesnapshot", sharesnapshot, true);
-            }
-            if (timeout != null)
-            {
-                uri.AppendQuery("timeout", timeout.Value, true);
-            }
-            request.Uri = uri;
-            if (_allowTrailingDot != null)
-            {
-                request.Headers.Add("x-ms-allow-trailing-dot", _allowTrailingDot.Value);
-            }
-            request.Headers.Add("x-ms-version", _version);
-            if (shareFileRequestConditions?.LeaseId != null)
-            {
-                request.Headers.Add("x-ms-lease-id", shareFileRequestConditions.LeaseId);
-            }
-            if (_fileRequestIntent != null)
-            {
-                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
-            }
-            request.Headers.Add("Accept", "application/xml");
-            return message;
-        }
-
-        /// <summary> Returns all user-defined metadata, standard HTTP properties, and system properties for the file. It does not return the content of the file. </summary>
-        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
-        /// <param name="shareFileRequestConditions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<FileGetPropertiesHeaders>> GetPropertiesAsync(string sharesnapshot = null, int? timeout = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
-        {
-            using var message = CreateGetPropertiesRequest(sharesnapshot, timeout, shareFileRequestConditions);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new FileGetPropertiesHeaders(message.Response);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Returns all user-defined metadata, standard HTTP properties, and system properties for the file. It does not return the content of the file. </summary>
-        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
-        /// <param name="shareFileRequestConditions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<FileGetPropertiesHeaders> GetProperties(string sharesnapshot = null, int? timeout = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
-        {
-            using var message = CreateGetPropertiesRequest(sharesnapshot, timeout, shareFileRequestConditions);
-            _pipeline.Send(message, cancellationToken);
-            var headers = new FileGetPropertiesHeaders(message.Response);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateDeleteRequest(int? timeout, ShareFileRequestConditions shareFileRequestConditions)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_url, false);
-            if (timeout != null)
-            {
-                uri.AppendQuery("timeout", timeout.Value, true);
-            }
-            request.Uri = uri;
-            if (_allowTrailingDot != null)
-            {
-                request.Headers.Add("x-ms-allow-trailing-dot", _allowTrailingDot.Value);
-            }
-            request.Headers.Add("x-ms-version", _version);
-            if (shareFileRequestConditions?.LeaseId != null)
-            {
-                request.Headers.Add("x-ms-lease-id", shareFileRequestConditions.LeaseId);
-            }
-            if (_fileRequestIntent != null)
-            {
-                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
-            }
-            request.Headers.Add("Accept", "application/xml");
-            return message;
-        }
-
-        /// <summary> removes the file from the storage account. </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
-        /// <param name="shareFileRequestConditions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<FileDeleteHeaders>> DeleteAsync(int? timeout = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
-        {
-            using var message = CreateDeleteRequest(timeout, shareFileRequestConditions);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new FileDeleteHeaders(message.Response);
-            switch (message.Response.Status)
-            {
-                case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> removes the file from the storage account. </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
-        /// <param name="shareFileRequestConditions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<FileDeleteHeaders> Delete(int? timeout = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
-        {
-            using var message = CreateDeleteRequest(timeout, shareFileRequestConditions);
-            _pipeline.Send(message, cancellationToken);
-            var headers = new FileDeleteHeaders(message.Response);
-            switch (message.Response.Status)
-            {
-                case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateSetHttpHeadersRequest(int? timeout, long? fileContentLength, string filePermission, FilePermissionFormat? filePermissionFormat, string filePermissionKey, string fileAttributes, string fileCreationTime, string fileLastWriteTime, string fileChangeTime, string owner, string group, string fileMode, FileHttpHeaders fileHttpHeaders, ShareFileRequestConditions shareFileRequestConditions)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_url, false);
-            uri.AppendQuery("comp", "properties", true);
-            if (timeout != null)
-            {
-                uri.AppendQuery("timeout", timeout.Value, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("x-ms-version", _version);
-            if (fileContentLength != null)
-            {
-                request.Headers.Add("x-ms-content-length", fileContentLength.Value);
-            }
-            if (fileHttpHeaders?.FileContentType != null)
-            {
-                request.Headers.Add("x-ms-content-type", fileHttpHeaders.FileContentType);
-            }
-            if (fileHttpHeaders?.FileContentEncoding != null)
-            {
-                request.Headers.Add("x-ms-content-encoding", fileHttpHeaders.FileContentEncoding);
-            }
-            if (fileHttpHeaders?.FileContentLanguage != null)
-            {
-                request.Headers.Add("x-ms-content-language", fileHttpHeaders.FileContentLanguage);
-            }
-            if (fileHttpHeaders?.FileCacheControl != null)
-            {
-                request.Headers.Add("x-ms-cache-control", fileHttpHeaders.FileCacheControl);
-            }
-            if (fileHttpHeaders?.FileContentMD5 != null)
-            {
-                request.Headers.Add("x-ms-content-md5", fileHttpHeaders.FileContentMD5, "D");
-            }
-            if (fileHttpHeaders?.FileContentDisposition != null)
-            {
-                request.Headers.Add("x-ms-content-disposition", fileHttpHeaders.FileContentDisposition);
-            }
-            if (filePermission != null)
-            {
-                request.Headers.Add("x-ms-file-permission", filePermission);
-            }
-            if (filePermissionFormat != null)
-            {
-                request.Headers.Add("x-ms-file-permission-format", filePermissionFormat.Value.ToSerialString());
-            }
-            if (filePermissionKey != null)
-            {
-                request.Headers.Add("x-ms-file-permission-key", filePermissionKey);
-            }
-            if (fileAttributes != null)
-            {
-                request.Headers.Add("x-ms-file-attributes", fileAttributes);
-            }
-            if (fileCreationTime != null)
-            {
-                request.Headers.Add("x-ms-file-creation-time", fileCreationTime);
-            }
-            if (fileLastWriteTime != null)
-            {
-                request.Headers.Add("x-ms-file-last-write-time", fileLastWriteTime);
-            }
-            if (fileChangeTime != null)
-            {
-                request.Headers.Add("x-ms-file-change-time", fileChangeTime);
-            }
-            if (shareFileRequestConditions?.LeaseId != null)
-            {
-                request.Headers.Add("x-ms-lease-id", shareFileRequestConditions.LeaseId);
-            }
-            if (_allowTrailingDot != null)
-            {
-                request.Headers.Add("x-ms-allow-trailing-dot", _allowTrailingDot.Value);
-            }
-            if (_fileRequestIntent != null)
-            {
-                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
-            }
-            if (owner != null)
-            {
-                request.Headers.Add("x-ms-owner", owner);
-            }
-            if (group != null)
-            {
-                request.Headers.Add("x-ms-group", group);
-            }
-            if (fileMode != null)
-            {
-                request.Headers.Add("x-ms-mode", fileMode);
-            }
-            request.Headers.Add("Accept", "application/xml");
-            return message;
-        }
-
-        /// <summary> Sets HTTP headers on the file. </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
-        /// <param name="fileContentLength"> Resizes a file to the specified size. If the specified byte value is less than the current size of the file, then all ranges above the specified byte value are cleared. </param>
+        /// <summary> Creates a new file or replaces a file. Note it only initializes the file with no content. </summary>
+        /// <param name="contentLength"> Specifies the number of bytes being transmitted in the request body. When the x-ms-write header is set to clear, the value of this header must be set to zero. </param>
+        /// <param name="optionalBody"> Initial data. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="fileContentType"> Sets the MIME content type of the file. The default type is 'application/octet-stream'. </param>
+        /// <param name="fileContentEncoding"> Specifies which content encodings have been applied to the file. </param>
+        /// <param name="fileContentLanguage"> Specifies the natural languages used by this resource. </param>
+        /// <param name="fileCacheControl"> Sets the file's cache control. The File service stores this value but does not use or modify it. </param>
+        /// <param name="fileContentMD5"> An MD5 hash of the file content. This hash is used to verify the integrity of the file during transport. </param>
+        /// <param name="fileContentDisposition"> Sets the file's Content-Disposition header. </param>
+        /// <param name="metadata"> Optional. User-defined metadata for the resource. </param>
         /// <param name="filePermission"> If specified the permission (security descriptor) shall be set for the directory/file. This header can be used if Permission size is &lt;= 8KB, else x-ms-file-permission-key header shall be used. Default value: Inherit. If SDDL is specified as input, it must have owner, group and dacl. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
-        /// <param name="filePermissionFormat"> Optional. Available for version 2023-06-01 and later. Specifies the format in which the permission is returned. Acceptable values are SDDL or binary. If x-ms-file-permission-format is unspecified or explicitly set to SDDL, the permission is returned in SDDL format. If x-ms-file-permission-format is explicitly set to binary, the permission is returned as a base64 string representing the binary encoding of the permission. </param>
         /// <param name="filePermissionKey"> Key of the permission to be set for the directory/file. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
-        /// <param name="fileAttributes"> If specified, the provided file attributes shall be set. Default value: ‘Archive’ for file and ‘Directory’ for directory. ‘None’ can also be specified as default. </param>
+        /// <param name="fileAttributes"> If specified, the provided file attributes shall be set. Default value: 'Archive' for file and 'Directory' for directory. 'None' can also be specified as default. </param>
         /// <param name="fileCreationTime"> Creation time for the file/directory. Default value: Now. </param>
         /// <param name="fileLastWriteTime"> Last write time for the file/directory. Default value: Now. </param>
         /// <param name="fileChangeTime"> Change time for the file/directory. Default value: Now. </param>
+        /// <param name="filePermissionFormat"> Optional. Used to set permission format. </param>
+        /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
         /// <param name="owner"> Optional, NFS only. The owner of the file or directory. </param>
         /// <param name="group"> Optional, NFS only. The owning group of the file or directory. </param>
         /// <param name="fileMode"> Optional, NFS only. The file mode of the file or directory. </param>
-        /// <param name="fileHttpHeaders"> Parameter group. </param>
-        /// <param name="shareFileRequestConditions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<FileSetHttpHeadersHeaders>> SetHttpHeadersAsync(int? timeout = null, long? fileContentLength = null, string filePermission = null, FilePermissionFormat? filePermissionFormat = null, string filePermissionKey = null, string fileAttributes = null, string fileCreationTime = null, string fileLastWriteTime = null, string fileChangeTime = null, string owner = null, string group = null, string fileMode = null, FileHttpHeaders fileHttpHeaders = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
+        /// <param name="nfsFileType"> Optional, NFS only. Type of the file or directory. </param>
+        /// <param name="contentMD5"> An MD5 hash of the content. This hash is used to verify the integrity of the data during transport. </param>
+        /// <param name="filePropertySemantics"> SMB only. Default value is New. </param>
+        /// <param name="optionalContentLength"> Optional. Specifies the content length of the file. </param>
+        /// <param name="structuredBodyType"> Specifies the response content should be returned as a structured message and specifies the message schema version and properties. </param>
+        /// <param name="structuredContentLength"> Required if the request body is a structured message. Specifies the length of the blob/file content inside the message body. Will always be smaller than Content-Length. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response Create(long contentLength, BinaryData optionalBody = default, int? timeout = default, string fileContentType = default, string fileContentEncoding = default, string fileContentLanguage = default, string fileCacheControl = default, BinaryData fileContentMD5 = default, string fileContentDisposition = default, IDictionary<string, string> metadata = default, string filePermission = default, string filePermissionKey = default, string fileAttributes = default, string fileCreationTime = default, string fileLastWriteTime = default, string fileChangeTime = default, FilePermissionFormat? filePermissionFormat = default, string leaseId = default, string owner = default, string @group = default, string fileMode = default, NfsFileType? nfsFileType = default, BinaryData contentMD5 = default, FilePropertySemantics? filePropertySemantics = default, long? optionalContentLength = default, string structuredBodyType = default, long? structuredContentLength = default, CancellationToken cancellationToken = default)
         {
-            using var message = CreateSetHttpHeadersRequest(timeout, fileContentLength, filePermission, filePermissionFormat, filePermissionKey, fileAttributes, fileCreationTime, fileLastWriteTime, fileChangeTime, owner, group, fileMode, fileHttpHeaders, shareFileRequestConditions);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new FileSetHttpHeadersHeaders(message.Response);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
+            return Create(contentLength, RequestContent.Create(optionalBody), timeout, fileContentType, fileContentEncoding, fileContentLanguage, fileCacheControl, fileContentMD5, fileContentDisposition, metadata, filePermission, filePermissionKey, fileAttributes, fileCreationTime, fileLastWriteTime, fileChangeTime, filePermissionFormat?.ToSerialString(), leaseId, owner, @group, fileMode, nfsFileType?.ToString(), contentMD5, filePropertySemantics?.ToString(), optionalContentLength, structuredBodyType, structuredContentLength, cancellationToken.ToRequestContext());
         }
 
-        /// <summary> Sets HTTP headers on the file. </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
-        /// <param name="fileContentLength"> Resizes a file to the specified size. If the specified byte value is less than the current size of the file, then all ranges above the specified byte value are cleared. </param>
+        /// <summary> Creates a new file or replaces a file. Note it only initializes the file with no content. </summary>
+        /// <param name="contentLength"> Specifies the number of bytes being transmitted in the request body. When the x-ms-write header is set to clear, the value of this header must be set to zero. </param>
+        /// <param name="optionalBody"> Initial data. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="fileContentType"> Sets the MIME content type of the file. The default type is 'application/octet-stream'. </param>
+        /// <param name="fileContentEncoding"> Specifies which content encodings have been applied to the file. </param>
+        /// <param name="fileContentLanguage"> Specifies the natural languages used by this resource. </param>
+        /// <param name="fileCacheControl"> Sets the file's cache control. The File service stores this value but does not use or modify it. </param>
+        /// <param name="fileContentMD5"> An MD5 hash of the file content. This hash is used to verify the integrity of the file during transport. </param>
+        /// <param name="fileContentDisposition"> Sets the file's Content-Disposition header. </param>
+        /// <param name="metadata"> Optional. User-defined metadata for the resource. </param>
         /// <param name="filePermission"> If specified the permission (security descriptor) shall be set for the directory/file. This header can be used if Permission size is &lt;= 8KB, else x-ms-file-permission-key header shall be used. Default value: Inherit. If SDDL is specified as input, it must have owner, group and dacl. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
-        /// <param name="filePermissionFormat"> Optional. Available for version 2023-06-01 and later. Specifies the format in which the permission is returned. Acceptable values are SDDL or binary. If x-ms-file-permission-format is unspecified or explicitly set to SDDL, the permission is returned in SDDL format. If x-ms-file-permission-format is explicitly set to binary, the permission is returned as a base64 string representing the binary encoding of the permission. </param>
         /// <param name="filePermissionKey"> Key of the permission to be set for the directory/file. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
-        /// <param name="fileAttributes"> If specified, the provided file attributes shall be set. Default value: ‘Archive’ for file and ‘Directory’ for directory. ‘None’ can also be specified as default. </param>
+        /// <param name="fileAttributes"> If specified, the provided file attributes shall be set. Default value: 'Archive' for file and 'Directory' for directory. 'None' can also be specified as default. </param>
         /// <param name="fileCreationTime"> Creation time for the file/directory. Default value: Now. </param>
         /// <param name="fileLastWriteTime"> Last write time for the file/directory. Default value: Now. </param>
         /// <param name="fileChangeTime"> Change time for the file/directory. Default value: Now. </param>
+        /// <param name="filePermissionFormat"> Optional. Used to set permission format. </param>
+        /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
         /// <param name="owner"> Optional, NFS only. The owner of the file or directory. </param>
         /// <param name="group"> Optional, NFS only. The owning group of the file or directory. </param>
         /// <param name="fileMode"> Optional, NFS only. The file mode of the file or directory. </param>
-        /// <param name="fileHttpHeaders"> Parameter group. </param>
-        /// <param name="shareFileRequestConditions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<FileSetHttpHeadersHeaders> SetHttpHeaders(int? timeout = null, long? fileContentLength = null, string filePermission = null, FilePermissionFormat? filePermissionFormat = null, string filePermissionKey = null, string fileAttributes = null, string fileCreationTime = null, string fileLastWriteTime = null, string fileChangeTime = null, string owner = null, string group = null, string fileMode = null, FileHttpHeaders fileHttpHeaders = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
+        /// <param name="nfsFileType"> Optional, NFS only. Type of the file or directory. </param>
+        /// <param name="contentMD5"> An MD5 hash of the content. This hash is used to verify the integrity of the data during transport. </param>
+        /// <param name="filePropertySemantics"> SMB only. Default value is New. </param>
+        /// <param name="optionalContentLength"> Optional. Specifies the content length of the file. </param>
+        /// <param name="structuredBodyType"> Specifies the response content should be returned as a structured message and specifies the message schema version and properties. </param>
+        /// <param name="structuredContentLength"> Required if the request body is a structured message. Specifies the length of the blob/file content inside the message body. Will always be smaller than Content-Length. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> CreateAsync(long contentLength, BinaryData optionalBody = default, int? timeout = default, string fileContentType = default, string fileContentEncoding = default, string fileContentLanguage = default, string fileCacheControl = default, BinaryData fileContentMD5 = default, string fileContentDisposition = default, IDictionary<string, string> metadata = default, string filePermission = default, string filePermissionKey = default, string fileAttributes = default, string fileCreationTime = default, string fileLastWriteTime = default, string fileChangeTime = default, FilePermissionFormat? filePermissionFormat = default, string leaseId = default, string owner = default, string @group = default, string fileMode = default, NfsFileType? nfsFileType = default, BinaryData contentMD5 = default, FilePropertySemantics? filePropertySemantics = default, long? optionalContentLength = default, string structuredBodyType = default, long? structuredContentLength = default, CancellationToken cancellationToken = default)
         {
-            using var message = CreateSetHttpHeadersRequest(timeout, fileContentLength, filePermission, filePermissionFormat, filePermissionKey, fileAttributes, fileCreationTime, fileLastWriteTime, fileChangeTime, owner, group, fileMode, fileHttpHeaders, shareFileRequestConditions);
-            _pipeline.Send(message, cancellationToken);
-            var headers = new FileSetHttpHeadersHeaders(message.Response);
-            switch (message.Response.Status)
+            return await CreateAsync(contentLength, RequestContent.Create(optionalBody), timeout, fileContentType, fileContentEncoding, fileContentLanguage, fileCacheControl, fileContentMD5, fileContentDisposition, metadata, filePermission, filePermissionKey, fileAttributes, fileCreationTime, fileLastWriteTime, fileChangeTime, filePermissionFormat?.ToSerialString(), leaseId, owner, @group, fileMode, nfsFileType?.ToString(), contentMD5, filePropertySemantics?.ToString(), optionalContentLength, structuredBodyType, structuredContentLength, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Reads or downloads a file from the system, including its metadata and properties.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="range"> Return file data only from the specified byte range. </param>
+        /// <param name="rangeGetContentMD5"> When this header is set to true and specified together with the Range header, the service returns the MD5 hash for the range, as long as the range is less than or equal to 4 MB in size. </param>
+        /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
+        /// <param name="structuredBodyType"> Specifies the response content should be returned as a structured message and specifies the message schema version and properties. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response Download(int? timeout, string range, bool? rangeGetContentMD5, string leaseId, string structuredBodyType, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("FileRestClient.Download");
+            scope.Start();
+            try
             {
-                case 200:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
+                using HttpMessage message = CreateDownloadRequest(timeout, range, rangeGetContentMD5, leaseId, structuredBodyType, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
             }
         }
 
-        internal HttpMessage CreateSetMetadataRequest(int? timeout, IDictionary<string, string> metadata, ShareFileRequestConditions shareFileRequestConditions)
+        /// <summary>
+        /// [Protocol Method] Reads or downloads a file from the system, including its metadata and properties.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="range"> Return file data only from the specified byte range. </param>
+        /// <param name="rangeGetContentMD5"> When this header is set to true and specified together with the Range header, the service returns the MD5 hash for the range, as long as the range is less than or equal to 4 MB in size. </param>
+        /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
+        /// <param name="structuredBodyType"> Specifies the response content should be returned as a structured message and specifies the message schema version and properties. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> DownloadAsync(int? timeout, string range, bool? rangeGetContentMD5, string leaseId, string structuredBodyType, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_url, false);
-            uri.AppendQuery("comp", "metadata", true);
-            if (timeout != null)
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("FileRestClient.Download");
+            scope.Start();
+            try
             {
-                uri.AppendQuery("timeout", timeout.Value, true);
+                using HttpMessage message = CreateDownloadRequest(timeout, range, rangeGetContentMD5, leaseId, structuredBodyType, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
-            request.Uri = uri;
-            if (metadata != null)
+            catch (Exception e)
             {
-                request.Headers.Add("x-ms-meta-", metadata);
-            }
-            request.Headers.Add("x-ms-version", _version);
-            if (shareFileRequestConditions?.LeaseId != null)
-            {
-                request.Headers.Add("x-ms-lease-id", shareFileRequestConditions.LeaseId);
-            }
-            if (_allowTrailingDot != null)
-            {
-                request.Headers.Add("x-ms-allow-trailing-dot", _allowTrailingDot.Value);
-            }
-            if (_fileRequestIntent != null)
-            {
-                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
-            }
-            request.Headers.Add("Accept", "application/xml");
-            return message;
-        }
-
-        /// <summary> Updates user-defined metadata for the specified file. </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
-        /// <param name="metadata"> A name-value pair to associate with a file storage object. </param>
-        /// <param name="shareFileRequestConditions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<FileSetMetadataHeaders>> SetMetadataAsync(int? timeout = null, IDictionary<string, string> metadata = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
-        {
-            using var message = CreateSetMetadataRequest(timeout, metadata, shareFileRequestConditions);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new FileSetMetadataHeaders(message.Response);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
+                scope.Failed(e);
+                throw;
             }
         }
 
-        /// <summary> Updates user-defined metadata for the specified file. </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
-        /// <param name="metadata"> A name-value pair to associate with a file storage object. </param>
-        /// <param name="shareFileRequestConditions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<FileSetMetadataHeaders> SetMetadata(int? timeout = null, IDictionary<string, string> metadata = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
+        /// <summary>
+        /// [Protocol Method] Returns all user-defined metadata, standard HTTP properties, and system properties for the file.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetProperties(string sharesnapshot, int? timeout, string leaseId, RequestContext context)
         {
-            using var message = CreateSetMetadataRequest(timeout, metadata, shareFileRequestConditions);
-            _pipeline.Send(message, cancellationToken);
-            var headers = new FileSetMetadataHeaders(message.Response);
-            switch (message.Response.Status)
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("FileRestClient.GetProperties");
+            scope.Start();
+            try
             {
-                case 200:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
+                using HttpMessage message = CreateGetPropertiesRequest(sharesnapshot, timeout, leaseId, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
             }
         }
 
-        internal HttpMessage CreateAcquireLeaseRequest(int? timeout, int? duration, string proposedLeaseId)
+        /// <summary>
+        /// [Protocol Method] Returns all user-defined metadata, standard HTTP properties, and system properties for the file.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetPropertiesAsync(string sharesnapshot, int? timeout, string leaseId, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_url, false);
-            uri.AppendQuery("comp", "lease", true);
-            if (timeout != null)
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("FileRestClient.GetProperties");
+            scope.Start();
+            try
             {
-                uri.AppendQuery("timeout", timeout.Value, true);
+                using HttpMessage message = CreateGetPropertiesRequest(sharesnapshot, timeout, leaseId, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
-            request.Uri = uri;
-            request.Headers.Add("x-ms-lease-action", "acquire");
-            if (duration != null)
+            catch (Exception e)
             {
-                request.Headers.Add("x-ms-lease-duration", duration.Value);
+                scope.Failed(e);
+                throw;
             }
-            if (proposedLeaseId != null)
-            {
-                request.Headers.Add("x-ms-proposed-lease-id", proposedLeaseId);
-            }
-            request.Headers.Add("x-ms-version", _version);
-            if (_allowTrailingDot != null)
-            {
-                request.Headers.Add("x-ms-allow-trailing-dot", _allowTrailingDot.Value);
-            }
-            if (_fileRequestIntent != null)
-            {
-                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
-            }
-            request.Headers.Add("Accept", "application/xml");
-            return message;
         }
 
-        /// <summary> [Update] The Lease File operation establishes and manages a lock on a file for write and delete operations. </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
-        /// <param name="duration"> Specifies the duration of the lease, in seconds, or negative one (-1) for a lease that never expires. A non-infinite lease can be between 15 and 60 seconds. A lease duration cannot be changed using renew or change. </param>
+        /// <summary> Returns all user-defined metadata, standard HTTP properties, and system properties for the file. </summary>
+        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response GetProperties(string sharesnapshot = default, int? timeout = default, string leaseId = default, CancellationToken cancellationToken = default)
+        {
+            return GetProperties(sharesnapshot, timeout, leaseId, cancellationToken.ToRequestContext());
+        }
+
+        /// <summary> Returns all user-defined metadata, standard HTTP properties, and system properties for the file. </summary>
+        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> GetPropertiesAsync(string sharesnapshot = default, int? timeout = default, string leaseId = default, CancellationToken cancellationToken = default)
+        {
+            return await GetPropertiesAsync(sharesnapshot, timeout, leaseId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Removes the file from the storage account.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response Delete(int? timeout, string leaseId, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("FileRestClient.Delete");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDeleteRequest(timeout, leaseId, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Removes the file from the storage account.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> DeleteAsync(int? timeout, string leaseId, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("FileRestClient.Delete");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDeleteRequest(timeout, leaseId, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Removes the file from the storage account. </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response Delete(int? timeout = default, string leaseId = default, CancellationToken cancellationToken = default)
+        {
+            return Delete(timeout, leaseId, cancellationToken.ToRequestContext());
+        }
+
+        /// <summary> Removes the file from the storage account. </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> DeleteAsync(int? timeout = default, string leaseId = default, CancellationToken cancellationToken = default)
+        {
+            return await DeleteAsync(timeout, leaseId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Sets HTTP headers on a file.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="fileContentLength"> Specifies the number of bytes being transmitted. </param>
+        /// <param name="fileContentType"> Sets the MIME content type of the file. The default type is 'application/octet-stream'. </param>
+        /// <param name="fileContentEncoding"> Specifies which content encodings have been applied to the file. </param>
+        /// <param name="fileContentLanguage"> Specifies the natural languages used by this resource. </param>
+        /// <param name="fileCacheControl"> Sets the file's cache control. The File service stores this value but does not use or modify it. </param>
+        /// <param name="fileContentMD5"> An MD5 hash of the file content. This hash is used to verify the integrity of the file during transport. </param>
+        /// <param name="fileContentDisposition"> Sets the file's Content-Disposition header. </param>
+        /// <param name="filePermission"> If specified the permission (security descriptor) shall be set for the directory/file. This header can be used if Permission size is &lt;= 8KB, else x-ms-file-permission-key header shall be used. Default value: Inherit. If SDDL is specified as input, it must have owner, group and dacl. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
+        /// <param name="filePermissionKey"> Key of the permission to be set for the directory/file. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
+        /// <param name="fileAttributes"> If specified, the provided file attributes shall be set. Default value: 'Archive' for file and 'Directory' for directory. 'None' can also be specified as default. </param>
+        /// <param name="fileCreationTime"> Creation time for the file/directory. Default value: Now. </param>
+        /// <param name="fileLastWriteTime"> Last write time for the file/directory. Default value: Now. </param>
+        /// <param name="fileChangeTime"> Change time for the file/directory. Default value: Now. </param>
+        /// <param name="filePermissionFormat"> Optional. Used to set permission format. </param>
+        /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
+        /// <param name="owner"> Optional, NFS only. The owner of the file or directory. </param>
+        /// <param name="group"> Optional, NFS only. The owning group of the file or directory. </param>
+        /// <param name="fileMode"> Optional, NFS only. The file mode of the file or directory. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response SetHttpHeaders(int? timeout, long? fileContentLength, string fileContentType, string fileContentEncoding, string fileContentLanguage, string fileCacheControl, BinaryData fileContentMD5, string fileContentDisposition, string filePermission, string filePermissionKey, string fileAttributes, string fileCreationTime, string fileLastWriteTime, string fileChangeTime, string filePermissionFormat, string leaseId, string owner, string @group, string fileMode, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("FileRestClient.SetHttpHeaders");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateSetHttpHeadersRequest(timeout, fileContentLength, fileContentType, fileContentEncoding, fileContentLanguage, fileCacheControl, fileContentMD5, fileContentDisposition, filePermission, filePermissionKey, fileAttributes, fileCreationTime, fileLastWriteTime, fileChangeTime, filePermissionFormat, leaseId, owner, @group, fileMode, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Sets HTTP headers on a file.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="fileContentLength"> Specifies the number of bytes being transmitted. </param>
+        /// <param name="fileContentType"> Sets the MIME content type of the file. The default type is 'application/octet-stream'. </param>
+        /// <param name="fileContentEncoding"> Specifies which content encodings have been applied to the file. </param>
+        /// <param name="fileContentLanguage"> Specifies the natural languages used by this resource. </param>
+        /// <param name="fileCacheControl"> Sets the file's cache control. The File service stores this value but does not use or modify it. </param>
+        /// <param name="fileContentMD5"> An MD5 hash of the file content. This hash is used to verify the integrity of the file during transport. </param>
+        /// <param name="fileContentDisposition"> Sets the file's Content-Disposition header. </param>
+        /// <param name="filePermission"> If specified the permission (security descriptor) shall be set for the directory/file. This header can be used if Permission size is &lt;= 8KB, else x-ms-file-permission-key header shall be used. Default value: Inherit. If SDDL is specified as input, it must have owner, group and dacl. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
+        /// <param name="filePermissionKey"> Key of the permission to be set for the directory/file. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
+        /// <param name="fileAttributes"> If specified, the provided file attributes shall be set. Default value: 'Archive' for file and 'Directory' for directory. 'None' can also be specified as default. </param>
+        /// <param name="fileCreationTime"> Creation time for the file/directory. Default value: Now. </param>
+        /// <param name="fileLastWriteTime"> Last write time for the file/directory. Default value: Now. </param>
+        /// <param name="fileChangeTime"> Change time for the file/directory. Default value: Now. </param>
+        /// <param name="filePermissionFormat"> Optional. Used to set permission format. </param>
+        /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
+        /// <param name="owner"> Optional, NFS only. The owner of the file or directory. </param>
+        /// <param name="group"> Optional, NFS only. The owning group of the file or directory. </param>
+        /// <param name="fileMode"> Optional, NFS only. The file mode of the file or directory. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> SetHttpHeadersAsync(int? timeout, long? fileContentLength, string fileContentType, string fileContentEncoding, string fileContentLanguage, string fileCacheControl, BinaryData fileContentMD5, string fileContentDisposition, string filePermission, string filePermissionKey, string fileAttributes, string fileCreationTime, string fileLastWriteTime, string fileChangeTime, string filePermissionFormat, string leaseId, string owner, string @group, string fileMode, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("FileRestClient.SetHttpHeaders");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateSetHttpHeadersRequest(timeout, fileContentLength, fileContentType, fileContentEncoding, fileContentLanguage, fileCacheControl, fileContentMD5, fileContentDisposition, filePermission, filePermissionKey, fileAttributes, fileCreationTime, fileLastWriteTime, fileChangeTime, filePermissionFormat, leaseId, owner, @group, fileMode, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Sets HTTP headers on a file. </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="fileContentLength"> Specifies the number of bytes being transmitted. </param>
+        /// <param name="fileContentType"> Sets the MIME content type of the file. The default type is 'application/octet-stream'. </param>
+        /// <param name="fileContentEncoding"> Specifies which content encodings have been applied to the file. </param>
+        /// <param name="fileContentLanguage"> Specifies the natural languages used by this resource. </param>
+        /// <param name="fileCacheControl"> Sets the file's cache control. The File service stores this value but does not use or modify it. </param>
+        /// <param name="fileContentMD5"> An MD5 hash of the file content. This hash is used to verify the integrity of the file during transport. </param>
+        /// <param name="fileContentDisposition"> Sets the file's Content-Disposition header. </param>
+        /// <param name="filePermission"> If specified the permission (security descriptor) shall be set for the directory/file. This header can be used if Permission size is &lt;= 8KB, else x-ms-file-permission-key header shall be used. Default value: Inherit. If SDDL is specified as input, it must have owner, group and dacl. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
+        /// <param name="filePermissionKey"> Key of the permission to be set for the directory/file. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
+        /// <param name="fileAttributes"> If specified, the provided file attributes shall be set. Default value: 'Archive' for file and 'Directory' for directory. 'None' can also be specified as default. </param>
+        /// <param name="fileCreationTime"> Creation time for the file/directory. Default value: Now. </param>
+        /// <param name="fileLastWriteTime"> Last write time for the file/directory. Default value: Now. </param>
+        /// <param name="fileChangeTime"> Change time for the file/directory. Default value: Now. </param>
+        /// <param name="filePermissionFormat"> Optional. Used to set permission format. </param>
+        /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
+        /// <param name="owner"> Optional, NFS only. The owner of the file or directory. </param>
+        /// <param name="group"> Optional, NFS only. The owning group of the file or directory. </param>
+        /// <param name="fileMode"> Optional, NFS only. The file mode of the file or directory. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response SetHttpHeaders(int? timeout = default, long? fileContentLength = default, string fileContentType = default, string fileContentEncoding = default, string fileContentLanguage = default, string fileCacheControl = default, BinaryData fileContentMD5 = default, string fileContentDisposition = default, string filePermission = default, string filePermissionKey = default, string fileAttributes = default, string fileCreationTime = default, string fileLastWriteTime = default, string fileChangeTime = default, FilePermissionFormat? filePermissionFormat = default, string leaseId = default, string owner = default, string @group = default, string fileMode = default, CancellationToken cancellationToken = default)
+        {
+            return SetHttpHeaders(timeout, fileContentLength, fileContentType, fileContentEncoding, fileContentLanguage, fileCacheControl, fileContentMD5, fileContentDisposition, filePermission, filePermissionKey, fileAttributes, fileCreationTime, fileLastWriteTime, fileChangeTime, filePermissionFormat?.ToSerialString(), leaseId, owner, @group, fileMode, cancellationToken.ToRequestContext());
+        }
+
+        /// <summary> Sets HTTP headers on a file. </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="fileContentLength"> Specifies the number of bytes being transmitted. </param>
+        /// <param name="fileContentType"> Sets the MIME content type of the file. The default type is 'application/octet-stream'. </param>
+        /// <param name="fileContentEncoding"> Specifies which content encodings have been applied to the file. </param>
+        /// <param name="fileContentLanguage"> Specifies the natural languages used by this resource. </param>
+        /// <param name="fileCacheControl"> Sets the file's cache control. The File service stores this value but does not use or modify it. </param>
+        /// <param name="fileContentMD5"> An MD5 hash of the file content. This hash is used to verify the integrity of the file during transport. </param>
+        /// <param name="fileContentDisposition"> Sets the file's Content-Disposition header. </param>
+        /// <param name="filePermission"> If specified the permission (security descriptor) shall be set for the directory/file. This header can be used if Permission size is &lt;= 8KB, else x-ms-file-permission-key header shall be used. Default value: Inherit. If SDDL is specified as input, it must have owner, group and dacl. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
+        /// <param name="filePermissionKey"> Key of the permission to be set for the directory/file. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
+        /// <param name="fileAttributes"> If specified, the provided file attributes shall be set. Default value: 'Archive' for file and 'Directory' for directory. 'None' can also be specified as default. </param>
+        /// <param name="fileCreationTime"> Creation time for the file/directory. Default value: Now. </param>
+        /// <param name="fileLastWriteTime"> Last write time for the file/directory. Default value: Now. </param>
+        /// <param name="fileChangeTime"> Change time for the file/directory. Default value: Now. </param>
+        /// <param name="filePermissionFormat"> Optional. Used to set permission format. </param>
+        /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
+        /// <param name="owner"> Optional, NFS only. The owner of the file or directory. </param>
+        /// <param name="group"> Optional, NFS only. The owning group of the file or directory. </param>
+        /// <param name="fileMode"> Optional, NFS only. The file mode of the file or directory. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> SetHttpHeadersAsync(int? timeout = default, long? fileContentLength = default, string fileContentType = default, string fileContentEncoding = default, string fileContentLanguage = default, string fileCacheControl = default, BinaryData fileContentMD5 = default, string fileContentDisposition = default, string filePermission = default, string filePermissionKey = default, string fileAttributes = default, string fileCreationTime = default, string fileLastWriteTime = default, string fileChangeTime = default, FilePermissionFormat? filePermissionFormat = default, string leaseId = default, string owner = default, string @group = default, string fileMode = default, CancellationToken cancellationToken = default)
+        {
+            return await SetHttpHeadersAsync(timeout, fileContentLength, fileContentType, fileContentEncoding, fileContentLanguage, fileCacheControl, fileContentMD5, fileContentDisposition, filePermission, filePermissionKey, fileAttributes, fileCreationTime, fileLastWriteTime, fileChangeTime, filePermissionFormat?.ToSerialString(), leaseId, owner, @group, fileMode, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Sets one or more user-defined name-value pairs for the specified file.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="metadata"> Optional. User-defined metadata for the resource. </param>
+        /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response SetMetadata(int? timeout, IDictionary<string, string> metadata, string leaseId, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("FileRestClient.SetMetadata");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateSetMetadataRequest(timeout, metadata, leaseId, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Sets one or more user-defined name-value pairs for the specified file.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="metadata"> Optional. User-defined metadata for the resource. </param>
+        /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> SetMetadataAsync(int? timeout, IDictionary<string, string> metadata, string leaseId, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("FileRestClient.SetMetadata");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateSetMetadataRequest(timeout, metadata, leaseId, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Sets one or more user-defined name-value pairs for the specified file. </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="metadata"> Optional. User-defined metadata for the resource. </param>
+        /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response SetMetadata(int? timeout = default, IDictionary<string, string> metadata = default, string leaseId = default, CancellationToken cancellationToken = default)
+        {
+            return SetMetadata(timeout, metadata, leaseId, cancellationToken.ToRequestContext());
+        }
+
+        /// <summary> Sets one or more user-defined name-value pairs for the specified file. </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="metadata"> Optional. User-defined metadata for the resource. </param>
+        /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> SetMetadataAsync(int? timeout = default, IDictionary<string, string> metadata = default, string leaseId = default, CancellationToken cancellationToken = default)
+        {
+            return await SetMetadataAsync(timeout, metadata, leaseId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// [Protocol Method] The Lease File operation establishes and manages a lock on a file for write and delete operations.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="leaseDuration"> Specifies the duration of the lease, in seconds, or negative one (-1) for a lease that never expires. A non-infinite lease can be between 15 and 60 seconds. A lease duration cannot be changed using renew or change. </param>
         /// <param name="proposedLeaseId"> Proposed lease ID, in a GUID string format. The File service returns 400 (Invalid request) if the proposed lease ID is not in the correct format. See Guid Constructor (String) for a list of valid GUID string formats. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<FileAcquireLeaseHeaders>> AcquireLeaseAsync(int? timeout = null, int? duration = null, string proposedLeaseId = null, CancellationToken cancellationToken = default)
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response AcquireLease(int? timeout, int? leaseDuration, string proposedLeaseId, RequestContext context)
         {
-            using var message = CreateAcquireLeaseRequest(timeout, duration, proposedLeaseId);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new FileAcquireLeaseHeaders(message.Response);
-            switch (message.Response.Status)
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("FileRestClient.AcquireLease");
+            scope.Start();
+            try
             {
-                case 201:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
+                using HttpMessage message = CreateAcquireLeaseRequest(timeout, leaseDuration, proposedLeaseId, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
             }
         }
 
-        /// <summary> [Update] The Lease File operation establishes and manages a lock on a file for write and delete operations. </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
-        /// <param name="duration"> Specifies the duration of the lease, in seconds, or negative one (-1) for a lease that never expires. A non-infinite lease can be between 15 and 60 seconds. A lease duration cannot be changed using renew or change. </param>
+        /// <summary>
+        /// [Protocol Method] The Lease File operation establishes and manages a lock on a file for write and delete operations.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="leaseDuration"> Specifies the duration of the lease, in seconds, or negative one (-1) for a lease that never expires. A non-infinite lease can be between 15 and 60 seconds. A lease duration cannot be changed using renew or change. </param>
         /// <param name="proposedLeaseId"> Proposed lease ID, in a GUID string format. The File service returns 400 (Invalid request) if the proposed lease ID is not in the correct format. See Guid Constructor (String) for a list of valid GUID string formats. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<FileAcquireLeaseHeaders> AcquireLease(int? timeout = null, int? duration = null, string proposedLeaseId = null, CancellationToken cancellationToken = default)
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> AcquireLeaseAsync(int? timeout, int? leaseDuration, string proposedLeaseId, RequestContext context)
         {
-            using var message = CreateAcquireLeaseRequest(timeout, duration, proposedLeaseId);
-            _pipeline.Send(message, cancellationToken);
-            var headers = new FileAcquireLeaseHeaders(message.Response);
-            switch (message.Response.Status)
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("FileRestClient.AcquireLease");
+            scope.Start();
+            try
             {
-                case 201:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
+                using HttpMessage message = CreateAcquireLeaseRequest(timeout, leaseDuration, proposedLeaseId, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
             }
         }
 
-        internal HttpMessage CreateReleaseLeaseRequest(string leaseId, int? timeout)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_url, false);
-            uri.AppendQuery("comp", "lease", true);
-            if (timeout != null)
-            {
-                uri.AppendQuery("timeout", timeout.Value, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("x-ms-lease-action", "release");
-            request.Headers.Add("x-ms-lease-id", leaseId);
-            request.Headers.Add("x-ms-version", _version);
-            if (_allowTrailingDot != null)
-            {
-                request.Headers.Add("x-ms-allow-trailing-dot", _allowTrailingDot.Value);
-            }
-            if (_fileRequestIntent != null)
-            {
-                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
-            }
-            request.Headers.Add("Accept", "application/xml");
-            return message;
-        }
-
-        /// <summary> [Update] The Lease File operation establishes and manages a lock on a file for write and delete operations. </summary>
-        /// <param name="leaseId"> Specifies the current lease ID on the resource. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="leaseId"/> is null. </exception>
-        public async Task<ResponseWithHeaders<FileReleaseLeaseHeaders>> ReleaseLeaseAsync(string leaseId, int? timeout = null, CancellationToken cancellationToken = default)
-        {
-            if (leaseId == null)
-            {
-                throw new ArgumentNullException(nameof(leaseId));
-            }
-
-            using var message = CreateReleaseLeaseRequest(leaseId, timeout);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new FileReleaseLeaseHeaders(message.Response);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> [Update] The Lease File operation establishes and manages a lock on a file for write and delete operations. </summary>
-        /// <param name="leaseId"> Specifies the current lease ID on the resource. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="leaseId"/> is null. </exception>
-        public ResponseWithHeaders<FileReleaseLeaseHeaders> ReleaseLease(string leaseId, int? timeout = null, CancellationToken cancellationToken = default)
-        {
-            if (leaseId == null)
-            {
-                throw new ArgumentNullException(nameof(leaseId));
-            }
-
-            using var message = CreateReleaseLeaseRequest(leaseId, timeout);
-            _pipeline.Send(message, cancellationToken);
-            var headers = new FileReleaseLeaseHeaders(message.Response);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateChangeLeaseRequest(string leaseId, int? timeout, string proposedLeaseId)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_url, false);
-            uri.AppendQuery("comp", "lease", true);
-            if (timeout != null)
-            {
-                uri.AppendQuery("timeout", timeout.Value, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("x-ms-lease-action", "change");
-            request.Headers.Add("x-ms-lease-id", leaseId);
-            if (proposedLeaseId != null)
-            {
-                request.Headers.Add("x-ms-proposed-lease-id", proposedLeaseId);
-            }
-            request.Headers.Add("x-ms-version", _version);
-            if (_allowTrailingDot != null)
-            {
-                request.Headers.Add("x-ms-allow-trailing-dot", _allowTrailingDot.Value);
-            }
-            if (_fileRequestIntent != null)
-            {
-                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
-            }
-            request.Headers.Add("Accept", "application/xml");
-            return message;
-        }
-
-        /// <summary> [Update] The Lease File operation establishes and manages a lock on a file for write and delete operations. </summary>
-        /// <param name="leaseId"> Specifies the current lease ID on the resource. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
+        /// <summary> The Lease File operation establishes and manages a lock on a file for write and delete operations. </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="leaseDuration"> Specifies the duration of the lease, in seconds, or negative one (-1) for a lease that never expires. A non-infinite lease can be between 15 and 60 seconds. A lease duration cannot be changed using renew or change. </param>
         /// <param name="proposedLeaseId"> Proposed lease ID, in a GUID string format. The File service returns 400 (Invalid request) if the proposed lease ID is not in the correct format. See Guid Constructor (String) for a list of valid GUID string formats. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="leaseId"/> is null. </exception>
-        public async Task<ResponseWithHeaders<FileChangeLeaseHeaders>> ChangeLeaseAsync(string leaseId, int? timeout = null, string proposedLeaseId = null, CancellationToken cancellationToken = default)
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response AcquireLease(int? timeout = default, int? leaseDuration = default, string proposedLeaseId = default, CancellationToken cancellationToken = default)
         {
-            if (leaseId == null)
-            {
-                throw new ArgumentNullException(nameof(leaseId));
-            }
-
-            using var message = CreateChangeLeaseRequest(leaseId, timeout, proposedLeaseId);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new FileChangeLeaseHeaders(message.Response);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
+            return AcquireLease(timeout, leaseDuration, proposedLeaseId, cancellationToken.ToRequestContext());
         }
 
-        /// <summary> [Update] The Lease File operation establishes and manages a lock on a file for write and delete operations. </summary>
-        /// <param name="leaseId"> Specifies the current lease ID on the resource. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
+        /// <summary> The Lease File operation establishes and manages a lock on a file for write and delete operations. </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="leaseDuration"> Specifies the duration of the lease, in seconds, or negative one (-1) for a lease that never expires. A non-infinite lease can be between 15 and 60 seconds. A lease duration cannot be changed using renew or change. </param>
         /// <param name="proposedLeaseId"> Proposed lease ID, in a GUID string format. The File service returns 400 (Invalid request) if the proposed lease ID is not in the correct format. See Guid Constructor (String) for a list of valid GUID string formats. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="leaseId"/> is null. </exception>
-        public ResponseWithHeaders<FileChangeLeaseHeaders> ChangeLease(string leaseId, int? timeout = null, string proposedLeaseId = null, CancellationToken cancellationToken = default)
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> AcquireLeaseAsync(int? timeout = default, int? leaseDuration = default, string proposedLeaseId = default, CancellationToken cancellationToken = default)
         {
-            if (leaseId == null)
-            {
-                throw new ArgumentNullException(nameof(leaseId));
-            }
+            return await AcquireLeaseAsync(timeout, leaseDuration, proposedLeaseId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+        }
 
-            using var message = CreateChangeLeaseRequest(leaseId, timeout, proposedLeaseId);
-            _pipeline.Send(message, cancellationToken);
-            var headers = new FileChangeLeaseHeaders(message.Response);
-            switch (message.Response.Status)
+        /// <summary>
+        /// [Protocol Method] The Lease File operation establishes and manages a lock on a file for write and delete operations.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="leaseId"> Specifies the current lease ID on the resource. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response ReleaseLease(string leaseId, int? timeout, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("FileRestClient.ReleaseLease");
+            scope.Start();
+            try
             {
-                case 200:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
+                using HttpMessage message = CreateReleaseLeaseRequest(leaseId, timeout, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
             }
         }
 
-        internal HttpMessage CreateBreakLeaseRequest(int? timeout, ShareFileRequestConditions shareFileRequestConditions)
+        /// <summary>
+        /// [Protocol Method] The Lease File operation establishes and manages a lock on a file for write and delete operations.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="leaseId"> Specifies the current lease ID on the resource. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> ReleaseLeaseAsync(string leaseId, int? timeout, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_url, false);
-            uri.AppendQuery("comp", "lease", true);
-            if (timeout != null)
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("FileRestClient.ReleaseLease");
+            scope.Start();
+            try
             {
-                uri.AppendQuery("timeout", timeout.Value, true);
+                using HttpMessage message = CreateReleaseLeaseRequest(leaseId, timeout, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
-            request.Uri = uri;
-            request.Headers.Add("x-ms-lease-action", "break");
-            if (shareFileRequestConditions?.LeaseId != null)
+            catch (Exception e)
             {
-                request.Headers.Add("x-ms-lease-id", shareFileRequestConditions.LeaseId);
-            }
-            request.Headers.Add("x-ms-version", _version);
-            if (_allowTrailingDot != null)
-            {
-                request.Headers.Add("x-ms-allow-trailing-dot", _allowTrailingDot.Value);
-            }
-            if (_fileRequestIntent != null)
-            {
-                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
-            }
-            request.Headers.Add("Accept", "application/xml");
-            return message;
-        }
-
-        /// <summary> [Update] The Lease File operation establishes and manages a lock on a file for write and delete operations. </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
-        /// <param name="shareFileRequestConditions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<FileBreakLeaseHeaders>> BreakLeaseAsync(int? timeout = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
-        {
-            using var message = CreateBreakLeaseRequest(timeout, shareFileRequestConditions);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new FileBreakLeaseHeaders(message.Response);
-            switch (message.Response.Status)
-            {
-                case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
+                scope.Failed(e);
+                throw;
             }
         }
 
-        /// <summary> [Update] The Lease File operation establishes and manages a lock on a file for write and delete operations. </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
-        /// <param name="shareFileRequestConditions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<FileBreakLeaseHeaders> BreakLease(int? timeout = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
+        /// <summary> The Lease File operation establishes and manages a lock on a file for write and delete operations. </summary>
+        /// <param name="leaseId"> Specifies the current lease ID on the resource. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response ReleaseLease(string leaseId, int? timeout = default, CancellationToken cancellationToken = default)
         {
-            using var message = CreateBreakLeaseRequest(timeout, shareFileRequestConditions);
-            _pipeline.Send(message, cancellationToken);
-            var headers = new FileBreakLeaseHeaders(message.Response);
-            switch (message.Response.Status)
+            return ReleaseLease(leaseId, timeout, cancellationToken.ToRequestContext());
+        }
+
+        /// <summary> The Lease File operation establishes and manages a lock on a file for write and delete operations. </summary>
+        /// <param name="leaseId"> Specifies the current lease ID on the resource. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> ReleaseLeaseAsync(string leaseId, int? timeout = default, CancellationToken cancellationToken = default)
+        {
+            return await ReleaseLeaseAsync(leaseId, timeout, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// [Protocol Method] The Lease File operation establishes and manages a lock on a file for write and delete operations.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="leaseId"> Specifies the current lease ID on the resource. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="proposedLeaseId"> Proposed lease ID, in a GUID string format. The File service returns 400 (Invalid request) if the proposed lease ID is not in the correct format. See Guid Constructor (String) for a list of valid GUID string formats. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response ChangeLease(string leaseId, int? timeout, string proposedLeaseId, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("FileRestClient.ChangeLease");
+            scope.Start();
+            try
             {
-                case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
+                using HttpMessage message = CreateChangeLeaseRequest(leaseId, timeout, proposedLeaseId, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
             }
         }
 
-        internal HttpMessage CreateUploadRangeRequest(string range, ShareFileRangeWriteType fileRangeWrite, long contentLength, int? timeout, byte[] contentMD5, FileLastWrittenMode? fileLastWrittenMode, string structuredBodyType, long? structuredContentLength, Stream optionalbody, ShareFileRequestConditions shareFileRequestConditions)
+        /// <summary>
+        /// [Protocol Method] The Lease File operation establishes and manages a lock on a file for write and delete operations.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="leaseId"> Specifies the current lease ID on the resource. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="proposedLeaseId"> Proposed lease ID, in a GUID string format. The File service returns 400 (Invalid request) if the proposed lease ID is not in the correct format. See Guid Constructor (String) for a list of valid GUID string formats. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> ChangeLeaseAsync(string leaseId, int? timeout, string proposedLeaseId, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_url, false);
-            uri.AppendQuery("comp", "range", true);
-            if (timeout != null)
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("FileRestClient.ChangeLease");
+            scope.Start();
+            try
             {
-                uri.AppendQuery("timeout", timeout.Value, true);
+                using HttpMessage message = CreateChangeLeaseRequest(leaseId, timeout, proposedLeaseId, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
-            request.Uri = uri;
-            request.Headers.Add("x-ms-range", range);
-            request.Headers.Add("x-ms-write", fileRangeWrite.ToSerialString());
-            request.Headers.Add("x-ms-version", _version);
-            if (shareFileRequestConditions?.LeaseId != null)
+            catch (Exception e)
             {
-                request.Headers.Add("x-ms-lease-id", shareFileRequestConditions.LeaseId);
+                scope.Failed(e);
+                throw;
             }
-            if (fileLastWrittenMode != null)
+        }
+
+        /// <summary> The Lease File operation establishes and manages a lock on a file for write and delete operations. </summary>
+        /// <param name="leaseId"> Specifies the current lease ID on the resource. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="proposedLeaseId"> Proposed lease ID, in a GUID string format. The File service returns 400 (Invalid request) if the proposed lease ID is not in the correct format. See Guid Constructor (String) for a list of valid GUID string formats. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response ChangeLease(string leaseId, int? timeout = default, string proposedLeaseId = default, CancellationToken cancellationToken = default)
+        {
+            return ChangeLease(leaseId, timeout, proposedLeaseId, cancellationToken.ToRequestContext());
+        }
+
+        /// <summary> The Lease File operation establishes and manages a lock on a file for write and delete operations. </summary>
+        /// <param name="leaseId"> Specifies the current lease ID on the resource. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="proposedLeaseId"> Proposed lease ID, in a GUID string format. The File service returns 400 (Invalid request) if the proposed lease ID is not in the correct format. See Guid Constructor (String) for a list of valid GUID string formats. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> ChangeLeaseAsync(string leaseId, int? timeout = default, string proposedLeaseId = default, CancellationToken cancellationToken = default)
+        {
+            return await ChangeLeaseAsync(leaseId, timeout, proposedLeaseId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// [Protocol Method] The Lease File operation establishes and manages a lock on a file for write and delete operations.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response BreakLease(int? timeout, string leaseId, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("FileRestClient.BreakLease");
+            scope.Start();
+            try
             {
-                request.Headers.Add("x-ms-file-last-write-time", fileLastWrittenMode.Value.ToSerialString());
+                using HttpMessage message = CreateBreakLeaseRequest(timeout, leaseId, context);
+                return Pipeline.ProcessMessage(message, context);
             }
-            if (_allowTrailingDot != null)
+            catch (Exception e)
             {
-                request.Headers.Add("x-ms-allow-trailing-dot", _allowTrailingDot.Value);
+                scope.Failed(e);
+                throw;
             }
-            if (_fileRequestIntent != null)
+        }
+
+        /// <summary>
+        /// [Protocol Method] The Lease File operation establishes and manages a lock on a file for write and delete operations.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> BreakLeaseAsync(int? timeout, string leaseId, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("FileRestClient.BreakLease");
+            scope.Start();
+            try
             {
-                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
+                using HttpMessage message = CreateBreakLeaseRequest(timeout, leaseId, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
-            if (structuredBodyType != null)
+            catch (Exception e)
             {
-                request.Headers.Add("x-ms-structured-body", structuredBodyType);
+                scope.Failed(e);
+                throw;
             }
-            if (structuredContentLength != null)
+        }
+
+        /// <summary> The Lease File operation establishes and manages a lock on a file for write and delete operations. </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response BreakLease(int? timeout = default, string leaseId = default, CancellationToken cancellationToken = default)
+        {
+            return BreakLease(timeout, leaseId, cancellationToken.ToRequestContext());
+        }
+
+        /// <summary> The Lease File operation establishes and manages a lock on a file for write and delete operations. </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> BreakLeaseAsync(int? timeout = default, string leaseId = default, CancellationToken cancellationToken = default)
+        {
+            return await BreakLeaseAsync(timeout, leaseId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Upload a range of bytes to a file.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="range"> Specifies the range of bytes to be written. Both the start and end of the range must be specified. </param>
+        /// <param name="fileRangeWrite"> Specify one of the following options: - Update: Writes the bytes specified by the request body into the specified range. - Clear: Clears the specified range and releases the space used in storage for that range. </param>
+        /// <param name="contentLength"> The number of bytes being transmitted in the request body. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="contentMD5"> An MD5 hash of the content. This hash is used to verify the integrity of the data during transport. </param>
+        /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
+        /// <param name="fileLastWrittenMode"> If the file last write time should be preserved or overwritten. </param>
+        /// <param name="structuredBodyType"> Specifies the response content should be returned as a structured message and specifies the message schema version and properties. </param>
+        /// <param name="structuredContentLength"> Required if the request body is a structured message. Specifies the length of the blob/file content inside the message body. Will always be smaller than Content-Length. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response UploadRange(string range, string fileRangeWrite, long contentLength, RequestContent content = null, int? timeout = default, BinaryData contentMD5 = default, string leaseId = default, string fileLastWrittenMode = default, string structuredBodyType = default, long? structuredContentLength = default, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("FileRestClient.UploadRange");
+            scope.Start();
+            try
             {
-                request.Headers.Add("x-ms-structured-content-length", structuredContentLength.Value);
+                using HttpMessage message = CreateUploadRangeRequest(range, fileRangeWrite, contentLength, content, timeout, contentMD5, leaseId, fileLastWrittenMode, structuredBodyType, structuredContentLength, context);
+                return Pipeline.ProcessMessage(message, context);
             }
-            request.Headers.Add("Accept", "application/xml");
-            if (optionalbody != null)
+            catch (Exception e)
             {
-                request.Headers.Add("Content-Length", contentLength);
-                if (contentMD5 != null)
-                {
-                    request.Headers.Add("Content-MD5", contentMD5, "D");
-                }
-                request.Headers.Add("Content-Type", "application/octet-stream");
-                request.Content = RequestContent.Create(optionalbody);
+                scope.Failed(e);
+                throw;
             }
-            return message;
+        }
+
+        /// <summary>
+        /// [Protocol Method] Upload a range of bytes to a file.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="range"> Specifies the range of bytes to be written. Both the start and end of the range must be specified. </param>
+        /// <param name="fileRangeWrite"> Specify one of the following options: - Update: Writes the bytes specified by the request body into the specified range. - Clear: Clears the specified range and releases the space used in storage for that range. </param>
+        /// <param name="contentLength"> The number of bytes being transmitted in the request body. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="contentMD5"> An MD5 hash of the content. This hash is used to verify the integrity of the data during transport. </param>
+        /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
+        /// <param name="fileLastWrittenMode"> If the file last write time should be preserved or overwritten. </param>
+        /// <param name="structuredBodyType"> Specifies the response content should be returned as a structured message and specifies the message schema version and properties. </param>
+        /// <param name="structuredContentLength"> Required if the request body is a structured message. Specifies the length of the blob/file content inside the message body. Will always be smaller than Content-Length. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> UploadRangeAsync(string range, string fileRangeWrite, long contentLength, RequestContent content = null, int? timeout = default, BinaryData contentMD5 = default, string leaseId = default, string fileLastWrittenMode = default, string structuredBodyType = default, long? structuredContentLength = default, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("FileRestClient.UploadRange");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateUploadRangeRequest(range, fileRangeWrite, contentLength, content, timeout, contentMD5, leaseId, fileLastWrittenMode, structuredBodyType, structuredContentLength, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Upload a range of bytes to a file. </summary>
-        /// <param name="range"> Specifies the range of bytes to be written. Both the start and end of the range must be specified. For an update operation, the range can be up to 4 MB in size. For a clear operation, the range can be up to the value of the file's full size. The File service accepts only a single byte range for the Range and 'x-ms-range' headers, and the byte range must be specified in the following format: bytes=startByte-endByte. </param>
-        /// <param name="fileRangeWrite"> Specify one of the following options: - Update: Writes the bytes specified by the request body into the specified range. The Range and Content-Length headers must match to perform the update. - Clear: Clears the specified range and releases the space used in storage for that range. To clear a range, set the Content-Length header to zero, and set the Range header to a value that indicates the range to clear, up to maximum file size. </param>
-        /// <param name="contentLength"> Specifies the number of bytes being transmitted in the request body. When the x-ms-write header is set to clear, the value of this header must be set to zero. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
-        /// <param name="contentMD5"> An MD5 hash of the content. This hash is used to verify the integrity of the data during transport. When the Content-MD5 header is specified, the File service compares the hash of the content that has arrived with the header value that was sent. If the two hashes do not match, the operation will fail with error code 400 (Bad Request). </param>
+        /// <param name="range"> Specifies the range of bytes to be written. Both the start and end of the range must be specified. </param>
+        /// <param name="fileRangeWrite"> Specify one of the following options: - Update: Writes the bytes specified by the request body into the specified range. - Clear: Clears the specified range and releases the space used in storage for that range. </param>
+        /// <param name="contentLength"> The number of bytes being transmitted in the request body. </param>
+        /// <param name="optionalBody"> Initial data. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="contentMD5"> An MD5 hash of the content. This hash is used to verify the integrity of the data during transport. </param>
+        /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
         /// <param name="fileLastWrittenMode"> If the file last write time should be preserved or overwritten. </param>
-        /// <param name="structuredBodyType"> Required if the request body is a structured message. Specifies the message schema version and properties. </param>
+        /// <param name="structuredBodyType"> Specifies the response content should be returned as a structured message and specifies the message schema version and properties. </param>
         /// <param name="structuredContentLength"> Required if the request body is a structured message. Specifies the length of the blob/file content inside the message body. Will always be smaller than Content-Length. </param>
-        /// <param name="optionalbody"> Initial data. </param>
-        /// <param name="shareFileRequestConditions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="range"/> is null. </exception>
-        public async Task<ResponseWithHeaders<FileUploadRangeHeaders>> UploadRangeAsync(string range, ShareFileRangeWriteType fileRangeWrite, long contentLength, int? timeout = null, byte[] contentMD5 = null, FileLastWrittenMode? fileLastWrittenMode = null, string structuredBodyType = null, long? structuredContentLength = null, Stream optionalbody = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response UploadRange(string range, ShareFileRangeWriteType fileRangeWrite, long contentLength, BinaryData optionalBody = default, int? timeout = default, BinaryData contentMD5 = default, string leaseId = default, FileLastWrittenMode? fileLastWrittenMode = default, string structuredBodyType = default, long? structuredContentLength = default, CancellationToken cancellationToken = default)
         {
-            if (range == null)
-            {
-                throw new ArgumentNullException(nameof(range));
-            }
-
-            using var message = CreateUploadRangeRequest(range, fileRangeWrite, contentLength, timeout, contentMD5, fileLastWrittenMode, structuredBodyType, structuredContentLength, optionalbody, shareFileRequestConditions);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new FileUploadRangeHeaders(message.Response);
-            switch (message.Response.Status)
-            {
-                case 201:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
+            return UploadRange(range, fileRangeWrite.ToSerialString(), contentLength, RequestContent.Create(optionalBody), timeout, contentMD5, leaseId, fileLastWrittenMode?.ToSerialString(), structuredBodyType, structuredContentLength, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Upload a range of bytes to a file. </summary>
-        /// <param name="range"> Specifies the range of bytes to be written. Both the start and end of the range must be specified. For an update operation, the range can be up to 4 MB in size. For a clear operation, the range can be up to the value of the file's full size. The File service accepts only a single byte range for the Range and 'x-ms-range' headers, and the byte range must be specified in the following format: bytes=startByte-endByte. </param>
-        /// <param name="fileRangeWrite"> Specify one of the following options: - Update: Writes the bytes specified by the request body into the specified range. The Range and Content-Length headers must match to perform the update. - Clear: Clears the specified range and releases the space used in storage for that range. To clear a range, set the Content-Length header to zero, and set the Range header to a value that indicates the range to clear, up to maximum file size. </param>
-        /// <param name="contentLength"> Specifies the number of bytes being transmitted in the request body. When the x-ms-write header is set to clear, the value of this header must be set to zero. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
-        /// <param name="contentMD5"> An MD5 hash of the content. This hash is used to verify the integrity of the data during transport. When the Content-MD5 header is specified, the File service compares the hash of the content that has arrived with the header value that was sent. If the two hashes do not match, the operation will fail with error code 400 (Bad Request). </param>
+        /// <param name="range"> Specifies the range of bytes to be written. Both the start and end of the range must be specified. </param>
+        /// <param name="fileRangeWrite"> Specify one of the following options: - Update: Writes the bytes specified by the request body into the specified range. - Clear: Clears the specified range and releases the space used in storage for that range. </param>
+        /// <param name="contentLength"> The number of bytes being transmitted in the request body. </param>
+        /// <param name="optionalBody"> Initial data. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="contentMD5"> An MD5 hash of the content. This hash is used to verify the integrity of the data during transport. </param>
+        /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
         /// <param name="fileLastWrittenMode"> If the file last write time should be preserved or overwritten. </param>
-        /// <param name="structuredBodyType"> Required if the request body is a structured message. Specifies the message schema version and properties. </param>
+        /// <param name="structuredBodyType"> Specifies the response content should be returned as a structured message and specifies the message schema version and properties. </param>
         /// <param name="structuredContentLength"> Required if the request body is a structured message. Specifies the length of the blob/file content inside the message body. Will always be smaller than Content-Length. </param>
-        /// <param name="optionalbody"> Initial data. </param>
-        /// <param name="shareFileRequestConditions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="range"/> is null. </exception>
-        public ResponseWithHeaders<FileUploadRangeHeaders> UploadRange(string range, ShareFileRangeWriteType fileRangeWrite, long contentLength, int? timeout = null, byte[] contentMD5 = null, FileLastWrittenMode? fileLastWrittenMode = null, string structuredBodyType = null, long? structuredContentLength = null, Stream optionalbody = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> UploadRangeAsync(string range, ShareFileRangeWriteType fileRangeWrite, long contentLength, BinaryData optionalBody = default, int? timeout = default, BinaryData contentMD5 = default, string leaseId = default, FileLastWrittenMode? fileLastWrittenMode = default, string structuredBodyType = default, long? structuredContentLength = default, CancellationToken cancellationToken = default)
         {
-            if (range == null)
-            {
-                throw new ArgumentNullException(nameof(range));
-            }
-
-            using var message = CreateUploadRangeRequest(range, fileRangeWrite, contentLength, timeout, contentMD5, fileLastWrittenMode, structuredBodyType, structuredContentLength, optionalbody, shareFileRequestConditions);
-            _pipeline.Send(message, cancellationToken);
-            var headers = new FileUploadRangeHeaders(message.Response);
-            switch (message.Response.Status)
-            {
-                case 201:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
+            return await UploadRangeAsync(range, fileRangeWrite.ToSerialString(), contentLength, RequestContent.Create(optionalBody), timeout, contentMD5, leaseId, fileLastWrittenMode?.ToSerialString(), structuredBodyType, structuredContentLength, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
-        internal HttpMessage CreateUploadRangeFromURLRequest(string range, string copySource, long contentLength, int? timeout, string sourceRange, byte[] sourceContentCrc64, string copySourceAuthorization, FileLastWrittenMode? fileLastWrittenMode, SourceModifiedAccessConditions sourceModifiedAccessConditions, ShareFileRequestConditions shareFileRequestConditions)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_url, false);
-            uri.AppendQuery("comp", "range", true);
-            if (timeout != null)
-            {
-                uri.AppendQuery("timeout", timeout.Value, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("x-ms-range", range);
-            request.Headers.Add("x-ms-copy-source", copySource);
-            if (sourceRange != null)
-            {
-                request.Headers.Add("x-ms-source-range", sourceRange);
-            }
-            request.Headers.Add("x-ms-write", _fileRangeWriteFromUrl);
-            if (sourceContentCrc64 != null)
-            {
-                request.Headers.Add("x-ms-source-content-crc64", sourceContentCrc64, "D");
-            }
-            if (sourceModifiedAccessConditions?.SourceIfMatchCrc64 != null)
-            {
-                request.Headers.Add("x-ms-source-if-match-crc64", sourceModifiedAccessConditions.SourceIfMatchCrc64, "D");
-            }
-            if (sourceModifiedAccessConditions?.SourceIfNoneMatchCrc64 != null)
-            {
-                request.Headers.Add("x-ms-source-if-none-match-crc64", sourceModifiedAccessConditions.SourceIfNoneMatchCrc64, "D");
-            }
-            request.Headers.Add("x-ms-version", _version);
-            if (shareFileRequestConditions?.LeaseId != null)
-            {
-                request.Headers.Add("x-ms-lease-id", shareFileRequestConditions.LeaseId);
-            }
-            if (copySourceAuthorization != null)
-            {
-                request.Headers.Add("x-ms-copy-source-authorization", copySourceAuthorization);
-            }
-            if (fileLastWrittenMode != null)
-            {
-                request.Headers.Add("x-ms-file-last-write-time", fileLastWrittenMode.Value.ToSerialString());
-            }
-            if (_allowTrailingDot != null)
-            {
-                request.Headers.Add("x-ms-allow-trailing-dot", _allowTrailingDot.Value);
-            }
-            if (_allowSourceTrailingDot != null)
-            {
-                request.Headers.Add("x-ms-source-allow-trailing-dot", _allowSourceTrailingDot.Value);
-            }
-            if (_fileRequestIntent != null)
-            {
-                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
-            }
-            request.Headers.Add("Accept", "application/xml");
-            return message;
-        }
-
-        /// <summary> Upload a range of bytes to a file where the contents are read from a URL. </summary>
-        /// <param name="range"> Writes data to the specified byte range in the file. </param>
-        /// <param name="copySource"> Specifies the URL of the source file or blob, up to 2 KB in length. To copy a file to another file within the same storage account, you may use Shared Key to authenticate the source file. If you are copying a file from another storage account, or if you are copying a blob from the same storage account or another storage account, then you must authenticate the source file or blob using a shared access signature. If the source is a public blob, no authentication is required to perform the copy operation. A file in a share snapshot can also be specified as a copy source. </param>
-        /// <param name="contentLength"> Specifies the number of bytes being transmitted in the request body. When the x-ms-write header is set to clear, the value of this header must be set to zero. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
+        /// <summary>
+        /// [Protocol Method] Upload a range of bytes to a file where the contents are read from a URL.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="range"> Specifies the range of bytes to be written. Both the start and end of the range must be specified. </param>
+        /// <param name="copySource"> Specifies the URL of the source file or blob, up to 2 KB in length. </param>
+        /// <param name="contentLength"> The number of bytes being transmitted in the request body. </param>
         /// <param name="sourceRange"> Bytes of source data in the specified range. </param>
-        /// <param name="sourceContentCrc64"> Specify the crc64 calculated for the range of bytes that must be read from the copy source. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="sourceContentCrc64"> Specify the CRC64 hash of the source content. </param>
+        /// <param name="sourceIfMatchCrc64"> Specify the CRC64 hash value to check for source content integrity. </param>
+        /// <param name="sourceIfNoneMatchCrc64"> Specify the CRC64 hash value to check for source content mismatch. </param>
+        /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
         /// <param name="copySourceAuthorization"> Only Bearer type is supported. Credentials should be a valid OAuth access token to copy source. </param>
         /// <param name="fileLastWrittenMode"> If the file last write time should be preserved or overwritten. </param>
-        /// <param name="sourceModifiedAccessConditions"> Parameter group. </param>
-        /// <param name="shareFileRequestConditions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="range"/> or <paramref name="copySource"/> is null. </exception>
-        public async Task<ResponseWithHeaders<FileUploadRangeFromURLHeaders>> UploadRangeFromURLAsync(string range, string copySource, long contentLength, int? timeout = null, string sourceRange = null, byte[] sourceContentCrc64 = null, string copySourceAuthorization = null, FileLastWrittenMode? fileLastWrittenMode = null, SourceModifiedAccessConditions sourceModifiedAccessConditions = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response UploadRangeFromUrl(string range, string copySource, long contentLength, string sourceRange, int? timeout, string sourceContentCrc64, string sourceIfMatchCrc64, string sourceIfNoneMatchCrc64, string leaseId, string copySourceAuthorization, string fileLastWrittenMode, RequestContext context)
         {
-            if (range == null)
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("FileRestClient.UploadRangeFromUrl");
+            scope.Start();
+            try
             {
-                throw new ArgumentNullException(nameof(range));
+                using HttpMessage message = CreateUploadRangeFromUrlRequest(range, copySource, contentLength, sourceRange, timeout, sourceContentCrc64, sourceIfMatchCrc64, sourceIfNoneMatchCrc64, leaseId, copySourceAuthorization, fileLastWrittenMode, context);
+                return Pipeline.ProcessMessage(message, context);
             }
-            if (copySource == null)
+            catch (Exception e)
             {
-                throw new ArgumentNullException(nameof(copySource));
+                scope.Failed(e);
+                throw;
             }
+        }
 
-            using var message = CreateUploadRangeFromURLRequest(range, copySource, contentLength, timeout, sourceRange, sourceContentCrc64, copySourceAuthorization, fileLastWrittenMode, sourceModifiedAccessConditions, shareFileRequestConditions);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new FileUploadRangeFromURLHeaders(message.Response);
-            switch (message.Response.Status)
+        /// <summary>
+        /// [Protocol Method] Upload a range of bytes to a file where the contents are read from a URL.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="range"> Specifies the range of bytes to be written. Both the start and end of the range must be specified. </param>
+        /// <param name="copySource"> Specifies the URL of the source file or blob, up to 2 KB in length. </param>
+        /// <param name="contentLength"> The number of bytes being transmitted in the request body. </param>
+        /// <param name="sourceRange"> Bytes of source data in the specified range. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="sourceContentCrc64"> Specify the CRC64 hash of the source content. </param>
+        /// <param name="sourceIfMatchCrc64"> Specify the CRC64 hash value to check for source content integrity. </param>
+        /// <param name="sourceIfNoneMatchCrc64"> Specify the CRC64 hash value to check for source content mismatch. </param>
+        /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
+        /// <param name="copySourceAuthorization"> Only Bearer type is supported. Credentials should be a valid OAuth access token to copy source. </param>
+        /// <param name="fileLastWrittenMode"> If the file last write time should be preserved or overwritten. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> UploadRangeFromUrlAsync(string range, string copySource, long contentLength, string sourceRange, int? timeout, string sourceContentCrc64, string sourceIfMatchCrc64, string sourceIfNoneMatchCrc64, string leaseId, string copySourceAuthorization, string fileLastWrittenMode, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("FileRestClient.UploadRangeFromUrl");
+            scope.Start();
+            try
             {
-                case 201:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
+                using HttpMessage message = CreateUploadRangeFromUrlRequest(range, copySource, contentLength, sourceRange, timeout, sourceContentCrc64, sourceIfMatchCrc64, sourceIfNoneMatchCrc64, leaseId, copySourceAuthorization, fileLastWrittenMode, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
             }
         }
 
         /// <summary> Upload a range of bytes to a file where the contents are read from a URL. </summary>
-        /// <param name="range"> Writes data to the specified byte range in the file. </param>
-        /// <param name="copySource"> Specifies the URL of the source file or blob, up to 2 KB in length. To copy a file to another file within the same storage account, you may use Shared Key to authenticate the source file. If you are copying a file from another storage account, or if you are copying a blob from the same storage account or another storage account, then you must authenticate the source file or blob using a shared access signature. If the source is a public blob, no authentication is required to perform the copy operation. A file in a share snapshot can also be specified as a copy source. </param>
-        /// <param name="contentLength"> Specifies the number of bytes being transmitted in the request body. When the x-ms-write header is set to clear, the value of this header must be set to zero. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
+        /// <param name="range"> Specifies the range of bytes to be written. Both the start and end of the range must be specified. </param>
+        /// <param name="copySource"> Specifies the URL of the source file or blob, up to 2 KB in length. </param>
+        /// <param name="contentLength"> The number of bytes being transmitted in the request body. </param>
         /// <param name="sourceRange"> Bytes of source data in the specified range. </param>
-        /// <param name="sourceContentCrc64"> Specify the crc64 calculated for the range of bytes that must be read from the copy source. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="sourceContentCrc64"> Specify the CRC64 hash of the source content. </param>
+        /// <param name="sourceIfMatchCrc64"> Specify the CRC64 hash value to check for source content integrity. </param>
+        /// <param name="sourceIfNoneMatchCrc64"> Specify the CRC64 hash value to check for source content mismatch. </param>
+        /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
         /// <param name="copySourceAuthorization"> Only Bearer type is supported. Credentials should be a valid OAuth access token to copy source. </param>
         /// <param name="fileLastWrittenMode"> If the file last write time should be preserved or overwritten. </param>
-        /// <param name="sourceModifiedAccessConditions"> Parameter group. </param>
-        /// <param name="shareFileRequestConditions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="range"/> or <paramref name="copySource"/> is null. </exception>
-        public ResponseWithHeaders<FileUploadRangeFromURLHeaders> UploadRangeFromURL(string range, string copySource, long contentLength, int? timeout = null, string sourceRange = null, byte[] sourceContentCrc64 = null, string copySourceAuthorization = null, FileLastWrittenMode? fileLastWrittenMode = null, SourceModifiedAccessConditions sourceModifiedAccessConditions = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response UploadRangeFromUrl(string range, string copySource, long contentLength, string sourceRange = default, int? timeout = default, string sourceContentCrc64 = default, string sourceIfMatchCrc64 = default, string sourceIfNoneMatchCrc64 = default, string leaseId = default, string copySourceAuthorization = default, FileLastWrittenMode? fileLastWrittenMode = default, CancellationToken cancellationToken = default)
         {
-            if (range == null)
-            {
-                throw new ArgumentNullException(nameof(range));
-            }
-            if (copySource == null)
-            {
-                throw new ArgumentNullException(nameof(copySource));
-            }
+            return UploadRangeFromUrl(range, copySource, contentLength, sourceRange, timeout, sourceContentCrc64, sourceIfMatchCrc64, sourceIfNoneMatchCrc64, leaseId, copySourceAuthorization, fileLastWrittenMode?.ToSerialString(), cancellationToken.ToRequestContext());
+        }
 
-            using var message = CreateUploadRangeFromURLRequest(range, copySource, contentLength, timeout, sourceRange, sourceContentCrc64, copySourceAuthorization, fileLastWrittenMode, sourceModifiedAccessConditions, shareFileRequestConditions);
-            _pipeline.Send(message, cancellationToken);
-            var headers = new FileUploadRangeFromURLHeaders(message.Response);
-            switch (message.Response.Status)
+        /// <summary> Upload a range of bytes to a file where the contents are read from a URL. </summary>
+        /// <param name="range"> Specifies the range of bytes to be written. Both the start and end of the range must be specified. </param>
+        /// <param name="copySource"> Specifies the URL of the source file or blob, up to 2 KB in length. </param>
+        /// <param name="contentLength"> The number of bytes being transmitted in the request body. </param>
+        /// <param name="sourceRange"> Bytes of source data in the specified range. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="sourceContentCrc64"> Specify the CRC64 hash of the source content. </param>
+        /// <param name="sourceIfMatchCrc64"> Specify the CRC64 hash value to check for source content integrity. </param>
+        /// <param name="sourceIfNoneMatchCrc64"> Specify the CRC64 hash value to check for source content mismatch. </param>
+        /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
+        /// <param name="copySourceAuthorization"> Only Bearer type is supported. Credentials should be a valid OAuth access token to copy source. </param>
+        /// <param name="fileLastWrittenMode"> If the file last write time should be preserved or overwritten. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> UploadRangeFromUrlAsync(string range, string copySource, long contentLength, string sourceRange = default, int? timeout = default, string sourceContentCrc64 = default, string sourceIfMatchCrc64 = default, string sourceIfNoneMatchCrc64 = default, string leaseId = default, string copySourceAuthorization = default, FileLastWrittenMode? fileLastWrittenMode = default, CancellationToken cancellationToken = default)
+        {
+            return await UploadRangeFromUrlAsync(range, copySource, contentLength, sourceRange, timeout, sourceContentCrc64, sourceIfMatchCrc64, sourceIfNoneMatchCrc64, leaseId, copySourceAuthorization, fileLastWrittenMode?.ToSerialString(), cancellationToken.ToRequestContext()).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Returns the list of valid page ranges for a file or snapshot of a file.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
+        /// <param name="prevsharesnapshot"> The previous snapshot parameter is an opaque DateTime value that specifies a previous file snapshot to compare against. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="range"> Return file data only from the specified byte range. </param>
+        /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
+        /// <param name="supportRename"> This header is allowed only when PrevShareSnapshot query parameter is set. Determines whether the changed ranges for a file that has been renamed or moved should be listed. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetRangeList(string sharesnapshot, string prevsharesnapshot, int? timeout, string range, string leaseId, bool? supportRename, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("FileRestClient.GetRangeList");
+            scope.Start();
+            try
             {
-                case 201:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
+                using HttpMessage message = CreateGetRangeListRequest(sharesnapshot, prevsharesnapshot, timeout, range, leaseId, supportRename, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
             }
         }
 
-        internal HttpMessage CreateGetRangeListRequest(string sharesnapshot, string prevsharesnapshot, int? timeout, string range, bool? supportRename, ShareFileRequestConditions shareFileRequestConditions)
+        /// <summary>
+        /// [Protocol Method] Returns the list of valid page ranges for a file or snapshot of a file.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
+        /// <param name="prevsharesnapshot"> The previous snapshot parameter is an opaque DateTime value that specifies a previous file snapshot to compare against. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="range"> Return file data only from the specified byte range. </param>
+        /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
+        /// <param name="supportRename"> This header is allowed only when PrevShareSnapshot query parameter is set. Determines whether the changed ranges for a file that has been renamed or moved should be listed. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetRangeListAsync(string sharesnapshot, string prevsharesnapshot, int? timeout, string range, string leaseId, bool? supportRename, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_url, false);
-            uri.AppendQuery("comp", "rangelist", true);
-            if (sharesnapshot != null)
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("FileRestClient.GetRangeList");
+            scope.Start();
+            try
             {
-                uri.AppendQuery("sharesnapshot", sharesnapshot, true);
+                using HttpMessage message = CreateGetRangeListRequest(sharesnapshot, prevsharesnapshot, timeout, range, leaseId, supportRename, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
-            if (prevsharesnapshot != null)
+            catch (Exception e)
             {
-                uri.AppendQuery("prevsharesnapshot", prevsharesnapshot, true);
-            }
-            if (timeout != null)
-            {
-                uri.AppendQuery("timeout", timeout.Value, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("x-ms-version", _version);
-            if (range != null)
-            {
-                request.Headers.Add("x-ms-range", range);
-            }
-            if (shareFileRequestConditions?.LeaseId != null)
-            {
-                request.Headers.Add("x-ms-lease-id", shareFileRequestConditions.LeaseId);
-            }
-            if (_allowTrailingDot != null)
-            {
-                request.Headers.Add("x-ms-allow-trailing-dot", _allowTrailingDot.Value);
-            }
-            if (_fileRequestIntent != null)
-            {
-                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
-            }
-            if (supportRename != null)
-            {
-                request.Headers.Add("x-ms-file-support-rename", supportRename.Value);
-            }
-            request.Headers.Add("Accept", "application/xml");
-            return message;
-        }
-
-        /// <summary> Returns the list of valid ranges for a file. </summary>
-        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query. </param>
-        /// <param name="prevsharesnapshot"> The previous snapshot parameter is an opaque DateTime value that, when present, specifies the previous snapshot. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
-        /// <param name="range"> Specifies the range of bytes over which to list ranges, inclusively. </param>
-        /// <param name="supportRename"> This header is allowed only when PrevShareSnapshot query parameter is set. Determines whether the changed ranges for a file that has been renamed or moved between the target snapshot (or the live file) and the previous snapshot should be listed. If the value is true, the valid changed ranges for the file will be returned. If the value is false, the operation will result in a failure with 409 (Conflict) response. The default value is false. </param>
-        /// <param name="shareFileRequestConditions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<ShareFileRangeList, FileGetRangeListHeaders>> GetRangeListAsync(string sharesnapshot = null, string prevsharesnapshot = null, int? timeout = null, string range = null, bool? supportRename = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
-        {
-            using var message = CreateGetRangeListRequest(sharesnapshot, prevsharesnapshot, timeout, range, supportRename, shareFileRequestConditions);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new FileGetRangeListHeaders(message.Response);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ShareFileRangeList value = default;
-                        var document = XDocument.Load(message.Response.ContentStream, LoadOptions.PreserveWhitespace);
-                        if (document.Element("Ranges") is XElement rangesElement)
-                        {
-                            value = ShareFileRangeList.DeserializeShareFileRangeList(rangesElement);
-                        }
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
+                scope.Failed(e);
+                throw;
             }
         }
 
-        /// <summary> Returns the list of valid ranges for a file. </summary>
-        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query. </param>
-        /// <param name="prevsharesnapshot"> The previous snapshot parameter is an opaque DateTime value that, when present, specifies the previous snapshot. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
-        /// <param name="range"> Specifies the range of bytes over which to list ranges, inclusively. </param>
-        /// <param name="supportRename"> This header is allowed only when PrevShareSnapshot query parameter is set. Determines whether the changed ranges for a file that has been renamed or moved between the target snapshot (or the live file) and the previous snapshot should be listed. If the value is true, the valid changed ranges for the file will be returned. If the value is false, the operation will result in a failure with 409 (Conflict) response. The default value is false. </param>
-        /// <param name="shareFileRequestConditions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<ShareFileRangeList, FileGetRangeListHeaders> GetRangeList(string sharesnapshot = null, string prevsharesnapshot = null, int? timeout = null, string range = null, bool? supportRename = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
+        /// <summary> Returns the list of valid page ranges for a file or snapshot of a file. </summary>
+        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
+        /// <param name="prevsharesnapshot"> The previous snapshot parameter is an opaque DateTime value that specifies a previous file snapshot to compare against. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="range"> Return file data only from the specified byte range. </param>
+        /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
+        /// <param name="supportRename"> This header is allowed only when PrevShareSnapshot query parameter is set. Determines whether the changed ranges for a file that has been renamed or moved should be listed. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<ShareFileRangeList> GetRangeList(string sharesnapshot = default, string prevsharesnapshot = default, int? timeout = default, string range = default, string leaseId = default, bool? supportRename = default, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetRangeListRequest(sharesnapshot, prevsharesnapshot, timeout, range, supportRename, shareFileRequestConditions);
-            _pipeline.Send(message, cancellationToken);
-            var headers = new FileGetRangeListHeaders(message.Response);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ShareFileRangeList value = default;
-                        var document = XDocument.Load(message.Response.ContentStream, LoadOptions.PreserveWhitespace);
-                        if (document.Element("Ranges") is XElement rangesElement)
-                        {
-                            value = ShareFileRangeList.DeserializeShareFileRangeList(rangesElement);
-                        }
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
+            Response result = GetRangeList(sharesnapshot, prevsharesnapshot, timeout, range, leaseId, supportRename, cancellationToken.ToRequestContext());
+            return Response.FromValue((ShareFileRangeList)result, result);
         }
 
-        internal HttpMessage CreateStartCopyRequest(string copySource, int? timeout, IDictionary<string, string> metadata, string filePermission, FilePermissionFormat? filePermissionFormat, string filePermissionKey, string owner, string group, string fileMode, ModeCopyMode? fileModeCopyMode, OwnerCopyMode? fileOwnerCopyMode, CopyFileSmbInfo copyFileSmbInfo, ShareFileRequestConditions shareFileRequestConditions)
+        /// <summary> Returns the list of valid page ranges for a file or snapshot of a file. </summary>
+        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
+        /// <param name="prevsharesnapshot"> The previous snapshot parameter is an opaque DateTime value that specifies a previous file snapshot to compare against. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="range"> Return file data only from the specified byte range. </param>
+        /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
+        /// <param name="supportRename"> This header is allowed only when PrevShareSnapshot query parameter is set. Determines whether the changed ranges for a file that has been renamed or moved should be listed. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<ShareFileRangeList>> GetRangeListAsync(string sharesnapshot = default, string prevsharesnapshot = default, int? timeout = default, string range = default, string leaseId = default, bool? supportRename = default, CancellationToken cancellationToken = default)
         {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_url, false);
-            if (timeout != null)
-            {
-                uri.AppendQuery("timeout", timeout.Value, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("x-ms-version", _version);
-            if (metadata != null)
-            {
-                request.Headers.Add("x-ms-meta-", metadata);
-            }
-            request.Headers.Add("x-ms-copy-source", copySource);
-            if (filePermission != null)
-            {
-                request.Headers.Add("x-ms-file-permission", filePermission);
-            }
-            if (filePermissionFormat != null)
-            {
-                request.Headers.Add("x-ms-file-permission-format", filePermissionFormat.Value.ToSerialString());
-            }
-            if (filePermissionKey != null)
-            {
-                request.Headers.Add("x-ms-file-permission-key", filePermissionKey);
-            }
-            if (copyFileSmbInfo?.FilePermissionCopyMode != null)
-            {
-                request.Headers.Add("x-ms-file-permission-copy-mode", copyFileSmbInfo.FilePermissionCopyMode.Value.ToSerialString());
-            }
-            if (copyFileSmbInfo?.IgnoreReadOnly != null)
-            {
-                request.Headers.Add("x-ms-file-copy-ignore-readonly", copyFileSmbInfo.IgnoreReadOnly.Value);
-            }
-            if (copyFileSmbInfo?.FileAttributes != null)
-            {
-                request.Headers.Add("x-ms-file-attributes", copyFileSmbInfo.FileAttributes);
-            }
-            if (copyFileSmbInfo?.FileCreationTime != null)
-            {
-                request.Headers.Add("x-ms-file-creation-time", copyFileSmbInfo.FileCreationTime);
-            }
-            if (copyFileSmbInfo?.FileLastWriteTime != null)
-            {
-                request.Headers.Add("x-ms-file-last-write-time", copyFileSmbInfo.FileLastWriteTime);
-            }
-            if (copyFileSmbInfo?.FileChangeTime != null)
-            {
-                request.Headers.Add("x-ms-file-change-time", copyFileSmbInfo.FileChangeTime);
-            }
-            if (copyFileSmbInfo?.SetArchiveAttribute != null)
-            {
-                request.Headers.Add("x-ms-file-copy-set-archive", copyFileSmbInfo.SetArchiveAttribute.Value);
-            }
-            if (shareFileRequestConditions?.LeaseId != null)
-            {
-                request.Headers.Add("x-ms-lease-id", shareFileRequestConditions.LeaseId);
-            }
-            if (_allowTrailingDot != null)
-            {
-                request.Headers.Add("x-ms-allow-trailing-dot", _allowTrailingDot.Value);
-            }
-            if (_allowSourceTrailingDot != null)
-            {
-                request.Headers.Add("x-ms-source-allow-trailing-dot", _allowSourceTrailingDot.Value);
-            }
-            if (_fileRequestIntent != null)
-            {
-                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
-            }
-            if (owner != null)
-            {
-                request.Headers.Add("x-ms-owner", owner);
-            }
-            if (group != null)
-            {
-                request.Headers.Add("x-ms-group", group);
-            }
-            if (fileMode != null)
-            {
-                request.Headers.Add("x-ms-mode", fileMode);
-            }
-            if (fileModeCopyMode != null)
-            {
-                request.Headers.Add("x-ms-file-mode-copy-mode", fileModeCopyMode.Value.ToSerialString());
-            }
-            if (fileOwnerCopyMode != null)
-            {
-                request.Headers.Add("x-ms-file-owner-copy-mode", fileOwnerCopyMode.Value.ToSerialString());
-            }
-            request.Headers.Add("Accept", "application/xml");
-            return message;
+            Response result = await GetRangeListAsync(sharesnapshot, prevsharesnapshot, timeout, range, leaseId, supportRename, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((ShareFileRangeList)result, result);
         }
 
-        /// <summary> Copies a blob or file to a destination file within the storage account. </summary>
-        /// <param name="copySource"> Specifies the URL of the source file or blob, up to 2 KB in length. To copy a file to another file within the same storage account, you may use Shared Key to authenticate the source file. If you are copying a file from another storage account, or if you are copying a blob from the same storage account or another storage account, then you must authenticate the source file or blob using a shared access signature. If the source is a public blob, no authentication is required to perform the copy operation. A file in a share snapshot can also be specified as a copy source. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
-        /// <param name="metadata"> A name-value pair to associate with a file storage object. </param>
-        /// <param name="filePermission"> If specified the permission (security descriptor) shall be set for the directory/file. This header can be used if Permission size is &lt;= 8KB, else x-ms-file-permission-key header shall be used. Default value: Inherit. If SDDL is specified as input, it must have owner, group and dacl. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
-        /// <param name="filePermissionFormat"> Optional. Available for version 2023-06-01 and later. Specifies the format in which the permission is returned. Acceptable values are SDDL or binary. If x-ms-file-permission-format is unspecified or explicitly set to SDDL, the permission is returned in SDDL format. If x-ms-file-permission-format is explicitly set to binary, the permission is returned as a base64 string representing the binary encoding of the permission. </param>
-        /// <param name="filePermissionKey"> Key of the permission to be set for the directory/file. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
+        /// <summary>
+        /// [Protocol Method] Copies a blob or file to a destination file within the storage account.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="copySource"> Specifies the URL of the source file or blob, up to 2 KB in length. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="metadata"> Optional. User-defined metadata for the resource. </param>
+        /// <param name="filePermission"> If specified the permission shall be set for the file. </param>
+        /// <param name="filePermissionFormat"> Optional. Used to set permission format. </param>
+        /// <param name="filePermissionKey"> Key of the permission to be set. </param>
+        /// <param name="filePermissionCopyMode"> Specifies the option to copy file security descriptor from source file or to set it using the value which is defined by the header value of x-ms-file-permission or x-ms-file-permission-key. </param>
+        /// <param name="ignoreReadOnly"> A boolean value that specifies whether the ReadOnly attribute on a preexisting destination file should be respected or overridden. </param>
+        /// <param name="fileAttributes"> If specified, the provided file attributes shall be set. </param>
+        /// <param name="fileCreationTime"> Creation time for the file. </param>
+        /// <param name="fileLastWriteTime"> Last write time for the file. </param>
+        /// <param name="fileChangeTime"> Change time for the file. </param>
+        /// <param name="setArchiveAttribute"> Optional. Sets the archive attribute on the destination file. </param>
+        /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
         /// <param name="owner"> Optional, NFS only. The owner of the file or directory. </param>
         /// <param name="group"> Optional, NFS only. The owning group of the file or directory. </param>
         /// <param name="fileMode"> Optional, NFS only. The file mode of the file or directory. </param>
-        /// <param name="fileModeCopyMode"> NFS only. Applicable only when the copy source is a File. Determines the copy behavior of the mode bits of the file. source: The mode on the destination file is copied from the source file. override: The mode on the destination file is determined via the x-ms-mode header. </param>
-        /// <param name="fileOwnerCopyMode"> NFS only. Determines the copy behavior of the owner user identifier (UID) and group identifier (GID) of the file. source: The owner user identifier (UID) and group identifier (GID) on the destination file is copied from the source file. override: The owner user identifier (UID) and group identifier (GID) on the destination file is determined via the x-ms-owner and x-ms-group  headers. </param>
-        /// <param name="copyFileSmbInfo"> Parameter group. </param>
-        /// <param name="shareFileRequestConditions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="copySource"/> is null. </exception>
-        public async Task<ResponseWithHeaders<FileStartCopyHeaders>> StartCopyAsync(string copySource, int? timeout = null, IDictionary<string, string> metadata = null, string filePermission = null, FilePermissionFormat? filePermissionFormat = null, string filePermissionKey = null, string owner = null, string group = null, string fileMode = null, ModeCopyMode? fileModeCopyMode = null, OwnerCopyMode? fileOwnerCopyMode = null, CopyFileSmbInfo copyFileSmbInfo = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
+        /// <param name="fileModeCopyMode"> Specifies mode copy option for the file. </param>
+        /// <param name="fileOwnerCopyMode"> Specifies owner copy option for the file. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response StartCopy(string copySource, int? timeout, IDictionary<string, string> metadata, string filePermission, string filePermissionFormat, string filePermissionKey, string filePermissionCopyMode, bool? ignoreReadOnly, string fileAttributes, string fileCreationTime, string fileLastWriteTime, string fileChangeTime, bool? setArchiveAttribute, string leaseId, string owner, string @group, string fileMode, string fileModeCopyMode, string fileOwnerCopyMode, RequestContext context)
         {
-            if (copySource == null)
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("FileRestClient.StartCopy");
+            scope.Start();
+            try
             {
-                throw new ArgumentNullException(nameof(copySource));
+                using HttpMessage message = CreateStartCopyRequest(copySource, timeout, metadata, filePermission, filePermissionFormat, filePermissionKey, filePermissionCopyMode, ignoreReadOnly, fileAttributes, fileCreationTime, fileLastWriteTime, fileChangeTime, setArchiveAttribute, leaseId, owner, @group, fileMode, fileModeCopyMode, fileOwnerCopyMode, context);
+                return Pipeline.ProcessMessage(message, context);
             }
-
-            using var message = CreateStartCopyRequest(copySource, timeout, metadata, filePermission, filePermissionFormat, filePermissionKey, owner, group, fileMode, fileModeCopyMode, fileOwnerCopyMode, copyFileSmbInfo, shareFileRequestConditions);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new FileStartCopyHeaders(message.Response);
-            switch (message.Response.Status)
+            catch (Exception e)
             {
-                case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Copies a blob or file to a destination file within the storage account.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="copySource"> Specifies the URL of the source file or blob, up to 2 KB in length. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="metadata"> Optional. User-defined metadata for the resource. </param>
+        /// <param name="filePermission"> If specified the permission shall be set for the file. </param>
+        /// <param name="filePermissionFormat"> Optional. Used to set permission format. </param>
+        /// <param name="filePermissionKey"> Key of the permission to be set. </param>
+        /// <param name="filePermissionCopyMode"> Specifies the option to copy file security descriptor from source file or to set it using the value which is defined by the header value of x-ms-file-permission or x-ms-file-permission-key. </param>
+        /// <param name="ignoreReadOnly"> A boolean value that specifies whether the ReadOnly attribute on a preexisting destination file should be respected or overridden. </param>
+        /// <param name="fileAttributes"> If specified, the provided file attributes shall be set. </param>
+        /// <param name="fileCreationTime"> Creation time for the file. </param>
+        /// <param name="fileLastWriteTime"> Last write time for the file. </param>
+        /// <param name="fileChangeTime"> Change time for the file. </param>
+        /// <param name="setArchiveAttribute"> Optional. Sets the archive attribute on the destination file. </param>
+        /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
+        /// <param name="owner"> Optional, NFS only. The owner of the file or directory. </param>
+        /// <param name="group"> Optional, NFS only. The owning group of the file or directory. </param>
+        /// <param name="fileMode"> Optional, NFS only. The file mode of the file or directory. </param>
+        /// <param name="fileModeCopyMode"> Specifies mode copy option for the file. </param>
+        /// <param name="fileOwnerCopyMode"> Specifies owner copy option for the file. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> StartCopyAsync(string copySource, int? timeout, IDictionary<string, string> metadata, string filePermission, string filePermissionFormat, string filePermissionKey, string filePermissionCopyMode, bool? ignoreReadOnly, string fileAttributes, string fileCreationTime, string fileLastWriteTime, string fileChangeTime, bool? setArchiveAttribute, string leaseId, string owner, string @group, string fileMode, string fileModeCopyMode, string fileOwnerCopyMode, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("FileRestClient.StartCopy");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateStartCopyRequest(copySource, timeout, metadata, filePermission, filePermissionFormat, filePermissionKey, filePermissionCopyMode, ignoreReadOnly, fileAttributes, fileCreationTime, fileLastWriteTime, fileChangeTime, setArchiveAttribute, leaseId, owner, @group, fileMode, fileModeCopyMode, fileOwnerCopyMode, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
             }
         }
 
         /// <summary> Copies a blob or file to a destination file within the storage account. </summary>
-        /// <param name="copySource"> Specifies the URL of the source file or blob, up to 2 KB in length. To copy a file to another file within the same storage account, you may use Shared Key to authenticate the source file. If you are copying a file from another storage account, or if you are copying a blob from the same storage account or another storage account, then you must authenticate the source file or blob using a shared access signature. If the source is a public blob, no authentication is required to perform the copy operation. A file in a share snapshot can also be specified as a copy source. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
-        /// <param name="metadata"> A name-value pair to associate with a file storage object. </param>
-        /// <param name="filePermission"> If specified the permission (security descriptor) shall be set for the directory/file. This header can be used if Permission size is &lt;= 8KB, else x-ms-file-permission-key header shall be used. Default value: Inherit. If SDDL is specified as input, it must have owner, group and dacl. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
-        /// <param name="filePermissionFormat"> Optional. Available for version 2023-06-01 and later. Specifies the format in which the permission is returned. Acceptable values are SDDL or binary. If x-ms-file-permission-format is unspecified or explicitly set to SDDL, the permission is returned in SDDL format. If x-ms-file-permission-format is explicitly set to binary, the permission is returned as a base64 string representing the binary encoding of the permission. </param>
-        /// <param name="filePermissionKey"> Key of the permission to be set for the directory/file. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
+        /// <param name="copySource"> Specifies the URL of the source file or blob, up to 2 KB in length. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="metadata"> Optional. User-defined metadata for the resource. </param>
+        /// <param name="filePermission"> If specified the permission shall be set for the file. </param>
+        /// <param name="filePermissionFormat"> Optional. Used to set permission format. </param>
+        /// <param name="filePermissionKey"> Key of the permission to be set. </param>
+        /// <param name="filePermissionCopyMode"> Specifies the option to copy file security descriptor from source file or to set it using the value which is defined by the header value of x-ms-file-permission or x-ms-file-permission-key. </param>
+        /// <param name="ignoreReadOnly"> A boolean value that specifies whether the ReadOnly attribute on a preexisting destination file should be respected or overridden. </param>
+        /// <param name="fileAttributes"> If specified, the provided file attributes shall be set. </param>
+        /// <param name="fileCreationTime"> Creation time for the file. </param>
+        /// <param name="fileLastWriteTime"> Last write time for the file. </param>
+        /// <param name="fileChangeTime"> Change time for the file. </param>
+        /// <param name="setArchiveAttribute"> Optional. Sets the archive attribute on the destination file. </param>
+        /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
         /// <param name="owner"> Optional, NFS only. The owner of the file or directory. </param>
         /// <param name="group"> Optional, NFS only. The owning group of the file or directory. </param>
         /// <param name="fileMode"> Optional, NFS only. The file mode of the file or directory. </param>
-        /// <param name="fileModeCopyMode"> NFS only. Applicable only when the copy source is a File. Determines the copy behavior of the mode bits of the file. source: The mode on the destination file is copied from the source file. override: The mode on the destination file is determined via the x-ms-mode header. </param>
-        /// <param name="fileOwnerCopyMode"> NFS only. Determines the copy behavior of the owner user identifier (UID) and group identifier (GID) of the file. source: The owner user identifier (UID) and group identifier (GID) on the destination file is copied from the source file. override: The owner user identifier (UID) and group identifier (GID) on the destination file is determined via the x-ms-owner and x-ms-group  headers. </param>
-        /// <param name="copyFileSmbInfo"> Parameter group. </param>
-        /// <param name="shareFileRequestConditions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="copySource"/> is null. </exception>
-        public ResponseWithHeaders<FileStartCopyHeaders> StartCopy(string copySource, int? timeout = null, IDictionary<string, string> metadata = null, string filePermission = null, FilePermissionFormat? filePermissionFormat = null, string filePermissionKey = null, string owner = null, string group = null, string fileMode = null, ModeCopyMode? fileModeCopyMode = null, OwnerCopyMode? fileOwnerCopyMode = null, CopyFileSmbInfo copyFileSmbInfo = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
+        /// <param name="fileModeCopyMode"> Specifies mode copy option for the file. </param>
+        /// <param name="fileOwnerCopyMode"> Specifies owner copy option for the file. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response StartCopy(string copySource, int? timeout = default, IDictionary<string, string> metadata = default, string filePermission = default, FilePermissionFormat? filePermissionFormat = default, string filePermissionKey = default, PermissionCopyMode? filePermissionCopyMode = default, bool? ignoreReadOnly = default, string fileAttributes = default, string fileCreationTime = default, string fileLastWriteTime = default, string fileChangeTime = default, bool? setArchiveAttribute = default, string leaseId = default, string owner = default, string @group = default, string fileMode = default, ModeCopyMode? fileModeCopyMode = default, OwnerCopyMode? fileOwnerCopyMode = default, CancellationToken cancellationToken = default)
         {
-            if (copySource == null)
-            {
-                throw new ArgumentNullException(nameof(copySource));
-            }
+            return StartCopy(copySource, timeout, metadata, filePermission, filePermissionFormat?.ToSerialString(), filePermissionKey, filePermissionCopyMode?.ToSerialString(), ignoreReadOnly, fileAttributes, fileCreationTime, fileLastWriteTime, fileChangeTime, setArchiveAttribute, leaseId, owner, @group, fileMode, fileModeCopyMode?.ToSerialString(), fileOwnerCopyMode?.ToSerialString(), cancellationToken.ToRequestContext());
+        }
 
-            using var message = CreateStartCopyRequest(copySource, timeout, metadata, filePermission, filePermissionFormat, filePermissionKey, owner, group, fileMode, fileModeCopyMode, fileOwnerCopyMode, copyFileSmbInfo, shareFileRequestConditions);
-            _pipeline.Send(message, cancellationToken);
-            var headers = new FileStartCopyHeaders(message.Response);
-            switch (message.Response.Status)
+        /// <summary> Copies a blob or file to a destination file within the storage account. </summary>
+        /// <param name="copySource"> Specifies the URL of the source file or blob, up to 2 KB in length. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="metadata"> Optional. User-defined metadata for the resource. </param>
+        /// <param name="filePermission"> If specified the permission shall be set for the file. </param>
+        /// <param name="filePermissionFormat"> Optional. Used to set permission format. </param>
+        /// <param name="filePermissionKey"> Key of the permission to be set. </param>
+        /// <param name="filePermissionCopyMode"> Specifies the option to copy file security descriptor from source file or to set it using the value which is defined by the header value of x-ms-file-permission or x-ms-file-permission-key. </param>
+        /// <param name="ignoreReadOnly"> A boolean value that specifies whether the ReadOnly attribute on a preexisting destination file should be respected or overridden. </param>
+        /// <param name="fileAttributes"> If specified, the provided file attributes shall be set. </param>
+        /// <param name="fileCreationTime"> Creation time for the file. </param>
+        /// <param name="fileLastWriteTime"> Last write time for the file. </param>
+        /// <param name="fileChangeTime"> Change time for the file. </param>
+        /// <param name="setArchiveAttribute"> Optional. Sets the archive attribute on the destination file. </param>
+        /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
+        /// <param name="owner"> Optional, NFS only. The owner of the file or directory. </param>
+        /// <param name="group"> Optional, NFS only. The owning group of the file or directory. </param>
+        /// <param name="fileMode"> Optional, NFS only. The file mode of the file or directory. </param>
+        /// <param name="fileModeCopyMode"> Specifies mode copy option for the file. </param>
+        /// <param name="fileOwnerCopyMode"> Specifies owner copy option for the file. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> StartCopyAsync(string copySource, int? timeout = default, IDictionary<string, string> metadata = default, string filePermission = default, FilePermissionFormat? filePermissionFormat = default, string filePermissionKey = default, PermissionCopyMode? filePermissionCopyMode = default, bool? ignoreReadOnly = default, string fileAttributes = default, string fileCreationTime = default, string fileLastWriteTime = default, string fileChangeTime = default, bool? setArchiveAttribute = default, string leaseId = default, string owner = default, string @group = default, string fileMode = default, ModeCopyMode? fileModeCopyMode = default, OwnerCopyMode? fileOwnerCopyMode = default, CancellationToken cancellationToken = default)
+        {
+            return await StartCopyAsync(copySource, timeout, metadata, filePermission, filePermissionFormat?.ToSerialString(), filePermissionKey, filePermissionCopyMode?.ToSerialString(), ignoreReadOnly, fileAttributes, fileCreationTime, fileLastWriteTime, fileChangeTime, setArchiveAttribute, leaseId, owner, @group, fileMode, fileModeCopyMode?.ToSerialString(), fileOwnerCopyMode?.ToSerialString(), cancellationToken.ToRequestContext()).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Aborts a pending Copy File operation, and leaves a destination file with zero length and full metadata.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="copyid"> The copy identifier provided in the x-ms-copy-id header of the original Copy File operation. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response AbortCopy(string copyid, int? timeout, string leaseId, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("FileRestClient.AbortCopy");
+            scope.Start();
+            try
             {
-                case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
+                using HttpMessage message = CreateAbortCopyRequest(copyid, timeout, leaseId, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
             }
         }
 
-        internal HttpMessage CreateAbortCopyRequest(string copyId, int? timeout, ShareFileRequestConditions shareFileRequestConditions)
+        /// <summary>
+        /// [Protocol Method] Aborts a pending Copy File operation, and leaves a destination file with zero length and full metadata.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="copyid"> The copy identifier provided in the x-ms-copy-id header of the original Copy File operation. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> AbortCopyAsync(string copyid, int? timeout, string leaseId, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_url, false);
-            uri.AppendQuery("comp", "copy", true);
-            uri.AppendQuery("copyid", copyId, true);
-            if (timeout != null)
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("FileRestClient.AbortCopy");
+            scope.Start();
+            try
             {
-                uri.AppendQuery("timeout", timeout.Value, true);
+                using HttpMessage message = CreateAbortCopyRequest(copyid, timeout, leaseId, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
-            request.Uri = uri;
-            request.Headers.Add("x-ms-copy-action", "abort");
-            request.Headers.Add("x-ms-version", _version);
-            if (shareFileRequestConditions?.LeaseId != null)
+            catch (Exception e)
             {
-                request.Headers.Add("x-ms-lease-id", shareFileRequestConditions.LeaseId);
+                scope.Failed(e);
+                throw;
             }
-            if (_allowTrailingDot != null)
-            {
-                request.Headers.Add("x-ms-allow-trailing-dot", _allowTrailingDot.Value);
-            }
-            if (_fileRequestIntent != null)
-            {
-                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
-            }
-            request.Headers.Add("Accept", "application/xml");
-            return message;
         }
 
         /// <summary> Aborts a pending Copy File operation, and leaves a destination file with zero length and full metadata. </summary>
-        /// <param name="copyId"> The copy identifier provided in the x-ms-copy-id header of the original Copy File operation. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
-        /// <param name="shareFileRequestConditions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="copyId"/> is null. </exception>
-        public async Task<ResponseWithHeaders<FileAbortCopyHeaders>> AbortCopyAsync(string copyId, int? timeout = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
+        /// <param name="copyid"> The copy identifier provided in the x-ms-copy-id header of the original Copy File operation. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response AbortCopy(string copyid, int? timeout = default, string leaseId = default, CancellationToken cancellationToken = default)
         {
-            if (copyId == null)
-            {
-                throw new ArgumentNullException(nameof(copyId));
-            }
-
-            using var message = CreateAbortCopyRequest(copyId, timeout, shareFileRequestConditions);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new FileAbortCopyHeaders(message.Response);
-            switch (message.Response.Status)
-            {
-                case 204:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
+            return AbortCopy(copyid, timeout, leaseId, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Aborts a pending Copy File operation, and leaves a destination file with zero length and full metadata. </summary>
-        /// <param name="copyId"> The copy identifier provided in the x-ms-copy-id header of the original Copy File operation. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
-        /// <param name="shareFileRequestConditions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="copyId"/> is null. </exception>
-        public ResponseWithHeaders<FileAbortCopyHeaders> AbortCopy(string copyId, int? timeout = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
+        /// <param name="copyid"> The copy identifier provided in the x-ms-copy-id header of the original Copy File operation. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> AbortCopyAsync(string copyid, int? timeout = default, string leaseId = default, CancellationToken cancellationToken = default)
         {
-            if (copyId == null)
-            {
-                throw new ArgumentNullException(nameof(copyId));
-            }
+            return await AbortCopyAsync(copyid, timeout, leaseId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+        }
 
-            using var message = CreateAbortCopyRequest(copyId, timeout, shareFileRequestConditions);
-            _pipeline.Send(message, cancellationToken);
-            var headers = new FileAbortCopyHeaders(message.Response);
-            switch (message.Response.Status)
+        /// <summary>
+        /// [Protocol Method] Lists handles for file.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="marker"> A string value that identifies the portion of the list to be returned with the next listing operation. </param>
+        /// <param name="maxresults"> Specifies the maximum number of items to return. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetHandles(string marker, int? maxresults, int? timeout, string sharesnapshot, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("FileRestClient.GetHandles");
+            scope.Start();
+            try
             {
-                case 204:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
+                using HttpMessage message = CreateGetHandlesRequest(marker, maxresults, timeout, sharesnapshot, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
             }
         }
 
-        internal HttpMessage CreateListHandlesRequest(string marker, int? maxresults, int? timeout, string sharesnapshot)
+        /// <summary>
+        /// [Protocol Method] Lists handles for file.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="marker"> A string value that identifies the portion of the list to be returned with the next listing operation. </param>
+        /// <param name="maxresults"> Specifies the maximum number of items to return. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetHandlesAsync(string marker, int? maxresults, int? timeout, string sharesnapshot, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_url, false);
-            uri.AppendQuery("comp", "listhandles", true);
-            if (marker != null)
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("FileRestClient.GetHandles");
+            scope.Start();
+            try
             {
-                uri.AppendQuery("marker", marker, true);
+                using HttpMessage message = CreateGetHandlesRequest(marker, maxresults, timeout, sharesnapshot, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
-            if (maxresults != null)
+            catch (Exception e)
             {
-                uri.AppendQuery("maxresults", maxresults.Value, true);
-            }
-            if (timeout != null)
-            {
-                uri.AppendQuery("timeout", timeout.Value, true);
-            }
-            if (sharesnapshot != null)
-            {
-                uri.AppendQuery("sharesnapshot", sharesnapshot, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("x-ms-version", _version);
-            if (_allowTrailingDot != null)
-            {
-                request.Headers.Add("x-ms-allow-trailing-dot", _allowTrailingDot.Value);
-            }
-            if (_fileRequestIntent != null)
-            {
-                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
-            }
-            request.Headers.Add("Accept", "application/xml");
-            return message;
-        }
-
-        /// <summary> Lists handles for file. </summary>
-        /// <param name="marker"> A string value that identifies the portion of the list to be returned with the next list operation. The operation returns a marker value within the response body if the list returned was not complete. The marker value may then be used in a subsequent call to request the next set of list items. The marker value is opaque to the client. </param>
-        /// <param name="maxresults"> Specifies the maximum number of entries to return. If the request does not specify maxresults, or specifies a value greater than 5,000, the server will return up to 5,000 items. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
-        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<ListHandlesResponse, FileListHandlesHeaders>> ListHandlesAsync(string marker = null, int? maxresults = null, int? timeout = null, string sharesnapshot = null, CancellationToken cancellationToken = default)
-        {
-            using var message = CreateListHandlesRequest(marker, maxresults, timeout, sharesnapshot);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new FileListHandlesHeaders(message.Response);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ListHandlesResponse value = default;
-                        var document = XDocument.Load(message.Response.ContentStream, LoadOptions.PreserveWhitespace);
-                        if (document.Element("EnumerationResults") is XElement enumerationResultsElement)
-                        {
-                            value = ListHandlesResponse.DeserializeListHandlesResponse(enumerationResultsElement);
-                        }
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
+                scope.Failed(e);
+                throw;
             }
         }
 
         /// <summary> Lists handles for file. </summary>
-        /// <param name="marker"> A string value that identifies the portion of the list to be returned with the next list operation. The operation returns a marker value within the response body if the list returned was not complete. The marker value may then be used in a subsequent call to request the next set of list items. The marker value is opaque to the client. </param>
-        /// <param name="maxresults"> Specifies the maximum number of entries to return. If the request does not specify maxresults, or specifies a value greater than 5,000, the server will return up to 5,000 items. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
-        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<ListHandlesResponse, FileListHandlesHeaders> ListHandles(string marker = null, int? maxresults = null, int? timeout = null, string sharesnapshot = null, CancellationToken cancellationToken = default)
+        /// <param name="marker"> A string value that identifies the portion of the list to be returned with the next listing operation. </param>
+        /// <param name="maxresults"> Specifies the maximum number of items to return. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<ListHandlesResponse> GetHandles(string marker = default, int? maxresults = default, int? timeout = default, string sharesnapshot = default, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListHandlesRequest(marker, maxresults, timeout, sharesnapshot);
-            _pipeline.Send(message, cancellationToken);
-            var headers = new FileListHandlesHeaders(message.Response);
-            switch (message.Response.Status)
+            Response result = GetHandles(marker, maxresults, timeout, sharesnapshot, cancellationToken.ToRequestContext());
+            return Response.FromValue((ListHandlesResponse)result, result);
+        }
+
+        /// <summary> Lists handles for file. </summary>
+        /// <param name="marker"> A string value that identifies the portion of the list to be returned with the next listing operation. </param>
+        /// <param name="maxresults"> Specifies the maximum number of items to return. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<ListHandlesResponse>> GetHandlesAsync(string marker = default, int? maxresults = default, int? timeout = default, string sharesnapshot = default, CancellationToken cancellationToken = default)
+        {
+            Response result = await GetHandlesAsync(marker, maxresults, timeout, sharesnapshot, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((ListHandlesResponse)result, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Closes all handles open for given file.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="handleId"> Specifies handle ID opened on the file or directory to be closed. Asterisk ('*') is a wildcard that specifies all handles. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="marker"> A string value that identifies the portion of the list to be returned with the next listing operation. </param>
+        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response ForceCloseHandles(string handleId, int? timeout, string marker, string sharesnapshot, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("FileRestClient.ForceCloseHandles");
+            scope.Start();
+            try
             {
-                case 200:
-                    {
-                        ListHandlesResponse value = default;
-                        var document = XDocument.Load(message.Response.ContentStream, LoadOptions.PreserveWhitespace);
-                        if (document.Element("EnumerationResults") is XElement enumerationResultsElement)
-                        {
-                            value = ListHandlesResponse.DeserializeListHandlesResponse(enumerationResultsElement);
-                        }
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
+                using HttpMessage message = CreateForceCloseHandlesRequest(handleId, timeout, marker, sharesnapshot, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
             }
         }
 
-        internal HttpMessage CreateForceCloseHandlesRequest(string handleId, int? timeout, string marker, string sharesnapshot)
+        /// <summary>
+        /// [Protocol Method] Closes all handles open for given file.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="handleId"> Specifies handle ID opened on the file or directory to be closed. Asterisk ('*') is a wildcard that specifies all handles. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="marker"> A string value that identifies the portion of the list to be returned with the next listing operation. </param>
+        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> ForceCloseHandlesAsync(string handleId, int? timeout, string marker, string sharesnapshot, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_url, false);
-            uri.AppendQuery("comp", "forceclosehandles", true);
-            if (timeout != null)
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("FileRestClient.ForceCloseHandles");
+            scope.Start();
+            try
             {
-                uri.AppendQuery("timeout", timeout.Value, true);
+                using HttpMessage message = CreateForceCloseHandlesRequest(handleId, timeout, marker, sharesnapshot, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
-            if (marker != null)
+            catch (Exception e)
             {
-                uri.AppendQuery("marker", marker, true);
+                scope.Failed(e);
+                throw;
             }
-            if (sharesnapshot != null)
-            {
-                uri.AppendQuery("sharesnapshot", sharesnapshot, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("x-ms-handle-id", handleId);
-            request.Headers.Add("x-ms-version", _version);
-            if (_allowTrailingDot != null)
-            {
-                request.Headers.Add("x-ms-allow-trailing-dot", _allowTrailingDot.Value);
-            }
-            if (_fileRequestIntent != null)
-            {
-                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
-            }
-            request.Headers.Add("Accept", "application/xml");
-            return message;
         }
 
         /// <summary> Closes all handles open for given file. </summary>
-        /// <param name="handleId"> Specifies handle ID opened on the file or directory to be closed. Asterisk (‘*’) is a wildcard that specifies all handles. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
-        /// <param name="marker"> A string value that identifies the portion of the list to be returned with the next list operation. The operation returns a marker value within the response body if the list returned was not complete. The marker value may then be used in a subsequent call to request the next set of list items. The marker value is opaque to the client. </param>
-        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="handleId"/> is null. </exception>
-        public async Task<ResponseWithHeaders<FileForceCloseHandlesHeaders>> ForceCloseHandlesAsync(string handleId, int? timeout = null, string marker = null, string sharesnapshot = null, CancellationToken cancellationToken = default)
+        /// <param name="handleId"> Specifies handle ID opened on the file or directory to be closed. Asterisk ('*') is a wildcard that specifies all handles. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="marker"> A string value that identifies the portion of the list to be returned with the next listing operation. </param>
+        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response ForceCloseHandles(string handleId, int? timeout = default, string marker = default, string sharesnapshot = default, CancellationToken cancellationToken = default)
         {
-            if (handleId == null)
-            {
-                throw new ArgumentNullException(nameof(handleId));
-            }
-
-            using var message = CreateForceCloseHandlesRequest(handleId, timeout, marker, sharesnapshot);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new FileForceCloseHandlesHeaders(message.Response);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
+            return ForceCloseHandles(handleId, timeout, marker, sharesnapshot, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Closes all handles open for given file. </summary>
-        /// <param name="handleId"> Specifies handle ID opened on the file or directory to be closed. Asterisk (‘*’) is a wildcard that specifies all handles. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
-        /// <param name="marker"> A string value that identifies the portion of the list to be returned with the next list operation. The operation returns a marker value within the response body if the list returned was not complete. The marker value may then be used in a subsequent call to request the next set of list items. The marker value is opaque to the client. </param>
-        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="handleId"/> is null. </exception>
-        public ResponseWithHeaders<FileForceCloseHandlesHeaders> ForceCloseHandles(string handleId, int? timeout = null, string marker = null, string sharesnapshot = null, CancellationToken cancellationToken = default)
+        /// <param name="handleId"> Specifies handle ID opened on the file or directory to be closed. Asterisk ('*') is a wildcard that specifies all handles. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="marker"> A string value that identifies the portion of the list to be returned with the next listing operation. </param>
+        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> ForceCloseHandlesAsync(string handleId, int? timeout = default, string marker = default, string sharesnapshot = default, CancellationToken cancellationToken = default)
         {
-            if (handleId == null)
-            {
-                throw new ArgumentNullException(nameof(handleId));
-            }
-
-            using var message = CreateForceCloseHandlesRequest(handleId, timeout, marker, sharesnapshot);
-            _pipeline.Send(message, cancellationToken);
-            var headers = new FileForceCloseHandlesHeaders(message.Response);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
+            return await ForceCloseHandlesAsync(handleId, timeout, marker, sharesnapshot, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
-        internal HttpMessage CreateRenameRequest(string renameSource, int? timeout, bool? replaceIfExists, bool? ignoreReadOnly, string sourceLeaseId, string destinationLeaseId, string filePermission, FilePermissionFormat? filePermissionFormat, string filePermissionKey, IDictionary<string, string> metadata, CopyFileSmbInfo copyFileSmbInfo, FileHttpHeaders fileHttpHeaders)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_url, false);
-            uri.AppendQuery("comp", "rename", true);
-            if (timeout != null)
-            {
-                uri.AppendQuery("timeout", timeout.Value, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("x-ms-version", _version);
-            request.Headers.Add("x-ms-file-rename-source", renameSource);
-            if (replaceIfExists != null)
-            {
-                request.Headers.Add("x-ms-file-rename-replace-if-exists", replaceIfExists.Value);
-            }
-            if (ignoreReadOnly != null)
-            {
-                request.Headers.Add("x-ms-file-rename-ignore-readonly", ignoreReadOnly.Value);
-            }
-            if (sourceLeaseId != null)
-            {
-                request.Headers.Add("x-ms-source-lease-id", sourceLeaseId);
-            }
-            if (destinationLeaseId != null)
-            {
-                request.Headers.Add("x-ms-destination-lease-id", destinationLeaseId);
-            }
-            if (copyFileSmbInfo?.FileAttributes != null)
-            {
-                request.Headers.Add("x-ms-file-attributes", copyFileSmbInfo.FileAttributes);
-            }
-            if (copyFileSmbInfo?.FileCreationTime != null)
-            {
-                request.Headers.Add("x-ms-file-creation-time", copyFileSmbInfo.FileCreationTime);
-            }
-            if (copyFileSmbInfo?.FileLastWriteTime != null)
-            {
-                request.Headers.Add("x-ms-file-last-write-time", copyFileSmbInfo.FileLastWriteTime);
-            }
-            if (copyFileSmbInfo?.FileChangeTime != null)
-            {
-                request.Headers.Add("x-ms-file-change-time", copyFileSmbInfo.FileChangeTime);
-            }
-            if (filePermission != null)
-            {
-                request.Headers.Add("x-ms-file-permission", filePermission);
-            }
-            if (filePermissionFormat != null)
-            {
-                request.Headers.Add("x-ms-file-permission-format", filePermissionFormat.Value.ToSerialString());
-            }
-            if (filePermissionKey != null)
-            {
-                request.Headers.Add("x-ms-file-permission-key", filePermissionKey);
-            }
-            if (metadata != null)
-            {
-                request.Headers.Add("x-ms-meta-", metadata);
-            }
-            if (fileHttpHeaders?.FileContentType != null)
-            {
-                request.Headers.Add("x-ms-content-type", fileHttpHeaders.FileContentType);
-            }
-            if (_allowTrailingDot != null)
-            {
-                request.Headers.Add("x-ms-allow-trailing-dot", _allowTrailingDot.Value);
-            }
-            if (_allowSourceTrailingDot != null)
-            {
-                request.Headers.Add("x-ms-source-allow-trailing-dot", _allowSourceTrailingDot.Value);
-            }
-            if (_fileRequestIntent != null)
-            {
-                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
-            }
-            request.Headers.Add("Accept", "application/xml");
-            return message;
-        }
-
-        /// <summary> Renames a file. </summary>
+        /// <summary>
+        /// [Protocol Method] Renames a file. By default, the destination is overwritten and if the destination already exists and has a read-only attribute set, the operation will fail.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="renameSource"> Required. Specifies the URI-style path of the source file, up to 2 KB in length. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
-        /// <param name="replaceIfExists"> Optional. A boolean value for if the destination file already exists, whether this request will overwrite the file or not. If true, the rename will succeed and will overwrite the destination file. If not provided or if false and the destination file does exist, the request will not overwrite the destination file. If provided and the destination file doesn’t exist, the rename will succeed. Note: This value does not override the x-ms-file-copy-ignore-read-only header value. </param>
-        /// <param name="ignoreReadOnly"> Optional. A boolean value that specifies whether the ReadOnly attribute on a preexisting destination file should be respected. If true, the rename will succeed, otherwise, a previous file at the destination with the ReadOnly attribute set will cause the rename to fail. </param>
-        /// <param name="sourceLeaseId"> Required if the source file has an active infinite lease. </param>
-        /// <param name="destinationLeaseId"> Required if the destination file has an active infinite lease. The lease ID specified for this header must match the lease ID of the destination file. If the request does not include the lease ID or it is not valid, the operation fails with status code 412 (Precondition Failed). If this header is specified and the destination file does not currently have an active lease, the operation will also fail with status code 412 (Precondition Failed). </param>
-        /// <param name="filePermission"> If specified the permission (security descriptor) shall be set for the directory/file. This header can be used if Permission size is &lt;= 8KB, else x-ms-file-permission-key header shall be used. Default value: Inherit. If SDDL is specified as input, it must have owner, group and dacl. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
-        /// <param name="filePermissionFormat"> Optional. Available for version 2023-06-01 and later. Specifies the format in which the permission is returned. Acceptable values are SDDL or binary. If x-ms-file-permission-format is unspecified or explicitly set to SDDL, the permission is returned in SDDL format. If x-ms-file-permission-format is explicitly set to binary, the permission is returned as a base64 string representing the binary encoding of the permission. </param>
-        /// <param name="filePermissionKey"> Key of the permission to be set for the directory/file. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
-        /// <param name="metadata"> A name-value pair to associate with a file storage object. </param>
-        /// <param name="copyFileSmbInfo"> Parameter group. </param>
-        /// <param name="fileHttpHeaders"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="renameSource"/> is null. </exception>
-        public async Task<ResponseWithHeaders<FileRenameHeaders>> RenameAsync(string renameSource, int? timeout = null, bool? replaceIfExists = null, bool? ignoreReadOnly = null, string sourceLeaseId = null, string destinationLeaseId = null, string filePermission = null, FilePermissionFormat? filePermissionFormat = null, string filePermissionKey = null, IDictionary<string, string> metadata = null, CopyFileSmbInfo copyFileSmbInfo = null, FileHttpHeaders fileHttpHeaders = null, CancellationToken cancellationToken = default)
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="replaceIfExists"> Boolean. Default value is false. Set to true to indicate that the destination should be overwritten. </param>
+        /// <param name="ignoreReadOnly"> Boolean. Default value is false. Set to true to overwrite the destination even if it has the read-only attribute set. </param>
+        /// <param name="sourceLeaseId"> Required if the source file has an active lease. </param>
+        /// <param name="destinationLeaseId"> Required if the destination has an active lease. </param>
+        /// <param name="fileAttributes"> If specified, the provided file attributes shall be set. </param>
+        /// <param name="fileCreationTime"> Creation time for the file. </param>
+        /// <param name="fileLastWriteTime"> Last write time for the file. </param>
+        /// <param name="fileChangeTime"> Change time for the file. </param>
+        /// <param name="filePermission"> If specified the permission shall be set for the file. </param>
+        /// <param name="filePermissionFormat"> Optional. Used to set permission format. </param>
+        /// <param name="filePermissionKey"> Key of the permission to be set. </param>
+        /// <param name="metadata"> Optional. User-defined metadata for the resource. </param>
+        /// <param name="fileContentType"> Sets the MIME content type of the file. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response Rename(string renameSource, int? timeout, bool? replaceIfExists, bool? ignoreReadOnly, string sourceLeaseId, string destinationLeaseId, string fileAttributes, string fileCreationTime, string fileLastWriteTime, string fileChangeTime, string filePermission, string filePermissionFormat, string filePermissionKey, IDictionary<string, string> metadata, string fileContentType, RequestContext context)
         {
-            if (renameSource == null)
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("FileRestClient.Rename");
+            scope.Start();
+            try
             {
-                throw new ArgumentNullException(nameof(renameSource));
+                using HttpMessage message = CreateRenameRequest(renameSource, timeout, replaceIfExists, ignoreReadOnly, sourceLeaseId, destinationLeaseId, fileAttributes, fileCreationTime, fileLastWriteTime, fileChangeTime, filePermission, filePermissionFormat, filePermissionKey, metadata, fileContentType, context);
+                return Pipeline.ProcessMessage(message, context);
             }
-
-            using var message = CreateRenameRequest(renameSource, timeout, replaceIfExists, ignoreReadOnly, sourceLeaseId, destinationLeaseId, filePermission, filePermissionFormat, filePermissionKey, metadata, copyFileSmbInfo, fileHttpHeaders);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new FileRenameHeaders(message.Response);
-            switch (message.Response.Status)
+            catch (Exception e)
             {
-                case 200:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
+                scope.Failed(e);
+                throw;
             }
         }
 
-        /// <summary> Renames a file. </summary>
+        /// <summary>
+        /// [Protocol Method] Renames a file. By default, the destination is overwritten and if the destination already exists and has a read-only attribute set, the operation will fail.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="renameSource"> Required. Specifies the URI-style path of the source file, up to 2 KB in length. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
-        /// <param name="replaceIfExists"> Optional. A boolean value for if the destination file already exists, whether this request will overwrite the file or not. If true, the rename will succeed and will overwrite the destination file. If not provided or if false and the destination file does exist, the request will not overwrite the destination file. If provided and the destination file doesn’t exist, the rename will succeed. Note: This value does not override the x-ms-file-copy-ignore-read-only header value. </param>
-        /// <param name="ignoreReadOnly"> Optional. A boolean value that specifies whether the ReadOnly attribute on a preexisting destination file should be respected. If true, the rename will succeed, otherwise, a previous file at the destination with the ReadOnly attribute set will cause the rename to fail. </param>
-        /// <param name="sourceLeaseId"> Required if the source file has an active infinite lease. </param>
-        /// <param name="destinationLeaseId"> Required if the destination file has an active infinite lease. The lease ID specified for this header must match the lease ID of the destination file. If the request does not include the lease ID or it is not valid, the operation fails with status code 412 (Precondition Failed). If this header is specified and the destination file does not currently have an active lease, the operation will also fail with status code 412 (Precondition Failed). </param>
-        /// <param name="filePermission"> If specified the permission (security descriptor) shall be set for the directory/file. This header can be used if Permission size is &lt;= 8KB, else x-ms-file-permission-key header shall be used. Default value: Inherit. If SDDL is specified as input, it must have owner, group and dacl. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
-        /// <param name="filePermissionFormat"> Optional. Available for version 2023-06-01 and later. Specifies the format in which the permission is returned. Acceptable values are SDDL or binary. If x-ms-file-permission-format is unspecified or explicitly set to SDDL, the permission is returned in SDDL format. If x-ms-file-permission-format is explicitly set to binary, the permission is returned as a base64 string representing the binary encoding of the permission. </param>
-        /// <param name="filePermissionKey"> Key of the permission to be set for the directory/file. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
-        /// <param name="metadata"> A name-value pair to associate with a file storage object. </param>
-        /// <param name="copyFileSmbInfo"> Parameter group. </param>
-        /// <param name="fileHttpHeaders"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="renameSource"/> is null. </exception>
-        public ResponseWithHeaders<FileRenameHeaders> Rename(string renameSource, int? timeout = null, bool? replaceIfExists = null, bool? ignoreReadOnly = null, string sourceLeaseId = null, string destinationLeaseId = null, string filePermission = null, FilePermissionFormat? filePermissionFormat = null, string filePermissionKey = null, IDictionary<string, string> metadata = null, CopyFileSmbInfo copyFileSmbInfo = null, FileHttpHeaders fileHttpHeaders = null, CancellationToken cancellationToken = default)
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="replaceIfExists"> Boolean. Default value is false. Set to true to indicate that the destination should be overwritten. </param>
+        /// <param name="ignoreReadOnly"> Boolean. Default value is false. Set to true to overwrite the destination even if it has the read-only attribute set. </param>
+        /// <param name="sourceLeaseId"> Required if the source file has an active lease. </param>
+        /// <param name="destinationLeaseId"> Required if the destination has an active lease. </param>
+        /// <param name="fileAttributes"> If specified, the provided file attributes shall be set. </param>
+        /// <param name="fileCreationTime"> Creation time for the file. </param>
+        /// <param name="fileLastWriteTime"> Last write time for the file. </param>
+        /// <param name="fileChangeTime"> Change time for the file. </param>
+        /// <param name="filePermission"> If specified the permission shall be set for the file. </param>
+        /// <param name="filePermissionFormat"> Optional. Used to set permission format. </param>
+        /// <param name="filePermissionKey"> Key of the permission to be set. </param>
+        /// <param name="metadata"> Optional. User-defined metadata for the resource. </param>
+        /// <param name="fileContentType"> Sets the MIME content type of the file. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> RenameAsync(string renameSource, int? timeout, bool? replaceIfExists, bool? ignoreReadOnly, string sourceLeaseId, string destinationLeaseId, string fileAttributes, string fileCreationTime, string fileLastWriteTime, string fileChangeTime, string filePermission, string filePermissionFormat, string filePermissionKey, IDictionary<string, string> metadata, string fileContentType, RequestContext context)
         {
-            if (renameSource == null)
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("FileRestClient.Rename");
+            scope.Start();
+            try
             {
-                throw new ArgumentNullException(nameof(renameSource));
+                using HttpMessage message = CreateRenameRequest(renameSource, timeout, replaceIfExists, ignoreReadOnly, sourceLeaseId, destinationLeaseId, fileAttributes, fileCreationTime, fileLastWriteTime, fileChangeTime, filePermission, filePermissionFormat, filePermissionKey, metadata, fileContentType, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
-
-            using var message = CreateRenameRequest(renameSource, timeout, replaceIfExists, ignoreReadOnly, sourceLeaseId, destinationLeaseId, filePermission, filePermissionFormat, filePermissionKey, metadata, copyFileSmbInfo, fileHttpHeaders);
-            _pipeline.Send(message, cancellationToken);
-            var headers = new FileRenameHeaders(message.Response);
-            switch (message.Response.Status)
+            catch (Exception e)
             {
-                case 200:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
+                scope.Failed(e);
+                throw;
             }
         }
 
-        internal HttpMessage CreateCreateSymbolicLinkRequest(string linkText, int? timeout, IDictionary<string, string> metadata, string fileCreationTime, string fileLastWriteTime, string owner, string group, ShareFileRequestConditions shareFileRequestConditions)
+        /// <summary> Renames a file. By default, the destination is overwritten and if the destination already exists and has a read-only attribute set, the operation will fail. </summary>
+        /// <param name="renameSource"> Required. Specifies the URI-style path of the source file, up to 2 KB in length. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="replaceIfExists"> Boolean. Default value is false. Set to true to indicate that the destination should be overwritten. </param>
+        /// <param name="ignoreReadOnly"> Boolean. Default value is false. Set to true to overwrite the destination even if it has the read-only attribute set. </param>
+        /// <param name="sourceLeaseId"> Required if the source file has an active lease. </param>
+        /// <param name="destinationLeaseId"> Required if the destination has an active lease. </param>
+        /// <param name="fileAttributes"> If specified, the provided file attributes shall be set. </param>
+        /// <param name="fileCreationTime"> Creation time for the file. </param>
+        /// <param name="fileLastWriteTime"> Last write time for the file. </param>
+        /// <param name="fileChangeTime"> Change time for the file. </param>
+        /// <param name="filePermission"> If specified the permission shall be set for the file. </param>
+        /// <param name="filePermissionFormat"> Optional. Used to set permission format. </param>
+        /// <param name="filePermissionKey"> Key of the permission to be set. </param>
+        /// <param name="metadata"> Optional. User-defined metadata for the resource. </param>
+        /// <param name="fileContentType"> Sets the MIME content type of the file. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response Rename(string renameSource, int? timeout = default, bool? replaceIfExists = default, bool? ignoreReadOnly = default, string sourceLeaseId = default, string destinationLeaseId = default, string fileAttributes = default, string fileCreationTime = default, string fileLastWriteTime = default, string fileChangeTime = default, string filePermission = default, FilePermissionFormat? filePermissionFormat = default, string filePermissionKey = default, IDictionary<string, string> metadata = default, string fileContentType = default, CancellationToken cancellationToken = default)
         {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_url, false);
-            uri.AppendQuery("restype", "symboliclink", true);
-            if (timeout != null)
-            {
-                uri.AppendQuery("timeout", timeout.Value, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("x-ms-version", _version);
-            if (metadata != null)
-            {
-                request.Headers.Add("x-ms-meta-", metadata);
-            }
-            if (fileCreationTime != null)
-            {
-                request.Headers.Add("x-ms-file-creation-time", fileCreationTime);
-            }
-            if (fileLastWriteTime != null)
-            {
-                request.Headers.Add("x-ms-file-last-write-time", fileLastWriteTime);
-            }
-            if (shareFileRequestConditions?.LeaseId != null)
-            {
-                request.Headers.Add("x-ms-lease-id", shareFileRequestConditions.LeaseId);
-            }
-            if (owner != null)
-            {
-                request.Headers.Add("x-ms-owner", owner);
-            }
-            if (group != null)
-            {
-                request.Headers.Add("x-ms-group", group);
-            }
-            request.Headers.Add("x-ms-link-text", linkText);
-            if (_fileRequestIntent != null)
-            {
-                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
-            }
-            request.Headers.Add("Accept", "application/xml");
-            return message;
+            return Rename(renameSource, timeout, replaceIfExists, ignoreReadOnly, sourceLeaseId, destinationLeaseId, fileAttributes, fileCreationTime, fileLastWriteTime, fileChangeTime, filePermission, filePermissionFormat?.ToSerialString(), filePermissionKey, metadata, fileContentType, cancellationToken.ToRequestContext());
         }
 
-        /// <summary> Creates a symbolic link. </summary>
-        /// <param name="linkText"> NFS only. Required. The path to the original file, the symbolic link is pointing to. The path is of type string which is not resolved and is stored as is. The path can be absolute path or the relative path depending on the content stored in the symbolic link file. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
-        /// <param name="metadata"> A name-value pair to associate with a file storage object. </param>
-        /// <param name="fileCreationTime"> Creation time for the file/directory. Default value: Now. </param>
-        /// <param name="fileLastWriteTime"> Last write time for the file/directory. Default value: Now. </param>
+        /// <summary> Renames a file. By default, the destination is overwritten and if the destination already exists and has a read-only attribute set, the operation will fail. </summary>
+        /// <param name="renameSource"> Required. Specifies the URI-style path of the source file, up to 2 KB in length. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="replaceIfExists"> Boolean. Default value is false. Set to true to indicate that the destination should be overwritten. </param>
+        /// <param name="ignoreReadOnly"> Boolean. Default value is false. Set to true to overwrite the destination even if it has the read-only attribute set. </param>
+        /// <param name="sourceLeaseId"> Required if the source file has an active lease. </param>
+        /// <param name="destinationLeaseId"> Required if the destination has an active lease. </param>
+        /// <param name="fileAttributes"> If specified, the provided file attributes shall be set. </param>
+        /// <param name="fileCreationTime"> Creation time for the file. </param>
+        /// <param name="fileLastWriteTime"> Last write time for the file. </param>
+        /// <param name="fileChangeTime"> Change time for the file. </param>
+        /// <param name="filePermission"> If specified the permission shall be set for the file. </param>
+        /// <param name="filePermissionFormat"> Optional. Used to set permission format. </param>
+        /// <param name="filePermissionKey"> Key of the permission to be set. </param>
+        /// <param name="metadata"> Optional. User-defined metadata for the resource. </param>
+        /// <param name="fileContentType"> Sets the MIME content type of the file. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> RenameAsync(string renameSource, int? timeout = default, bool? replaceIfExists = default, bool? ignoreReadOnly = default, string sourceLeaseId = default, string destinationLeaseId = default, string fileAttributes = default, string fileCreationTime = default, string fileLastWriteTime = default, string fileChangeTime = default, string filePermission = default, FilePermissionFormat? filePermissionFormat = default, string filePermissionKey = default, IDictionary<string, string> metadata = default, string fileContentType = default, CancellationToken cancellationToken = default)
+        {
+            return await RenameAsync(renameSource, timeout, replaceIfExists, ignoreReadOnly, sourceLeaseId, destinationLeaseId, fileAttributes, fileCreationTime, fileLastWriteTime, fileChangeTime, filePermission, filePermissionFormat?.ToSerialString(), filePermissionKey, metadata, fileContentType, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Creates a symbolic link to a target file. NFS only.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="linkText"> NFS only. The path to the original file, the symbolic link is pointing to. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="metadata"> Optional. User-defined metadata for the resource. </param>
+        /// <param name="fileCreationTime"> Creation time for the file. </param>
+        /// <param name="fileLastWriteTime"> Last write time for the file. </param>
+        /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
         /// <param name="owner"> Optional, NFS only. The owner of the file or directory. </param>
         /// <param name="group"> Optional, NFS only. The owning group of the file or directory. </param>
-        /// <param name="shareFileRequestConditions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="linkText"/> is null. </exception>
-        public async Task<ResponseWithHeaders<FileCreateSymbolicLinkHeaders>> CreateSymbolicLinkAsync(string linkText, int? timeout = null, IDictionary<string, string> metadata = null, string fileCreationTime = null, string fileLastWriteTime = null, string owner = null, string group = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response CreateSymbolicLink(string linkText, int? timeout, IDictionary<string, string> metadata, string fileCreationTime, string fileLastWriteTime, string leaseId, string owner, string @group, RequestContext context)
         {
-            if (linkText == null)
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("FileRestClient.CreateSymbolicLink");
+            scope.Start();
+            try
             {
-                throw new ArgumentNullException(nameof(linkText));
+                using HttpMessage message = CreateCreateSymbolicLinkRequest(linkText, timeout, metadata, fileCreationTime, fileLastWriteTime, leaseId, owner, @group, context);
+                return Pipeline.ProcessMessage(message, context);
             }
-
-            using var message = CreateCreateSymbolicLinkRequest(linkText, timeout, metadata, fileCreationTime, fileLastWriteTime, owner, group, shareFileRequestConditions);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new FileCreateSymbolicLinkHeaders(message.Response);
-            switch (message.Response.Status)
+            catch (Exception e)
             {
-                case 201:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
+                scope.Failed(e);
+                throw;
             }
         }
 
-        /// <summary> Creates a symbolic link. </summary>
-        /// <param name="linkText"> NFS only. Required. The path to the original file, the symbolic link is pointing to. The path is of type string which is not resolved and is stored as is. The path can be absolute path or the relative path depending on the content stored in the symbolic link file. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
-        /// <param name="metadata"> A name-value pair to associate with a file storage object. </param>
-        /// <param name="fileCreationTime"> Creation time for the file/directory. Default value: Now. </param>
-        /// <param name="fileLastWriteTime"> Last write time for the file/directory. Default value: Now. </param>
+        /// <summary>
+        /// [Protocol Method] Creates a symbolic link to a target file. NFS only.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="linkText"> NFS only. The path to the original file, the symbolic link is pointing to. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="metadata"> Optional. User-defined metadata for the resource. </param>
+        /// <param name="fileCreationTime"> Creation time for the file. </param>
+        /// <param name="fileLastWriteTime"> Last write time for the file. </param>
+        /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
         /// <param name="owner"> Optional, NFS only. The owner of the file or directory. </param>
         /// <param name="group"> Optional, NFS only. The owning group of the file or directory. </param>
-        /// <param name="shareFileRequestConditions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="linkText"/> is null. </exception>
-        public ResponseWithHeaders<FileCreateSymbolicLinkHeaders> CreateSymbolicLink(string linkText, int? timeout = null, IDictionary<string, string> metadata = null, string fileCreationTime = null, string fileLastWriteTime = null, string owner = null, string group = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> CreateSymbolicLinkAsync(string linkText, int? timeout, IDictionary<string, string> metadata, string fileCreationTime, string fileLastWriteTime, string leaseId, string owner, string @group, RequestContext context)
         {
-            if (linkText == null)
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("FileRestClient.CreateSymbolicLink");
+            scope.Start();
+            try
             {
-                throw new ArgumentNullException(nameof(linkText));
+                using HttpMessage message = CreateCreateSymbolicLinkRequest(linkText, timeout, metadata, fileCreationTime, fileLastWriteTime, leaseId, owner, @group, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
-
-            using var message = CreateCreateSymbolicLinkRequest(linkText, timeout, metadata, fileCreationTime, fileLastWriteTime, owner, group, shareFileRequestConditions);
-            _pipeline.Send(message, cancellationToken);
-            var headers = new FileCreateSymbolicLinkHeaders(message.Response);
-            switch (message.Response.Status)
+            catch (Exception e)
             {
-                case 201:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
+                scope.Failed(e);
+                throw;
             }
         }
 
-        internal HttpMessage CreateGetSymbolicLinkRequest(int? timeout, string sharesnapshot)
+        /// <summary> Creates a symbolic link to a target file. NFS only. </summary>
+        /// <param name="linkText"> NFS only. The path to the original file, the symbolic link is pointing to. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="metadata"> Optional. User-defined metadata for the resource. </param>
+        /// <param name="fileCreationTime"> Creation time for the file. </param>
+        /// <param name="fileLastWriteTime"> Last write time for the file. </param>
+        /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
+        /// <param name="owner"> Optional, NFS only. The owner of the file or directory. </param>
+        /// <param name="group"> Optional, NFS only. The owning group of the file or directory. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response CreateSymbolicLink(string linkText, int? timeout = default, IDictionary<string, string> metadata = default, string fileCreationTime = default, string fileLastWriteTime = default, string leaseId = default, string owner = default, string @group = default, CancellationToken cancellationToken = default)
         {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_url, false);
-            uri.AppendQuery("restype", "symboliclink", true);
-            if (timeout != null)
-            {
-                uri.AppendQuery("timeout", timeout.Value, true);
-            }
-            if (sharesnapshot != null)
-            {
-                uri.AppendQuery("sharesnapshot", sharesnapshot, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("x-ms-version", _version);
-            if (_fileRequestIntent != null)
-            {
-                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
-            }
-            request.Headers.Add("Accept", "application/xml");
-            return message;
+            return CreateSymbolicLink(linkText, timeout, metadata, fileCreationTime, fileLastWriteTime, leaseId, owner, @group, cancellationToken.ToRequestContext());
         }
 
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
-        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<FileGetSymbolicLinkHeaders>> GetSymbolicLinkAsync(int? timeout = null, string sharesnapshot = null, CancellationToken cancellationToken = default)
+        /// <summary> Creates a symbolic link to a target file. NFS only. </summary>
+        /// <param name="linkText"> NFS only. The path to the original file, the symbolic link is pointing to. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="metadata"> Optional. User-defined metadata for the resource. </param>
+        /// <param name="fileCreationTime"> Creation time for the file. </param>
+        /// <param name="fileLastWriteTime"> Last write time for the file. </param>
+        /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
+        /// <param name="owner"> Optional, NFS only. The owner of the file or directory. </param>
+        /// <param name="group"> Optional, NFS only. The owning group of the file or directory. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> CreateSymbolicLinkAsync(string linkText, int? timeout = default, IDictionary<string, string> metadata = default, string fileCreationTime = default, string fileLastWriteTime = default, string leaseId = default, string owner = default, string @group = default, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetSymbolicLinkRequest(timeout, sharesnapshot);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new FileGetSymbolicLinkHeaders(message.Response);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
+            return await CreateSymbolicLinkAsync(linkText, timeout, metadata, fileCreationTime, fileLastWriteTime, leaseId, owner, @group, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
-        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<FileGetSymbolicLinkHeaders> GetSymbolicLink(int? timeout = null, string sharesnapshot = null, CancellationToken cancellationToken = default)
+        /// <summary>
+        /// [Protocol Method] Returns the target of a symbolic link. NFS only.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetSymbolicLink(int? timeout, string sharesnapshot, RequestContext context)
         {
-            using var message = CreateGetSymbolicLinkRequest(timeout, sharesnapshot);
-            _pipeline.Send(message, cancellationToken);
-            var headers = new FileGetSymbolicLinkHeaders(message.Response);
-            switch (message.Response.Status)
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("FileRestClient.GetSymbolicLink");
+            scope.Start();
+            try
             {
-                case 200:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
+                using HttpMessage message = CreateGetSymbolicLinkRequest(timeout, sharesnapshot, context);
+                return Pipeline.ProcessMessage(message, context);
             }
-        }
-
-        internal HttpMessage CreateCreateHardLinkRequest(string targetFile, int? timeout, ShareFileRequestConditions shareFileRequestConditions)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_url, false);
-            uri.AppendQuery("restype", "hardlink", true);
-            if (timeout != null)
+            catch (Exception e)
             {
-                uri.AppendQuery("timeout", timeout.Value, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("x-ms-version", _version);
-            request.Headers.Add("x-ms-type", "file");
-            if (shareFileRequestConditions?.LeaseId != null)
-            {
-                request.Headers.Add("x-ms-lease-id", shareFileRequestConditions.LeaseId);
-            }
-            request.Headers.Add("x-ms-file-target-file", targetFile);
-            if (_fileRequestIntent != null)
-            {
-                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
-            }
-            request.Headers.Add("Accept", "application/xml");
-            return message;
-        }
-
-        /// <summary> Creates a hard link. </summary>
-        /// <param name="targetFile"> NFS only. Required. Specifies the path of the target file to which the link will be created, up to 2 KiB in length. It should be full path of the target from the root.The target file must be in the same share and hence the same storage account. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
-        /// <param name="shareFileRequestConditions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="targetFile"/> is null. </exception>
-        public async Task<ResponseWithHeaders<FileCreateHardLinkHeaders>> CreateHardLinkAsync(string targetFile, int? timeout = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
-        {
-            if (targetFile == null)
-            {
-                throw new ArgumentNullException(nameof(targetFile));
-            }
-
-            using var message = CreateCreateHardLinkRequest(targetFile, timeout, shareFileRequestConditions);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new FileCreateHardLinkHeaders(message.Response);
-            switch (message.Response.Status)
-            {
-                case 201:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
+                scope.Failed(e);
+                throw;
             }
         }
 
-        /// <summary> Creates a hard link. </summary>
-        /// <param name="targetFile"> NFS only. Required. Specifies the path of the target file to which the link will be created, up to 2 KiB in length. It should be full path of the target from the root.The target file must be in the same share and hence the same storage account. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
-        /// <param name="shareFileRequestConditions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="targetFile"/> is null. </exception>
-        public ResponseWithHeaders<FileCreateHardLinkHeaders> CreateHardLink(string targetFile, int? timeout = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
+        /// <summary>
+        /// [Protocol Method] Returns the target of a symbolic link. NFS only.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetSymbolicLinkAsync(int? timeout, string sharesnapshot, RequestContext context)
         {
-            if (targetFile == null)
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("FileRestClient.GetSymbolicLink");
+            scope.Start();
+            try
             {
-                throw new ArgumentNullException(nameof(targetFile));
+                using HttpMessage message = CreateGetSymbolicLinkRequest(timeout, sharesnapshot, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
 
-            using var message = CreateCreateHardLinkRequest(targetFile, timeout, shareFileRequestConditions);
-            _pipeline.Send(message, cancellationToken);
-            var headers = new FileCreateHardLinkHeaders(message.Response);
-            switch (message.Response.Status)
+        /// <summary> Returns the target of a symbolic link. NFS only. </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response GetSymbolicLink(int? timeout = default, string sharesnapshot = default, CancellationToken cancellationToken = default)
+        {
+            return GetSymbolicLink(timeout, sharesnapshot, cancellationToken.ToRequestContext());
+        }
+
+        /// <summary> Returns the target of a symbolic link. NFS only. </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> GetSymbolicLinkAsync(int? timeout = default, string sharesnapshot = default, CancellationToken cancellationToken = default)
+        {
+            return await GetSymbolicLinkAsync(timeout, sharesnapshot, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Creates a hard link to a target file. NFS only.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="targetFile"> NFS only. Required. Specifies the path of the target file to which the link will be created, up to 2 KiB in length. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response CreateHardLink(string targetFile, int? timeout, string leaseId, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("FileRestClient.CreateHardLink");
+            scope.Start();
+            try
             {
-                case 201:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
+                using HttpMessage message = CreateCreateHardLinkRequest(targetFile, timeout, leaseId, context);
+                return Pipeline.ProcessMessage(message, context);
             }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Creates a hard link to a target file. NFS only.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="targetFile"> NFS only. Required. Specifies the path of the target file to which the link will be created, up to 2 KiB in length. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> CreateHardLinkAsync(string targetFile, int? timeout, string leaseId, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("FileRestClient.CreateHardLink");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCreateHardLinkRequest(targetFile, timeout, leaseId, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Creates a hard link to a target file. NFS only. </summary>
+        /// <param name="targetFile"> NFS only. Required. Specifies the path of the target file to which the link will be created, up to 2 KiB in length. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response CreateHardLink(string targetFile, int? timeout = default, string leaseId = default, CancellationToken cancellationToken = default)
+        {
+            return CreateHardLink(targetFile, timeout, leaseId, cancellationToken.ToRequestContext());
+        }
+
+        /// <summary> Creates a hard link to a target file. NFS only. </summary>
+        /// <param name="targetFile"> NFS only. Required. Specifies the path of the target file to which the link will be created, up to 2 KiB in length. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> CreateHardLinkAsync(string targetFile, int? timeout = default, string leaseId = default, CancellationToken cancellationToken = default)
+        {
+            return await CreateHardLinkAsync(targetFile, timeout, leaseId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
     }
 }
