@@ -1240,7 +1240,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
     }
     public partial class XiaomiCredential : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NotificationHubs.Models.XiaomiCredential>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NotificationHubs.Models.XiaomiCredential>
     {
-        internal XiaomiCredential() { }
+        public XiaomiCredential() { }
         public string AppSecret { get { throw null; } set { } }
         public string Endpoint { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.NotificationHubs.Models.XiaomiCredential JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

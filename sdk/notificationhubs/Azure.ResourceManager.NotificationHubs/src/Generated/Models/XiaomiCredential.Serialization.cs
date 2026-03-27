@@ -16,11 +16,6 @@ namespace Azure.ResourceManager.NotificationHubs.Models
     /// <summary> Description of a NotificationHub XiaomiCredential. </summary>
     public partial class XiaomiCredential : IJsonModel<XiaomiCredential>
     {
-        /// <summary> Initializes a new instance of <see cref="XiaomiCredential"/> for deserialization. </summary>
-        internal XiaomiCredential()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual XiaomiCredential PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
