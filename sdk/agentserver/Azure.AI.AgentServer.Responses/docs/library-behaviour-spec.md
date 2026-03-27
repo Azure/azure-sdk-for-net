@@ -235,13 +235,13 @@ The library MUST support the following configuration options.
 
 - **S-041**: The library MUST include an identity header on all responses: `x-platform-server: {sdk_name}/{version} ({language}/{runtime})`. The header value MUST support composable append via `; ` separator. See [B19](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/api-behaviour-contract.md#behavioural-rules-index).
 
-  > **Architecture note**: Identity is a single-layer system managed by the `ServerUserAgentMiddleware` in the Hosting package. Each protocol registers its identity segment with the `ServerUserAgentRegistry` during route mapping, and the middleware composes the final header value: `azure-ai-agentserver/{version}; azure-ai-agentserver-responses/{version}; ...`.
+  > **Architecture note**: Identity is a single-layer system managed by the `ServerUserAgentMiddleware` in the Core package. Each protocol registers its identity segment with the `ServerUserAgentRegistry` during route mapping, and the middleware composes the final header value: `azure-ai-agentserver/{version}; azure-ai-agentserver-responses/{version}; ...`.
 
 - **S-042**: The library SHOULD support configurable cancel winddown grace period (default: 10 seconds).
 
 - **S-046**: The library MUST expose a configurable `AdditionalServerIdentity` option on `AgentHostOptions` (default: `null`). When set, the middleware MUST append the value to the `x-platform-server` header using a `; ` separator. The full header value becomes: `azure-ai-agentserver/{version}; azure-ai-agentserver-responses/{version}; {AdditionalServerIdentity}`. See S-041, [B19](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/api-behaviour-contract.md#behavioural-rules-index).
 
-  > **Architecture note**: `AdditionalServerIdentity` is configured on `AgentHostOptions` (in the Hosting package), not on individual protocol options classes. This keeps the identity header as a single shared concern.
+  > **Architecture note**: `AdditionalServerIdentity` is configured on `AgentHostOptions` (in the Core package), not on individual protocol options classes. This keeps the identity header as a single shared concern.
 
 ---
 

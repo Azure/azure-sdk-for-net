@@ -84,4 +84,4 @@ curl -X POST http://localhost:5000/invocations \
 Use `WebApplication.CreateBuilder()` + `AddInvocationsServer()` + `MapInvocationsServer()` when you:
 - Have an **existing ASP.NET Core application** and want to add agent endpoints
 - Need **full control** over middleware, DI, port binding, and health probes
-- Want to use the protocol SDK without the opinionated Hosting framework
+- Want to use the protocol SDK without the opinionated Core framework

@@ -22,7 +22,7 @@ dotnet add package Azure.AI.AgentServer.Responses --prerelease
 
 ### Configure the server
 
-The recommended way to start a Responses server is with the Hosting package's one-line API:
+The recommended way to start a Responses server is with the Core package's one-line API:
 
 ```C# Snippet:Responses_ReadMe_ConfigureServer_Tier1
 ResponsesServer.Run<EchoHandler>();

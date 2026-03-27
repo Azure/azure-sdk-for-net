@@ -14,7 +14,7 @@ public class StandaloneOTelTests
     [Test]
     public void AgentHostTelemetry_ConstantsAvailable()
     {
-        // Shared constants accessible directly from Hosting
+        // Shared constants accessible directly from Core
         Assert.That(AgentHostTelemetry.ResponsesSourceName, Is.EqualTo("Azure.AI.AgentServer.Responses"));
         Assert.That(AgentHostTelemetry.InvocationsSourceName, Is.EqualTo("Azure.AI.AgentServer.Invocations"));
         Assert.That(AgentHostTelemetry.ResponsesMeterName, Is.EqualTo("Azure.AI.AgentServer.Responses"));

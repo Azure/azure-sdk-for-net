@@ -128,7 +128,7 @@ merge requirements enforced by CI, code review, and the Azure SDK architects.
 | Project type | Property to use | Example |
 |---|---|---|
 | Class libraries (Contracts) | `$(RequiredTargetFrameworks)` | `netstandard2.0;net8.0;net10.0` |
-| ASP.NET libraries (Hosting, Responses, Invocations) | `$(RequiredRunnableTargetFrameworks)` | `net8.0;net10.0` |
+| ASP.NET libraries (Core, Responses, Invocations) | `$(RequiredRunnableTargetFrameworks)` | `net8.0;net10.0` |
 | Test projects | Inherited from repo defaults | — |
 
 **Never hard-code target framework monikers.** The variables are defined in

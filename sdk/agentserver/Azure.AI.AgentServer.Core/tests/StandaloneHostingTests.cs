@@ -6,7 +6,7 @@ using NUnit.Framework;
 namespace Azure.AI.AgentServer.Core.Tests;
 
 /// <summary>
-/// Standalone Hosting tests — verify Hosting utilities work without any protocol package.
+/// Standalone Core tests — verify Core utilities work without any protocol package.
 /// </summary>
 [TestFixture]
 public class StandaloneHostingTests
@@ -23,7 +23,7 @@ public class StandaloneHostingTests
     [Test]
     public void FoundryEnvironment_WorksStandalone()
     {
-        // No protocol packages needed — just Hosting utilities
+        // No protocol packages needed — just Core utilities
         Environment.SetEnvironmentVariable("FOUNDRY_AGENT_NAME", "standalone-agent");
         Environment.SetEnvironmentVariable("FOUNDRY_AGENT_VERSION", "1.0.0");
         Environment.SetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT", "https://my-endpoint.com");

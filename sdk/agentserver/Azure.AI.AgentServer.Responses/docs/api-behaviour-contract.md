@@ -700,7 +700,7 @@ Quick-reference index of all rules:
 | B16 | Non-background in-flight 404 | JSON GET during in-flight returns 404; retrievable after completion if stored. SSE replay → 400 (see B2) |
 | B17 | Connection termination cancels non-background | Disconnecting from `POST /responses` cancels the in-flight response when `background=false` (both streaming and non-streaming). Does NOT apply when `background=true` (see B18) |
 | B18 | Connection termination does NOT cancel background | Disconnecting has no effect on `background=true` responses; use `/cancel` endpoint |
-| B19 | Server identity header | All responses include `x-platform-server: {hosting}/{version} ({language}/{runtime}); {protocol}/{version} ({language}/{runtime})`. Composable via `; ` append. Identity is managed by the shared `ServerUserAgentMiddleware` in the Hosting package; each protocol registers its segment with the `ServerUserAgentRegistry` during route mapping |
+| B19 | Server identity header | All responses include `x-platform-server: {hosting}/{version} ({language}/{runtime}); {protocol}/{version} ({language}/{runtime})`. Composable via `; ` append. Identity is managed by the shared `ServerUserAgentMiddleware` in the Core package; each protocol registers its segment with the `ServerUserAgentRegistry` during route mapping |
 | B20 | Response ID auto-stamp | Output items include a `response_id` field matching the current response ID |
 | B21 | Agent reference auto-stamp | `agent_reference` from the request is present on the response and all output items |
 | B22 | Model is optional | `model` can be omitted from the request. Resolution: `request.model → default_model → ""`. The resolved model is propagated to the `Response.model` field |

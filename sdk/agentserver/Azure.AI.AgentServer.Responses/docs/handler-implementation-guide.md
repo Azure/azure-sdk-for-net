@@ -865,9 +865,9 @@ var app = builder.Build();
 app.Run();
 ```
 
-### Manual Setup (Without Hosting)
+### Manual Setup (Without Core)
 
-If you don't use the Hosting package, register services and map endpoints directly:
+If you don't use the Core package, register services and map endpoints directly:
 
 ### Basic Setup
 
@@ -986,7 +986,7 @@ This happens transparently — no handler code is needed.
 
 ### Library Identity Header
 
-The server automatically adds an `x-platform-server` identity header to all responses via the `ServerUserAgentMiddleware` in the Hosting package. Each protocol registers its own identity segment (e.g., `azure-ai-agentserver-responses/{version}`) with the `ServerUserAgentRegistry` during route mapping. To append custom identity information, use the hosting options:
+The server automatically adds an `x-platform-server` identity header to all responses via the `ServerUserAgentMiddleware` in the Core package. Each protocol registers its own identity segment (e.g., `azure-ai-agentserver-responses/{version}`) with the `ServerUserAgentRegistry` during route mapping. To append custom identity information, use the core options:
 
 ```csharp
 var builder = AgentHost.CreateBuilder(args);

@@ -6,7 +6,7 @@
 
         AgentHost.Run<MyHandler>(args);
 
-    The Hosting namespace contains the static AgentHost entry point, AgentHostBuilder,
+    The Core namespace contains the static AgentHost entry point, AgentHostBuilder,
     AgentHostApp, AgentHostOptions, and AgentHostTelemetry.
   -->
   <ItemGroup>
