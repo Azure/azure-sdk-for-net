@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.ComputeSchedule.Models;
+using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
@@ -16,7 +17,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
     {
         private static readonly int s_cancelOperationsDelayedDays = 5;
         public ComputescheduleOperationsTests(bool isAsync)
-            : base(isAsync)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
@@ -446,16 +447,30 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
         public async Task TestVirtualMachinesExecuteCreateFlexOperations()
         {
             var subId = DefaultSubscription.Id.Name;
+            var rgName = DefaultResourceGroupResource.Id.Name;
 
-            ScheduledActionExecutionParameterDetail executionParameters = new() { RetryPolicy = new UserRequestRetryPolicy() { RetryCount = 3, RetryWindowInMinutes = 30 } };
+            // Create VNet to get a subnet ID for inline NIC configuration
+            string dependencyName = Recording.GenerateAssetName("testflex");
+            GenericResource vnet = await CreateVirtualNetwork(DefaultResourceGroupResource, dependencyName);
+            string subnetId = GetSubnetId(vnet).ToString();
+
+            ScheduledActionExecutionParameterDetail executionParameters = new()
+            {
+                RetryPolicy = new UserRequestRetryPolicy() { RetryCount = 1 }
+            };
 
             var flexProperties = new FlexProperties(
-                new[] { new VmSizeProfile("Standard_D2ads_v5", 1) },
-                OsType.Linux,
+                new[]
+                {
+                    new VmSizeProfile("Standard_D2ads_v5", 0),
+                    new VmSizeProfile("Standard_E2ads_v5", 1),
+                    new VmSizeProfile("Standard_D2ds_v5", 2),
+                },
+                OsType.Windows,
                 new PriorityProfile
                 {
-                    Type = PriorityType.Spot,
-                    AllocationStrategy = AllocationStrategy.CapacityOptimized,
+                    Type = PriorityType.Regular,
+                    AllocationStrategy = AllocationStrategy.Prioritized,
                 });
 
             var resourceConfigParameters = new ResourceProvisionFlexPayload(1, flexProperties)
@@ -463,40 +478,100 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
                 ResourcePrefix = "testflex",
             };
 
+            // baseProfile: properties common to all VMs in the batch
+            resourceConfigParameters.BaseProfile["resourcegroupName"] = BinaryData.FromString($"\"{rgName}\"");
+            resourceConfigParameters.BaseProfile["computeApiVersion"] = BinaryData.FromString("\"2023-09-01\"");
+            resourceConfigParameters.BaseProfile["zones"] = BinaryData.FromObjectAsJson(new[] { "1", "2", "3" });
+            resourceConfigParameters.BaseProfile["properties"] = BinaryData.FromObjectAsJson(new
+            {
+                hardwareProfile = new { vmSize = "Standard_D2ads_v5" },
+                storageProfile = new
+                {
+                    imageReference = new
+                    {
+                        publisher = "MicrosoftWindowsServer",
+                        offer = "WindowsServer",
+                        sku = "2022-datacenter-azure-edition",
+                        version = "latest"
+                    },
+                    osDisk = new
+                    {
+                        osType = "Windows",
+                        createOption = "FromImage",
+                        caching = "ReadWrite",
+                        managedDisk = new { storageAccountType = "Standard_LRS" },
+                        deleteOption = "Detach",
+                        diskSizeGB = 127
+                    },
+                    diskControllerType = "SCSI"
+                },
+                networkProfile = new
+                {
+                    networkInterfaceConfigurations = new[]
+                    {
+                        new
+                        {
+                            name = "testflexnic",
+                            properties = new
+                            {
+                                primary = true,
+                                enableIPForwarding = true,
+                                ipConfigurations = new[]
+                                {
+                                    new
+                                    {
+                                        name = "testflexnic",
+                                        properties = new
+                                        {
+                                            subnet = new { id = subnetId },
+                                            primary = true,
+                                            applicationGatewayBackendAddressPools = Array.Empty<object>(),
+                                            loadBalancerBackendAddressPools = Array.Empty<object>()
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    networkApiVersion = "2022-07-01"
+                }
+            });
+
+            // resourceOverrides: per-VM properties (name, location, osProfile with credentials)
+            var vmOverride = new Dictionary<string, BinaryData>
+            {
+                ["name"] = BinaryData.FromString("\"testflexvm0\""),
+                ["location"] = BinaryData.FromString($"\"{Location}\""),
+                ["properties"] = BinaryData.FromObjectAsJson(new
+                {
+                    hardwareProfile = new { vmSize = "Standard_D2ads_v5" },
+                    osProfile = new
+                    {
+                        computerName = "testflexvm",
+                        adminUsername = "testadmin",
+                        adminPassword = "TestPassword123!",
+                        windowsConfiguration = new
+                        {
+                            provisionVmAgent = true,
+                            enableAutomaticUpdates = true
+                        }
+                    }
+                })
+            };
+            resourceConfigParameters.ResourceOverrides.Add(vmOverride);
+
             var executeCreateFlexRequest = new ExecuteCreateFlexContent(resourceConfigParameters, executionParameters)
             {
                 CorrelationId = Recording.Random.NewGuid().ToString(),
             };
 
             // Act
-            // VirtualMachinesExecuteCreateFlex
             CreateFlexResourceOperationResult executeCreateFlexResult = await TestExecuteCreateFlexAsync(Location, executeCreateFlexRequest, subId, Client);
 
-            HashSet<string> validOperationIds = ExcludeResourcesNotProcessed(executeCreateFlexResult.Results);
-
-            if (validOperationIds.Count > 0)
-            {
-                // Polling
-                GetOperationStatusResult getOperationStatus = PollOperationStatus(1).ExecuteAsync(async () =>
-                {
-                    var getOpsStatusReq = new GetOperationStatusContent(validOperationIds, Recording.Random.NewGuid().ToString());
-                    return await TestGetOpsStatusAsync(Location, getOpsStatusReq, subId, Client);
-                }).GetAwaiter().GetResult();
-
-                // Assert results are returned
-                Assert.NotNull(executeCreateFlexResult);
-                Assert.NotNull(getOperationStatus);
-
-                foreach (ResourceOperationResult result in getOperationStatus.Results)
-                {
-                    Assert.Contains(result.Operation.State, s_terminalList);
-                    Assert.AreEqual(result.Operation.SubscriptionId, subId);
-                }
-            }
-            else
-            {
-                Assert.Pass("No operations to process.");
-            }
+            // Assert - ExecuteCreateFlex is an immediate operation; results are returned directly
+            Assert.NotNull(executeCreateFlexResult);
+            Assert.NotNull(executeCreateFlexResult.Results);
+            Assert.IsNotEmpty(executeCreateFlexResult.Results);
         }
     }
 }
