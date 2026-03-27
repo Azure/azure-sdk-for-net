@@ -237,6 +237,16 @@ public class ModelReaderWriterTests
     }
 
     [Test]
+    public void MRW_BicepExpression_IfConditionExpression_RoundTrips()
+    {
+        var expr = new IfConditionExpression(
+            new IdentifierExpression("enabled"),
+            new ObjectExpression(
+                new PropertyExpression("name", new StringLiteralExpression("myResource"))));
+        SerializationTestHelpers.AssertExpressionRoundTrip(expr);
+    }
+
+    [Test]
     public void MRW_BicepExpression_NestedExpression_RoundTrips()
     {
         var expr = new NestedExpression(new IdentifierExpression("kv"), "secret");
