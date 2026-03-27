@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppNetwork.Models
         internal PrivateConnectProfile PrivateConnect { get; set; }
 
         /// <summary> East-West gateway visibility. </summary>
-        public EastWestGatewayVisibility? EastWestGatewayVisibility
+        public AppLinkEastWestGatewayVisibility? EastWestGatewayVisibility
         {
             get
             {

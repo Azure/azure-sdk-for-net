@@ -12,7 +12,7 @@ using Azure.ResourceManager.AppNetwork;
 namespace Azure.ResourceManager.AppNetwork.Models
 {
     /// <summary> East-West gateway visibility. </summary>
-    public readonly partial struct EastWestGatewayVisibility : IEquatable<EastWestGatewayVisibility>
+    public readonly partial struct AppLinkEastWestGatewayVisibility : IEquatable<AppLinkEastWestGatewayVisibility>
     {
         private readonly string _value;
         /// <summary> Use an internal load balancer for the east-west gateway. </summary>
@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.AppNetwork.Models
         /// <summary> Use an external load balancer for the east-west gateway. </summary>
         private const string ExternalValue = "External";
 
-        /// <summary> Initializes a new instance of <see cref="EastWestGatewayVisibility"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppLinkEastWestGatewayVisibility"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public EastWestGatewayVisibility(string value)
+        public AppLinkEastWestGatewayVisibility(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,35 +31,35 @@ namespace Azure.ResourceManager.AppNetwork.Models
         }
 
         /// <summary> Use an internal load balancer for the east-west gateway. </summary>
-        public static EastWestGatewayVisibility Internal { get; } = new EastWestGatewayVisibility(InternalValue);
+        public static AppLinkEastWestGatewayVisibility Internal { get; } = new AppLinkEastWestGatewayVisibility(InternalValue);
 
         /// <summary> Use an external load balancer for the east-west gateway. </summary>
-        public static EastWestGatewayVisibility External { get; } = new EastWestGatewayVisibility(ExternalValue);
+        public static AppLinkEastWestGatewayVisibility External { get; } = new AppLinkEastWestGatewayVisibility(ExternalValue);
 
-        /// <summary> Determines if two <see cref="EastWestGatewayVisibility"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="AppLinkEastWestGatewayVisibility"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(EastWestGatewayVisibility left, EastWestGatewayVisibility right) => left.Equals(right);
+        public static bool operator ==(AppLinkEastWestGatewayVisibility left, AppLinkEastWestGatewayVisibility right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="EastWestGatewayVisibility"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="AppLinkEastWestGatewayVisibility"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(EastWestGatewayVisibility left, EastWestGatewayVisibility right) => !left.Equals(right);
+        public static bool operator !=(AppLinkEastWestGatewayVisibility left, AppLinkEastWestGatewayVisibility right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="EastWestGatewayVisibility"/>. </summary>
+        /// <summary> Converts a string to a <see cref="AppLinkEastWestGatewayVisibility"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EastWestGatewayVisibility(string value) => new EastWestGatewayVisibility(value);
+        public static implicit operator AppLinkEastWestGatewayVisibility(string value) => new AppLinkEastWestGatewayVisibility(value);
 
-        /// <summary> Converts a string to a <see cref="EastWestGatewayVisibility"/>. </summary>
+        /// <summary> Converts a string to a <see cref="AppLinkEastWestGatewayVisibility"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EastWestGatewayVisibility?(string value) => value == null ? null : new EastWestGatewayVisibility(value);
+        public static implicit operator AppLinkEastWestGatewayVisibility?(string value) => value == null ? null : new AppLinkEastWestGatewayVisibility(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is EastWestGatewayVisibility other && Equals(other);
+        public override bool Equals(object obj) => obj is AppLinkEastWestGatewayVisibility other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(EastWestGatewayVisibility other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(AppLinkEastWestGatewayVisibility other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

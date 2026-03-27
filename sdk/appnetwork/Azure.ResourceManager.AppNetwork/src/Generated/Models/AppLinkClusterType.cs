@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppNetwork.Models
     {
         private readonly string _value;
         /// <summary> Azure Kubernetes Service. </summary>
-        private const string AKSValue = "AKS";
+        private const string AksValue = "AKS";
 
         /// <summary> Initializes a new instance of <see cref="AppLinkClusterType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppNetwork.Models
         }
 
         /// <summary> Azure Kubernetes Service. </summary>
-        public static AppLinkClusterType AKS { get; } = new AppLinkClusterType(AKSValue);
+        public static AppLinkClusterType Aks { get; } = new AppLinkClusterType(AksValue);
 
         /// <summary> Determines if two <see cref="AppLinkClusterType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

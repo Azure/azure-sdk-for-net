@@ -123,13 +123,13 @@ namespace Azure.ResourceManager.AppNetwork.Models
             {
                 return null;
             }
-            EastWestGatewayVisibility visibility = default;
+            AppLinkEastWestGatewayVisibility visibility = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("visibility"u8))
                 {
-                    visibility = new EastWestGatewayVisibility(prop.Value.GetString());
+                    visibility = new AppLinkEastWestGatewayVisibility(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

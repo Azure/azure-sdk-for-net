@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppNetwork.Models
 
         /// <summary> Initializes a new instance of <see cref="EastWestGatewayProfile"/>. </summary>
         /// <param name="visibility"> East-West gateway visibility. </param>
-        public EastWestGatewayProfile(EastWestGatewayVisibility visibility)
+        public EastWestGatewayProfile(AppLinkEastWestGatewayVisibility visibility)
         {
             Visibility = visibility;
         }
@@ -26,13 +26,13 @@ namespace Azure.ResourceManager.AppNetwork.Models
         /// <summary> Initializes a new instance of <see cref="EastWestGatewayProfile"/>. </summary>
         /// <param name="visibility"> East-West gateway visibility. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EastWestGatewayProfile(EastWestGatewayVisibility visibility, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EastWestGatewayProfile(AppLinkEastWestGatewayVisibility visibility, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Visibility = visibility;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> East-West gateway visibility. </summary>
-        public EastWestGatewayVisibility Visibility { get; set; }
+        public AppLinkEastWestGatewayVisibility Visibility { get; set; }
     }
 }

@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.AppNetwork.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public AppLinkClusterType(string value) { throw null; }
-        public static Azure.ResourceManager.AppNetwork.Models.AppLinkClusterType AKS { get { throw null; } }
+        public static Azure.ResourceManager.AppNetwork.Models.AppLinkClusterType Aks { get { throw null; } }
         public bool Equals(Azure.ResourceManager.AppNetwork.Models.AppLinkClusterType other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.AppNetwork.Models
     public partial class AppLinkConnectivityProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppNetwork.Models.AppLinkConnectivityProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppNetwork.Models.AppLinkConnectivityProfile>
     {
         public AppLinkConnectivityProfile() { }
-        public Azure.ResourceManager.AppNetwork.Models.EastWestGatewayVisibility? EastWestGatewayVisibility { get { throw null; } set { } }
+        public Azure.ResourceManager.AppNetwork.Models.AppLinkEastWestGatewayVisibility? EastWestGatewayVisibility { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier PrivateConnectSubnetResourceId { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.AppNetwork.Models.AppLinkConnectivityProfile JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -224,6 +224,23 @@ namespace Azure.ResourceManager.AppNetwork.Models
         Azure.ResourceManager.AppNetwork.Models.AppLinkConnectivityProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppNetwork.Models.AppLinkConnectivityProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppNetwork.Models.AppLinkConnectivityProfile>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppNetwork.Models.AppLinkConnectivityProfile>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AppLinkEastWestGatewayVisibility : System.IEquatable<Azure.ResourceManager.AppNetwork.Models.AppLinkEastWestGatewayVisibility>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AppLinkEastWestGatewayVisibility(string value) { throw null; }
+        public static Azure.ResourceManager.AppNetwork.Models.AppLinkEastWestGatewayVisibility External { get { throw null; } }
+        public static Azure.ResourceManager.AppNetwork.Models.AppLinkEastWestGatewayVisibility Internal { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.AppNetwork.Models.AppLinkEastWestGatewayVisibility other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.AppNetwork.Models.AppLinkEastWestGatewayVisibility left, Azure.ResourceManager.AppNetwork.Models.AppLinkEastWestGatewayVisibility right) { throw null; }
+        public static implicit operator Azure.ResourceManager.AppNetwork.Models.AppLinkEastWestGatewayVisibility (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.AppNetwork.Models.AppLinkEastWestGatewayVisibility? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.AppNetwork.Models.AppLinkEastWestGatewayVisibility left, Azure.ResourceManager.AppNetwork.Models.AppLinkEastWestGatewayVisibility right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class AppLinkMemberPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppNetwork.Models.AppLinkMemberPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppNetwork.Models.AppLinkMemberPatch>
     {
@@ -437,22 +454,5 @@ namespace Azure.ResourceManager.AppNetwork.Models
         public static Azure.ResourceManager.AppNetwork.Models.AppLinkUpgradeHistory AppLinkUpgradeHistory(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.AppNetwork.Models.AppLinkUpgradeHistoryProperties properties = null) { throw null; }
         public static Azure.ResourceManager.AppNetwork.Models.AppLinkUpgradeHistoryProperties AppLinkUpgradeHistoryProperties(System.DateTimeOffset startOn = default(System.DateTimeOffset), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), string initiatedBy = null, string fromVersion = null, string toVersion = null, Azure.ResourceManager.AppNetwork.Models.AppLinkProvisioningState? provisioningState = default(Azure.ResourceManager.AppNetwork.Models.AppLinkProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.AppNetwork.Models.AppLinkVersionInfo AppLinkVersionInfo(string version = null, System.Collections.Generic.IEnumerable<string> upgrades = null) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct EastWestGatewayVisibility : System.IEquatable<Azure.ResourceManager.AppNetwork.Models.EastWestGatewayVisibility>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public EastWestGatewayVisibility(string value) { throw null; }
-        public static Azure.ResourceManager.AppNetwork.Models.EastWestGatewayVisibility External { get { throw null; } }
-        public static Azure.ResourceManager.AppNetwork.Models.EastWestGatewayVisibility Internal { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.AppNetwork.Models.EastWestGatewayVisibility other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.AppNetwork.Models.EastWestGatewayVisibility left, Azure.ResourceManager.AppNetwork.Models.EastWestGatewayVisibility right) { throw null; }
-        public static implicit operator Azure.ResourceManager.AppNetwork.Models.EastWestGatewayVisibility (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.AppNetwork.Models.EastWestGatewayVisibility? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.AppNetwork.Models.EastWestGatewayVisibility left, Azure.ResourceManager.AppNetwork.Models.EastWestGatewayVisibility right) { throw null; }
-        public override string ToString() { throw null; }
     }
 }
