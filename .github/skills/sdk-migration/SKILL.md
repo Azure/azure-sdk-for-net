@@ -686,6 +686,7 @@ These patterns are specific to data-plane migrations. Apply them during the shar
 | AZC0030 (forbidden suffix) | Naming analyzer rejects name | `@@clientName` to old name |
 | AZC0032 (forbidden 'Data' suffix) | Doesn't inherit `ResourceData` | `@@clientName` to old name |
 | ApiCompat MembersMustExist | Changed return type / missing member | `[CodeGenSuppress]` + custom shim (never use ApiCompatBaseline.txt) |
+| ApiCompat CannotRemoveAttribute (WirePathAttribute) | Old SDK had `WirePathAttribute` but new generation doesn't | See `mitigate-breaking-changes` skill |
 | ApiCompat TypesMustExist | Missing type | `@@clientName` to restore old name |
 
 ### MPG Fix Decision Tree [MPG only]
@@ -1026,15 +1027,14 @@ Proceed **without asking the user** except when:
 
 ## Quick Reference — Do's and Don'ts
 
-- Use `dotnet build /t:GenerateCode`, never `tsp-client update`.
-- Never hand-edit `metadata.json` or files under `Generated/`.
-- Match the existing custom code folder convention (`Custom/`, `Customization/`, or `Customized/`).
-- Only add `@@clientName` for names that cause build errors — don't blindly copy all renames from `autorest.md`.
-- Batch spec-side fixes before rebuilding — one fix can resolve 5–20 errors.
-- Prefer spec-side fixes (`@@access`) before SDK custom code (`[CodeGenType]`).
-- Finalize `tsp-location.yaml` with the pushed spec commit SHA before creating a PR.
-- Clean up stale custom workarounds after generator fixes.
-- Don't blindly copy all renames from `autorest.md` — check existing spec decorators (`@clientName`, `back-compatible.tsp`) to avoid duplicates.
+- **Do NOT use `tsp-client update`** — use `dotnet build /t:GenerateCode`.
+- **Do NOT hand-edit `metadata.json`**.
+- **Match existing custom code folder convention**.
+- Don't blindly copy all renames from `autorest.md` — only add `@@clientName` for names that actually cause build errors after generation. Check existing spec decorators to avoid duplicates.
+- Batch spec fixes, then rebuild — one spec fix can resolve 5–20 errors.
+- Try spec-side fix (`@@access`) before custom code (`[CodeGenType]`).
+- Finalize `tsp-location.yaml` with pushed spec commit before creating PR.
 - Run `CodeChecks.ps1` before pushing: `pwsh eng\scripts\CodeChecks.ps1 -ServiceDirectory <service>`
+- Clean up stale custom workarounds after generator fixes.
 - **Always require `localSpecsPath`** — ask at migration start, not mid-flow.
 - **Respect generation mode** — remote by default, local after any `client.tsp`/`tspconfig.yaml` edit. Never mix modes within a migration.
