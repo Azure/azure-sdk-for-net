@@ -37,6 +37,7 @@
     <MSTestVersion>1.3.2</MSTestVersion>
     <NUnitVersion>3.14.0</NUnitVersion>
     <OpenTelemetryExtensionsHostingVersion>1.15.1</OpenTelemetryExtensionsHostingVersion>
+    <OpenTelemetryInstrumentationAspNetCoreVersion>1.15.1</OpenTelemetryInstrumentationAspNetCoreVersion>
     <OpenTelemetryInstrumentationHttpVersion>1.15.1</OpenTelemetryInstrumentationHttpVersion>
     <OpenTelemetryVersion>1.15.1</OpenTelemetryVersion>
   </PropertyGroup>

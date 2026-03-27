@@ -13,6 +13,7 @@
 ### Other Changes
 
 * Update OpenTelemetry dependencies
+  - OpenTelemetry 1.15.1
   - OpenTelemetry.Extensions.Hosting 1.15.1
 
 * Made `AzureMonitorLogExporter`, `AzureMonitorMetricExporter`, `AzureMonitorTraceExporter`.
