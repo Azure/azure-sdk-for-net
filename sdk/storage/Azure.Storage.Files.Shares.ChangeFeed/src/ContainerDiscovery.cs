@@ -4,66 +4,50 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
-using Azure.Core.Pipeline;
+using Azure.Storage.Files.Shares;
+using Azure.Storage.Files.Shares.Models;
 
 namespace Azure.Storage.Files.Shares.ChangeFeed
 {
     /// <summary>
     /// Discovers the change feed blob container name for a given file share
-    /// by calling the Get Share Properties REST API.
-    /// TODO: Replace this raw REST call by calling into Azure.Storage.Files.Shares
-    /// ShareClient.GetProperties() once that package exposes the change feed container header.
+    /// by calling <see cref="ShareClient.GetProperties(CancellationToken)"/> and reading
+    /// the <c>x-ms-file-blob-container-for-xfiles-change-feed</c> response header.
     /// </summary>
     internal static class ContainerDiscovery
     {
         /// <summary>
-        /// Discovers the change feed container name for a file share by sending an
-        /// authenticated GET request to the file service's Get Share Properties REST API
-        /// and reading the <c>x-ms-file-blob-container-for-xfiles-change-feed</c> response header.
+        /// Discovers the change feed container name by calling <see cref="ShareClient.GetProperties(CancellationToken)"/>
+        /// and reading the change feed container header from the raw response.
+        /// This is the preferred path when a <see cref="ShareClient"/> is available, as it
+        /// reuses the client's authenticated pipeline.
         /// </summary>
-        /// <param name="pipeline">The HTTP pipeline configured with authentication for the file endpoint.</param>
-        /// <param name="fileServiceUri">The file service base URI (e.g., https://account.file.core.windows.net).</param>
-        /// <param name="shareName">The file share name to query.</param>
+        /// <param name="shareClient">An authenticated <see cref="ShareClient"/>.</param>
         /// <param name="async">Whether to execute the request asynchronously.</param>
         /// <param name="cancellationToken">A cancellation token.</param>
         /// <returns>The blob container name that stores the change feed data for this share.</returns>
         internal static async Task<string> DiscoverContainerNameAsync(
-            HttpPipeline pipeline,
-            Uri fileServiceUri,
-            string shareName,
+            ShareClient shareClient,
             bool async,
             CancellationToken cancellationToken)
         {
-            // Build the REST call to: GET https://{account}.file.core.windows.net/{shareName}?restype=share
-            UriBuilder uriBuilder = new UriBuilder(fileServiceUri);
-            uriBuilder.Path = uriBuilder.Path.TrimEnd('/') + "/" + shareName;
-            uriBuilder.Query = "restype=share";
-
-            Request request = pipeline.CreateRequest();
-            request.Method = RequestMethod.Get;
-            request.Uri.Reset(uriBuilder.Uri);
-            request.Headers.Add("x-ms-version", Constants.FilesChangeFeed.RequiredApiVersion);
-
-            Response response;
+            Response<ShareProperties> response;
             if (async)
             {
-                response = await pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
+                response = await shareClient.GetPropertiesAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
             }
             else
             {
-                response = pipeline.SendRequest(request, cancellationToken);
+                response = shareClient.GetProperties(cancellationToken: cancellationToken);
             }
 
-            if (response.Status != 200)
-            {
-                throw new RequestFailedException(response);
-            }
-
-            if (!response.Headers.TryGetValue(Constants.FilesChangeFeed.ChangeFeedContainerHeader, out string containerName))
+            // The change feed container name is returned as a raw response header
+            // that isn't yet surfaced in the ShareProperties model.
+            Response rawResponse = response.GetRawResponse();
+            if (!rawResponse.Headers.TryGetValue(Constants.FilesChangeFeed.ChangeFeedContainerHeader, out string containerName))
             {
                 throw new InvalidOperationException(
-                    $"Change Feed is not enabled for share '{shareName}'. " +
+                    $"Change Feed is not enabled for share '{shareClient.Name}'. " +
                     $"Enable it by setting x-ms-file-enable-change-feed: true when creating or updating the share.");
             }
 

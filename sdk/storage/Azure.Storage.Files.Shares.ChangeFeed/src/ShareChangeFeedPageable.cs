@@ -3,106 +3,49 @@
 
 using System;
 using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs;
 using Azure.Storage.ChangeFeed.Common;
 
 namespace Azure.Storage.Files.Shares.ChangeFeed
 {
-    /// <summary>
-    /// Synchronous pageable implementation that enumerates Azure Files Change Feed events.
-    /// Discovers the change feed blob container, builds a change feed reader, and yields
-    /// pages of <see cref="ShareChangeFeedEvent"/> instances.
-    /// </summary>
     internal class ShareChangeFeedPageable : Pageable<ShareChangeFeedEvent>
     {
-        private readonly BlobServiceClient _blobServiceClient;
-        private readonly HttpPipeline _pipeline;
-        private readonly Uri _fileServiceUri;
-        private readonly string _shareName;
+        private readonly ShareChangeFeedClient _client;
         private readonly long? _maxTransferSize;
         private readonly DateTimeOffset? _startTime;
         private readonly DateTimeOffset? _endTime;
         private readonly string _continuation;
 
-        /// <summary>
-        /// Initializes a new instance of <see cref="ShareChangeFeedPageable"/>.
-        /// </summary>
-        /// <param name="blobServiceClient">The blob service client for reading change feed segments.</param>
-        /// <param name="pipeline">The HTTP pipeline for file service container discovery.</param>
-        /// <param name="fileServiceUri">The file service endpoint URI.</param>
-        /// <param name="shareName">The file share name.</param>
-        /// <param name="maxTransferSize">Optional maximum transfer size for blob downloads.</param>
-        /// <param name="startTime">Optional inclusive start time filter.</param>
-        /// <param name="endTime">Optional exclusive end time filter.</param>
-        /// <param name="continuation">Optional continuation token to resume from.</param>
         internal ShareChangeFeedPageable(
-            BlobServiceClient blobServiceClient,
-            HttpPipeline pipeline,
-            Uri fileServiceUri,
-            string shareName,
+            ShareChangeFeedClient client,
             long? maxTransferSize,
             DateTimeOffset? startTime = default,
             DateTimeOffset? endTime = default,
             string continuation = default)
         {
-            _blobServiceClient = blobServiceClient;
-            _pipeline = pipeline;
-            _fileServiceUri = fileServiceUri;
-            _shareName = shareName;
+            _client = client;
             _maxTransferSize = maxTransferSize;
             _startTime = startTime;
             _endTime = endTime;
             _continuation = continuation;
         }
 
-        /// <summary>
-        /// Enumerates pages of change feed events synchronously.
-        /// </summary>
-        /// <param name="continuationToken">Must be null; continuation is handled via the constructor parameter.</param>
-        /// <param name="pageSizeHint">Optional hint for the number of events per page.</param>
-        /// <returns>An enumerable of pages of <see cref="ShareChangeFeedEvent"/>.</returns>
         public override IEnumerable<Page<ShareChangeFeedEvent>> AsPages(
             string continuationToken = null,
             int? pageSizeHint = null)
         {
             if (continuationToken != null)
-            {
                 throw new ArgumentException("Continuation not supported. Use ShareChangeFeedClient.GetChanges(string) instead.");
-            }
 
-            // Discover the blob container name by querying file share properties,
-            // then build the change feed factory and reader from that container.
-            string containerName = ContainerDiscovery.DiscoverContainerNameAsync(
-                _pipeline,
-                _fileServiceUri,
-                _shareName,
-                async: false,
-                cancellationToken: default).EnsureCompleted();
+            var (containerClient, config) = _client.ResolveContainerAsync(async: false, cancellationToken: default).EnsureCompleted();
 
-            BlobContainerClient containerClient = _blobServiceClient.GetBlobContainerClient(containerName);
-            ChangeFeedConfiguration<ShareChangeFeedEvent> config = ShareChangeFeedClient.CreateConfiguration(containerName);
-
-            ChangeFeedFactoryBase<ShareChangeFeedEvent> factory = new ChangeFeedFactoryBase<ShareChangeFeedEvent>(
-                containerClient,
-                _maxTransferSize,
-                config);
-
-            ChangeFeedBase<ShareChangeFeedEvent> changeFeed = factory.BuildChangeFeed(
-                _startTime,
-                _endTime,
-                _continuation,
-                async: false,
-                cancellationToken: default)
-                .EnsureCompleted();
+            var factory = new ChangeFeedFactoryBase<ShareChangeFeedEvent>(containerClient, _maxTransferSize, config);
+            var changeFeed = factory.BuildChangeFeed(_startTime, _endTime, _continuation, async: false, cancellationToken: default).EnsureCompleted();
 
             while (changeFeed.HasNext())
             {
-                yield return changeFeed.GetPage(
-                    async: false,
-                    pageSize: pageSizeHint ?? Constants.FilesChangeFeed.DefaultPageSize).EnsureCompleted();
+                yield return changeFeed.GetPage(async: false, pageSize: pageSizeHint ?? Constants.FilesChangeFeed.DefaultPageSize).EnsureCompleted();
             }
         }
     }

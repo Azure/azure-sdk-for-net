@@ -3,81 +3,40 @@
 
 using System;
 using System.Collections.Generic;
-using System.Threading;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs;
 using Azure.Storage.ChangeFeed.Common;
 
 namespace Azure.Storage.Files.Shares.ChangeFeed
 {
-    /// <summary>
-    /// Async pageable that returns change feed events between two snapshots,
-    /// filtered by container version ID (cvId).
-    /// </summary>
     internal class ShareChangeFeedSnapshotAsyncPageable : AsyncPageable<ShareChangeFeedEvent>
     {
-        private readonly BlobServiceClient _blobServiceClient;
-        private readonly HttpPipeline _pipeline;
-        private readonly Uri _fileServiceUri;
-        private readonly string _shareName;
+        private readonly ShareChangeFeedClient _client;
         private readonly long? _maxTransferSize;
         private readonly string _beginSnapshot;
         private readonly string _endSnapshot;
 
-        /// <summary>
-        /// Initializes a new instance of <see cref="ShareChangeFeedSnapshotAsyncPageable"/>.
-        /// </summary>
-        /// <param name="blobServiceClient">The blob service client for reading change feed segments.</param>
-        /// <param name="pipeline">The HTTP pipeline for file service container discovery.</param>
-        /// <param name="fileServiceUri">The file service endpoint URI.</param>
-        /// <param name="shareName">The file share name.</param>
-        /// <param name="maxTransferSize">Optional maximum transfer size for blob downloads.</param>
-        /// <param name="beginSnapshot">The begin snapshot timestamp string.</param>
-        /// <param name="endSnapshot">The end snapshot timestamp string.</param>
         internal ShareChangeFeedSnapshotAsyncPageable(
-            BlobServiceClient blobServiceClient,
-            HttpPipeline pipeline,
-            Uri fileServiceUri,
-            string shareName,
+            ShareChangeFeedClient client,
             long? maxTransferSize,
             string beginSnapshot,
             string endSnapshot)
         {
-            _blobServiceClient = blobServiceClient;
-            _pipeline = pipeline;
-            _fileServiceUri = fileServiceUri;
-            _shareName = shareName;
+            _client = client;
             _maxTransferSize = maxTransferSize;
             _beginSnapshot = beginSnapshot;
             _endSnapshot = endSnapshot;
         }
 
-        /// <summary>
-        /// Asynchronously enumerates pages of change feed events between two snapshots, filtered by container version ID.
-        /// </summary>
-        /// <param name="continuationToken">Must be null; continuation is not supported for snapshot queries.</param>
-        /// <param name="pageSizeHint">Optional hint for the number of events per page.</param>
-        /// <returns>An async enumerable of pages of <see cref="ShareChangeFeedEvent"/> filtered by cvId range.</returns>
         public override async IAsyncEnumerable<Page<ShareChangeFeedEvent>> AsPages(
             string continuationToken = null,
             int? pageSizeHint = null)
         {
             if (continuationToken != null)
-            {
                 throw new ArgumentException("Continuation not supported for snapshot queries.");
-            }
 
-            // Discover the blob container name from the file share properties.
-            string containerName = await ContainerDiscovery.DiscoverContainerNameAsync(
-                _pipeline,
-                _fileServiceUri,
-                _shareName,
-                async: true,
-                cancellationToken: default).ConfigureAwait(false);
+            var (containerClient, config) = await _client.ResolveContainerAsync(async: true, cancellationToken: default).ConfigureAwait(false);
 
-            BlobContainerClient containerClient = _blobServiceClient.GetBlobContainerClient(containerName);
-
-            // Read snapshot metadata to get cvId values and time window boundaries.
             SnapshotMetadata beginMeta = await SnapshotQueryHelper.ReadSnapshotMetadataAsync(
                 containerClient, _beginSnapshot, async: true, cancellationToken: default).ConfigureAwait(false);
             SnapshotMetadata endMeta = await SnapshotQueryHelper.ReadSnapshotMetadataAsync(
@@ -90,42 +49,29 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
                     "Wait for the snapshot to be finalized before querying.");
             }
 
-            // Derive the cvId range and time window from the two snapshot metadata objects.
-            // The begin snapshot's MinLogWindowForNextSnapshot is the earliest time events may appear,
-            // and the end snapshot's MaxLogWindowForCurrentSnapshot is the latest.
             long beginCvId = beginMeta.CvId;
             long endCvId = endMeta.CvId;
             DateTimeOffset startTime = beginMeta.MinLogWindowForNextSnapshot;
             DateTimeOffset endTime = endMeta.MaxLogWindowForCurrentSnapshot;
 
-            ChangeFeedConfiguration<ShareChangeFeedEvent> config = ShareChangeFeedClient.CreateConfiguration(containerName);
-            ChangeFeedFactoryBase<ShareChangeFeedEvent> factory = new ChangeFeedFactoryBase<ShareChangeFeedEvent>(
-                containerClient, _maxTransferSize, config);
-
-            ChangeFeedBase<ShareChangeFeedEvent> changeFeed = await factory.BuildChangeFeed(
+            var factory = new ChangeFeedFactoryBase<ShareChangeFeedEvent>(containerClient, _maxTransferSize, config);
+            var changeFeed = await factory.BuildChangeFeed(
                 startTime, endTime, continuation: null, async: true, cancellationToken: default).ConfigureAwait(false);
 
             int pageSize = pageSizeHint ?? Constants.FilesChangeFeed.DefaultPageSize;
             while (changeFeed.HasNext())
             {
-                Page<ShareChangeFeedEvent> rawPage = await changeFeed.GetPage(
-                    async: true, pageSize: pageSize).ConfigureAwait(false);
+                Page<ShareChangeFeedEvent> rawPage = await changeFeed.GetPage(async: true, pageSize: pageSize).ConfigureAwait(false);
 
-                // Filter events by container version number: only include events where
-                // beginCvId < ContainerVersionNumber <= endCvId (exclusive begin, inclusive end).
                 List<ShareChangeFeedEvent> filtered = new List<ShareChangeFeedEvent>();
                 foreach (ShareChangeFeedEvent evt in rawPage.Values)
                 {
                     if (evt.ContainerVersionNumber > beginCvId && evt.ContainerVersionNumber <= endCvId)
-                    {
                         filtered.Add(evt);
-                    }
                 }
 
                 if (filtered.Count > 0)
-                {
                     yield return new ChangeFeedEventPageBase<ShareChangeFeedEvent>(filtered, rawPage.ContinuationToken);
-                }
             }
         }
     }

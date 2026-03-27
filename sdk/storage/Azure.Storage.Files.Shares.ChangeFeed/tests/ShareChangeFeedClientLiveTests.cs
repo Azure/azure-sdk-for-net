@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Storage.Blobs;
@@ -30,10 +31,10 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
         /// <summary>
         /// Creates a <see cref="ShareChangeFeedClient"/> via the extension method on <see cref="ShareClient"/>.
         /// </summary>
-        private ShareChangeFeedClient GetChangeFeedClient()
+        private ShareChangeFeedClient GetChangeFeedClient(string shareName = null)
         {
             ShareServiceClient serviceClient = GetShareServiceClient_SharedKey();
-            ShareClient shareClient = serviceClient.GetShareClient(TestShareName);
+            ShareClient shareClient = serviceClient.GetShareClient(shareName ?? TestShareName);
             return shareClient.GetShareChangeFeedClient();
         }
 
@@ -44,8 +45,11 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
         //[Ignore("Requires a storage account with Files Change Feed enabled and pre-existing events")]
         public async Task GetChanges_ReturnsEvents()
         {
+            ShareServiceClient shareServiceClient = GetShareServiceClient_SharedKey();
+            await shareServiceClient.GetSharesAsync().ToListAsync();
+
             // Arrange
-            ShareChangeFeedClient client = GetChangeFeedClient();
+            ShareChangeFeedClient client = GetChangeFeedClient("changefeedshare");
 
             // Act
             List<ShareChangeFeedEvent> events = new List<ShareChangeFeedEvent>();
