@@ -720,6 +720,9 @@ function relocateCrossResourceListActions(
           .split("/")
           .filter((s) => s.length > 0);
         if (resSegments.length !== opSegments.length + 1) continue;
+        // The additional segment must be a variable segment (e.g. `{resourceName}`)
+        const lastSegment = resSegments[resSegments.length - 1];
+        if (!isVariableSegment(lastSegment)) continue;
 
         relocations.push({
           sourceResource: resource,

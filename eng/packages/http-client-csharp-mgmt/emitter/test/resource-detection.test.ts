@@ -3458,13 +3458,14 @@ interface Containers {
     );
     strictEqual(listOnContainer!.kind, "List");
     ok(
-      listOnContainer!.methodId.includes("containers"),
+      listOnContainer!.operationPath.includes("/containers"),
       "The List method should be the relocated containers operation"
     );
 
     // BlobService should NOT have the listContainers action anymore
-    const listContainersOnService = blobServiceMethods.find((m: any) =>
-      m.methodId.includes("containers") && m.kind === "Action"
+    const listContainersOnService = blobServiceMethods.find(
+      (m: any) =>
+        m.kind === "Action" && m.operationPath?.includes("/containers")
     );
     strictEqual(
       listContainersOnService,
@@ -3592,7 +3593,9 @@ interface Containers {
 
     // BlobService should NOT have the list operation
     const listOnService = blobServiceResource.metadata.methods.find(
-      (m: any) => m.kind === "List" || m.methodId.includes("listContainers")
+      (m: any) =>
+        m.kind === "List" ||
+        (m.kind === "Action" && m.operationPath?.includes("/containers"))
     );
     strictEqual(
       listOnService,
