@@ -1,10 +1,11 @@
 <#
 .SYNOPSIS
-    Unit tests for the PreparePr functionality in CodeChecks.ps1.
+    Unit tests for the SkipDiffValidation functionality in CodeChecks.ps1.
 
 .DESCRIPTION
-    Tests the helper functions that parse git porcelain output and produce the
-    "what is new" summary when running CodeChecks with -PreparePr.
+    Tests the helper functions that parse git porcelain output, produce the
+    "what is new" summary, and determine the correct action (error vs. report)
+    when running CodeChecks with or without -SkipDiffValidation.
 
 .How-To-Run
     Install Pester if needed:
@@ -211,6 +212,139 @@ Describe "Get-CodeCheckSummary" -Tag "UnitTest" {
             $result = Get-CodeCheckSummary -CurrentStatusLines $currentLines -PreExistingChanges @()
 
             $result.NewStatusLines.Count | Should -Be 0
+        }
+    }
+}
+
+# ─────────────────────────────────────────────
+# Get-DiffCheckResult
+# ─────────────────────────────────────────────
+Describe "Get-DiffCheckResult" -Tag "UnitTest" {
+
+    Context "no diffs detected" {
+        It "returns 'none' action when there are no diffs and SkipDiffValidation is false" {
+            $result = Get-DiffCheckResult -HasDiff $false -SkipDiffValidation $false
+            $result.Action | Should -Be "none"
+        }
+
+        It "returns 'none' action when there are no diffs and SkipDiffValidation is true" {
+            $result = Get-DiffCheckResult -HasDiff $false -SkipDiffValidation $true
+            $result.Action | Should -Be "none"
+        }
+    }
+
+    Context "default behavior (SkipDiffValidation = false) — validates CI mode" {
+        It "returns 'error' action when diffs exist and SkipDiffValidation is false" {
+            $result = Get-DiffCheckResult -HasDiff $true -SkipDiffValidation $false -ServiceDirectory "foo"
+            $result.Action | Should -Be "error"
+        }
+
+        It "produces an error message mentioning the service directory" {
+            $result = Get-DiffCheckResult -HasDiff $true -SkipDiffValidation $false -ServiceDirectory "storage"
+            $result.ErrorMessage | Should -BeLike "*Generated code is not up to date*"
+            $result.ErrorMessage | Should -BeLike "*storage*"
+        }
+
+        It "error message includes remediation instructions" {
+            $result = Get-DiffCheckResult -HasDiff $true -SkipDiffValidation $false -ServiceDirectory "keyvault"
+            $result.ErrorMessage | Should -BeLike "*Update-Snippets*"
+            $result.ErrorMessage | Should -BeLike "*Export-API*"
+            $result.ErrorMessage | Should -BeLike "*GenerateCode*"
+        }
+
+        It "error message suggests -SkipDiffValidation for local fix" {
+            $result = Get-DiffCheckResult -HasDiff $true -SkipDiffValidation $false -ServiceDirectory "compute"
+            $result.ErrorMessage | Should -BeLike "*-SkipDiffValidation*"
+        }
+
+        It "does not include a Summary in error mode" {
+            $result = Get-DiffCheckResult -HasDiff $true -SkipDiffValidation $false
+            $result.Keys | Should -Not -Contain "Summary"
+        }
+    }
+
+    Context "report mode (SkipDiffValidation = true)" {
+        It "returns 'report' action when diffs exist and SkipDiffValidation is true" {
+            $statusLines = @(" M sdk/foo/Generated/Client.cs")
+            $result = Get-DiffCheckResult -HasDiff $true -SkipDiffValidation $true -CurrentStatusLines $statusLines
+
+            $result.Action | Should -Be "report"
+        }
+
+        It "includes a Summary with new status lines" {
+            $statusLines = @(
+                " M sdk/foo/Generated/Client.cs",
+                " M sdk/foo/api/Foo.netstandard2.0.cs"
+            )
+            $result = Get-DiffCheckResult -HasDiff $true -SkipDiffValidation $true `
+                -CurrentStatusLines $statusLines -PreExistingChanges @()
+
+            $result.Summary | Should -Not -BeNullOrEmpty
+            $result.Summary.NewStatusLines.Count | Should -Be 2
+        }
+
+        It "filters pre-existing changes in the summary" {
+            $statusLines = @(
+                " M sdk/foo/src/MyClient.cs",
+                " M sdk/foo/Generated/Client.cs"
+            )
+            $preExisting = @("sdk/foo/src/MyClient.cs")
+            $result = Get-DiffCheckResult -HasDiff $true -SkipDiffValidation $true `
+                -CurrentStatusLines $statusLines -PreExistingChanges $preExisting
+
+            $result.Summary.NewStatusLines.Count | Should -Be 1
+            $result.Summary.NewStatusLines[0]    | Should -BeLike "*Generated/Client.cs*"
+            $result.Summary.PreExistingCount      | Should -Be 1
+        }
+
+        It "does not include an ErrorMessage in report mode" {
+            $result = Get-DiffCheckResult -HasDiff $true -SkipDiffValidation $true `
+                -CurrentStatusLines @(" M sdk/foo/bar.cs")
+            $result.Keys | Should -Not -Contain "ErrorMessage"
+        }
+    }
+
+    Context "realistic end-to-end scenarios" {
+        It "simulates CI run: diffs found, default mode (no flag), error is raised" {
+            # CI runs without -SkipDiffValidation, so SkipDiffValidation is $false
+            $result = Get-DiffCheckResult `
+                -HasDiff $true `
+                -SkipDiffValidation $false `
+                -CurrentStatusLines @(" M sdk/ai/Generated/FooClient.cs") `
+                -ServiceDirectory "ai"
+
+            $result.Action       | Should -Be "error"
+            $result.ErrorMessage | Should -BeLike "*not up to date*"
+        }
+
+        It "simulates local run: no diffs after code checks, nothing to report" {
+            $result = Get-DiffCheckResult `
+                -HasDiff $false `
+                -SkipDiffValidation $true `
+                -CurrentStatusLines @() `
+                -PreExistingChanges @()
+
+            $result.Action | Should -Be "none"
+        }
+
+        It "simulates local run with pre-existing and new changes" {
+            $statusLines = @(
+                " M sdk/ai/src/HandWritten.cs",
+                " M sdk/ai/Generated/FooClient.cs",
+                "A  sdk/ai/api/Foo.netstandard2.0.cs",
+                "?? sdk/ai/src/Scratch.cs"
+            )
+            $preExisting = @("sdk/ai/src/HandWritten.cs", "sdk/ai/src/Scratch.cs")
+
+            $result = Get-DiffCheckResult `
+                -HasDiff $true `
+                -SkipDiffValidation $true `
+                -CurrentStatusLines $statusLines `
+                -PreExistingChanges $preExisting
+
+            $result.Action                        | Should -Be "report"
+            $result.Summary.NewStatusLines.Count  | Should -Be 2
+            $result.Summary.PreExistingCount       | Should -Be 2
         }
     }
 }

@@ -43,3 +43,41 @@ function Get-CodeCheckSummary {
         PreExistingCount = ($PreExistingChanges | Measure-Object).Count
     }
 }
+
+# Determines the action to take when a git diff is detected after code checks.
+# Returns an object with:
+#   Action       - "none" (no diffs), "error" (fail with message), or "report" (informational summary)
+#   ErrorMessage - the error string (only when Action = "error")
+#   Summary      - the Get-CodeCheckSummary result (only when Action = "report")
+function Get-DiffCheckResult {
+    param(
+        [bool]$HasDiff,
+        [bool]$SkipDiffValidation,
+        [string[]]$CurrentStatusLines = @(),
+        [string[]]$PreExistingChanges = @(),
+        [string]$ServiceDirectory = ""
+    )
+
+    if (-not $HasDiff) {
+        return @{ Action = "none" }
+    }
+
+    if (-not $SkipDiffValidation) {
+        return @{
+            Action       = "error"
+            ErrorMessage = "Generated code is not up to date.`
+    You may need to rebase on the latest main, `
+    run 'eng\scripts\Update-Snippets.ps1 $ServiceDirectory' if you modified sample snippets or other *.md files (https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md#updating-sample-snippets), `
+    run 'eng\scripts\Export-API.ps1 $ServiceDirectory' if you changed public APIs (https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md#public-api-additions). `
+    run 'dotnet build /t:GenerateCode' to update the generated code and samples.`
+    `
+To fix this locally, run 'eng\scripts\CodeChecks.ps1 -ServiceDirectory $ServiceDirectory -SkipDiffValidation' and commit the resulting changes."
+        }
+    }
+
+    $summary = Get-CodeCheckSummary -CurrentStatusLines $CurrentStatusLines -PreExistingChanges $PreExistingChanges
+    return @{
+        Action  = "report"
+        Summary = $summary
+    }
+}

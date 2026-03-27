@@ -15,7 +15,7 @@ param (
     [switch] $SpellCheckPublicApiSurface,
 
     [Parameter()]
-    [switch] $PreparePr
+    [switch] $SkipDiffValidation
 )
 
 Write-Host "Service Directory $ServiceDirectory"
@@ -59,10 +59,10 @@ function Invoke-Block([scriptblock]$cmd) {
 }
 
 try {
-    # In PreparePr mode, snapshot the current git state so we can later report
+    # When SkipDiffValidation is set, snapshot the current git state so we can later report
     # only the files that were changed by the code checks, not pre-existing changes.
     $preExistingChanges = @()
-    if ($PreparePr) {
+    if ($SkipDiffValidation) {
         $statusLines = git status --porcelain
         foreach ($line in $statusLines) {
             $preExistingChanges += Get-PorcelainPaths $line
@@ -110,7 +110,7 @@ try {
                         }
             }
 
-        if ($PreparePr) {
+        if ($SkipDiffValidation) {
             Write-Host "`nRunning dotnet format"
             Join-Path "$PSScriptRoot/../../sdk" $ServiceDirectory `
                 | Resolve-Path `
@@ -222,28 +222,29 @@ try {
         # prevent warning related to EOL differences which triggers an exception for some reason
         & git -c core.safecrlf=false diff --ignore-space-at-eol --exit-code
         if ($LastExitCode -ne 0) {
-            if ($PreparePr) {
-                $summary = Get-CodeCheckSummary -CurrentStatusLines (git status --porcelain) -PreExistingChanges $preExistingChanges
-                if ($summary.NewStatusLines) {
-                    $newStatus = ($summary.NewStatusLines | ForEach-Object { "    $_" }) -join "`n"
-                    Write-Host ""
-                    Write-Host -f Green "The following files were updated by code checks and should be included in your commit:"
-                    Write-Host -f Yellow $newStatus
+            $diffResult = Get-DiffCheckResult `
+                -HasDiff $true `
+                -SkipDiffValidation $SkipDiffValidation `
+                -CurrentStatusLines (git status --porcelain) `
+                -PreExistingChanges $preExistingChanges `
+                -ServiceDirectory $ServiceDirectory
+
+            switch ($diffResult.Action) {
+                "error" {
+                    LogError $diffResult.ErrorMessage
                 }
-                if ($summary.PreExistingCount -gt 0) {
-                    Write-Host ""
-                    Write-Host -f Cyan "Note: $($summary.PreExistingCount) file(s) already had changes before code checks ran and were excluded from the list above."
+                "report" {
+                    if ($diffResult.Summary.NewStatusLines) {
+                        $newStatus = ($diffResult.Summary.NewStatusLines | ForEach-Object { "    $_" }) -join "`n"
+                        Write-Host ""
+                        Write-Host -f Green "The following files were updated by code checks and should be included in your commit:"
+                        Write-Host -f Yellow $newStatus
+                    }
+                    if ($diffResult.Summary.PreExistingCount -gt 0) {
+                        Write-Host ""
+                        Write-Host -f Cyan "Note: $($diffResult.Summary.PreExistingCount) file(s) already had changes before code checks ran and were excluded from the list above."
+                    }
                 }
-            }
-            else {
-                LogError `
-"Generated code is not up to date.`
-    You may need to rebase on the latest main, `
-    run 'eng\scripts\Update-Snippets.ps1 $ServiceDirectory' if you modified sample snippets or other *.md files (https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md#updating-sample-snippets), `
-    run 'eng\scripts\Export-API.ps1 $ServiceDirectory' if you changed public APIs (https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md#public-api-additions). `
-    run 'dotnet build /t:GenerateCode' to update the generated code and samples.`
-    `
-To fix this locally, run 'eng\scripts\CodeChecks.ps1 -ServiceDirectory $ServiceDirectory -PreparePr' and commit the resulting changes."
             }
         }
     }
@@ -259,7 +260,7 @@ finally {
         Write-Host -f Red "error : $err"
     }
 
-    if ($PreparePr -and $errors) {
+    if ($SkipDiffValidation -and $errors) {
         Write-Host ""
         Write-Host -f Yellow "The above $($errors.Length) issue(s) require manual attention and cannot be auto-fixed."
     }
