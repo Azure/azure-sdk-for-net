@@ -327,7 +327,8 @@ export interface ParentResourceLookupContext {
 export function postProcessArmResources(
   resources: ArmResourceSchema[],
   nonResourceMethods: NonResourceMethod[],
-  parentLookup: ParentResourceLookupContext
+  parentLookup: ParentResourceLookupContext,
+  methodResponseModelIdMap?: Map<string, string>
 ): ArmResourceSchema[] {
   // Step 1: Separate valid resources (with resourceIdPattern) from incomplete ones (without)
   const validResources = resources.filter(
@@ -412,7 +413,7 @@ export function postProcessArmResources(
   // (e.g., blobContainersList as ArmResourceActionSync on BlobService that lists BlobContainers),
   // detect that the Action's operationPath matches a child resource's collection path
   // and reclassify it as a List on the child resource.
-  relocateCrossResourceListActions(validResources);
+  relocateCrossResourceListActions(validResources, methodResponseModelIdMap);
 
   // Step 4: Populate resourceScope for all resource methods
   // For each method, find the longest matching resource path that is a prefix of the method's operation path
@@ -695,7 +696,8 @@ function canBeListResourceScope(
  *   - Result: List is moved from BlobService to Container
  */
 function relocateCrossResourceListActions(
-  validResources: ArmResourceSchema[]
+  validResources: ArmResourceSchema[],
+  methodResponseModelIdMap?: Map<string, string>
 ): void {
   // Find List methods that are assigned to the wrong resource and should be
   // relocated to a child resource. This handles the case where a pageable
@@ -731,6 +733,15 @@ function relocateCrossResourceListActions(
         // The additional segment must be a variable segment (e.g. `{resourceName}`)
         const lastSegment = resSegments[resSegments.length - 1];
         if (!isVariableSegment(lastSegment)) continue;
+
+        // Verify the response item type matches the target resource's model.
+        // This prevents relocating pageable actions that return metadata models
+        // (not the resource type) to the wrong collection.
+        if (methodResponseModelIdMap) {
+          const responseModelId = methodResponseModelIdMap.get(method.methodId);
+          if (responseModelId && responseModelId !== candidate.resourceModelId)
+            continue;
+        }
 
         relocations.push({
           sourceResource: resource,

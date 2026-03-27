@@ -28,7 +28,8 @@ import {
   getClientType,
   SdkHttpOperation,
   SdkMethod,
-  SdkModelType
+  SdkModelType,
+  SdkPagingServiceMethod
 } from "@azure-tools/typespec-client-generator-core";
 import pluralize from "pluralize";
 import {
@@ -124,6 +125,16 @@ export function buildArmProviderSchema(
     resourceModels.map((m) => m.crossLanguageDefinitionId)
   );
 
+  // Build a lookup map from methodId to the page item type's crossLanguageDefinitionId
+  // so that relocateCrossResourceListActions can verify type compatibility
+  const methodResponseModelIdMap = new Map<string, string>();
+  for (const [methodId, method] of serviceMethods) {
+    const itemModelId = getPagingItemModelId(method);
+    if (itemModelId) {
+      methodResponseModelIdMap.set(methodId, itemModelId);
+    }
+  }
+
   // Track client names associated with each resource path for name derivation
   const resourcePathToClientName = new Map<string, string>();
 
@@ -144,7 +155,8 @@ export function buildArmProviderSchema(
     const serviceMethod = serviceMethods.get(method.crossLanguageDefinitionId);
     const { kind, modelId, explicitResourceName } = parseResourceOperation(
       serviceMethod,
-      sdkContext
+      sdkContext,
+      resourceModelIds
     );
 
     if (modelId && kind && resourceModelIds.has(modelId)) {
@@ -457,7 +469,8 @@ export function buildArmProviderSchema(
   const filteredResources = postProcessArmResources(
     resources,
     nonResourceMethodsArray,
-    parentLookup
+    parentLookup,
+    methodResponseModelIdMap
   );
 
   // Emit diagnostics for resources that were filtered out (non-singleton resources without Read operations)
@@ -575,7 +588,8 @@ function isCRUDKind(kind: ResourceOperationKind): boolean {
 
 function parseResourceOperation(
   serviceMethod: SdkMethod<SdkHttpOperation> | undefined,
-  sdkContext: CSharpEmitterContext
+  sdkContext: CSharpEmitterContext,
+  resourceModelIds?: Set<string>
 ): {
   kind?: ResourceOperationKind;
   modelId?: string;
@@ -624,13 +638,13 @@ function parseResourceOperation(
         };
       case armResourceActionName:
         return {
-          // If the operation is pageable, it's actually a list operation
-          // (e.g., blobContainersList modeled as ArmResourceActionSync
-          // but returning paged results)
-          kind:
-            serviceMethod?.kind === "paging"
-              ? ResourceOperationKind.List
-              : ResourceOperationKind.Action,
+          // If the operation is pageable AND its response item type is a known
+          // resource model, it's a list-children operation (e.g., blobContainersList
+          // modeled as ArmResourceActionSync but returning paged Container resources).
+          // If the item type is NOT a resource model (e.g., metadata), keep it as Action.
+          kind: isPagingActionListingResources(serviceMethod, resourceModelIds)
+            ? ResourceOperationKind.List
+            : ResourceOperationKind.Action,
           modelId: getResourceModelId(sdkContext, decorator),
           explicitResourceName: undefined
         };
@@ -889,6 +903,45 @@ function getResourceModelId(
     decorator.args[0].value as Model,
     decorator.definition?.name
   );
+}
+
+/**
+ * Extracts the page item model's crossLanguageDefinitionId from a paging method.
+ * Returns undefined if the item type is not a model (e.g., metadata or scalar types).
+ */
+function getPagingItemModelId(
+  method: SdkMethod<SdkHttpOperation>
+): string | undefined {
+  if (method.kind !== "paging" && method.kind !== "lropaging") return undefined;
+  const pagingMethod = method as SdkPagingServiceMethod<SdkHttpOperation>;
+  const segments = pagingMethod.pagingMetadata?.pageItemsSegments;
+  if (!segments || segments.length === 0) return undefined;
+  // The last segment's type is the items array; extract the element type
+  const itemsType = segments[segments.length - 1].type;
+  if (itemsType.kind === "array" && itemsType.valueType.kind === "model") {
+    return (itemsType.valueType as SdkModelType).crossLanguageDefinitionId;
+  }
+  // Fallback: the items property might directly be a model (non-array case)
+  if (itemsType.kind === "model") {
+    return (itemsType as SdkModelType).crossLanguageDefinitionId;
+  }
+  return undefined;
+}
+
+/**
+ * Checks whether a pageable action actually lists resource models.
+ * Returns true only if the method is a paging method AND its page item type
+ * matches a known resource model. This prevents metadata-returning pageable actions
+ * (e.g., NginxDeployments_WafPolicyList returning WafPolicyMetadata) from being
+ * misclassified as List operations.
+ */
+function isPagingActionListingResources(
+  serviceMethod: SdkMethod<SdkHttpOperation> | undefined,
+  resourceModelIds?: Set<string>
+): boolean {
+  if (!serviceMethod || !resourceModelIds) return false;
+  const itemModelId = getPagingItemModelId(serviceMethod);
+  return !!itemModelId && resourceModelIds.has(itemModelId);
 }
 
 function getResourceModelIdCore(

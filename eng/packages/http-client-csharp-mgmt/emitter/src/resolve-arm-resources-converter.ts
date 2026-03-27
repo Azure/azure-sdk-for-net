@@ -56,7 +56,9 @@ import { CSharpEmitterContext } from "@typespec/http-client-csharp";
 import {
   getCrossLanguageDefinitionId,
   getClientType,
-  SdkModelType
+  SdkModelType,
+  SdkPagingServiceMethod,
+  SdkHttpOperation
 } from "@azure-tools/typespec-client-generator-core";
 import {
   isVariableSegment,
@@ -103,6 +105,9 @@ export function resolveArmResources(
   // Build a lookup map from methodId to SdkMethod kind (basic, paging, lro, lropaging)
   // so that we can detect pageable actions that should be classified as List
   const methodKindMap = new Map<string, string>();
+  // Build a lookup map from methodId to the response item type's crossLanguageDefinitionId
+  // so that we can verify pageable actions return actual resource models
+  const methodResponseModelIdMap = new Map<string, string>();
   for (const client of getAllSdkClients(sdkContext)) {
     for (const method of client.methods) {
       if (!methodApiVersionsMap.has(method.crossLanguageDefinitionId)) {
@@ -116,6 +121,42 @@ export function resolveArmResources(
           method.crossLanguageDefinitionId,
           method.kind
         );
+      }
+      if (
+        (method.kind === "paging" || method.kind === "lropaging") &&
+        !methodResponseModelIdMap.has(method.crossLanguageDefinitionId)
+      ) {
+        const pagingMethod =
+          method as SdkPagingServiceMethod<SdkHttpOperation>;
+        const segments = pagingMethod.pagingMetadata?.pageItemsSegments;
+        if (segments && segments.length > 0) {
+          const itemsType = segments[segments.length - 1].type;
+          if (itemsType.kind === "array" && itemsType.valueType.kind === "model") {
+            methodResponseModelIdMap.set(
+              method.crossLanguageDefinitionId,
+              (itemsType.valueType as SdkModelType).crossLanguageDefinitionId
+            );
+          } else if (itemsType.kind === "model") {
+            methodResponseModelIdMap.set(
+              method.crossLanguageDefinitionId,
+              (itemsType as SdkModelType).crossLanguageDefinitionId
+            );
+          }
+        }
+      }
+    }
+  }
+
+  // Build the set of resource model IDs for validating pageable action responses
+  const resourceModelIds = new Set<string>();
+  if (provider.resources) {
+    for (const resolvedResource of provider.resources) {
+      const modelId = getCrossLanguageDefinitionId(
+        sdkContext,
+        resolvedResource.type
+      );
+      if (modelId) {
+        resourceModelIds.add(modelId);
       }
     }
   }
@@ -143,7 +184,9 @@ export function resolveArmResources(
         program,
         sdkContext,
         resolvedResource,
-        methodKindMap
+        methodKindMap,
+        methodResponseModelIdMap,
+        resourceModelIds
       );
 
       const resource = {
@@ -208,7 +251,8 @@ export function resolveArmResources(
   const filteredResources = postProcessArmResources(
     resources,
     nonResourceMethods,
-    parentLookup
+    parentLookup,
+    methodResponseModelIdMap
   );
 
   // Add provider operations as non-resource methods
@@ -298,7 +342,9 @@ function convertResolvedResourceToMetadata(
   program: Program,
   sdkContext: CSharpEmitterContext,
   resolvedResource: ResolvedResource,
-  methodKindMap?: Map<string, string>
+  methodKindMap?: Map<string, string>,
+  methodResponseModelIdMap?: Map<string, string>,
+  resourceModelIds?: Set<string>
 ): ResourceMetadata {
   const methods: ResourceMethod[] = [];
   const resourceScope = convertScopeToResourceScope(resolvedResource.scope);
@@ -396,15 +442,21 @@ function convertResolvedResourceToMetadata(
     for (const actionOp of resolvedResource.operations.actions) {
       const methodId = getMethodIdFromOperation(sdkContext, actionOp.operation);
       if (methodId) {
-        // If the action is pageable, classify as List instead of Action
-        // (handles ArmResourceActionSync used for list-children operations)
+        // Classify as List only if the action is pageable AND its response item type
+        // is a known resource model. This prevents metadata-returning pageable actions
+        // from being misclassified as List operations.
         const sdkMethodKind = methodKindMap?.get(methodId);
+        const responseModelId = methodResponseModelIdMap?.get(methodId);
+        const isResourceList =
+          sdkMethodKind === "paging" &&
+          !!responseModelId &&
+          !!resourceModelIds &&
+          resourceModelIds.has(responseModelId);
         methods.push({
           methodId,
-          kind:
-            sdkMethodKind === "paging"
-              ? ResourceOperationKind.List
-              : ResourceOperationKind.Action,
+          kind: isResourceList
+            ? ResourceOperationKind.List
+            : ResourceOperationKind.Action,
           operationPath: actionOp.path,
           operationScope: resourceScope,
           resourceScope: calculateResourceScope(actionOp.path, resolvedResource)
