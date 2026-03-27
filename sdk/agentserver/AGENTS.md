@@ -412,6 +412,15 @@ avoid repeating them.
 | `build/` directory not committed (root `.gitignore`) | Use `git add -f` for `build/` and `buildTransitive/` props |
 | Not testing CI snippet build locally | Always run `dotnet build /p:BuildSnippets=true` before pushing |
 | CI "Analyze PRBatch" / "Set diagnostic arguments" flake | Repo-wide infrastructure issue; not caused by our changes; retry |
+| Using `git rebase` | **Always use `git merge`**, never rebase. This is a strict project rule. |
+| Running piecemeal generation steps (`tsp compile`, `npx` individually) | **Always use the full pipeline script** (e.g., `Generate-Contracts.ps1`). Never execute individual steps — the script handles sequencing, cleanup, and copyright headers. |
+
+### 5.9 External SDK verification
+
+| Mistake | Fix |
+|---|---|
+| Guessing external SDK API names (method names, property names, enum values) | **Decompile the actual SDK assembly** to verify names before writing code. Use `ilspycmd` or equivalent. Never guess — the OpenAI SDK renames and reshapes types from the spec. |
+| Trusting TypeSpec-generated type names without investigation when interop issues arise | Azure TypeSpec is intentionally a superset of OpenAI \u2014 extra types are expected. But when a type causes **interop issues or contradicts the spec description**, investigate whether it is an intentional extension or an authoring mistake. See Responses `AGENTS.md` \u00a75 for the `output_message` case study. || Assuming the correct resolution for OpenAI compat conflicts | **Always confirm with the user** before making TypeSpec (`client.tsp`), service-layer, or wire-format changes to resolve an OpenAI compat conflict. Present findings and proposed actions for approval — do not assume correctness. The user has domain knowledge about intentional vs. unintentional Azure TypeSpec deviations. || Bulk `sed` renames without verification | After any bulk text replacement, **always run a second-pass grep sweep** to verify zero remaining old references. Build immediately after to catch type/parameter mismatches that text replacement cannot detect. |
 
 ---
 
@@ -452,6 +461,10 @@ Do **not** duplicate repo-wide rules here. Consult these canonical sources:
 - Hard-code target framework monikers in `.csproj` (see §2.2).
 - Use `#if SNIPPET` blocks in snippet test files (see §4).
 - Add alpha/preview packages to global package management (see §2.4).
+- Use `git rebase` — always use `git merge` (see §5.8).
+- Run generation steps individually — always use the full pipeline script (see §5.8).
+- Guess external SDK API names — decompile and verify (see §5.9).
+- Assume the correct fix for OpenAI compat conflicts — always confirm with the user first (see §5.9).
 
 ---
 
@@ -464,3 +477,14 @@ Do **not** duplicate repo-wide rules here. Consult these canonical sources:
 - All PRs and code reviews must verify compliance with these principles.
 - Amendments require: (1) written proposal with rationale, (2) update to any affected
   docs for consistency.
+
+### 8.1 Continuous learning (MANDATORY)
+
+This `AGENTS.md` (and its per-protocol children) should be a **living document** that captures generalized patterns discovered during development sessions. When the user corrects the agent or suggests a reusable pattern:
+
+1. **Recognize** generalized lessons that would benefit future sessions (not one-off fixes).
+2. **Do NOT update AGENTS.md automatically.** At the end of the session, propose the specific additions to the user — explain what you learned, where you would add it, and why it is generalizable.
+3. **Seek explicit confirmation** from the user before making any edits. Ask clarifying questions if the scope or framing is unclear.
+4. **Only after user approval**, add the rule to the appropriate `AGENTS.md` file(s) with clear context.
+
+This ensures AGENTS.md stays accurate and reflects the user's intent, not the agent's assumptions.
