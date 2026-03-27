@@ -702,7 +702,7 @@ namespace Azure.Identity
                 dacClone.EnvironmentClientCertificatePath = EnvironmentClientCertificatePath;
                 dacClone.EnvironmentClientCertificatePassword = EnvironmentClientCertificatePassword;
                 dacClone.EnvironmentSendCertificateChain = EnvironmentSendCertificateChain;
-dacClone.WorkloadTokenFilePath = WorkloadTokenFilePath;
+                dacClone.WorkloadTokenFilePath = WorkloadTokenFilePath;
             }
             else if (clone is InteractiveBrowserCredentialOptions ibcClone)
             {
