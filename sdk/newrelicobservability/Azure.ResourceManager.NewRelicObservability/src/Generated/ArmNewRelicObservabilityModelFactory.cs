@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using Azure;
 using Azure.Core;
@@ -385,70 +384,6 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 systemData,
                 additionalBinaryDataProperties: null,
                 saasId);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.NewRelicAccountResourceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="organizationId"> organization id. </param>
-        /// <param name="accountId"> account id. </param>
-        /// <param name="accountName"> account name. </param>
-        /// <param name="region"> Region where New Relic account is present. </param>
-        /// <returns> A new <see cref="Models.NewRelicAccountResourceData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NewRelicAccountResourceData NewRelicAccountResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string organizationId, string accountId, string accountName, AzureLocation? region)
-        {
-            return new NewRelicAccountResourceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.NewRelicOrganizationResourceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="organizationId"> organization id. </param>
-        /// <param name="organizationName"> organization name. </param>
-        /// <param name="billingSource"> Billing source. </param>
-        /// <returns> A new <see cref="Models.NewRelicOrganizationResourceData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NewRelicOrganizationResourceData NewRelicOrganizationResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string organizationId, string organizationName, NewRelicObservabilityBillingSource? billingSource)
-        {
-            return new NewRelicOrganizationResourceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.NewRelicPlanData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="planData"> Plan details. </param>
-        /// <param name="orgCreationSource"> Source of org creation. </param>
-        /// <param name="accountCreationSource"> Source of account creation. </param>
-        /// <returns> A new <see cref="Models.NewRelicPlanData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NewRelicPlanData NewRelicPlanData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NewRelicPlanDetails planData, NewRelicObservabilityOrgCreationSource? orgCreationSource, NewRelicObservabilityAccountCreationSource? accountCreationSource)
-        {
-            return new NewRelicPlanData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                default);
         }
     }
 }

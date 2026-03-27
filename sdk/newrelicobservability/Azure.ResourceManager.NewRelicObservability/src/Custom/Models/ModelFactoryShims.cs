@@ -4,6 +4,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.ComponentModel;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Microsoft.TypeSpec.Generator.Customizations;
@@ -14,10 +15,14 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
     // parameters. The new TypeSpec generator produces different signatures (added publisherId,
     // offerId, subscriptionState, etc.). These shims delegate to the new overloads to avoid
     // breaking existing callers that use the old parameter lists.
-    // Also suppress generated factory methods that expose internal property types.
+    // Suppress generated factory methods that expose internal property types.
     [CodeGenSuppress("NewRelicAccountResourceData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(AccountProperties))]
     [CodeGenSuppress("NewRelicOrganizationResourceData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(OrganizationProperties))]
     [CodeGenSuppress("NewRelicPlanData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(PlanDataProperties))]
+    // Suppress generated flattened factory methods (no default param values) so we can provide backward-compat versions with defaults.
+    [CodeGenSuppress("NewRelicAccountResourceData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(string), typeof(string), typeof(string), typeof(AzureLocation?))]
+    [CodeGenSuppress("NewRelicOrganizationResourceData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(string), typeof(string), typeof(NewRelicObservabilityBillingSource?))]
+    [CodeGenSuppress("NewRelicPlanData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(NewRelicPlanDetails), typeof(NewRelicObservabilityOrgCreationSource?), typeof(NewRelicObservabilityAccountCreationSource?))]
     public static partial class ArmNewRelicObservabilityModelFactory
     {
         /// <summary> Initializes a new instance of MarketplaceSaaSInfo (5-param overload). </summary>
@@ -31,6 +36,45 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 billedAzureSubscriptionId: billedAzureSubscriptionId,
                 publisherId: default,
                 offerId: default);
+        }
+
+        /// <summary> Initializes a new instance of NewRelicAccountResourceData. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NewRelicAccountResourceData NewRelicAccountResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string organizationId = null, string accountId = null, string accountName = null, AzureLocation? region = default)
+        {
+            return new NewRelicAccountResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                new AccountProperties(organizationId, accountId, accountName, region, additionalBinaryDataProperties: null));
+        }
+
+        /// <summary> Initializes a new instance of NewRelicOrganizationResourceData. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NewRelicOrganizationResourceData NewRelicOrganizationResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string organizationId = null, string organizationName = null, NewRelicObservabilityBillingSource? billingSource = default)
+        {
+            return new NewRelicOrganizationResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                new OrganizationProperties(organizationId, organizationName, billingSource, additionalBinaryDataProperties: null));
+        }
+
+        /// <summary> Initializes a new instance of NewRelicPlanData. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NewRelicPlanData NewRelicPlanData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, NewRelicPlanDetails planData = null, NewRelicObservabilityOrgCreationSource? orgCreationSource = default, NewRelicObservabilityAccountCreationSource? accountCreationSource = default)
+        {
+            return new NewRelicPlanData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                new PlanDataProperties(planData, orgCreationSource, accountCreationSource, additionalBinaryDataProperties: null));
         }
 
         /// <summary> Initializes a new instance of NewRelicMonitorResourceData (17-param overload). </summary>
