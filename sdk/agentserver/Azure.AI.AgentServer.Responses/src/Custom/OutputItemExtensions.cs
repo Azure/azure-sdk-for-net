@@ -44,6 +44,7 @@ public static class OutputItemExtensions
         // Fast path: pattern match on known subclass types that have an Id property.
         switch (item)
         {
+            // --- OpenAI base types ---
             case OutputItemOutputMessage m:
                 id = m.Id;
                 return true;
@@ -116,12 +117,77 @@ public static class OutputItemExtensions
             case FunctionToolCallOutputResource m:
                 id = m.Id;
                 return true;
+
+            // --- Azure.AI.Projects types ---
             case OAuthConsentRequestOutputItem m:
+                id = m.Id;
+                return true;
+            case A2AToolCall m:
+                id = m.Id;
+                return true;
+            case A2AToolCallOutput m:
+                id = m.Id;
+                return true;
+            case AzureAISearchToolCall m:
+                id = m.Id;
+                return true;
+            case AzureAISearchToolCallOutput m:
+                id = m.Id;
+                return true;
+            case AzureFunctionToolCall m:
+                id = m.Id;
+                return true;
+            case AzureFunctionToolCallOutput m:
+                id = m.Id;
+                return true;
+            case BingCustomSearchToolCall m:
+                id = m.Id;
+                return true;
+            case BingCustomSearchToolCallOutput m:
+                id = m.Id;
+                return true;
+            case BingGroundingToolCall m:
+                id = m.Id;
+                return true;
+            case BingGroundingToolCallOutput m:
+                id = m.Id;
+                return true;
+            case BrowserAutomationToolCall m:
+                id = m.Id;
+                return true;
+            case BrowserAutomationToolCallOutput m:
+                id = m.Id;
+                return true;
+            case FabricDataAgentToolCall m:
+                id = m.Id;
+                return true;
+            case FabricDataAgentToolCallOutput m:
+                id = m.Id;
+                return true;
+            case MemorySearchToolCallItemResource m:
+                id = m.Id;
+                return true;
+            case OpenApiToolCall m:
+                id = m.Id;
+                return true;
+            case OpenApiToolCallOutput m:
+                id = m.Id;
+                return true;
+            case SharepointGroundingToolCall m:
+                id = m.Id;
+                return true;
+            case SharepointGroundingToolCallOutput m:
+                id = m.Id;
+                return true;
+            case StructuredOutputsOutputItem m:
+                id = m.Id;
+                return true;
+            case WorkflowActionOutputItem m:
                 id = m.Id;
                 return true;
         }
 
-        // Slow path: serialize to JSON and look for an "id" property.
+        // Slow path: serialize to JSON and scan forward for an "id" property.
         // This covers any future OutputItem subclasses added by code generation.
         return TryGetIdFromJson(item, out id);
     }
@@ -139,11 +205,30 @@ public static class OutputItemExtensions
                 jsonModel.Write(writer, ModelReaderWriterOptions.Json);
             }
 
-            using var doc = JsonDocument.Parse(stream.ToArray());
-            if (doc.RootElement.TryGetProperty("id", out var idElement))
+            // Forward scan with Utf8JsonReader — avoids allocating a JsonDocument.
+            var reader = new Utf8JsonReader(stream.GetBuffer().AsSpan(0, (int)stream.Length));
+            if (reader.Read() && reader.TokenType == JsonTokenType.StartObject)
             {
-                id = idElement.ValueKind == JsonValueKind.Null ? null : idElement.GetString();
-                return true;
+                while (reader.Read())
+                {
+                    if (reader.TokenType == JsonTokenType.EndObject)
+                    {
+                        break;
+                    }
+
+                    if (reader.TokenType == JsonTokenType.PropertyName && reader.ValueTextEquals("id"u8))
+                    {
+                        if (reader.Read())
+                        {
+                            id = reader.TokenType == JsonTokenType.Null ? null : reader.GetString();
+                            return true;
+                        }
+                    }
+                    else
+                    {
+                        reader.Skip();
+                    }
+                }
             }
 
             return false;

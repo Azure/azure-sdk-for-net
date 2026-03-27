@@ -192,7 +192,7 @@ public class SnapshotConsistencyTests : ProtocolTestBase
     /// Emits output items slowly for concurrent GET testing.
     /// </summary>
     private static async IAsyncEnumerable<ResponseStreamEvent> SlowMultiOutputStream(
-        IResponseContext ctx, int itemCount, TaskCompletionSource handlerStarted,
+        ResponseContext ctx, int itemCount, TaskCompletionSource handlerStarted,
         [EnumeratorCancellation] CancellationToken ct)
     {
         var response = new Models.ResponseObject(ctx.ResponseId, "test-model") { Status = ResponseStatus.InProgress };
@@ -224,7 +224,7 @@ public class SnapshotConsistencyTests : ProtocolTestBase
     /// Emits 2 output items then completes — for snapshot isolation testing.
     /// </summary>
     private static async IAsyncEnumerable<ResponseStreamEvent> MultiOutputStreamForSnapshotTest(
-        IResponseContext ctx)
+        ResponseContext ctx)
     {
         var response = new Models.ResponseObject(ctx.ResponseId, "test-model") { Status = ResponseStatus.InProgress };
         yield return new ResponseCreatedEvent(0, response);
@@ -253,7 +253,7 @@ public class SnapshotConsistencyTests : ProtocolTestBase
     /// Simple background stream that waits for a signal before completing.
     /// </summary>
     private static async IAsyncEnumerable<ResponseStreamEvent> SimpleBackgroundStream(
-        IResponseContext ctx, TaskCompletionSource done)
+        ResponseContext ctx, TaskCompletionSource done)
     {
         var response = new Models.ResponseObject(ctx.ResponseId, "test-model") { Status = ResponseStatus.InProgress };
         yield return new ResponseCreatedEvent(0, response);

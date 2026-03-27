@@ -1,6 +1,6 @@
 # Azure AI Agent Server Responses library for .NET
 
-Azure.AI.AgentServer.Responses is a .NET library for building ASP.NET Core servers that implement the [Azure AI Responses API][product_doc]. Add the NuGet package, implement one interface (`IResponseHandler`), and the library handles routing, streaming (SSE), background execution, cancellation, caching, and response lifecycle management.
+Azure.AI.AgentServer.Responses is a .NET library for building ASP.NET Core servers that implement the [Azure AI Responses API][product_doc]. Add the NuGet package, extend one abstract class (`ResponseHandler`), and the library handles routing, streaming (SSE), background execution, cancellation, caching, and response lifecycle management.
 
 [Source code][source] | [Package (NuGet)][nuget] | [REST API reference][rest_api] | [Product documentation][product_doc]
 
@@ -36,7 +36,7 @@ Alternatively, register the library services manually in your `Program.cs`:
 var builder = WebApplication.CreateBuilder();
 
 builder.Services.AddResponsesServer();
-builder.Services.AddScoped<IResponseHandler, EchoHandler>();
+builder.Services.AddScoped<ResponseHandler, EchoHandler>();
 
 var app = builder.Build();
 app.MapResponsesServer();
@@ -45,16 +45,16 @@ app.Run();
 
 ## Key concepts
 
-### IResponseHandler
+### ResponseHandler
 
 The core abstraction you implement. The library calls `CreateAsync` for each incoming request and delivers the returned `IAsyncEnumerable<ResponseStreamEvent>` to clients via SSE:
 
 ```C# Snippet:Responses_ReadMe_EchoHandler
-public class EchoHandler : IResponseHandler
+public class EchoHandler : ResponseHandler
 {
-    public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
+    public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
         CreateResponse request,
-        IResponseContext context,
+        ResponseContext context,
         [EnumeratorCancellation] CancellationToken cancellationToken)
     {
         var stream = new ResponseEventStream(context, request);

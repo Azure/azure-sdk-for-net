@@ -165,7 +165,7 @@ public class GetResponseTests : IDisposable
     }
 
     private static async IAsyncEnumerable<ResponseStreamEvent> ThreeEventStream(
-        IResponseContext ctx,
+        ResponseContext ctx,
         [EnumeratorCancellation] CancellationToken ct = default)
     {
         await Task.CompletedTask;
@@ -177,7 +177,7 @@ public class GetResponseTests : IDisposable
     }
 
     private static async IAsyncEnumerable<ResponseStreamEvent> WaitingEventStream(
-        IResponseContext ctx,
+        ResponseContext ctx,
         Task delayTask,
         [EnumeratorCancellation] CancellationToken ct = default)
     {

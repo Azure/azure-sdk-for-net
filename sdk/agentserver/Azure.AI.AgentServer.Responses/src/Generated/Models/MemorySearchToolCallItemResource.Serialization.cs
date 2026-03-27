@@ -91,6 +91,8 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 writer.WriteEndArray();
             }
+            writer.WritePropertyName("id"u8);
+            writer.WriteStringValue(Id);
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -125,6 +127,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             MemorySearchToolCallItemResourceStatus status = default;
             IList<MemorySearchItem> results = default;
+            string id = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -174,6 +177,11 @@ namespace Azure.AI.AgentServer.Responses.Models
                     results = array;
                     continue;
                 }
+                if (prop.NameEquals("id"u8))
+                {
+                    id = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -186,7 +194,8 @@ namespace Azure.AI.AgentServer.Responses.Models
                 responseId,
                 additionalBinaryDataProperties,
                 status,
-                results ?? new ChangeTrackingList<MemorySearchItem>());
+                results ?? new ChangeTrackingList<MemorySearchItem>(),
+                id);
         }
     }
 }

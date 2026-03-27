@@ -18,7 +18,7 @@ public class OutputItemBuilderAutoStampTests
     public void EmitAdded_StampsResponseId_WhenNotSetByHandler()
     {
         var responseId = "resp_auto_001";
-        var ctx = new TestResponseContext(responseId);
+        var ctx = new ResponseContext(responseId);
         var stream = new ResponseEventStream(ctx, new CreateResponse { Model = "test" });
         var builder = stream.AddOutputItemMessage();
 
@@ -31,7 +31,7 @@ public class OutputItemBuilderAutoStampTests
     public void EmitDone_StampsResponseId_WhenNotSetByHandler()
     {
         var responseId = "resp_auto_002";
-        var ctx = new TestResponseContext(responseId);
+        var ctx = new ResponseContext(responseId);
         var stream = new ResponseEventStream(ctx, new CreateResponse { Model = "test" });
         var builder = stream.AddOutputItemMessage();
 
@@ -52,7 +52,7 @@ public class OutputItemBuilderAutoStampTests
     {
         var responseId = "resp_auto_003";
         var handlerResponseId = "handler-override-id";
-        var ctx = new TestResponseContext(responseId);
+        var ctx = new ResponseContext(responseId);
         var stream = new ResponseEventStream(ctx, new CreateResponse { Model = "test" });
         var builder = stream.AddOutputItemMessage();
 
@@ -77,7 +77,7 @@ public class OutputItemBuilderAutoStampTests
         var responseId = "resp_auto_004";
         var agentRef = new AgentReference("my-agent") { Version = "1.0" };
         var request = new CreateResponse { Model = "test", AgentReference = agentRef };
-        var ctx = new TestResponseContext(responseId);
+        var ctx = new ResponseContext(responseId);
         var stream = new ResponseEventStream(ctx, request);
         var builder = stream.AddOutputItemMessage();
 
@@ -95,7 +95,7 @@ public class OutputItemBuilderAutoStampTests
         var requestAgentRef = new AgentReference("request-agent");
         var handlerAgentRef = new AgentReference("handler-agent") { Version = "2.0" };
         var request = new CreateResponse { Model = "test", AgentReference = requestAgentRef };
-        var ctx = new TestResponseContext(responseId);
+        var ctx = new ResponseContext(responseId);
         var stream = new ResponseEventStream(ctx, request);
         var builder = stream.AddOutputItemMessage();
 
@@ -117,28 +117,12 @@ public class OutputItemBuilderAutoStampTests
     public void EmitAdded_SkipsAgentReference_WhenNoAgentRefOnRequest()
     {
         var responseId = "resp_auto_006";
-        var ctx = new TestResponseContext(responseId);
+        var ctx = new ResponseContext(responseId);
         var stream = new ResponseEventStream(ctx, new CreateResponse { Model = "test" });
         var builder = stream.AddOutputItemMessage();
 
         var evt = builder.EmitAdded();
 
         Assert.That(evt.Item.AgentReference, Is.Null);
-    }
-
-    // ── Test helpers ──────────────────────────────────────────
-
-    private sealed class TestResponseContext : IResponseContext
-    {
-        public TestResponseContext(string responseId) => ResponseId = responseId;
-        public string ResponseId { get; }
-        public bool IsShutdownRequested { get; set; }
-        public System.Text.Json.JsonElement RawBody => default;
-        public IReadOnlyDictionary<string, string> ClientHeaders { get; } = new Dictionary<string, string>();
-        public IReadOnlyDictionary<string, Microsoft.Extensions.Primitives.StringValues> QueryParameters { get; } = new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>();
-        public Task<IReadOnlyList<OutputItem>> GetInputItemsAsync(CancellationToken cancellationToken = default)
-            => Task.FromResult<IReadOnlyList<OutputItem>>(Array.Empty<OutputItem>());
-        public Task<IReadOnlyList<OutputItem>> GetHistoryAsync(CancellationToken cancellationToken = default)
-            => Task.FromResult<IReadOnlyList<OutputItem>>(Array.Empty<OutputItem>());
     }
 }

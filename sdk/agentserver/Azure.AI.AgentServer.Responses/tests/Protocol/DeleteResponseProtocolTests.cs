@@ -154,7 +154,7 @@ public class DeleteResponseProtocolTests : ProtocolTestBase
     }
 
     private static async IAsyncEnumerable<ResponseStreamEvent> BlockingStream(
-        IResponseContext ctx,
+        ResponseContext ctx,
         Task delayTask,
         [EnumeratorCancellation] CancellationToken ct)
     {

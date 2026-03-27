@@ -41,11 +41,11 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
 
         #region Snippet:Responses_Sample3_StudyTutorHandler
 
-        public class StudyTutorHandler : IResponseHandler
+        public class StudyTutorHandler : ResponseHandler
         {
-            public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
+            public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
                 CreateResponse request,
-                IResponseContext context,
+                ResponseContext context,
                 [EnumeratorCancellation] CancellationToken cancellationToken)
             {
                 var stream = new ResponseEventStream(context, request);

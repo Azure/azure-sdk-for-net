@@ -12,7 +12,7 @@ using NUnit.Framework;
 namespace Azure.AI.AgentServer.Responses.Tests.Snippets
 {
     /// <summary>
-    /// Code snippets backing Sample5_Customization.md. Compiled to prevent rot.
+    /// Code snippets backing Sample5_HostingAndConfiguration.md. Compiled to prevent rot.
     /// </summary>
     [TestFixture]
     [Explicit("Snippets are compiled to prevent rot but require a running server to execute.")]
@@ -91,15 +91,15 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
 
         #region Snippet:Responses_Sample5_KnowledgeHandler
 
-        public class KnowledgeHandler : IResponseHandler
+        public class KnowledgeHandler : ResponseHandler
         {
             private readonly IKnowledgeBase _kb;
 
             public KnowledgeHandler(IKnowledgeBase kb) => _kb = kb;
 
-            public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
+            public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
                 CreateResponse request,
-                IResponseContext context,
+                ResponseContext context,
                 [EnumeratorCancellation] CancellationToken cancellationToken)
             {
                 var stream = new ResponseEventStream(context, request);

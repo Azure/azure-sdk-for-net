@@ -93,4 +93,4 @@ Integration follows standard ASP.NET Core conventions:
 - `IServiceCollection` extensions for registration: `AddResponsesServer()`
 - `IEndpointRouteBuilder` extensions for routing: `MapResponsesServer()`
 - The library owns protocol concerns (request/response models, routing, serialization, error shapes)
-- The consumer owns business logic (tool implementations, agent behaviour via `IResponseHandler`)
+- The consumer owns business logic (tool implementations, agent behaviour via `ResponseHandler`)

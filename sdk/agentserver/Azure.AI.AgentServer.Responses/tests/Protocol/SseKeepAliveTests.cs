@@ -103,7 +103,7 @@ public class SseKeepAliveTests : IDisposable
     /// The delay gives the keep-alive timer a chance to fire (if configured).
     /// </summary>
     private static async IAsyncEnumerable<ResponseStreamEvent> SlowStream(
-        IResponseContext ctx, TimeSpan delay,
+        ResponseContext ctx, TimeSpan delay,
         [EnumeratorCancellation] CancellationToken ct = default)
     {
         var response = new Models.ResponseObject(ctx.ResponseId, "test");

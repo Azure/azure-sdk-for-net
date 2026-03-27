@@ -104,7 +104,7 @@ public class GetNonBgInFlightProtocolTests : ProtocolTestBase
     // ── Helper streams ──
 
     private static async IAsyncEnumerable<ResponseStreamEvent> GatedStream(
-        IResponseContext ctx, TaskCompletionSource started, Task gate,
+        ResponseContext ctx, TaskCompletionSource started, Task gate,
         [EnumeratorCancellation] CancellationToken ct = default)
     {
         var stream = new ResponseEventStream(ctx, new CreateResponse { Model = "test" });
@@ -115,7 +115,7 @@ public class GetNonBgInFlightProtocolTests : ProtocolTestBase
     }
 
     private static async IAsyncEnumerable<ResponseStreamEvent> WaitingStream(
-        IResponseContext ctx, Task waitTask,
+        ResponseContext ctx, Task waitTask,
         [EnumeratorCancellation] CancellationToken ct = default)
     {
         var stream = new ResponseEventStream(ctx, new CreateResponse { Model = "test" });

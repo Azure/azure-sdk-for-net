@@ -11,11 +11,11 @@ dotnet add package Azure.AI.AgentServer.Responses --prerelease
 ## Implement the handler
 
 ```C# Snippet:Responses_Sample2_WeatherHandler
-public class WeatherHandler : IResponseHandler
+public class WeatherHandler : ResponseHandler
 {
-    public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
+    public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
         CreateResponse request,
-        IResponseContext context,
+        ResponseContext context,
         [EnumeratorCancellation] CancellationToken cancellationToken)
     {
         await Task.CompletedTask;

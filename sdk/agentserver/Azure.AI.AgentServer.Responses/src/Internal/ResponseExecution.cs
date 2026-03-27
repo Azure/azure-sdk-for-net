@@ -74,7 +74,7 @@ internal sealed class ResponseExecution : IDisposable
     /// <summary>
     /// Gets or sets whether a graceful shutdown has been requested for this response.
     /// Set by <see cref="ResponseExecutionTracker.StopAsync"/> before cancelling the CTS.
-    /// Handlers can check <see cref="IResponseContext.IsShutdownRequested"/> to distinguish
+    /// Handlers can check <see cref="ResponseContext.IsShutdownRequested"/> to distinguish
     /// shutdown from explicit cancel or client disconnect.
     /// Written from shutdown thread, read from handler thread — uses Volatile for visibility.
     /// </summary>
@@ -104,9 +104,9 @@ internal sealed class ResponseExecution : IDisposable
     /// <summary>
     /// Gets or sets the response context associated with this execution.
     /// Used by <see cref="ResponseExecutionTracker.StopAsync"/> to propagate
-    /// <see cref="IResponseContext.IsShutdownRequested"/> to the handler.
+    /// <see cref="ResponseContext.IsShutdownRequested"/> to the handler.
     /// </summary>
-    public IResponseContext? Context { get; set; }
+    public ResponseContext? Context { get; set; }
 
     /// <summary>
     /// Gets or sets the completion timestamp. Null when in-flight; set on completion for TTL eviction.

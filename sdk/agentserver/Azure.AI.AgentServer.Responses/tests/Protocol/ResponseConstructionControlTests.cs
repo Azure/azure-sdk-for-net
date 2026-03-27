@@ -136,7 +136,7 @@ public class ResponseConstructionControlTests : ProtocolTestBase
 
     private static async IAsyncEnumerable<ResponseStreamEvent> CustomMetadataStream(
         CreateResponse request,
-        IResponseContext ctx,
+        ResponseContext ctx,
         [EnumeratorCancellation] CancellationToken ct = default)
     {
         await Task.CompletedTask;
@@ -150,7 +150,7 @@ public class ResponseConstructionControlTests : ProtocolTestBase
 
     private static async IAsyncEnumerable<ResponseStreamEvent> CustomInstructionsStream(
         CreateResponse request,
-        IResponseContext ctx,
+        ResponseContext ctx,
         [EnumeratorCancellation] CancellationToken ct = default)
     {
         await Task.CompletedTask;
@@ -162,7 +162,7 @@ public class ResponseConstructionControlTests : ProtocolTestBase
     }
 
     private static async IAsyncEnumerable<ResponseStreamEvent> RawEventStream(
-        IResponseContext ctx,
+        ResponseContext ctx,
         [EnumeratorCancellation] CancellationToken ct = default)
     {
         await Task.CompletedTask;

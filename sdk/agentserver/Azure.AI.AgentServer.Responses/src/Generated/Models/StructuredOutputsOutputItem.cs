@@ -16,12 +16,15 @@ namespace Azure.AI.AgentServer.Responses.Models
     {
         /// <summary> Initializes a new instance of <see cref="StructuredOutputsOutputItem"/>. </summary>
         /// <param name="output"> The structured output captured during the response. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="output"/> is null. </exception>
-        public StructuredOutputsOutputItem(BinaryData output) : base(OutputItemType.StructuredOutputs)
+        /// <param name="id"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="output"/> or <paramref name="id"/> is null. </exception>
+        public StructuredOutputsOutputItem(BinaryData output, string id) : base(OutputItemType.StructuredOutputs)
         {
             Argument.AssertNotNull(output, nameof(output));
+            Argument.AssertNotNull(id, nameof(id));
 
             Output = output;
+            Id = id;
         }
 
         /// <summary> Initializes a new instance of <see cref="StructuredOutputsOutputItem"/>. </summary>
@@ -31,9 +34,11 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <param name="responseId"> The response on which the item is created. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="output"> The structured output captured during the response. </param>
-        internal StructuredOutputsOutputItem(OutputItemType @type, BinaryData createdBy, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, BinaryData output) : base(@type, createdBy, agentReference, responseId, additionalBinaryDataProperties)
+        /// <param name="id"></param>
+        internal StructuredOutputsOutputItem(OutputItemType @type, BinaryData createdBy, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, BinaryData output, string id) : base(@type, createdBy, agentReference, responseId, additionalBinaryDataProperties)
         {
             Output = output;
+            Id = id;
         }
 
         /// <summary>
@@ -63,5 +68,8 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// </para>
         /// </summary>
         public BinaryData Output { get; set; }
+
+        /// <summary> Gets or sets the Id. </summary>
+        public string Id { get; set; }
     }
 }

@@ -17,7 +17,7 @@ public static class ResponsesBuilderExtensions
     /// specified <typeparamref name="THandler"/> as the response handler.
     /// </summary>
     /// <typeparam name="THandler">
-    /// The <see cref="IResponseHandler"/> implementation to handle responses.
+    /// The <see cref="ResponseHandler"/> implementation to handle responses.
     /// </typeparam>
     /// <param name="builder">The agent server builder.</param>
     /// <param name="configure">Optional callback to configure <see cref="ResponsesServerOptions"/>.</param>
@@ -25,10 +25,10 @@ public static class ResponsesBuilderExtensions
     public static AgentHostBuilder AddResponses<THandler>(
         this AgentHostBuilder builder,
         Action<ResponsesServerOptions>? configure = null)
-        where THandler : class, IResponseHandler
+        where THandler : ResponseHandler
     {
         builder.Services.AddResponsesServer(configure);
-        builder.Services.AddScoped<IResponseHandler, THandler>();
+        builder.Services.AddScoped<ResponseHandler, THandler>();
 
         builder.RegisterProtocol("Responses", endpoints =>
         {
@@ -47,11 +47,38 @@ public static class ResponsesBuilderExtensions
     /// <returns>The builder for chaining.</returns>
     public static AgentHostBuilder AddResponses(
         this AgentHostBuilder builder,
-        IResponseHandler handler,
+        ResponseHandler handler,
         Action<ResponsesServerOptions>? configure = null)
     {
         builder.Services.AddResponsesServer(configure);
-        builder.Services.AddScoped<IResponseHandler>(_ => handler);
+        builder.Services.AddScoped<ResponseHandler>(_ => handler);
+
+        builder.RegisterProtocol("Responses", endpoints =>
+        {
+            endpoints.MapResponsesServer();
+        });
+
+        return builder;
+    }
+
+    /// <summary>
+    /// Registers the Responses protocol with a factory delegate that creates the handler.
+    /// Use this overload when you need full control over handler construction
+    /// while still having access to the <see cref="IServiceProvider"/>.
+    /// </summary>
+    /// <param name="builder">The agent server builder.</param>
+    /// <param name="factory">A factory that receives the service provider and returns a <see cref="ResponseHandler"/>.</param>
+    /// <param name="configure">Optional callback to configure <see cref="ResponsesServerOptions"/>.</param>
+    /// <returns>The builder for chaining.</returns>
+    public static AgentHostBuilder AddResponses(
+        this AgentHostBuilder builder,
+        Func<IServiceProvider, ResponseHandler> factory,
+        Action<ResponsesServerOptions>? configure = null)
+    {
+        Argument.AssertNotNull(factory, nameof(factory));
+
+        builder.Services.AddResponsesServer(configure);
+        builder.Services.AddScoped<ResponseHandler>(factory);
 
         builder.RegisterProtocol("Responses", endpoints =>
         {

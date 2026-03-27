@@ -85,7 +85,7 @@ public class CacheIntegrationTests : IDisposable
     }
 
     private static async IAsyncEnumerable<ResponseStreamEvent> WaitingEventStream(
-        IResponseContext ctx,
+        ResponseContext ctx,
         Task delayTask,
         [EnumeratorCancellation] CancellationToken ct)
     {

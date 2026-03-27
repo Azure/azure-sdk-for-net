@@ -75,7 +75,7 @@ public class CancelResponseTests : IDisposable
     }
 
     private static async IAsyncEnumerable<ResponseStreamEvent> InfiniteEventStream(
-        IResponseContext ctx,
+        ResponseContext ctx,
         TaskCompletionSource tcs,
         [EnumeratorCancellation] CancellationToken ct)
     {

@@ -96,7 +96,7 @@ public class ConnectionTerminationTests : ProtocolTestBase
     }
 
     private static async IAsyncEnumerable<ResponseStreamEvent> DisconnectTrackingStream(
-        IResponseContext ctx,
+        ResponseContext ctx,
         TaskCompletionSource handlerStarted,
         TaskCompletionSource handlerCancelled,
         [EnumeratorCancellation] CancellationToken ct = default)
@@ -123,7 +123,7 @@ public class ConnectionTerminationTests : ProtocolTestBase
     }
 
     private static async IAsyncEnumerable<ResponseStreamEvent> DelayedCompleteStream(
-        IResponseContext ctx,
+        ResponseContext ctx,
         TaskCompletionSource handlerCompleted,
         [EnumeratorCancellation] CancellationToken ct = default)
     {

@@ -17,15 +17,18 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <param name="kind"> The kind of CSDL action (e.g., 'SetVariable', 'InvokeAzureAgent'). </param>
         /// <param name="actionId"> Unique identifier for the action. </param>
         /// <param name="status"> Status of the action (e.g., 'in_progress', 'completed', 'failed', 'cancelled'). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="kind"/> or <paramref name="actionId"/> is null. </exception>
-        public WorkflowActionOutputItem(string kind, string actionId, WorkflowActionOutputItemStatus status) : base(OutputItemType.WorkflowAction)
+        /// <param name="id"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="kind"/>, <paramref name="actionId"/> or <paramref name="id"/> is null. </exception>
+        public WorkflowActionOutputItem(string kind, string actionId, WorkflowActionOutputItemStatus status, string id) : base(OutputItemType.WorkflowAction)
         {
             Argument.AssertNotNull(kind, nameof(kind));
             Argument.AssertNotNull(actionId, nameof(actionId));
+            Argument.AssertNotNull(id, nameof(id));
 
             Kind = kind;
             ActionId = actionId;
             Status = status;
+            Id = id;
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkflowActionOutputItem"/>. </summary>
@@ -39,13 +42,15 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <param name="parentActionId"> ID of the parent action if this is a nested action. </param>
         /// <param name="previousActionId"> ID of the previous action if this action follows another. </param>
         /// <param name="status"> Status of the action (e.g., 'in_progress', 'completed', 'failed', 'cancelled'). </param>
-        internal WorkflowActionOutputItem(OutputItemType @type, BinaryData createdBy, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string kind, string actionId, string parentActionId, string previousActionId, WorkflowActionOutputItemStatus status) : base(@type, createdBy, agentReference, responseId, additionalBinaryDataProperties)
+        /// <param name="id"></param>
+        internal WorkflowActionOutputItem(OutputItemType @type, BinaryData createdBy, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string kind, string actionId, string parentActionId, string previousActionId, WorkflowActionOutputItemStatus status, string id) : base(@type, createdBy, agentReference, responseId, additionalBinaryDataProperties)
         {
             Kind = kind;
             ActionId = actionId;
             ParentActionId = parentActionId;
             PreviousActionId = previousActionId;
             Status = status;
+            Id = id;
         }
 
         /// <summary> The kind of CSDL action (e.g., 'SetVariable', 'InvokeAzureAgent'). </summary>
@@ -62,5 +67,8 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <summary> Status of the action (e.g., 'in_progress', 'completed', 'failed', 'cancelled'). </summary>
         public WorkflowActionOutputItemStatus Status { get; set; }
+
+        /// <summary> Gets or sets the Id. </summary>
+        public string Id { get; set; }
     }
 }

@@ -87,7 +87,7 @@ public class StreamingBackgroundModeProtocolTests : ProtocolTestBase
     // ── Helper event factories ─────────────────────────────────
 
     private static async IAsyncEnumerable<ResponseStreamEvent> SimpleStream(
-        IResponseContext ctx,
+        ResponseContext ctx,
         [EnumeratorCancellation] CancellationToken ct = default)
     {
         await Task.CompletedTask;
@@ -98,7 +98,7 @@ public class StreamingBackgroundModeProtocolTests : ProtocolTestBase
     }
 
     private static async IAsyncEnumerable<ResponseStreamEvent> BackgroundContinuationStream(
-        IResponseContext ctx,
+        ResponseContext ctx,
         TaskCompletionSource tcs,
         TaskCompletionSource handlerStarted,
         [EnumeratorCancellation] CancellationToken ct = default)

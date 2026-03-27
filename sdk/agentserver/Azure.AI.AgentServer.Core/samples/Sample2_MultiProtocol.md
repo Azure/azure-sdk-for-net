@@ -37,11 +37,11 @@ app.Run();
 The chat handler streams responses via the Responses API:
 
 ```C# Snippet:Hosting_Sample2_ChatHandler
-public class ChatHandler : IResponseHandler
+public class ChatHandler : ResponseHandler
 {
-    public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
+    public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
         CreateResponse request,
-        IResponseContext context,
+        ResponseContext context,
         [EnumeratorCancellation] CancellationToken cancellationToken)
     {
         var stream = new ResponseEventStream(context, request);

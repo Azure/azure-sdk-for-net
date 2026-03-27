@@ -32,7 +32,7 @@ public class ServiceRegistrationTests
         var custom = new StubResponsesProvider();
         var services = new ServiceCollection();
         services.AddSingleton<IResponsesProvider>(custom);
-        services.AddSingleton<IResponseHandler>(new TestHandler());
+        services.AddSingleton<ResponseHandler>(new TestHandler());
         services.AddResponsesServer();
 
         using var sp = services.BuildServiceProvider();
@@ -47,7 +47,7 @@ public class ServiceRegistrationTests
         var custom = new StubCancellationProvider();
         var services = new ServiceCollection();
         services.AddSingleton<IResponsesCancellationSignalProvider>(custom);
-        services.AddSingleton<IResponseHandler>(new TestHandler());
+        services.AddSingleton<ResponseHandler>(new TestHandler());
         services.AddResponsesServer();
 
         using var sp = services.BuildServiceProvider();
@@ -62,7 +62,7 @@ public class ServiceRegistrationTests
         var custom = new StubStreamProvider();
         var services = new ServiceCollection();
         services.AddSingleton<IResponsesStreamProvider>(custom);
-        services.AddSingleton<IResponseHandler>(new TestHandler());
+        services.AddSingleton<ResponseHandler>(new TestHandler());
         services.AddResponsesServer();
 
         using var sp = services.BuildServiceProvider();
@@ -75,7 +75,7 @@ public class ServiceRegistrationTests
     public void Default_Registration_Provides_InMemory_For_All_Three_Interfaces()
     {
         var services = new ServiceCollection();
-        services.AddSingleton<IResponseHandler>(new TestHandler());
+        services.AddSingleton<ResponseHandler>(new TestHandler());
         services.AddResponsesServer();
 
         using var sp = services.BuildServiceProvider();
@@ -94,7 +94,7 @@ public class ServiceRegistrationTests
         var customState = new StubResponsesProvider();
         var services = new ServiceCollection();
         services.AddSingleton<IResponsesProvider>(customState);
-        services.AddSingleton<IResponseHandler>(new TestHandler());
+        services.AddSingleton<ResponseHandler>(new TestHandler());
         services.AddResponsesServer();
 
         using var sp = services.BuildServiceProvider();
@@ -361,7 +361,7 @@ public class ServiceRegistrationTests
     }
 
     private static async IAsyncEnumerable<ResponseStreamEvent> BlockingStream(
-        IResponseContext ctx,
+        ResponseContext ctx,
         [EnumeratorCancellation] CancellationToken ct)
     {
         var response = new Models.ResponseObject(ctx.ResponseId, "test");

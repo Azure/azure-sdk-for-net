@@ -10,7 +10,7 @@ namespace Azure.AI.AgentServer.Responses.Tests.Protocol;
 
 /// <summary>
 /// E2E protocol tests for ResponseCreatedEvent validation rules.
-/// Validates FR-006 (Models.ResponseObject.Id must match IResponseContext.ResponseId) and
+/// Validates FR-006 (Models.ResponseObject.Id must match ResponseContext.ResponseId) and
 /// FR-007 (Models.ResponseObject.Status must be non-terminal on ResponseCreatedEvent).
 /// </summary>
 public class ResponseCreatedValidationTests : ProtocolTestBase
@@ -20,7 +20,7 @@ public class ResponseCreatedValidationTests : ProtocolTestBase
     [Test]
     public async Task POST_Responses_MismatchedResponseId_ReturnsBadHandlerError()
     {
-        // Handler emits ResponseCreatedEvent with a different ID than IResponseContext.ResponseId
+        // Handler emits ResponseCreatedEvent with a different ID than ResponseContext.ResponseId
         // → SDK rejects with bad handler error (FR-006)
         Handler.EventFactory = (req, ctx, ct) => MismatchedIdStream(ctx);
 
@@ -120,7 +120,7 @@ public class ResponseCreatedValidationTests : ProtocolTestBase
     // ── Helper event factories ─────────────────────────────────
 
     private static async IAsyncEnumerable<ResponseStreamEvent> MismatchedIdStream(
-        IResponseContext ctx,
+        ResponseContext ctx,
         [EnumeratorCancellation] CancellationToken ct = default)
     {
         await Task.CompletedTask;
@@ -135,7 +135,7 @@ public class ResponseCreatedValidationTests : ProtocolTestBase
     }
 
     private static async IAsyncEnumerable<ResponseStreamEvent> TerminalInitialStatusStream(
-        IResponseContext ctx,
+        ResponseContext ctx,
         [EnumeratorCancellation] CancellationToken ct = default)
     {
         await Task.CompletedTask;
@@ -148,7 +148,7 @@ public class ResponseCreatedValidationTests : ProtocolTestBase
     }
 
     private static async IAsyncEnumerable<ResponseStreamEvent> NullStatusStream(
-        IResponseContext ctx,
+        ResponseContext ctx,
         [EnumeratorCancellation] CancellationToken ct = default)
     {
         await Task.CompletedTask;

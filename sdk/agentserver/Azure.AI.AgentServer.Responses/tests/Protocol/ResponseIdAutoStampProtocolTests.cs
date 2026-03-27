@@ -135,7 +135,7 @@ public class ResponseIdAutoStampProtocolTests : ProtocolTestBase
     // ── Helper event factories ─────────────────────────────────
 
     private static async IAsyncEnumerable<ResponseStreamEvent> StreamWithOutputItem(
-        IResponseContext ctx,
+        ResponseContext ctx,
         [EnumeratorCancellation] CancellationToken ct = default)
     {
         await Task.CompletedTask;
@@ -157,7 +157,7 @@ public class ResponseIdAutoStampProtocolTests : ProtocolTestBase
     }
 
     private static async IAsyncEnumerable<ResponseStreamEvent> StreamWithHandlerSetResponseId(
-        IResponseContext ctx,
+        ResponseContext ctx,
         string customResponseId,
         [EnumeratorCancellation] CancellationToken ct = default)
     {
@@ -182,7 +182,7 @@ public class ResponseIdAutoStampProtocolTests : ProtocolTestBase
     }
 
     private static async IAsyncEnumerable<ResponseStreamEvent> StreamWithMultipleOutputItems(
-        IResponseContext ctx,
+        ResponseContext ctx,
         [EnumeratorCancellation] CancellationToken ct = default)
     {
         await Task.CompletedTask;
@@ -217,7 +217,7 @@ public class ResponseIdAutoStampProtocolTests : ProtocolTestBase
     /// Layer 2 (event consumption loop) must stamp response_id.
     /// </summary>
     private static async IAsyncEnumerable<ResponseStreamEvent> DirectYieldStreamWithoutResponseId(
-        IResponseContext ctx,
+        ResponseContext ctx,
         [EnumeratorCancellation] CancellationToken ct = default)
     {
         await Task.CompletedTask;

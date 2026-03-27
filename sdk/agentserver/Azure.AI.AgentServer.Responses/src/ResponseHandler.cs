@@ -7,9 +7,9 @@ namespace Azure.AI.AgentServer.Responses;
 
 /// <summary>
 /// Defines the contract for handling response creation requests.
-/// Implement this interface and register it in DI to provide your agent logic.
+/// Override this class and register it in DI to provide your agent logic.
 /// </summary>
-public interface IResponseHandler
+public abstract class ResponseHandler
 {
     /// <summary>
     /// Processes a response creation request and yields the full event stream.
@@ -19,7 +19,7 @@ public interface IResponseHandler
     /// have been consumed by the SDK and are not present.
     /// </param>
     /// <param name="context">
-    /// Provides the response identifier via <see cref="IResponseContext.ResponseId"/>.
+    /// Provides the response identifier via <see cref="ResponseContext.ResponseId"/>.
     /// Use <see cref="ResponseEventStream"/> to build and emit events.
     /// </param>
     /// <param name="cancellationToken">
@@ -30,8 +30,8 @@ public interface IResponseHandler
     /// An async enumerable of events comprising the full response event stream,
     /// including both lifecycle events and content events.
     /// </returns>
-    IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
+    public abstract IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
         CreateResponse request,
-        IResponseContext context,
+        ResponseContext context,
         CancellationToken cancellationToken);
 }

@@ -16,7 +16,7 @@ namespace Azure.AI.AgentServer.Responses.Internal;
 /// </summary>
 internal sealed class ResponseOrchestrator
 {
-    private readonly IResponseHandler _handler;
+    private readonly ResponseHandler _handler;
     private readonly IResponsesProvider _provider;
     private readonly IResponsesCancellationSignalProvider _cancellationProvider;
     private readonly IResponsesStreamProvider _streamProvider;
@@ -27,7 +27,7 @@ internal sealed class ResponseOrchestrator
     /// Initializes a new instance of <see cref="ResponseOrchestrator"/>.
     /// </summary>
     public ResponseOrchestrator(
-        IResponseHandler handler,
+        ResponseHandler handler,
         IResponsesProvider provider,
         IResponsesCancellationSignalProvider cancellationProvider,
         IResponsesStreamProvider streamProvider,
@@ -70,7 +70,7 @@ internal sealed class ResponseOrchestrator
     /// </summary>
     /// <param name="request">The deserialized CreateResponse request.</param>
     /// <param name="execution">The <see cref="ResponseExecution"/> tracking this request.</param>
-    /// <param name="context">The <see cref="IResponseContext"/> passed to the handler.</param>
+    /// <param name="context">The <see cref="ResponseContext"/> passed to the handler.</param>
     /// <param name="ct">
     /// Cancellation token assembled by the endpoint handler. Includes
     /// httpContext.RequestAborted for non-background modes.
@@ -83,7 +83,7 @@ internal sealed class ResponseOrchestrator
     public async Task<OrchestratorResult> CreateAsync(
         CreateResponse request,
         ResponseExecution execution,
-        IResponseContext context,
+        ResponseContext context,
         CancellationToken ct)
     {
         if (execution.IsStreaming)
@@ -242,7 +242,7 @@ internal sealed class ResponseOrchestrator
     internal async IAsyncEnumerable<ResponseStreamEvent> ProcessEventsAsync(
         CreateResponse request,
         ResponseExecution execution,
-        IResponseContext context,
+        ResponseContext context,
         IAsyncObserver<ResponseStreamEvent> publisher,
         [EnumeratorCancellation] CancellationToken ct)
     {
@@ -264,7 +264,7 @@ internal sealed class ResponseOrchestrator
                     yield break; // unreachable — satisfies compiler definite-assignment
                 }
 
-                // FR-006: Response.Id must match IResponseContext.ResponseId
+                // FR-006: Response.Id must match ResponseContext.ResponseId
                 if (createdEvt.Response.Id != context.ResponseId)
                 {
                     ThrowBadHandler(execution,
@@ -405,7 +405,7 @@ internal sealed class ResponseOrchestrator
     private async IAsyncEnumerable<ResponseStreamEvent> CreateStreamingAsync(
         CreateResponse request,
         ResponseExecution execution,
-        IResponseContext context,
+        ResponseContext context,
         [EnumeratorCancellation] CancellationToken ct)
     {
         var publisher = await _streamProvider.CreateEventPublisherAsync(execution.ResponseId, ct);
@@ -712,7 +712,7 @@ internal sealed class ResponseOrchestrator
     /// Returns null collections when the context is not available (e.g. cancelled before response.created).
     /// </summary>
     private static async Task<(IEnumerable<OutputItem>? InputItems, IEnumerable<string>? HistoryItemIds)>
-        ResolveItemsForPersistenceAsync(IResponseContext? context)
+        ResolveItemsForPersistenceAsync(ResponseContext? context)
     {
         if (context is null)
         {

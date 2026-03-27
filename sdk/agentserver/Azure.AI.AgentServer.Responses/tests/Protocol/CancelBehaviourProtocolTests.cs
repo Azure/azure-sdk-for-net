@@ -215,7 +215,7 @@ public class CancelBehaviourProtocolTests : ProtocolTestBase
     // ── Helper event factories ─────────────────────────────────
 
     private static async IAsyncEnumerable<ResponseStreamEvent> CompleteImmediately(
-        IResponseContext ctx,
+        ResponseContext ctx,
         [EnumeratorCancellation] CancellationToken ct = default)
     {
         await Task.CompletedTask;
@@ -225,7 +225,7 @@ public class CancelBehaviourProtocolTests : ProtocolTestBase
     }
 
     private static async IAsyncEnumerable<ResponseStreamEvent> WaitingStream(
-        IResponseContext ctx,
+        ResponseContext ctx,
         Task waitTask,
         [EnumeratorCancellation] CancellationToken ct = default)
     {
@@ -236,7 +236,7 @@ public class CancelBehaviourProtocolTests : ProtocolTestBase
     }
 
     private static async IAsyncEnumerable<ResponseStreamEvent> StreamWithDeltas(
-        IResponseContext ctx,
+        ResponseContext ctx,
         Task waitTask,
         TaskCompletionSource deltasEmitted,
         [EnumeratorCancellation] CancellationToken ct = default)
@@ -255,7 +255,7 @@ public class CancelBehaviourProtocolTests : ProtocolTestBase
     }
 
     private static async IAsyncEnumerable<ResponseStreamEvent> FailAfterCreated(
-        IResponseContext ctx,
+        ResponseContext ctx,
         [EnumeratorCancellation] CancellationToken ct = default)
     {
         var stream = new ResponseEventStream(ctx, new CreateResponse { Model = "test" });
@@ -264,7 +264,7 @@ public class CancelBehaviourProtocolTests : ProtocolTestBase
     }
 
     private static async IAsyncEnumerable<ResponseStreamEvent> ThrowOnCancel(
-        IResponseContext ctx,
+        ResponseContext ctx,
         TaskCompletionSource handlerStarted,
         [EnumeratorCancellation] CancellationToken ct = default)
     {

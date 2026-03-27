@@ -115,7 +115,7 @@ public class OptionalModelProtocolTests : ProtocolTestBase
     // ── Helper event factories ─────────────────────────────────
 
     private static async IAsyncEnumerable<ResponseStreamEvent> SimpleStream(
-        IResponseContext ctx,
+        ResponseContext ctx,
         CreateResponse request,
         [EnumeratorCancellation] CancellationToken ct = default)
     {

@@ -10,7 +10,7 @@ namespace Azure.AI.AgentServer.Responses.Tests;
 
 /// <summary>
 /// T019: External consumer validation — proves that a consumer project
-/// (no InternalsVisibleTo) can implement IResponseHandler and construct
+/// (no InternalsVisibleTo) can implement ResponseHandler and construct
 /// all needed types using public constructors only.
 /// Validates SC-001.
 /// </summary>

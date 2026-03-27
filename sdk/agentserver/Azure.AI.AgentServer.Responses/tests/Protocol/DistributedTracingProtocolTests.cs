@@ -62,7 +62,7 @@ public sealed class DistributedTracingProtocolTests : IDisposable
 
     private async IAsyncEnumerable<Azure.AI.AgentServer.Responses.Models.ResponseStreamEvent> CaptureAndYieldDefault(
         Azure.AI.AgentServer.Responses.Models.CreateResponse request,
-        IResponseContext context,
+        ResponseContext context,
         [System.Runtime.CompilerServices.EnumeratorCancellation] CancellationToken ct)
     {
         // Capture Activity.Current — tags and baggage are set BEFORE handler invocation

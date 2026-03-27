@@ -75,7 +75,7 @@ public class BackgroundModeProtocolTests : ProtocolTestBase
     // ── Helper event factories ─────────────────────────────────
 
     private static async IAsyncEnumerable<ResponseStreamEvent> WaitingStream(
-        IResponseContext ctx,
+        ResponseContext ctx,
         Task waitTask,
         [EnumeratorCancellation] CancellationToken ct = default)
     {

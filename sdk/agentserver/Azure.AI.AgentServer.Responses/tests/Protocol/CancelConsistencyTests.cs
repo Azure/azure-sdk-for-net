@@ -171,7 +171,7 @@ public class CancelConsistencyTests : IDisposable
     /// Handler that yields response.created, signals started, waits for gate or cancellation.
     /// </summary>
     private static async IAsyncEnumerable<ResponseStreamEvent> CancellableStream(
-        IResponseContext ctx, TaskCompletionSource started, TaskCompletionSource gate,
+        ResponseContext ctx, TaskCompletionSource started, TaskCompletionSource gate,
         [EnumeratorCancellation] CancellationToken ct = default)
     {
         var response = new Models.ResponseObject(ctx.ResponseId, "test");

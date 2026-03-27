@@ -18,10 +18,15 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// The status of the memory search tool call. One of `in_progress`,
         /// `searching`, `completed`, `incomplete` or `failed`,
         /// </param>
-        public MemorySearchToolCallItemResource(MemorySearchToolCallItemResourceStatus status) : base(OutputItemType.MemorySearchCall)
+        /// <param name="id"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        public MemorySearchToolCallItemResource(MemorySearchToolCallItemResourceStatus status, string id) : base(OutputItemType.MemorySearchCall)
         {
+            Argument.AssertNotNull(id, nameof(id));
+
             Status = status;
             Results = new ChangeTrackingList<MemorySearchItem>();
+            Id = id;
         }
 
         /// <summary> Initializes a new instance of <see cref="MemorySearchToolCallItemResource"/>. </summary>
@@ -35,10 +40,12 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// `searching`, `completed`, `incomplete` or `failed`,
         /// </param>
         /// <param name="results"> The results returned from the memory search. </param>
-        internal MemorySearchToolCallItemResource(OutputItemType @type, BinaryData createdBy, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, MemorySearchToolCallItemResourceStatus status, IList<MemorySearchItem> results) : base(@type, createdBy, agentReference, responseId, additionalBinaryDataProperties)
+        /// <param name="id"></param>
+        internal MemorySearchToolCallItemResource(OutputItemType @type, BinaryData createdBy, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, MemorySearchToolCallItemResourceStatus status, IList<MemorySearchItem> results, string id) : base(@type, createdBy, agentReference, responseId, additionalBinaryDataProperties)
         {
             Status = status;
             Results = results;
+            Id = id;
         }
 
         /// <summary>
@@ -49,5 +56,8 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <summary> The results returned from the memory search. </summary>
         public IList<MemorySearchItem> Results { get; set; }
+
+        /// <summary> Gets or sets the Id. </summary>
+        public string Id { get; set; }
     }
 }

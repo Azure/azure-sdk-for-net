@@ -22,7 +22,8 @@ internal static class StorageErrorMapper
     /// <exception cref="ResponsesApiException">Thrown for all other non-success responses (5xx, etc.).</exception>
     public static async Task ThrowIfErrorAsync(HttpResponseMessage response, CancellationToken cancellationToken = default)
     {
-        if (response.IsSuccessStatusCode) return;
+        if (response.IsSuccessStatusCode)
+            return;
 
         var status = (int)response.StatusCode;
         var message = await ExtractMessageAsync(response, cancellationToken);
@@ -57,7 +58,8 @@ internal static class StorageErrorMapper
                     if (errorElement.TryGetProperty("message", out var msgElement))
                     {
                         var msg = msgElement.GetString();
-                        if (!string.IsNullOrEmpty(msg)) return msg;
+                        if (!string.IsNullOrEmpty(msg))
+                            return msg;
                     }
                 }
             }

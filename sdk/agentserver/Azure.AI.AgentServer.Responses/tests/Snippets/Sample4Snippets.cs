@@ -34,11 +34,11 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
 
         #region Snippet:Responses_Sample4_MathSolverHandler
 
-        public class MathSolverHandler : IResponseHandler
+        public class MathSolverHandler : ResponseHandler
         {
-            public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
+            public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
                 CreateResponse request,
-                IResponseContext context,
+                ResponseContext context,
                 [EnumeratorCancellation] CancellationToken cancellationToken)
             {
                 await Task.CompletedTask;

@@ -341,9 +341,9 @@ public class LiveOutputTrackingTests : IDisposable
     }
 
     private static async IAsyncEnumerable<ResponseStreamEvent> CaptureAfterAdd(
-        IResponseContext ctx,
+        ResponseContext ctx,
         OutputItem item,
-        Action<IResponseContext> capture,
+        Action<ResponseContext> capture,
         [EnumeratorCancellation] CancellationToken ct)
     {
         var response = new Models.ResponseObject(ctx.ResponseId, "test-model");

@@ -15,7 +15,7 @@ namespace Azure.AI.AgentServer.Responses.Tests;
 public class InternalStateManagementTests
 {
     private static readonly Assembly ContractsAssembly = typeof(Models.ResponseObject).Assembly;
-    private static readonly Assembly SdkAssembly = typeof(IResponseHandler).Assembly;
+    private static readonly Assembly SdkAssembly = typeof(ResponseHandler).Assembly;
 
     [Test]
     public void ResponseState_NoLongerExists()

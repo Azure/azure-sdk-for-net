@@ -79,9 +79,9 @@ The documentation follows a **4-layer architecture**. The first three layers for
 
 | Topic | Canonical Document | Section | Audience |
 |-------|-------------------|---------|----------|
-| `IResponseHandler` interface | [handler-implementation-guide.md](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/handler-implementation-guide.md) | [IResponseHandler](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/handler-implementation-guide.md#iresponsehandler) | Handler authors |
+| `ResponseHandler` abstract class | [handler-implementation-guide.md](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/handler-implementation-guide.md) | [ResponseHandler](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/handler-implementation-guide.md#responsehandler) | Handler authors |
 | `ResponseEventStream` | [handler-implementation-guide.md](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/handler-implementation-guide.md) | [ResponseEventStream](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/handler-implementation-guide.md#responseeventstream) | Handler authors |
-| `IResponseContext` | [handler-implementation-guide.md](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/handler-implementation-guide.md) | [IResponseContext](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/handler-implementation-guide.md#iresponsecontext) | Handler authors |
+| `ResponseContext` | [handler-implementation-guide.md](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/handler-implementation-guide.md) | [ResponseContext](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/handler-implementation-guide.md#responsecontext) | Handler authors |
 | Builder pattern | [handler-implementation-guide.md](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/handler-implementation-guide.md) | [Builder Pattern](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/handler-implementation-guide.md#builder-pattern) | Handler authors |
 | Emitting output (text, function calls, etc.) | [handler-implementation-guide.md](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/handler-implementation-guide.md) | [Emitting Output](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/handler-implementation-guide.md#emitting-output) | Handler authors |
 | Handling input | [handler-implementation-guide.md](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/handler-implementation-guide.md) | [Handling Input](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/handler-implementation-guide.md#handling-input) | Handler authors |
@@ -108,8 +108,8 @@ The documentation follows a **4-layer architecture**. The first three layers for
 | Distributed tracing | Code sample (ActivitySource registration) | API contract §B34 |
 | TTL eviction | Config code sample | API contract §B35 |
 | SSE keep-alive | Config code sample | API contract §B28 |
-| Client headers (`ClientHeaders`) | "Forwarded `x-client-*` headers from the original request" | Handler guide §IResponseContext |
-| Query parameters (`QueryParameters`) | "All query parameters from the original request" | Handler guide §IResponseContext |
+| Client headers (`ClientHeaders`) | "Forwarded `x-client-*` headers from the original request" | Handler guide §ResponseContext |
+| Query parameters (`QueryParameters`) | "All query parameters from the original request" | Handler guide §ResponseContext |
 | Custom response provider | Cross-link to library spec + design doc | library spec §Persistence Contract, design/provider-contract.md |
 | Error shapes | "Throw BadRequestException for 400; unhandled → 500" | API contract §Error Shapes |
 

@@ -226,7 +226,7 @@ public class EphemeralNonBgResponseTests : ProtocolTestBase
     /// Handler that signals when started, then waits for cancellation.
     /// </summary>
     private static async IAsyncEnumerable<ResponseStreamEvent> DisconnectTrackingStream(
-        IResponseContext ctx, TaskCompletionSource started, TaskCompletionSource cancelled,
+        ResponseContext ctx, TaskCompletionSource started, TaskCompletionSource cancelled,
         [EnumeratorCancellation] CancellationToken ct = default)
     {
         var stream = new ResponseEventStream(ctx, new CreateResponse { Model = "test" });
@@ -248,7 +248,7 @@ public class EphemeralNonBgResponseTests : ProtocolTestBase
     /// Handler that yields response.created, then waits for a gate, then completes.
     /// </summary>
     private static async IAsyncEnumerable<ResponseStreamEvent> WaitingStream(
-        IResponseContext ctx, Task gate,
+        ResponseContext ctx, Task gate,
         [EnumeratorCancellation] CancellationToken ct = default)
     {
         var stream = new ResponseEventStream(ctx, new CreateResponse { Model = "test" });
@@ -261,7 +261,7 @@ public class EphemeralNonBgResponseTests : ProtocolTestBase
     /// Handler that yields response.created, then throws.
     /// </summary>
     private static async IAsyncEnumerable<ResponseStreamEvent> ThrowAfterCreatedStream(
-        IResponseContext ctx)
+        ResponseContext ctx)
     {
         var stream = new ResponseEventStream(ctx, new CreateResponse { Model = "test" });
         yield return stream.EmitCreated();
@@ -273,7 +273,7 @@ public class EphemeralNonBgResponseTests : ProtocolTestBase
     /// Handler that yields response.created → response.incomplete.
     /// </summary>
     private static async IAsyncEnumerable<ResponseStreamEvent> IncompleteStream(
-        IResponseContext ctx)
+        ResponseContext ctx)
     {
         var stream = new ResponseEventStream(ctx, new CreateResponse { Model = "test" });
         yield return stream.EmitCreated();

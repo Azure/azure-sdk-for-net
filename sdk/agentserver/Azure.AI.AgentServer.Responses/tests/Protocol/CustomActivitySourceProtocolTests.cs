@@ -344,7 +344,7 @@ public sealed class CustomActivitySourceProtocolTests
 
         private async IAsyncEnumerable<ResponseStreamEvent> CaptureAndYield(
             CreateResponse request,
-            IResponseContext context,
+            ResponseContext context,
             [System.Runtime.CompilerServices.EnumeratorCancellation] System.Threading.CancellationToken ct)
         {
             var current = Activity.Current;

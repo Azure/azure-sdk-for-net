@@ -1,6 +1,6 @@
 # Sample 3: Conversation History — Study Tutor
 
-This sample builds a study tutor agent that uses `IResponseContext.GetHistoryAsync()` to resolve prior conversation turns. The tutor references previous exchanges to give contextual follow-up answers, demonstrating multi-turn conversational flows using `previous_response_id`.
+This sample builds a study tutor agent that uses `ResponseContext.GetHistoryAsync()` to resolve prior conversation turns. The tutor references previous exchanges to give contextual follow-up answers, demonstrating multi-turn conversational flows using `previous_response_id`.
 
 ## Prerequisites
 
@@ -11,11 +11,11 @@ dotnet add package Azure.AI.AgentServer.Responses --prerelease
 ## Implement the handler
 
 ```C# Snippet:Responses_Sample3_StudyTutorHandler
-public class StudyTutorHandler : IResponseHandler
+public class StudyTutorHandler : ResponseHandler
 {
-    public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
+    public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
         CreateResponse request,
-        IResponseContext context,
+        ResponseContext context,
         [EnumeratorCancellation] CancellationToken cancellationToken)
     {
         var stream = new ResponseEventStream(context, request);

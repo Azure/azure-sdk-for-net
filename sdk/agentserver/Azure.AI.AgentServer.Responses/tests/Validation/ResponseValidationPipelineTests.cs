@@ -167,7 +167,7 @@ public class ResponseValidationPipelineTests : ProtocolTestBase
     // -----------------------------------------------------------------------
 
     private static async IAsyncEnumerable<ResponseStreamEvent> StreamWithValidationError(
-        IResponseContext ctx,
+        ResponseContext ctx,
         [EnumeratorCancellation] CancellationToken ct = default)
     {
         var resp = new Models.ResponseObject(ctx.ResponseId, "test");
@@ -181,7 +181,7 @@ public class ResponseValidationPipelineTests : ProtocolTestBase
     }
 
     private static async IAsyncEnumerable<ResponseStreamEvent> ThrowsValidationImmediately(
-        IResponseContext ctx,
+        ResponseContext ctx,
         [EnumeratorCancellation] CancellationToken ct = default)
     {
         var resp = new Models.ResponseObject(ctx.ResponseId, "test");
@@ -203,7 +203,7 @@ public class ResponseValidationPipelineTests : ProtocolTestBase
     }
 
     private static async IAsyncEnumerable<ResponseStreamEvent> ValidStream(
-        IResponseContext ctx,
+        ResponseContext ctx,
         [EnumeratorCancellation] CancellationToken ct = default)
     {
         var resp = new Models.ResponseObject(ctx.ResponseId, "test");

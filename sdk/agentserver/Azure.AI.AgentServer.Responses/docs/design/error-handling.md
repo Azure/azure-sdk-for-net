@@ -62,7 +62,7 @@ The classification relies on three separate `CancellationTokenSource` instances 
 | HTTP context `RequestAborted` | ASP.NET Core transport layer | `ClientDisconnected` |
 | `IHostApplicationLifetime.ApplicationStopping` | .NET host | `ShutdownRequested` |
 
-These are linked into a combined `CancellationToken` passed to the handler via `IResponseContext`. When any source fires, the combined token is cancelled. The orchestrator then inspects which source fired to classify the OCE.
+These are linked into a combined `CancellationToken` passed to the handler via `ResponseContext`. When any source fires, the combined token is cancelled. The orchestrator then inspects which source fired to classify the OCE.
 
 ---
 

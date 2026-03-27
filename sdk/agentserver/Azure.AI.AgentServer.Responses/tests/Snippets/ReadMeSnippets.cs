@@ -36,7 +36,7 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
             var builder = WebApplication.CreateBuilder();
 
             builder.Services.AddResponsesServer();
-            builder.Services.AddScoped<IResponseHandler, EchoHandler>();
+            builder.Services.AddScoped<ResponseHandler, EchoHandler>();
 
             var app = builder.Build();
             app.MapResponsesServer();
@@ -56,11 +56,11 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
 
         #region Snippet:Responses_ReadMe_EchoHandler
 
-        public class EchoHandler : IResponseHandler
+        public class EchoHandler : ResponseHandler
         {
-            public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
+            public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
                 CreateResponse request,
-                IResponseContext context,
+                ResponseContext context,
                 [EnumeratorCancellation] CancellationToken cancellationToken)
             {
                 var stream = new ResponseEventStream(context, request);

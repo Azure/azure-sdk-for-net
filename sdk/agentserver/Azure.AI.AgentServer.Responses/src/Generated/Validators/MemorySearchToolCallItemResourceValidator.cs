@@ -31,6 +31,15 @@ internal static partial class MemorySearchToolCallItemResourceValidator
             return ValidationResult.Failure(errors);
         }
 
+        // Required: id
+        if (!element.TryGetProperty("id", out var idProp))
+            errors.Add(new ValidationError("$.id", "Required property 'id' is missing"));
+        else
+        {
+            if (idProp.ValueKind != JsonValueKind.String)
+                errors.Add(new ValidationError("$.id", $"Expected string, got {idProp.ValueKind}"));
+        }
+
         // Optional: results
         if (element.TryGetProperty("results", out var resultsProp) && resultsProp.ValueKind != JsonValueKind.Null)
         {

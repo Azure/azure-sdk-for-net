@@ -23,15 +23,15 @@ ResponsesServer.Run<KnowledgeHandler>(configure: builder =>
 The handler receives services through constructor injection:
 
 ```C# Snippet:Responses_Sample5_KnowledgeHandler
-public class KnowledgeHandler : IResponseHandler
+public class KnowledgeHandler : ResponseHandler
 {
     private readonly IKnowledgeBase _kb;
 
     public KnowledgeHandler(IKnowledgeBase kb) => _kb = kb;
 
-    public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
+    public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
         CreateResponse request,
-        IResponseContext context,
+        ResponseContext context,
         [EnumeratorCancellation] CancellationToken cancellationToken)
     {
         var stream = new ResponseEventStream(context, request);

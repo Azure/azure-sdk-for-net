@@ -1,6 +1,6 @@
 # Sample 1: Getting Started — Q&A Assistant
 
-This sample shows the minimal implementation of `IResponseHandler` — a Q&A assistant that answers user questions by streaming a text response.
+This sample shows the minimal implementation of `ResponseHandler` — a Q&A assistant that answers user questions by streaming a text response.
 
 ## Prerequisites
 
@@ -11,11 +11,11 @@ dotnet add package Azure.AI.AgentServer.Responses --prerelease
 ## Implement the handler
 
 ```C# Snippet:Responses_Sample1_QnAHandler
-public class QnAHandler : IResponseHandler
+public class QnAHandler : ResponseHandler
 {
-    public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
+    public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
         CreateResponse request,
-        IResponseContext context,
+        ResponseContext context,
         [EnumeratorCancellation] CancellationToken cancellationToken)
     {
         await Task.CompletedTask;

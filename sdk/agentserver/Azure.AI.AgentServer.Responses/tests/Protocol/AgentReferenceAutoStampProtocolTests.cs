@@ -141,7 +141,7 @@ public class AgentReferenceAutoStampProtocolTests : ProtocolTestBase
     // ── Helper event factories ─────────────────────────────────
 
     private static async IAsyncEnumerable<ResponseStreamEvent> StreamWithOutputItem(
-        IResponseContext ctx,
+        ResponseContext ctx,
         CreateResponse request,
         [EnumeratorCancellation] CancellationToken ct = default)
     {
@@ -164,7 +164,7 @@ public class AgentReferenceAutoStampProtocolTests : ProtocolTestBase
     }
 
     private static async IAsyncEnumerable<ResponseStreamEvent> StreamWithHandlerSetAgentRef(
-        IResponseContext ctx,
+        ResponseContext ctx,
         CreateResponse request,
         [EnumeratorCancellation] CancellationToken ct = default)
     {
@@ -192,7 +192,7 @@ public class AgentReferenceAutoStampProtocolTests : ProtocolTestBase
     /// Layer 2 must stamp agent_reference from the request.
     /// </summary>
     private static async IAsyncEnumerable<ResponseStreamEvent> DirectYieldStreamWithAgentRef(
-        IResponseContext ctx,
+        ResponseContext ctx,
         [EnumeratorCancellation] CancellationToken ct = default)
     {
         await Task.CompletedTask;

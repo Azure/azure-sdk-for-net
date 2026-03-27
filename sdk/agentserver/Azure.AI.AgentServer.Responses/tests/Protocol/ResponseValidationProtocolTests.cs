@@ -85,7 +85,7 @@ public class ResponseValidationProtocolTests : ProtocolTestBase
     /// Throws immediately — non-streaming path will catch it.
     /// </summary>
     private static async IAsyncEnumerable<ResponseStreamEvent> ValidationFailingStream(
-        IResponseContext ctx,
+        ResponseContext ctx,
         [EnumeratorCancellation] CancellationToken ct = default)
     {
         await Task.CompletedTask;
@@ -102,7 +102,7 @@ public class ResponseValidationProtocolTests : ProtocolTestBase
     /// The SSE path should emit response.failed.
     /// </summary>
     private static async IAsyncEnumerable<ResponseStreamEvent> ValidationFailingStreamAfterCreated(
-        IResponseContext ctx,
+        ResponseContext ctx,
         [EnumeratorCancellation] CancellationToken ct = default)
     {
         await Task.CompletedTask;

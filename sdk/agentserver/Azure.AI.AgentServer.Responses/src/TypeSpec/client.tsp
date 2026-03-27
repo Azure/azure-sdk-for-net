@@ -22,6 +22,30 @@ namespace Azure.AI.Projects {
     }
   );
 
+  // Propagate "id" to Azure.AI.Projects OutputItem types that lack it.
+  // The OpenAI base types already have id; these are Azure-specific extensions.
+  @@copyProperties(Azure.AI.Projects.A2AToolCall, { id: string });
+  @@copyProperties(Azure.AI.Projects.A2AToolCallOutput, { id: string });
+  @@copyProperties(Azure.AI.Projects.AzureAISearchToolCall, { id: string });
+  @@copyProperties(Azure.AI.Projects.AzureAISearchToolCallOutput, { id: string });
+  @@copyProperties(Azure.AI.Projects.AzureFunctionToolCall, { id: string });
+  @@copyProperties(Azure.AI.Projects.AzureFunctionToolCallOutput, { id: string });
+  @@copyProperties(Azure.AI.Projects.BingCustomSearchToolCall, { id: string });
+  @@copyProperties(Azure.AI.Projects.BingCustomSearchToolCallOutput, { id: string });
+  @@copyProperties(Azure.AI.Projects.BingGroundingToolCall, { id: string });
+  @@copyProperties(Azure.AI.Projects.BingGroundingToolCallOutput, { id: string });
+  @@copyProperties(Azure.AI.Projects.BrowserAutomationToolCall, { id: string });
+  @@copyProperties(Azure.AI.Projects.BrowserAutomationToolCallOutput, { id: string });
+  @@copyProperties(Azure.AI.Projects.FabricDataAgentToolCall, { id: string });
+  @@copyProperties(Azure.AI.Projects.FabricDataAgentToolCallOutput, { id: string });
+  @@copyProperties(Azure.AI.Projects.MemorySearchToolCallItemResource, { id: string });
+  @@copyProperties(Azure.AI.Projects.OpenApiToolCall, { id: string });
+  @@copyProperties(Azure.AI.Projects.OpenApiToolCallOutput, { id: string });
+  @@copyProperties(Azure.AI.Projects.SharepointGroundingToolCall, { id: string });
+  @@copyProperties(Azure.AI.Projects.SharepointGroundingToolCallOutput, { id: string });
+  @@copyProperties(Azure.AI.Projects.StructuredOutputsOutputItem, { id: string });
+  @@copyProperties(Azure.AI.Projects.WorkflowActionOutputItem, { id: string });
+
   // Remove created_by from specific models to avoid BinaryData/string mismatch
   // with the base OutputItem.CreatedBy (BinaryData) type
   @@withoutOmittedProperties(OpenAI.OutputItemFunctionShellCallOutput, "created_by");
@@ -43,7 +67,7 @@ namespace Azure.AI.Projects {
   // ============================================================================
   // Public constructors: mark models as input+output so the C# emitter generates
   // public compact constructors. Consumers need these to construct events in their
-  // IResponseHandler implementations.
+  // ResponseHandler implementations.
   // ============================================================================
 
   // --- ResponseStreamEvent subtypes (53 concrete types) ---

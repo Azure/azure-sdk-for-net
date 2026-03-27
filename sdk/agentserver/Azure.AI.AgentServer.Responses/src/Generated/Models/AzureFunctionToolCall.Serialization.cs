@@ -87,6 +87,8 @@ namespace Azure.AI.AgentServer.Responses.Models
             writer.WriteStringValue(Arguments);
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToSerialString());
+            writer.WritePropertyName("id"u8);
+            writer.WriteStringValue(Id);
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -123,6 +125,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             string name = default;
             string arguments = default;
             ToolCallStatus status = default;
+            string id = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -173,6 +176,11 @@ namespace Azure.AI.AgentServer.Responses.Models
                     status = prop.Value.GetString().ToToolCallStatus();
                     continue;
                 }
+                if (prop.NameEquals("id"u8))
+                {
+                    id = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -187,7 +195,8 @@ namespace Azure.AI.AgentServer.Responses.Models
                 callId,
                 name,
                 arguments,
-                status);
+                status,
+                id);
         }
     }
 }

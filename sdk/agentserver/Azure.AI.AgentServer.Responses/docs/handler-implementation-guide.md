@@ -1,6 +1,6 @@
 # Handler Implementation Guide
 
-> Developer guidance for implementing `IResponseHandler` — the single integration point for building Azure AI Responses API servers with this library.
+> Developer guidance for implementing `ResponseHandler` — the single integration point for building Azure AI Responses API servers with this library.
 
 ---
 
@@ -9,9 +9,9 @@
 - [Overview](#overview)
 - [Getting Started](#getting-started)
 - [Core Concepts](#core-concepts)
-  - [IResponseHandler](#iresponsehandler)
+  - [ResponseHandler](#responsehandler)
   - [ResponseEventStream](#responseeventstream)
-  - [IResponseContext](#iresponsecontext)
+  - [ResponseContext](#responsecontext)
   - [Sequence Numbers](#sequence-numbers)
   - [Snapshot Semantics](#snapshot-semantics)
   - [Builder Pattern](#builder-pattern)
@@ -41,7 +41,7 @@
 
 ## Overview
 
-The library handles all protocol concerns — routing, serialization, SSE framing, `stream`/`background` mode negotiation, status lifecycle, and error shapes. You implement **one interface**: `IResponseHandler`. Your handler receives a `CreateResponse` request and yields SSE events via `IAsyncEnumerable<ResponseStreamEvent>`. The library wraps these events into the correct HTTP response format based on the client's requested mode.
+The library handles all protocol concerns — routing, serialization, SSE framing, `stream`/`background` mode negotiation, status lifecycle, and error shapes. You extend **one abstract class**: `ResponseHandler`. Your handler receives a `CreateResponse` request and yields SSE events via `IAsyncEnumerable<ResponseStreamEvent>`. The library wraps these events into the correct HTTP response format based on the client's requested mode.
 
 You do **not** need to think about:
 - Whether the client requested JSON or SSE streaming
@@ -60,11 +60,11 @@ The library manages all of this. Your handler just yields events.
 ```csharp
 using Azure.AI.AgentServer.Responses;
 
-public class EchoHandler : IResponseHandler
+public class EchoHandler : ResponseHandler
 {
     public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
         CreateResponse request,
-        IResponseContext context,
+        ResponseContext context,
         [EnumeratorCancellation] CancellationToken cancellationToken)
     {
         await Task.CompletedTask;
@@ -98,7 +98,7 @@ public class EchoHandler : IResponseHandler
 ```csharp
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddResponsesServer();
-builder.Services.AddSingleton<IResponseHandler, EchoHandler>();
+builder.Services.AddSingleton<ResponseHandler, EchoHandler>();
 
 var app = builder.Build();
 app.MapResponsesServer();
@@ -111,14 +111,14 @@ That's it. The library registers all middleware, routes (`POST /responses`, `GET
 
 ## Core Concepts
 
-### IResponseHandler
+### ResponseHandler
 
 ```csharp
-public interface IResponseHandler
+public abstract class ResponseHandler
 {
     IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
         CreateResponse request,
-        IResponseContext context,
+        ResponseContext context,
         CancellationToken cancellationToken);
 }
 ```
@@ -189,7 +189,7 @@ Handlers do not need to set these — they are populated automatically in the `R
 | Violation | Library Behaviour |
 |-----------|--------------|
 | First event is not `response.created` | HTTP 500 error, handler CT cancelled, no persistence |
-| `Response.Id` doesn't match `IResponseContext.ResponseId` | HTTP 500 error, handler CT cancelled, no persistence (FR-006) |
+| `Response.Id` doesn't match `ResponseContext.ResponseId` | HTTP 500 error, handler CT cancelled, no persistence (FR-006) |
 | `Response.Status` is terminal on `response.created` | HTTP 500 error, handler CT cancelled, no persistence (FR-007) |
 | Direct `Response.Output` manipulation detected | Post-created: `response.failed`; pre-created: HTTP 500 (FR-008a) |
 | Empty enumerable (no events) | HTTP 500 error, handler CT cancelled, no persistence |
@@ -199,14 +199,14 @@ Handlers do not need to set these — they are populated automatically in the `R
 
 All violations are logged with handler type name and request ID for diagnostics.
 
-### IResponseContext
+### ResponseContext
 
 ```csharp
-public interface IResponseContext
+public class ResponseContext
 {
     string ResponseId { get; }
     bool IsShutdownRequested { get; set; }
-    JsonElement RawBody { get; }
+    BinaryData? RawBody { get; }
     Task<IReadOnlyList<OutputItem>> GetInputItemsAsync(CancellationToken cancellationToken = default);
     Task<IReadOnlyList<OutputItem>> GetHistoryAsync(CancellationToken cancellationToken = default);
     IReadOnlyDictionary<string, string> ClientHeaders { get; }
@@ -222,7 +222,7 @@ Returns the caller's input items fully resolved and converted to `OutputItem` ty
 
 ```csharp
 public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-    CreateResponse request, IResponseContext context, CancellationToken ct)
+    CreateResponse request, ResponseContext context, CancellationToken ct)
 {
     var inputItems = await context.GetInputItemsAsync(ct);
     // inputItems contains OutputItemMessage instances with generated IDs
@@ -256,7 +256,7 @@ Returns `x-client-*` prefixed headers forwarded from the original HTTP request. 
 
 ```csharp
 public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-    CreateResponse request, IResponseContext context, CancellationToken ct)
+    CreateResponse request, ResponseContext context, CancellationToken ct)
 {
     // Access forwarded client headers (e.g., x-client-request-id, x-client-trace-id)
     var clientHeaders = context.ClientHeaders;
@@ -280,7 +280,7 @@ Returns all query parameters from the original HTTP request:
 
 ```csharp
 public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-    CreateResponse request, IResponseContext context, CancellationToken ct)
+    CreateResponse request, ResponseContext context, CancellationToken ct)
 {
     var queryParams = context.QueryParameters;
 
@@ -299,7 +299,7 @@ public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
 
 #### ID Generation Extensions
 
-Extension methods on `IResponseContext` generate correctly-prefixed IDs for child items:
+Extension methods on `ResponseContext` generate correctly-prefixed IDs for child items:
 
 | Method | Prefix | Use For |
 |---|---|---|
@@ -401,7 +401,7 @@ The client receives the function call, executes it locally, and sends a new requ
 
 ```csharp
 public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-    CreateResponse request, IResponseContext context,
+    CreateResponse request, ResponseContext context,
     [EnumeratorCancellation] CancellationToken cancellationToken)
 {
     await Task.CompletedTask;
@@ -558,21 +558,25 @@ This complements the request-level helpers (`GetInputExpanded`, `GetInputText`, 
 
 ## RawBody Access
 
-The `IResponseContext` exposes the full raw JSON request body via `context.RawBody`:
+The `ResponseContext` exposes the full raw JSON request body via `context.RawBody`:
 
 ```csharp
 public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-    CreateResponse request, IResponseContext context,
+    CreateResponse request, ResponseContext context,
     [EnumeratorCancellation] CancellationToken cancellationToken)
 {
     // Access the raw JSON request body
-    JsonElement rawBody = context.RawBody;
+    BinaryData? rawBody = context.RawBody;
 
-    // Read custom extension fields not in the typed model
-    if (rawBody.TryGetProperty("x-custom-field", out var customField))
+    // Parse and read custom extension fields not in the typed model
+    if (rawBody is not null)
     {
-        var customValue = customField.GetString();
-        // Use custom value in handler logic
+        using var doc = JsonDocument.Parse(rawBody);
+        if (doc.RootElement.TryGetProperty("x-custom-field", out var customField))
+        {
+            var customValue = customField.GetString();
+            // Use custom value in handler logic
+        }
     }
 
     // ... emit events ...
@@ -581,12 +585,12 @@ public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
 
 | Property | Type | Description |
 |---|---|---|
-| `context.RawBody` | `JsonElement` | The full raw JSON request body, including any custom extension fields not present in the typed `CreateResponse` model |
+| `context.RawBody` | `BinaryData?` | The full raw JSON request body, including any custom extension fields not present in the typed `CreateResponse` model |
 
 **Notes**:
-- Returns `default(JsonElement)` in test contexts where no HTTP request is available (e.g., unit tests using `TestResponseContext`).
+- Returns `null` in test contexts where no HTTP request is available (e.g., unit tests using `ResponseContext`).
 - Useful for forward-compatible extension fields, vendor-specific annotations, or custom metadata that the typed model does not capture.
-- The `JsonElement` is read-only — modifications do not affect the request.
+- Use `JsonDocument.Parse(context.RawBody)` or `context.RawBody.ToObjectFromJson<T>()` to inspect the JSON content.
 
 ---
 
@@ -602,7 +606,7 @@ The `CancellationToken` is triggered when:
 
 ```csharp
 public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-    CreateResponse request, IResponseContext context,
+    CreateResponse request, ResponseContext context,
     [EnumeratorCancellation] CancellationToken cancellationToken)
 {
     var stream = new ResponseEventStream(context, request);
@@ -644,7 +648,7 @@ Use `context.IsShutdownRequested` to distinguish shutdown from explicit cancel o
 
 ```csharp
 public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-    CreateResponse request, IResponseContext context,
+    CreateResponse request, ResponseContext context,
     [EnumeratorCancellation] CancellationToken cancellationToken)
 {
     var stream = new ResponseEventStream(context, request);
@@ -873,7 +877,7 @@ If you don't use the Core package, register services and map endpoints directly:
 
 ```csharp
 builder.Services.AddResponsesServer();
-builder.Services.AddSingleton<IResponseHandler, MyHandler>();
+builder.Services.AddSingleton<ResponseHandler, MyHandler>();
 ```
 
 ### With Options
@@ -905,7 +909,7 @@ This maps five endpoints:
 - `DELETE {prefix}/responses/{responseId}` — Delete a response
 - `GET {prefix}/responses/{responseId}/input_items` — List input items (paginated)
 
-**Startup validation**: `MapResponsesServer()` throws `InvalidOperationException` if no `IResponseHandler` is registered. This fail-fast behaviour ensures misconfigured servers are caught at startup, not at the first request.
+**Startup validation**: `MapResponsesServer()` throws `InvalidOperationException` if no `ResponseHandler` is registered. This fail-fast behaviour ensures misconfigured servers are caught at startup, not at the first request.
 
 ### Custom Response Provider
 
@@ -1023,7 +1027,7 @@ The library sets baggage items on the activity for `POST /responses` requests. H
 using System.Diagnostics;
 
 public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-    CreateResponse request, IResponseContext context,
+    CreateResponse request, ResponseContext context,
     [EnumeratorCancellation] CancellationToken cancellationToken)
 {
     var activity = Activity.Current;
@@ -1220,10 +1224,10 @@ public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(...)
 
 ```csharp
 // Stateless handler — one instance for the lifetime of the app
-builder.Services.AddSingleton<IResponseHandler, MyHandler>();
+builder.Services.AddSingleton<ResponseHandler, MyHandler>();
 
 // Stateful handler — new instance per request
-builder.Services.AddScoped<IResponseHandler, MyStatefulHandler>();
+builder.Services.AddScoped<ResponseHandler, MyStatefulHandler>();
 ```
 
 ### 8. Let the library Handle Mode Negotiation
@@ -1239,12 +1243,12 @@ Never branch on `request.Stream` or `request.Background` in your handler. The li
 ```csharp
 // ❌ Cancellation won't propagate correctly
 public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-    CreateResponse request, IResponseContext context,
+    CreateResponse request, ResponseContext context,
     CancellationToken cancellationToken)
 
 // ✅ Correct
 public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-    CreateResponse request, IResponseContext context,
+    CreateResponse request, ResponseContext context,
     [EnumeratorCancellation] CancellationToken cancellationToken)
 ```
 

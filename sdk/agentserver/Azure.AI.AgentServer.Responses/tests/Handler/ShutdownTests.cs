@@ -16,7 +16,7 @@ namespace Azure.AI.AgentServer.Responses.Tests.Handler;
 /// <summary>
 /// T030-T032 — Protocol and unit tests for graceful shutdown (US3).
 /// Verifies that handlers can distinguish shutdown from cancel/disconnect
-/// via <see cref="IResponseContext.IsShutdownRequested"/>, and that
+/// via <see cref="ResponseContext.IsShutdownRequested"/>, and that
 /// handlers can choose to emit <c>response.incomplete</c> on shutdown.
 /// The SDK itself never emits incomplete — that is purely handler-driven.
 /// </summary>
@@ -172,7 +172,7 @@ public class ShutdownTests : IDisposable
 
     /// <summary>
     /// T032: Verify that <c>ResponseExecution.ShutdownRequested</c>
-    /// propagates to <c>IResponseContext.IsShutdownRequested</c>
+    /// propagates to <c>ResponseContext.IsShutdownRequested</c>
     /// when <c>StopAsync</c> sets it.
     /// </summary>
     [Test]
@@ -198,7 +198,7 @@ public class ShutdownTests : IDisposable
     }
 
     private static async IAsyncEnumerable<ResponseStreamEvent> ShutdownAwareHandlerStream(
-        IResponseContext context,
+        ResponseContext context,
         [EnumeratorCancellation] CancellationToken ct,
         TaskCompletionSource handlerStarted,
         Action<bool> captureIsShutdown)
@@ -227,7 +227,7 @@ public class ShutdownTests : IDisposable
     }
 
     private static async IAsyncEnumerable<ResponseStreamEvent> ShutdownAwareHandlerStreamWithSignal(
-        IResponseContext context,
+        ResponseContext context,
         [EnumeratorCancellation] CancellationToken ct,
         TaskCompletionSource handlerStarted,
         TaskCompletionSource handlerDone)
@@ -257,7 +257,7 @@ public class ShutdownTests : IDisposable
     }
 
     private static async IAsyncEnumerable<ResponseStreamEvent> SlowNonCooperativeHandler(
-        IResponseContext context,
+        ResponseContext context,
         TaskCompletionSource handlerStarted)
     {
         var response = new Models.ResponseObject(context.ResponseId, "test");

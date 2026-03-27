@@ -8,7 +8,7 @@ namespace Azure.AI.AgentServer.Responses.Tests.PublicApi;
 
 public class ResponseContextExtensionsTests
 {
-    private static IResponseContext CreateContext()
+    private static ResponseContext CreateContext()
     {
         var responseId = IdGenerator.NewResponseId();
         return new ResponseContext(responseId);

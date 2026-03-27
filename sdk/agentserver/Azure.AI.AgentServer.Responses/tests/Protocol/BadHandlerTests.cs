@@ -216,7 +216,7 @@ public class BadHandlerTests : ProtocolTestBase
     /// Handler that yields an output event as first event (not response.created).
     /// </summary>
     private static async IAsyncEnumerable<ResponseStreamEvent> WrongFirstEventStream(
-        IResponseContext ctx)
+        ResponseContext ctx)
     {
         await Task.CompletedTask;
         var response = new Models.ResponseObject(ctx.ResponseId, "test");
@@ -251,7 +251,7 @@ public class BadHandlerTests : ProtocolTestBase
     /// Handler that yields response.created only (no terminal event).
     /// </summary>
     private static async IAsyncEnumerable<ResponseStreamEvent> CreatedOnlyStream(
-        IResponseContext ctx)
+        ResponseContext ctx)
     {
         var stream = new ResponseEventStream(ctx, new CreateResponse { Model = "test" });
         yield return stream.EmitCreated();
@@ -263,7 +263,7 @@ public class BadHandlerTests : ProtocolTestBase
     /// Handler that yields response.created then throws.
     /// </summary>
     private static async IAsyncEnumerable<ResponseStreamEvent> ThrowAfterCreatedStream(
-        IResponseContext ctx)
+        ResponseContext ctx)
     {
         var stream = new ResponseEventStream(ctx, new CreateResponse { Model = "test" });
         yield return stream.EmitCreated();

@@ -300,7 +300,7 @@ public class GetResponseProtocolTests : ProtocolTestBase
     // ── Helper event factories ─────────────────────────────────
 
     private static async IAsyncEnumerable<ResponseStreamEvent> SimpleTextStream(
-        IResponseContext ctx,
+        ResponseContext ctx,
         [EnumeratorCancellation] CancellationToken ct = default)
     {
         await Task.CompletedTask;
@@ -324,7 +324,7 @@ public class GetResponseProtocolTests : ProtocolTestBase
     }
 
     private static async IAsyncEnumerable<ResponseStreamEvent> WaitingStream(
-        IResponseContext ctx,
+        ResponseContext ctx,
         Task waitTask,
         [EnumeratorCancellation] CancellationToken ct = default)
     {

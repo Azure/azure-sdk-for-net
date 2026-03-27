@@ -195,7 +195,7 @@ public class HandlerDrivenPersistenceTests : IDisposable
     /// Handler that signals when started, then waits for a gate before yielding response.created.
     /// </summary>
     private static async IAsyncEnumerable<ResponseStreamEvent> DelayingStream(
-        IResponseContext ctx, Task gate, TaskCompletionSource started,
+        ResponseContext ctx, Task gate, TaskCompletionSource started,
         [EnumeratorCancellation] CancellationToken ct = default)
     {
         started.TrySetResult();

@@ -1123,7 +1123,7 @@ public class CrossApiE2eTests : ProtocolTestBase
     // ════════════════════════════════════════════════════════════
 
     private static async IAsyncEnumerable<ResponseStreamEvent> SimpleTextStream(
-        IResponseContext ctx,
+        ResponseContext ctx,
         [EnumeratorCancellation] CancellationToken ct = default)
     {
         await Task.CompletedTask;
@@ -1134,7 +1134,7 @@ public class CrossApiE2eTests : ProtocolTestBase
     }
 
     private static async IAsyncEnumerable<ResponseStreamEvent> WaitingStream(
-        IResponseContext ctx, Task waitTask,
+        ResponseContext ctx, Task waitTask,
         [EnumeratorCancellation] CancellationToken ct = default)
     {
         var stream = new ResponseEventStream(ctx, new CreateResponse { Model = "test" });
@@ -1144,7 +1144,7 @@ public class CrossApiE2eTests : ProtocolTestBase
     }
 
     private static async IAsyncEnumerable<ResponseStreamEvent> GatedStream(
-        IResponseContext ctx, TaskCompletionSource started, Task gate,
+        ResponseContext ctx, TaskCompletionSource started, Task gate,
         [EnumeratorCancellation] CancellationToken ct = default)
     {
         var stream = new ResponseEventStream(ctx, new CreateResponse { Model = "test" });
@@ -1155,7 +1155,7 @@ public class CrossApiE2eTests : ProtocolTestBase
     }
 
     private static async IAsyncEnumerable<ResponseStreamEvent> GatedStreamWithStart(
-        IResponseContext ctx, TaskCompletionSource started, Task gate,
+        ResponseContext ctx, TaskCompletionSource started, Task gate,
         [EnumeratorCancellation] CancellationToken ct = default)
     {
         var stream = new ResponseEventStream(ctx, new CreateResponse { Model = "test" });
@@ -1166,7 +1166,7 @@ public class CrossApiE2eTests : ProtocolTestBase
     }
 
     private static async IAsyncEnumerable<ResponseStreamEvent> StreamWithDeltas(
-        IResponseContext ctx, Task waitTask,
+        ResponseContext ctx, Task waitTask,
         TaskCompletionSource? deltasEmitted = null,
         [EnumeratorCancellation] CancellationToken ct = default)
     {
@@ -1187,7 +1187,7 @@ public class CrossApiE2eTests : ProtocolTestBase
     }
 
     private static async IAsyncEnumerable<ResponseStreamEvent> ThrowingStream(
-        IResponseContext ctx,
+        ResponseContext ctx,
         [EnumeratorCancellation] CancellationToken ct = default)
     {
         var stream = new ResponseEventStream(ctx, new CreateResponse { Model = "test" });
@@ -1197,7 +1197,7 @@ public class CrossApiE2eTests : ProtocolTestBase
     }
 
     private static async IAsyncEnumerable<ResponseStreamEvent> ThrowingStreamAfterCreated(
-        IResponseContext ctx,
+        ResponseContext ctx,
         [EnumeratorCancellation] CancellationToken ct = default)
     {
         var stream = new ResponseEventStream(ctx, new CreateResponse { Model = "test" });
@@ -1207,7 +1207,7 @@ public class CrossApiE2eTests : ProtocolTestBase
     }
 
     private static async IAsyncEnumerable<ResponseStreamEvent> IncompleteStream(
-        IResponseContext ctx,
+        ResponseContext ctx,
         [EnumeratorCancellation] CancellationToken ct = default)
     {
         await Task.CompletedTask;
@@ -1217,7 +1217,7 @@ public class CrossApiE2eTests : ProtocolTestBase
     }
 
     private static async IAsyncEnumerable<ResponseStreamEvent> IncompleteStreamWithCreated(
-        IResponseContext ctx,
+        ResponseContext ctx,
         [EnumeratorCancellation] CancellationToken ct = default)
     {
         await Task.CompletedTask;
@@ -1227,7 +1227,7 @@ public class CrossApiE2eTests : ProtocolTestBase
     }
 
     private static async IAsyncEnumerable<ResponseStreamEvent> DisconnectTrackingStream(
-        IResponseContext ctx,
+        ResponseContext ctx,
         TaskCompletionSource handlerStarted,
         TaskCompletionSource handlerCancelled,
         [EnumeratorCancellation] CancellationToken ct = default)
@@ -1259,7 +1259,7 @@ public class CrossApiE2eTests : ProtocolTestBase
     /// Gates fire after each item is fully done (EmitDone).
     /// </summary>
     private static async IAsyncEnumerable<ResponseStreamEvent> TwoItemGatedStream(
-        IResponseContext ctx,
+        ResponseContext ctx,
         TaskCompletionSource item1Emitted,
         Task item1GateChecked,
         TaskCompletionSource item2Emitted,
@@ -1305,7 +1305,7 @@ public class CrossApiE2eTests : ProtocolTestBase
     /// - After Done: item in output with status=completed, full text content
     /// </summary>
     private static async IAsyncEnumerable<ResponseStreamEvent> ItemLifecycleGatedStream(
-        IResponseContext ctx,
+        ResponseContext ctx,
         TaskCompletionSource itemAdded,
         Task itemAddedChecked,
         TaskCompletionSource itemDone,

@@ -7,13 +7,13 @@ using Azure.AI.AgentServer.Responses.Tests.Helpers;
 namespace Azure.AI.AgentServer.Responses.Tests.Protocol;
 
 /// <summary>
-/// E2E protocol tests for IResponseContext.RawBody (US7 / FR-019..022).
+/// E2E protocol tests for ResponseContext.RawBody (US7 / FR-019..022).
 /// Verifies the handler can access the full raw JSON request body,
 /// including custom fields not in the typed model.
 /// </summary>
 public sealed class RawBodyProtocolTests : ProtocolTestBase
 {
-    private JsonElement _capturedRawBody;
+    private BinaryData? _capturedRawBody;
     private int _rawBodyAccessCount;
 
     public RawBodyProtocolTests()
@@ -29,7 +29,7 @@ public sealed class RawBodyProtocolTests : ProtocolTestBase
 
     private static async IAsyncEnumerable<Azure.AI.AgentServer.Responses.Models.ResponseStreamEvent> YieldDefault(
         Azure.AI.AgentServer.Responses.Models.CreateResponse request,
-        IResponseContext context,
+        ResponseContext context,
         [System.Runtime.CompilerServices.EnumeratorCancellation] CancellationToken ct)
     {
         var response = new Azure.AI.AgentServer.Responses.Models.ResponseObject(context.ResponseId, request.Model ?? "test-model");
@@ -38,15 +38,22 @@ public sealed class RawBodyProtocolTests : ProtocolTestBase
         yield return new Azure.AI.AgentServer.Responses.Models.ResponseCompletedEvent(0, response);
     }
 
+    /// <summary>Parses the captured BinaryData into a JsonElement for assertion convenience.</summary>
+    private JsonElement ParseCapturedBody()
+    {
+        Assert.That(_capturedRawBody, Is.Not.Null, "RawBody should be set by the handler");
+        return JsonDocument.Parse(_capturedRawBody!).RootElement;
+    }
+
     [Test]
     public async Task RawBody_ContainsStandardFields()
     {
         // T028 / FR-019, FR-021: RawBody contains standard fields
         await PostResponsesAsync(new { model = "gpt-4o" });
 
-        Assert.That(_capturedRawBody, Is.Not.EqualTo(default(JsonElement)));
-        Assert.That(_capturedRawBody.ValueKind, Is.EqualTo(JsonValueKind.Object));
-        Assert.That(_capturedRawBody.TryGetProperty("model", out var modelProp), Is.True);
+        var root = ParseCapturedBody();
+        Assert.That(root.ValueKind, Is.EqualTo(JsonValueKind.Object));
+        Assert.That(root.TryGetProperty("model", out var modelProp), Is.True);
         Assert.That(modelProp.GetString(), Is.EqualTo("gpt-4o"));
     }
 
@@ -64,11 +71,11 @@ public sealed class RawBodyProtocolTests : ProtocolTestBase
         var response = await PostResponsesAsync(json);
 
         Assert.That(response.IsSuccessStatusCode, Is.True, $"Request failed with {response.StatusCode}: {await response.Content.ReadAsStringAsync()}");
-        Assert.That(_capturedRawBody, Is.Not.EqualTo(default(JsonElement)));
-        Assert.That(_capturedRawBody.TryGetProperty("x_custom_extension", out var customProp), Is.True, "RawBody should include x_custom_extension field");
+        var root = ParseCapturedBody();
+        Assert.That(root.TryGetProperty("x_custom_extension", out var customProp), Is.True, "RawBody should include x_custom_extension field");
         Assert.That(customProp.GetString(), Is.EqualTo("hello-world"));
 
-        Assert.That(_capturedRawBody.TryGetProperty("x_extra_info", out var extraProp), Is.True, "RawBody should include x_extra_info field");
+        Assert.That(root.TryGetProperty("x_extra_info", out var extraProp), Is.True, "RawBody should include x_extra_info field");
         Assert.That(extraProp.ValueKind, Is.EqualTo(JsonValueKind.Object));
         Assert.That(extraProp.GetProperty("key1").GetString(), Is.EqualTo("value1"));
     }
@@ -77,8 +84,8 @@ public sealed class RawBodyProtocolTests : ProtocolTestBase
     public async Task RawBody_IsStableAcrossMultipleAccesses()
     {
         // T030 / FR-022: RawBody returns same value on multiple accesses
-        JsonElement firstAccess = default;
-        JsonElement secondAccess = default;
+        BinaryData? firstAccess = null;
+        BinaryData? secondAccess = null;
 
         Handler.EventFactory = (request, context, ct) =>
         {
@@ -90,9 +97,9 @@ public sealed class RawBodyProtocolTests : ProtocolTestBase
 
         await PostResponsesAsync(new { model = "test" });
 
-        Assert.That(firstAccess, Is.Not.EqualTo(default(JsonElement)));
-        Assert.That(secondAccess, Is.Not.EqualTo(default(JsonElement)));
-        Assert.That(secondAccess.GetRawText(), Is.EqualTo(firstAccess.GetRawText()));
+        Assert.That(firstAccess, Is.Not.Null);
+        Assert.That(secondAccess, Is.Not.Null);
+        Assert.That(firstAccess, Is.SameAs(secondAccess), "BinaryData instance should be the same object on repeated access");
     }
 
     [Test]
@@ -106,8 +113,8 @@ public sealed class RawBodyProtocolTests : ProtocolTestBase
         });
         await PostResponsesAsync(json);
 
-        Assert.That(_capturedRawBody, Is.Not.EqualTo(default(JsonElement)));
-        Assert.That(_capturedRawBody.TryGetProperty("stream", out var streamProp), Is.True);
+        var root = ParseCapturedBody();
+        Assert.That(root.TryGetProperty("stream", out var streamProp), Is.True);
         Assert.That(streamProp.GetBoolean(), Is.True);
     }
 }

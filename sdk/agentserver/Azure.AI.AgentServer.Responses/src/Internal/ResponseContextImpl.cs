@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Text.Json;
 using Azure.AI.AgentServer.Responses.Models;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Primitives;
@@ -9,12 +8,12 @@ using Microsoft.Extensions.Primitives;
 namespace Azure.AI.AgentServer.Responses.Internal;
 
 /// <summary>
-/// Enhanced implementation of <see cref="IResponseContext"/> that resolves
+/// Enhanced implementation of <see cref="ResponseContext"/> that resolves
 /// input items and conversation history from the request, using lazy-cached async resolution.
 /// Inline items are converted via <see cref="ItemConversion"/>; item
 /// references are resolved via <see cref="IResponsesProvider.GetItemsAsync"/>.
 /// </summary>
-internal sealed class ResponseContextImpl : IResponseContext
+internal sealed class ResponseContextImpl : ResponseContext
 {
     private readonly IResponsesProvider _provider;
     private readonly CreateResponse _request;
@@ -22,6 +21,9 @@ internal sealed class ResponseContextImpl : IResponseContext
     private readonly Lazy<Task<IReadOnlyList<OutputItem>>> _inputItems;
     private readonly Lazy<Task<IReadOnlyList<string>>> _historyItemIds;
     private readonly Lazy<Task<IReadOnlyList<OutputItem>>> _history;
+    private readonly BinaryData? _rawBody;
+    private readonly IReadOnlyDictionary<string, string> _clientHeaders;
+    private readonly IReadOnlyDictionary<string, StringValues> _queryParameters;
 
     /// <summary>
     /// Initializes a new instance of <see cref="ResponseContextImpl"/>.
@@ -30,7 +32,7 @@ internal sealed class ResponseContextImpl : IResponseContext
     /// <param name="provider">The responses provider for resolving item references.</param>
     /// <param name="request">The create-response request containing input items.</param>
     /// <param name="options">Server options for configuration values like history limit.</param>
-    /// <param name="rawBody">The full raw JSON request body, or <c>default</c> if not available.</param>
+    /// <param name="rawBody">The full raw JSON request body, or <see langword="null"/> if not available.</param>
     /// <param name="clientHeaders">Forwarded <c>x-client-*</c> headers, or <c>null</c> for empty.</param>
     /// <param name="queryParameters">Query parameters from the request, or <c>null</c> for empty.</param>
     public ResponseContextImpl(
@@ -38,14 +40,14 @@ internal sealed class ResponseContextImpl : IResponseContext
         IResponsesProvider provider,
         CreateResponse request,
         IOptions<ResponsesServerOptions>? options = null,
-        JsonElement rawBody = default,
+        BinaryData? rawBody = null,
         IReadOnlyDictionary<string, string>? clientHeaders = null,
         IReadOnlyDictionary<string, StringValues>? queryParameters = null)
+        : base(responseId)
     {
-        ResponseId = responseId;
-        RawBody = rawBody;
-        ClientHeaders = clientHeaders ?? new Dictionary<string, string>();
-        QueryParameters = queryParameters ?? new Dictionary<string, StringValues>();
+        _rawBody = rawBody;
+        _clientHeaders = clientHeaders ?? new Dictionary<string, string>();
+        _queryParameters = queryParameters ?? new Dictionary<string, StringValues>();
         _provider = provider;
         _request = request;
         _historyLimit = options?.Value.DefaultFetchHistoryCount ?? ResponsesServerOptions.DefaultFetchHistoryCountValue;
@@ -55,26 +57,20 @@ internal sealed class ResponseContextImpl : IResponseContext
     }
 
     /// <inheritdoc/>
-    public string ResponseId { get; }
+    public override BinaryData? RawBody => _rawBody;
 
     /// <inheritdoc/>
-    public JsonElement RawBody { get; }
+    public override IReadOnlyDictionary<string, string> ClientHeaders => _clientHeaders;
 
     /// <inheritdoc/>
-    public bool IsShutdownRequested { get; set; }
+    public override IReadOnlyDictionary<string, StringValues> QueryParameters => _queryParameters;
 
     /// <inheritdoc/>
-    public IReadOnlyDictionary<string, string> ClientHeaders { get; }
-
-    /// <inheritdoc/>
-    public IReadOnlyDictionary<string, StringValues> QueryParameters { get; }
-
-    /// <inheritdoc/>
-    public Task<IReadOnlyList<OutputItem>> GetInputItemsAsync(CancellationToken cancellationToken = default)
+    public override Task<IReadOnlyList<OutputItem>> GetInputItemsAsync(CancellationToken cancellationToken = default)
         => _inputItems.Value;
 
     /// <inheritdoc/>
-    public Task<IReadOnlyList<OutputItem>> GetHistoryAsync(CancellationToken cancellationToken = default)
+    public override Task<IReadOnlyList<OutputItem>> GetHistoryAsync(CancellationToken cancellationToken = default)
         => _history.Value;
 
     /// <summary>

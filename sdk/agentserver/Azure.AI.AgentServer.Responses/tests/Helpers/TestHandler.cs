@@ -7,16 +7,16 @@ using Azure.AI.AgentServer.Responses.Models;
 namespace Azure.AI.AgentServer.Responses.Tests.Helpers;
 
 /// <summary>
-/// A configurable <see cref="IResponseHandler"/> for testing.
+/// A configurable <see cref="ResponseHandler"/> for testing.
 /// Set <see cref="EventFactory"/> to control what events are yielded.
 /// </summary>
-public sealed class TestHandler : IResponseHandler
+public sealed class TestHandler : ResponseHandler
 {
     /// <summary>
     /// Factory function that produces the event stream.
     /// Default: yields response.created → response.completed.
     /// </summary>
-    public Func<CreateResponse, IResponseContext, CancellationToken, IAsyncEnumerable<ResponseStreamEvent>>?
+    public Func<CreateResponse, ResponseContext, CancellationToken, IAsyncEnumerable<ResponseStreamEvent>>?
         EventFactory
     { get; set; }
 
@@ -28,16 +28,16 @@ public sealed class TestHandler : IResponseHandler
     /// <summary>
     /// Gets the last context received by the handler.
     /// </summary>
-    public IResponseContext? LastContext { get; private set; }
+    public ResponseContext? LastContext { get; private set; }
 
     /// <summary>
     /// Gets the number of times CreateAsync was called.
     /// </summary>
     public int CallCount { get; private set; }
 
-    public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
+    public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
         CreateResponse request,
-        IResponseContext context,
+        ResponseContext context,
         [EnumeratorCancellation] CancellationToken cancellationToken)
     {
         LastRequest = request;

@@ -110,7 +110,7 @@ public class CancelResponseProtocolTests : ProtocolTestBase
     // ── Helper event factories ─────────────────────────────────
 
     private static async IAsyncEnumerable<ResponseStreamEvent> SimpleStream(
-        IResponseContext ctx,
+        ResponseContext ctx,
         [EnumeratorCancellation] CancellationToken ct = default)
     {
         await Task.CompletedTask;
@@ -120,7 +120,7 @@ public class CancelResponseProtocolTests : ProtocolTestBase
     }
 
     private static async IAsyncEnumerable<ResponseStreamEvent> WaitingStream(
-        IResponseContext ctx,
+        ResponseContext ctx,
         Task waitTask,
         [EnumeratorCancellation] CancellationToken ct = default)
     {
@@ -131,7 +131,7 @@ public class CancelResponseProtocolTests : ProtocolTestBase
     }
 
     private static async IAsyncEnumerable<ResponseStreamEvent> CancellationTrackingStream(
-        IResponseContext ctx,
+        ResponseContext ctx,
         Task waitTask,
         TaskCompletionSource handlerCancelled,
         [EnumeratorCancellation] CancellationToken ct = default)

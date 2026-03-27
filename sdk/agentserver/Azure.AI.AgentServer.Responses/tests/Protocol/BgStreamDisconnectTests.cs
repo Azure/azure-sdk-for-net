@@ -147,7 +147,7 @@ public class BgStreamDisconnectTests : ProtocolTestBase
     /// and continues to completion.
     /// </summary>
     private static async IAsyncEnumerable<ResponseStreamEvent> MultiOutputStream(
-        IResponseContext ctx, int totalOutputs, int disconnectAfter,
+        ResponseContext ctx, int totalOutputs, int disconnectAfter,
         TaskCompletionSource readyForDisconnect, TaskCompletionSource completed,
         [EnumeratorCancellation] CancellationToken ct = default)
     {
@@ -175,7 +175,7 @@ public class BgStreamDisconnectTests : ProtocolTestBase
     /// Signals readyForDisconnect after response.created, then continues.
     /// </summary>
     private static async IAsyncEnumerable<ResponseStreamEvent> CancellationTrackingStream(
-        IResponseContext ctx, TaskCompletionSource readyForDisconnect,
+        ResponseContext ctx, TaskCompletionSource readyForDisconnect,
         TaskCompletionSource cancelled, TaskCompletionSource completed,
         [EnumeratorCancellation] CancellationToken ct = default)
     {
@@ -202,7 +202,7 @@ public class BgStreamDisconnectTests : ProtocolTestBase
     /// Handler that takes a moment to complete (for bg+nostream regression test).
     /// </summary>
     private static async IAsyncEnumerable<ResponseStreamEvent> SlowCompletingStream(
-        IResponseContext ctx, TaskCompletionSource completed,
+        ResponseContext ctx, TaskCompletionSource completed,
         [EnumeratorCancellation] CancellationToken ct = default)
     {
         var stream = new ResponseEventStream(ctx, new CreateResponse { Model = "test" });

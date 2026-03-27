@@ -142,7 +142,7 @@ public class ModeOrchestrationTests : IDisposable
     }
 
     private static async IAsyncEnumerable<ResponseStreamEvent> SimpleEventStream(
-        IResponseContext ctx,
+        ResponseContext ctx,
         [EnumeratorCancellation] CancellationToken ct = default)
     {
         await Task.CompletedTask;
@@ -153,7 +153,7 @@ public class ModeOrchestrationTests : IDisposable
     }
 
     private static async IAsyncEnumerable<ResponseStreamEvent> DelayedEventStream(
-        IResponseContext ctx,
+        ResponseContext ctx,
         Task delayTask,
         [EnumeratorCancellation] CancellationToken ct = default)
     {

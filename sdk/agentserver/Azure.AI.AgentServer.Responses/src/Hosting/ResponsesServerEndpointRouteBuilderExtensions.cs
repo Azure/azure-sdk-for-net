@@ -26,13 +26,13 @@ public static class ResponsesServerEndpointRouteBuilderExtensions
         this IEndpointRouteBuilder endpoints,
         string? prefix = null)
     {
-        // Fail-fast: verify IResponseHandler is registered (FR-016, FR-017)
-        var handler = endpoints.ServiceProvider.GetService<IResponseHandler>();
+        // Fail-fast: verify ResponseHandler is registered (FR-016, FR-017)
+        var handler = endpoints.ServiceProvider.GetService<ResponseHandler>();
         if (handler is null)
         {
             throw new InvalidOperationException(
-                "No IResponseHandler implementation is registered. " +
-                "Call AddResponsesServer() and register an IResponseHandler implementation " +
+                "No ResponseHandler implementation is registered. " +
+                "Call AddResponsesServer() and register an ResponseHandler implementation " +
                 "before calling MapResponsesServer().");
         }
 

@@ -149,7 +149,7 @@ public class ProviderDiIntegrationTests : IDisposable
     }
 
     private static async IAsyncEnumerable<ResponseStreamEvent> WaitingEventStream(
-        IResponseContext ctx,
+        ResponseContext ctx,
         Task delayTask,
         [EnumeratorCancellation] CancellationToken ct)
     {
@@ -390,7 +390,7 @@ public class DefaultProviderZeroRegressionTests : ProtocolTestBase
     }
 
     private static async IAsyncEnumerable<ResponseStreamEvent> WaitingEventStream(
-        IResponseContext ctx,
+        ResponseContext ctx,
         Task delayTask,
         [EnumeratorCancellation] CancellationToken ct)
     {
@@ -562,7 +562,7 @@ public class PartialProviderOverrideTests : IDisposable
     }
 
     private static async IAsyncEnumerable<ResponseStreamEvent> WaitingEventStream(
-        IResponseContext ctx,
+        ResponseContext ctx,
         Task delayTask,
         [EnumeratorCancellation] CancellationToken ct)
     {

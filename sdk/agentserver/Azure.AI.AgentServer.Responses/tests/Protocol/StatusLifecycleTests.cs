@@ -108,7 +108,7 @@ public class StatusLifecycleTests : ProtocolTestBase
     // ── Helper event factories ─────────────────────────────────
 
     private static async IAsyncEnumerable<ResponseStreamEvent> ThrowingStream(
-        IResponseContext ctx,
+        ResponseContext ctx,
         [EnumeratorCancellation] CancellationToken ct = default)
     {
         await Task.CompletedTask;
@@ -119,7 +119,7 @@ public class StatusLifecycleTests : ProtocolTestBase
     }
 
     private static async IAsyncEnumerable<ResponseStreamEvent> IncompleteStream(
-        IResponseContext ctx,
+        ResponseContext ctx,
         [EnumeratorCancellation] CancellationToken ct = default)
     {
         var stream = new ResponseEventStream(ctx, new CreateResponse { Model = "test" });
@@ -129,7 +129,7 @@ public class StatusLifecycleTests : ProtocolTestBase
     }
 
     private static async IAsyncEnumerable<ResponseStreamEvent> WaitingStream(
-        IResponseContext ctx,
+        ResponseContext ctx,
         Task waitTask,
         [EnumeratorCancellation] CancellationToken ct = default)
     {

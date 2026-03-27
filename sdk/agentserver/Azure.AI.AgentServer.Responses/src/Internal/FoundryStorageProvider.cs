@@ -105,8 +105,10 @@ internal sealed class FoundryStorageProvider : IResponsesProvider
     {
         var order = ascending ? "asc" : "desc";
         var query = $"limit={limit}&order={order}";
-        if (after is not null) query += $"&after={Uri.EscapeDataString(after)}";
-        if (before is not null) query += $"&before={Uri.EscapeDataString(before)}";
+        if (after is not null)
+            query += $"&after={Uri.EscapeDataString(after)}";
+        if (before is not null)
+            query += $"&before={Uri.EscapeDataString(before)}";
 
         var http = _httpClientFactory.CreateClient(HttpClientName);
         using var httpResponse = await http.GetAsync(
@@ -139,8 +141,10 @@ internal sealed class FoundryStorageProvider : IResponsesProvider
         CancellationToken cancellationToken = default)
     {
         var query = $"limit={limit}";
-        if (previousResponseId is not null) query += $"&previous_response_id={Uri.EscapeDataString(previousResponseId)}";
-        if (conversationId is not null) query += $"&conversation_id={Uri.EscapeDataString(conversationId)}";
+        if (previousResponseId is not null)
+            query += $"&previous_response_id={Uri.EscapeDataString(previousResponseId)}";
+        if (conversationId is not null)
+            query += $"&conversation_id={Uri.EscapeDataString(conversationId)}";
 
         var http = _httpClientFactory.CreateClient(HttpClientName);
         using var httpResponse = await http.GetAsync(

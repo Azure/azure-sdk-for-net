@@ -35,11 +35,11 @@ namespace Azure.AI.AgentServer.Core.Tests.Snippets
 
         #region Snippet:Hosting_Sample1_QnAHandler
 
-        public class QnAHandler : IResponseHandler
+        public class QnAHandler : ResponseHandler
         {
-            public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
+            public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
                 CreateResponse request,
-                IResponseContext context,
+                ResponseContext context,
                 [EnumeratorCancellation] CancellationToken cancellationToken)
             {
                 var stream = new ResponseEventStream(context, request);

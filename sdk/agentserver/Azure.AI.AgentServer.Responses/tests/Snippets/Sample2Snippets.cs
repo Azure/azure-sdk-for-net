@@ -35,11 +35,11 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
 
         #region Snippet:Responses_Sample2_WeatherHandler
 
-        public class WeatherHandler : IResponseHandler
+        public class WeatherHandler : ResponseHandler
         {
-            public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
+            public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
                 CreateResponse request,
-                IResponseContext context,
+                ResponseContext context,
                 [EnumeratorCancellation] CancellationToken cancellationToken)
             {
                 await Task.CompletedTask;

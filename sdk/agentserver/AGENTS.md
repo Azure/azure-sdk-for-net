@@ -341,7 +341,7 @@ must include `<ProjectReference>` entries for all packages used.
 |---|---|
 | Responses.Tests | Core (`AgentHost.CreateBuilder`) |
 | Invocations.Tests | Core (`AgentHost.CreateBuilder`) |
-| Core.Tests | Responses (`IResponseHandler`, `ResponseEventStream`), Invocations |
+| Core.Tests | Responses (`ResponseHandler`, `ResponseEventStream`), Invocations |
 
 ---
 

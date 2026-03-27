@@ -221,7 +221,7 @@ public class TtlConfigurationTests : IDisposable
     // ═══════════════════════════════════════════════════════════════════════
 
     private static async IAsyncEnumerable<ResponseStreamEvent> CompletingStream(
-        IResponseContext ctx,
+        ResponseContext ctx,
         [EnumeratorCancellation] CancellationToken ct = default)
     {
         var response = new Models.ResponseObject(ctx.ResponseId, "test");

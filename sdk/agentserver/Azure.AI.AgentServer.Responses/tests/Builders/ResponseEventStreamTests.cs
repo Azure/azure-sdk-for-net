@@ -14,7 +14,7 @@ public class ResponseEventStreamTests
     }
 
     [Test]
-    public void Constructor_AcceptsIResponseContextAndCreateResponse()
+    public void Constructor_AcceptsResponseContextAndCreateResponse()
     {
         var context = new ResponseContext("resp_test");
         var request = new CreateResponse { Model = "gpt-4o" };

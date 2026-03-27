@@ -120,7 +120,7 @@ public class SimpleTextResponseTests
         }
     }
 
-    private static async IAsyncEnumerable<ResponseStreamEvent> BuildEvents(IResponseContext context)
+    private static async IAsyncEnumerable<ResponseStreamEvent> BuildEvents(ResponseContext context)
     {
         var stream = new ResponseEventStream(context, new CreateResponse { Model = "gpt-4o" });
 

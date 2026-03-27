@@ -107,7 +107,7 @@ public class StreamingErrorTests : IDisposable
     // ── Helpers ──
 
     private static async IAsyncEnumerable<ResponseStreamEvent> ThrowAfterOneEvent(
-        IResponseContext ctx,
+        ResponseContext ctx,
         [EnumeratorCancellation] CancellationToken ct)
     {
         var response = new Models.ResponseObject(ctx.ResponseId, "test");
@@ -117,7 +117,7 @@ public class StreamingErrorTests : IDisposable
     }
 
     private static async IAsyncEnumerable<ResponseStreamEvent> YieldFailedThenThrow(
-        IResponseContext ctx,
+        ResponseContext ctx,
         [EnumeratorCancellation] CancellationToken ct)
     {
         var response = new Models.ResponseObject(ctx.ResponseId, "test");

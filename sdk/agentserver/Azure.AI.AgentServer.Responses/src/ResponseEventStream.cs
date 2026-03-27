@@ -14,7 +14,7 @@ namespace Azure.AI.AgentServer.Responses;
 /// </summary>
 public class ResponseEventStream
 {
-    private readonly IResponseContext _context;
+    private readonly ResponseContext _context;
     private readonly Models.ResponseObject _response;
     private long _sequenceNumber;
     private long _outputIndex;
@@ -24,7 +24,7 @@ public class ResponseEventStream
     /// </summary>
     /// <param name="context">Context providing the response ID.</param>
     /// <param name="request">The original create request (used for Model, Instructions, Metadata).</param>
-    public ResponseEventStream(IResponseContext context, CreateResponse request)
+    public ResponseEventStream(ResponseContext context, CreateResponse request)
     {
         _context = context ?? throw new ArgumentNullException(nameof(context));
         ArgumentNullException.ThrowIfNull(request);

@@ -59,7 +59,7 @@ internal sealed class ResponseEndpointHandler
     public async Task<IResult> CreateResponseAsync(HttpContext httpContext)
     {
         CreateResponse request;
-        JsonElement rawBody = default;
+        BinaryData? rawBody = null;
         try
         {
             // Buffer the request body for validation + deserialization
@@ -83,9 +83,8 @@ internal sealed class ResponseEndpointHandler
             request = JsonSerializer.Deserialize<CreateResponse>(bodyBytes, SharedJsonOptions.Instance)
                 ?? throw new BadRequestException("Request body is required.");
 
-            // Parse raw body for IResponseContext.RawBody — clone decouples from JsonDocument lifetime
-            using var doc = JsonDocument.Parse(bodyBytes);
-            rawBody = doc.RootElement.Clone();
+            // Capture raw bytes for ResponseContext.RawBody
+            rawBody = BinaryData.FromBytes(bodyBytes);
         }
         catch (JsonException ex)
         {
@@ -136,7 +135,7 @@ internal sealed class ResponseEndpointHandler
 
         var execution = _tracker.Create(responseId, isBackground, isStreaming, store);
 
-        // Extract x-client-* headers and query parameters for IResponseContext
+        // Extract x-client-* headers and query parameters for ResponseContext
         var clientHeaders = ExtractClientHeaders(httpContext.Request);
         var queryParameters = ExtractQueryParameters(httpContext.Request);
 

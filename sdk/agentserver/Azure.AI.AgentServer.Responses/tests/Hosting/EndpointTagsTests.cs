@@ -28,7 +28,7 @@ public sealed class EndpointTagsTests
                 webHost.ConfigureServices(services =>
                 {
                     services.AddRouting();
-                    services.AddSingleton<IResponseHandler>(new Azure.AI.AgentServer.Responses.Tests.Helpers.TestHandler());
+                    services.AddSingleton<ResponseHandler>(new Azure.AI.AgentServer.Responses.Tests.Helpers.TestHandler());
                     services.AddResponsesServer();
                 });
                 webHost.Configure(app =>

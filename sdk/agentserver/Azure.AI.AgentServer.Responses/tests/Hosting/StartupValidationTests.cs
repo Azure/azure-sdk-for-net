@@ -11,14 +11,14 @@ namespace Azure.AI.AgentServer.Responses.Tests.Hosting;
 
 /// <summary>
 /// Tests for MapResponsesServer() startup validation (US5 / FR-016..017).
-/// Verifies fail-fast behaviour when IResponseHandler is not registered.
+/// Verifies fail-fast behaviour when ResponseHandler is not registered.
 /// </summary>
 public sealed class StartupValidationTests
 {
     [Test]
     public void MapResponsesServer_Throws_WhenHandlerNotRegistered()
     {
-        // T036 / FR-016, FR-017: missing IResponseHandler → InvalidOperationException
+        // T036 / FR-016, FR-017: missing ResponseHandler → InvalidOperationException
         var ex = Assert.Throws<InvalidOperationException>(() =>
         {
             var builder = new HostBuilder()
@@ -28,7 +28,7 @@ public sealed class StartupValidationTests
                     webHost.ConfigureServices(services =>
                     {
                         services.AddRouting();
-                        // Deliberately NOT registering IResponseHandler
+                        // Deliberately NOT registering ResponseHandler
                         services.AddResponsesServer();
                     });
                     webHost.Configure(app =>
@@ -45,7 +45,7 @@ public sealed class StartupValidationTests
             host.Start();
         });
 
-        XAssert.Contains("IResponseHandler", ex.Message);
+        XAssert.Contains("ResponseHandler", ex.Message);
     }
 
     [Test]
@@ -59,7 +59,7 @@ public sealed class StartupValidationTests
                 webHost.ConfigureServices(services =>
                 {
                     services.AddRouting();
-                    services.AddSingleton<IResponseHandler>(new Azure.AI.AgentServer.Responses.Tests.Helpers.TestHandler());
+                    services.AddSingleton<ResponseHandler>(new Azure.AI.AgentServer.Responses.Tests.Helpers.TestHandler());
                     services.AddResponsesServer();
                 });
                 webHost.Configure(app =>

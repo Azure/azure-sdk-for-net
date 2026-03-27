@@ -30,11 +30,11 @@ namespace Azure.AI.AgentServer.Core.Tests.Snippets
         }
 
         // Minimal handler for snippet compilation.
-        private class MyHandler : IResponseHandler
+        private class MyHandler : ResponseHandler
         {
-            public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
+            public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
                 CreateResponse request,
-                IResponseContext context,
+                ResponseContext context,
                 [EnumeratorCancellation] CancellationToken cancellationToken)
             {
                 await Task.CompletedTask;

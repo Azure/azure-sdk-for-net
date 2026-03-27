@@ -11,7 +11,7 @@ The `ResponseOrchestrator` class is the central coordination point for processin
 ```
 HTTP Request → ResponseEndpointHandler → ResponseOrchestrator
   → PayloadValidator (S-002 enforcement)
-  → IResponseHandler.HandleAsync()
+  → ResponseHandler.HandleAsync()
   → ProcessEventsAsync() loop
   → IResponsesProvider persistence
   → IAsyncObserver<ResponseStreamEvent> publishing

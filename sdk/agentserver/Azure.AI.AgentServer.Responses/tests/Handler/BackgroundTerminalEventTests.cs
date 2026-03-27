@@ -90,7 +90,7 @@ public class BackgroundTerminalEventTests : IDisposable
     }
 
     private static async IAsyncEnumerable<ResponseStreamEvent> SuccessStream(
-        IResponseContext ctx,
+        ResponseContext ctx,
         [EnumeratorCancellation] CancellationToken ct = default)
     {
         await Task.CompletedTask;
@@ -101,7 +101,7 @@ public class BackgroundTerminalEventTests : IDisposable
     }
 
     private static async IAsyncEnumerable<ResponseStreamEvent> FailingStream(
-        IResponseContext ctx,
+        ResponseContext ctx,
         [EnumeratorCancellation] CancellationToken ct = default)
     {
         await Task.CompletedTask;

@@ -119,7 +119,7 @@ public class CrossModeConsistencyTests : IDisposable
     /// Handler that yields output items with text content — shared across all mode tests.
     /// </summary>
     private static async IAsyncEnumerable<ResponseStreamEvent> TextEventStream(
-        IResponseContext ctx,
+        ResponseContext ctx,
         [EnumeratorCancellation] CancellationToken ct = default)
     {
         await Task.CompletedTask;

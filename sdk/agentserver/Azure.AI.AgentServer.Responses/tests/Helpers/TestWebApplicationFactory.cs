@@ -39,7 +39,7 @@ public sealed class TestWebApplicationFactory : IDisposable
                     {
                         services.Configure(configureHostOptions);
                     }
-                    services.AddSingleton<IResponseHandler>(testHandler);
+                    services.AddSingleton<ResponseHandler>(testHandler);
                     configureTestServices?.Invoke(services);
                     services.AddResponsesServer(configureOptions);
                 });

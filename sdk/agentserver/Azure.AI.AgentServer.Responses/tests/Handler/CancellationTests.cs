@@ -39,7 +39,7 @@ public class CancellationTests : IDisposable
     }
 
     private static async IAsyncEnumerable<ResponseStreamEvent> CancellingEventStream(
-        IResponseContext ctx,
+        ResponseContext ctx,
         [EnumeratorCancellation] CancellationToken ct)
     {
         await Task.CompletedTask;
