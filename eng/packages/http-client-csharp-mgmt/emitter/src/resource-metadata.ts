@@ -674,27 +674,35 @@ function canBeListResourceScope(
 }
 
 /**
- * Detects Action methods whose operationPath matches a child resource's collection path
- * and relocates them to the child resource as List operations.
+ * Detects List methods that are assigned to the wrong resource and relocates
+ * them to the correct child resource.
  *
- * This handles the pattern where a TypeSpec spec models a list-children operation as an
- * ArmResourceActionSync on a parent resource (e.g., blobContainersList on BlobService)
- * rather than as ArmResourceListByParent on the child interface (BlobContainers).
+ * This handles the pattern where a TypeSpec spec models a list-children operation
+ * as an ArmResourceActionSync on a parent resource (e.g., blobContainersList on
+ * BlobService). The operation is already classified as List by parseResourceOperation
+ * (because TCGC detects it as pageable), but is assigned to the parent resource
+ * because @armResourceAction points to the parent model.
  *
- * The detection works by comparing each Action's operationPath against the "collection path"
- * of every other resource. A collection path is derived by stripping the last /{parameter}
- * segment from a resource's resourceIdPattern.
+ * The detection checks two conditions:
+ * 1. The operation is pageable (already ensured by kind=List from parseResourceOperation)
+ * 2. The operationPath matches a child resource's collection path (resourceIdPattern
+ *    minus the last /{parameter} segment)
  *
  * Example:
  *   - Container resourceIdPattern: .../blobServices/default/containers/{containerName}
  *   - Container collection path:   .../blobServices/default/containers
- *   - Action operationPath:        .../blobServices/default/containers  ← match!
- *   - Result: Action is moved from BlobService to Container and reclassified as List
+ *   - List operationPath:          .../blobServices/default/containers  ← match!
+ *   - Result: List is moved from BlobService to Container
  */
 function relocateCrossResourceListActions(
   validResources: ArmResourceSchema[]
 ): void {
-  // Find Action methods that should be relocated to a child resource
+  // Find List methods that are assigned to the wrong resource and should be
+  // relocated to a child resource. This handles the case where a pageable
+  // operation uses @armResourceAction on a parent resource (e.g., BlobService)
+  // but actually lists child resources (e.g., BlobContainers). The operation
+  // is already classified as List (because it's pageable) but is on the wrong
+  // resource because @armResourceAction points to the parent model.
   const relocations: Array<{
     sourceResource: ArmResourceSchema;
     targetResource: ArmResourceSchema;
@@ -703,11 +711,11 @@ function relocateCrossResourceListActions(
 
   for (const resource of validResources) {
     for (const method of resource.metadata.methods) {
-      if (method.kind !== ResourceOperationKind.Action) continue;
+      if (method.kind !== ResourceOperationKind.List) continue;
 
-      // Find the child resource whose resourceIdPattern is exactly the action's
-      // operationPath plus one variable segment (the resource name parameter).
-      // This means the action is at the child resource's collection path.
+      // Find the child resource whose resourceIdPattern is exactly this
+      // operation's path plus one variable segment (the resource name).
+      // This means the operation is at the child resource's collection path.
       for (const candidate of validResources) {
         if (candidate === resource) continue;
         if (!isPrefix(method.operationPath, candidate.metadata.resourceIdPattern))
@@ -734,7 +742,7 @@ function relocateCrossResourceListActions(
     }
   }
 
-  // Apply relocations: move methods from source to target and reclassify as List
+  // Apply relocations: move methods from source to target
   for (const { sourceResource, targetResource, method } of relocations) {
     // Remove from source
     const sourceIndex = sourceResource.metadata.methods.indexOf(method);
@@ -742,10 +750,7 @@ function relocateCrossResourceListActions(
       sourceResource.metadata.methods.splice(sourceIndex, 1);
     }
 
-    // Add to target as a List operation
-    targetResource.metadata.methods.push({
-      ...method,
-      kind: ResourceOperationKind.List
-    });
+    // Add to target (already classified as List)
+    targetResource.metadata.methods.push(method);
   }
 }

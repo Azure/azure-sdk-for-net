@@ -3365,9 +3365,11 @@ model ContainerProperties {
 /** List of containers */
 model ListContainerItems {
   /** The list of containers */
+  @pageItems
   value?: Container[];
 
   /** The next link */
+  @nextLink
   nextLink?: string;
 }
 
@@ -3385,7 +3387,8 @@ interface BlobServices {
   setProperties is ArmResourceCreateOrReplaceSync<BlobService>;
 
   /** Lists all containers in the blob service - modeled as action on parent */
-  @post
+  @get
+  @list
   containers is ArmResourceActionSync<
     BlobService,
     void,
