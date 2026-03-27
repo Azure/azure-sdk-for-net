@@ -59,6 +59,12 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         public static Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedClient GetShareChangeFeedClient(this Azure.Storage.Files.Shares.ShareClient shareClient, Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedClientOptions options = null) { throw null; }
         public static Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedClient GetShareChangeFeedClient(this Azure.Storage.Files.Shares.ShareServiceClient serviceClient, string shareName, Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedClientOptions options = null) { throw null; }
     }
+    public static partial class ShareChangeFeedModelFactory
+    {
+        public static Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedEvent ShareChangeFeedEvent(long schemaVersion = (long)0, Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedReasonType reason = default(Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedReasonType), Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedProtocol protocol = default(Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedProtocol), System.DateTimeOffset eventTime = default(System.DateTimeOffset), string id = null, long containerVersionNumber = (long)0, Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedEventData eventData = null) { throw null; }
+        public static Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedEventData ShareChangeFeedEventData(string fileId = null, string parentFileId = null, Azure.ETag? eTag = default(Azure.ETag?), string fileName = null, string fullFilePath = null, Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedEventIdentity identity = null, string description = null, string initiator = null, bool isDirectory = false) { throw null; }
+        public static Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedEventIdentity ShareChangeFeedEventIdentity(string entraObjectId = null, string securityIdentifier = null) { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ShareChangeFeedProtocol : System.IEquatable<Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedProtocol>
     {
