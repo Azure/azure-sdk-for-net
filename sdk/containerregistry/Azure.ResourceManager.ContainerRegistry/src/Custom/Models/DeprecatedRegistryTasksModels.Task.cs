@@ -15,6 +15,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
+    // Backward compatibility: Task-related model types (DockerBuildStep, EncodedTaskStep, FileTaskStep,
+    // TaskOverridableValue, TaskPatch, TaskRunContent, TaskStepProperties, TaskStatus enum, etc.) have been
+    // moved to Azure.ResourceManager.ContainerRegistryTasks. These deprecated stubs preserve the old API
+    // surface with [Obsolete] attributes and NotSupportedException implementations so existing code compiles
+    // but directs users to the new package.
+
     [Obsolete("This type has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
     [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class ContainerRegistryDockerBuildStep : ContainerRegistryTaskStepProperties, IJsonModel<ContainerRegistryDockerBuildStep>, IPersistableModel<ContainerRegistryDockerBuildStep>

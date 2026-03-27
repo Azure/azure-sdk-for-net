@@ -16,6 +16,10 @@ using Azure.ResourceManager.ContainerRegistry.Models;
 
 namespace Azure.ResourceManager.ContainerRegistry
 {
+    // Backward compatibility: RegistryTasks operations (AgentPool, Run, Task, TaskRun, ScheduleRun, GetBuildSourceUploadUrl)
+    // have been moved to the separate Azure.ResourceManager.ContainerRegistryTasks package.
+    // These deprecated method stubs preserve the old API surface so existing callers get a clear
+    // NotSupportedException directing them to the new package, rather than a compile-time break.
     public partial class ContainerRegistryResource
     {
         [Obsolete("This method has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]

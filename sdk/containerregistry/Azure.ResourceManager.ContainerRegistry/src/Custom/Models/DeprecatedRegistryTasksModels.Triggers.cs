@@ -15,6 +15,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
+    // Backward compatibility: Trigger-related model types (BaseImageDependency, BaseImageTrigger,
+    // SourceTrigger, TimerTrigger, TriggerProperties, TriggerUpdateContent, and related enums) have been
+    // moved to Azure.ResourceManager.ContainerRegistryTasks. These deprecated stubs preserve the old API
+    // surface with [Obsolete] attributes and NotSupportedException implementations so existing code compiles
+    // but directs users to the new package.
+
     [Obsolete("This type has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
     [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class ContainerRegistryBaseImageDependency : IJsonModel<ContainerRegistryBaseImageDependency>, IPersistableModel<ContainerRegistryBaseImageDependency>
