@@ -546,10 +546,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="connectionState"> The state to set for the private endpoint connection. </param>
         /// <param name="description"> The description to associate with the private endpoint connection. </param>
         /// <param name="privateEndpointResourceId"> The resource ID of private endpoint to be permitted or denied connection to the relay namespace. </param>
-        /// <returns> A new <see cref="NetworkCloud.Models.ClusterManagerUpdateRelayPrivateEndpointConnectionParameters"/> instance for mocking. </returns>
-        public static ClusterManagerUpdateRelayPrivateEndpointConnectionParameters ClusterManagerUpdateRelayPrivateEndpointConnectionParameters(RelayPrivateEndpointConnectionState connectionState = default, string description = default, ResourceIdentifier privateEndpointResourceId = default)
+        /// <returns> A new <see cref="NetworkCloud.Models.ClusterManagerUpdateRelayPrivateEndpointConnectionContent"/> instance for mocking. </returns>
+        public static ClusterManagerUpdateRelayPrivateEndpointConnectionContent ClusterManagerUpdateRelayPrivateEndpointConnectionContent(RelayPrivateEndpointConnectionState connectionState = default, string description = default, ResourceIdentifier privateEndpointResourceId = default)
         {
-            return new ClusterManagerUpdateRelayPrivateEndpointConnectionParameters(connectionState, description, privateEndpointResourceId, additionalBinaryDataProperties: null);
+            return new ClusterManagerUpdateRelayPrivateEndpointConnectionContent(connectionState, description, privateEndpointResourceId, additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -799,24 +799,24 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> ClusterInspectParameters represents the body of the request to inspect the cluster. </summary>
         /// <param name="additionalActions"> Additional actions supplement the default non-disruptive cluster inspection. Additional actions may be disallowed if the cluster is in a deployed and running state. </param>
         /// <param name="filterDevices"> Indicates which devices are included in the inspection. By default, all devices that can be targeted will be included in the inspection. </param>
-        /// <returns> A new <see cref="NetworkCloud.Models.ClusterInspectParameters"/> instance for mocking. </returns>
-        public static ClusterInspectParameters ClusterInspectParameters(IEnumerable<ClusterInspectAdditionalAction> additionalActions = default, FilterDevices filterDevices = default)
+        /// <returns> A new <see cref="NetworkCloud.Models.ClusterInspectContent"/> instance for mocking. </returns>
+        public static ClusterInspectContent ClusterInspectContent(IEnumerable<ClusterInspectAdditionalAction> additionalActions = default, NetworkCloudFilterDevices filterDevices = default)
         {
             additionalActions ??= new ChangeTrackingList<ClusterInspectAdditionalAction>();
 
-            return new ClusterInspectParameters(additionalActions.ToList(), filterDevices, additionalBinaryDataProperties: null);
+            return new ClusterInspectContent(additionalActions.ToList(), filterDevices, additionalBinaryDataProperties: null);
         }
 
         /// <summary> FilterDevices defines the filtered target of the inspection. </summary>
         /// <param name="bareMetalMachineNames"> The list of bare metal machine names to include in the inspection. </param>
         /// <param name="rackNames"> The list of rack names to include in the inspection. </param>
-        /// <returns> A new <see cref="NetworkCloud.Models.FilterDevices"/> instance for mocking. </returns>
-        public static FilterDevices FilterDevices(IEnumerable<string> bareMetalMachineNames = default, IEnumerable<string> rackNames = default)
+        /// <returns> A new <see cref="NetworkCloud.Models.NetworkCloudFilterDevices"/> instance for mocking. </returns>
+        public static NetworkCloudFilterDevices NetworkCloudFilterDevices(IEnumerable<string> bareMetalMachineNames = default, IEnumerable<string> rackNames = default)
         {
             bareMetalMachineNames ??= new ChangeTrackingList<string>();
             rackNames ??= new ChangeTrackingList<string>();
 
-            return new FilterDevices(bareMetalMachineNames.ToList(), rackNames.ToList(), additionalBinaryDataProperties: null);
+            return new NetworkCloudFilterDevices(bareMetalMachineNames.ToList(), rackNames.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> ClusterUpdateVersionParameters represents the body of the request to update cluster version. </summary>

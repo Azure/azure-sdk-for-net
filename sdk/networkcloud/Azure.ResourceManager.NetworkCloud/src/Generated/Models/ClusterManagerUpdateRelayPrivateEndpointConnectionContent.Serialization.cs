@@ -15,66 +15,66 @@ using Azure.ResourceManager.NetworkCloud;
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
     /// <summary> ClusterManagerUpdateRelayPrivateEndpointConnectionParameters represents the body of the request to approve or reject the relay private endpoint connection for the private relay managed by a cluster manager. </summary>
-    public partial class ClusterManagerUpdateRelayPrivateEndpointConnectionParameters : IJsonModel<ClusterManagerUpdateRelayPrivateEndpointConnectionParameters>
+    public partial class ClusterManagerUpdateRelayPrivateEndpointConnectionContent : IJsonModel<ClusterManagerUpdateRelayPrivateEndpointConnectionContent>
     {
-        /// <summary> Initializes a new instance of <see cref="ClusterManagerUpdateRelayPrivateEndpointConnectionParameters"/> for deserialization. </summary>
-        internal ClusterManagerUpdateRelayPrivateEndpointConnectionParameters()
+        /// <summary> Initializes a new instance of <see cref="ClusterManagerUpdateRelayPrivateEndpointConnectionContent"/> for deserialization. </summary>
+        internal ClusterManagerUpdateRelayPrivateEndpointConnectionContent()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ClusterManagerUpdateRelayPrivateEndpointConnectionParameters PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ClusterManagerUpdateRelayPrivateEndpointConnectionContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ClusterManagerUpdateRelayPrivateEndpointConnectionParameters>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ClusterManagerUpdateRelayPrivateEndpointConnectionContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeClusterManagerUpdateRelayPrivateEndpointConnectionParameters(document.RootElement, options);
+                        return DeserializeClusterManagerUpdateRelayPrivateEndpointConnectionContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ClusterManagerUpdateRelayPrivateEndpointConnectionParameters)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClusterManagerUpdateRelayPrivateEndpointConnectionContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ClusterManagerUpdateRelayPrivateEndpointConnectionParameters>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ClusterManagerUpdateRelayPrivateEndpointConnectionContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkCloudContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ClusterManagerUpdateRelayPrivateEndpointConnectionParameters)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClusterManagerUpdateRelayPrivateEndpointConnectionContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ClusterManagerUpdateRelayPrivateEndpointConnectionParameters>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ClusterManagerUpdateRelayPrivateEndpointConnectionContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ClusterManagerUpdateRelayPrivateEndpointConnectionParameters IPersistableModel<ClusterManagerUpdateRelayPrivateEndpointConnectionParameters>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ClusterManagerUpdateRelayPrivateEndpointConnectionContent IPersistableModel<ClusterManagerUpdateRelayPrivateEndpointConnectionContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ClusterManagerUpdateRelayPrivateEndpointConnectionParameters>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ClusterManagerUpdateRelayPrivateEndpointConnectionContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="clusterManagerUpdateRelayPrivateEndpointConnectionParameters"> The <see cref="ClusterManagerUpdateRelayPrivateEndpointConnectionParameters"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(ClusterManagerUpdateRelayPrivateEndpointConnectionParameters clusterManagerUpdateRelayPrivateEndpointConnectionParameters)
+        /// <param name="clusterManagerUpdateRelayPrivateEndpointConnectionContent"> The <see cref="ClusterManagerUpdateRelayPrivateEndpointConnectionContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ClusterManagerUpdateRelayPrivateEndpointConnectionContent clusterManagerUpdateRelayPrivateEndpointConnectionContent)
         {
-            if (clusterManagerUpdateRelayPrivateEndpointConnectionParameters == null)
+            if (clusterManagerUpdateRelayPrivateEndpointConnectionContent == null)
             {
                 return null;
             }
-            return RequestContent.Create(clusterManagerUpdateRelayPrivateEndpointConnectionParameters, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(clusterManagerUpdateRelayPrivateEndpointConnectionContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ClusterManagerUpdateRelayPrivateEndpointConnectionParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ClusterManagerUpdateRelayPrivateEndpointConnectionContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ClusterManagerUpdateRelayPrivateEndpointConnectionParameters>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ClusterManagerUpdateRelayPrivateEndpointConnectionContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClusterManagerUpdateRelayPrivateEndpointConnectionParameters)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ClusterManagerUpdateRelayPrivateEndpointConnectionContent)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("connectionState"u8);
             writer.WriteStringValue(ConnectionState.ToString());
@@ -118,24 +118,24 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ClusterManagerUpdateRelayPrivateEndpointConnectionParameters IJsonModel<ClusterManagerUpdateRelayPrivateEndpointConnectionParameters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ClusterManagerUpdateRelayPrivateEndpointConnectionContent IJsonModel<ClusterManagerUpdateRelayPrivateEndpointConnectionContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ClusterManagerUpdateRelayPrivateEndpointConnectionParameters JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ClusterManagerUpdateRelayPrivateEndpointConnectionContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ClusterManagerUpdateRelayPrivateEndpointConnectionParameters>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ClusterManagerUpdateRelayPrivateEndpointConnectionContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClusterManagerUpdateRelayPrivateEndpointConnectionParameters)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ClusterManagerUpdateRelayPrivateEndpointConnectionContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeClusterManagerUpdateRelayPrivateEndpointConnectionParameters(document.RootElement, options);
+            return DeserializeClusterManagerUpdateRelayPrivateEndpointConnectionContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ClusterManagerUpdateRelayPrivateEndpointConnectionParameters DeserializeClusterManagerUpdateRelayPrivateEndpointConnectionParameters(JsonElement element, ModelReaderWriterOptions options)
+        internal static ClusterManagerUpdateRelayPrivateEndpointConnectionContent DeserializeClusterManagerUpdateRelayPrivateEndpointConnectionContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ClusterManagerUpdateRelayPrivateEndpointConnectionParameters(connectionState, description, privateEndpointResourceId, additionalBinaryDataProperties);
+            return new ClusterManagerUpdateRelayPrivateEndpointConnectionContent(connectionState, description, privateEndpointResourceId, additionalBinaryDataProperties);
         }
     }
 }

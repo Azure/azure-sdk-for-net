@@ -50,9 +50,9 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             taints ??= new List<KubernetesLabel>();
 
             return new KubernetesClusterNode(
-                new ResourceIdentifier(agentPoolId),
+                agentPoolId is null ? null : new ResourceIdentifier(agentPoolId),
                 availabilityZone,
-                new ResourceIdentifier(bareMetalMachineId),
+                bareMetalMachineId is null ? null : new ResourceIdentifier(bareMetalMachineId),
                 cpuCores,
                 detailedStatus,
                 detailedStatusMessage,

@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     {
         private readonly string _value;
         /// <summary> The TCP transport protocol. </summary>
-        private const string TCPValue = "TCP";
+        private const string TcpValue = "TCP";
         /// <summary> The UDP transport protocol. </summary>
-        private const string UDPValue = "UDP";
+        private const string UdpValue = "UDP";
 
         /// <summary> Initializes a new instance of <see cref="TransportProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -31,10 +31,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         }
 
         /// <summary> The TCP transport protocol. </summary>
-        public static TransportProtocol TCP { get; } = new TransportProtocol(TCPValue);
+        public static TransportProtocol Tcp { get; } = new TransportProtocol(TcpValue);
 
         /// <summary> The UDP transport protocol. </summary>
-        public static TransportProtocol UDP { get; } = new TransportProtocol(UDPValue);
+        public static TransportProtocol Udp { get; } = new TransportProtocol(UdpValue);
 
         /// <summary> Determines if two <see cref="TransportProtocol"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

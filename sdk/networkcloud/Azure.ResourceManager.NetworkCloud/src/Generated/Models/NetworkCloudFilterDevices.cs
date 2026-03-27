@@ -12,23 +12,23 @@ using Azure.ResourceManager.NetworkCloud;
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
     /// <summary> FilterDevices defines the filtered target of the inspection. </summary>
-    public partial class FilterDevices
+    public partial class NetworkCloudFilterDevices
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="FilterDevices"/>. </summary>
-        public FilterDevices()
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudFilterDevices"/>. </summary>
+        public NetworkCloudFilterDevices()
         {
             BareMetalMachineNames = new ChangeTrackingList<string>();
             RackNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="FilterDevices"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudFilterDevices"/>. </summary>
         /// <param name="bareMetalMachineNames"> The list of bare metal machine names to include in the inspection. </param>
         /// <param name="rackNames"> The list of rack names to include in the inspection. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FilterDevices(IList<string> bareMetalMachineNames, IList<string> rackNames, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetworkCloudFilterDevices(IList<string> bareMetalMachineNames, IList<string> rackNames, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BareMetalMachineNames = bareMetalMachineNames;
             RackNames = rackNames;

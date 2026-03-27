@@ -12,22 +12,22 @@ using Azure.ResourceManager.NetworkCloud;
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
     /// <summary> ClusterInspectParameters represents the body of the request to inspect the cluster. </summary>
-    public partial class ClusterInspectParameters
+    public partial class ClusterInspectContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ClusterInspectParameters"/>. </summary>
-        public ClusterInspectParameters()
+        /// <summary> Initializes a new instance of <see cref="ClusterInspectContent"/>. </summary>
+        public ClusterInspectContent()
         {
             AdditionalActions = new ChangeTrackingList<ClusterInspectAdditionalAction>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ClusterInspectParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterInspectContent"/>. </summary>
         /// <param name="additionalActions"> Additional actions supplement the default non-disruptive cluster inspection. Additional actions may be disallowed if the cluster is in a deployed and running state. </param>
         /// <param name="filterDevices"> Indicates which devices are included in the inspection. By default, all devices that can be targeted will be included in the inspection. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ClusterInspectParameters(IList<ClusterInspectAdditionalAction> additionalActions, FilterDevices filterDevices, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ClusterInspectContent(IList<ClusterInspectAdditionalAction> additionalActions, NetworkCloudFilterDevices filterDevices, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AdditionalActions = additionalActions;
             FilterDevices = filterDevices;
@@ -38,6 +38,6 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public IList<ClusterInspectAdditionalAction> AdditionalActions { get; }
 
         /// <summary> Indicates which devices are included in the inspection. By default, all devices that can be targeted will be included in the inspection. </summary>
-        public FilterDevices FilterDevices { get; set; }
+        public NetworkCloudFilterDevices FilterDevices { get; set; }
     }
 }
