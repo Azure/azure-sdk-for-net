@@ -29,7 +29,7 @@ namespace Azure.Identity.Tests.samples
             string tenantId = "00000000-0000-0000-0000-00000000";
             string clientId = "00000000-0000-0000-0000-00000000";
 
-            ```C# Snippet:Identity_CertificateCredential_CreateWithPath_Store
+            C# Snippet:Identity_CertificateCredential_CreateWithPath_Store
             var credential = new ClientCertificateCredential(tenantId, clientId, "cert:/CurrentUser/My/E661583E8FABEF4C0BEF694CBC41C28FB81CD870");
             #endregion
         }
