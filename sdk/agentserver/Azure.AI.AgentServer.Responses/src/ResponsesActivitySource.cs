@@ -46,7 +46,7 @@ public class ResponsesActivitySource
 
     /// <summary>
     /// The default service name used for the <c>service.name</c> and
-    /// <c>gen_ai.system</c> tags: <c>"azure.ai.agentserver"</c>.
+    /// <c>gen_ai.provider.name</c> tags: <c>"AzureAI Hosted Agents"</c>.
     /// Matches the Core package for tracing parity.
     /// </summary>
     public const string DefaultServiceName = ResponsesTracingConstants.ServiceName;
@@ -95,7 +95,7 @@ public class ResponsesActivitySource
     /// <c>POST /responses</c> request.
     /// <para>
     /// The default implementation sets GenAI semantic convention tags
-    /// (<c>gen_ai.response.id</c>, <c>gen_ai.provider.name</c>, <c>gen_ai.system</c>,
+    /// (<c>gen_ai.response.id</c>, <c>gen_ai.provider.name</c>,
     /// <c>gen_ai.operation.name</c>, <c>gen_ai.request.model</c>,
     /// <c>gen_ai.conversation.id</c>, <c>gen_ai.agent.*</c>, <c>service.name</c>),
     /// Core-parity tags (<c>azure.ai.agentserver.responses.response_id</c>,
@@ -129,10 +129,10 @@ public class ResponsesActivitySource
         var isStreaming = request.Stream == true;
         var isBackground = request.Background == true;
 
-        // Activity display name per OTEL GenAI convention
+        // Span display name per spec §7.1: invoke_agent {Model}
         var activityName = string.IsNullOrEmpty(request.Model)
-            ? ResponsesTracingConstants.OperationName
-            : $"{ResponsesTracingConstants.OperationName} {request.Model}";
+            ? "invoke_agent"
+            : $"invoke_agent {request.Model}";
 
         var activity = _source.StartActivity(activityName);
         if (activity is null)
@@ -159,7 +159,6 @@ public class ResponsesActivitySource
         activity.SetTag(ResponsesTracingConstants.Tags.NamespacedStreaming, isStreaming);
 
         // --- GenAI semantic convention tags (Responses-specific additions) ---
-        activity.SetTag(ResponsesTracingConstants.Tags.System, DefaultServiceName);
         activity.SetTag(ResponsesTracingConstants.Tags.OperationName, ResponsesTracingConstants.OperationName);
 
         if (!string.IsNullOrEmpty(request.Model))

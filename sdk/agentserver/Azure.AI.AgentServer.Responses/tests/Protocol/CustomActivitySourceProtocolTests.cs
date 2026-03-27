@@ -28,7 +28,6 @@ public sealed class CustomActivitySourceProtocolTests
 
         Assert.That(env.Tags[ResponsesTracingConstants.Tags.ProviderName], Is.EqualTo(ResponsesTracingConstants.ProviderName));
         Assert.That(env.Tags[ResponsesTracingConstants.Tags.ServiceName], Is.EqualTo(ResponsesTracingConstants.ServiceName));
-        Assert.That(env.Tags[ResponsesTracingConstants.Tags.System], Is.EqualTo(ResponsesTracingConstants.ServiceName));
     }
 
     [Test]
@@ -37,7 +36,7 @@ public sealed class CustomActivitySourceProtocolTests
         using var env = CreateEnv();
         await env.PostAsync(new { model = "test-model" });
 
-        Assert.That(env.DisplayName, Is.EqualTo("create_response test-model"));
+        Assert.That(env.DisplayName, Is.EqualTo("invoke_agent test-model"));
     }
 
     [Test]
@@ -46,7 +45,7 @@ public sealed class CustomActivitySourceProtocolTests
         using var env = CreateEnv();
         await env.PostAsync(new { });
 
-        Assert.That(env.DisplayName, Is.EqualTo("create_response"));
+        Assert.That(env.DisplayName, Is.EqualTo("invoke_agent"));
     }
 
     [Test]
@@ -72,7 +71,6 @@ public sealed class CustomActivitySourceProtocolTests
         // Overridden tags
         Assert.That(env.Tags[ResponsesTracingConstants.Tags.ProviderName], Is.EqualTo("my.custom.provider"));
         Assert.That(env.Tags[ResponsesTracingConstants.Tags.ServiceName], Is.EqualTo("my.custom.provider"));
-        Assert.That(env.Tags[ResponsesTracingConstants.Tags.System], Is.EqualTo("my.custom.provider"));
 
         // Base defaults still present
         Assert.That(env.Tags[ResponsesTracingConstants.Tags.OperationName], Is.EqualTo(ResponsesTracingConstants.OperationName));
@@ -141,7 +139,6 @@ public sealed class CustomActivitySourceProtocolTests
         // Default GenAI tags NOT present (base not called)
         Assert.That(env.Tags.ContainsKey(ResponsesTracingConstants.Tags.ProviderName), Is.False);
         Assert.That(env.Tags.ContainsKey(ResponsesTracingConstants.Tags.ServiceName), Is.False);
-        Assert.That(env.Tags.ContainsKey(ResponsesTracingConstants.Tags.System), Is.False);
     }
 
     [Test]
@@ -190,7 +187,6 @@ public sealed class CustomActivitySourceProtocolTests
 
             activity.SetTag(ResponsesTracingConstants.Tags.ProviderName, "my.custom.provider");
             activity.SetTag(ResponsesTracingConstants.Tags.ServiceName, "my.custom.provider");
-            activity.SetTag(ResponsesTracingConstants.Tags.System, "my.custom.provider");
             return activity;
         }
     }

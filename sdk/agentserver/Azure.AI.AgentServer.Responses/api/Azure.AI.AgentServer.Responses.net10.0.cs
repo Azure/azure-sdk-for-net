@@ -702,7 +702,6 @@ namespace Azure.AI.AgentServer.Responses
             public const string RequestModel = "gen_ai.request.model";
             public const string ResponseId = "gen_ai.response.id";
             public const string ServiceName = "service.name";
-            public const string System = "gen_ai.system";
         }
     }
     public partial class TextContentBuilder

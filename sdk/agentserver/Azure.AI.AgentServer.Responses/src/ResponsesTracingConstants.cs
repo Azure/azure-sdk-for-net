@@ -18,7 +18,7 @@ public static class ResponsesTracingConstants
     // ── Well-Known Values ────────────────────────────────────────────────
 
     /// <summary>
-    /// The <c>service.name</c> and <c>gen_ai.system</c> tag value:
+    /// The <c>service.name</c> tag value:
     /// <c>"azure.ai.agentserver"</c>. Matches Core for parity.
     /// </summary>
     public const string ServiceName = "azure.ai.agentserver";
@@ -74,9 +74,6 @@ public static class ResponsesTracingConstants
         public const string ErrorMessage = "azure.ai.agentserver.responses.error.message";
 
         // --- GenAI semantic convention tags (Responses-specific additions) ---
-
-        /// <summary><c>gen_ai.system</c></summary>
-        public const string System = "gen_ai.system";
 
         /// <summary><c>gen_ai.operation.name</c></summary>
         public const string OperationName = "gen_ai.operation.name";

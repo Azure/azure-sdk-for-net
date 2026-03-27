@@ -135,7 +135,6 @@ public sealed class DistributedTracingProtocolTests : IDisposable
         await PostDefaultAsync(new { model = "test" });
 
         Assert.That(_capturedTags[ResponsesTracingConstants.Tags.ProviderName], Is.EqualTo(ResponsesTracingConstants.ProviderName));
-        Assert.That(_capturedTags[ResponsesTracingConstants.Tags.System], Is.EqualTo(ResponsesTracingConstants.ServiceName));
         Assert.That(_capturedTags[ResponsesTracingConstants.Tags.OperationName], Is.EqualTo(ResponsesTracingConstants.OperationName));
         Assert.That(_capturedTags[ResponsesTracingConstants.Tags.ServiceName], Is.EqualTo(ResponsesTracingConstants.ServiceName));
     }
@@ -174,7 +173,7 @@ public sealed class DistributedTracingProtocolTests : IDisposable
         // R8: activity display name follows OTEL convention
         await PostDefaultAsync(new { model = "gpt-4o" });
 
-        Assert.That(_capturedDisplayName, Is.EqualTo("create_response gpt-4o"));
+        Assert.That(_capturedDisplayName, Is.EqualTo("invoke_agent gpt-4o"));
     }
 
     [Test]
@@ -183,7 +182,7 @@ public sealed class DistributedTracingProtocolTests : IDisposable
         // R8: activity display name without model
         await PostDefaultAsync(new { model = "" });
 
-        Assert.That(_capturedDisplayName, Is.EqualTo("create_response"));
+        Assert.That(_capturedDisplayName, Is.EqualTo("invoke_agent"));
     }
 
     [Test]

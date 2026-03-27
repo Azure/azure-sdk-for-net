@@ -73,11 +73,10 @@ public sealed class ResponsesActivitySourceTests : IDisposable
             request, "caresp_123", EmptyHeaders());
 
         Assert.That(activity, Is.Not.Null);
-        Assert.That(activity.DisplayName, Is.EqualTo("create_response gpt-4o"));
+        Assert.That(activity.DisplayName, Is.EqualTo("invoke_agent gpt-4o"));
         Assert.That(activity.GetTagItem(ResponsesTracingConstants.Tags.ResponseId), Is.EqualTo("caresp_123"));
         Assert.That(activity.GetTagItem(ResponsesTracingConstants.Tags.ProviderName), Is.EqualTo(ResponsesTracingConstants.ProviderName));
         Assert.That(activity.GetTagItem(ResponsesTracingConstants.Tags.ServiceName), Is.EqualTo(ResponsesTracingConstants.ServiceName));
-        Assert.That(activity.GetTagItem(ResponsesTracingConstants.Tags.System), Is.EqualTo(ResponsesTracingConstants.ServiceName));
         Assert.That(activity.GetTagItem(ResponsesTracingConstants.Tags.OperationName), Is.EqualTo(ResponsesTracingConstants.OperationName));
         Assert.That(activity.GetTagItem(ResponsesTracingConstants.Tags.RequestModel), Is.EqualTo("gpt-4o"));
     }
@@ -156,7 +155,7 @@ public sealed class ResponsesActivitySourceTests : IDisposable
             request, "id", EmptyHeaders());
 
         Assert.That(activity, Is.Not.Null);
-        Assert.That(activity.DisplayName, Is.EqualTo("create_response"));
+        Assert.That(activity.DisplayName, Is.EqualTo("invoke_agent"));
         Assert.That(activity.GetTagItem(ResponsesTracingConstants.Tags.RequestModel), Is.Null);
     }
 
@@ -408,13 +407,12 @@ public sealed class ResponsesActivitySourceTests : IDisposable
         Assert.That(activity, Is.Not.Null);
 
         // Base defaults present
-        Assert.That(activity.DisplayName, Is.EqualTo("create_response test"));
+        Assert.That(activity.DisplayName, Is.EqualTo("invoke_agent test"));
         Assert.That(activity.GetTagItem(ResponsesTracingConstants.Tags.OperationName), Is.EqualTo("create_response"));
 
         // Overridden tags
         Assert.That(activity.GetTagItem(ResponsesTracingConstants.Tags.ProviderName), Is.EqualTo("my-service"));
         Assert.That(activity.GetTagItem(ResponsesTracingConstants.Tags.ServiceName), Is.EqualTo("my-service"));
-        Assert.That(activity.GetTagItem(ResponsesTracingConstants.Tags.System), Is.EqualTo("my-service"));
 
         // Extra tags from custom header
         Assert.That(activity.GetTagItem("custom.header"), Is.EqualTo("hello"));
@@ -484,7 +482,6 @@ public sealed class ResponsesActivitySourceTests : IDisposable
             // Replace service identity
             activity.SetTag(ResponsesTracingConstants.Tags.ProviderName, "my-service");
             activity.SetTag(ResponsesTracingConstants.Tags.ServiceName, "my-service");
-            activity.SetTag(ResponsesTracingConstants.Tags.System, "my-service");
 
             // Add extra tags
             activity.SetTag("service.namespace", "my.ns");

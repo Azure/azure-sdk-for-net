@@ -44,7 +44,7 @@ public class ObservabilityTests : IDisposable
         Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
         var activity = _activities.FirstOrDefault(a =>
-            a.OperationName == "create_response obs-test-emit" &&
+            a.OperationName == "invoke_agent obs-test-emit" &&
             a.GetTagItem(ResponsesTracingConstants.Tags.RequestModel) as string == "obs-test-emit");
 
         Assert.That(activity, Is.Not.Null);
@@ -62,7 +62,7 @@ public class ObservabilityTests : IDisposable
             new StringContent(body, Encoding.UTF8, "application/json"));
 
         var activity = _activities.FirstOrDefault(a =>
-            a.OperationName == "create_response obs-test-default" &&
+            a.OperationName == "invoke_agent obs-test-default" &&
             a.GetTagItem(ResponsesTracingConstants.Tags.RequestModel) as string == "obs-test-default");
 
         Assert.That(activity, Is.Not.Null);
@@ -85,7 +85,7 @@ public class ObservabilityTests : IDisposable
             new StringContent(body, Encoding.UTF8, "application/json"));
 
         var activity = _activities.FirstOrDefault(a =>
-            a.OperationName == "create_response obs-test-stream" &&
+            a.OperationName == "invoke_agent obs-test-stream" &&
             a.GetTagItem(ResponsesTracingConstants.Tags.RequestModel) as string == "obs-test-stream");
 
         Assert.That(activity, Is.Not.Null);
@@ -100,7 +100,7 @@ public class ObservabilityTests : IDisposable
             new StringContent(body, Encoding.UTF8, "application/json"));
 
         var activity = _activities.FirstOrDefault(a =>
-            a.OperationName == "create_response obs-test-background" &&
+            a.OperationName == "invoke_agent obs-test-background" &&
             a.GetTagItem(ResponsesTracingConstants.Tags.RequestModel) as string == "obs-test-background");
 
         Assert.That(activity, Is.Not.Null);
@@ -115,7 +115,7 @@ public class ObservabilityTests : IDisposable
             new StringContent(body, Encoding.UTF8, "application/json"));
 
         var activity = _activities.FirstOrDefault(a =>
-            a.OperationName == "create_response obs-test-nsid" &&
+            a.OperationName == "invoke_agent obs-test-nsid" &&
             a.GetTagItem(ResponsesTracingConstants.Tags.RequestModel) as string == "obs-test-nsid");
 
         Assert.That(activity, Is.Not.Null);
@@ -135,7 +135,7 @@ public class ObservabilityTests : IDisposable
             new StringContent(body, Encoding.UTF8, "application/json"));
 
         var activity = _activities.FirstOrDefault(a =>
-            a.OperationName == "create_response obs-test-no-agent" &&
+            a.OperationName == "invoke_agent obs-test-no-agent" &&
             a.GetTagItem(ResponsesTracingConstants.Tags.RequestModel) as string == "obs-test-no-agent");
 
         Assert.That(activity, Is.Not.Null);
