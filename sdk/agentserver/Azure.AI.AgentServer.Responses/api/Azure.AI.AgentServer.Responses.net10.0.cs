@@ -178,7 +178,7 @@ namespace Azure.AI.AgentServer.Responses
         public static Azure.AI.AgentServer.Responses.Models.ItemMcpApprovalRequest ItemMcpApprovalRequest(string id = null, string serverLabel = null, string name = null, string arguments = null) { throw null; }
         public static Azure.AI.AgentServer.Responses.Models.ItemMcpListTools ItemMcpListTools(string id = null, string serverLabel = null, System.Collections.Generic.IEnumerable<Azure.AI.AgentServer.Responses.Models.MCPListToolsTool> tools = null, string error = null) { throw null; }
         public static Azure.AI.AgentServer.Responses.Models.ItemMcpToolCall ItemMcpToolCall(string id = null, string serverLabel = null, string name = null, string arguments = null, string output = null, System.Collections.Generic.IDictionary<string, System.BinaryData> error = null, Azure.AI.AgentServer.Responses.Models.MCPToolCallStatus? status = default(Azure.AI.AgentServer.Responses.Models.MCPToolCallStatus?), string approvalRequestId = null) { throw null; }
-        public static Azure.AI.AgentServer.Responses.Models.ItemMessage ItemMessage(string id = null, Azure.AI.AgentServer.Responses.Models.MessageStatus status = Azure.AI.AgentServer.Responses.Models.MessageStatus.InProgress, Azure.AI.AgentServer.Responses.Models.MessageRole role = Azure.AI.AgentServer.Responses.Models.MessageRole.Unknown, System.BinaryData content = null) { throw null; }
+        public static Azure.AI.AgentServer.Responses.Models.ItemMessage ItemMessage(Azure.AI.AgentServer.Responses.Models.MessageRole role = Azure.AI.AgentServer.Responses.Models.MessageRole.Unknown, System.BinaryData content = null) { throw null; }
         public static Azure.AI.AgentServer.Responses.Models.ItemOutputMessage ItemOutputMessage(string id = null, System.Collections.Generic.IEnumerable<Azure.AI.AgentServer.Responses.Models.OutputMessageContent> content = null, Azure.AI.AgentServer.Responses.Models.OutputItemOutputMessageStatus status = Azure.AI.AgentServer.Responses.Models.OutputItemOutputMessageStatus.InProgress) { throw null; }
         public static Azure.AI.AgentServer.Responses.Models.ItemReasoningItem ItemReasoningItem(string id = null, string encryptedContent = null, System.Collections.Generic.IEnumerable<Azure.AI.AgentServer.Responses.Models.SummaryTextContent> summary = null, System.Collections.Generic.IEnumerable<Azure.AI.AgentServer.Responses.Models.ReasoningTextContent> content = null, Azure.AI.AgentServer.Responses.Models.OutputItemReasoningItemStatus? status = default(Azure.AI.AgentServer.Responses.Models.OutputItemReasoningItemStatus?)) { throw null; }
         public static Azure.AI.AgentServer.Responses.Models.ItemReferenceParam ItemReferenceParam(string id = null) { throw null; }
@@ -722,6 +722,17 @@ namespace Azure.AI.AgentServer.Responses
         public ValidationError(string path, string message) { }
         public string Message { get { throw null; } }
         public string Path { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct WireFormatData
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public T To<T>() where T : System.ClientModel.Primitives.IPersistableModel<T> { throw null; }
+    }
+    public static partial class WireFormatExtensions
+    {
+        public static Azure.AI.AgentServer.Responses.WireFormatData Translate<T>(this T model) where T : System.ClientModel.Primitives.IPersistableModel<T> { throw null; }
     }
 }
 namespace Azure.AI.AgentServer.Responses.Models
@@ -3957,12 +3968,10 @@ namespace Azure.AI.AgentServer.Responses.Models
     }
     public partial class ItemMessage : Azure.AI.AgentServer.Responses.Models.Item, System.ClientModel.Primitives.IJsonModel<Azure.AI.AgentServer.Responses.Models.ItemMessage>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.ItemMessage>
     {
+        public ItemMessage(Azure.AI.AgentServer.Responses.Models.MessageRole role, System.BinaryData content) { }
         public ItemMessage(Azure.AI.AgentServer.Responses.Models.MessageRole role, System.Collections.Generic.IList<Azure.AI.AgentServer.Responses.Models.MessageContent> content) { }
-        public ItemMessage(string id, Azure.AI.AgentServer.Responses.Models.MessageStatus status, Azure.AI.AgentServer.Responses.Models.MessageRole role, System.BinaryData content) { }
         public System.BinaryData Content { get { throw null; } set { } }
-        public string Id { get { throw null; } set { } }
         public Azure.AI.AgentServer.Responses.Models.MessageRole Role { get { throw null; } set { } }
-        public Azure.AI.AgentServer.Responses.Models.MessageStatus Status { get { throw null; } set { } }
         protected override Azure.AI.AgentServer.Responses.Models.Item JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected override Azure.AI.AgentServer.Responses.Models.Item PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

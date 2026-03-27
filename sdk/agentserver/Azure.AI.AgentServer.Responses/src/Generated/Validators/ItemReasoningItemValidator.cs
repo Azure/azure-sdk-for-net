@@ -34,11 +34,21 @@ internal static partial class ItemReasoningItemValidator
         // Optional: content
         if (element.TryGetProperty("content", out var contentProp))
         {
-            var contentResult = ReasoningTextContentValidator.Validate(contentProp);
-            if (!contentResult.IsValid)
+            if (contentProp.ValueKind != JsonValueKind.Array)
+                errors.Add(new ValidationError("$.content", $"Expected array, got {contentProp.ValueKind}"));
+            else
             {
-                foreach (var e in contentResult.Errors)
-                    errors.Add(new ValidationError("$.content" + e.Path.Substring(1), e.Message));
+                var contentIdx = 0;
+                foreach (var item in contentProp.EnumerateArray())
+                {
+                    var itemResult = ReasoningTextContentValidator.Validate(item);
+                    if (!itemResult.IsValid)
+                    {
+                        foreach (var e in itemResult.Errors)
+                            errors.Add(new ValidationError($"$.content[{contentIdx}]" + e.Path.Substring(1), e.Message));
+                    }
+                    contentIdx++;
+                }
             }
         }
 
@@ -72,11 +82,21 @@ internal static partial class ItemReasoningItemValidator
             errors.Add(new ValidationError("$.summary", "Required property 'summary' is missing"));
         else
         {
-            var summaryResult = SummaryTextContentValidator.Validate(summaryProp);
-            if (!summaryResult.IsValid)
+            if (summaryProp.ValueKind != JsonValueKind.Array)
+                errors.Add(new ValidationError("$.summary", $"Expected array, got {summaryProp.ValueKind}"));
+            else
             {
-                foreach (var e in summaryResult.Errors)
-                    errors.Add(new ValidationError("$.summary" + e.Path.Substring(1), e.Message));
+                var summaryIdx = 0;
+                foreach (var item in summaryProp.EnumerateArray())
+                {
+                    var itemResult = SummaryTextContentValidator.Validate(item);
+                    if (!itemResult.IsValid)
+                    {
+                        foreach (var e in itemResult.Errors)
+                            errors.Add(new ValidationError($"$.summary[{summaryIdx}]" + e.Path.Substring(1), e.Message));
+                    }
+                    summaryIdx++;
+                }
             }
         }
 

@@ -36,11 +36,21 @@ internal static partial class OutputItemOutputMessageValidator
             errors.Add(new ValidationError("$.content", "Required property 'content' is missing"));
         else
         {
-            var contentResult = OutputMessageContentValidator.Validate(contentProp);
-            if (!contentResult.IsValid)
+            if (contentProp.ValueKind != JsonValueKind.Array)
+                errors.Add(new ValidationError("$.content", $"Expected array, got {contentProp.ValueKind}"));
+            else
             {
-                foreach (var e in contentResult.Errors)
-                    errors.Add(new ValidationError("$.content" + e.Path.Substring(1), e.Message));
+                var contentIdx = 0;
+                foreach (var item in contentProp.EnumerateArray())
+                {
+                    var itemResult = OutputMessageContentValidator.Validate(item);
+                    if (!itemResult.IsValid)
+                    {
+                        foreach (var e in itemResult.Errors)
+                            errors.Add(new ValidationError($"$.content[{contentIdx}]" + e.Path.Substring(1), e.Message));
+                    }
+                    contentIdx++;
+                }
             }
         }
 

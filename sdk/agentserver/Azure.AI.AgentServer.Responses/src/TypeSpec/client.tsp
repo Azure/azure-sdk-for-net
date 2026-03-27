@@ -54,6 +54,23 @@ namespace Azure.AI.Projects {
   @@withoutOmittedProperties(OpenAI.OutputItemApplyPatchToolCallOutput, "created_by");
   @@withoutOmittedProperties(OpenAI.OutputItemApplyPatchToolCall, "created_by");
 
+  // Remove "id" and "status" from ItemMessage (input-only model).
+  // The Responses-only TypeSpec view merges input and output item types into a
+  // single Item union, losing the distinction between EasyInputMessage (input,
+  // requires only role/content/type) and ConversationItemMessage (output,
+  // requires id/status/role/content/type). ItemMessage is only referenced by
+  // OpenAI.Item (input context); the output side uses OpenAI.OutputItemMessage.
+  @@withoutOmittedProperties(OpenAI.ItemMessage, "id");
+  @@withoutOmittedProperties(OpenAI.ItemMessage, "status");
+
+  // Fix ItemMessage.content to match the upstream EasyInputMessage format.
+  // The Responses-only view inherits content: MessageContent[] from the output-
+  // oriented Message model. The upstream EasyInputMessage accepts either a plain
+  // string or an array of content parts (string | InputMessageContentList).
+  // Remove the array-only content and replace with the union type.
+  @@withoutOmittedProperties(OpenAI.ItemMessage, "content");
+  @@copyProperties(OpenAI.ItemMessage, { content: string | OpenAI.MessageContent[] });
+
   // Remove "object" from DeleteResponseResult to work around codegen bug
   // (TypeSpec emitter generates `= "response"` string default for ResponseObjectType enum)
   @@withoutOmittedProperties(Azure.AI.Projects.DeleteResponseResult, "object");

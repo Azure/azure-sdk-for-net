@@ -63,11 +63,21 @@ internal static partial class OutputItemFunctionShellCallOutputValidator
             errors.Add(new ValidationError("$.output", "Required property 'output' is missing"));
         else
         {
-            var outputResult = FunctionShellCallOutputContentValidator.Validate(outputProp);
-            if (!outputResult.IsValid)
+            if (outputProp.ValueKind != JsonValueKind.Array)
+                errors.Add(new ValidationError("$.output", $"Expected array, got {outputProp.ValueKind}"));
+            else
             {
-                foreach (var e in outputResult.Errors)
-                    errors.Add(new ValidationError("$.output" + e.Path.Substring(1), e.Message));
+                var outputIdx = 0;
+                foreach (var item in outputProp.EnumerateArray())
+                {
+                    var itemResult = FunctionShellCallOutputContentValidator.Validate(item);
+                    if (!itemResult.IsValid)
+                    {
+                        foreach (var e in itemResult.Errors)
+                            errors.Add(new ValidationError($"$.output[{outputIdx}]" + e.Path.Substring(1), e.Message));
+                    }
+                    outputIdx++;
+                }
             }
         }
 

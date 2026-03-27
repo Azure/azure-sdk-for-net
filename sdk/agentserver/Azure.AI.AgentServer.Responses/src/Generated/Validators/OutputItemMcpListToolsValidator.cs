@@ -61,11 +61,21 @@ internal static partial class OutputItemMcpListToolsValidator
             errors.Add(new ValidationError("$.tools", "Required property 'tools' is missing"));
         else
         {
-            var toolsResult = MCPListToolsToolValidator.Validate(toolsProp);
-            if (!toolsResult.IsValid)
+            if (toolsProp.ValueKind != JsonValueKind.Array)
+                errors.Add(new ValidationError("$.tools", $"Expected array, got {toolsProp.ValueKind}"));
+            else
             {
-                foreach (var e in toolsResult.Errors)
-                    errors.Add(new ValidationError("$.tools" + e.Path.Substring(1), e.Message));
+                var toolsIdx = 0;
+                foreach (var item in toolsProp.EnumerateArray())
+                {
+                    var itemResult = MCPListToolsToolValidator.Validate(item);
+                    if (!itemResult.IsValid)
+                    {
+                        foreach (var e in itemResult.Errors)
+                            errors.Add(new ValidationError($"$.tools[{toolsIdx}]" + e.Path.Substring(1), e.Message));
+                    }
+                    toolsIdx++;
+                }
             }
         }
 

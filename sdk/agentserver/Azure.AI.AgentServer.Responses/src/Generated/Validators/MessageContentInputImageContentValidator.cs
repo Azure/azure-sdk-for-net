@@ -31,10 +31,8 @@ internal static partial class MessageContentInputImageContentValidator
             return ValidationResult.Failure(errors);
         }
 
-        // Required: detail
-        if (!element.TryGetProperty("detail", out var detailProp))
-            errors.Add(new ValidationError("$.detail", "Required property 'detail' is missing"));
-        else
+        // Optional: detail
+        if (element.TryGetProperty("detail", out var detailProp) && detailProp.ValueKind != JsonValueKind.Null)
         {
             if (detailProp.ValueKind != JsonValueKind.String)
                 errors.Add(new ValidationError("$.detail", $"Expected string, got {detailProp.ValueKind}"));

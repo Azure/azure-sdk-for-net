@@ -36,11 +36,21 @@ internal static partial class OutputMessageContentOutputTextContentValidator
             errors.Add(new ValidationError("$.annotations", "Required property 'annotations' is missing"));
         else
         {
-            var annotationsResult = AnnotationValidator.Validate(annotationsProp);
-            if (!annotationsResult.IsValid)
+            if (annotationsProp.ValueKind != JsonValueKind.Array)
+                errors.Add(new ValidationError("$.annotations", $"Expected array, got {annotationsProp.ValueKind}"));
+            else
             {
-                foreach (var e in annotationsResult.Errors)
-                    errors.Add(new ValidationError("$.annotations" + e.Path.Substring(1), e.Message));
+                var annotationsIdx = 0;
+                foreach (var item in annotationsProp.EnumerateArray())
+                {
+                    var itemResult = AnnotationValidator.Validate(item);
+                    if (!itemResult.IsValid)
+                    {
+                        foreach (var e in itemResult.Errors)
+                            errors.Add(new ValidationError($"$.annotations[{annotationsIdx}]" + e.Path.Substring(1), e.Message));
+                    }
+                    annotationsIdx++;
+                }
             }
         }
 
@@ -49,11 +59,21 @@ internal static partial class OutputMessageContentOutputTextContentValidator
             errors.Add(new ValidationError("$.logprobs", "Required property 'logprobs' is missing"));
         else
         {
-            var logprobsResult = LogProbValidator.Validate(logprobsProp);
-            if (!logprobsResult.IsValid)
+            if (logprobsProp.ValueKind != JsonValueKind.Array)
+                errors.Add(new ValidationError("$.logprobs", $"Expected array, got {logprobsProp.ValueKind}"));
+            else
             {
-                foreach (var e in logprobsResult.Errors)
-                    errors.Add(new ValidationError("$.logprobs" + e.Path.Substring(1), e.Message));
+                var logprobsIdx = 0;
+                foreach (var item in logprobsProp.EnumerateArray())
+                {
+                    var itemResult = LogProbValidator.Validate(item);
+                    if (!itemResult.IsValid)
+                    {
+                        foreach (var e in itemResult.Errors)
+                            errors.Add(new ValidationError($"$.logprobs[{logprobsIdx}]" + e.Path.Substring(1), e.Message));
+                    }
+                    logprobsIdx++;
+                }
             }
         }
 

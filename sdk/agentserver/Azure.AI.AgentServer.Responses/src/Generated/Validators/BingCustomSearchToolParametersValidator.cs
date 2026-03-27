@@ -36,11 +36,21 @@ internal static partial class BingCustomSearchToolParametersValidator
             errors.Add(new ValidationError("$.search_configurations", "Required property 'search_configurations' is missing"));
         else
         {
-            var searchConfigurationsResult = BingCustomSearchConfigurationValidator.Validate(searchConfigurationsProp);
-            if (!searchConfigurationsResult.IsValid)
+            if (searchConfigurationsProp.ValueKind != JsonValueKind.Array)
+                errors.Add(new ValidationError("$.search_configurations", $"Expected array, got {searchConfigurationsProp.ValueKind}"));
+            else
             {
-                foreach (var e in searchConfigurationsResult.Errors)
-                    errors.Add(new ValidationError("$.search_configurations" + e.Path.Substring(1), e.Message));
+                var searchConfigurationsIdx = 0;
+                foreach (var item in searchConfigurationsProp.EnumerateArray())
+                {
+                    var itemResult = BingCustomSearchConfigurationValidator.Validate(item);
+                    if (!itemResult.IsValid)
+                    {
+                        foreach (var e in itemResult.Errors)
+                            errors.Add(new ValidationError($"$.search_configurations[{searchConfigurationsIdx}]" + e.Path.Substring(1), e.Message));
+                    }
+                    searchConfigurationsIdx++;
+                }
             }
         }
 

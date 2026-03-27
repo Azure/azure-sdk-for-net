@@ -14,18 +14,13 @@ namespace Azure.AI.AgentServer.Responses.Models
     public partial class ItemMessage : Item
     {
         /// <summary> Initializes a new instance of <see cref="ItemMessage"/>. </summary>
-        /// <param name="id"> The unique ID of the message. </param>
-        /// <param name="status"> The status of item. One of `in_progress`, `completed`, or `incomplete`. Populated when items are returned via API. </param>
         /// <param name="role"> The role of the message. One of `unknown`, `user`, `assistant`, `system`, `critic`, `discriminator`, `developer`, or `tool`. </param>
-        /// <param name="content"> The content of the message. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="content"/> is null. </exception>
-        public ItemMessage(string id, MessageStatus status, MessageRole role, BinaryData content) : base(ItemType.Message)
+        /// <param name="content"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public ItemMessage(MessageRole role, BinaryData content) : base(ItemType.Message)
         {
-            Argument.AssertNotNull(id, nameof(id));
             Argument.AssertNotNull(content, nameof(content));
 
-            Id = id;
-            Status = status;
             Role = role;
             Content = content;
         }
@@ -33,23 +28,13 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <summary> Initializes a new instance of <see cref="ItemMessage"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="id"> The unique ID of the message. </param>
-        /// <param name="status"> The status of item. One of `in_progress`, `completed`, or `incomplete`. Populated when items are returned via API. </param>
         /// <param name="role"> The role of the message. One of `unknown`, `user`, `assistant`, `system`, `critic`, `discriminator`, `developer`, or `tool`. </param>
-        /// <param name="content"> The content of the message. </param>
-        internal ItemMessage(ItemType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, MessageStatus status, MessageRole role, BinaryData content) : base(@type, additionalBinaryDataProperties)
+        /// <param name="content"></param>
+        internal ItemMessage(ItemType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, MessageRole role, BinaryData content) : base(@type, additionalBinaryDataProperties)
         {
-            Id = id;
-            Status = status;
             Role = role;
             Content = content;
         }
-
-        /// <summary> The unique ID of the message. </summary>
-        public string Id { get; set; }
-
-        /// <summary> The status of item. One of `in_progress`, `completed`, or `incomplete`. Populated when items are returned via API. </summary>
-        public MessageStatus Status { get; set; }
 
         /// <summary> The role of the message. One of `unknown`, `user`, `assistant`, `system`, `critic`, `discriminator`, `developer`, or `tool`. </summary>
         public MessageRole Role { get; set; }

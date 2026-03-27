@@ -13,7 +13,7 @@ namespace Azure.AI.AgentServer.Responses.Models;
 
 /// <summary>
 /// Custom partial extending the generated <see cref="ItemMessage"/> with a
-/// strongly-typed constructor and a mutable <see cref="Content"/> property.
+/// strongly-typed constructor that accepts typed content parts.
 /// </summary>
 public partial class ItemMessage
 {
@@ -29,8 +29,6 @@ public partial class ItemMessage
     {
         Argument.AssertNotNull(content, nameof(content));
 
-        Id = string.Empty;
-        Status = default;
         Role = role;
 
         using var stream = new MemoryStream();

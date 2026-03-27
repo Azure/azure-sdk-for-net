@@ -16,7 +16,7 @@ public class ItemConversionTests
     public void ToOutputItem_ItemMessage_ReturnsOutputItemMessage()
     {
         var content = BinaryData.FromObjectAsJson("Hello, world!");
-        var message = new ItemMessage("msg_input", MessageStatus.Completed, MessageRole.User, content);
+        var message = new ItemMessage(MessageRole.User, content);
 
         var result = ItemConversion.ToOutputItem(message, PartitionKeyHint);
 
@@ -31,7 +31,7 @@ public class ItemConversionTests
     public void ToOutputItem_ItemMessage_PreservesRole()
     {
         var content = BinaryData.FromObjectAsJson("System prompt");
-        var message = new ItemMessage("msg_dev", MessageStatus.Completed, MessageRole.Developer, content);
+        var message = new ItemMessage(MessageRole.Developer, content);
 
         var result = ItemConversion.ToOutputItem(message, PartitionKeyHint);
 
@@ -513,7 +513,7 @@ public class ItemConversionTests
     {
         var items = new List<Item>
         {
-            new ItemMessage("msg_1", MessageStatus.Completed, MessageRole.User, BinaryData.FromObjectAsJson("Hello")),
+            new ItemMessage(MessageRole.User, BinaryData.FromObjectAsJson("Hello")),
             new ItemReferenceParam("ref_1"),
             new FunctionCallOutputItemParam("call_1", BinaryData.FromObjectAsJson("result")),
         };
@@ -566,8 +566,8 @@ public class ItemConversionTests
     [Test]
     public void ToOutputItem_GeneratesUniqueIds_ForSameItemType()
     {
-        var msg1 = new ItemMessage("m1", MessageStatus.Completed, MessageRole.User, BinaryData.FromObjectAsJson("a"));
-        var msg2 = new ItemMessage("m2", MessageStatus.Completed, MessageRole.User, BinaryData.FromObjectAsJson("b"));
+        var msg1 = new ItemMessage(MessageRole.User, BinaryData.FromObjectAsJson("a"));
+        var msg2 = new ItemMessage(MessageRole.User, BinaryData.FromObjectAsJson("b"));
 
         var result1 = ItemConversion.ToOutputItem(msg1, PartitionKeyHint);
         var result2 = ItemConversion.ToOutputItem(msg2, PartitionKeyHint);

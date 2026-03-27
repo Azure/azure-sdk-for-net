@@ -70,11 +70,21 @@ internal static partial class CreateResponsePayloadValidator
         // Optional: context_management
         if (element.TryGetProperty("context_management", out var contextManagementProp) && contextManagementProp.ValueKind != JsonValueKind.Null)
         {
-            var contextManagementResult = ContextManagementParamValidator.Validate(contextManagementProp);
-            if (!contextManagementResult.IsValid)
+            if (contextManagementProp.ValueKind != JsonValueKind.Array)
+                errors.Add(new ValidationError("$.context_management", $"Expected array, got {contextManagementProp.ValueKind}"));
+            else
             {
-                foreach (var e in contextManagementResult.Errors)
-                    errors.Add(new ValidationError("$.context_management" + e.Path.Substring(1), e.Message));
+                var contextManagementIdx = 0;
+                foreach (var item in contextManagementProp.EnumerateArray())
+                {
+                    var itemResult = ContextManagementParamValidator.Validate(item);
+                    if (!itemResult.IsValid)
+                    {
+                        foreach (var e in itemResult.Errors)
+                            errors.Add(new ValidationError($"$.context_management[{contextManagementIdx}]" + e.Path.Substring(1), e.Message));
+                    }
+                    contextManagementIdx++;
+                }
             }
         }
 
@@ -92,8 +102,8 @@ internal static partial class CreateResponsePayloadValidator
         // Optional: include
         if (element.TryGetProperty("include", out var includeProp) && includeProp.ValueKind != JsonValueKind.Null)
         {
-            if (includeProp.ValueKind != JsonValueKind.String)
-                errors.Add(new ValidationError("$.include", $"Expected string, got {includeProp.ValueKind}"));
+            if (includeProp.ValueKind != JsonValueKind.Array)
+                errors.Add(new ValidationError("$.include", $"Expected array, got {includeProp.ValueKind}"));
         }
 
         // Optional: input

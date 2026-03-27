@@ -6,14 +6,17 @@
 # To add a new override:
 #   1. Add a key under `schemas:` matching the schema name (or "CreateResponse" for the inline request body)
 #   2. Set `required:` to add required fields
-#   3. Set `properties.<field>.minimum/maximum` for range fixes
+#   3. Set `not_required:` to remove fields from required (for input schemas where the
+#      merged TypeSpec view is stricter than the OpenAI input spec)
+#   4. Set `properties.<field>.minimum/maximum` for range fixes
 #
 # Example:
 #   schemas:
 #     MySchema:
 #       required: ["field_a"]
+#       not_required: ["field_b"]
 #       properties:
-#         field_b:
+#         field_c:
 #           minimum: 0
 #           maximum: 100
 
@@ -23,3 +26,20 @@ schemas:
   # When omitted, the SDK resolves it via ResponsesServerOptions.DefaultModel or empty string.
   CreateResponse:
     required: []
+
+  # GAP-01: OpenAI spec EasyInputMessage only requires [role, content].
+  # The "type" field defaults to "message" when absent.
+  # ItemValidatorCustom.ResolveDefaultDiscriminator handles discriminator routing;
+  # this overlay prevents ItemMessageValidator from rejecting missing "type".
+  ItemMessage:
+    not_required: ["type"]
+
+  # GAP-03: OpenAI spec InputImageContentParamAutoParam only requires [type].
+  # The "detail" field is nullable/optional and defaults to "auto".
+  MessageContentInputImageContent:
+    not_required: ["detail"]
+
+  # GAP-04 & GAP-05: OpenAI spec FunctionToolParam only requires [name, type].
+  # Both "strict" and "parameters" are nullable/optional.
+  FunctionTool:
+    not_required: ["strict", "parameters"]

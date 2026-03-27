@@ -36,11 +36,21 @@ internal static partial class DragParamValidator
             errors.Add(new ValidationError("$.path", "Required property 'path' is missing"));
         else
         {
-            var pathResult = CoordParamValidator.Validate(pathProp);
-            if (!pathResult.IsValid)
+            if (pathProp.ValueKind != JsonValueKind.Array)
+                errors.Add(new ValidationError("$.path", $"Expected array, got {pathProp.ValueKind}"));
+            else
             {
-                foreach (var e in pathResult.Errors)
-                    errors.Add(new ValidationError("$.path" + e.Path.Substring(1), e.Message));
+                var pathIdx = 0;
+                foreach (var item in pathProp.EnumerateArray())
+                {
+                    var itemResult = CoordParamValidator.Validate(item);
+                    if (!itemResult.IsValid)
+                    {
+                        foreach (var e in itemResult.Errors)
+                            errors.Add(new ValidationError($"$.path[{pathIdx}]" + e.Path.Substring(1), e.Message));
+                    }
+                    pathIdx++;
+                }
             }
         }
 

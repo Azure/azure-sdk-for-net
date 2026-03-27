@@ -36,21 +36,22 @@ internal static partial class ItemMessageValidator
             errors.Add(new ValidationError("$.content", "Required property 'content' is missing"));
         else
         {
-            var contentResult = MessageContentValidator.Validate(contentProp);
-            if (!contentResult.IsValid)
+            if (contentProp.ValueKind != JsonValueKind.String && contentProp.ValueKind != JsonValueKind.Array)
+                errors.Add(new ValidationError("$.content", $"Expected string or array, got {contentProp.ValueKind}"));
+            else if (contentProp.ValueKind == JsonValueKind.Array)
             {
-                foreach (var e in contentResult.Errors)
-                    errors.Add(new ValidationError("$.content" + e.Path.Substring(1), e.Message));
+                var contentidx = 0;
+                foreach (var item in contentProp.EnumerateArray())
+                {
+                    var itemResult = MessageContentValidator.Validate(item);
+                    if (!itemResult.IsValid)
+                    {
+                        foreach (var e in itemResult.Errors)
+                            errors.Add(new ValidationError($"$.content[{contentidx}]" + e.Path.Substring(1), e.Message));
+                    }
+                    contentidx++;
+                }
             }
-        }
-
-        // Required: id
-        if (!element.TryGetProperty("id", out var idProp))
-            errors.Add(new ValidationError("$.id", "Required property 'id' is missing"));
-        else
-        {
-            if (idProp.ValueKind != JsonValueKind.String)
-                errors.Add(new ValidationError("$.id", $"Expected string, got {idProp.ValueKind}"));
         }
 
         // Required: role
@@ -64,21 +65,8 @@ internal static partial class ItemMessageValidator
                 errors.Add(new ValidationError("$.role", $"Value '{roleProp.GetString()}' is not valid. Allowed: unknown, user, assistant, system, critic, discriminator, developer, tool"));
         }
 
-        // Required: status
-        if (!element.TryGetProperty("status", out var statusProp))
-            errors.Add(new ValidationError("$.status", "Required property 'status' is missing"));
-        else
-        {
-            if (statusProp.ValueKind != JsonValueKind.String)
-                errors.Add(new ValidationError("$.status", $"Expected string, got {statusProp.ValueKind}"));
-            else if (statusProp.GetString() is not ("in_progress" or "completed" or "incomplete"))
-                errors.Add(new ValidationError("$.status", $"Value '{statusProp.GetString()}' is not valid. Allowed: in_progress, completed, incomplete"));
-        }
-
-        // Required: type
-        if (!element.TryGetProperty("type", out var typeValProp))
-            errors.Add(new ValidationError("$.type", "Required property 'type' is missing"));
-        else
+        // Optional: type
+        if (element.TryGetProperty("type", out var typeValProp) && typeValProp.ValueKind != JsonValueKind.Null)
         {
             if (typeValProp.ValueKind != JsonValueKind.String)
                 errors.Add(new ValidationError("$.type", $"Expected string, got {typeValProp.ValueKind}"));

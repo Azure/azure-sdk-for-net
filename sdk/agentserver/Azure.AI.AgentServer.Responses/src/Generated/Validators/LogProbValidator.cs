@@ -63,11 +63,21 @@ internal static partial class LogProbValidator
             errors.Add(new ValidationError("$.top_logprobs", "Required property 'top_logprobs' is missing"));
         else
         {
-            var topLogprobsResult = TopLogProbValidator.Validate(topLogprobsProp);
-            if (!topLogprobsResult.IsValid)
+            if (topLogprobsProp.ValueKind != JsonValueKind.Array)
+                errors.Add(new ValidationError("$.top_logprobs", $"Expected array, got {topLogprobsProp.ValueKind}"));
+            else
             {
-                foreach (var e in topLogprobsResult.Errors)
-                    errors.Add(new ValidationError("$.top_logprobs" + e.Path.Substring(1), e.Message));
+                var topLogprobsIdx = 0;
+                foreach (var item in topLogprobsProp.EnumerateArray())
+                {
+                    var itemResult = TopLogProbValidator.Validate(item);
+                    if (!itemResult.IsValid)
+                    {
+                        foreach (var e in itemResult.Errors)
+                            errors.Add(new ValidationError($"$.top_logprobs[{topLogprobsIdx}]" + e.Path.Substring(1), e.Message));
+                    }
+                    topLogprobsIdx++;
+                }
             }
         }
 

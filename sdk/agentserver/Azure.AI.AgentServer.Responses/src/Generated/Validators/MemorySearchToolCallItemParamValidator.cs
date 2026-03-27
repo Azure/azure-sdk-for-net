@@ -34,11 +34,21 @@ internal static partial class MemorySearchToolCallItemParamValidator
         // Optional: results
         if (element.TryGetProperty("results", out var resultsProp) && resultsProp.ValueKind != JsonValueKind.Null)
         {
-            var resultsResult = MemorySearchItemValidator.Validate(resultsProp);
-            if (!resultsResult.IsValid)
+            if (resultsProp.ValueKind != JsonValueKind.Array)
+                errors.Add(new ValidationError("$.results", $"Expected array, got {resultsProp.ValueKind}"));
+            else
             {
-                foreach (var e in resultsResult.Errors)
-                    errors.Add(new ValidationError("$.results" + e.Path.Substring(1), e.Message));
+                var resultsIdx = 0;
+                foreach (var item in resultsProp.EnumerateArray())
+                {
+                    var itemResult = MemorySearchItemValidator.Validate(item);
+                    if (!itemResult.IsValid)
+                    {
+                        foreach (var e in itemResult.Errors)
+                            errors.Add(new ValidationError($"$.results[{resultsIdx}]" + e.Path.Substring(1), e.Message));
+                    }
+                    resultsIdx++;
+                }
             }
         }
 

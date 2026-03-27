@@ -34,11 +34,21 @@ internal static partial class FunctionShellCallItemParamEnvironmentLocalEnvironm
         // Optional: skills
         if (element.TryGetProperty("skills", out var skillsProp))
         {
-            var skillsResult = LocalSkillParamValidator.Validate(skillsProp);
-            if (!skillsResult.IsValid)
+            if (skillsProp.ValueKind != JsonValueKind.Array)
+                errors.Add(new ValidationError("$.skills", $"Expected array, got {skillsProp.ValueKind}"));
+            else
             {
-                foreach (var e in skillsResult.Errors)
-                    errors.Add(new ValidationError("$.skills" + e.Path.Substring(1), e.Message));
+                var skillsIdx = 0;
+                foreach (var item in skillsProp.EnumerateArray())
+                {
+                    var itemResult = LocalSkillParamValidator.Validate(item);
+                    if (!itemResult.IsValid)
+                    {
+                        foreach (var e in itemResult.Errors)
+                            errors.Add(new ValidationError($"$.skills[{skillsIdx}]" + e.Path.Substring(1), e.Message));
+                    }
+                    skillsIdx++;
+                }
             }
         }
 

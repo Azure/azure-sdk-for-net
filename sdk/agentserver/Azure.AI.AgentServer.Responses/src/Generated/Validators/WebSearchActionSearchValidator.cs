@@ -50,11 +50,21 @@ internal static partial class WebSearchActionSearchValidator
         // Optional: sources
         if (element.TryGetProperty("sources", out var sourcesProp))
         {
-            var sourcesResult = WebSearchActionSearchSourcesValidator.Validate(sourcesProp);
-            if (!sourcesResult.IsValid)
+            if (sourcesProp.ValueKind != JsonValueKind.Array)
+                errors.Add(new ValidationError("$.sources", $"Expected array, got {sourcesProp.ValueKind}"));
+            else
             {
-                foreach (var e in sourcesResult.Errors)
-                    errors.Add(new ValidationError("$.sources" + e.Path.Substring(1), e.Message));
+                var sourcesIdx = 0;
+                foreach (var item in sourcesProp.EnumerateArray())
+                {
+                    var itemResult = WebSearchActionSearchSourcesValidator.Validate(item);
+                    if (!itemResult.IsValid)
+                    {
+                        foreach (var e in itemResult.Errors)
+                            errors.Add(new ValidationError($"$.sources[{sourcesIdx}]" + e.Path.Substring(1), e.Message));
+                    }
+                    sourcesIdx++;
+                }
             }
         }
 

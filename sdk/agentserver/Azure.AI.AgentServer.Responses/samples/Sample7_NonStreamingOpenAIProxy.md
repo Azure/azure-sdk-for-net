@@ -2,7 +2,7 @@
 
 This sample shows how to implement a `ResponseHandler` that acts as a **non-streaming proxy**: it calls an upstream [OpenAI-compatible responses server](https://platform.openai.com/docs/api-reference/responses) using the [OpenAI .NET SDK](https://github.com/openai/openai-dotnet), waits for the complete response, and translates every output item back into a standard SSE event stream for the client.
 
-All item types (messages, function calls, reasoning, file search, etc.) are preserved with full fidelity using a fluent `.Translate().To<T>()` helper:
+All item types (messages, function calls, reasoning, file search, etc.) are preserved with full fidelity using the built-in `.Translate().To<T>()` helper:
 
 ```csharp
 // Our Item → OpenAI ResponseItem (input)
@@ -20,10 +20,6 @@ This pattern is useful when your handler needs to inspect or transform the full 
 dotnet add package Azure.AI.AgentServer.Responses --prerelease
 dotnet add package OpenAI
 ```
-
-## Wire-format translation helper
-
-See [Sample 6](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/samples/Sample6_StreamingOpenAIProxy.md#wire-format-translation-helper) for the `Translate().To<T>()` helper definition.
 
 ## Implement the handler
 
@@ -47,8 +43,8 @@ public class NonStreamingProxyHandler : ResponseHandler
         };
 
         // Translate every input item with full fidelity.
-        // .Translate().To<T>() round-trips through JSON to convert
-        // between model stacks that share the same wire format.
+        // Both model stacks share the same JSON wire contract, so
+        // .Translate().To<T>() round-trips through JSON to convert.
         foreach (Item item in request.GetInputExpanded())
         {
             options.InputItems.Add(item.Translate().To<ResponseItem>());

@@ -64,9 +64,9 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
                     Instructions = request.Instructions,
                 };
 
-                // Translate every input item with full fidelity. Both model stacks
-                // are generated from TypeSpec and share the same JSON wire format,
-                // so .Translate().To<T>() round-trips through JSON to convert:
+                // Translate every input item with full fidelity. Both model
+                // stacks share the same JSON wire contract, so
+                // .Translate().To<T>() round-trips through JSON to convert:
                 //   our Item → JSON → OpenAI ResponseItem.
                 foreach (Item item in request.GetInputExpanded())
                 {

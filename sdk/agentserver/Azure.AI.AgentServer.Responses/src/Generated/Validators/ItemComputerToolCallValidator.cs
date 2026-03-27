@@ -67,11 +67,21 @@ internal static partial class ItemComputerToolCallValidator
             errors.Add(new ValidationError("$.pending_safety_checks", "Required property 'pending_safety_checks' is missing"));
         else
         {
-            var pendingSafetyChecksResult = ComputerCallSafetyCheckParamValidator.Validate(pendingSafetyChecksProp);
-            if (!pendingSafetyChecksResult.IsValid)
+            if (pendingSafetyChecksProp.ValueKind != JsonValueKind.Array)
+                errors.Add(new ValidationError("$.pending_safety_checks", $"Expected array, got {pendingSafetyChecksProp.ValueKind}"));
+            else
             {
-                foreach (var e in pendingSafetyChecksResult.Errors)
-                    errors.Add(new ValidationError("$.pending_safety_checks" + e.Path.Substring(1), e.Message));
+                var pendingSafetyChecksIdx = 0;
+                foreach (var item in pendingSafetyChecksProp.EnumerateArray())
+                {
+                    var itemResult = ComputerCallSafetyCheckParamValidator.Validate(item);
+                    if (!itemResult.IsValid)
+                    {
+                        foreach (var e in itemResult.Errors)
+                            errors.Add(new ValidationError($"$.pending_safety_checks[{pendingSafetyChecksIdx}]" + e.Path.Substring(1), e.Message));
+                    }
+                    pendingSafetyChecksIdx++;
+                }
             }
         }
 

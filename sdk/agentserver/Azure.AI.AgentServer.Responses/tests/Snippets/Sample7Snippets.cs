@@ -65,8 +65,8 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
                 };
 
                 // Translate every input item with full fidelity.
-                // .Translate().To<T>() round-trips through JSON to convert
-                // between model stacks that share the same wire format.
+                // Both model stacks share the same JSON wire contract, so
+                // .Translate().To<T>() round-trips through JSON to convert.
                 foreach (Item item in request.GetInputExpanded())
                 {
                     options.InputItems.Add(item.Translate().To<ResponseItem>());

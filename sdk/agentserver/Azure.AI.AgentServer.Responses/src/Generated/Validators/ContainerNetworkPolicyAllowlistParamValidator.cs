@@ -43,11 +43,21 @@ internal static partial class ContainerNetworkPolicyAllowlistParamValidator
         // Optional: domain_secrets
         if (element.TryGetProperty("domain_secrets", out var domainSecretsProp))
         {
-            var domainSecretsResult = ContainerNetworkPolicyDomainSecretParamValidator.Validate(domainSecretsProp);
-            if (!domainSecretsResult.IsValid)
+            if (domainSecretsProp.ValueKind != JsonValueKind.Array)
+                errors.Add(new ValidationError("$.domain_secrets", $"Expected array, got {domainSecretsProp.ValueKind}"));
+            else
             {
-                foreach (var e in domainSecretsResult.Errors)
-                    errors.Add(new ValidationError("$.domain_secrets" + e.Path.Substring(1), e.Message));
+                var domainSecretsIdx = 0;
+                foreach (var item in domainSecretsProp.EnumerateArray())
+                {
+                    var itemResult = ContainerNetworkPolicyDomainSecretParamValidator.Validate(item);
+                    if (!itemResult.IsValid)
+                    {
+                        foreach (var e in itemResult.Errors)
+                            errors.Add(new ValidationError($"$.domain_secrets[{domainSecretsIdx}]" + e.Path.Substring(1), e.Message));
+                    }
+                    domainSecretsIdx++;
+                }
             }
         }
 

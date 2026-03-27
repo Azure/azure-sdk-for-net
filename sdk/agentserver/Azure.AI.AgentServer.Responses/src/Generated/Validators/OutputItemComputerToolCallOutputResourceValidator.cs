@@ -34,11 +34,21 @@ internal static partial class OutputItemComputerToolCallOutputResourceValidator
         // Optional: acknowledged_safety_checks
         if (element.TryGetProperty("acknowledged_safety_checks", out var acknowledgedSafetyChecksProp))
         {
-            var acknowledgedSafetyChecksResult = ComputerCallSafetyCheckParamValidator.Validate(acknowledgedSafetyChecksProp);
-            if (!acknowledgedSafetyChecksResult.IsValid)
+            if (acknowledgedSafetyChecksProp.ValueKind != JsonValueKind.Array)
+                errors.Add(new ValidationError("$.acknowledged_safety_checks", $"Expected array, got {acknowledgedSafetyChecksProp.ValueKind}"));
+            else
             {
-                foreach (var e in acknowledgedSafetyChecksResult.Errors)
-                    errors.Add(new ValidationError("$.acknowledged_safety_checks" + e.Path.Substring(1), e.Message));
+                var acknowledgedSafetyChecksIdx = 0;
+                foreach (var item in acknowledgedSafetyChecksProp.EnumerateArray())
+                {
+                    var itemResult = ComputerCallSafetyCheckParamValidator.Validate(item);
+                    if (!itemResult.IsValid)
+                    {
+                        foreach (var e in itemResult.Errors)
+                            errors.Add(new ValidationError($"$.acknowledged_safety_checks[{acknowledgedSafetyChecksIdx}]" + e.Path.Substring(1), e.Message));
+                    }
+                    acknowledgedSafetyChecksIdx++;
+                }
             }
         }
 

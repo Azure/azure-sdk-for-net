@@ -1665,20 +1665,12 @@ namespace Azure.AI.AgentServer.Responses
         }
 
         /// <summary> Message. </summary>
-        /// <param name="id"> The unique ID of the message. </param>
-        /// <param name="status"> The status of item. One of `in_progress`, `completed`, or `incomplete`. Populated when items are returned via API. </param>
         /// <param name="role"> The role of the message. One of `unknown`, `user`, `assistant`, `system`, `critic`, `discriminator`, `developer`, or `tool`. </param>
-        /// <param name="content"> The content of the message. </param>
+        /// <param name="content"></param>
         /// <returns> A new <see cref="Models.ItemMessage"/> instance for mocking. </returns>
-        public static ItemMessage ItemMessage(string id = default, MessageStatus status = default, MessageRole role = default, BinaryData content = default)
+        public static ItemMessage ItemMessage(MessageRole role = default, BinaryData content = default)
         {
-            return new ItemMessage(
-                ItemType.Message,
-                additionalBinaryDataProperties: null,
-                id,
-                status,
-                role,
-                content);
+            return new ItemMessage(ItemType.Message, additionalBinaryDataProperties: null, role, content);
         }
 
         /// <summary>

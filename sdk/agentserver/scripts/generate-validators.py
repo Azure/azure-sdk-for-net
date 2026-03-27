@@ -212,6 +212,19 @@ class SchemaWalker:
                 existing.add(field)
             schema["required"] = list(existing)
 
+        # Remove fields from required (for input schemas that are more relaxed
+        # than the merged TypeSpec view, e.g. EasyInputMessage vs ItemMessage)
+        # Also mark these properties as nullable since the OpenAI spec/SDK treats
+        # them as optional+nullable (e.g. "detail": null is valid when detail is optional).
+        if "not_required" in overlay_entry:
+            existing = set(schema.get("required", []))
+            for field in overlay_entry["not_required"]:
+                existing.discard(field)
+                # Mark the property as nullable so the validator accepts null values
+                if "properties" in schema and field in schema["properties"]:
+                    schema["properties"][field]["nullable"] = True
+            schema["required"] = list(existing)
+
         # Merge property-level constraints
         if "properties" in overlay_entry:
             if "properties" not in schema:
@@ -813,6 +826,20 @@ internal static partial class {class_name}
         if "anyOf" in prop_schema and not is_extensible_enum(prop_schema):
             return self._gen_union_check(var, json_path, prop_schema["anyOf"])
 
+        # Handle arrays with item refs BEFORE ref-based delegation.
+        # extract_ref_from_prop() extracts items.$ref for array properties, but
+        # the ref-based code below would treat that as a direct object reference.
+        # Arrays must be handled first so elements are iterated, not passed whole.
+        if prop_type == "array" or prop_schema.get("type") == "array":
+            items = prop_schema.get("items") or effective_schema.get("items")
+            if items:
+                return self._gen_array_check(prop_name, var, json_path, items)
+            else:
+                lines.append(f"if ({var}.ValueKind != JsonValueKind.Array)")
+                lines.append(f'    errors.Add(new ValidationError("{json_path}", '
+                              f'$"Expected array, got {{{var}.ValueKind}}"));')
+                return lines
+
         # Handle referenced schemas
         if ref_target and ref_target in self.reachable:
             ref_schema = self.reachable[ref_target]
@@ -887,17 +914,6 @@ internal static partial class {class_name}
         # Handle inline extensible enums
         if is_extensible_enum(effective_schema) or is_extensible_enum(prop_schema):
             return self._gen_extensible_enum_check(var, json_path)
-
-        # Handle arrays with item refs
-        if prop_type == "array" or prop_schema.get("type") == "array":
-            items = prop_schema.get("items") or effective_schema.get("items")
-            if items:
-                return self._gen_array_check(prop_name, var, json_path, items)
-            else:
-                lines.append(f"if ({var}.ValueKind != JsonValueKind.Array)")
-                lines.append(f'    errors.Add(new ValidationError("{json_path}", '
-                              f'$"Expected array, got {{{var}.ValueKind}}"));')
-                return lines
 
         # Simple type checks
         expected_kind = self._type_to_json_kind(prop_type)
@@ -997,8 +1013,9 @@ internal static partial class {class_name}
         if "$ref" in items:
             item_ref = resolve_ref(items["$ref"])
 
-        # Skip delegation for primitive schemas (integer, number, string, boolean)
-        # — these are validated inline, not via separate validator classes.
+        # Skip delegation for primitive schemas and extensible enums (integer,
+        # number, string, boolean, anyOf[string, string-with-enum]) — these are
+        # validated inline, not via separate validator classes.
         if item_ref and item_ref in self.reachable:
             ref_schema = self.all_schemas.get(item_ref, {})
             is_primitive = (
@@ -1007,7 +1024,8 @@ internal static partial class {class_name}
                 and "oneOf" not in ref_schema
                 and "anyOf" not in ref_schema
             )
-            if not is_primitive:
+            is_ext_enum = is_extensible_enum(ref_schema)
+            if not is_primitive and not is_ext_enum:
                 item_class = to_csharp_class(item_ref)
                 idx_var = f"{self._var_name(prop_name)}Idx"
                 lines.append("else")

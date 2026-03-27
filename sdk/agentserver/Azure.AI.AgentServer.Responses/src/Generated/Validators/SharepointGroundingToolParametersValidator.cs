@@ -34,11 +34,21 @@ internal static partial class SharepointGroundingToolParametersValidator
         // Optional: project_connections
         if (element.TryGetProperty("project_connections", out var projectConnectionsProp))
         {
-            var projectConnectionsResult = ToolProjectConnectionValidator.Validate(projectConnectionsProp);
-            if (!projectConnectionsResult.IsValid)
+            if (projectConnectionsProp.ValueKind != JsonValueKind.Array)
+                errors.Add(new ValidationError("$.project_connections", $"Expected array, got {projectConnectionsProp.ValueKind}"));
+            else
             {
-                foreach (var e in projectConnectionsResult.Errors)
-                    errors.Add(new ValidationError("$.project_connections" + e.Path.Substring(1), e.Message));
+                var projectConnectionsIdx = 0;
+                foreach (var item in projectConnectionsProp.EnumerateArray())
+                {
+                    var itemResult = ToolProjectConnectionValidator.Validate(item);
+                    if (!itemResult.IsValid)
+                    {
+                        foreach (var e in itemResult.Errors)
+                            errors.Add(new ValidationError($"$.project_connections[{projectConnectionsIdx}]" + e.Path.Substring(1), e.Message));
+                    }
+                    projectConnectionsIdx++;
+                }
             }
         }
 

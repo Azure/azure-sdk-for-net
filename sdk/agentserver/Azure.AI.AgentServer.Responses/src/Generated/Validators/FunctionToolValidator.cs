@@ -47,19 +47,15 @@ internal static partial class FunctionToolValidator
                 errors.Add(new ValidationError("$.name", $"Expected string, got {nameProp.ValueKind}"));
         }
 
-        // Required (nullable): parameters
-        if (!element.TryGetProperty("parameters", out var parametersProp))
-            errors.Add(new ValidationError("$.parameters", "Required property 'parameters' is missing"));
-        else if (parametersProp.ValueKind != JsonValueKind.Null)
+        // Optional: parameters
+        if (element.TryGetProperty("parameters", out var parametersProp) && parametersProp.ValueKind != JsonValueKind.Null)
         {
             if (parametersProp.ValueKind != JsonValueKind.Object)
                 errors.Add(new ValidationError("$.parameters", $"Expected object, got {parametersProp.ValueKind}"));
         }
 
-        // Required (nullable): strict
-        if (!element.TryGetProperty("strict", out var strictProp))
-            errors.Add(new ValidationError("$.strict", "Required property 'strict' is missing"));
-        else if (strictProp.ValueKind != JsonValueKind.Null)
+        // Optional: strict
+        if (element.TryGetProperty("strict", out var strictProp) && strictProp.ValueKind != JsonValueKind.Null)
         {
             if (strictProp.ValueKind != JsonValueKind.True && strictProp.ValueKind != JsonValueKind.False)
                 errors.Add(new ValidationError("$.strict", $"Expected boolean, got {strictProp.ValueKind}"));

@@ -79,10 +79,6 @@ namespace Azure.AI.AgentServer.Responses.Models
                 throw new FormatException($"The model {nameof(ItemMessage)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("id"u8);
-            writer.WriteStringValue(Id);
-            writer.WritePropertyName("status"u8);
-            writer.WriteStringValue(Status.ToSerialString());
             writer.WritePropertyName("role"u8);
             writer.WriteStringValue(Role.ToSerialString());
             writer.WritePropertyName("content"u8);
@@ -123,8 +119,6 @@ namespace Azure.AI.AgentServer.Responses.Models
             }
             ItemType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            string id = default;
-            MessageStatus status = default;
             MessageRole role = default;
             BinaryData content = default;
             foreach (var prop in element.EnumerateObject())
@@ -132,16 +126,6 @@ namespace Azure.AI.AgentServer.Responses.Models
                 if (prop.NameEquals("type"u8))
                 {
                     @type = new ItemType(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("id"u8))
-                {
-                    id = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("status"u8))
-                {
-                    status = prop.Value.GetString().ToMessageStatus();
                     continue;
                 }
                 if (prop.NameEquals("role"u8))
@@ -159,13 +143,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ItemMessage(
-                @type,
-                additionalBinaryDataProperties,
-                id,
-                status,
-                role,
-                content);
+            return new ItemMessage(@type, additionalBinaryDataProperties, role, content);
         }
     }
 }

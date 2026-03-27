@@ -583,7 +583,7 @@ public class GetInputItemsProtocolTests : IDisposable
                 id = $"msg_{i:D4}",
                 status = "completed",
                 role = "user",
-                content = new { type = "input_text", text = $"test message {i}" }
+                content = new[] { new { type = "input_text", text = $"test message {i}" } }
             });
         }
 

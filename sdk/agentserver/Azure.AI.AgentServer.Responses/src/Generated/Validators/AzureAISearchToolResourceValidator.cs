@@ -36,11 +36,21 @@ internal static partial class AzureAISearchToolResourceValidator
             errors.Add(new ValidationError("$.indexes", "Required property 'indexes' is missing"));
         else
         {
-            var indexesResult = AISearchIndexResourceValidator.Validate(indexesProp);
-            if (!indexesResult.IsValid)
+            if (indexesProp.ValueKind != JsonValueKind.Array)
+                errors.Add(new ValidationError("$.indexes", $"Expected array, got {indexesProp.ValueKind}"));
+            else
             {
-                foreach (var e in indexesResult.Errors)
-                    errors.Add(new ValidationError("$.indexes" + e.Path.Substring(1), e.Message));
+                var indexesIdx = 0;
+                foreach (var item in indexesProp.EnumerateArray())
+                {
+                    var itemResult = AISearchIndexResourceValidator.Validate(item);
+                    if (!itemResult.IsValid)
+                    {
+                        foreach (var e in itemResult.Errors)
+                            errors.Add(new ValidationError($"$.indexes[{indexesIdx}]" + e.Path.Substring(1), e.Message));
+                    }
+                    indexesIdx++;
+                }
             }
         }
 
