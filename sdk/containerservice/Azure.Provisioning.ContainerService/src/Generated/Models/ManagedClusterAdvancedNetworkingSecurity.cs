@@ -43,6 +43,17 @@ public partial class ManagedClusterAdvancedNetworkingSecurity : ProvisionableCon
     private BicepValue<ManagedClusterAdvancedNetworkPolicy>? _advancedNetworkPolicies;
 
     /// <summary>
+    /// Configures pod-to-pod encryption. This can be enabled only on
+    /// Cilium-based clusters. If not specified, the default value is None.
+    /// </summary>
+    public BicepValue<TransitEncryptionType> TransitEncryptionType 
+    {
+        get { Initialize(); return _transitEncryptionType!; }
+        set { Initialize(); _transitEncryptionType!.Assign(value); }
+    }
+    private BicepValue<TransitEncryptionType>? _transitEncryptionType;
+
+    /// <summary>
     /// Creates a new ManagedClusterAdvancedNetworkingSecurity.
     /// </summary>
     public ManagedClusterAdvancedNetworkingSecurity()
@@ -58,5 +69,6 @@ public partial class ManagedClusterAdvancedNetworkingSecurity : ProvisionableCon
         base.DefineProvisionableProperties();
         _isEnabled = DefineProperty<bool>("IsEnabled", ["enabled"]);
         _advancedNetworkPolicies = DefineProperty<ManagedClusterAdvancedNetworkPolicy>("AdvancedNetworkPolicies", ["advancedNetworkPolicies"]);
+        _transitEncryptionType = DefineProperty<TransitEncryptionType>("TransitEncryptionType", ["transitEncryption", "type"]);
     }
 }

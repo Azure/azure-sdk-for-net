@@ -29,18 +29,6 @@ public partial class ManagedClusterNatGatewayProfile : ProvisionableConstruct
     private BicepList<WritableSubResource>? _effectiveOutboundIPs;
 
     /// <summary>
-    /// The desired number of outbound IPs created/managed by Azure. Allowed
-    /// values must be in the range of 1 to 16 (inclusive). The default value
-    /// is 1.
-    /// </summary>
-    public BicepValue<int> ManagedOutboundIPCount 
-    {
-        get { Initialize(); return _managedOutboundIPCount!; }
-        set { Initialize(); _managedOutboundIPCount!.Assign(value); }
-    }
-    private BicepValue<int>? _managedOutboundIPCount;
-
-    /// <summary>
     /// Desired outbound flow idle timeout in minutes. Allowed values are in
     /// the range of 4 to 120 (inclusive). The default value is 4 minutes.
     /// </summary>
@@ -66,7 +54,6 @@ public partial class ManagedClusterNatGatewayProfile : ProvisionableConstruct
     {
         base.DefineProvisionableProperties();
         _effectiveOutboundIPs = DefineListProperty<WritableSubResource>("EffectiveOutboundIPs", ["effectiveOutboundIPs"]);
-        _managedOutboundIPCount = DefineProperty<int>("ManagedOutboundIPCount", ["managedOutboundIPProfile", "count"]);
         _idleTimeoutInMinutes = DefineProperty<int>("IdleTimeoutInMinutes", ["idleTimeoutInMinutes"]);
     }
 }

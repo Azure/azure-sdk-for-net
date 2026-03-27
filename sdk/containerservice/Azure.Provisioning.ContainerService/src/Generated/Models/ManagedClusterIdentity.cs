@@ -14,15 +14,13 @@ using System;
 namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
-/// Identity for the managed cluster.             Serialized Name:
-/// ManagedClusterIdentity
+/// Identity for the managed cluster.
 /// </summary>
 public partial class ManagedClusterIdentity : ProvisionableConstruct
 {
     /// <summary>
     /// The principal id of the system assigned identity which is used by
-    /// master components.             Serialized Name:
-    /// ManagedClusterIdentity.principalId
+    /// master components.
     /// </summary>
     public BicepValue<Guid> PrincipalId 
     {
@@ -32,8 +30,7 @@ public partial class ManagedClusterIdentity : ProvisionableConstruct
 
     /// <summary>
     /// The tenant id of the system assigned identity which is used by master
-    /// components.             Serialized Name:
-    /// ManagedClusterIdentity.tenantId
+    /// components.
     /// </summary>
     public BicepValue<Guid> TenantId 
     {
@@ -42,23 +39,21 @@ public partial class ManagedClusterIdentity : ProvisionableConstruct
     private BicepValue<Guid>? _tenantId;
 
     /// <summary>
-    /// For more information see [use managed identities in
+    /// The type of identity used for the managed cluster. For more information
+    /// see [use managed identities in
     /// AKS](https://docs.microsoft.com/azure/aks/use-managed-identity).
-    /// Serialized Name: ManagedClusterIdentity.type
     /// </summary>
-    public BicepValue<ManagedServiceIdentityType> ResourceIdentityType 
+    public BicepValue<ManagedServiceIdentityType> IdentityType 
     {
-        get { Initialize(); return _resourceIdentityType!; }
-        set { Initialize(); _resourceIdentityType!.Assign(value); }
+        get { Initialize(); return _identityType!; }
+        set { Initialize(); _identityType!.Assign(value); }
     }
-    private BicepValue<ManagedServiceIdentityType>? _resourceIdentityType;
+    private BicepValue<ManagedServiceIdentityType>? _identityType;
 
     /// <summary>
     /// The delegated identity resources assigned to this managed cluster. This
     /// can only be set by another Azure Resource Provider, and managed
-    /// cluster only accept one delegated identity resource. Internal use
-    /// only.             Serialized Name:
-    /// ManagedClusterIdentity.delegatedResources
+    /// cluster only accept one delegated identity resource. Internal use only.
     /// </summary>
     public BicepDictionary<ManagedClusterDelegatedIdentity> DelegatedResources 
     {
@@ -68,10 +63,10 @@ public partial class ManagedClusterIdentity : ProvisionableConstruct
     private BicepDictionary<ManagedClusterDelegatedIdentity>? _delegatedResources;
 
     /// <summary>
-    /// The keys must be ARM resource IDs in the form:
+    /// The user identity associated with the managed cluster. This identity
+    /// will be used in control plane. Only one user assigned identity is
+    /// allowed. The keys must be ARM resource IDs in the form:
     /// &apos;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}&apos;.
-    /// Serialized Name:
-    /// ManagedClusterIdentity.userAssignedIdentities
     /// </summary>
     public BicepDictionary<UserAssignedIdentityDetails> UserAssignedIdentities 
     {
@@ -95,7 +90,7 @@ public partial class ManagedClusterIdentity : ProvisionableConstruct
         base.DefineProvisionableProperties();
         _principalId = DefineProperty<Guid>("PrincipalId", ["principalId"], isOutput: true);
         _tenantId = DefineProperty<Guid>("TenantId", ["tenantId"], isOutput: true);
-        _resourceIdentityType = DefineProperty<ManagedServiceIdentityType>("ResourceIdentityType", ["type"]);
+        _identityType = DefineProperty<ManagedServiceIdentityType>("IdentityType", ["type"]);
         _delegatedResources = DefineDictionaryProperty<ManagedClusterDelegatedIdentity>("DelegatedResources", ["delegatedResources"]);
         _userAssignedIdentities = DefineDictionaryProperty<UserAssignedIdentityDetails>("UserAssignedIdentities", ["userAssignedIdentities"]);
     }

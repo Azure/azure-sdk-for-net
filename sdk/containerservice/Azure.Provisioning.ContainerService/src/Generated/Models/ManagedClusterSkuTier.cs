@@ -6,8 +6,10 @@
 namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
-/// If not specified, the default is &apos;Free&apos;. See [uptime
-/// SLA](https://docs.microsoft.com/azure/aks/uptime-sla) for more details.
+/// The tier of a managed cluster SKU. If not specified, the default is
+/// &apos;Free&apos;. See [AKS Pricing
+/// Tier](https://learn.microsoft.com/azure/aks/free-standard-pricing-tiers)
+/// for more details.
 /// </summary>
 public enum ManagedClusterSkuTier
 {

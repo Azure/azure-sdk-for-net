@@ -38,12 +38,12 @@ public partial class ManagedClusterPodIdentityProfile : ProvisionableConstruct
     /// Identity](https://docs.microsoft.com/azure/aks/use-azure-ad-pod-identity#using-kubenet-network-plugin-with-azure-active-directory-pod-managed-identities)
     /// for more information.
     /// </summary>
-    public BicepValue<bool> AllowNetworkPluginKubenet 
+    public BicepValue<bool> IsKubenetNetworkPluginAllowed 
     {
-        get { Initialize(); return _allowNetworkPluginKubenet!; }
-        set { Initialize(); _allowNetworkPluginKubenet!.Assign(value); }
+        get { Initialize(); return _isKubenetNetworkPluginAllowed!; }
+        set { Initialize(); _isKubenetNetworkPluginAllowed!.Assign(value); }
     }
-    private BicepValue<bool>? _allowNetworkPluginKubenet;
+    private BicepValue<bool>? _isKubenetNetworkPluginAllowed;
 
     /// <summary>
     /// The pod identities to use in the cluster.
@@ -80,7 +80,7 @@ public partial class ManagedClusterPodIdentityProfile : ProvisionableConstruct
     {
         base.DefineProvisionableProperties();
         _isEnabled = DefineProperty<bool>("IsEnabled", ["enabled"]);
-        _allowNetworkPluginKubenet = DefineProperty<bool>("AllowNetworkPluginKubenet", ["allowNetworkPluginKubenet"]);
+        _isKubenetNetworkPluginAllowed = DefineProperty<bool>("IsKubenetNetworkPluginAllowed", ["allowNetworkPluginKubenet"]);
         _userAssignedIdentities = DefineListProperty<ManagedClusterPodIdentity>("UserAssignedIdentities", ["userAssignedIdentities"]);
         _userAssignedIdentityExceptions = DefineListProperty<ManagedClusterPodIdentityException>("UserAssignedIdentityExceptions", ["userAssignedIdentityExceptions"]);
     }

@@ -12,12 +12,13 @@ namespace Azure.Provisioning.ContainerService;
 public enum ContainerServicePublicNetworkAccess
 {
     /// <summary>
-    /// Enabled.
+    /// Inbound/Outbound to the managedCluster is allowed.
     /// </summary>
     Enabled,
 
     /// <summary>
-    /// Disabled.
+    /// Inbound traffic to managedCluster is disabled, traffic from
+    /// managedCluster is allowed.
     /// </summary>
     Disabled,
 }

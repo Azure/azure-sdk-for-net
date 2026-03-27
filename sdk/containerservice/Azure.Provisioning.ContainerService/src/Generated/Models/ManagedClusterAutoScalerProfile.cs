@@ -33,12 +33,12 @@ public partial class ManagedClusterAutoScalerProfile : ProvisionableConstruct
     /// node will be chosen for scaling. If set to false, the node will be
     /// deleted without ensuring that daemonset pods are deleted or evicted.
     /// </summary>
-    public BicepValue<bool> DaemonsetEvictionForEmptyNodes 
+    public BicepValue<bool> IsDaemonsetEvictionForEmptyNodesEnabled 
     {
-        get { Initialize(); return _daemonsetEvictionForEmptyNodes!; }
-        set { Initialize(); _daemonsetEvictionForEmptyNodes!.Assign(value); }
+        get { Initialize(); return _isDaemonsetEvictionForEmptyNodesEnabled!; }
+        set { Initialize(); _isDaemonsetEvictionForEmptyNodesEnabled!.Assign(value); }
     }
-    private BicepValue<bool>? _daemonsetEvictionForEmptyNodes;
+    private BicepValue<bool>? _isDaemonsetEvictionForEmptyNodesEnabled;
 
     /// <summary>
     /// DaemonSet pods will be gracefully terminated from non-empty nodes. If
@@ -48,24 +48,24 @@ public partial class ManagedClusterAutoScalerProfile : ProvisionableConstruct
     /// will be deleted without ensuring that daemonset pods are deleted or
     /// evicted.
     /// </summary>
-    public BicepValue<bool> DaemonsetEvictionForOccupiedNodes 
+    public BicepValue<bool> IsDaemonsetEvictionForOccupiedNodesEnabled 
     {
-        get { Initialize(); return _daemonsetEvictionForOccupiedNodes!; }
-        set { Initialize(); _daemonsetEvictionForOccupiedNodes!.Assign(value); }
+        get { Initialize(); return _isDaemonsetEvictionForOccupiedNodesEnabled!; }
+        set { Initialize(); _isDaemonsetEvictionForOccupiedNodesEnabled!.Assign(value); }
     }
-    private BicepValue<bool>? _daemonsetEvictionForOccupiedNodes;
+    private BicepValue<bool>? _isDaemonsetEvictionForOccupiedNodesEnabled;
 
     /// <summary>
     /// Should CA ignore DaemonSet pods when calculating resource utilization
     /// for scaling down. If set to true, the resources used by daemonset will
     /// be taken into account when making scaling down decisions.
     /// </summary>
-    public BicepValue<bool> IgnoreDaemonsetsUtilization 
+    public BicepValue<bool> IsDaemonsetsUtilizationIgnored 
     {
-        get { Initialize(); return _ignoreDaemonsetsUtilization!; }
-        set { Initialize(); _ignoreDaemonsetsUtilization!.Assign(value); }
+        get { Initialize(); return _isDaemonsetsUtilizationIgnored!; }
+        set { Initialize(); _isDaemonsetsUtilizationIgnored!.Assign(value); }
     }
-    private BicepValue<bool>? _ignoreDaemonsetsUtilization;
+    private BicepValue<bool>? _isDaemonsetsUtilizationIgnored;
 
     /// <summary>
     /// The expander to use when scaling up. If not specified, the default is
@@ -276,9 +276,9 @@ public partial class ManagedClusterAutoScalerProfile : ProvisionableConstruct
     {
         base.DefineProvisionableProperties();
         _balanceSimilarNodeGroups = DefineProperty<string>("BalanceSimilarNodeGroups", ["balance-similar-node-groups"]);
-        _daemonsetEvictionForEmptyNodes = DefineProperty<bool>("DaemonsetEvictionForEmptyNodes", ["daemonset-eviction-for-empty-nodes"]);
-        _daemonsetEvictionForOccupiedNodes = DefineProperty<bool>("DaemonsetEvictionForOccupiedNodes", ["daemonset-eviction-for-occupied-nodes"]);
-        _ignoreDaemonsetsUtilization = DefineProperty<bool>("IgnoreDaemonsetsUtilization", ["ignore-daemonsets-utilization"]);
+        _isDaemonsetEvictionForEmptyNodesEnabled = DefineProperty<bool>("IsDaemonsetEvictionForEmptyNodesEnabled", ["daemonset-eviction-for-empty-nodes"]);
+        _isDaemonsetEvictionForOccupiedNodesEnabled = DefineProperty<bool>("IsDaemonsetEvictionForOccupiedNodesEnabled", ["daemonset-eviction-for-occupied-nodes"]);
+        _isDaemonsetsUtilizationIgnored = DefineProperty<bool>("IsDaemonsetsUtilizationIgnored", ["ignore-daemonsets-utilization"]);
         _expander = DefineProperty<AutoScaleExpander>("Expander", ["expander"]);
         _maxEmptyBulkDelete = DefineProperty<string>("MaxEmptyBulkDelete", ["max-empty-bulk-delete"]);
         _maxGracefulTerminationSec = DefineProperty<string>("MaxGracefulTerminationSec", ["max-graceful-termination-sec"]);

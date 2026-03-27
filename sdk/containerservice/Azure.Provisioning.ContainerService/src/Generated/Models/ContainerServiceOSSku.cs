@@ -66,7 +66,8 @@ public enum ContainerServiceOSSku
     /// <summary>
     /// Use Ubuntu2404 as the OS for node images, however, Ubuntu 24.04 may not
     /// be supported for all nodepools. For limitations and supported
-    /// kubernetes versions, see https://aka.ms/aks/supported-ubuntu-versions.
+    /// kubernetes versions, see see
+    /// https://aka.ms/aks/supported-ubuntu-versions.
     /// </summary>
     Ubuntu2404,
 }

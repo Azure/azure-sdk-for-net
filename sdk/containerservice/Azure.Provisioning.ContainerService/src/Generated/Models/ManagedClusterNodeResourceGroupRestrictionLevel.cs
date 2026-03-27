@@ -17,7 +17,8 @@ public enum ManagedClusterNodeResourceGroupRestrictionLevel
     Unrestricted,
 
     /// <summary>
-    /// Only */read RBAC permissions allowed on the managed node resource group.
+    /// Only \*\/read RBAC permissions allowed on the managed node resource
+    /// group.
     /// </summary>
     ReadOnly,
 }

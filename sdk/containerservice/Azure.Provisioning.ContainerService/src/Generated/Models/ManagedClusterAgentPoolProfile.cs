@@ -226,12 +226,12 @@ public partial class ManagedClusterAgentPoolProfile : ProvisionableConstruct
     /// <summary>
     /// Whether to enable auto-scaler.
     /// </summary>
-    public BicepValue<bool> EnableAutoScaling 
+    public BicepValue<bool> IsAutoScalingEnabled 
     {
-        get { Initialize(); return _enableAutoScaling!; }
-        set { Initialize(); _enableAutoScaling!.Assign(value); }
+        get { Initialize(); return _isAutoScalingEnabled!; }
+        set { Initialize(); _isAutoScalingEnabled!.Assign(value); }
     }
-    private BicepValue<bool>? _enableAutoScaling;
+    private BicepValue<bool>? _isAutoScalingEnabled;
 
     /// <summary>
     /// The scale down mode to use when scaling the Agent Pool. This also
@@ -332,16 +332,6 @@ public partial class ManagedClusterAgentPoolProfile : ProvisionableConstruct
     private BicepValue<string>? _provisioningState;
 
     /// <summary>
-    /// Tells whether the cluster is Running or Stopped.
-    /// </summary>
-    public BicepValue<ContainerServiceStateCode> PowerStateCode 
-    {
-        get { Initialize(); return _powerStateCode!; }
-        set { Initialize(); _powerStateCode!.Assign(value); }
-    }
-    private BicepValue<ContainerServiceStateCode>? _powerStateCode;
-
-    /// <summary>
     /// The list of Availability zones to use for nodes. This can only be
     /// specified if the AgentPoolType property is
     /// &apos;VirtualMachineScaleSets&apos;.
@@ -362,12 +352,12 @@ public partial class ManagedClusterAgentPoolProfile : ProvisionableConstruct
     /// node](https://docs.microsoft.com/azure/aks/use-multiple-node-pools#assign-a-public-ip-per-node-for-your-node-pools).
     /// The default is false.
     /// </summary>
-    public BicepValue<bool> EnableNodePublicIP 
+    public BicepValue<bool> IsNodePublicIpEnabled 
     {
-        get { Initialize(); return _enableNodePublicIP!; }
-        set { Initialize(); _enableNodePublicIP!.Assign(value); }
+        get { Initialize(); return _isNodePublicIpEnabled!; }
+        set { Initialize(); _isNodePublicIpEnabled!.Assign(value); }
     }
-    private BicepValue<bool>? _enableNodePublicIP;
+    private BicepValue<bool>? _isNodePublicIpEnabled;
 
     /// <summary>
     /// The public IP prefix ID which VM nodes should use IPs from. This is of
@@ -382,8 +372,7 @@ public partial class ManagedClusterAgentPoolProfile : ProvisionableConstruct
     private BicepValue<ResourceIdentifier>? _nodePublicIPPrefixId;
 
     /// <summary>
-    /// The Virtual Machine Scale Set priority. If not specified, the default
-    /// is &apos;Regular&apos;.
+    /// The Virtual Machine Scale Set priority.
     /// </summary>
     public BicepValue<ScaleSetPriority> ScaleSetPriority 
     {
@@ -393,9 +382,10 @@ public partial class ManagedClusterAgentPoolProfile : ProvisionableConstruct
     private BicepValue<ScaleSetPriority>? _scaleSetPriority;
 
     /// <summary>
-    /// The Virtual Machine Scale Set eviction policy to use. This cannot be
-    /// specified unless the scaleSetPriority is &apos;Spot&apos;. If not
-    /// specified, the default is &apos;Delete&apos;.
+    /// The Virtual Machine Scale Set eviction policy. The eviction policy
+    /// specifies what to do with the VM when it is evicted. The default is
+    /// Delete. For more information about eviction see [spot
+    /// VMs](https://docs.microsoft.com/azure/virtual-machines/spot-vms).
     /// </summary>
     public BicepValue<ScaleSetEvictionPolicy> ScaleSetEvictionPolicy 
     {
@@ -487,34 +477,34 @@ public partial class ManagedClusterAgentPoolProfile : ProvisionableConstruct
     /// information, see:
     /// https://docs.microsoft.com/azure/aks/enable-host-encryption.
     /// </summary>
-    public BicepValue<bool> EnableEncryptionAtHost 
+    public BicepValue<bool> IsEncryptionAtHostEnabled 
     {
-        get { Initialize(); return _enableEncryptionAtHost!; }
-        set { Initialize(); _enableEncryptionAtHost!.Assign(value); }
+        get { Initialize(); return _isEncryptionAtHostEnabled!; }
+        set { Initialize(); _isEncryptionAtHostEnabled!.Assign(value); }
     }
-    private BicepValue<bool>? _enableEncryptionAtHost;
+    private BicepValue<bool>? _isEncryptionAtHostEnabled;
 
     /// <summary>
     /// Whether to enable UltraSSD.
     /// </summary>
-    public BicepValue<bool> EnableUltraSsd 
+    public BicepValue<bool> IsUltraSsdEnabled 
     {
-        get { Initialize(); return _enableUltraSsd!; }
-        set { Initialize(); _enableUltraSsd!.Assign(value); }
+        get { Initialize(); return _isUltraSsdEnabled!; }
+        set { Initialize(); _isUltraSsdEnabled!.Assign(value); }
     }
-    private BicepValue<bool>? _enableUltraSsd;
+    private BicepValue<bool>? _isUltraSsdEnabled;
 
     /// <summary>
     /// Whether to use a FIPS-enabled OS. See [Add a FIPS-enabled node
     /// pool](https://docs.microsoft.com/azure/aks/use-multiple-node-pools#add-a-fips-enabled-node-pool-preview)
     /// for more details.
     /// </summary>
-    public BicepValue<bool> EnableFips 
+    public BicepValue<bool> IsFipsEnabled 
     {
-        get { Initialize(); return _enableFips!; }
-        set { Initialize(); _enableFips!.Assign(value); }
+        get { Initialize(); return _isFipsEnabled!; }
+        set { Initialize(); _isFipsEnabled!.Assign(value); }
     }
-    private BicepValue<bool>? _enableFips;
+    private BicepValue<bool>? _isFipsEnabled;
 
     /// <summary>
     /// GPUInstanceProfile to be used to specify GPU MIG instance profile for
@@ -528,19 +518,13 @@ public partial class ManagedClusterAgentPoolProfile : ProvisionableConstruct
     private BicepValue<GpuInstanceProfile>? _gpuInstanceProfile;
 
     /// <summary>
-    /// This is the ARM ID of the source object to be used to create the target
-    /// object.
-    /// </summary>
-    public BicepValue<ResourceIdentifier> CreationDataSourceResourceId 
-    {
-        get { Initialize(); return _creationDataSourceResourceId!; }
-        set { Initialize(); _creationDataSourceResourceId!.Assign(value); }
-    }
-    private BicepValue<ResourceIdentifier>? _creationDataSourceResourceId;
-
-    /// <summary>
-    /// AKS will associate the specified agent pool with the Capacity
-    /// Reservation Group.
+    /// The fully qualified resource ID of the Capacity Reservation Group to
+    /// provide virtual machines from a reserved group of Virtual Machines.
+    /// This is of the form:
+    /// &apos;/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Compute/capacityreservationgroups/{capacityReservationGroupName}&apos;
+    /// Customers use it to create an agentpool with a specified CRG. For more
+    /// information see [Capacity
+    /// Reservation](https://learn.microsoft.com/en-us/azure/virtual-machines/capacity-reservation-overview).
     /// </summary>
     public BicepValue<ResourceIdentifier> CapacityReservationGroupId 
     {
@@ -575,6 +559,59 @@ public partial class ManagedClusterAgentPoolProfile : ProvisionableConstruct
     private AgentPoolNetworkProfile? _networkProfile;
 
     /// <summary>
+    /// The security settings of an agent pool.
+    /// </summary>
+    public AgentPoolSecurityProfile SecurityProfile 
+    {
+        get { Initialize(); return _securityProfile!; }
+        set { Initialize(); AssignOrReplace(ref _securityProfile, value); }
+    }
+    private AgentPoolSecurityProfile? _securityProfile;
+
+    /// <summary>
+    /// The status of nodes in a VirtualMachines agent pool.
+    /// </summary>
+    public BicepList<AgentPoolVirtualMachineNodes> VirtualMachineNodesStatus 
+    {
+        get { Initialize(); return _virtualMachineNodesStatus!; }
+        set { Initialize(); _virtualMachineNodesStatus!.Assign(value); }
+    }
+    private BicepList<AgentPoolVirtualMachineNodes>? _virtualMachineNodesStatus;
+
+    /// <summary>
+    /// Configures the per-node local DNS, with VnetDNS and KubeDNS overrides.
+    /// LocalDNS helps improve performance and reliability of DNS resolution
+    /// in an AKS cluster. For more details see aka.ms/aks/localdns.
+    /// </summary>
+    public LocalDnsProfile LocalDnsProfile 
+    {
+        get { Initialize(); return _localDnsProfile!; }
+        set { Initialize(); AssignOrReplace(ref _localDnsProfile, value); }
+    }
+    private LocalDnsProfile? _localDnsProfile;
+
+    /// <summary>
+    /// Tells whether the cluster is Running or Stopped.
+    /// </summary>
+    public BicepValue<ContainerServiceStateCode> PowerStateCode 
+    {
+        get { Initialize(); return _powerStateCode!; }
+        set { Initialize(); _powerStateCode!.Assign(value); }
+    }
+    private BicepValue<ContainerServiceStateCode>? _powerStateCode;
+
+    /// <summary>
+    /// This is the ARM ID of the source object to be used to create the target
+    /// object.
+    /// </summary>
+    public BicepValue<ResourceIdentifier> CreationDataSourceResourceId 
+    {
+        get { Initialize(); return _creationDataSourceResourceId!; }
+        set { Initialize(); _creationDataSourceResourceId!.Assign(value); }
+    }
+    private BicepValue<ResourceIdentifier>? _creationDataSourceResourceId;
+
+    /// <summary>
     /// Whether to disable OutboundNAT in windows nodes. The default value is
     /// false. Outbound NAT can only be disabled if the cluster outboundType
     /// is NAT Gateway and the Windows agent pool does not have node public IP
@@ -586,27 +623,6 @@ public partial class ManagedClusterAgentPoolProfile : ProvisionableConstruct
         set { Initialize(); _isOutboundNatDisabled!.Assign(value); }
     }
     private BicepValue<bool>? _isOutboundNatDisabled;
-
-    /// <summary>
-    /// The security settings of an agent pool.
-    /// </summary>
-    public AgentPoolSecurityProfile SecurityProfile 
-    {
-        get { Initialize(); return _securityProfile!; }
-        set { Initialize(); AssignOrReplace(ref _securityProfile, value); }
-    }
-    private AgentPoolSecurityProfile? _securityProfile;
-
-    /// <summary>
-    /// Whether to install GPU drivers. When it&apos;s not specified, default
-    /// is Install.
-    /// </summary>
-    public BicepValue<AgentPoolGpuDriver> GpuDriver 
-    {
-        get { Initialize(); return _gpuDriver!; }
-        set { Initialize(); _gpuDriver!.Assign(value); }
-    }
-    private BicepValue<AgentPoolGpuDriver>? _gpuDriver;
 
     /// <summary>
     /// The Gateway agent pool associates one public IPPrefix for each static
@@ -629,22 +645,12 @@ public partial class ManagedClusterAgentPoolProfile : ProvisionableConstruct
     /// Specifications on how to scale the VirtualMachines agent pool to a
     /// fixed size.
     /// </summary>
-    public BicepList<ManualScaleProfile> ScaleManual 
+    public BicepList<ManualScaleProfile> VirtualMachinesScaleManual 
     {
-        get { Initialize(); return _scaleManual!; }
-        set { Initialize(); _scaleManual!.Assign(value); }
+        get { Initialize(); return _virtualMachinesScaleManual!; }
+        set { Initialize(); _virtualMachinesScaleManual!.Assign(value); }
     }
-    private BicepList<ManualScaleProfile>? _scaleManual;
-
-    /// <summary>
-    /// The status of nodes in a VirtualMachines agent pool.
-    /// </summary>
-    public BicepList<AgentPoolVirtualMachineNodes> VirtualMachineNodesStatus 
-    {
-        get { Initialize(); return _virtualMachineNodesStatus!; }
-        set { Initialize(); _virtualMachineNodesStatus!.Assign(value); }
-    }
-    private BicepList<AgentPoolVirtualMachineNodes>? _virtualMachineNodesStatus;
+    private BicepList<ManualScaleProfile>? _virtualMachinesScaleManual;
 
     /// <summary>
     /// The error detail information of the agent pool. Preserves the detailed
@@ -655,18 +661,6 @@ public partial class ManagedClusterAgentPoolProfile : ProvisionableConstruct
         get { Initialize(); return _statusProvisioningError!; }
     }
     private BicepValue<ResponseError>? _statusProvisioningError;
-
-    /// <summary>
-    /// Configures the per-node local DNS, with VnetDNS and KubeDNS overrides.
-    /// LocalDNS helps improve performance and reliability of DNS resolution
-    /// in an AKS cluster. For more details see aka.ms/aks/localdns.
-    /// </summary>
-    public LocalDnsProfile LocalDnsProfile 
-    {
-        get { Initialize(); return _localDnsProfile!; }
-        set { Initialize(); AssignOrReplace(ref _localDnsProfile, value); }
-    }
-    private LocalDnsProfile? _localDnsProfile;
 
     /// <summary>
     /// Creates a new ManagedClusterAgentPoolProfile.
@@ -699,7 +693,7 @@ public partial class ManagedClusterAgentPoolProfile : ProvisionableConstruct
         _oSSku = DefineProperty<ContainerServiceOSSku>("OSSku", ["osSKU"]);
         _maxCount = DefineProperty<int>("MaxCount", ["maxCount"]);
         _minCount = DefineProperty<int>("MinCount", ["minCount"]);
-        _enableAutoScaling = DefineProperty<bool>("EnableAutoScaling", ["enableAutoScaling"]);
+        _isAutoScalingEnabled = DefineProperty<bool>("IsAutoScalingEnabled", ["enableAutoScaling"]);
         _scaleDownMode = DefineProperty<ScaleDownMode>("ScaleDownMode", ["scaleDownMode"]);
         _agentPoolType = DefineProperty<AgentPoolType>("AgentPoolType", ["type"]);
         _mode = DefineProperty<AgentPoolMode>("Mode", ["mode"]);
@@ -708,9 +702,8 @@ public partial class ManagedClusterAgentPoolProfile : ProvisionableConstruct
         _nodeImageVersion = DefineProperty<string>("NodeImageVersion", ["nodeImageVersion"], isOutput: true);
         _upgradeSettings = DefineModelProperty<AgentPoolUpgradeSettings>("UpgradeSettings", ["upgradeSettings"]);
         _provisioningState = DefineProperty<string>("ProvisioningState", ["provisioningState"], isOutput: true);
-        _powerStateCode = DefineProperty<ContainerServiceStateCode>("PowerStateCode", ["powerState", "code"]);
         _availabilityZones = DefineListProperty<string>("AvailabilityZones", ["availabilityZones"]);
-        _enableNodePublicIP = DefineProperty<bool>("EnableNodePublicIP", ["enableNodePublicIP"]);
+        _isNodePublicIpEnabled = DefineProperty<bool>("IsNodePublicIpEnabled", ["enableNodePublicIP"]);
         _nodePublicIPPrefixId = DefineProperty<ResourceIdentifier>("NodePublicIPPrefixId", ["nodePublicIPPrefixID"]);
         _scaleSetPriority = DefineProperty<ScaleSetPriority>("ScaleSetPriority", ["scaleSetPriority"]);
         _scaleSetEvictionPolicy = DefineProperty<ScaleSetEvictionPolicy>("ScaleSetEvictionPolicy", ["scaleSetEvictionPolicy"]);
@@ -721,21 +714,21 @@ public partial class ManagedClusterAgentPoolProfile : ProvisionableConstruct
         _proximityPlacementGroupId = DefineProperty<ResourceIdentifier>("ProximityPlacementGroupId", ["proximityPlacementGroupID"]);
         _kubeletConfig = DefineModelProperty<KubeletConfig>("KubeletConfig", ["kubeletConfig"]);
         _linuxOSConfig = DefineModelProperty<LinuxOSConfig>("LinuxOSConfig", ["linuxOSConfig"]);
-        _enableEncryptionAtHost = DefineProperty<bool>("EnableEncryptionAtHost", ["enableEncryptionAtHost"]);
-        _enableUltraSsd = DefineProperty<bool>("EnableUltraSsd", ["enableUltraSSD"]);
-        _enableFips = DefineProperty<bool>("EnableFips", ["enableFIPS"]);
+        _isEncryptionAtHostEnabled = DefineProperty<bool>("IsEncryptionAtHostEnabled", ["enableEncryptionAtHost"]);
+        _isUltraSsdEnabled = DefineProperty<bool>("IsUltraSsdEnabled", ["enableUltraSSD"]);
+        _isFipsEnabled = DefineProperty<bool>("IsFipsEnabled", ["enableFIPS"]);
         _gpuInstanceProfile = DefineProperty<GpuInstanceProfile>("GpuInstanceProfile", ["gpuInstanceProfile"]);
-        _creationDataSourceResourceId = DefineProperty<ResourceIdentifier>("CreationDataSourceResourceId", ["creationData", "sourceResourceId"]);
         _capacityReservationGroupId = DefineProperty<ResourceIdentifier>("CapacityReservationGroupId", ["capacityReservationGroupID"]);
         _hostGroupId = DefineProperty<ResourceIdentifier>("HostGroupId", ["hostGroupID"]);
         _networkProfile = DefineModelProperty<AgentPoolNetworkProfile>("NetworkProfile", ["networkProfile"]);
-        _isOutboundNatDisabled = DefineProperty<bool>("IsOutboundNatDisabled", ["windowsProfile", "disableOutboundNat"]);
         _securityProfile = DefineModelProperty<AgentPoolSecurityProfile>("SecurityProfile", ["securityProfile"]);
-        _gpuDriver = DefineProperty<AgentPoolGpuDriver>("GpuDriver", ["gpuProfile", "driver"]);
-        _gatewayPublicIPPrefixSize = DefineProperty<int>("GatewayPublicIPPrefixSize", ["gatewayProfile", "publicIPPrefixSize"]);
-        _scaleManual = DefineListProperty<ManualScaleProfile>("ScaleManual", ["virtualMachinesProfile", "scale", "manual"]);
         _virtualMachineNodesStatus = DefineListProperty<AgentPoolVirtualMachineNodes>("VirtualMachineNodesStatus", ["virtualMachineNodesStatus"]);
-        _statusProvisioningError = DefineProperty<ResponseError>("StatusProvisioningError", ["status", "provisioningError"], isOutput: true);
         _localDnsProfile = DefineModelProperty<LocalDnsProfile>("LocalDnsProfile", ["localDNSProfile"]);
+        _powerStateCode = DefineProperty<ContainerServiceStateCode>("PowerStateCode", ["powerState", "code"]);
+        _creationDataSourceResourceId = DefineProperty<ResourceIdentifier>("CreationDataSourceResourceId", ["creationData", "sourceResourceId"]);
+        _isOutboundNatDisabled = DefineProperty<bool>("IsOutboundNatDisabled", ["windowsProfile", "disableOutboundNat"]);
+        _gatewayPublicIPPrefixSize = DefineProperty<int>("GatewayPublicIPPrefixSize", ["gatewayProfile", "publicIPPrefixSize"]);
+        _virtualMachinesScaleManual = DefineListProperty<ManualScaleProfile>("VirtualMachinesScaleManual", ["virtualMachinesProfile", "scale", "manual"]);
+        _statusProvisioningError = DefineProperty<ResponseError>("StatusProvisioningError", ["status", "provisioningError"], isOutput: true);
     }
 }

@@ -11,32 +11,32 @@ namespace Azure.Provisioning.ContainerService;
 public enum ManagedClusterPodIdentityProvisioningState
 {
     /// <summary>
-    /// Assigned.
+    /// Pod identity is assigned.
     /// </summary>
     Assigned,
 
     /// <summary>
-    /// Canceled.
+    /// Pod identity assignment was canceled.
     /// </summary>
     Canceled,
 
     /// <summary>
-    /// Deleting.
+    /// Pod identity is being deleted.
     /// </summary>
     Deleting,
 
     /// <summary>
-    /// Failed.
+    /// Pod identity assignment failed.
     /// </summary>
     Failed,
 
     /// <summary>
-    /// Succeeded.
+    /// Pod identity assignment succeeded.
     /// </summary>
     Succeeded,
 
     /// <summary>
-    /// Updating.
+    /// Pod identity is being updated.
     /// </summary>
     Updating,
 }

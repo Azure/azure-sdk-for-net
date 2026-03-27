@@ -11,27 +11,27 @@ namespace Azure.Provisioning.ContainerService;
 public enum ContainerServicePrivateEndpointConnectionProvisioningState
 {
     /// <summary>
-    /// Canceled.
+    /// Private endpoint connection provisioning was canceled.
     /// </summary>
     Canceled,
 
     /// <summary>
-    /// Creating.
+    /// Private endpoint connection is being created.
     /// </summary>
     Creating,
 
     /// <summary>
-    /// Deleting.
+    /// Private endpoint connection is being deleted.
     /// </summary>
     Deleting,
 
     /// <summary>
-    /// Failed.
+    /// Private endpoint connection provisioning failed.
     /// </summary>
     Failed,
 
     /// <summary>
-    /// Succeeded.
+    /// Private endpoint connection provisioning succeeded.
     /// </summary>
     Succeeded,
 }

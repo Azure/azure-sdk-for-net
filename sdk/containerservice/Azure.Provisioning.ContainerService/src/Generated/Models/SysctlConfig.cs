@@ -148,12 +148,12 @@ public partial class SysctlConfig : ProvisionableConstruct
     /// <summary>
     /// Sysctl setting net.ipv4.tcp_tw_reuse.
     /// </summary>
-    public BicepValue<bool> NetIPv4TcpTwReuse 
+    public BicepValue<bool> IsNetIpv4TcpTwReuseEnabled 
     {
-        get { Initialize(); return _netIPv4TcpTwReuse!; }
-        set { Initialize(); _netIPv4TcpTwReuse!.Assign(value); }
+        get { Initialize(); return _isNetIpv4TcpTwReuseEnabled!; }
+        set { Initialize(); _isNetIpv4TcpTwReuseEnabled!.Assign(value); }
     }
-    private BicepValue<bool>? _netIPv4TcpTwReuse;
+    private BicepValue<bool>? _isNetIpv4TcpTwReuseEnabled;
 
     /// <summary>
     /// Sysctl setting net.ipv4.ip_local_port_range.
@@ -321,7 +321,7 @@ public partial class SysctlConfig : ProvisionableConstruct
         _netIPv4TcpKeepaliveTime = DefineProperty<int>("NetIPv4TcpKeepaliveTime", ["netIpv4TcpKeepaliveTime"]);
         _netIPv4TcpKeepaliveProbes = DefineProperty<int>("NetIPv4TcpKeepaliveProbes", ["netIpv4TcpKeepaliveProbes"]);
         _netIPv4TcpKeepaliveIntvl = DefineProperty<int>("NetIPv4TcpKeepaliveIntvl", ["netIpv4TcpkeepaliveIntvl"]);
-        _netIPv4TcpTwReuse = DefineProperty<bool>("NetIPv4TcpTwReuse", ["netIpv4TcpTwReuse"]);
+        _isNetIpv4TcpTwReuseEnabled = DefineProperty<bool>("IsNetIpv4TcpTwReuseEnabled", ["netIpv4TcpTwReuse"]);
         _netIPv4IPLocalPortRange = DefineProperty<string>("NetIPv4IPLocalPortRange", ["netIpv4IpLocalPortRange"]);
         _netIPv4NeighDefaultGcThresh1 = DefineProperty<int>("NetIPv4NeighDefaultGcThresh1", ["netIpv4NeighDefaultGcThresh1"]);
         _netIPv4NeighDefaultGcThresh2 = DefineProperty<int>("NetIPv4NeighDefaultGcThresh2", ["netIpv4NeighDefaultGcThresh2"]);

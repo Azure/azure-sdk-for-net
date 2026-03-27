@@ -14,31 +14,31 @@ namespace Azure.Provisioning.ContainerService;
 public enum GpuInstanceProfile
 {
     /// <summary>
-    /// MIG1g.
+    /// MIG 1g GPU instance profile.
     /// </summary>
     [DataMember(Name = "MIG1g")]
     Mig1G,
 
     /// <summary>
-    /// MIG2g.
+    /// MIG 2g GPU instance profile.
     /// </summary>
     [DataMember(Name = "MIG2g")]
     Mig2G,
 
     /// <summary>
-    /// MIG3g.
+    /// MIG 3g GPU instance profile.
     /// </summary>
     [DataMember(Name = "MIG3g")]
     Mig3G,
 
     /// <summary>
-    /// MIG4g.
+    /// MIG 4g GPU instance profile.
     /// </summary>
     [DataMember(Name = "MIG4g")]
     Mig4G,
 
     /// <summary>
-    /// MIG7g.
+    /// MIG 7g GPU instance profile.
     /// </summary>
     [DataMember(Name = "MIG7g")]
     Mig7G,

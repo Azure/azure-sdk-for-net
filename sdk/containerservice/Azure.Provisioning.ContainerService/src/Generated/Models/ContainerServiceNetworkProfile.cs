@@ -14,8 +14,7 @@ using System;
 namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
-/// Profile of network configuration.             Serialized Name:
-/// ContainerServiceNetworkProfile
+/// Profile of network configuration.
 /// </summary>
 public partial class ContainerServiceNetworkProfile : ProvisionableConstruct
 {
@@ -162,17 +161,6 @@ public partial class ContainerServiceNetworkProfile : ProvisionableConstruct
     private ManagedClusterNatGatewayProfile? _natGatewayProfile;
 
     /// <summary>
-    /// Enable Static Egress Gateway addon. Indicates if Static Egress Gateway
-    /// addon is enabled or not.
-    /// </summary>
-    public BicepValue<bool> IsStaticEgressGatewayAddonEnabled 
-    {
-        get { Initialize(); return _isStaticEgressGatewayAddonEnabled!; }
-        set { Initialize(); _isStaticEgressGatewayAddonEnabled!.Assign(value); }
-    }
-    private BicepValue<bool>? _isStaticEgressGatewayAddonEnabled;
-
-    /// <summary>
     /// The CIDR notation IP ranges from which to assign pod IPs. One IPv4 CIDR
     /// is expected for single-stack networking. Two CIDRs, one for each IP
     /// family (IPv4/IPv6), is expected for dual-stack networking.
@@ -211,6 +199,17 @@ public partial class ContainerServiceNetworkProfile : ProvisionableConstruct
     private BicepList<ContainerServiceIPFamily>? _networkIPFamilies;
 
     /// <summary>
+    /// Enable Static Egress Gateway addon. Indicates if Static Egress Gateway
+    /// addon is enabled or not.
+    /// </summary>
+    public BicepValue<bool> IsStaticEgressGatewayAddonEnabled 
+    {
+        get { Initialize(); return _isStaticEgressGatewayAddonEnabled!; }
+        set { Initialize(); _isStaticEgressGatewayAddonEnabled!.Assign(value); }
+    }
+    private BicepValue<bool>? _isStaticEgressGatewayAddonEnabled;
+
+    /// <summary>
     /// Creates a new ContainerServiceNetworkProfile.
     /// </summary>
     public ContainerServiceNetworkProfile()
@@ -237,9 +236,9 @@ public partial class ContainerServiceNetworkProfile : ProvisionableConstruct
         _loadBalancerSku = DefineProperty<ContainerServiceLoadBalancerSku>("LoadBalancerSku", ["loadBalancerSku"]);
         _loadBalancerProfile = DefineModelProperty<ManagedClusterLoadBalancerProfile>("LoadBalancerProfile", ["loadBalancerProfile"]);
         _natGatewayProfile = DefineModelProperty<ManagedClusterNatGatewayProfile>("NatGatewayProfile", ["natGatewayProfile"]);
-        _isStaticEgressGatewayAddonEnabled = DefineProperty<bool>("IsStaticEgressGatewayAddonEnabled", ["staticEgressGatewayProfile", "enabled"]);
         _podCidrs = DefineListProperty<string>("PodCidrs", ["podCidrs"]);
         _serviceCidrs = DefineListProperty<string>("ServiceCidrs", ["serviceCidrs"]);
         _networkIPFamilies = DefineListProperty<ContainerServiceIPFamily>("NetworkIPFamilies", ["ipFamilies"]);
+        _isStaticEgressGatewayAddonEnabled = DefineProperty<bool>("IsStaticEgressGatewayAddonEnabled", ["staticEgressGatewayProfile", "enabled"]);
     }
 }

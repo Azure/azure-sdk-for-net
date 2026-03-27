@@ -7,6 +7,7 @@
 
 using Azure;
 using Azure.Core;
+using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 using System;
 
@@ -69,11 +70,11 @@ public partial class ManagedClusterPodIdentity : ProvisionableConstruct
     /// <summary>
     /// Details about the error.
     /// </summary>
-    public BicepValue<ResponseError> ErrorDetail 
+    public ManagedClusterPodIdentityProvisioningErrorDetail ProvisioningInfoErrorDetail 
     {
-        get { Initialize(); return _errorDetail!; }
+        get { Initialize(); return _provisioningInfoErrorDetail!; }
     }
-    private BicepValue<ResponseError>? _errorDetail;
+    private ManagedClusterPodIdentityProvisioningErrorDetail? _provisioningInfoErrorDetail;
 
     /// <summary>
     /// Creates a new ManagedClusterPodIdentity.
@@ -93,6 +94,6 @@ public partial class ManagedClusterPodIdentity : ProvisionableConstruct
         _bindingSelector = DefineProperty<string>("BindingSelector", ["bindingSelector"]);
         _identity = DefineModelProperty<ContainerServiceUserAssignedIdentity>("Identity", ["identity"]);
         _provisioningState = DefineProperty<ManagedClusterPodIdentityProvisioningState>("ProvisioningState", ["provisioningState"], isOutput: true);
-        _errorDetail = DefineProperty<ResponseError>("ErrorDetail", ["provisioningInfo", "error", "error"], isOutput: true);
+        _provisioningInfoErrorDetail = DefineModelProperty<ManagedClusterPodIdentityProvisioningErrorDetail>("ProvisioningInfoErrorDetail", ["provisioningInfo", "error", "error"], isOutput: true);
     }
 }

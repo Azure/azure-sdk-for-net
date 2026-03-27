@@ -60,11 +60,12 @@ public partial class ManagedClusterNamespace : ProvisionableResource
     private BicepDictionary<string>? _tags;
 
     /// <summary>
-    /// Unique read-only string used to implement optimistic concurrency. The
-    /// eTag value will change when the resource is updated. Specify an
-    /// if-match or if-none-match header with the eTag value for a subsequent
-    /// request to enable optimistic concurrency per the normal eTag
-    /// convention.
+    /// If eTag is provided in the response body, it may also be provided as a
+    /// header per the normal etag convention.  Entity tags are used for
+    /// comparing two or more entities from the same requested resource.
+    /// HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match
+    /// (section 14.24), If-None-Match (section 14.26), and If-Range (section
+    /// 14.27) header fields.
     /// </summary>
     public BicepValue<ETag> ETag 
     {
@@ -111,7 +112,7 @@ public partial class ManagedClusterNamespace : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the ManagedClusterNamespace.</param>
     public ManagedClusterNamespace(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.ContainerService/managedClusters/managedNamespaces", resourceVersion ?? "2025-10-01")
+        : base(bicepIdentifier, "Microsoft.ContainerService/managedClusters/managedNamespaces", resourceVersion ?? "2026-01-01")
     {
     }
 
@@ -136,6 +137,11 @@ public partial class ManagedClusterNamespace : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2026-01-01.
+        /// </summary>
+        public static readonly string V2026_01_01 = "2026-01-01";
+
         /// <summary>
         /// 2025-10-01.
         /// </summary>

@@ -88,6 +88,15 @@ public partial class AgentPoolSnapshot : ProvisionableResource
     private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
+    /// Whether to use a FIPS-enabled OS.
+    /// </summary>
+    public BicepValue<bool> IsFipsEnabled 
+    {
+        get { Initialize(); return _isFipsEnabled!; }
+    }
+    private BicepValue<bool>? _isFipsEnabled;
+
+    /// <summary>
     /// The version of Kubernetes.
     /// </summary>
     public BicepValue<string> KubernetesVersion 
@@ -154,7 +163,7 @@ public partial class AgentPoolSnapshot : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the AgentPoolSnapshot.</param>
     public AgentPoolSnapshot(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.ContainerService/snapshots", resourceVersion ?? "2025-10-01")
+        : base(bicepIdentifier, "Microsoft.ContainerService/snapshots", resourceVersion ?? "2026-01-01")
     {
     }
 
@@ -171,6 +180,7 @@ public partial class AgentPoolSnapshot : ProvisionableResource
         _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
         _enableFips = DefineProperty<bool>("EnableFips", ["properties", "enableFIPS"], isOutput: true);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _isFipsEnabled = DefineProperty<bool>("IsFipsEnabled", ["properties", "enableFIPS"], isOutput: true);
         _kubernetesVersion = DefineProperty<string>("KubernetesVersion", ["properties", "kubernetesVersion"], isOutput: true);
         _nodeImageVersion = DefineProperty<string>("NodeImageVersion", ["properties", "nodeImageVersion"], isOutput: true);
         _oSSku = DefineProperty<ContainerServiceOSSku>("OSSku", ["properties", "osSku"], isOutput: true);
@@ -184,6 +194,11 @@ public partial class AgentPoolSnapshot : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2026-01-01.
+        /// </summary>
+        public static readonly string V2026_01_01 = "2026-01-01";
+
         /// <summary>
         /// 2025-10-01.
         /// </summary>

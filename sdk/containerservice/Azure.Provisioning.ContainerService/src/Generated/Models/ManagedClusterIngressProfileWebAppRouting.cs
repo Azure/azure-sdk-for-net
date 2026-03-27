@@ -42,16 +42,6 @@ public partial class ManagedClusterIngressProfileWebAppRouting : ProvisionableCo
     private BicepList<ResourceIdentifier>? _dnsZoneResourceIds;
 
     /// <summary>
-    /// Ingress type for the default NginxIngressController custom resource.
-    /// </summary>
-    public BicepValue<NginxIngressControllerType> NginxDefaultIngressControllerType 
-    {
-        get { Initialize(); return _nginxDefaultIngressControllerType!; }
-        set { Initialize(); _nginxDefaultIngressControllerType!.Assign(value); }
-    }
-    private BicepValue<NginxIngressControllerType>? _nginxDefaultIngressControllerType;
-
-    /// <summary>
     /// Managed identity of the Application Routing add-on. This is the
     /// identity that should be granted permissions, for example, to manage
     /// the associated Azure DNS resource and get certificates from Azure Key
@@ -64,6 +54,16 @@ public partial class ManagedClusterIngressProfileWebAppRouting : ProvisionableCo
         get { Initialize(); return _identity!; }
     }
     private ContainerServiceUserAssignedIdentity? _identity;
+
+    /// <summary>
+    /// Ingress type for the default NginxIngressController custom resource.
+    /// </summary>
+    public BicepValue<NginxIngressControllerType> NginxDefaultIngressControllerType 
+    {
+        get { Initialize(); return _nginxDefaultIngressControllerType!; }
+        set { Initialize(); _nginxDefaultIngressControllerType!.Assign(value); }
+    }
+    private BicepValue<NginxIngressControllerType>? _nginxDefaultIngressControllerType;
 
     /// <summary>
     /// Creates a new ManagedClusterIngressProfileWebAppRouting.
@@ -81,7 +81,7 @@ public partial class ManagedClusterIngressProfileWebAppRouting : ProvisionableCo
         base.DefineProvisionableProperties();
         _isEnabled = DefineProperty<bool>("IsEnabled", ["enabled"]);
         _dnsZoneResourceIds = DefineListProperty<ResourceIdentifier>("DnsZoneResourceIds", ["dnsZoneResourceIds"]);
-        _nginxDefaultIngressControllerType = DefineProperty<NginxIngressControllerType>("NginxDefaultIngressControllerType", ["nginx", "defaultIngressControllerType"]);
         _identity = DefineModelProperty<ContainerServiceUserAssignedIdentity>("Identity", ["identity"], isOutput: true);
+        _nginxDefaultIngressControllerType = DefineProperty<NginxIngressControllerType>("NginxDefaultIngressControllerType", ["nginx", "defaultIngressControllerType"]);
     }
 }

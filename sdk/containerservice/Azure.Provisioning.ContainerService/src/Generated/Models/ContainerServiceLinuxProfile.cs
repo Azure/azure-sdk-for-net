@@ -17,16 +17,6 @@ namespace Azure.Provisioning.ContainerService;
 public partial class ContainerServiceLinuxProfile : ProvisionableConstruct
 {
     /// <summary>
-    /// The administrator username to use for Linux VMs.
-    /// </summary>
-    public BicepValue<string> AdminUsername 
-    {
-        get { Initialize(); return _adminUsername!; }
-        set { Initialize(); _adminUsername!.Assign(value); }
-    }
-    private BicepValue<string>? _adminUsername;
-
-    /// <summary>
     /// The list of SSH public keys used to authenticate with Linux-based VMs.
     /// A maximum of 1 key may be specified.
     /// </summary>
@@ -36,6 +26,16 @@ public partial class ContainerServiceLinuxProfile : ProvisionableConstruct
         set { Initialize(); _sshPublicKeys!.Assign(value); }
     }
     private BicepList<ContainerServiceSshPublicKey>? _sshPublicKeys;
+
+    /// <summary>
+    /// The administrator username to use for Linux VMs.
+    /// </summary>
+    public BicepValue<string> AdminUsername 
+    {
+        get { Initialize(); return _adminUsername!; }
+        set { Initialize(); _adminUsername!.Assign(value); }
+    }
+    private BicepValue<string>? _adminUsername;
 
     /// <summary>
     /// Creates a new ContainerServiceLinuxProfile.
@@ -50,7 +50,7 @@ public partial class ContainerServiceLinuxProfile : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _adminUsername = DefineProperty<string>("AdminUsername", ["adminUsername"]);
         _sshPublicKeys = DefineListProperty<ContainerServiceSshPublicKey>("SshPublicKeys", ["ssh", "publicKeys"]);
+        _adminUsername = DefineProperty<string>("AdminUsername", ["adminUsername"]);
     }
 }

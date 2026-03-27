@@ -40,16 +40,6 @@ public partial class ManagedClusterSecurityProfile : ProvisionableConstruct
     private ManagedClusterSecurityProfileKeyVaultKms? _azureKeyVaultKms;
 
     /// <summary>
-    /// Whether to enable workload identity.
-    /// </summary>
-    public BicepValue<bool> IsWorkloadIdentityEnabled 
-    {
-        get { Initialize(); return _isWorkloadIdentityEnabled!; }
-        set { Initialize(); _isWorkloadIdentityEnabled!.Assign(value); }
-    }
-    private BicepValue<bool>? _isWorkloadIdentityEnabled;
-
-    /// <summary>
     /// Image Cleaner settings for the security profile.
     /// </summary>
     public ManagedClusterSecurityProfileImageCleaner ImageCleaner 
@@ -73,6 +63,16 @@ public partial class ManagedClusterSecurityProfile : ProvisionableConstruct
     private BicepList<BinaryData>? _customCATrustCertificates;
 
     /// <summary>
+    /// Whether to enable workload identity.
+    /// </summary>
+    public BicepValue<bool> IsWorkloadIdentityEnabled 
+    {
+        get { Initialize(); return _isWorkloadIdentityEnabled!; }
+        set { Initialize(); _isWorkloadIdentityEnabled!.Assign(value); }
+    }
+    private BicepValue<bool>? _isWorkloadIdentityEnabled;
+
+    /// <summary>
     /// Creates a new ManagedClusterSecurityProfile.
     /// </summary>
     public ManagedClusterSecurityProfile()
@@ -88,8 +88,8 @@ public partial class ManagedClusterSecurityProfile : ProvisionableConstruct
         base.DefineProvisionableProperties();
         _defender = DefineModelProperty<ManagedClusterSecurityProfileDefender>("Defender", ["defender"]);
         _azureKeyVaultKms = DefineModelProperty<ManagedClusterSecurityProfileKeyVaultKms>("AzureKeyVaultKms", ["azureKeyVaultKms"]);
-        _isWorkloadIdentityEnabled = DefineProperty<bool>("IsWorkloadIdentityEnabled", ["workloadIdentity", "enabled"]);
         _imageCleaner = DefineModelProperty<ManagedClusterSecurityProfileImageCleaner>("ImageCleaner", ["imageCleaner"]);
         _customCATrustCertificates = DefineListProperty<BinaryData>("CustomCATrustCertificates", ["customCATrustCertificates"]);
+        _isWorkloadIdentityEnabled = DefineProperty<bool>("IsWorkloadIdentityEnabled", ["workloadIdentity", "enabled"]);
     }
 }

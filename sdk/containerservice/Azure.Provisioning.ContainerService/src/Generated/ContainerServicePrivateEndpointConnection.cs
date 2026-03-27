@@ -39,7 +39,7 @@ public partial class ContainerServicePrivateEndpointConnection : ProvisionableRe
     private ContainerServicePrivateLinkServiceConnectionState? _connectionState;
 
     /// <summary>
-    /// Gets or sets Id.
+    /// The resource ID of the private endpoint.
     /// </summary>
     public BicepValue<ResourceIdentifier> PrivateEndpointId 
     {
@@ -97,7 +97,7 @@ public partial class ContainerServicePrivateEndpointConnection : ProvisionableRe
     /// </param>
     /// <param name="resourceVersion">Version of the ContainerServicePrivateEndpointConnection.</param>
     public ContainerServicePrivateEndpointConnection(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.ContainerService/managedClusters/privateEndpointConnections", resourceVersion ?? "2025-10-01")
+        : base(bicepIdentifier, "Microsoft.ContainerService/managedClusters/privateEndpointConnections", resourceVersion ?? "2026-01-01")
     {
     }
 
@@ -122,6 +122,11 @@ public partial class ContainerServicePrivateEndpointConnection : ProvisionableRe
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2026-01-01.
+        /// </summary>
+        public static readonly string V2026_01_01 = "2026-01-01";
+
         /// <summary>
         /// 2025-10-01.
         /// </summary>

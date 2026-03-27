@@ -31,6 +31,16 @@ public partial class ContainerServiceAgentPool : ProvisionableResource
     private BicepValue<string>? _name;
 
     /// <summary>
+    /// The type of Agent Pool.
+    /// </summary>
+    public BicepValue<AgentPoolType> AgentPoolType 
+    {
+        get { Initialize(); return _agentPoolType!; }
+        set { Initialize(); _agentPoolType!.Assign(value); }
+    }
+    private BicepValue<AgentPoolType>? _agentPoolType;
+
+    /// <summary>
     /// The list of Availability zones to use for nodes. This can only be
     /// specified if the AgentPoolType property is
     /// &apos;VirtualMachineScaleSets&apos;.
@@ -43,8 +53,13 @@ public partial class ContainerServiceAgentPool : ProvisionableResource
     private BicepList<string>? _availabilityZones;
 
     /// <summary>
-    /// AKS will associate the specified agent pool with the Capacity
-    /// Reservation Group.
+    /// The fully qualified resource ID of the Capacity Reservation Group to
+    /// provide virtual machines from a reserved group of Virtual Machines.
+    /// This is of the form:
+    /// &apos;/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Compute/capacityreservationgroups/{capacityReservationGroupName}&apos;
+    /// Customers use it to create an agentpool with a specified CRG. For more
+    /// information see [Capacity
+    /// Reservation](https://learn.microsoft.com/en-us/azure/virtual-machines/capacity-reservation-overview).
     /// </summary>
     public BicepValue<ResourceIdentifier> CapacityReservationGroupId 
     {
@@ -88,10 +103,7 @@ public partial class ContainerServiceAgentPool : ProvisionableResource
     private BicepValue<bool>? _enableAutoScaling;
 
     /// <summary>
-    /// Whether to enable host based OS and data drive encryption. This is only
-    /// supported on certain VM sizes and in certain Azure regions. For more
-    /// information, see:
-    /// https://docs.microsoft.com/azure/aks/enable-host-encryption.
+    /// Whether to enable host based OS and data drive encryption.
     /// </summary>
     public BicepValue<bool> EnableEncryptionAtHost 
     {
@@ -101,9 +113,7 @@ public partial class ContainerServiceAgentPool : ProvisionableResource
     private BicepValue<bool>? _enableEncryptionAtHost;
 
     /// <summary>
-    /// Whether to use a FIPS-enabled OS. See [Add a FIPS-enabled node
-    /// pool](https://docs.microsoft.com/azure/aks/use-multiple-node-pools#add-a-fips-enabled-node-pool-preview)
-    /// for more details.
+    /// Whether to use a FIPS-enabled OS.
     /// </summary>
     public BicepValue<bool> EnableFips 
     {
@@ -113,13 +123,7 @@ public partial class ContainerServiceAgentPool : ProvisionableResource
     private BicepValue<bool>? _enableFips;
 
     /// <summary>
-    /// Whether each node is allocated its own public IP. Some scenarios may
-    /// require nodes in a node pool to receive their own dedicated public IP
-    /// addresses. A common scenario is for gaming workloads, where a console
-    /// needs to make a direct connection to a cloud virtual machine to
-    /// minimize hops. For more information see [assigning a public IP per
-    /// node](https://docs.microsoft.com/azure/aks/use-multiple-node-pools#assign-a-public-ip-per-node-for-your-node-pools).
-    /// The default is false.
+    /// Whether each node is allocated its own public IP.
     /// </summary>
     public BicepValue<bool> EnableNodePublicIP 
     {
@@ -193,6 +197,57 @@ public partial class ContainerServiceAgentPool : ProvisionableResource
     private BicepValue<ResourceIdentifier>? _hostGroupId;
 
     /// <summary>
+    /// Whether to enable auto-scaler.
+    /// </summary>
+    public BicepValue<bool> IsAutoScalingEnabled 
+    {
+        get { Initialize(); return _isAutoScalingEnabled!; }
+        set { Initialize(); _isAutoScalingEnabled!.Assign(value); }
+    }
+    private BicepValue<bool>? _isAutoScalingEnabled;
+
+    /// <summary>
+    /// Whether to enable host based OS and data drive encryption. This is only
+    /// supported on certain VM sizes and in certain Azure regions. For more
+    /// information, see:
+    /// https://docs.microsoft.com/azure/aks/enable-host-encryption.
+    /// </summary>
+    public BicepValue<bool> IsEncryptionAtHostEnabled 
+    {
+        get { Initialize(); return _isEncryptionAtHostEnabled!; }
+        set { Initialize(); _isEncryptionAtHostEnabled!.Assign(value); }
+    }
+    private BicepValue<bool>? _isEncryptionAtHostEnabled;
+
+    /// <summary>
+    /// Whether to use a FIPS-enabled OS. See [Add a FIPS-enabled node
+    /// pool](https://docs.microsoft.com/azure/aks/use-multiple-node-pools#add-a-fips-enabled-node-pool-preview)
+    /// for more details.
+    /// </summary>
+    public BicepValue<bool> IsFipsEnabled 
+    {
+        get { Initialize(); return _isFipsEnabled!; }
+        set { Initialize(); _isFipsEnabled!.Assign(value); }
+    }
+    private BicepValue<bool>? _isFipsEnabled;
+
+    /// <summary>
+    /// Whether each node is allocated its own public IP. Some scenarios may
+    /// require nodes in a node pool to receive their own dedicated public IP
+    /// addresses. A common scenario is for gaming workloads, where a console
+    /// needs to make a direct connection to a cloud virtual machine to
+    /// minimize hops. For more information see [assigning a public IP per
+    /// node](https://docs.microsoft.com/azure/aks/use-multiple-node-pools#assign-a-public-ip-per-node-for-your-node-pools).
+    /// The default is false.
+    /// </summary>
+    public BicepValue<bool> IsNodePublicIpEnabled 
+    {
+        get { Initialize(); return _isNodePublicIpEnabled!; }
+        set { Initialize(); _isNodePublicIpEnabled!.Assign(value); }
+    }
+    private BicepValue<bool>? _isNodePublicIpEnabled;
+
+    /// <summary>
     /// Whether to disable OutboundNAT in windows nodes. The default value is
     /// false. Outbound NAT can only be disabled if the cluster outboundType
     /// is NAT Gateway and the Windows agent pool does not have node public IP
@@ -204,6 +259,16 @@ public partial class ContainerServiceAgentPool : ProvisionableResource
         set { Initialize(); _isOutboundNatDisabled!.Assign(value); }
     }
     private BicepValue<bool>? _isOutboundNatDisabled;
+
+    /// <summary>
+    /// Whether to enable UltraSSD.
+    /// </summary>
+    public BicepValue<bool> IsUltraSsdEnabled 
+    {
+        get { Initialize(); return _isUltraSsdEnabled!; }
+        set { Initialize(); _isUltraSsdEnabled!.Assign(value); }
+    }
+    private BicepValue<bool>? _isUltraSsdEnabled;
 
     /// <summary>
     /// The Kubelet configuration on the agent pool nodes.
@@ -488,9 +553,10 @@ public partial class ContainerServiceAgentPool : ProvisionableResource
     private BicepList<ManualScaleProfile>? _scaleManual;
 
     /// <summary>
-    /// The Virtual Machine Scale Set eviction policy to use. This cannot be
-    /// specified unless the scaleSetPriority is &apos;Spot&apos;. If not
-    /// specified, the default is &apos;Delete&apos;.
+    /// The Virtual Machine Scale Set eviction policy. The eviction policy
+    /// specifies what to do with the VM when it is evicted. The default is
+    /// Delete. For more information about eviction see [spot
+    /// VMs](https://docs.microsoft.com/azure/virtual-machines/spot-vms).
     /// </summary>
     public BicepValue<ScaleSetEvictionPolicy> ScaleSetEvictionPolicy 
     {
@@ -500,8 +566,7 @@ public partial class ContainerServiceAgentPool : ProvisionableResource
     private BicepValue<ScaleSetEvictionPolicy>? _scaleSetEvictionPolicy;
 
     /// <summary>
-    /// The Virtual Machine Scale Set priority. If not specified, the default
-    /// is &apos;Regular&apos;.
+    /// The Virtual Machine Scale Set priority.
     /// </summary>
     public BicepValue<ScaleSetPriority> ScaleSetPriority 
     {
@@ -575,6 +640,17 @@ public partial class ContainerServiceAgentPool : ProvisionableResource
         set { Initialize(); _virtualMachineNodesStatus!.Assign(value); }
     }
     private BicepList<AgentPoolVirtualMachineNodes>? _virtualMachineNodesStatus;
+
+    /// <summary>
+    /// Specifications on how to scale the VirtualMachines agent pool to a
+    /// fixed size.
+    /// </summary>
+    public BicepList<ManualScaleProfile> VirtualMachinesScaleManual 
+    {
+        get { Initialize(); return _virtualMachinesScaleManual!; }
+        set { Initialize(); _virtualMachinesScaleManual!.Assign(value); }
+    }
+    private BicepList<ManualScaleProfile>? _virtualMachinesScaleManual;
 
     /// <summary>
     /// The size of the agent pool VMs. VM size availability varies by region.
@@ -707,7 +783,7 @@ public partial class ContainerServiceAgentPool : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the ContainerServiceAgentPool.</param>
     public ContainerServiceAgentPool(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.ContainerService/managedClusters/agentPools", resourceVersion ?? "2025-10-01")
+        : base(bicepIdentifier, "Microsoft.ContainerService/managedClusters/agentPools", resourceVersion ?? "2026-01-01")
     {
     }
 
@@ -718,6 +794,7 @@ public partial class ContainerServiceAgentPool : ProvisionableResource
     {
         base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _agentPoolType = DefineProperty<AgentPoolType>("AgentPoolType", ["properties", "type"]);
         _availabilityZones = DefineListProperty<string>("AvailabilityZones", ["properties", "availabilityZones"]);
         _capacityReservationGroupId = DefineProperty<ResourceIdentifier>("CapacityReservationGroupId", ["properties", "capacityReservationGroupID"]);
         _count = DefineProperty<int>("Count", ["properties", "count"]);
@@ -731,7 +808,12 @@ public partial class ContainerServiceAgentPool : ProvisionableResource
         _gpuDriver = DefineProperty<AgentPoolGpuDriver>("GpuDriver", ["properties", "gpuProfile", "driver"]);
         _gpuInstanceProfile = DefineProperty<GpuInstanceProfile>("GpuInstanceProfile", ["properties", "gpuInstanceProfile"]);
         _hostGroupId = DefineProperty<ResourceIdentifier>("HostGroupId", ["properties", "hostGroupID"]);
+        _isAutoScalingEnabled = DefineProperty<bool>("IsAutoScalingEnabled", ["properties", "enableAutoScaling"]);
+        _isEncryptionAtHostEnabled = DefineProperty<bool>("IsEncryptionAtHostEnabled", ["properties", "enableEncryptionAtHost"]);
+        _isFipsEnabled = DefineProperty<bool>("IsFipsEnabled", ["properties", "enableFIPS"]);
+        _isNodePublicIpEnabled = DefineProperty<bool>("IsNodePublicIpEnabled", ["properties", "enableNodePublicIP"]);
         _isOutboundNatDisabled = DefineProperty<bool>("IsOutboundNatDisabled", ["properties", "windowsProfile", "disableOutboundNat"]);
+        _isUltraSsdEnabled = DefineProperty<bool>("IsUltraSsdEnabled", ["properties", "enableUltraSSD"]);
         _kubeletConfig = DefineModelProperty<KubeletConfig>("KubeletConfig", ["properties", "kubeletConfig"]);
         _kubeletDiskType = DefineProperty<KubeletDiskType>("KubeletDiskType", ["properties", "kubeletDiskType"]);
         _linuxOSConfig = DefineModelProperty<LinuxOSConfig>("LinuxOSConfig", ["properties", "linuxOSConfig"]);
@@ -764,6 +846,7 @@ public partial class ContainerServiceAgentPool : ProvisionableResource
         _typePropertiesType = DefineProperty<AgentPoolType>("TypePropertiesType", ["properties", "type"]);
         _upgradeSettings = DefineModelProperty<AgentPoolUpgradeSettings>("UpgradeSettings", ["properties", "upgradeSettings"]);
         _virtualMachineNodesStatus = DefineListProperty<AgentPoolVirtualMachineNodes>("VirtualMachineNodesStatus", ["properties", "virtualMachineNodesStatus"]);
+        _virtualMachinesScaleManual = DefineListProperty<ManualScaleProfile>("VirtualMachinesScaleManual", ["properties", "virtualMachinesProfile", "scale", "manual"]);
         _vmSize = DefineProperty<string>("VmSize", ["properties", "vmSize"]);
         _vnetSubnetId = DefineProperty<ResourceIdentifier>("VnetSubnetId", ["properties", "vnetSubnetID"]);
         _workloadRuntime = DefineProperty<WorkloadRuntime>("WorkloadRuntime", ["properties", "workloadRuntime"]);
@@ -782,6 +865,11 @@ public partial class ContainerServiceAgentPool : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2026-01-01.
+        /// </summary>
+        public static readonly string V2026_01_01 = "2026-01-01";
+
         /// <summary>
         /// 2025-10-01.
         /// </summary>

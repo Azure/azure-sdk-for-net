@@ -16,7 +16,7 @@ namespace Azure.Provisioning.ContainerService;
 public partial class NamespaceNetworkPolicies : ProvisionableConstruct
 {
     /// <summary>
-    /// Ingress policy for the network.
+    /// Enum representing different network policy rules.
     /// </summary>
     public BicepValue<NamespaceNetworkPolicyRule> Ingress 
     {
@@ -26,7 +26,7 @@ public partial class NamespaceNetworkPolicies : ProvisionableConstruct
     private BicepValue<NamespaceNetworkPolicyRule>? _ingress;
 
     /// <summary>
-    /// Egress policy for the network.
+    /// Enum representing different network policy rules.
     /// </summary>
     public BicepValue<NamespaceNetworkPolicyRule> Egress 
     {

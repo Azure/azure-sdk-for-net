@@ -14,12 +14,12 @@ namespace Azure.Provisioning.ContainerService;
 public enum ManagedClusterKeyVaultNetworkAccessType
 {
     /// <summary>
-    /// Public.
+    /// Key vault allows public access from all networks.
     /// </summary>
     Public,
 
     /// <summary>
-    /// Private.
+    /// Key vault disables public access and enables private link.
     /// </summary>
     Private,
 }

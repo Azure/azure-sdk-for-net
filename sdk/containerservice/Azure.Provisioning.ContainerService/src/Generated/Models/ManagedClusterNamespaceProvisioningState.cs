@@ -11,32 +11,32 @@ namespace Azure.Provisioning.ContainerService;
 public enum ManagedClusterNamespaceProvisioningState
 {
     /// <summary>
-    /// Updating.
+    /// The namespace is being updated.
     /// </summary>
     Updating,
 
     /// <summary>
-    /// Deleting.
+    /// The namespace is being deleted.
     /// </summary>
     Deleting,
 
     /// <summary>
-    /// Creating.
+    /// The namespace is being created.
     /// </summary>
     Creating,
 
     /// <summary>
-    /// Succeeded.
+    /// The namespace provisioning succeeded.
     /// </summary>
     Succeeded,
 
     /// <summary>
-    /// Failed.
+    /// The namespace provisioning failed.
     /// </summary>
     Failed,
 
     /// <summary>
-    /// Canceled.
+    /// The namespace provisioning was canceled.
     /// </summary>
     Canceled,
 }

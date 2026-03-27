@@ -18,16 +18,6 @@ namespace Azure.Provisioning.ContainerService;
 public partial class ContainerServiceMaintenanceSchedule : ProvisionableConstruct
 {
     /// <summary>
-    /// Specifies the number of days between each set of occurrences.
-    /// </summary>
-    public BicepValue<int> DailyIntervalDays 
-    {
-        get { Initialize(); return _dailyIntervalDays!; }
-        set { Initialize(); _dailyIntervalDays!.Assign(value); }
-    }
-    private BicepValue<int>? _dailyIntervalDays;
-
-    /// <summary>
     /// For schedules like: &apos;recur every Monday&apos; or &apos;recur every
     /// 3 weeks on Wednesday&apos;.
     /// </summary>
@@ -61,6 +51,16 @@ public partial class ContainerServiceMaintenanceSchedule : ProvisionableConstruc
     private ContainerServiceMaintenanceRelativeMonthlySchedule? _relativeMonthly;
 
     /// <summary>
+    /// Specifies the number of days between each set of occurrences.
+    /// </summary>
+    public BicepValue<int> DailyIntervalDays 
+    {
+        get { Initialize(); return _dailyIntervalDays!; }
+        set { Initialize(); _dailyIntervalDays!.Assign(value); }
+    }
+    private BicepValue<int>? _dailyIntervalDays;
+
+    /// <summary>
     /// Creates a new ContainerServiceMaintenanceSchedule.
     /// </summary>
     public ContainerServiceMaintenanceSchedule()
@@ -74,9 +74,9 @@ public partial class ContainerServiceMaintenanceSchedule : ProvisionableConstruc
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _dailyIntervalDays = DefineProperty<int>("DailyIntervalDays", ["daily", "intervalDays"]);
         _weekly = DefineModelProperty<ContainerServiceMaintenanceWeeklySchedule>("Weekly", ["weekly"]);
         _absoluteMonthly = DefineModelProperty<ContainerServiceMaintenanceAbsoluteMonthlySchedule>("AbsoluteMonthly", ["absoluteMonthly"]);
         _relativeMonthly = DefineModelProperty<ContainerServiceMaintenanceRelativeMonthlySchedule>("RelativeMonthly", ["relativeMonthly"]);
+        _dailyIntervalDays = DefineProperty<int>("DailyIntervalDays", ["daily", "intervalDays"]);
     }
 }

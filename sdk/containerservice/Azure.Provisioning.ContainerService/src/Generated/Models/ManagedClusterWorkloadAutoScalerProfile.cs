@@ -26,16 +26,6 @@ public partial class ManagedClusterWorkloadAutoScalerProfile : ProvisionableCons
     private BicepValue<bool>? _isKedaEnabled;
 
     /// <summary>
-    /// Whether to enable VPA. Default value is false.
-    /// </summary>
-    public BicepValue<bool> IsVpaEnabled 
-    {
-        get { Initialize(); return _isVpaEnabled!; }
-        set { Initialize(); _isVpaEnabled!.Assign(value); }
-    }
-    private BicepValue<bool>? _isVpaEnabled;
-
-    /// <summary>
     /// Creates a new ManagedClusterWorkloadAutoScalerProfile.
     /// </summary>
     public ManagedClusterWorkloadAutoScalerProfile()
@@ -50,6 +40,5 @@ public partial class ManagedClusterWorkloadAutoScalerProfile : ProvisionableCons
     {
         base.DefineProvisionableProperties();
         _isKedaEnabled = DefineProperty<bool>("IsKedaEnabled", ["keda", "enabled"]);
-        _isVpaEnabled = DefineProperty<bool>("IsVpaEnabled", ["verticalPodAutoscaler", "enabled"]);
     }
 }

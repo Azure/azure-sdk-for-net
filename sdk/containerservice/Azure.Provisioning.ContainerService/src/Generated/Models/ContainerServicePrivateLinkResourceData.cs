@@ -28,7 +28,8 @@ public partial class ContainerServicePrivateLinkResourceData : ProvisionableCons
     private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
-    /// The name of the private link resource.
+    /// The name of the private link resource. See [naming
+    /// rules](https://aka.ms/search-naming-rules) for more details.
     /// </summary>
     public BicepValue<string> Name 
     {

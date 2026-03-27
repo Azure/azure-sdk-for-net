@@ -57,6 +57,18 @@ public partial class ManagedClusterHttpProxyConfig : ProvisionableConstruct
     private BicepValue<string>? _trustedCA;
 
     /// <summary>
+    /// Whether to enable HTTP proxy. If disabled, the specified proxy
+    /// configuration will be not be set on pods and nodes. If not specified,
+    /// the default is true.
+    /// </summary>
+    public BicepValue<bool> IsHttpProxyEnabled 
+    {
+        get { Initialize(); return _isHttpProxyEnabled!; }
+        set { Initialize(); _isHttpProxyEnabled!.Assign(value); }
+    }
+    private BicepValue<bool>? _isHttpProxyEnabled;
+
+    /// <summary>
     /// Creates a new ManagedClusterHttpProxyConfig.
     /// </summary>
     public ManagedClusterHttpProxyConfig()
@@ -74,5 +86,6 @@ public partial class ManagedClusterHttpProxyConfig : ProvisionableConstruct
         _httpsProxy = DefineProperty<string>("HttpsProxy", ["httpsProxy"]);
         _noProxy = DefineListProperty<string>("NoProxy", ["noProxy"]);
         _trustedCA = DefineProperty<string>("TrustedCA", ["trustedCa"]);
+        _isHttpProxyEnabled = DefineProperty<bool>("IsHttpProxyEnabled", ["enabled"]);
     }
 }

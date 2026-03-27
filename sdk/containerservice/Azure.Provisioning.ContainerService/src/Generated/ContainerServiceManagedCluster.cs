@@ -137,11 +137,7 @@ public partial class ContainerServiceManagedCluster : ProvisionableResource
     private ManagedClusterIdentity? _clusterIdentity;
 
     /// <summary>
-    /// If local accounts should be disabled on the Managed Cluster. If set to
-    /// true, getting static credentials will be disabled for this cluster.
-    /// This must only be used on Managed Clusters that are AAD enabled. For
-    /// more details see [disable local
-    /// accounts](https://docs.microsoft.com/azure/aks/managed-aad#disable-local-accounts-preview).
+    /// If local accounts should be disabled on the Managed Cluster.
     /// </summary>
     public BicepValue<bool> DisableLocalAccounts 
     {
@@ -278,6 +274,30 @@ public partial class ContainerServiceManagedCluster : ProvisionableResource
         set { Initialize(); _isCostAnalysisEnabled!.Assign(value); }
     }
     private BicepValue<bool>? _isCostAnalysisEnabled;
+
+    /// <summary>
+    /// If local accounts should be disabled on the Managed Cluster. If set to
+    /// true, getting static credentials will be disabled for this cluster.
+    /// This must only be used on Managed Clusters that are AAD enabled. For
+    /// more details see [disable local
+    /// accounts](https://docs.microsoft.com/azure/aks/managed-aad#disable-local-accounts-preview).
+    /// </summary>
+    public BicepValue<bool> IsLocalAccountsDisabled 
+    {
+        get { Initialize(); return _isLocalAccountsDisabled!; }
+        set { Initialize(); _isLocalAccountsDisabled!.Assign(value); }
+    }
+    private BicepValue<bool>? _isLocalAccountsDisabled;
+
+    /// <summary>
+    /// Whether to enable Kubernetes Role-Based Access Control.
+    /// </summary>
+    public BicepValue<bool> IsRbacEnabled 
+    {
+        get { Initialize(); return _isRbacEnabled!; }
+        set { Initialize(); _isRbacEnabled!.Assign(value); }
+    }
+    private BicepValue<bool>? _isRbacEnabled;
 
     /// <summary>
     /// This is primarily used to expose different UI experiences in the portal
@@ -537,11 +557,12 @@ public partial class ContainerServiceManagedCluster : ProvisionableResource
     private BicepValue<string>? _currentKubernetesVersion;
 
     /// <summary>
-    /// Unique read-only string used to implement optimistic concurrency. The
-    /// eTag value will change when the resource is updated. Specify an
-    /// if-match or if-none-match header with the eTag value for a subsequent
-    /// request to enable optimistic concurrency per the normal eTag
-    /// convention.
+    /// If eTag is provided in the response body, it may also be provided as a
+    /// header per the normal etag convention.  Entity tags are used for
+    /// comparing two or more entities from the same requested resource.
+    /// HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match
+    /// (section 14.24), If-None-Match (section 14.26), and If-Range (section
+    /// 14.27) header fields.
     /// </summary>
     public BicepValue<ETag> ETag 
     {
@@ -643,7 +664,7 @@ public partial class ContainerServiceManagedCluster : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the ContainerServiceManagedCluster.</param>
     public ContainerServiceManagedCluster(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.ContainerService/managedClusters", resourceVersion ?? "2025-10-01")
+        : base(bicepIdentifier, "Microsoft.ContainerService/managedClusters", resourceVersion ?? "2026-01-01")
     {
     }
 
@@ -677,6 +698,8 @@ public partial class ContainerServiceManagedCluster : ProvisionableResource
         _ingressWebAppRouting = DefineModelProperty<ManagedClusterIngressProfileWebAppRouting>("IngressWebAppRouting", ["properties", "ingressProfile", "webAppRouting"]);
         _isAIToolchainOperatorEnabled = DefineProperty<bool>("IsAIToolchainOperatorEnabled", ["properties", "aiToolchainOperatorProfile", "enabled"]);
         _isCostAnalysisEnabled = DefineProperty<bool>("IsCostAnalysisEnabled", ["properties", "metricsProfile", "costAnalysis", "enabled"]);
+        _isLocalAccountsDisabled = DefineProperty<bool>("IsLocalAccountsDisabled", ["properties", "disableLocalAccounts"]);
+        _isRbacEnabled = DefineProperty<bool>("IsRbacEnabled", ["properties", "enableRBAC"]);
         _kind = DefineProperty<string>("Kind", ["kind"]);
         _kubernetesVersion = DefineProperty<string>("KubernetesVersion", ["properties", "kubernetesVersion"]);
         _linuxProfile = DefineModelProperty<ContainerServiceLinuxProfile>("LinuxProfile", ["properties", "linuxProfile"]);
@@ -717,6 +740,11 @@ public partial class ContainerServiceManagedCluster : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2026-01-01.
+        /// </summary>
+        public static readonly string V2026_01_01 = "2026-01-01";
+
         /// <summary>
         /// 2025-10-01.
         /// </summary>

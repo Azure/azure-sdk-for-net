@@ -28,16 +28,6 @@ public partial class IstioServiceMesh : ProvisionableConstruct
     private IstioComponents? _components;
 
     /// <summary>
-    /// Plugin certificates information for Service Mesh.
-    /// </summary>
-    public IstioPluginCertificateAuthority CertificateAuthorityPlugin 
-    {
-        get { Initialize(); return _certificateAuthorityPlugin!; }
-        set { Initialize(); AssignOrReplace(ref _certificateAuthorityPlugin, value); }
-    }
-    private IstioPluginCertificateAuthority? _certificateAuthorityPlugin;
-
-    /// <summary>
     /// The list of revisions of the Istio control plane. When an upgrade is
     /// not in progress, this holds one value. When canary upgrade is in
     /// progress, this can only hold two consecutive values. For more
@@ -50,6 +40,16 @@ public partial class IstioServiceMesh : ProvisionableConstruct
         set { Initialize(); _revisions!.Assign(value); }
     }
     private BicepList<string>? _revisions;
+
+    /// <summary>
+    /// Plugin certificates information for Service Mesh.
+    /// </summary>
+    public IstioPluginCertificateAuthority CertificateAuthorityPlugin 
+    {
+        get { Initialize(); return _certificateAuthorityPlugin!; }
+        set { Initialize(); AssignOrReplace(ref _certificateAuthorityPlugin, value); }
+    }
+    private IstioPluginCertificateAuthority? _certificateAuthorityPlugin;
 
     /// <summary>
     /// Creates a new IstioServiceMesh.
@@ -65,7 +65,7 @@ public partial class IstioServiceMesh : ProvisionableConstruct
     {
         base.DefineProvisionableProperties();
         _components = DefineModelProperty<IstioComponents>("Components", ["components"]);
-        _certificateAuthorityPlugin = DefineModelProperty<IstioPluginCertificateAuthority>("CertificateAuthorityPlugin", ["certificateAuthority", "plugin"]);
         _revisions = DefineListProperty<string>("Revisions", ["revisions"]);
+        _certificateAuthorityPlugin = DefineModelProperty<IstioPluginCertificateAuthority>("CertificateAuthorityPlugin", ["certificateAuthority", "plugin"]);
     }
 }

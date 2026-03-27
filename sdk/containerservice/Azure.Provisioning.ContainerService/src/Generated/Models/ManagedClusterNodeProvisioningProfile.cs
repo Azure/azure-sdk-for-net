@@ -10,7 +10,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
-/// The ManagedClusterNodeProvisioningProfile.
+/// Node provisioning profile for the managed cluster.
 /// </summary>
 public partial class ManagedClusterNodeProvisioningProfile : ProvisionableConstruct
 {

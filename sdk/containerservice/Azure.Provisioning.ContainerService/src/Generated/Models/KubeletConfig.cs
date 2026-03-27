@@ -111,12 +111,12 @@ public partial class KubeletConfig : ProvisionableConstruct
     /// If set to true it will make the Kubelet fail to start if swap is
     /// enabled on the node.
     /// </summary>
-    public BicepValue<bool> FailStartWithSwapOn 
+    public BicepValue<bool> ShouldFailStartWithSwapOn 
     {
-        get { Initialize(); return _failStartWithSwapOn!; }
-        set { Initialize(); _failStartWithSwapOn!.Assign(value); }
+        get { Initialize(); return _shouldFailStartWithSwapOn!; }
+        set { Initialize(); _shouldFailStartWithSwapOn!.Assign(value); }
     }
-    private BicepValue<bool>? _failStartWithSwapOn;
+    private BicepValue<bool>? _shouldFailStartWithSwapOn;
 
     /// <summary>
     /// The maximum size (e.g. 10Mi) of container log file before it is rotated.
@@ -169,7 +169,7 @@ public partial class KubeletConfig : ProvisionableConstruct
         _imageGcLowThreshold = DefineProperty<int>("ImageGcLowThreshold", ["imageGcLowThreshold"]);
         _topologyManagerPolicy = DefineProperty<string>("TopologyManagerPolicy", ["topologyManagerPolicy"]);
         _allowedUnsafeSysctls = DefineListProperty<string>("AllowedUnsafeSysctls", ["allowedUnsafeSysctls"]);
-        _failStartWithSwapOn = DefineProperty<bool>("FailStartWithSwapOn", ["failSwapOn"]);
+        _shouldFailStartWithSwapOn = DefineProperty<bool>("ShouldFailStartWithSwapOn", ["failSwapOn"]);
         _containerLogMaxSizeInMB = DefineProperty<int>("ContainerLogMaxSizeInMB", ["containerLogMaxSizeMB"]);
         _containerLogMaxFiles = DefineProperty<int>("ContainerLogMaxFiles", ["containerLogMaxFiles"]);
         _podMaxPids = DefineProperty<int>("PodMaxPids", ["podMaxPids"]);

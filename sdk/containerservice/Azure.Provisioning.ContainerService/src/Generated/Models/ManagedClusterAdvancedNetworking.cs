@@ -30,6 +30,16 @@ public partial class ManagedClusterAdvancedNetworking : ProvisionableConstruct
     private BicepValue<bool>? _isEnabled;
 
     /// <summary>
+    /// Security profile to enable security features on cilium based cluster.
+    /// </summary>
+    public ManagedClusterAdvancedNetworkingSecurity Security 
+    {
+        get { Initialize(); return _security!; }
+        set { Initialize(); AssignOrReplace(ref _security, value); }
+    }
+    private ManagedClusterAdvancedNetworkingSecurity? _security;
+
+    /// <summary>
     /// Indicates the enablement of Advanced Networking observability
     /// functionalities on clusters.
     /// </summary>
@@ -41,14 +51,19 @@ public partial class ManagedClusterAdvancedNetworking : ProvisionableConstruct
     private BicepValue<bool>? _isObservabilityEnabled;
 
     /// <summary>
-    /// Security profile to enable security features on cilium based cluster.
+    /// Enable advanced network acceleration options. This allows users to
+    /// configure acceleration using BPF host routing. This can be enabled
+    /// only with Cilium dataplane. If not specified, the default value is
+    /// None (no acceleration). The acceleration mode can be changed on a
+    /// pre-existing cluster. See https://aka.ms/acnsperformance for a
+    /// detailed explanation.
     /// </summary>
-    public ManagedClusterAdvancedNetworkingSecurity Security 
+    public BicepValue<ManagedClusterAdvancedNetworkingAccelerationMode> PerformanceAccelerationMode 
     {
-        get { Initialize(); return _security!; }
-        set { Initialize(); AssignOrReplace(ref _security, value); }
+        get { Initialize(); return _performanceAccelerationMode!; }
+        set { Initialize(); _performanceAccelerationMode!.Assign(value); }
     }
-    private ManagedClusterAdvancedNetworkingSecurity? _security;
+    private BicepValue<ManagedClusterAdvancedNetworkingAccelerationMode>? _performanceAccelerationMode;
 
     /// <summary>
     /// Creates a new ManagedClusterAdvancedNetworking.
@@ -65,7 +80,8 @@ public partial class ManagedClusterAdvancedNetworking : ProvisionableConstruct
     {
         base.DefineProvisionableProperties();
         _isEnabled = DefineProperty<bool>("IsEnabled", ["enabled"]);
-        _isObservabilityEnabled = DefineProperty<bool>("IsObservabilityEnabled", ["observability", "enabled"]);
         _security = DefineModelProperty<ManagedClusterAdvancedNetworkingSecurity>("Security", ["security"]);
+        _isObservabilityEnabled = DefineProperty<bool>("IsObservabilityEnabled", ["observability", "enabled"]);
+        _performanceAccelerationMode = DefineProperty<ManagedClusterAdvancedNetworkingAccelerationMode>("PerformanceAccelerationMode", ["performance", "accelerationMode"]);
     }
 }

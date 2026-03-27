@@ -37,12 +37,12 @@ public partial class ManagedClusterApiServerAccessProfile : ProvisionableConstru
     /// details, see [Creating a private AKS
     /// cluster](https://docs.microsoft.com/azure/aks/private-clusters).
     /// </summary>
-    public BicepValue<bool> EnablePrivateCluster 
+    public BicepValue<bool> IsPrivateClusterEnabled 
     {
-        get { Initialize(); return _enablePrivateCluster!; }
-        set { Initialize(); _enablePrivateCluster!.Assign(value); }
+        get { Initialize(); return _isPrivateClusterEnabled!; }
+        set { Initialize(); _isPrivateClusterEnabled!.Assign(value); }
     }
-    private BicepValue<bool>? _enablePrivateCluster;
+    private BicepValue<bool>? _isPrivateClusterEnabled;
 
     /// <summary>
     /// The private DNS zone mode for the cluster. The default is System. For
@@ -60,33 +60,33 @@ public partial class ManagedClusterApiServerAccessProfile : ProvisionableConstru
     /// <summary>
     /// Whether to create additional public FQDN for private cluster or not.
     /// </summary>
-    public BicepValue<bool> EnablePrivateClusterPublicFqdn 
+    public BicepValue<bool> IsPrivateClusterPublicFqdnEnabled 
     {
-        get { Initialize(); return _enablePrivateClusterPublicFqdn!; }
-        set { Initialize(); _enablePrivateClusterPublicFqdn!.Assign(value); }
+        get { Initialize(); return _isPrivateClusterPublicFqdnEnabled!; }
+        set { Initialize(); _isPrivateClusterPublicFqdnEnabled!.Assign(value); }
     }
-    private BicepValue<bool>? _enablePrivateClusterPublicFqdn;
+    private BicepValue<bool>? _isPrivateClusterPublicFqdnEnabled;
 
     /// <summary>
     /// Whether to disable run command for the cluster or not.
     /// </summary>
-    public BicepValue<bool> DisableRunCommand 
+    public BicepValue<bool> IsRunCommandDisabled 
     {
-        get { Initialize(); return _disableRunCommand!; }
-        set { Initialize(); _disableRunCommand!.Assign(value); }
+        get { Initialize(); return _isRunCommandDisabled!; }
+        set { Initialize(); _isRunCommandDisabled!.Assign(value); }
     }
-    private BicepValue<bool>? _disableRunCommand;
+    private BicepValue<bool>? _isRunCommandDisabled;
 
     /// <summary>
     /// Whether to enable apiserver vnet integration for the cluster or not.
     /// See aka.ms/AksVnetIntegration for more details.
     /// </summary>
-    public BicepValue<bool> EnableVnetIntegration 
+    public BicepValue<bool> IsVnetIntegrationEnabled 
     {
-        get { Initialize(); return _enableVnetIntegration!; }
-        set { Initialize(); _enableVnetIntegration!.Assign(value); }
+        get { Initialize(); return _isVnetIntegrationEnabled!; }
+        set { Initialize(); _isVnetIntegrationEnabled!.Assign(value); }
     }
-    private BicepValue<bool>? _enableVnetIntegration;
+    private BicepValue<bool>? _isVnetIntegrationEnabled;
 
     /// <summary>
     /// The subnet to be used when apiserver vnet integration is enabled. It is
@@ -115,11 +115,11 @@ public partial class ManagedClusterApiServerAccessProfile : ProvisionableConstru
     {
         base.DefineProvisionableProperties();
         _authorizedIPRanges = DefineListProperty<string>("AuthorizedIPRanges", ["authorizedIPRanges"]);
-        _enablePrivateCluster = DefineProperty<bool>("EnablePrivateCluster", ["enablePrivateCluster"]);
+        _isPrivateClusterEnabled = DefineProperty<bool>("IsPrivateClusterEnabled", ["enablePrivateCluster"]);
         _privateDnsZone = DefineProperty<string>("PrivateDnsZone", ["privateDNSZone"]);
-        _enablePrivateClusterPublicFqdn = DefineProperty<bool>("EnablePrivateClusterPublicFqdn", ["enablePrivateClusterPublicFQDN"]);
-        _disableRunCommand = DefineProperty<bool>("DisableRunCommand", ["disableRunCommand"]);
-        _enableVnetIntegration = DefineProperty<bool>("EnableVnetIntegration", ["enableVnetIntegration"]);
+        _isPrivateClusterPublicFqdnEnabled = DefineProperty<bool>("IsPrivateClusterPublicFqdnEnabled", ["enablePrivateClusterPublicFQDN"]);
+        _isRunCommandDisabled = DefineProperty<bool>("IsRunCommandDisabled", ["disableRunCommand"]);
+        _isVnetIntegrationEnabled = DefineProperty<bool>("IsVnetIntegrationEnabled", ["enableVnetIntegration"]);
         _subnetId = DefineProperty<ResourceIdentifier>("SubnetId", ["subnetId"]);
     }
 }

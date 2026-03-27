@@ -37,6 +37,16 @@ public partial class IstioComponents : ProvisionableConstruct
     private BicepList<IstioEgressGateway>? _egressGateways;
 
     /// <summary>
+    /// Mode of traffic redirection.
+    /// </summary>
+    public BicepValue<ProxyRedirectionMechanism> ProxyRedirectionMechanism 
+    {
+        get { Initialize(); return _proxyRedirectionMechanism!; }
+        set { Initialize(); _proxyRedirectionMechanism!.Assign(value); }
+    }
+    private BicepValue<ProxyRedirectionMechanism>? _proxyRedirectionMechanism;
+
+    /// <summary>
     /// Creates a new IstioComponents.
     /// </summary>
     public IstioComponents()
@@ -51,5 +61,6 @@ public partial class IstioComponents : ProvisionableConstruct
         base.DefineProvisionableProperties();
         _ingressGateways = DefineListProperty<IstioIngressGateway>("IngressGateways", ["ingressGateways"]);
         _egressGateways = DefineListProperty<IstioEgressGateway>("EgressGateways", ["egressGateways"]);
+        _proxyRedirectionMechanism = DefineProperty<ProxyRedirectionMechanism>("ProxyRedirectionMechanism", ["proxyRedirectionMechanism"]);
     }
 }

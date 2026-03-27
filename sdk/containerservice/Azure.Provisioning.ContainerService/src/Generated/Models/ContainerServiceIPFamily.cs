@@ -6,17 +6,17 @@
 namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
-/// The IP version to use for cluster networking and IP assignment.
+/// To determine if address belongs IPv4 or IPv6 family.
 /// </summary>
 public enum ContainerServiceIPFamily
 {
     /// <summary>
-    /// IPv4.
+    /// IPv4 family.
     /// </summary>
     IPv4,
 
     /// <summary>
-    /// IPv6.
+    /// IPv6 family.
     /// </summary>
     IPv6,
 }

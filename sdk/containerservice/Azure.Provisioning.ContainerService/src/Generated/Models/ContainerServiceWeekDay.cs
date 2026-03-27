@@ -11,37 +11,37 @@ namespace Azure.Provisioning.ContainerService;
 public enum ContainerServiceWeekDay
 {
     /// <summary>
-    /// Sunday.
+    /// Represents Sunday.
     /// </summary>
     Sunday,
 
     /// <summary>
-    /// Monday.
+    /// Represents Monday.
     /// </summary>
     Monday,
 
     /// <summary>
-    /// Tuesday.
+    /// Represents Tuesday.
     /// </summary>
     Tuesday,
 
     /// <summary>
-    /// Wednesday.
+    /// Represents Wednesday.
     /// </summary>
     Wednesday,
 
     /// <summary>
-    /// Thursday.
+    /// Represents Thursday.
     /// </summary>
     Thursday,
 
     /// <summary>
-    /// Friday.
+    /// Represents Friday.
     /// </summary>
     Friday,
 
     /// <summary>
-    /// Saturday.
+    /// Represents Saturday.
     /// </summary>
     Saturday,
 }

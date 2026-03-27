@@ -39,26 +39,6 @@ public partial class ManagedClusterLoadBalancerProfile : ProvisionableConstruct
     private ManagedClusterLoadBalancerProfileManagedOutboundIPs? _managedOutboundIPs;
 
     /// <summary>
-    /// A list of public IP prefix resources.
-    /// </summary>
-    public BicepList<WritableSubResource> OutboundPublicIPPrefixes 
-    {
-        get { Initialize(); return _outboundPublicIPPrefixes!; }
-        set { Initialize(); _outboundPublicIPPrefixes!.Assign(value); }
-    }
-    private BicepList<WritableSubResource>? _outboundPublicIPPrefixes;
-
-    /// <summary>
-    /// A list of public IP resources.
-    /// </summary>
-    public BicepList<WritableSubResource> OutboundPublicIPs 
-    {
-        get { Initialize(); return _outboundPublicIPs!; }
-        set { Initialize(); _outboundPublicIPs!.Assign(value); }
-    }
-    private BicepList<WritableSubResource>? _outboundPublicIPs;
-
-    /// <summary>
     /// The desired number of allocated SNAT ports per VM. Allowed values are
     /// in the range of 0 to 64000 (inclusive). The default value is 0 which
     /// results in Azure dynamically allocating ports.
@@ -84,12 +64,12 @@ public partial class ManagedClusterLoadBalancerProfile : ProvisionableConstruct
     /// <summary>
     /// Enable multiple standard load balancers per AKS cluster or not.
     /// </summary>
-    public BicepValue<bool> EnableMultipleStandardLoadBalancers 
+    public BicepValue<bool> IsMultipleStandardLoadBalancersEnabled 
     {
-        get { Initialize(); return _enableMultipleStandardLoadBalancers!; }
-        set { Initialize(); _enableMultipleStandardLoadBalancers!.Assign(value); }
+        get { Initialize(); return _isMultipleStandardLoadBalancersEnabled!; }
+        set { Initialize(); _isMultipleStandardLoadBalancersEnabled!.Assign(value); }
     }
-    private BicepValue<bool>? _enableMultipleStandardLoadBalancers;
+    private BicepValue<bool>? _isMultipleStandardLoadBalancersEnabled;
 
     /// <summary>
     /// The type of the managed inbound Load Balancer BackendPool.
@@ -100,6 +80,26 @@ public partial class ManagedClusterLoadBalancerProfile : ProvisionableConstruct
         set { Initialize(); _backendPoolType!.Assign(value); }
     }
     private BicepValue<ManagedClusterLoadBalancerBackendPoolType>? _backendPoolType;
+
+    /// <summary>
+    /// A list of public IP prefix resources.
+    /// </summary>
+    public BicepList<WritableSubResource> OutboundPublicIPPrefixes 
+    {
+        get { Initialize(); return _outboundPublicIPPrefixes!; }
+        set { Initialize(); _outboundPublicIPPrefixes!.Assign(value); }
+    }
+    private BicepList<WritableSubResource>? _outboundPublicIPPrefixes;
+
+    /// <summary>
+    /// A list of public IP resources.
+    /// </summary>
+    public BicepList<WritableSubResource> OutboundPublicIPs 
+    {
+        get { Initialize(); return _outboundPublicIPs!; }
+        set { Initialize(); _outboundPublicIPs!.Assign(value); }
+    }
+    private BicepList<WritableSubResource>? _outboundPublicIPs;
 
     /// <summary>
     /// Creates a new ManagedClusterLoadBalancerProfile.
@@ -117,11 +117,11 @@ public partial class ManagedClusterLoadBalancerProfile : ProvisionableConstruct
         base.DefineProvisionableProperties();
         _effectiveOutboundIPs = DefineListProperty<WritableSubResource>("EffectiveOutboundIPs", ["effectiveOutboundIPs"]);
         _managedOutboundIPs = DefineModelProperty<ManagedClusterLoadBalancerProfileManagedOutboundIPs>("ManagedOutboundIPs", ["managedOutboundIPs"]);
-        _outboundPublicIPPrefixes = DefineListProperty<WritableSubResource>("OutboundPublicIPPrefixes", ["outboundIPPrefixes", "publicIPPrefixes"]);
-        _outboundPublicIPs = DefineListProperty<WritableSubResource>("OutboundPublicIPs", ["outboundIPs", "publicIPs"]);
         _allocatedOutboundPorts = DefineProperty<int>("AllocatedOutboundPorts", ["allocatedOutboundPorts"]);
         _idleTimeoutInMinutes = DefineProperty<int>("IdleTimeoutInMinutes", ["idleTimeoutInMinutes"]);
-        _enableMultipleStandardLoadBalancers = DefineProperty<bool>("EnableMultipleStandardLoadBalancers", ["enableMultipleStandardLoadBalancers"]);
+        _isMultipleStandardLoadBalancersEnabled = DefineProperty<bool>("IsMultipleStandardLoadBalancersEnabled", ["enableMultipleStandardLoadBalancers"]);
         _backendPoolType = DefineProperty<ManagedClusterLoadBalancerBackendPoolType>("BackendPoolType", ["backendPoolType"]);
+        _outboundPublicIPPrefixes = DefineListProperty<WritableSubResource>("OutboundPublicIPPrefixes", ["outboundIPPrefixes", "publicIPPrefixes"]);
+        _outboundPublicIPs = DefineListProperty<WritableSubResource>("OutboundPublicIPs", ["outboundIPs", "publicIPs"]);
     }
 }

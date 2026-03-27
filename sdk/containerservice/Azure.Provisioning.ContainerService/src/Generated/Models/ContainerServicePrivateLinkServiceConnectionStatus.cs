@@ -11,22 +11,22 @@ namespace Azure.Provisioning.ContainerService;
 public enum ContainerServicePrivateLinkServiceConnectionStatus
 {
     /// <summary>
-    /// Pending.
+    /// Connection is pending approval.
     /// </summary>
     Pending,
 
     /// <summary>
-    /// Approved.
+    /// Connection is approved.
     /// </summary>
     Approved,
 
     /// <summary>
-    /// Rejected.
+    /// Connection is rejected.
     /// </summary>
     Rejected,
 
     /// <summary>
-    /// Disconnected.
+    /// Connection is disconnected.
     /// </summary>
     Disconnected,
 }

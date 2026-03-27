@@ -20,12 +20,12 @@ public partial class UpgradeOverrideSettings : ProvisionableConstruct
     /// upgrade operation to bypass upgrade protections such as checking for
     /// deprecated API usage. Enable this option only with caution.
     /// </summary>
-    public BicepValue<bool> ForceUpgrade 
+    public BicepValue<bool> IsForceUpgradeEnabled 
     {
-        get { Initialize(); return _forceUpgrade!; }
-        set { Initialize(); _forceUpgrade!.Assign(value); }
+        get { Initialize(); return _isForceUpgradeEnabled!; }
+        set { Initialize(); _isForceUpgradeEnabled!.Assign(value); }
     }
-    private BicepValue<bool>? _forceUpgrade;
+    private BicepValue<bool>? _isForceUpgradeEnabled;
 
     /// <summary>
     /// Until when the overrides are effective. Note that this only matches the
@@ -54,7 +54,7 @@ public partial class UpgradeOverrideSettings : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _forceUpgrade = DefineProperty<bool>("ForceUpgrade", ["forceUpgrade"]);
+        _isForceUpgradeEnabled = DefineProperty<bool>("IsForceUpgradeEnabled", ["forceUpgrade"]);
         _until = DefineProperty<DateTimeOffset>("Until", ["until"]);
     }
 }
