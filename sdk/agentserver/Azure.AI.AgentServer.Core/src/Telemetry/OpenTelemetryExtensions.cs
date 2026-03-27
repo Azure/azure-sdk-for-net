@@ -78,6 +78,10 @@ internal static class OpenTelemetryExtensions
                 tracing.AddSource(AgentHostTelemetry.ResponsesSourceName);
                 tracing.AddSource(AgentHostTelemetry.InvocationsSourceName);
 
+                // Foundry enrichment processor — stamps agent identity and project ID
+                // on every span so protocol packages get it automatically.
+                tracing.AddProcessor(new FoundryEnrichmentProcessor());
+
                 configureTracing?.Invoke(tracing);
 
                 if (hasOtlp)
@@ -147,6 +151,12 @@ internal static class OpenTelemetryExtensions
             if (!string.IsNullOrEmpty(projectEndpoint))
             {
                 attributes.Add(new KeyValuePair<string, object>("foundry.project.endpoint", projectEndpoint));
+            }
+
+            var projectArmId = FoundryEnvironment.ProjectArmId;
+            if (!string.IsNullOrEmpty(projectArmId))
+            {
+                attributes.Add(new KeyValuePair<string, object>("foundry.project.arm_id", projectArmId));
             }
 
             return attributes.Count > 0

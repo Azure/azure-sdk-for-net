@@ -27,6 +27,12 @@ public static class FoundryEnvironment
     public static string? ProjectEndpoint { get; private set; }
 
     /// <summary>
+    /// The full ARM ID of the Foundry project.
+    /// Sourced from the <c>FOUNDRY_PROJECT_ARM_ID</c> environment variable.
+    /// </summary>
+    public static string? ProjectArmId { get; private set; }
+
+    /// <summary>
     /// The session ID. Sourced from the <c>FOUNDRY_AGENT_SESSION_ID</c> environment variable.
     /// </summary>
     public static string? SessionId { get; private set; }
@@ -64,6 +70,7 @@ public static class FoundryEnvironment
         AgentName = Environment.GetEnvironmentVariable("FOUNDRY_AGENT_NAME");
         AgentVersion = Environment.GetEnvironmentVariable("FOUNDRY_AGENT_VERSION");
         ProjectEndpoint = Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+        ProjectArmId = Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ARM_ID");
         SessionId = Environment.GetEnvironmentVariable("FOUNDRY_AGENT_SESSION_ID");
         OtlpEndpoint = Environment.GetEnvironmentVariable("OTEL_EXPORTER_OTLP_ENDPOINT");
         AppInsightsConnectionString = Environment.GetEnvironmentVariable("APPLICATIONINSIGHTS_CONNECTION_STRING");

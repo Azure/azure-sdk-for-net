@@ -15,6 +15,7 @@ public class FoundryEnvironmentTests
         Environment.SetEnvironmentVariable("FOUNDRY_AGENT_NAME", null);
         Environment.SetEnvironmentVariable("FOUNDRY_AGENT_VERSION", null);
         Environment.SetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT", null);
+        Environment.SetEnvironmentVariable("FOUNDRY_PROJECT_ARM_ID", null);
         Environment.SetEnvironmentVariable("FOUNDRY_AGENT_SESSION_ID", null);
         Environment.SetEnvironmentVariable("PORT", null);
         Environment.SetEnvironmentVariable("OTEL_EXPORTER_OTLP_ENDPOINT", null);
@@ -50,6 +51,20 @@ public class FoundryEnvironmentTests
         Environment.SetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT", "https://example.com");
         FoundryEnvironment.Reload();
         Assert.That(FoundryEnvironment.ProjectEndpoint, Is.EqualTo("https://example.com"));
+    }
+
+    [Test]
+    public void ProjectArmId_ReturnsEnvVar_WhenSet()
+    {
+        Environment.SetEnvironmentVariable("FOUNDRY_PROJECT_ARM_ID", "/subscriptions/sub1/resourceGroups/rg1/providers/Microsoft.CognitiveServices/accounts/acct1/projects/proj1");
+        FoundryEnvironment.Reload();
+        Assert.That(FoundryEnvironment.ProjectArmId, Is.EqualTo("/subscriptions/sub1/resourceGroups/rg1/providers/Microsoft.CognitiveServices/accounts/acct1/projects/proj1"));
+    }
+
+    [Test]
+    public void ProjectArmId_ReturnsNull_WhenNotSet()
+    {
+        Assert.That(FoundryEnvironment.ProjectArmId, Is.Null);
     }
 
     [Test]
