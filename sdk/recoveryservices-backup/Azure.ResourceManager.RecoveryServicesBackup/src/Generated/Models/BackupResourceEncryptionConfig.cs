@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="lastUpdateStatus"></param>
         /// <param name="infrastructureEncryptionState"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BackupResourceEncryptionConfig(BackupEncryptionAtRestType? encryptionAtRestType, string keyUri, string subscriptionId, LastUpdateStatus? lastUpdateStatus, InfrastructureEncryptionState? infrastructureEncryptionState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BackupResourceEncryptionConfig(BackupEncryptionAtRestType? encryptionAtRestType, Uri keyUri, string subscriptionId, LastUpdateStatus? lastUpdateStatus, InfrastructureEncryptionState? infrastructureEncryptionState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EncryptionAtRestType = encryptionAtRestType;
             KeyUri = keyUri;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public BackupEncryptionAtRestType? EncryptionAtRestType { get; set; }
 
         /// <summary> Key Vault Key URI. </summary>
-        public string KeyUri { get; set; }
+        public Uri KeyUri { get; set; }
 
         /// <summary> Key Vault Subscription Id. </summary>
         public string SubscriptionId { get; set; }

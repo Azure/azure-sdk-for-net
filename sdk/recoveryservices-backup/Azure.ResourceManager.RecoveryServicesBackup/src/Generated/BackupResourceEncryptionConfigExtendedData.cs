@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 
         /// <summary> Initializes a new instance of <see cref="BackupResourceEncryptionConfigExtendedData"/>. </summary>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        internal BackupResourceEncryptionConfigExtendedData(AzureLocation location) : base(location)
+        public BackupResourceEncryptionConfigExtendedData(AzureLocation location) : base(location)
         {
         }
 
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> BackupResourceEncryptionConfigExtendedResource properties. </param>
+        /// <param name="properties"> The properties of the backup resource encryption config extended resource. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="eTag"> Optional ETag. </param>
         internal BackupResourceEncryptionConfigExtendedData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureLocation location, BackupResourceEncryptionConfigExtendedProperties properties, IDictionary<string, string> tags, ETag? eTag) : base(id, name, resourceType, systemData, tags, location)
@@ -43,10 +43,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             ETag = eTag;
         }
 
-        /// <summary> BackupResourceEncryptionConfigExtendedResource properties. </summary>
-        public BackupResourceEncryptionConfigExtendedProperties Properties { get; }
+        /// <summary> The properties of the backup resource encryption config extended resource. </summary>
+        public BackupResourceEncryptionConfigExtendedProperties Properties { get; set; }
 
         /// <summary> Optional ETag. </summary>
-        public ETag? ETag { get; }
+        public ETag? ETag { get; set; }
     }
 }

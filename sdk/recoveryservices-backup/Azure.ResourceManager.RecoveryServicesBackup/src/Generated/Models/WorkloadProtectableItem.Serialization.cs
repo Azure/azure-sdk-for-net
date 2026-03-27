@@ -14,16 +14,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary>
     /// Base class for backup item. Workload-specific backup items are derived from this class.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="FileShareProtectableItem"/>, <see cref="IaasClassicComputeVmProtectableItem"/>, <see cref="IaasVmProtectableItem"/>, <see cref="IaasComputeVmProtectableItem"/>, <see cref="VmWorkloadProtectableItem"/>, <see cref="VmWorkloadSapAseDatabaseProtectableItem"/>, <see cref="VmWorkloadSapAseSystemProtectableItem"/>, <see cref="VmWorkloadSapHanaDatabaseProtectableItem"/>, <see cref="VmWorkloadSapHanaSystemProtectableItem"/>, <see cref="VmWorkloadSapHanaDBInstance"/>, <see cref="VmWorkloadSapHanaHsrProtectableItem"/>, <see cref="AzureVmWorkloadSAPHanaScaleoutProtectableItem"/>, <see cref="VmWorkloadSqlAvailabilityGroupProtectableItem"/>, <see cref="VmWorkloadSqlDatabaseProtectableItem"/>, and <see cref="VmWorkloadSqlInstanceProtectableItem"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="FileShareProtectableItem"/>, <see cref="IaasClassicComputeVmProtectableItem"/>, <see cref="IaasVmProtectableItem"/>, <see cref="IaasComputeVmProtectableItem"/>, <see cref="VmWorkloadProtectableItem"/>, <see cref="VmWorkloadSapAseDatabaseProtectableItem"/>, <see cref="VmWorkloadSapAseSystemProtectableItem"/>, <see cref="VmWorkloadSapHanaDatabaseProtectableItem"/>, <see cref="VmWorkloadSapHanaSystemProtectableItem"/>, <see cref="VmWorkloadSapHanaDBInstance"/>, <see cref="VmWorkloadSapHanaHsrProtectableItem"/>, <see cref="AzureVmWorkloadSapHanaHSRProtectableItem"/>, <see cref="VmWorkloadSqlAvailabilityGroupProtectableItem"/>, <see cref="VmWorkloadSqlDatabaseProtectableItem"/>, and <see cref="VmWorkloadSqlInstanceProtectableItem"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownWorkloadProtectableItem))]
     public abstract partial class WorkloadProtectableItem : IJsonModel<WorkloadProtectableItem>
     {
-        /// <summary> Initializes a new instance of <see cref="WorkloadProtectableItem"/> for deserialization. </summary>
-        internal WorkloadProtectableItem()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual WorkloadProtectableItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -173,7 +168,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     case "HanaHSRContainer":
                         return VmWorkloadSapHanaHsrProtectableItem.DeserializeVmWorkloadSapHanaHsrProtectableItem(element, options);
                     case "HanaScaleoutContainer":
-                        return AzureVmWorkloadSAPHanaScaleoutProtectableItem.DeserializeAzureVmWorkloadSAPHanaScaleoutProtectableItem(element, options);
+                        return AzureVmWorkloadSapHanaHSRProtectableItem.DeserializeAzureVmWorkloadSapHanaHSRProtectableItem(element, options);
                     case "SQLAvailabilityGroupContainer":
                         return VmWorkloadSqlAvailabilityGroupProtectableItem.DeserializeVmWorkloadSqlAvailabilityGroupProtectableItem(element, options);
                     case "SQLDataBase":

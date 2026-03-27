@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="status"> Recovery point tier status. </param>
         /// <param name="extendedInfo"> Recovery point tier status. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RecoveryPointTierInformation(RecoveryPointTierType? tierType, BackupRecoveryPointTierStatus? status, IDictionary<string, string> extendedInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RecoveryPointTierInformation(RecoveryPointTierType? tierType, RecoveryPointTierStatus? status, IDictionary<string, string> extendedInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TierType = tierType;
             Status = status;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public RecoveryPointTierType? TierType { get; set; }
 
         /// <summary> Recovery point tier status. </summary>
-        public BackupRecoveryPointTierStatus? Status { get; set; }
+        public RecoveryPointTierStatus? Status { get; set; }
 
         /// <summary> Recovery point tier status. </summary>
         public IDictionary<string, string> ExtendedInfo { get; }

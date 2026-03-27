@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
@@ -35,10 +36,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="containerName"> Unique name of container. </param>
         /// <param name="sourceResourceId"> ARM ID of the resource to be backed up. </param>
         /// <param name="policyId"> ID of the backup policy with which this item is backed up. </param>
-        /// <param name="lastRecoveryPoint"> Timestamp when the last (latest) backup copy was created for this backup item. </param>
+        /// <param name="lastRecoverOn"> Timestamp when the last (latest) backup copy was created for this backup item. </param>
         /// <param name="backupSetName"> Name of the backup set the backup item belongs to. </param>
         /// <param name="createMode"> Create mode to indicate recovery of existing soft deleted data source or creation of new data source. </param>
-        /// <param name="deferredDeleteTimeInUTC"> Time for deferred deletion in UTC. </param>
+        /// <param name="deferredDeletedOn"> Time for deferred deletion in UTC. </param>
         /// <param name="isScheduledForDeferredDelete"> Flag to identify whether the DS is scheduled for deferred delete. </param>
         /// <param name="deferredDeleteTimeRemaining"> Time remaining before the DS marked for deferred delete is permanently deleted. </param>
         /// <param name="isDeferredDeleteScheduleUpcoming"> Flag to identify whether the deferred deleted DS is to be purged soon. </param>
@@ -50,7 +51,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="vaultId"> ID of the vault which protects this item. </param>
         /// <param name="sourceSideScanInfo"> Source side threat information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BackupGenericProtectedItem(string protectedItemType, BackupManagementType? backupManagementType, BackupDataSourceType? workloadType, string containerName, string sourceResourceId, string policyId, DateTimeOffset? lastRecoveryPoint, string backupSetName, BackupCreateMode? createMode, DateTimeOffset? deferredDeleteTimeInUTC, bool? isScheduledForDeferredDelete, string deferredDeleteTimeRemaining, bool? isDeferredDeleteScheduleUpcoming, bool? isRehydrate, IList<string> resourceGuardOperationRequests, bool? isArchiveEnabled, string policyName, int? softDeleteRetentionPeriodInDays, string vaultId, SourceSideScanInfo sourceSideScanInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BackupGenericProtectedItem(string protectedItemType, BackupManagementType? backupManagementType, BackupDataSourceType? workloadType, string containerName, ResourceIdentifier sourceResourceId, ResourceIdentifier policyId, DateTimeOffset? lastRecoverOn, string backupSetName, BackupCreateMode? createMode, DateTimeOffset? deferredDeletedOn, bool? isScheduledForDeferredDelete, string deferredDeleteTimeRemaining, bool? isDeferredDeleteScheduleUpcoming, bool? isRehydrate, IList<string> resourceGuardOperationRequests, bool? isArchiveEnabled, string policyName, int? softDeleteRetentionPeriodInDays, string vaultId, SourceSideScanInfo sourceSideScanInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProtectedItemType = protectedItemType;
             BackupManagementType = backupManagementType;
@@ -58,10 +59,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             ContainerName = containerName;
             SourceResourceId = sourceResourceId;
             PolicyId = policyId;
-            LastRecoveryPoint = lastRecoveryPoint;
+            LastRecoverOn = lastRecoverOn;
             BackupSetName = backupSetName;
             CreateMode = createMode;
-            DeferredDeleteTimeInUTC = deferredDeleteTimeInUTC;
+            DeferredDeletedOn = deferredDeletedOn;
             IsScheduledForDeferredDelete = isScheduledForDeferredDelete;
             DeferredDeleteTimeRemaining = deferredDeleteTimeRemaining;
             IsDeferredDeleteScheduleUpcoming = isDeferredDeleteScheduleUpcoming;
@@ -88,13 +89,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public string ContainerName { get; set; }
 
         /// <summary> ARM ID of the resource to be backed up. </summary>
-        public string SourceResourceId { get; set; }
+        public ResourceIdentifier SourceResourceId { get; set; }
 
         /// <summary> ID of the backup policy with which this item is backed up. </summary>
-        public string PolicyId { get; set; }
+        public ResourceIdentifier PolicyId { get; set; }
 
         /// <summary> Timestamp when the last (latest) backup copy was created for this backup item. </summary>
-        public DateTimeOffset? LastRecoveryPoint { get; set; }
+        public DateTimeOffset? LastRecoverOn { get; set; }
 
         /// <summary> Name of the backup set the backup item belongs to. </summary>
         public string BackupSetName { get; set; }
@@ -103,7 +104,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public BackupCreateMode? CreateMode { get; set; }
 
         /// <summary> Time for deferred deletion in UTC. </summary>
-        public DateTimeOffset? DeferredDeleteTimeInUTC { get; set; }
+        public DateTimeOffset? DeferredDeletedOn { get; set; }
 
         /// <summary> Flag to identify whether the DS is scheduled for deferred delete. </summary>
         public bool? IsScheduledForDeferredDelete { get; set; }

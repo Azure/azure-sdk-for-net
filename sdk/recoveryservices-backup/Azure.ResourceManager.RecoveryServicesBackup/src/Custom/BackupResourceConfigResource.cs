@@ -13,6 +13,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager.Resources;
 
 // NOTE: The following customization is intentionally retained for backward compatibility.
+// This is a singleton resource which was not correctly generated as such, so we have to fix Update, AddTag, SetTags, and RemoveTag methods to make it backward compatible.
 namespace Azure.ResourceManager.RecoveryServicesBackup
 {
     public partial class BackupResourceConfigResource : ArmResource

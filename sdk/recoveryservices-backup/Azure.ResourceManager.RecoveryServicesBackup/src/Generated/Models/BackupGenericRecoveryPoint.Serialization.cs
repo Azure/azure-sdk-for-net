@@ -19,11 +19,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     [PersistableModelProxy(typeof(UnknownBackupGenericRecoveryPoint))]
     public abstract partial class BackupGenericRecoveryPoint : IJsonModel<BackupGenericRecoveryPoint>
     {
-        /// <summary> Initializes a new instance of <see cref="BackupGenericRecoveryPoint"/> for deserialization. </summary>
-        internal BackupGenericRecoveryPoint()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BackupGenericRecoveryPoint PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -93,7 +88,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 writer.WritePropertyName("threatInfo"u8);
                 writer.WriteStartArray();
-                foreach (ThreatInfo item in ThreatInfo)
+                foreach (RecoveryPointThreatInformation item in ThreatInfo)
                 {
                     writer.WriteObjectValue(item, options);
                 }

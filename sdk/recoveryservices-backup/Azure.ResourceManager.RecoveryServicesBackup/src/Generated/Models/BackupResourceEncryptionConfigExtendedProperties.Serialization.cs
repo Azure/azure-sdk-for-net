@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 return null;
             }
             BackupEncryptionAtRestType? encryptionAtRestType = default;
-            string keyUri = default;
+            Uri keyUri = default;
             string subscriptionId = default;
             LastUpdateStatus? lastUpdateStatus = default;
             InfrastructureEncryptionState? infrastructureEncryptionState = default;
@@ -134,7 +134,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 if (prop.NameEquals("keyUri"u8))
                 {
-                    keyUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    keyUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("subscriptionId"u8))

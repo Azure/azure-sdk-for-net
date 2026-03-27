@@ -20,11 +20,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     [PersistableModelProxy(typeof(UnknownTieringCostInfo))]
     public abstract partial class TieringCostInfo : IJsonModel<TieringCostInfo>
     {
-        /// <summary> Initializes a new instance of <see cref="TieringCostInfo"/> for deserialization. </summary>
-        internal TieringCostInfo()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual TieringCostInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

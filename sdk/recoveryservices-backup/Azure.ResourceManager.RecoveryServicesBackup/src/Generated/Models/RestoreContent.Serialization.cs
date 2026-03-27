@@ -19,11 +19,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     [PersistableModelProxy(typeof(UnknownRestoreContent))]
     public abstract partial class RestoreContent : IJsonModel<RestoreContent>
     {
-        /// <summary> Initializes a new instance of <see cref="RestoreContent"/> for deserialization. </summary>
-        internal RestoreContent()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual RestoreContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

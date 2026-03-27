@@ -19,11 +19,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     [PersistableModelProxy(typeof(UnknownBackupContent))]
     public abstract partial class BackupContent : IJsonModel<BackupContent>
     {
-        /// <summary> Initializes a new instance of <see cref="BackupContent"/> for deserialization. </summary>
-        internal BackupContent()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BackupContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

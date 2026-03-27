@@ -23,11 +23,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="sourceRegion"> Source Region. </param>
         /// <param name="dataMoveLevel"> DataMove Level. </param>
         /// <param name="correlationId"> Correlation Id. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sourceResourceId"/>, <paramref name="sourceRegion"/> or <paramref name="correlationId"/> is null. </exception>
-        public TriggerDataMoveContent(string sourceResourceId, string sourceRegion, DataMoveLevel dataMoveLevel, string correlationId)
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceResourceId"/> or <paramref name="correlationId"/> is null. </exception>
+        public TriggerDataMoveContent(ResourceIdentifier sourceResourceId, AzureLocation sourceRegion, DataMoveLevel dataMoveLevel, string correlationId)
         {
             Argument.AssertNotNull(sourceResourceId, nameof(sourceResourceId));
-            Argument.AssertNotNull(sourceRegion, nameof(sourceRegion));
             Argument.AssertNotNull(correlationId, nameof(correlationId));
 
             SourceResourceId = sourceResourceId;
@@ -45,7 +44,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="sourceContainerArmIds"> Source Container ArmIds. </param>
         /// <param name="doesPauseGC"> Pause GC. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TriggerDataMoveContent(string sourceResourceId, string sourceRegion, DataMoveLevel dataMoveLevel, string correlationId, IList<ResourceIdentifier> sourceContainerArmIds, bool? doesPauseGC, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TriggerDataMoveContent(ResourceIdentifier sourceResourceId, AzureLocation sourceRegion, DataMoveLevel dataMoveLevel, string correlationId, IList<ResourceIdentifier> sourceContainerArmIds, bool? doesPauseGC, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SourceResourceId = sourceResourceId;
             SourceRegion = sourceRegion;
@@ -57,10 +56,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> ARM Id of source vault. </summary>
-        public string SourceResourceId { get; }
+        public ResourceIdentifier SourceResourceId { get; }
 
         /// <summary> Source Region. </summary>
-        public string SourceRegion { get; }
+        public AzureLocation SourceRegion { get; }
 
         /// <summary> DataMove Level. </summary>
         public DataMoveLevel DataMoveLevel { get; }

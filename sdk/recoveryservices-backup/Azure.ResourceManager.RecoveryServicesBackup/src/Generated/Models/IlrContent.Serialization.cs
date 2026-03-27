@@ -19,11 +19,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     [PersistableModelProxy(typeof(UnknownIlrContent))]
     public abstract partial class IlrContent : IJsonModel<IlrContent>
     {
-        /// <summary> Initializes a new instance of <see cref="IlrContent"/> for deserialization. </summary>
-        internal IlrContent()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual IlrContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

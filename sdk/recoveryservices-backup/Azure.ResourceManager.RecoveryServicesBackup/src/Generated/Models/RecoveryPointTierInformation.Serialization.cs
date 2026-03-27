@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteStringValue(Status.Value.ToString());
+                writer.WriteStringValue(Status.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(ExtendedInfo))
             {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 return null;
             }
             RecoveryPointTierType? tierType = default;
-            BackupRecoveryPointTierStatus? status = default;
+            RecoveryPointTierStatus? status = default;
             IDictionary<string, string> extendedInfo = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    status = new BackupRecoveryPointTierStatus(prop.Value.GetString());
+                    status = prop.Value.GetString().ToRecoveryPointTierStatus();
                     continue;
                 }
                 if (prop.NameEquals("extendedInfo"u8))

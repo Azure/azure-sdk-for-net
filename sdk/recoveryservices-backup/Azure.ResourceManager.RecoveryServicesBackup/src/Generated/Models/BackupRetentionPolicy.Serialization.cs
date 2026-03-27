@@ -19,11 +19,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     [PersistableModelProxy(typeof(UnknownBackupRetentionPolicy))]
     public abstract partial class BackupRetentionPolicy : IJsonModel<BackupRetentionPolicy>
     {
-        /// <summary> Initializes a new instance of <see cref="BackupRetentionPolicy"/> for deserialization. </summary>
-        internal BackupRetentionPolicy()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BackupRetentionPolicy PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

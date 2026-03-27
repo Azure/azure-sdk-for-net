@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="recoveryPointSizeInGB"> Contains recovery point size. </param>
         /// <param name="recoveryPointProperties"> Properties of Recovery Point. </param>
         /// <param name="recoveryPointTierDetails"> Recovery point tier information. </param>
-        internal FileShareRecoveryPoint(string objectType, ThreatStatus? threatStatus, IList<ThreatInfo> threatInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties, string recoveryPointType, DateTimeOffset? recoveryPointOn, string fileShareSnapshotUri, int? recoveryPointSizeInGB, RecoveryPointProperties recoveryPointProperties, IList<RecoveryPointTierInformation> recoveryPointTierDetails) : base(objectType, threatStatus, threatInfo, additionalBinaryDataProperties)
+        internal FileShareRecoveryPoint(string objectType, ThreatStatus? threatStatus, IList<RecoveryPointThreatInformation> threatInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties, string recoveryPointType, DateTimeOffset? recoveryPointOn, Uri fileShareSnapshotUri, int? recoveryPointSizeInGB, RecoveryPointProperties recoveryPointProperties, IList<RecoveryPointTierInformation> recoveryPointTierDetails) : base(objectType, threatStatus, threatInfo, additionalBinaryDataProperties)
         {
             RecoveryPointType = recoveryPointType;
             RecoveryPointOn = recoveryPointOn;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public DateTimeOffset? RecoveryPointOn { get; set; }
 
         /// <summary> Contains Url to the snapshot of fileshare, if applicable. </summary>
-        public string FileShareSnapshotUri { get; set; }
+        public Uri FileShareSnapshotUri { get; set; }
 
         /// <summary> Contains recovery point size. </summary>
         public int? RecoveryPointSizeInGB { get; set; }

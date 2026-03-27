@@ -19,11 +19,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     [PersistableModelProxy(typeof(UnknownBackupGenericJob))]
     public abstract partial class BackupGenericJob : IJsonModel<BackupGenericJob>
     {
-        /// <summary> Initializes a new instance of <see cref="BackupGenericJob"/> for deserialization. </summary>
-        internal BackupGenericJob()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BackupGenericJob PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

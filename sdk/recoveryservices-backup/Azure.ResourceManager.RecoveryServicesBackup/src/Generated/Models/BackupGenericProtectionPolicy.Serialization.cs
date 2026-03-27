@@ -19,11 +19,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     [PersistableModelProxy(typeof(UnknownBackupGenericProtectionPolicy))]
     public abstract partial class BackupGenericProtectionPolicy : IJsonModel<BackupGenericProtectionPolicy>
     {
-        /// <summary> Initializes a new instance of <see cref="BackupGenericProtectionPolicy"/> for deserialization. </summary>
-        internal BackupGenericProtectionPolicy()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BackupGenericProtectionPolicy PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

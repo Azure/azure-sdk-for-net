@@ -114,10 +114,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             string objectType = "AzureWorkloadSQLPointInTimeRecoveryPoint";
             ThreatStatus? threatStatus = default;
-            IList<ThreatInfo> threatInfo = default;
+            IList<RecoveryPointThreatInformation> threatInfo = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             DateTimeOffset? recoveryPointCreatedOn = default;
-            RestorePointType? @type = default;
+            RestorePointType? restorePointType = default;
             IList<RecoveryPointTierInformationV2> recoveryPointTierDetails = default;
             IDictionary<string, RecoveryPointMoveReadinessInfo> recoveryPointMoveReadinessInfo = default;
             RecoveryPointProperties recoveryPointProperties = default;
@@ -145,10 +145,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    List<ThreatInfo> array = new List<ThreatInfo>();
+                    List<RecoveryPointThreatInformation> array = new List<RecoveryPointThreatInformation>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Models.ThreatInfo.DeserializeThreatInfo(item, options));
+                        array.Add(RecoveryPointThreatInformation.DeserializeRecoveryPointThreatInformation(item, options));
                     }
                     threatInfo = array;
                     continue;
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    @type = new RestorePointType(prop.Value.GetString());
+                    restorePointType = new RestorePointType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("recoveryPointTierDetails"u8))
@@ -239,10 +239,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             return new WorkloadSqlPointInTimeRecoveryPoint(
                 objectType,
                 threatStatus,
-                threatInfo ?? new ChangeTrackingList<ThreatInfo>(),
+                threatInfo ?? new ChangeTrackingList<RecoveryPointThreatInformation>(),
                 additionalBinaryDataProperties,
                 recoveryPointCreatedOn,
-                @type,
+                restorePointType,
                 recoveryPointTierDetails ?? new ChangeTrackingList<RecoveryPointTierInformationV2>(),
                 recoveryPointMoveReadinessInfo ?? new ChangeTrackingDictionary<string, RecoveryPointMoveReadinessInfo>(),
                 recoveryPointProperties,

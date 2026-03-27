@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateRefreshRequest(string vaultName, string resourceGroupName, string subscriptionId, string fabricName, string filter, RequestContext context)
+        internal HttpMessage CreateRefreshProtectionContainerRequest(string vaultName, string resourceGroupName, string subscriptionId, string fabricName, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

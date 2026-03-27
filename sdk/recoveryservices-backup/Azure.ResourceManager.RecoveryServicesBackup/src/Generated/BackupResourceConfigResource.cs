@@ -301,100 +301,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         }
 
         /// <summary>
-        /// Updates vault storage model type.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupstorageconfig/vaultstorageconfig. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> BackupResourceStorageConfigsNonCRR_Patch. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="BackupResourceConfigResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="data"> Vault storage config request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<Response> PatchAsync(BackupResourceConfigData data, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(data, nameof(data));
-
-            using DiagnosticScope scope = _backupResourceStorageConfigsNonCRRClientDiagnostics.CreateScope("BackupResourceConfigResource.Patch");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _backupResourceStorageConfigsNonCRRRestClient.CreatePatchRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, BackupResourceConfigData.ToRequestContent(data), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Updates vault storage model type.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupstorageconfig/vaultstorageconfig. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> BackupResourceStorageConfigsNonCRR_Patch. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="BackupResourceConfigResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="data"> Vault storage config request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual Response Patch(BackupResourceConfigData data, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(data, nameof(data));
-
-            using DiagnosticScope scope = _backupResourceStorageConfigsNonCRRClientDiagnostics.CreateScope("BackupResourceConfigResource.Patch");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _backupResourceStorageConfigsNonCRRRestClient.CreatePatchRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, BackupResourceConfigData.ToRequestContent(data), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
         /// Prepares source vault for Data Move operation
         /// <list type="bullet">
         /// <item>
@@ -419,7 +325,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="content"> Prepare data move request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<OkResponse>> PrepareDataMoveAsync(WaitUntil waitUntil, PrepareDataMoveContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> PrepareDataMoveAsync(WaitUntil waitUntil, PrepareDataMoveContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -433,16 +339,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 };
                 HttpMessage message = _backupResourceStorageConfigsNonCRRRestClient.CreatePrepareDataMoveRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, PrepareDataMoveContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                RecoveryServicesBackupArmOperation<OkResponse> operation = new RecoveryServicesBackupArmOperation<OkResponse>(
-                    new OkResponseOperationSource(),
-                    _backupResourceStorageConfigsNonCRRClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
+                RecoveryServicesBackupArmOperation operation = new RecoveryServicesBackupArmOperation(_backupResourceStorageConfigsNonCRRClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 }
                 return operation;
             }
@@ -478,7 +378,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="content"> Prepare data move request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<OkResponse> PrepareDataMove(WaitUntil waitUntil, PrepareDataMoveContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation PrepareDataMove(WaitUntil waitUntil, PrepareDataMoveContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -492,16 +392,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 };
                 HttpMessage message = _backupResourceStorageConfigsNonCRRRestClient.CreatePrepareDataMoveRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, PrepareDataMoveContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                RecoveryServicesBackupArmOperation<OkResponse> operation = new RecoveryServicesBackupArmOperation<OkResponse>(
-                    new OkResponseOperationSource(),
-                    _backupResourceStorageConfigsNonCRRClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
+                RecoveryServicesBackupArmOperation operation = new RecoveryServicesBackupArmOperation(_backupResourceStorageConfigsNonCRRClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
-                    operation.WaitForCompletion(cancellationToken);
+                    operation.WaitForCompletionResponse(cancellationToken);
                 }
                 return operation;
             }
@@ -537,7 +431,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="content"> Trigger data move request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<OkResponse>> TriggerDataMoveAsync(WaitUntil waitUntil, TriggerDataMoveContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> TriggerDataMoveAsync(WaitUntil waitUntil, TriggerDataMoveContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -551,16 +445,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 };
                 HttpMessage message = _backupResourceStorageConfigsNonCRRRestClient.CreateTriggerDataMoveRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, TriggerDataMoveContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                RecoveryServicesBackupArmOperation<OkResponse> operation = new RecoveryServicesBackupArmOperation<OkResponse>(
-                    new OkResponseOperationSource(),
-                    _backupResourceStorageConfigsNonCRRClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
+                RecoveryServicesBackupArmOperation operation = new RecoveryServicesBackupArmOperation(_backupResourceStorageConfigsNonCRRClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 }
                 return operation;
             }
@@ -596,7 +484,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="content"> Trigger data move request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<OkResponse> TriggerDataMove(WaitUntil waitUntil, TriggerDataMoveContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation TriggerDataMove(WaitUntil waitUntil, TriggerDataMoveContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -610,16 +498,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 };
                 HttpMessage message = _backupResourceStorageConfigsNonCRRRestClient.CreateTriggerDataMoveRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, TriggerDataMoveContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                RecoveryServicesBackupArmOperation<OkResponse> operation = new RecoveryServicesBackupArmOperation<OkResponse>(
-                    new OkResponseOperationSource(),
-                    _backupResourceStorageConfigsNonCRRClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
+                RecoveryServicesBackupArmOperation operation = new RecoveryServicesBackupArmOperation(_backupResourceStorageConfigsNonCRRClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
-                    operation.WaitForCompletion(cancellationToken);
+                    operation.WaitForCompletionResponse(cancellationToken);
                 }
                 return operation;
             }

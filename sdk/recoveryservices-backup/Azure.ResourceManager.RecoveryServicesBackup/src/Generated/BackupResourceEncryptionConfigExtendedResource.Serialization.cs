@@ -8,11 +8,12 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup
 {
     /// <summary></summary>
-    public partial class BackupResourceEncryptionConfigExtendedResource : IJsonModel<BackupResourceEncryptionConfigExtendedData>
+    public partial class BackupResourceEncryptionConfigExtendedResource : ArmResource, IJsonModel<BackupResourceEncryptionConfigExtendedData>
     {
         private static IJsonModel<BackupResourceEncryptionConfigExtendedData> s_dataDeserializationInstance;
 

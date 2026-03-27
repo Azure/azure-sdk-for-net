@@ -19,11 +19,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     [PersistableModelProxy(typeof(UnknownBackupGenericProtectionIntent))]
     public abstract partial class BackupGenericProtectionIntent : IJsonModel<BackupGenericProtectionIntent>
     {
-        /// <summary> Initializes a new instance of <see cref="BackupGenericProtectionIntent"/> for deserialization. </summary>
-        internal BackupGenericProtectionIntent()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BackupGenericProtectionIntent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

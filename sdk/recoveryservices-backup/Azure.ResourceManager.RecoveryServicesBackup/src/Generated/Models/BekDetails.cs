@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="secretVaultId"> ID of the Key Vault where this Secret is stored. </param>
         /// <param name="secretData"> BEK data. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BekDetails(string secretUri, string secretVaultId, string secretData, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BekDetails(Uri secretUri, ResourceIdentifier secretVaultId, string secretData, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SecretUri = secretUri;
             SecretVaultId = secretVaultId;
@@ -35,10 +36,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Secret is BEK. </summary>
-        public string SecretUri { get; set; }
+        public Uri SecretUri { get; set; }
 
         /// <summary> ID of the Key Vault where this Secret is stored. </summary>
-        public string SecretVaultId { get; set; }
+        public ResourceIdentifier SecretVaultId { get; set; }
 
         /// <summary> BEK data. </summary>
         public string SecretData { get; set; }

@@ -18,8 +18,13 @@ using Azure.ResourceManager.RecoveryServicesBackup;
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Parameters to Provision ILR API. </summary>
-    public partial class ProvisionIlrConnectionContent : ResourceData, IJsonModel<ProvisionIlrConnectionContent>
+    public partial class ProvisionIlrConnectionContent : TrackedResourceData, IJsonModel<ProvisionIlrConnectionContent>
     {
+        /// <summary> Initializes a new instance of <see cref="ProvisionIlrConnectionContent"/> for deserialization. </summary>
+        internal ProvisionIlrConnectionContent()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -89,27 +94,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 throw new FormatException($"The model {nameof(ProvisionIlrConnectionContent)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Location))
-            {
-                writer.WritePropertyName("location"u8);
-                writer.WriteStringValue(Location.Value);
-            }
-            if (Optional.IsCollectionDefined(Tags))
-            {
-                writer.WritePropertyName("tags"u8);
-                writer.WriteStartObject();
-                foreach (var item in Tags)
-                {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
             if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("eTag"u8);
@@ -152,7 +136,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            AzureLocation? location = default;
+            AzureLocation location = default;
             IDictionary<string, string> tags = default;
             ETag? eTag = default;
             IlrContent properties = default;
@@ -192,10 +176,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 if (prop.NameEquals("location"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }

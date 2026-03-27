@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("recoveryPointTimeInUTC"u8);
                 writer.WriteStringValue(RecoveryPointCreatedOn.Value, "O");
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(RestorePointType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WriteStringValue(RestorePointType.Value.ToString());
             }
             if (Optional.IsCollectionDefined(RecoveryPointTierDetails))
             {

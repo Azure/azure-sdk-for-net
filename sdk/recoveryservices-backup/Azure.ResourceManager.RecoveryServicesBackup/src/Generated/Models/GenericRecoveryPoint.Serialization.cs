@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             string objectType = "GenericRecoveryPoint";
             ThreatStatus? threatStatus = default;
-            IList<ThreatInfo> threatInfo = default;
+            IList<RecoveryPointThreatInformation> threatInfo = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string friendlyName = default;
             string recoveryPointType = default;
@@ -158,10 +158,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    List<ThreatInfo> array = new List<ThreatInfo>();
+                    List<RecoveryPointThreatInformation> array = new List<RecoveryPointThreatInformation>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Models.ThreatInfo.DeserializeThreatInfo(item, options));
+                        array.Add(RecoveryPointThreatInformation.DeserializeRecoveryPointThreatInformation(item, options));
                     }
                     threatInfo = array;
                     continue;
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             return new GenericRecoveryPoint(
                 objectType,
                 threatStatus,
-                threatInfo ?? new ChangeTrackingList<ThreatInfo>(),
+                threatInfo ?? new ChangeTrackingList<RecoveryPointThreatInformation>(),
                 additionalBinaryDataProperties,
                 friendlyName,
                 recoveryPointType,

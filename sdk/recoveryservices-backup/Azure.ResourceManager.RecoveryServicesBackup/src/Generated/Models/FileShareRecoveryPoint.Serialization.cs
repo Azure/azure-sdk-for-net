@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(FileShareSnapshotUri))
             {
                 writer.WritePropertyName("fileShareSnapshotUri"u8);
-                writer.WriteStringValue(FileShareSnapshotUri);
+                writer.WriteStringValue(FileShareSnapshotUri.AbsoluteUri);
             }
             if (Optional.IsDefined(RecoveryPointSizeInGB))
             {
@@ -139,11 +139,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             string objectType = "AzureFileShareRecoveryPoint";
             ThreatStatus? threatStatus = default;
-            IList<ThreatInfo> threatInfo = default;
+            IList<RecoveryPointThreatInformation> threatInfo = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string recoveryPointType = default;
             DateTimeOffset? recoveryPointOn = default;
-            string fileShareSnapshotUri = default;
+            Uri fileShareSnapshotUri = default;
             int? recoveryPointSizeInGB = default;
             RecoveryPointProperties recoveryPointProperties = default;
             IList<RecoveryPointTierInformation> recoveryPointTierDetails = default;
@@ -169,10 +169,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    List<ThreatInfo> array = new List<ThreatInfo>();
+                    List<RecoveryPointThreatInformation> array = new List<RecoveryPointThreatInformation>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Models.ThreatInfo.DeserializeThreatInfo(item, options));
+                        array.Add(RecoveryPointThreatInformation.DeserializeRecoveryPointThreatInformation(item, options));
                     }
                     threatInfo = array;
                     continue;
@@ -193,7 +193,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 if (prop.NameEquals("fileShareSnapshotUri"u8))
                 {
-                    fileShareSnapshotUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    fileShareSnapshotUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("recoveryPointSizeInGB"u8))
@@ -236,7 +240,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             return new FileShareRecoveryPoint(
                 objectType,
                 threatStatus,
-                threatInfo ?? new ChangeTrackingList<ThreatInfo>(),
+                threatInfo ?? new ChangeTrackingList<RecoveryPointThreatInformation>(),
                 additionalBinaryDataProperties,
                 recoveryPointType,
                 recoveryPointOn,

@@ -29,12 +29,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         private Jobs _jobsRestClient;
         private ClientDiagnostics _backupProtectedItemsClientDiagnostics;
         private BackupProtectedItems _backupProtectedItemsRestClient;
-        private ClientDiagnostics _operationOperationGroupClientDiagnostics;
-        private OperationOperationGroup _operationOperationGroupRestClient;
-        private ClientDiagnostics _validateOperationClientDiagnostics;
-        private ValidateOperation _validateOperationRestClient;
-        private ClientDiagnostics _protectionContainerRefreshOperationResultsClientDiagnostics;
-        private ProtectionContainerRefreshOperationResults _protectionContainerRefreshOperationResultsRestClient;
         private ClientDiagnostics _protectableContainersClientDiagnostics;
         private ProtectableContainers _protectableContainersRestClient;
         private ClientDiagnostics _protectionContainersOperationGroupClientDiagnostics;
@@ -79,18 +73,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         private ClientDiagnostics BackupProtectedItemsClientDiagnostics => _backupProtectedItemsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private BackupProtectedItems BackupProtectedItemsRestClient => _backupProtectedItemsRestClient ??= new BackupProtectedItems(BackupProtectedItemsClientDiagnostics, Pipeline, Endpoint, "2026-01-01-preview");
-
-        private ClientDiagnostics OperationOperationGroupClientDiagnostics => _operationOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private OperationOperationGroup OperationOperationGroupRestClient => _operationOperationGroupRestClient ??= new OperationOperationGroup(OperationOperationGroupClientDiagnostics, Pipeline, Endpoint, "2026-01-01-preview");
-
-        private ClientDiagnostics ValidateOperationClientDiagnostics => _validateOperationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private ValidateOperation ValidateOperationRestClient => _validateOperationRestClient ??= new ValidateOperation(ValidateOperationClientDiagnostics, Pipeline, Endpoint, "2026-01-01-preview");
-
-        private ClientDiagnostics ProtectionContainerRefreshOperationResultsClientDiagnostics => _protectionContainerRefreshOperationResultsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private ProtectionContainerRefreshOperationResults ProtectionContainerRefreshOperationResultsRestClient => _protectionContainerRefreshOperationResultsRestClient ??= new ProtectionContainerRefreshOperationResults(ProtectionContainerRefreshOperationResultsClientDiagnostics, Pipeline, Endpoint, "2026-01-01-preview");
 
         private ClientDiagnostics ProtectableContainersClientDiagnostics => _protectableContainersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -890,11 +872,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response> ExportAsync(string vaultName, string filter = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> ExportJobAsync(string vaultName, string filter = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
 
-            using DiagnosticScope scope = JobsClientDiagnostics.CreateScope("MockableRecoveryServicesBackupResourceGroupResource.Export");
+            using DiagnosticScope scope = JobsClientDiagnostics.CreateScope("MockableRecoveryServicesBackupResourceGroupResource.ExportJob");
             scope.Start();
             try
             {
@@ -902,7 +884,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = JobsRestClient.CreateExportRequest(vaultName, Id.ResourceGroupName, Id.SubscriptionId, filter, context);
+                HttpMessage message = JobsRestClient.CreateExportJobRequest(vaultName, Id.ResourceGroupName, Id.SubscriptionId, filter, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -935,11 +917,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response Export(string vaultName, string filter = default, CancellationToken cancellationToken = default)
+        public virtual Response ExportJob(string vaultName, string filter = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
 
-            using DiagnosticScope scope = JobsClientDiagnostics.CreateScope("MockableRecoveryServicesBackupResourceGroupResource.Export");
+            using DiagnosticScope scope = JobsClientDiagnostics.CreateScope("MockableRecoveryServicesBackupResourceGroupResource.ExportJob");
             scope.Start();
             try
             {
@@ -947,7 +929,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = JobsRestClient.CreateExportRequest(vaultName, Id.ResourceGroupName, Id.SubscriptionId, filter, context);
+                HttpMessage message = JobsRestClient.CreateExportJobRequest(vaultName, Id.ResourceGroupName, Id.SubscriptionId, filter, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -1040,308 +1022,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
                 filter,
                 skipToken,
                 context), data => new BackupProtectedItemResource(Client, data));
-        }
-
-        /// <summary>
-        /// Validate operation for specified backed up item. This is a synchronous operation.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupValidateOperation. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> OperationOperationGroup_Validate. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="validateOperationRequestResource"> resource validate operation request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="validateOperationRequestResource"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<ValidateOperationsResponse>> ValidateAsync(string vaultName, ValidateOperationRequestResource validateOperationRequestResource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
-            Argument.AssertNotNull(validateOperationRequestResource, nameof(validateOperationRequestResource));
-
-            using DiagnosticScope scope = OperationOperationGroupClientDiagnostics.CreateScope("MockableRecoveryServicesBackupResourceGroupResource.Validate");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = OperationOperationGroupRestClient.CreateValidateRequest(vaultName, Id.ResourceGroupName, Id.SubscriptionId, ValidateOperationRequestResource.ToRequestContent(validateOperationRequestResource), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ValidateOperationsResponse> response = Response.FromValue(ValidateOperationsResponse.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Validate operation for specified backed up item. This is a synchronous operation.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupValidateOperation. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> OperationOperationGroup_Validate. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="validateOperationRequestResource"> resource validate operation request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="validateOperationRequestResource"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<ValidateOperationsResponse> Validate(string vaultName, ValidateOperationRequestResource validateOperationRequestResource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
-            Argument.AssertNotNull(validateOperationRequestResource, nameof(validateOperationRequestResource));
-
-            using DiagnosticScope scope = OperationOperationGroupClientDiagnostics.CreateScope("MockableRecoveryServicesBackupResourceGroupResource.Validate");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = OperationOperationGroupRestClient.CreateValidateRequest(vaultName, Id.ResourceGroupName, Id.SubscriptionId, ValidateOperationRequestResource.ToRequestContent(validateOperationRequestResource), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<ValidateOperationsResponse> response = Response.FromValue(ValidateOperationsResponse.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Validate operation for specified backed up item in the form of an asynchronous operation. Returns tracking headers which can be tracked using GetValidateOperationResult API.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupTriggerValidateOperation. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ValidateOperation_Trigger. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="validateOperationRequestResource"> resource validate operation request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="validateOperationRequestResource"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation> TriggerAsync(WaitUntil waitUntil, string vaultName, ValidateOperationRequestResource validateOperationRequestResource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
-            Argument.AssertNotNull(validateOperationRequestResource, nameof(validateOperationRequestResource));
-
-            using DiagnosticScope scope = ValidateOperationClientDiagnostics.CreateScope("MockableRecoveryServicesBackupResourceGroupResource.Trigger");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = ValidateOperationRestClient.CreateTriggerRequest(vaultName, Id.ResourceGroupName, Id.SubscriptionId, ValidateOperationRequestResource.ToRequestContent(validateOperationRequestResource), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                RecoveryServicesBackupArmOperation operation = new RecoveryServicesBackupArmOperation(ValidateOperationClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Validate operation for specified backed up item in the form of an asynchronous operation. Returns tracking headers which can be tracked using GetValidateOperationResult API.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupTriggerValidateOperation. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ValidateOperation_Trigger. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="validateOperationRequestResource"> resource validate operation request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="validateOperationRequestResource"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation Trigger(WaitUntil waitUntil, string vaultName, ValidateOperationRequestResource validateOperationRequestResource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
-            Argument.AssertNotNull(validateOperationRequestResource, nameof(validateOperationRequestResource));
-
-            using DiagnosticScope scope = ValidateOperationClientDiagnostics.CreateScope("MockableRecoveryServicesBackupResourceGroupResource.Trigger");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = ValidateOperationRestClient.CreateTriggerRequest(vaultName, Id.ResourceGroupName, Id.SubscriptionId, ValidateOperationRequestResource.ToRequestContent(validateOperationRequestResource), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                RecoveryServicesBackupArmOperation operation = new RecoveryServicesBackupArmOperation(ValidateOperationClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    operation.WaitForCompletionResponse(cancellationToken);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Provides the result of the refresh operation triggered by the BeginRefresh operation.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/operationResults/{operationId}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ProtectionContainerRefreshOperationResults_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="fabricName"> Fabric name associated with the container. </param>
-        /// <param name="operationId"> Operation ID associated with the operation whose result needs to be fetched. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response> GetAsync(string vaultName, string fabricName, string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
-            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            using DiagnosticScope scope = ProtectionContainerRefreshOperationResultsClientDiagnostics.CreateScope("MockableRecoveryServicesBackupResourceGroupResource.Get");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = ProtectionContainerRefreshOperationResultsRestClient.CreateGetRequest(vaultName, Id.ResourceGroupName, Id.SubscriptionId, fabricName, operationId, context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Provides the result of the refresh operation triggered by the BeginRefresh operation.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/operationResults/{operationId}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ProtectionContainerRefreshOperationResults_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="fabricName"> Fabric name associated with the container. </param>
-        /// <param name="operationId"> Operation ID associated with the operation whose result needs to be fetched. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response Get(string vaultName, string fabricName, string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
-            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            using DiagnosticScope scope = ProtectionContainerRefreshOperationResultsClientDiagnostics.CreateScope("MockableRecoveryServicesBackupResourceGroupResource.Get");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = ProtectionContainerRefreshOperationResultsRestClient.CreateGetRequest(vaultName, Id.ResourceGroupName, Id.SubscriptionId, fabricName, operationId, context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
 
         /// <summary>
@@ -1454,12 +1134,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="fabricName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> or <paramref name="fabricName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response> RefreshAsync(string vaultName, string fabricName, string filter = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> RefreshProtectionContainerAsync(string vaultName, string fabricName, string filter = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
             Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
 
-            using DiagnosticScope scope = ProtectionContainersOperationGroupClientDiagnostics.CreateScope("MockableRecoveryServicesBackupResourceGroupResource.Refresh");
+            using DiagnosticScope scope = ProtectionContainersOperationGroupClientDiagnostics.CreateScope("MockableRecoveryServicesBackupResourceGroupResource.RefreshProtectionContainer");
             scope.Start();
             try
             {
@@ -1467,7 +1147,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ProtectionContainersOperationGroupRestClient.CreateRefreshRequest(vaultName, Id.ResourceGroupName, Id.SubscriptionId, fabricName, filter, context);
+                HttpMessage message = ProtectionContainersOperationGroupRestClient.CreateRefreshProtectionContainerRequest(vaultName, Id.ResourceGroupName, Id.SubscriptionId, fabricName, filter, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -1502,12 +1182,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="fabricName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> or <paramref name="fabricName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response Refresh(string vaultName, string fabricName, string filter = default, CancellationToken cancellationToken = default)
+        public virtual Response RefreshProtectionContainer(string vaultName, string fabricName, string filter = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
             Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
 
-            using DiagnosticScope scope = ProtectionContainersOperationGroupClientDiagnostics.CreateScope("MockableRecoveryServicesBackupResourceGroupResource.Refresh");
+            using DiagnosticScope scope = ProtectionContainersOperationGroupClientDiagnostics.CreateScope("MockableRecoveryServicesBackupResourceGroupResource.RefreshProtectionContainer");
             scope.Start();
             try
             {
@@ -1515,7 +1195,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ProtectionContainersOperationGroupRestClient.CreateRefreshRequest(vaultName, Id.ResourceGroupName, Id.SubscriptionId, fabricName, filter, context);
+                HttpMessage message = ProtectionContainersOperationGroupRestClient.CreateRefreshProtectionContainerRequest(vaultName, Id.ResourceGroupName, Id.SubscriptionId, fabricName, filter, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -1635,7 +1315,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="BackupProtectionContainerResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BackupProtectionContainerResource> GetAllAsync(string vaultName, string filter = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<BackupProtectionContainerResource> GetBackupProtectionContainersAsync(string vaultName, string filter = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
 
@@ -1643,7 +1323,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BackupProtectionContainerData, BackupProtectionContainerResource>(new BackupProtectionContainersGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<BackupProtectionContainerData, BackupProtectionContainerResource>(new BackupProtectionContainersGetBackupProtectionContainersAsyncCollectionResultOfT(
                 BackupProtectionContainersRestClient,
                 vaultName,
                 Id.ResourceGroupName,
@@ -1675,7 +1355,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="BackupProtectionContainerResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BackupProtectionContainerResource> GetAll(string vaultName, string filter = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<BackupProtectionContainerResource> GetBackupProtectionContainers(string vaultName, string filter = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
 
@@ -1683,7 +1363,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BackupProtectionContainerData, BackupProtectionContainerResource>(new BackupProtectionContainersGetAllCollectionResultOfT(
+            return new PageableWrapper<BackupProtectionContainerData, BackupProtectionContainerResource>(new BackupProtectionContainersGetBackupProtectionContainersCollectionResultOfT(
                 BackupProtectionContainersRestClient,
                 vaultName,
                 Id.ResourceGroupName,
@@ -1795,11 +1475,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<TokenInformation>> GetAsync(string vaultName, SecurityPinContent content = default, string xMsAuthorizationAuxiliary = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TokenInformation>> GetSecurityPinAsync(string vaultName, SecurityPinContent content = default, string xMsAuthorizationAuxiliary = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
 
-            using DiagnosticScope scope = SecurityPINsClientDiagnostics.CreateScope("MockableRecoveryServicesBackupResourceGroupResource.Get");
+            using DiagnosticScope scope = SecurityPINsClientDiagnostics.CreateScope("MockableRecoveryServicesBackupResourceGroupResource.GetSecurityPin");
             scope.Start();
             try
             {
@@ -1807,7 +1487,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SecurityPINsRestClient.CreateGetRequest(vaultName, Id.ResourceGroupName, Id.SubscriptionId, SecurityPinContent.ToRequestContent(content), xMsAuthorizationAuxiliary, context);
+                HttpMessage message = SecurityPINsRestClient.CreateGetSecurityPinRequest(vaultName, Id.ResourceGroupName, Id.SubscriptionId, SecurityPinContent.ToRequestContent(content), xMsAuthorizationAuxiliary, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<TokenInformation> response = Response.FromValue(TokenInformation.FromResponse(result), result);
                 if (response.Value == null)
@@ -1846,11 +1526,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<TokenInformation> Get(string vaultName, SecurityPinContent content = default, string xMsAuthorizationAuxiliary = default, CancellationToken cancellationToken = default)
+        public virtual Response<TokenInformation> GetSecurityPin(string vaultName, SecurityPinContent content = default, string xMsAuthorizationAuxiliary = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
 
-            using DiagnosticScope scope = SecurityPINsClientDiagnostics.CreateScope("MockableRecoveryServicesBackupResourceGroupResource.Get");
+            using DiagnosticScope scope = SecurityPINsClientDiagnostics.CreateScope("MockableRecoveryServicesBackupResourceGroupResource.GetSecurityPin");
             scope.Start();
             try
             {
@@ -1858,7 +1538,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SecurityPINsRestClient.CreateGetRequest(vaultName, Id.ResourceGroupName, Id.SubscriptionId, SecurityPinContent.ToRequestContent(content), xMsAuthorizationAuxiliary, context);
+                HttpMessage message = SecurityPINsRestClient.CreateGetSecurityPinRequest(vaultName, Id.ResourceGroupName, Id.SubscriptionId, SecurityPinContent.ToRequestContent(content), xMsAuthorizationAuxiliary, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<TokenInformation> response = Response.FromValue(TokenInformation.FromResponse(result), result);
                 if (response.Value == null)
@@ -1898,12 +1578,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<TieringCostInfo>> PostAsync(WaitUntil waitUntil, string vaultName, FetchTieringCostInfoContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<TieringCostInfo>> PostFetchTieringCostAsync(WaitUntil waitUntil, string vaultName, FetchTieringCostInfoContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = FetchTieringCostClientDiagnostics.CreateScope("MockableRecoveryServicesBackupResourceGroupResource.Post");
+            using DiagnosticScope scope = FetchTieringCostClientDiagnostics.CreateScope("MockableRecoveryServicesBackupResourceGroupResource.PostFetchTieringCost");
             scope.Start();
             try
             {
@@ -1911,7 +1591,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = FetchTieringCostRestClient.CreatePostRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, FetchTieringCostInfoContent.ToRequestContent(content), context);
+                HttpMessage message = FetchTieringCostRestClient.CreatePostFetchTieringCostRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, FetchTieringCostInfoContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RecoveryServicesBackupArmOperation<TieringCostInfo> operation = new RecoveryServicesBackupArmOperation<TieringCostInfo>(
                     new TieringCostInfoOperationSource(),
@@ -1957,12 +1637,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<TieringCostInfo> Post(WaitUntil waitUntil, string vaultName, FetchTieringCostInfoContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<TieringCostInfo> PostFetchTieringCost(WaitUntil waitUntil, string vaultName, FetchTieringCostInfoContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = FetchTieringCostClientDiagnostics.CreateScope("MockableRecoveryServicesBackupResourceGroupResource.Post");
+            using DiagnosticScope scope = FetchTieringCostClientDiagnostics.CreateScope("MockableRecoveryServicesBackupResourceGroupResource.PostFetchTieringCost");
             scope.Start();
             try
             {
@@ -1970,7 +1650,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = FetchTieringCostRestClient.CreatePostRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, FetchTieringCostInfoContent.ToRequestContent(content), context);
+                HttpMessage message = FetchTieringCostRestClient.CreatePostFetchTieringCostRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, FetchTieringCostInfoContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RecoveryServicesBackupArmOperation<TieringCostInfo> operation = new RecoveryServicesBackupArmOperation<TieringCostInfo>(
                     new TieringCostInfoOperationSource(),

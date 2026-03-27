@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary> Initializes a new instance of <see cref="WorkloadProtectableItemResource"/>. </summary>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        internal WorkloadProtectableItemResource(AzureLocation location) : base(location)
+        public WorkloadProtectableItemResource(AzureLocation location) : base(location)
         {
         }
 
@@ -43,9 +43,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Optional ETag. </summary>
-        public ETag? ETag { get; }
+        public ETag? ETag { get; set; }
 
         /// <summary> WorkloadProtectableItemResource properties. </summary>
-        public WorkloadProtectableItem Properties { get; }
+        public WorkloadProtectableItem Properties { get; set; }
     }
 }

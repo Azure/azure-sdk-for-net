@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -25,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="name"> File share name. </param>
         /// <param name="targetResourceId"> Target file share resource ARM ID. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TargetAfsRestoreInfo(string name, string targetResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TargetAfsRestoreInfo(string name, ResourceIdentifier targetResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             TargetResourceId = targetResourceId;
@@ -36,6 +37,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public string Name { get; set; }
 
         /// <summary> Target file share resource ARM ID. </summary>
-        public string TargetResourceId { get; set; }
+        public ResourceIdentifier TargetResourceId { get; set; }
     }
 }

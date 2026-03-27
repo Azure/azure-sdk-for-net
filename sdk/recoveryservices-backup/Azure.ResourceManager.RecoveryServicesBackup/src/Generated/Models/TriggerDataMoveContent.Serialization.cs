@@ -160,8 +160,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            string sourceResourceId = default;
-            string sourceRegion = default;
+            ResourceIdentifier sourceResourceId = default;
+            AzureLocation sourceRegion = default;
             DataMoveLevel dataMoveLevel = default;
             string correlationId = default;
             IList<ResourceIdentifier> sourceContainerArmIds = default;
@@ -171,12 +171,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 if (prop.NameEquals("sourceResourceId"u8))
                 {
-                    sourceResourceId = prop.Value.GetString();
+                    sourceResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("sourceRegion"u8))
                 {
-                    sourceRegion = prop.Value.GetString();
+                    sourceRegion = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("dataMoveLevel"u8))

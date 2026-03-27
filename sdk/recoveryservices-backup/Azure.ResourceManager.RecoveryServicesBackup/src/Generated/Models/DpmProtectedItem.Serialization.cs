@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
@@ -126,12 +127,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             BackupManagementType? backupManagementType = default;
             BackupDataSourceType? workloadType = default;
             string containerName = default;
-            string sourceResourceId = default;
-            string policyId = default;
-            DateTimeOffset? lastRecoveryPoint = default;
+            ResourceIdentifier sourceResourceId = default;
+            ResourceIdentifier policyId = default;
+            DateTimeOffset? lastRecoverOn = default;
             string backupSetName = default;
             BackupCreateMode? createMode = default;
-            DateTimeOffset? deferredDeleteTimeInUTC = default;
+            DateTimeOffset? deferredDeletedOn = default;
             bool? isScheduledForDeferredDelete = default;
             string deferredDeleteTimeRemaining = default;
             bool? isDeferredDeleteScheduleUpcoming = default;
@@ -179,12 +180,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 if (prop.NameEquals("sourceResourceId"u8))
                 {
-                    sourceResourceId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sourceResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("policyId"u8))
                 {
-                    policyId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    policyId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("lastRecoveryPoint"u8))
@@ -193,7 +202,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    lastRecoveryPoint = prop.Value.GetDateTimeOffset("O");
+                    lastRecoverOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("backupSetName"u8))
@@ -216,7 +225,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    deferredDeleteTimeInUTC = prop.Value.GetDateTimeOffset("O");
+                    deferredDeletedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("isScheduledForDeferredDelete"u8))
@@ -349,10 +358,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 containerName,
                 sourceResourceId,
                 policyId,
-                lastRecoveryPoint,
+                lastRecoverOn,
                 backupSetName,
                 createMode,
-                deferredDeleteTimeInUTC,
+                deferredDeletedOn,
                 isScheduledForDeferredDelete,
                 deferredDeleteTimeRemaining,
                 isDeferredDeleteScheduleUpcoming,

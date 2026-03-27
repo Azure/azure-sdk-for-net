@@ -41,14 +41,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateValidateRequest(string azureRegion, string subscriptionId, RequestContent content, RequestContext context)
+        internal HttpMessage CreateValidateFeatureSupportRequest(AzureLocation location, string subscriptionId, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.RecoveryServices/locations/", false);
-            uri.AppendPath(azureRegion, true);
+            uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/backupValidateFeatures", false);
             if (_apiVersion != null)
             {

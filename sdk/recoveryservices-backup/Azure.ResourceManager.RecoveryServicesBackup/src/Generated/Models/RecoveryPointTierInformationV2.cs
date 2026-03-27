@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="extendedInfo"> Recovery point tier status. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="type"> Recovery point tier type. </param>
-        internal RecoveryPointTierInformationV2(RecoveryPointTierType? tierType, BackupRecoveryPointTierStatus? status, IDictionary<string, string> extendedInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties, RecoveryPointTierType? @type) : base(tierType, status, extendedInfo, additionalBinaryDataProperties)
+        internal RecoveryPointTierInformationV2(RecoveryPointTierType? tierType, RecoveryPointTierStatus? status, IDictionary<string, string> extendedInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties, RecoveryPointTierType? @type) : base(tierType, status, extendedInfo, additionalBinaryDataProperties)
         {
             Type = @type;
         }

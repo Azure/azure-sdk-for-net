@@ -17,11 +17,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> The ResourceGuardProxyProperties. </summary>
     public partial class ResourceGuardProxyProperties : IJsonModel<ResourceGuardProxyProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="ResourceGuardProxyProperties"/> for deserialization. </summary>
-        internal ResourceGuardProxyProperties()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceGuardProxyProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

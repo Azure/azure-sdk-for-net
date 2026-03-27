@@ -20,11 +20,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     [PersistableModelProxy(typeof(UnknownFeatureSupportContent))]
     public abstract partial class FeatureSupportContent : IJsonModel<FeatureSupportContent>
     {
-        /// <summary> Initializes a new instance of <see cref="FeatureSupportContent"/> for deserialization. </summary>
-        internal FeatureSupportContent()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual FeatureSupportContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

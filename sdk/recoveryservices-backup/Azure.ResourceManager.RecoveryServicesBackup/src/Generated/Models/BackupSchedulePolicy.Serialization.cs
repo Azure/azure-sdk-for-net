@@ -19,11 +19,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     [PersistableModelProxy(typeof(UnknownBackupSchedulePolicy))]
     public abstract partial class BackupSchedulePolicy : IJsonModel<BackupSchedulePolicy>
     {
-        /// <summary> Initializes a new instance of <see cref="BackupSchedulePolicy"/> for deserialization. </summary>
-        internal BackupSchedulePolicy()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BackupSchedulePolicy PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

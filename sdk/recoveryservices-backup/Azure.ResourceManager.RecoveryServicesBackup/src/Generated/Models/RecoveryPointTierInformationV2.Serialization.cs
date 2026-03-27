@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 return null;
             }
             RecoveryPointTierType? tierType = default;
-            BackupRecoveryPointTierStatus? status = default;
+            RecoveryPointTierStatus? status = default;
             IDictionary<string, string> extendedInfo = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             RecoveryPointTierType? @type = default;
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    status = new BackupRecoveryPointTierStatus(prop.Value.GetString());
+                    status = prop.Value.GetString().ToRecoveryPointTierStatus();
                     continue;
                 }
                 if (prop.NameEquals("extendedInfo"u8))

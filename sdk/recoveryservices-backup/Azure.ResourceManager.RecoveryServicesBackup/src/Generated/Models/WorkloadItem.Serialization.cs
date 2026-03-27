@@ -19,11 +19,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     [PersistableModelProxy(typeof(UnknownWorkloadItem))]
     public abstract partial class WorkloadItem : IJsonModel<WorkloadItem>
     {
-        /// <summary> Initializes a new instance of <see cref="WorkloadItem"/> for deserialization. </summary>
-        internal WorkloadItem()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual WorkloadItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
