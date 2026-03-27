@@ -913,9 +913,9 @@ This maps five endpoints:
 
 ### Custom Response Provider
 
-The server delegates state persistence, event streaming, and cancellation to three pluggable provider interfaces. The default in-memory implementation works for single-instance deployments.
+The server delegates state persistence, event streaming, and cancellation to three pluggable provider abstract classes. The default in-memory implementation works for single-instance deployments.
 
-#### Provider Interface Split
+#### Provider Abstract Class Split
 
 The provider contract is split into **three focused abstract classes**, each with a single responsibility:
 

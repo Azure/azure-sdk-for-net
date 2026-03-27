@@ -196,9 +196,9 @@ The library validates both incoming requests and handler-produced output.
 
 ## Persistence Contract
 
-The library delegates state persistence to a pluggable provider interface.
+The library delegates state persistence to a pluggable provider abstract class.
 
-- **S-034**: The library MUST delegate state persistence to a pluggable provider interface. The abstract provider MUST support the following operations:
+- **S-034**: The library MUST delegate state persistence to a pluggable provider abstract class. The abstract provider MUST support the following operations:
 
   | Operation | Purpose |
   |-----------|---------|

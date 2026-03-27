@@ -603,7 +603,7 @@ public class PartialProviderOverrideTests : IDisposable
 
     /// <summary>
     /// A state-only provider that handles Create/Get/Update with in-memory storage
-    /// but does NOT implement ResponsesCancellationSignalProvider or ResponsesStreamProvider.
+    /// but does NOT extend ResponsesCancellationSignalProvider or ResponsesStreamProvider.
     /// </summary>
     private sealed class StateOnlyProvider : ResponsesProvider
     {

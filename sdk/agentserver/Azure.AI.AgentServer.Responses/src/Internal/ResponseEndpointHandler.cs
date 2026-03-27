@@ -255,7 +255,7 @@ internal sealed class ResponseEndpointHandler
                 // tracker, mode flags are not persisted on the Response model.
                 // The stream provider may still have events for non-bg responses
                 // within the EventStreamTtl window. A full fix requires storing
-                // mode flags in the provider or stream provider interface.
+                // mode flags in the provider or stream provider abstract class.
             }
 
             // In-flight and passed guards OR not-in-flight and exists in provider —
