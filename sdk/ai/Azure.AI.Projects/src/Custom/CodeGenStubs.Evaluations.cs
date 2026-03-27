@@ -3,7 +3,19 @@
 
 namespace Azure.AI.Projects.Evaluation;
 
+[CodeGenType("AgentTaxonomyInput")] public partial class AgentTaxonomyInput { }
+[CodeGenType("AgentClusterInsightRequest")] public partial class AgentClusterInsightRequest { }
+[CodeGenType("AgentClusterInsightResult")] public partial class AgentClusterInsightResult { }
+[CodeGenType("AttackStrategy")] public readonly partial struct AttackStrategy { }
+[CodeGenType("AzureAIAgentTarget")] internal partial class AzureAIAgentTarget { }
+[CodeGenType("AzureAIModelTarget")] internal partial class AzureAIModelTarget { }
+[CodeGenType("AzureOpenAIModelConfiguration")] public partial class AzureOpenAIModelConfiguration { }
+[CodeGenType("ChartCoordinate")] public partial class ChartCoordinate { }
 [CodeGenType("ContinuousEvaluationRuleAction")] public partial class ContinuousEvaluationRuleAction { }
+[CodeGenType("ClusterInsightResult")] public partial class ClusterInsightResult { }
+[CodeGenType("ClusterTokenUsage")] public partial class ClusterTokenUsage { }
+[CodeGenType("CronTrigger")] public partial class CronTrigger { }
+[CodeGenType("DailyRecurrenceSchedule")] public partial class DailyRecurrenceSchedule { }
 [CodeGenType("EvalResult")] public partial class EvalResult { }
 [CodeGenType("EvalRunResultCompareItem")] public partial class EvalRunResultCompareItem { }
 [CodeGenType("EvalRunResultComparison")] public partial class EvalRunResultComparison { }
@@ -31,6 +43,8 @@ namespace Azure.AI.Projects.Evaluation;
 [CodeGenType("EvaluatorMetricDirection")] public readonly partial struct EvaluatorMetricDirection { }
 [CodeGenType("EvaluatorMetricType")] public readonly partial struct EvaluatorMetricType { }
 [CodeGenType("EvaluatorVersion")] public partial class EvaluatorVersion { }
+[CodeGenType("HourlyRecurrenceSchedule")] public partial class HourlyRecurrenceSchedule { }
+[CodeGenType("HumanEvaluationPreviewRuleAction")] public partial class HumanEvaluationPreviewRuleAction { }
 [CodeGenType("InsightCluster")] public partial class InsightCluster { }
 [CodeGenType("InsightModelConfiguration")] public partial class InsightModelConfiguration { }
 [CodeGenType("InsightRequest")] public abstract partial class InsightRequest { }
@@ -40,6 +54,11 @@ namespace Azure.AI.Projects.Evaluation;
 [CodeGenType("InsightsMetadata")] public partial class InsightsMetadata { }
 [CodeGenType("InsightSummary")] public partial class InsightSummary { }
 [CodeGenType("InsightType")] public readonly partial struct InsightType { }
+[CodeGenType("ListVersionsRequestType")] public readonly partial struct ListVersionsRequestType { }
+[CodeGenType("ModelSamplingParams")] internal partial class ModelSamplingParams { }
+[CodeGenType("MonthlyRecurrenceSchedule")] public partial class MonthlyRecurrenceSchedule { }
+[CodeGenType("OneTimeTrigger")] public partial class OneTimeTrigger { }
+[CodeGenType("OperationStatus")] public readonly partial struct OperationStatus { }
 [CodeGenType("PagedEvaluationRule")] internal partial class PagedEvaluationRule { }
 [CodeGenType("PagedEvaluationTaxonomy")] internal partial class PagedEvaluationTaxonomy { }
 [CodeGenType("PagedEvaluatorVersion")] internal partial class PagedEvaluatorVersion { }
@@ -47,18 +66,15 @@ namespace Azure.AI.Projects.Evaluation;
 [CodeGenType("PagedSchedule")] internal partial class PagedSchedule { }
 [CodeGenType("PagedScheduleRun")] internal partial class PagedScheduleRun { }
 [CodeGenType("ProjectInsight")] public partial class ProjectInsight { }
-[CodeGenType("ProjectsSchedule")] public partial class ProjectsSchedule { }
 [CodeGenType("RecurrenceSchedule")] public abstract partial class RecurrenceSchedule { }
 [CodeGenType("RecurrenceTrigger")] public partial class RecurrenceTrigger { }
 [CodeGenType("RecurrenceType")] internal readonly partial struct RecurrenceType { }
 [CodeGenType("RedTeam")] public partial class RedTeam { }
-[CodeGenType("RedTeams")] public partial class RedTeams { }
 [CodeGenType("RiskCategory")] public readonly partial struct RiskCategory { }
 [CodeGenType("SampleType")] internal readonly partial struct SampleType { }
 [CodeGenType("ScheduleProvisioningStatus")] public readonly partial struct ScheduleProvisioningStatus { }
 [CodeGenType("ScheduleRun")] public partial class ScheduleRun { }
 [CodeGenType("ScheduleTaskType")] public readonly partial struct ScheduleTaskType { }
-[CodeGenType("ScheduleTrigger")] public abstract partial class ScheduleTrigger { }
 [CodeGenType("TargetConfig")] public abstract partial class TargetConfig { }
 [CodeGenType("TaxonomyCategory")] public partial class TaxonomyCategory { }
 [CodeGenType("TaxonomySubCategory")] public partial class TaxonomySubCategory { }

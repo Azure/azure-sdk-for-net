@@ -5,9 +5,10 @@
 
 using System;
 
-namespace Azure.AI.Projects.Management
+namespace Azure.AI.Projects
 {
     /// <summary> Blob reference details. </summary>
+    [CodeGenType("AIProjectBlobReference")]
     public partial class AIProjectBlobReference
     {
         public Uri BlobUri { get; }

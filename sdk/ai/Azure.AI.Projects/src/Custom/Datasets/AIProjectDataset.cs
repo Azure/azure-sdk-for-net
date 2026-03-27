@@ -5,7 +5,7 @@
 
 using System;
 
-namespace Azure.AI.Projects.Management
+namespace Azure.AI.Projects
 {
     /// <summary>
     /// AIProjectDataset Definition

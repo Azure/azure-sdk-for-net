@@ -4,9 +4,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.Projects.Evaluation;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary>
     /// Base model for Trigger of the schedule.

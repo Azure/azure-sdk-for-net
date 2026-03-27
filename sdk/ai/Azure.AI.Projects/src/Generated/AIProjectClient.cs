@@ -29,7 +29,7 @@ namespace Azure.AI.Projects
         private AIProjectDatasetsOperations _cachedAIProjectDatasetsOperations;
         private AIProjectIndexesOperations _cachedAIProjectIndexesOperations;
         private AIProjectDeploymentsOperations _cachedAIProjectDeploymentsOperations;
-        private Evaluation.RedTeams _cachedRedTeams;
+        private RedTeams _cachedRedTeams;
         private EvaluationRules _cachedEvaluationRules;
         private EvaluationTaxonomies _cachedEvaluationTaxonomies;
         private ProjectEvaluators _cachedProjectEvaluators;

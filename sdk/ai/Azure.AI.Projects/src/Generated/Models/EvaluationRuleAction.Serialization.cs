@@ -11,7 +11,7 @@ namespace Azure.AI.Projects.Evaluation
 {
     /// <summary>
     /// Evaluation action model.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ContinuousEvaluationRuleAction"/> and <see cref="Projects.HumanEvaluationPreviewRuleAction"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ContinuousEvaluationRuleAction"/> and <see cref="HumanEvaluationPreviewRuleAction"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownEvaluationRuleAction))]
     public abstract partial class EvaluationRuleAction : IJsonModel<EvaluationRuleAction>
@@ -130,7 +130,7 @@ namespace Azure.AI.Projects.Evaluation
                     case "continuousEvaluation":
                         return ContinuousEvaluationRuleAction.DeserializeContinuousEvaluationRuleAction(element, options);
                     case "humanEvaluationPreview":
-                        return Projects.HumanEvaluationPreviewRuleAction.DeserializeHumanEvaluationPreviewRuleAction(element, options);
+                        return HumanEvaluationPreviewRuleAction.DeserializeHumanEvaluationPreviewRuleAction(element, options);
                 }
             }
             return UnknownEvaluationRuleAction.DeserializeUnknownEvaluationRuleAction(element, options);

@@ -9,7 +9,7 @@ using Azure.AI.Projects;
 namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Recurrence based trigger. </summary>
-    public partial class RecurrenceTrigger : Projects.ScheduleTrigger
+    public partial class RecurrenceTrigger : ScheduleTrigger
     {
         /// <summary> Initializes a new instance of <see cref="RecurrenceTrigger"/>. </summary>
         /// <param name="interval"> Interval for the recurrence schedule. </param>

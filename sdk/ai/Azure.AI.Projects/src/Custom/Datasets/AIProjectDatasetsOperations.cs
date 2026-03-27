@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Storage.Blobs;
 
-namespace Azure.AI.Projects.Management
+namespace Azure.AI.Projects
 {
     [CodeGenType("AIProjectDatasetsOperations")]
     public partial class AIProjectDatasetsOperations

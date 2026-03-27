@@ -5,9 +5,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.AI.Projects.Evaluation;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Input configuration for the evaluation taxonomy when the input type is agent. </summary>
     public partial class AgentTaxonomyInput : EvaluationTaxonomyInput

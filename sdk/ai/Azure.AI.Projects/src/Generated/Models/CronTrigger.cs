@@ -4,9 +4,9 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.Projects.Evaluation;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Cron based trigger. </summary>
     public partial class CronTrigger : ScheduleTrigger

@@ -27,7 +27,7 @@ namespace Azure.AI.Projects
         /// <param name="previousSearchId"> The unique ID of the previous search request, enabling incremental memory search from where the last operation left off. </param>
         /// <param name="options"> Memory search options. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InternalMemorySearchOptions(string scope, IList<InputItem> items, string previousSearchId, Memory.MemorySearchResultOptions options, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InternalMemorySearchOptions(string scope, IList<InputItem> items, string previousSearchId, MemorySearchResultOptions options, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Scope = scope;
             Items = items;
@@ -46,6 +46,6 @@ namespace Azure.AI.Projects
         public string PreviousSearchId { get; }
 
         /// <summary> Memory search options. </summary>
-        public Memory.MemorySearchResultOptions Options { get; }
+        public MemorySearchResultOptions Options { get; }
     }
 }

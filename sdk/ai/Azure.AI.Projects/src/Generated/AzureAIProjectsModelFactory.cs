@@ -458,7 +458,7 @@ namespace Azure.AI.Projects
 
         /// <summary>
         /// Abstract class for target configuration.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.AzureOpenAIModelConfiguration"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Evaluation.AzureOpenAIModelConfiguration"/>.
         /// </summary>
         /// <param name="type"> Type of the model configuration. </param>
         /// <returns> A new <see cref="Evaluation.TargetConfig"/> instance for mocking. </returns>
@@ -469,7 +469,7 @@ namespace Azure.AI.Projects
 
         /// <summary> Azure OpenAI model configuration. The API version would be selected by the service for querying the model. </summary>
         /// <param name="modelDeploymentName"> Deployment name for AOAI model. Example: gpt-4o if in AIServices or connection based `connection_name/deployment_name` (e.g. `my-aoai-connection/gpt-4o`). </param>
-        /// <returns> A new <see cref="Projects.AzureOpenAIModelConfiguration"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Evaluation.AzureOpenAIModelConfiguration"/> instance for mocking. </returns>
         public static AzureOpenAIModelConfiguration AzureOpenAIModelConfiguration(string modelDeploymentName = default)
         {
             return new AzureOpenAIModelConfiguration("AzureOpenAIModel", additionalBinaryDataProperties: null, modelDeploymentName);
@@ -503,7 +503,7 @@ namespace Azure.AI.Projects
 
         /// <summary>
         /// Evaluation action model.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Evaluation.ContinuousEvaluationRuleAction"/> and <see cref="Projects.HumanEvaluationPreviewRuleAction"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Evaluation.ContinuousEvaluationRuleAction"/> and <see cref="Evaluation.HumanEvaluationPreviewRuleAction"/>.
         /// </summary>
         /// <param name="type"> Type of the evaluation action. </param>
         /// <returns> A new <see cref="Evaluation.EvaluationRuleAction"/> instance for mocking. </returns>
@@ -523,7 +523,7 @@ namespace Azure.AI.Projects
 
         /// <summary> Evaluation rule action for human evaluation. </summary>
         /// <param name="templateId"> Human evaluation template Id. </param>
-        /// <returns> A new <see cref="Projects.HumanEvaluationPreviewRuleAction"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Evaluation.HumanEvaluationPreviewRuleAction"/> instance for mocking. </returns>
         public static HumanEvaluationPreviewRuleAction HumanEvaluationPreviewRuleAction(string templateId = default)
         {
             return new HumanEvaluationPreviewRuleAction(EvaluationRuleActionType.HumanEvaluationPreview, additionalBinaryDataProperties: null, templateId);
@@ -760,7 +760,7 @@ namespace Azure.AI.Projects
 
         /// <summary>
         /// The request of the insights report.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Evaluation.EvaluationRunClusterInsightRequest"/>, <see cref="Projects.AgentClusterInsightRequest"/>, and <see cref="Evaluation.EvaluationComparisonInsightRequest"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Evaluation.EvaluationRunClusterInsightRequest"/>, <see cref="Evaluation.AgentClusterInsightRequest"/>, and <see cref="Evaluation.EvaluationComparisonInsightRequest"/>.
         /// </summary>
         /// <param name="type"> The type of request. </param>
         /// <returns> A new <see cref="Evaluation.InsightRequest"/> instance for mocking. </returns>
@@ -792,7 +792,7 @@ namespace Azure.AI.Projects
         /// <summary> Insights on set of Agent Evaluation Results. </summary>
         /// <param name="agentName"> Identifier for the agent. </param>
         /// <param name="modelConfiguration"> Configuration of the model used in the insight generation. </param>
-        /// <returns> A new <see cref="Projects.AgentClusterInsightRequest"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Evaluation.AgentClusterInsightRequest"/> instance for mocking. </returns>
         public static AgentClusterInsightRequest AgentClusterInsightRequest(string agentName = default, InsightModelConfiguration modelConfiguration = default)
         {
             return new AgentClusterInsightRequest(InsightType.AgentClusterInsight, additionalBinaryDataProperties: null, agentName, modelConfiguration);
@@ -812,7 +812,7 @@ namespace Azure.AI.Projects
 
         /// <summary>
         /// The result of the insights.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Evaluation.EvaluationComparisonInsightResult"/>, <see cref="Evaluation.EvaluationRunClusterInsightResult"/>, and <see cref="Projects.AgentClusterInsightResult"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Evaluation.EvaluationComparisonInsightResult"/>, <see cref="Evaluation.EvaluationRunClusterInsightResult"/>, and <see cref="Evaluation.AgentClusterInsightResult"/>.
         /// </summary>
         /// <param name="type"> The type of insights result. </param>
         /// <returns> A new <see cref="Evaluation.InsightResult"/> instance for mocking. </returns>
@@ -908,7 +908,7 @@ namespace Azure.AI.Projects
         ///   Coordinates are intended only for client-side visualization and do not
         ///   modify the canonical insights results.
         /// </param>
-        /// <returns> A new <see cref="Projects.ClusterInsightResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Evaluation.ClusterInsightResult"/> instance for mocking. </returns>
         public static ClusterInsightResult ClusterInsightResult(InsightSummary summary = default, IEnumerable<InsightCluster> clusters = default, IDictionary<string, ChartCoordinate> coordinates = default)
         {
             clusters ??= new ChangeTrackingList<InsightCluster>();
@@ -939,7 +939,7 @@ namespace Azure.AI.Projects
         /// <param name="inputTokenUsage"> input token usage. </param>
         /// <param name="outputTokenUsage"> output token usage. </param>
         /// <param name="totalTokenUsage"> total token usage. </param>
-        /// <returns> A new <see cref="Projects.ClusterTokenUsage"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Evaluation.ClusterTokenUsage"/> instance for mocking. </returns>
         public static ClusterTokenUsage ClusterTokenUsage(int inputTokenUsage = default, int outputTokenUsage = default, int totalTokenUsage = default)
         {
             return new ClusterTokenUsage(inputTokenUsage, outputTokenUsage, totalTokenUsage, additionalBinaryDataProperties: null);
@@ -987,7 +987,7 @@ namespace Azure.AI.Projects
         /// <param name="x"> X-axis coordinate. </param>
         /// <param name="y"> Y-axis coordinate. </param>
         /// <param name="size"> Size of the chart element. </param>
-        /// <returns> A new <see cref="Projects.ChartCoordinate"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Evaluation.ChartCoordinate"/> instance for mocking. </returns>
         public static ChartCoordinate ChartCoordinate(int x = default, int y = default, int size = default)
         {
             return new ChartCoordinate(x, y, size, additionalBinaryDataProperties: null);
@@ -995,7 +995,7 @@ namespace Azure.AI.Projects
 
         /// <summary> Insights from the agent cluster analysis. </summary>
         /// <param name="clusterInsight"></param>
-        /// <returns> A new <see cref="Projects.AgentClusterInsightResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Evaluation.AgentClusterInsightResult"/> instance for mocking. </returns>
         public static AgentClusterInsightResult AgentClusterInsightResult(ClusterInsightResult clusterInsight = default)
         {
             return new AgentClusterInsightResult(InsightType.AgentClusterInsight, additionalBinaryDataProperties: null, clusterInsight);
@@ -1012,7 +1012,7 @@ namespace Azure.AI.Projects
         /// <param name="tags"> Schedule's tags. Unlike properties, tags are fully mutable. </param>
         /// <param name="properties"> Schedule's properties. Unlike tags, properties are add-only. Once added, a property cannot be removed. </param>
         /// <param name="systemData"> System metadata for the resource. </param>
-        /// <returns> A new <see cref="Projects.ProjectsSchedule"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Evaluation.ProjectsSchedule"/> instance for mocking. </returns>
         public static ProjectsSchedule ProjectsSchedule(string id = default, string displayName = default, string description = default, bool enabled = default, ScheduleProvisioningStatus? provisioningStatus = default, ScheduleTrigger trigger = default, ProjectsScheduleTask task = default, IDictionary<string, string> tags = default, IDictionary<string, string> properties = default, IReadOnlyDictionary<string, string> systemData = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
@@ -1171,9 +1171,9 @@ namespace Azure.AI.Projects
         /// <summary> Memory search options. </summary>
         /// <param name="maxMemories"> Maximum number of memory items to return. </param>
         /// <returns> A new <see cref="Memory.MemorySearchResultOptions"/> instance for mocking. </returns>
-        public static Memory.MemorySearchResultOptions MemorySearchResultOptions(int? maxMemories = default)
+        public static MemorySearchResultOptions MemorySearchResultOptions(int? maxMemories = default)
         {
-            return new Memory.MemorySearchResultOptions(maxMemories, additionalBinaryDataProperties: null);
+            return new MemorySearchResultOptions(maxMemories, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Memory search response. </summary>
@@ -1236,11 +1236,11 @@ namespace Azure.AI.Projects
         /// <param name="memoryOperations"> A list of individual memory operations that were performed during the update. </param>
         /// <param name="usage"> Usage statistics associated with the memory update operation. </param>
         /// <returns> A new <see cref="Memory.MemoryUpdateResultDetails"/> instance for mocking. </returns>
-        public static Memory.MemoryUpdateResultDetails MemoryUpdateResultDetails(IEnumerable<MemoryOperation> memoryOperations = default, MemoryStoreOperationUsage usage = default)
+        public static MemoryUpdateResultDetails MemoryUpdateResultDetails(IEnumerable<MemoryOperation> memoryOperations = default, MemoryStoreOperationUsage usage = default)
         {
             memoryOperations ??= new ChangeTrackingList<MemoryOperation>();
 
-            return new Memory.MemoryUpdateResultDetails(memoryOperations.ToList(), usage, additionalBinaryDataProperties: null);
+            return new MemoryUpdateResultDetails(memoryOperations.ToList(), usage, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Represents a single memory operation (create, update, or delete) performed on a memory item. </summary>

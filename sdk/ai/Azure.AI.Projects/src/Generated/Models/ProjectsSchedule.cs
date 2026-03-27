@@ -4,9 +4,9 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.Projects.Evaluation;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Schedule model. </summary>
     public partial class ProjectsSchedule

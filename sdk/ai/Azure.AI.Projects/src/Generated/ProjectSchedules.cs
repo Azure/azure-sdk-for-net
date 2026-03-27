@@ -294,7 +294,7 @@ namespace Azure.AI.Projects
             Argument.AssertNotNullOrEmpty(id, nameof(id));
             Argument.AssertNotNull(resource, nameof(resource));
 
-            ClientResult result = this.CreateOrUpdate(id, resource, cancellationToken.ToRequestOptions());
+            ClientResult result = CreateOrUpdate(id, resource, cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((ProjectsSchedule)result, result.GetRawResponse());
         }
 
@@ -310,7 +310,7 @@ namespace Azure.AI.Projects
             Argument.AssertNotNullOrEmpty(id, nameof(id));
             Argument.AssertNotNull(resource, nameof(resource));
 
-            ClientResult result = await this.CreateOrUpdateAsync(id, resource, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            ClientResult result = await CreateOrUpdateAsync(id, resource, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((ProjectsSchedule)result, result.GetRawResponse());
         }
 

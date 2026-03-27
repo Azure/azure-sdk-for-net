@@ -4,7 +4,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace Azure.AI.Projects.Management
+namespace Azure.AI.Projects
 {
     [CodeGenType("AIProjectConnectionCustomCredential")]
     public partial class AIProjectConnectionCustomCredential
