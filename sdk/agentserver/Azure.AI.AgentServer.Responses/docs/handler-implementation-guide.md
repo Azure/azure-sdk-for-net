@@ -842,7 +842,7 @@ See [Token Usage (B33)](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk
 
 ### Tier 1: One-Line Startup (Recommended)
 
-The simplest way to start a Responses server is with the `Azure.AI.AgentServer.Hosting` package:
+The simplest way to start a Responses server is with the `Azure.AI.AgentServer.Core` package:
 
 ```csharp
 using Azure.AI.AgentServer.Responses;

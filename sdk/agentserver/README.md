@@ -6,13 +6,13 @@ The Azure AI Agent Server libraries let you build ASP.NET Core servers that impl
 
 | Package | Description | NuGet |
 |---------|-------------|-------|
-| [Azure.AI.AgentServer.Hosting](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Hosting) | Shared hosting foundation: library-owned ASP.NET Core host with OpenTelemetry, health checks, server user-agent header, and multi-protocol composition. | [![NuGet](https://img.shields.io/nuget/vpre/Azure.AI.AgentServer.Hosting.svg)](https://www.nuget.org/packages/Azure.AI.AgentServer.Hosting) |
+| [Azure.AI.AgentServer.Core](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Core) | Shared hosting foundation: library-owned ASP.NET Core host with OpenTelemetry, health checks, server user-agent header, and multi-protocol composition. | [![NuGet](https://img.shields.io/nuget/vpre/Azure.AI.AgentServer.Core.svg)](https://www.nuget.org/packages/Azure.AI.AgentServer.Core) |
 | Azure.AI.AgentServer.Responses *(coming soon)* | Responses protocol implementation: SSE streaming, background execution, response lifecycle management, and `IResponseHandler` interface. | [![NuGet](https://img.shields.io/nuget/vpre/Azure.AI.AgentServer.Responses.svg)](https://www.nuget.org/packages/Azure.AI.AgentServer.Responses) |
 | Azure.AI.AgentServer.Invocations *(coming soon)* | Invocations protocol implementation: `InvocationHandler` abstract class, session resolution, client header forwarding, and invocation lifecycle. | [![NuGet](https://img.shields.io/nuget/vpre/Azure.AI.AgentServer.Invocations.svg)](https://www.nuget.org/packages/Azure.AI.AgentServer.Invocations) |
 
 ## When to use which package
 
-- **Hosting** is the foundation — install it when you need a server host. It is automatically referenced by both protocol packages.
+- **Core** is the foundation — install it when you need a server host. It is automatically referenced by both protocol packages.
 - **Responses** implements the Azure AI Responses API (SSE streaming, function calling, conversation history). Use it when your agent communicates via the Responses protocol.
 - **Invocations** implements the Azure AI Invocations protocol (request/response handler pattern). Use it when your agent communicates via the Invocations protocol.
 - **Both protocols together**: Use `AgentHostBuilder` with `.AddResponses<T>()` and `.AddInvocations<T>()` to compose both protocols on a single host.

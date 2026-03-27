@@ -4,7 +4,7 @@
 using System.Net;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
-using Azure.AI.AgentServer.Hosting;
+using Azure.AI.AgentServer.Core;
 using Azure.AI.AgentServer.Responses.Models;
 using Azure.AI.AgentServer.Responses.Tests.Helpers;
 

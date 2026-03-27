@@ -24,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Azure.AI.AgentServer.Hosting\src\Azure.AI.AgentServer.Hosting.csproj" />
+    <ProjectReference Include="..\..\Azure.AI.AgentServer.Core\src\Azure.AI.AgentServer.Core.csproj" />
     <ProjectReference Include="..\..\Azure.AI.AgentServer.Responses.Contracts\src\Azure.AI.AgentServer.Responses.Contracts.csproj" />
   </ItemGroup>
 

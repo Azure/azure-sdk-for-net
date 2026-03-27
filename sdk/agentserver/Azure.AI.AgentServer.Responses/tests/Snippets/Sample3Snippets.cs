@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Runtime.CompilerServices;
-using Azure.AI.AgentServer.Hosting;
+using Azure.AI.AgentServer.Core;
 using Azure.AI.AgentServer.Responses;
 using Azure.AI.AgentServer.Responses.Models;
 using NUnit.Framework;

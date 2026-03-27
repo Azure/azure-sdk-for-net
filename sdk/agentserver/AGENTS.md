@@ -84,8 +84,8 @@ principles conflict, resolve in this priority order:
 
 | Project | Path | Description |
 |---|---|---|
-| **Hosting** | `Azure.AI.AgentServer.Hosting/src/` | Shared hosting foundation: `AgentHost`, `AgentHostBuilder`, OpenTelemetry, user-agent header, health endpoint |
-| **Hosting Tests** | `Azure.AI.AgentServer.Hosting/tests/` | NUnit tests for Hosting |
+| **Core** | `Azure.AI.AgentServer.Core/src/` | Shared foundation: `AgentHost`, `AgentHostBuilder`, OpenTelemetry, user-agent header, health endpoint |
+| **Core Tests** | `Azure.AI.AgentServer.Core/tests/` | NUnit tests for Core |
 | **Invocations** | `Azure.AI.AgentServer.Invocations/src/` | Invocations protocol: `InvocationHandler`, session resolution, client header forwarding |
 | **Invocations Tests** | `Azure.AI.AgentServer.Invocations/tests/` | NUnit tests for Invocations |
 | **Responses.Contracts** | `Azure.AI.AgentServer.Responses.Contracts/src/` | TypeSpec-generated model contracts for Responses protocol |
@@ -101,7 +101,7 @@ principles conflict, resolve in this priority order:
 
 | Protocol | Location | Notes |
 |---|---|---|
-| Hosting / Invocations | This file | — |
+| Core / Invocations | This file | — |
 | Responses | `Azure.AI.AgentServer.Responses/AGENTS.md` | Contract compliance (B1–B37, S-001–S-046) |
 
 > When adding a new protocol, create an `AGENTS.md` in the protocol directory.
@@ -318,21 +318,21 @@ Since `ResponsesServer.Run<T>()`, `InvocationsServer.Run<T>()`, and `AgentHost.C
 
 ### `AgentHost` global using
 
-The Hosting NuGet package ships `build/` and `buildTransitive/` `.props` files that
-inject a global `using Azure.AI.AgentServer.Hosting;`. This gives consumers a
+The Core NuGet package ships `build/` and `buildTransitive/` `.props` files that
+inject a global `using Azure.AI.AgentServer.Core;`. This gives consumers a
 zero-import one-liner experience.
 
 For **test projects** (which use `<ProjectReference>`, not triggering NuGet build props),
-add `<Using Include="Azure.AI.AgentServer.Hosting" />` in the test `.csproj`, gated on:
+add `<Using Include="Azure.AI.AgentServer.Core" />` in the test `.csproj`, gated on:
 
 ```xml
 <ItemGroup Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net8.0'))">
-  <Using Include="Azure.AI.AgentServer.Hosting" />
+  <Using Include="Azure.AI.AgentServer.Core" />
 </ItemGroup>
 ```
 
 **Note:** The `build/` directory is matched by the root `.gitignore`. Use
-`git add -f Azure.AI.AgentServer.Hosting/build/` to force-add those files.
+`git add -f Azure.AI.AgentServer.Core/build/` to force-add those files.
 
 ### Cross-package snippet references
 
@@ -341,9 +341,9 @@ must include `<ProjectReference>` entries for all packages used.
 
 | Test Project | Extra References Needed |
 |---|---|
-| Responses.Tests | Hosting (`AgentHost.CreateBuilder`) |
-| Invocations.Tests | Hosting (`AgentHost.CreateBuilder`) |
-| Hosting.Tests | Responses (`IResponseHandler`, `ResponseEventStream`), Invocations |
+| Responses.Tests | Core (`AgentHost.CreateBuilder`) |
+| Invocations.Tests | Core (`AgentHost.CreateBuilder`) |
+| Core.Tests | Responses (`IResponseHandler`, `ResponseEventStream`), Invocations |
 
 ---
 
