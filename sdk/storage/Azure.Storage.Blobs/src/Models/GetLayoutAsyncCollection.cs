@@ -18,7 +18,7 @@ namespace Azure.Storage.Blobs.Models
         private readonly BlobBaseClient _client;
         private readonly HttpRange _range;
         private readonly BlobRequestConditions _conditions;
-        private ETag? _etag; // the ETag from the intial Get Layout request
+        private ETag? _etag; // the ETag from the initial Get Layout request
 
         public GetLayoutAsyncCollection(
             BlobBaseClient client,

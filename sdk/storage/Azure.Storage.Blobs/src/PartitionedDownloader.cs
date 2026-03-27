@@ -562,14 +562,14 @@ namespace Azure.Storage.Blobs
                 }
             }
             catch (RequestFailedException ex)
-                when (ex.Status == 409 || ex.Status == 412 || ex.Status == 404 || ex.Status == 403)
+                when (ex.Status == 400 || ex.Status >= 500)
             {
-                // Fail the download
-                throw;
+                return null;
             }
             catch (RequestFailedException)
             {
-                return null;
+                // Fail the download
+                throw;
             }
 
             // 204 returns back no layout
