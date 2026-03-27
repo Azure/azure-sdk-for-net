@@ -93,7 +93,7 @@ Use `WebApplication.CreateBuilder()` + `AddResponsesServer()` + `MapResponsesSer
 - Need **full control** over middleware, DI, port binding, and health probes
 - Want to use the Responses SDK without the opinionated Core framework
 
-For the simplest single-protocol experience, see [Tier 1 — Customize the One-Liner](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/samples/Sample5_HostingAndConfiguration.md).
-For composition with the Core builder, see [Tier 2 — Builder](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/samples/Sample6_Tier2Builder.md).
+For the simplest single-protocol experience, see [Tier 1 — Customize the One-Liner](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/samples/Sample5_Tier1HostingCustomize.md).
+For composition with the Core builder, see [Tier 2 — Builder](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/samples/Sample6_Tier2HostingBuilder.md).
 
 ````
