@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="threatStatus"> Threat status of the recovery point. </param>
         /// <param name="threatInfo"> Recovery point threat information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BackupGenericRecoveryPoint(string objectType, ThreatStatus? threatStatus, IList<RecoveryPointThreatInformation> threatInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BackupGenericRecoveryPoint(string objectType, RecoveryPointThreatStatus? threatStatus, IList<RecoveryPointThreatInformation> threatInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ObjectType = objectType;
             ThreatStatus = threatStatus;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         internal string ObjectType { get; set; }
 
         /// <summary> Threat status of the recovery point. </summary>
-        public ThreatStatus? ThreatStatus { get; set; }
+        public RecoveryPointThreatStatus? ThreatStatus { get; set; }
 
         /// <summary> Recovery point threat information. </summary>
         public IList<RecoveryPointThreatInformation> ThreatInfo { get; }

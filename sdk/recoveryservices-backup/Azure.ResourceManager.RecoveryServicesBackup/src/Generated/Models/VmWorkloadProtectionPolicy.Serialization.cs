@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             IList<string> resourceGuardOperationRequests = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             BackupWorkloadType? workLoadType = default;
-            VMWorkloadPolicyType? vmWorkloadPolicyType = default;
+            VmWorkloadPolicyType? vmWorkloadPolicyType = default;
             BackupCommonSettings settings = default;
             IList<SubProtectionPolicy> subProtectionPolicy = default;
             bool? doesMakePolicyConsistent = default;
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    vmWorkloadPolicyType = new VMWorkloadPolicyType(prop.Value.GetString());
+                    vmWorkloadPolicyType = new VmWorkloadPolicyType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("settings"u8))

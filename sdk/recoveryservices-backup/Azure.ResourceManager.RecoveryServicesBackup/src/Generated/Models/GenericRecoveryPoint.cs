@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="recoveryPointOn"> Time at which this backup copy was created. </param>
         /// <param name="recoveryPointAdditionalInfo"> Additional information associated with this backup copy. </param>
         /// <param name="recoveryPointProperties"> Properties of Recovery Point. </param>
-        internal GenericRecoveryPoint(string objectType, ThreatStatus? threatStatus, IList<RecoveryPointThreatInformation> threatInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties, string friendlyName, string recoveryPointType, DateTimeOffset? recoveryPointOn, string recoveryPointAdditionalInfo, RecoveryPointProperties recoveryPointProperties) : base(objectType, threatStatus, threatInfo, additionalBinaryDataProperties)
+        internal GenericRecoveryPoint(string objectType, RecoveryPointThreatStatus? threatStatus, IList<RecoveryPointThreatInformation> threatInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties, string friendlyName, string recoveryPointType, DateTimeOffset? recoveryPointOn, string recoveryPointAdditionalInfo, RecoveryPointProperties recoveryPointProperties) : base(objectType, threatStatus, threatInfo, additionalBinaryDataProperties)
         {
             FriendlyName = friendlyName;
             RecoveryPointType = recoveryPointType;

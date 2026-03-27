@@ -11,21 +11,21 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Database included in RP. </summary>
-    public partial class DatabaseInRP
+    public partial class BackupRecoveryPointDatabase
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DatabaseInRP"/>. </summary>
-        public DatabaseInRP()
+        /// <summary> Initializes a new instance of <see cref="BackupRecoveryPointDatabase"/>. </summary>
+        public BackupRecoveryPointDatabase()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DatabaseInRP"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupRecoveryPointDatabase"/>. </summary>
         /// <param name="datasourceId"> Datasource Id for the database. </param>
         /// <param name="datasourceName"> Datasource name for the database. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DatabaseInRP(string datasourceId, string datasourceName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BackupRecoveryPointDatabase(string datasourceId, string datasourceName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DatasourceId = datasourceId;
             DatasourceName = datasourceName;

@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 return null;
             }
             string objectType = "GenericRecoveryPoint";
-            ThreatStatus? threatStatus = default;
+            RecoveryPointThreatStatus? threatStatus = default;
             IList<RecoveryPointThreatInformation> threatInfo = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string friendlyName = default;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    threatStatus = new ThreatStatus(prop.Value.GetString());
+                    threatStatus = new RecoveryPointThreatStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("threatInfo"u8))

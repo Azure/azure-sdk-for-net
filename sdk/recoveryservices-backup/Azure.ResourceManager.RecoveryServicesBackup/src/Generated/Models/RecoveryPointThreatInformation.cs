@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="threatURI"> threat details link. </param>
         /// <param name="threatSeverity"> Threat Severity Types. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RecoveryPointThreatInformation(string threatTitle, string threatDescription, DateTimeOffset? lastUpdatedOn, ThreatState? threatState, DateTimeOffset? threatStartOn, DateTimeOffset? threatEndOn, Uri threatURI, ThreatSeverity? threatSeverity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RecoveryPointThreatInformation(string threatTitle, string threatDescription, DateTimeOffset? lastUpdatedOn, RecoveryPointThreatState? threatState, DateTimeOffset? threatStartOn, DateTimeOffset? threatEndOn, Uri threatURI, RecoveryPointThreatSeverity? threatSeverity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ThreatTitle = threatTitle;
             ThreatDescription = threatDescription;
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public DateTimeOffset? LastUpdatedOn { get; }
 
         /// <summary> Threat Status Types. </summary>
-        public ThreatState? ThreatState { get; set; }
+        public RecoveryPointThreatState? ThreatState { get; set; }
 
         /// <summary> Start timestamp of the threat. </summary>
         public DateTimeOffset? ThreatStartOn { get; }
@@ -66,6 +66,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public Uri ThreatURI { get; }
 
         /// <summary> Threat Severity Types. </summary>
-        public ThreatSeverity? ThreatSeverity { get; set; }
+        public RecoveryPointThreatSeverity? ThreatSeverity { get; set; }
     }
 }

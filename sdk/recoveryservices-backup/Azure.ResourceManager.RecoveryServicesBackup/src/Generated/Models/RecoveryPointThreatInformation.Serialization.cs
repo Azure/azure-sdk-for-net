@@ -159,11 +159,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             string threatTitle = default;
             string threatDescription = default;
             DateTimeOffset? lastUpdatedOn = default;
-            ThreatState? threatState = default;
+            RecoveryPointThreatState? threatState = default;
             DateTimeOffset? threatStartOn = default;
             DateTimeOffset? threatEndOn = default;
             Uri threatURI = default;
-            ThreatSeverity? threatSeverity = default;
+            RecoveryPointThreatSeverity? threatSeverity = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    threatState = new ThreatState(prop.Value.GetString());
+                    threatState = new RecoveryPointThreatState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("threatStartTime"u8))
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    threatSeverity = new ThreatSeverity(prop.Value.GetString());
+                    threatSeverity = new RecoveryPointThreatSeverity(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

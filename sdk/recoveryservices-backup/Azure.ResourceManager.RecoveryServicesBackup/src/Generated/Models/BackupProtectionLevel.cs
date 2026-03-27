@@ -12,16 +12,16 @@ using Azure.ResourceManager.RecoveryServicesBackup;
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Protection type in case protected as part of a parent. </summary>
-    public readonly partial struct ProtectionLevel : IEquatable<ProtectionLevel>
+    public readonly partial struct BackupProtectionLevel : IEquatable<BackupProtectionLevel>
     {
         private readonly string _value;
         private const string DatabaseValue = "Database";
         private const string DatabaseUnderInstanceValue = "DatabaseUnderInstance";
 
-        /// <summary> Initializes a new instance of <see cref="ProtectionLevel"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupProtectionLevel"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ProtectionLevel(string value)
+        public BackupProtectionLevel(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -29,35 +29,35 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Gets the Database. </summary>
-        public static ProtectionLevel Database { get; } = new ProtectionLevel(DatabaseValue);
+        public static BackupProtectionLevel Database { get; } = new BackupProtectionLevel(DatabaseValue);
 
         /// <summary> Gets the DatabaseUnderInstance. </summary>
-        public static ProtectionLevel DatabaseUnderInstance { get; } = new ProtectionLevel(DatabaseUnderInstanceValue);
+        public static BackupProtectionLevel DatabaseUnderInstance { get; } = new BackupProtectionLevel(DatabaseUnderInstanceValue);
 
-        /// <summary> Determines if two <see cref="ProtectionLevel"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="BackupProtectionLevel"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(ProtectionLevel left, ProtectionLevel right) => left.Equals(right);
+        public static bool operator ==(BackupProtectionLevel left, BackupProtectionLevel right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ProtectionLevel"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="BackupProtectionLevel"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(ProtectionLevel left, ProtectionLevel right) => !left.Equals(right);
+        public static bool operator !=(BackupProtectionLevel left, BackupProtectionLevel right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ProtectionLevel"/>. </summary>
+        /// <summary> Converts a string to a <see cref="BackupProtectionLevel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ProtectionLevel(string value) => new ProtectionLevel(value);
+        public static implicit operator BackupProtectionLevel(string value) => new BackupProtectionLevel(value);
 
-        /// <summary> Converts a string to a <see cref="ProtectionLevel"/>. </summary>
+        /// <summary> Converts a string to a <see cref="BackupProtectionLevel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ProtectionLevel?(string value) => value == null ? null : new ProtectionLevel(value);
+        public static implicit operator BackupProtectionLevel?(string value) => value == null ? null : new BackupProtectionLevel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ProtectionLevel other && Equals(other);
+        public override bool Equals(object obj) => obj is BackupProtectionLevel other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(ProtectionLevel other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(BackupProtectionLevel other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

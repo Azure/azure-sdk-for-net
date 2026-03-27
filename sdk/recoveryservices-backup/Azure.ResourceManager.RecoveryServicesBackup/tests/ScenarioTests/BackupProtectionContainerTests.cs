@@ -45,15 +45,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Tests
             var vault = (await rg.GetRecoveryServicesVaults().CreateOrUpdateAsync(WaitUntil.Completed, vaultName, vaultData)).Value;
 
             var containerName = $"StorageContainer;Storage;{rg.Data.Name};{storageName}";
-            var containerData = new ProtectionContainerResourceData(default, default, default, default, default,
-                new AzureStorageContainer()
+            var containerData = new BackupProtectionContainerData(AzureLocation.EastUS)
+            {
+                Properties = new StorageContainer()
                 {
                     FriendlyName = storageName,
                     BackupManagementType = BackupManagementType.AzureStorage,
                     SourceResourceId = storage.Id,
                     AcquireStorageAccountLock = AcquireStorageAccountLock.Acquire
-                }, default, AzureLocation.EastUS.ToString(), default);
-            var container = (await rg.GetProtectionContainers()
+                }
+            };
+            var container = (await rg.GetBackupProtectionContainers()
                 .CreateOrUpdateAsync(WaitUntil.Completed, vaultName, "Azure", containerName, containerData)).Value;
             Assert.AreEqual(container.Data.Properties.RegistrationStatus, "Registered");
             Assert.AreEqual(container.Data.Name, containerName);

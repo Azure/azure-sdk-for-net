@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             string policyName = default;
             int? softDeleteRetentionPeriodInDays = default;
             string vaultId = default;
-            SourceSideScanInfo sourceSideScanInfo = default;
+            BackupSourceSideScanInfo sourceSideScanInfo = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string friendlyName = default;
             string policyState = default;
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    sourceSideScanInfo = SourceSideScanInfo.DeserializeSourceSideScanInfo(prop.Value, options);
+                    sourceSideScanInfo = BackupSourceSideScanInfo.DeserializeBackupSourceSideScanInfo(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("friendlyName"u8))
