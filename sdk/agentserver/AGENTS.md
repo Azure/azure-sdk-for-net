@@ -92,8 +92,9 @@ principles conflict, resolve in this priority order:
 | **Responses** | `Azure.AI.AgentServer.Responses/src/` | Responses protocol: hosting extensions, SSE streaming, handlers |
 | **Responses Tests** | `Azure.AI.AgentServer.Responses/tests/` | NUnit tests for Responses |
 
-> **Out of scope**: `Azure.AI.AgentServer.Core`, `Azure.AI.AgentServer.Contracts`, and
-> `Azure.AI.AgentServer.AgentFramework` are legacy projects slated for deprecation.
+> **Removed**: The legacy `Azure.AI.AgentServer.Contracts` and
+> `Azure.AI.AgentServer.AgentFramework` projects have been removed from this
+> repository. They are superseded by the Responses and Invocations packages above.
 
 **Solution file**: `Azure.AI.AgentServer.sln`
 

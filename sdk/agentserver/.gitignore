@@ -9,8 +9,7 @@ Azure.AI.AgentServer.Responses.Contracts/src/TypeSpec/tsp-output/**
 __pycache__/
 *.pyc
 
-# npm
-package-lock.json
+# npm lockfiles are committed to ensure reproducible installs
 
 # Copilot + Spec Kit — local-only files (never committed)
 # Bootstrap with: ./scripts/Bootstrap-Copilot.ps1
