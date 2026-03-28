@@ -46,7 +46,7 @@ The static entry point. `AgentHost.CreateBuilder()` returns an `AgentHostBuilder
 
 ### AgentHostBuilder
 
-Configures the underlying ASP.NET Core host with sensible defaults: Kestrel on the `PORT` environment variable (or 8088), OpenTelemetry traces and metrics, a `/healthy` health endpoint, and `x-platform-server` user-agent header via `ServerUserAgentMiddleware`. Protocol packages use `RegisterProtocol()` to add their endpoints — each protocol registers its identity segment with the `ServerUserAgentRegistry`.
+Configures the underlying ASP.NET Core host with sensible defaults: Kestrel on the `PORT` environment variable (or 8088), OpenTelemetry traces and metrics, a `/healthy` health endpoint, and `x-platform-server` user-agent header. Protocol packages use `RegisterProtocol()` to add their endpoints — each protocol registers its identity segment with the `ServerUserAgentRegistry`.
 
 ### AgentHostApp
 
@@ -58,7 +58,7 @@ Reads Azure AI Foundry platform variables (`FOUNDRY_*`, `PORT`, `SSE_KEEPALIVE_I
 
 ### Telemetry
 
-OpenTelemetry is configured automatically via `Azure.Monitor.OpenTelemetry.AspNetCore`. The `AgentHostTelemetry` class exposes the shared `ActivitySource` for custom trace spans. OTLP export is enabled when the `OTEL_EXPORTER_OTLP_ENDPOINT` environment variable is set.
+OpenTelemetry is configured automatically via `Azure.Monitor.OpenTelemetry.AspNetCore`. The `AgentHostTelemetry` class exposes the shared activity source and meter names (`ResponsesSourceName`, `InvocationsSourceName`, `ResponsesMeterName`, `InvocationsMeterName`) for the Responses and Invocations protocols. OTLP export is enabled when the `OTEL_EXPORTER_OTLP_ENDPOINT` environment variable is set.
 
 ### Health endpoint
 
@@ -77,7 +77,7 @@ You can familiarise yourself with different APIs using [Samples](https://github.
 
 ### Logging
 
-The library emits OpenTelemetry traces via the `Azure.AI.AgentServer.Core` activity source. Enable ASP.NET Core logging in your application configuration to diagnose startup issues.
+The library emits OpenTelemetry traces via the `Azure.AI.AgentServer.Responses` and `Azure.AI.AgentServer.Invocations` activity sources. Enable ASP.NET Core logging in your application configuration to diagnose startup issues.
 
 ## Next steps
 

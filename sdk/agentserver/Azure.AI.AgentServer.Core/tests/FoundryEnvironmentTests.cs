@@ -20,6 +20,7 @@ public class FoundryEnvironmentTests
         Environment.SetEnvironmentVariable("PORT", null);
         Environment.SetEnvironmentVariable("OTEL_EXPORTER_OTLP_ENDPOINT", null);
         Environment.SetEnvironmentVariable("APPLICATIONINSIGHTS_CONNECTION_STRING", null);
+        Environment.SetEnvironmentVariable("SSE_KEEPALIVE_INTERVAL", null);
         FoundryEnvironment.Reload();
     }
 
@@ -131,5 +132,43 @@ public class FoundryEnvironmentTests
         Environment.SetEnvironmentVariable("APPLICATIONINSIGHTS_CONNECTION_STRING", "InstrumentationKey=abc");
         FoundryEnvironment.Reload();
         Assert.That(FoundryEnvironment.AppInsightsConnectionString, Is.EqualTo("InstrumentationKey=abc"));
+    }
+
+    [Test]
+    public void SseKeepAliveInterval_ReturnsInfinite_WhenNotSet()
+    {
+        Assert.That(FoundryEnvironment.SseKeepAliveInterval, Is.EqualTo(Timeout.InfiniteTimeSpan));
+    }
+
+    [Test]
+    public void SseKeepAliveInterval_ReturnsParsedValue_WhenSet()
+    {
+        Environment.SetEnvironmentVariable("SSE_KEEPALIVE_INTERVAL", "30");
+        FoundryEnvironment.Reload();
+        Assert.That(FoundryEnvironment.SseKeepAliveInterval, Is.EqualTo(TimeSpan.FromSeconds(30)));
+    }
+
+    [Test]
+    public void SseKeepAliveInterval_ReturnsInfinite_WhenZero()
+    {
+        Environment.SetEnvironmentVariable("SSE_KEEPALIVE_INTERVAL", "0");
+        FoundryEnvironment.Reload();
+        Assert.That(FoundryEnvironment.SseKeepAliveInterval, Is.EqualTo(Timeout.InfiniteTimeSpan));
+    }
+
+    [Test]
+    public void SseKeepAliveInterval_ReturnsInfinite_WhenNegative()
+    {
+        Environment.SetEnvironmentVariable("SSE_KEEPALIVE_INTERVAL", "-5");
+        FoundryEnvironment.Reload();
+        Assert.That(FoundryEnvironment.SseKeepAliveInterval, Is.EqualTo(Timeout.InfiniteTimeSpan));
+    }
+
+    [Test]
+    public void SseKeepAliveInterval_ReturnsInfinite_WhenUnparseable()
+    {
+        Environment.SetEnvironmentVariable("SSE_KEEPALIVE_INTERVAL", "not-a-number");
+        FoundryEnvironment.Reload();
+        Assert.That(FoundryEnvironment.SseKeepAliveInterval, Is.EqualTo(Timeout.InfiniteTimeSpan));
     }
 }
