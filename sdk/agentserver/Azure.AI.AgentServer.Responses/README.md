@@ -22,13 +22,13 @@ dotnet add package Azure.AI.AgentServer.Responses --prerelease
 
 ### Configure the server
 
-The recommended way to start a Responses server is with the Core package's one-line API:
+The recommended way to start a Responses server is with the built-in one-line API:
 
 ```C# Snippet:Responses_ReadMe_ConfigureServer_Tier1
 ResponsesServer.Run<EchoHandler>();
 ```
 
-This starts a Kestrel server with OpenTelemetry, health checks, server user-agent headers, and your handler mapped to the Responses API endpoints. Install the `Azure.AI.AgentServer.Core` package for this approach.
+This starts a Kestrel server with OpenTelemetry, health checks, server user-agent headers, and your handler mapped to the Responses API endpoints. The `Azure.AI.AgentServer.Core` package is included as a transitive dependency.
 
 Alternatively, register the library services manually in your `Program.cs`:
 
@@ -78,12 +78,12 @@ public class EchoHandler : ResponseHandler
 
 ### ResponseEventStream
 
-Manages `sequenceNumber`, `outputIndex`, `contentIndex`, `itemId`, and the full `Response` lifecycle automatically. Each `yield return` maps 1:1 to an SSE event with zero bookkeeping.
+Manages `sequenceNumber`, `outputIndex`, `contentIndex`, and `itemId` tracking internally. Each `yield return` maps 1:1 to an SSE event with zero bookkeeping.
 
 ### Streaming & Background Modes
 
-- **Streaming mode**: Enabled when the `stream` parameter is `true`; SSE events are delivered in real-time to the connected client.
-- **Background mode**: The handler runs to completion without a connected SSE client; events are buffered and available for replay via `GET /responses/{id}`.
+- **Streaming mode**: Enabled when the `stream` parameter is `true` (defaults to `false`); SSE events are delivered in real-time to the connected client.
+- **Background mode**: The handler runs to completion without a connected SSE client; events are buffered and available for replay via `GET /responses/{id}`. Requires `background=true` and `store=true`.
 
 ### Response Lifecycle
 
@@ -105,7 +105,8 @@ You can familiarize yourself with different APIs using [Samples](https://github.
 
 - **400 Bad Request**: The request body failed validation. Check that optional fields such as `model` (when provided) are valid and that `input` items are well-formed.
 - **404 Not Found**: The response ID does not exist or has expired past the configured TTL.
-- **400 Bad Request** (cancel): A cancellation was attempted on a response that has already reached a terminal state or was not created with `background=true`.
+- **400 Bad Request** (cancel): The response was not created with `background=true`, or it has already reached a terminal state.
+- **404 Not Found** (cancel): The response was created with `store=false`, or a non-background response is still in-flight and not findable.
 
 ### Logging
 

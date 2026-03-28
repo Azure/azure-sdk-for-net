@@ -30,7 +30,8 @@ public static class ResponseSnapshotExtensions
     public static ResponseObject Snapshot(this ResponseObject response)
     {
         BinaryData data = ModelReaderWriter.Write(response, ModelReaderWriterOptions.Json, AzureAIAgentServerResponsesContext.Default);
-        return ModelReaderWriter.Read<ResponseObject>(data, ModelReaderWriterOptions.Json, AzureAIAgentServerResponsesContext.Default)!;
+        return ModelReaderWriter.Read<ResponseObject>(data, ModelReaderWriterOptions.Json, AzureAIAgentServerResponsesContext.Default)
+            ?? throw new InvalidOperationException($"Failed to deserialize snapshot of {nameof(ResponseObject)}.");
     }
 
     /// <summary>

@@ -42,7 +42,7 @@ The Responses library has three **authoritative contract documents** that define
 ## 2. Key Namespaces
 
 - `Azure.AI.AgentServer.Responses` — public API surface
-- `Azure.AI.AgentServer.Responses.Models` — model types (from Contracts)
+- `Azure.AI.AgentServer.Responses.Models` — model types (generated from TypeSpec)
 - `Azure.AI.AgentServer.Responses.Internal` — internal implementation (e.g., `SeekableReplaySubject`)
 
 ## 3. Package Rules
@@ -58,7 +58,7 @@ The Responses library has three **authoritative contract documents** that define
 
 ### Generated code suppressions
 
-Analyzer suppressions for generated code are scoped to `Azure.AI.AgentServer.Responses.Contracts/src/Generated/Directory.Build.props` — **not** in the root `Directory.Build.props`. Do not add blanket suppressions at higher levels.
+Analyzer suppressions for generated code are scoped to `Azure.AI.AgentServer.Responses/src/Generated/Directory.Build.props` — **not** in the root `Directory.Build.props`. Do not add blanket suppressions at higher levels.
 
 ### Generation pipeline
 
