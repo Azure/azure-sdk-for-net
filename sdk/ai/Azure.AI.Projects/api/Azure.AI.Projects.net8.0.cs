@@ -595,26 +595,6 @@ namespace Azure.AI.Projects
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct EvaluatorDefinitionType : System.IEquatable<Azure.AI.Projects.EvaluatorDefinitionType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public EvaluatorDefinitionType(string value) { throw null; }
-        public static Azure.AI.Projects.EvaluatorDefinitionType Code { get { throw null; } }
-        public static Azure.AI.Projects.EvaluatorDefinitionType OpenaiGraders { get { throw null; } }
-        public static Azure.AI.Projects.EvaluatorDefinitionType Prompt { get { throw null; } }
-        public static Azure.AI.Projects.EvaluatorDefinitionType PromptAndCode { get { throw null; } }
-        public static Azure.AI.Projects.EvaluatorDefinitionType Service { get { throw null; } }
-        public bool Equals(Azure.AI.Projects.EvaluatorDefinitionType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.Projects.EvaluatorDefinitionType left, Azure.AI.Projects.EvaluatorDefinitionType right) { throw null; }
-        public static implicit operator Azure.AI.Projects.EvaluatorDefinitionType (string value) { throw null; }
-        public static implicit operator Azure.AI.Projects.EvaluatorDefinitionType? (string value) { throw null; }
-        public static bool operator !=(Azure.AI.Projects.EvaluatorDefinitionType left, Azure.AI.Projects.EvaluatorDefinitionType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct EvaluatorType : System.IEquatable<Azure.AI.Projects.EvaluatorType>
     {
         private readonly object _dummy;
@@ -1484,9 +1464,25 @@ namespace Azure.AI.Projects.Evaluation
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Evaluation.EvaluatorDefinition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Evaluation.EvaluatorDefinition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential, Size=1)]
-    public readonly partial struct EvaluatorDefinitionTypet
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct EvaluatorDefinitionType : System.IEquatable<Azure.AI.Projects.Evaluation.EvaluatorDefinitionType>
     {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public EvaluatorDefinitionType(string value) { throw null; }
+        public static Azure.AI.Projects.Evaluation.EvaluatorDefinitionType Code { get { throw null; } }
+        public static Azure.AI.Projects.Evaluation.EvaluatorDefinitionType OpenaiGraders { get { throw null; } }
+        public static Azure.AI.Projects.Evaluation.EvaluatorDefinitionType Prompt { get { throw null; } }
+        public static Azure.AI.Projects.Evaluation.EvaluatorDefinitionType PromptAndCode { get { throw null; } }
+        public static Azure.AI.Projects.Evaluation.EvaluatorDefinitionType Service { get { throw null; } }
+        public bool Equals(Azure.AI.Projects.Evaluation.EvaluatorDefinitionType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.Projects.Evaluation.EvaluatorDefinitionType left, Azure.AI.Projects.Evaluation.EvaluatorDefinitionType right) { throw null; }
+        public static implicit operator Azure.AI.Projects.Evaluation.EvaluatorDefinitionType (string value) { throw null; }
+        public static implicit operator Azure.AI.Projects.Evaluation.EvaluatorDefinitionType? (string value) { throw null; }
+        public static bool operator !=(Azure.AI.Projects.Evaluation.EvaluatorDefinitionType left, Azure.AI.Projects.Evaluation.EvaluatorDefinitionType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class EvaluatorMetric : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Evaluation.EvaluatorMetric>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Evaluation.EvaluatorMetric>
     {

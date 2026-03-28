@@ -38,7 +38,7 @@ namespace Azure.AI.Projects.Evaluation;
 [CodeGenType("EvaluationTaxonomyInput")] public abstract partial class EvaluationTaxonomyInput { }
 [CodeGenType("EvaluationTaxonomyInputType")] internal readonly partial struct EvaluationTaxonomyInputType { }
 [CodeGenType("EvaluatorCategory")] public readonly partial struct EvaluatorCategory { }
-[CodeGenType("EvaluatorDefinitionTypet")] public readonly partial struct EvaluatorDefinitionTypet { }
+[CodeGenType("EvaluatorDefinitionType")] public readonly partial struct EvaluatorDefinitionType { }
 [CodeGenType("EvaluatorMetric")] public partial class EvaluatorMetric { }
 [CodeGenType("EvaluatorMetricDirection")] public readonly partial struct EvaluatorMetricDirection { }
 [CodeGenType("EvaluatorMetricType")] public readonly partial struct EvaluatorMetricType { }
