@@ -8,25 +8,25 @@ using System.Collections.Generic;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> A retrieved memory item from memory search. </summary>
-    public partial class MemorySearchItem
+    public partial class MemoryToolSearchItem
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MemorySearchItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MemoryToolSearchItem"/>. </summary>
         /// <param name="memoryItem"> Retrieved memory item. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="memoryItem"/> is null. </exception>
-        public MemorySearchItem(MemoryOutputItem memoryItem)
+        public MemoryToolSearchItem(MemoryOutputItem memoryItem)
         {
             Argument.AssertNotNull(memoryItem, nameof(memoryItem));
 
             MemoryItem = memoryItem;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MemorySearchItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MemoryToolSearchItem"/>. </summary>
         /// <param name="memoryItem"> Retrieved memory item. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MemorySearchItem(MemoryOutputItem memoryItem, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MemoryToolSearchItem(MemoryOutputItem memoryItem, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MemoryItem = memoryItem;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

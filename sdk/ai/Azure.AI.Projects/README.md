@@ -1168,9 +1168,9 @@ Console.WriteLine($"Continuous Evaluation Rule created (id: {continuousEvalRule.
 ### Performing Classic Agent operations
 
 The `Azure.AI.Agents.Persistent` package provides the legacy way to create and use Agents (Classic Agents).
-Please consider upgrading the codebase to use Agents as desctibed in "[Performing Agent operations](#performing-agent-operations)" section. 
+Please consider upgrading the codebase to use Agents as described  in "[Performing Agent operations](#performing-agent-operations)" section. 
 
-The `GetPersistentAgentsClient` method on the `AIProjectsClient` gives you access to an authenticated `PersistentAgentsClient` from the `Azure.AI.Agents.Persistent` package. Below we show how to create an Agent and delete it. To see what you can do with the agent you created, see the [many samples](https://aka.ms/azsdk/Azure.AI.Agents.Persistent/net/samples) associated with the `Azure.AI.Agents.Persistent` package.
+The `GetPersistentAgentsClient` method on the `AIProjectClient` gives you access to an authenticated `PersistentAgentsClient` from the `Azure.AI.Agents.Persistent` package. Below we show how to create an Agent and delete it. To see what you can do with the agent you created, see the [many samples](https://aka.ms/azsdk/Azure.AI.Agents.Persistent/net/samples) associated with the `Azure.AI.Agents.Persistent` package.
 
 The code below assumes `ModelDeploymentName` (a string) is defined. It's the deployment name of an AI model in your Foundry Project, as shown in the "Models + endpoints" tab, under the "Name" column.
 ```C# Snippet:AI_Projects_ExtensionsAgentsBasicsSync

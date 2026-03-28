@@ -94,7 +94,7 @@ public class Sample_MemorySearchTool : ProjectsOpenAITestBase
             options: searchOptions
         );
         Console.WriteLine("==The output from memory tool.==");
-        foreach (Azure.AI.Projects.Memory.MemorySearchItem item in resp.Memories)
+        foreach (MemorySearchItem item in resp.Memories)
         {
             Console.WriteLine(item.MemoryItem.Content);
         }
@@ -205,7 +205,7 @@ public class Sample_MemorySearchTool : ProjectsOpenAITestBase
             options: searchOptions
         );
         Console.WriteLine("==The output from memory search tool.==");
-        foreach (Azure.AI.Projects.Memory.MemorySearchItem item in resp.Memories)
+        foreach (MemorySearchItem item in resp.Memories)
         {
             Console.WriteLine(item.MemoryItem.Content);
         }

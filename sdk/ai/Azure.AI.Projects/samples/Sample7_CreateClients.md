@@ -1,6 +1,7 @@
 # Sample demonstrating how to create instances of various LLM clients in Azure.AI.Projects
 
-
+**Note:** The Azure AI Model Inference API and its associated SDK clients are no longer in active development.
+Consider [migrating to parity OpenAI API and SDK](https://learn.microsoft.com/azure/foundry/how-to/model-inference-to-openai-migration?tabs=openai&pivots=programming-language-dotnet) use for access to the latest models and features.
 
 ## Prerequisites
 
@@ -198,7 +199,7 @@ Using synchronous and asynchronous `Azure OpenAI` embedding methods.
 
 ```C# Snippet:AI_Projects_AzureOpenAIEmbeddingsSync
 var endpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
-var modelDeploymentName = System.Environment.GetEnvironmentVariable("EMBEDDING_MODEL_NAME");
+var modelDeploymentName = System.Environment.GetEnvironmentVariable("EMBEDDING_FOUNDRY_MODEL_NAME");
 var connectionName = System.Environment.GetEnvironmentVariable("CONNECTION_NAME");
 Console.WriteLine("Create the Azure OpenAI embedding client");
 var credential = new DefaultAzureCredential();
@@ -223,7 +224,7 @@ Console.WriteLine($"Generated embedding with {result.ToFloats().Length} dimensio
 #### Asynchronous Sample
 ```C# Snippet:AI_Projects_AzureOpenAIEmbeddingsAsync
 var endpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
-var modelDeploymentName = System.Environment.GetEnvironmentVariable("EMBEDDING_MODEL_NAME");
+var modelDeploymentName = System.Environment.GetEnvironmentVariable("EMBEDDING_FOUNDRY_MODEL_NAME");
 var connectionName = System.Environment.GetEnvironmentVariable("CONNECTION_NAME");
 Console.WriteLine("Create the Azure OpenAI embedding client");
 var credential = new DefaultAzureCredential();
