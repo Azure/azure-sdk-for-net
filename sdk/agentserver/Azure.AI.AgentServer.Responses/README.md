@@ -82,7 +82,7 @@ Manages `sequenceNumber`, `outputIndex`, `contentIndex`, `itemId`, and the full 
 
 ### Streaming & Background Modes
 
-- **Streaming mode** (default): SSE events are delivered in real-time to the connected client.
+- **Streaming mode**: Enabled when the `stream` parameter is `true`; SSE events are delivered in real-time to the connected client.
 - **Background mode**: The handler runs to completion without a connected SSE client; events are buffered and available for replay via `GET /responses/{id}`.
 
 ### Response Lifecycle
@@ -103,9 +103,9 @@ You can familiarize yourself with different APIs using [Samples](https://github.
 
 ### Common errors
 
-- **400 Bad Request**: The request body failed validation. Check that required fields (`model`) are present and that `input` items are well-formed.
+- **400 Bad Request**: The request body failed validation. Check that optional fields such as `model` (when provided) are valid and that `input` items are well-formed.
 - **404 Not Found**: The response ID does not exist or has expired past the configured TTL.
-- **409 Conflict**: A cancellation was attempted on a response that has already reached a terminal state.
+- **400 Bad Request** (cancel): A cancellation was attempted on a response that has already reached a terminal state or was not created with `background=true`.
 
 ### Logging
 

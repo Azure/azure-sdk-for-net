@@ -56,9 +56,22 @@ namespace Azure.AI.AgentServer.Responses
         /// The target type must share the same JSON wire contract as the
         /// source type that produced this data.
         /// </summary>
+        /// <exception cref="InvalidOperationException">
+        /// The payload could not be deserialized as <typeparamref name="T"/>.
+        /// </exception>
         [SuppressMessage("Usage", "AZC0150:Use ModelReaderWriterContext overload",
             Justification = "Cross-SDK translation: target type may be from OpenAI SDK which has no shared ModelReaderWriterContext.")]
         public T To<T>() where T : IPersistableModel<T>
-            => ModelReaderWriter.Read<T>(_data)!;
+        {
+            T? result = ModelReaderWriter.Read<T>(_data);
+            if (result is null)
+            {
+                throw new InvalidOperationException(
+                    $"Wire-format translation failed: the payload could not be deserialized as {typeof(T).Name}. " +
+                    "Ensure the source and target types share the same JSON wire contract.");
+            }
+
+            return result;
+        }
     }
 }

@@ -24,7 +24,7 @@ internal static class BinaryDataExpansionHelpers
             return null;
         }
 
-        using var doc = JsonDocument.Parse(toolChoice);
+        using var doc = JsonDocument.Parse(toolChoice.ToMemory());
         var root = doc.RootElement;
 
         return root.ValueKind switch
@@ -60,7 +60,7 @@ internal static class BinaryDataExpansionHelpers
 
         try
         {
-            using var doc = JsonDocument.Parse(input);
+            using var doc = JsonDocument.Parse(input.ToMemory());
             var root = doc.RootElement;
 
             return root.ValueKind switch
@@ -95,7 +95,7 @@ internal static class BinaryDataExpansionHelpers
             return new List<Item>();
         }
 
-        using var doc = JsonDocument.Parse(instructions);
+        using var doc = JsonDocument.Parse(instructions.ToMemory());
         var root = doc.RootElement;
 
         return root.ValueKind switch
@@ -120,7 +120,7 @@ internal static class BinaryDataExpansionHelpers
             return null;
         }
 
-        using var doc = JsonDocument.Parse(conversation);
+        using var doc = JsonDocument.Parse(conversation.ToMemory());
         var root = doc.RootElement;
 
         return root.ValueKind switch
@@ -142,7 +142,7 @@ internal static class BinaryDataExpansionHelpers
             return new List<MessageContent>();
         }
 
-        using var doc = JsonDocument.Parse(content);
+        using var doc = JsonDocument.Parse(content.ToMemory());
         var root = doc.RootElement;
 
         return root.ValueKind switch

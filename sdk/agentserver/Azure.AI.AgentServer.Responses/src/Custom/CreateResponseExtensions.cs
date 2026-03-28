@@ -30,7 +30,7 @@ public static class CreateResponseExtensions
         {
             try
             {
-                using var doc = JsonDocument.Parse(request.Conversation);
+                using var doc = JsonDocument.Parse(request.Conversation.ToMemory());
                 var root = doc.RootElement;
 
                 if (root.ValueKind == JsonValueKind.String)

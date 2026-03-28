@@ -1,4 +1,3 @@
-````markdown
 # Sample 5: Tier 1 — Customize the One-Liner
 
 This sample shows the **customization surface** of `ResponsesServer.Run<THandler>()`. The one-line entry point accepts an optional `configure` callback that gives you access to the underlying `AgentHostBuilder`, so you can register services, read configuration, and add custom tracing — all while keeping the Tier 1 zero-config experience.
@@ -148,5 +147,3 @@ Use `ResponsesServer.Run(factory: ...)` when you need:
 - **Runtime decisions** about which handler implementation to create
 
 For more control, see [Tier 2 — Builder](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/samples/Sample6_Tier2HostingBuilder.md) and [Tier 3 — Self-Hosted](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/samples/Sample7_Tier3SelfHosting.md).
-
-````

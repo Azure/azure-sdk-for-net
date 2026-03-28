@@ -433,4 +433,58 @@ public class CreateResponseExtensionsTests
 
         Assert.Throws<FormatException>(() => request.GetConversationExpanded());
     }
+
+    // ── GetInstructionsBinaryData ──────────────────────────────────────
+
+    [Test]
+    public void GetInstructionsBinaryData_NullRequest_ThrowsArgumentNullException()
+    {
+        CreateResponse? request = null;
+        Assert.Throws<ArgumentNullException>(() => request!.GetInstructionsBinaryData());
+    }
+
+    [Test]
+    public void GetInstructionsBinaryData_NullInstructions_ReturnsNull()
+    {
+        var request = new CreateResponse();
+        Assert.That(request.GetInstructionsBinaryData(), Is.Null);
+    }
+
+    [Test]
+    public void GetInstructionsBinaryData_WithInstructions_ReturnsJsonEncodedBinaryData()
+    {
+        var request = new CreateResponse { Instructions = "Be helpful and concise." };
+
+        var result = request.GetInstructionsBinaryData();
+
+        Assert.That(result, Is.Not.Null);
+        using var doc = JsonDocument.Parse(result!.ToMemory());
+        Assert.That(doc.RootElement.ValueKind, Is.EqualTo(JsonValueKind.String));
+        Assert.That(doc.RootElement.GetString(), Is.EqualTo("Be helpful and concise."));
+    }
+
+    [Test]
+    public void GetInstructionsBinaryData_WithSpecialCharacters_RoundTripsCorrectly()
+    {
+        var instructions = "Use \"quotes\" and backslashes \\ and newlines\n here.";
+        var request = new CreateResponse { Instructions = instructions };
+
+        var result = request.GetInstructionsBinaryData();
+
+        Assert.That(result, Is.Not.Null);
+        using var doc = JsonDocument.Parse(result!.ToMemory());
+        Assert.That(doc.RootElement.GetString(), Is.EqualTo(instructions));
+    }
+
+    [Test]
+    public void GetInstructionsBinaryData_EmptyString_ReturnsValidBinaryData()
+    {
+        var request = new CreateResponse { Instructions = "" };
+
+        var result = request.GetInstructionsBinaryData();
+
+        Assert.That(result, Is.Not.Null);
+        using var doc = JsonDocument.Parse(result!.ToMemory());
+        Assert.That(doc.RootElement.GetString(), Is.EqualTo(""));
+    }
 }

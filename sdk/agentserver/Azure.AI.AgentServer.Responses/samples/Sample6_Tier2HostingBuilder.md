@@ -1,4 +1,3 @@
-````markdown
 # Sample 6: Tier 2 — Builder with Full Control
 
 This sample demonstrates the **Tier 2** developer experience for the Responses protocol: use `AgentHost.CreateBuilder()` to get full control over service registration, handler construction, configuration, and tracing while still leveraging the Core framework infrastructure.
@@ -116,5 +115,3 @@ Use `AgentHost.CreateBuilder()` when you need to:
 
 For the simplest single-protocol experience, see [Tier 1 — Customize the One-Liner](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/samples/Sample5_Tier1HostingCustomize.md).
 For adding agent endpoints to an existing app, see [Tier 3 — Self-Hosted](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/samples/Sample7_Tier3SelfHosting.md).
-
-````
