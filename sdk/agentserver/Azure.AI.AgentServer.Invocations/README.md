@@ -72,6 +72,10 @@ The library automatically extracts a session identifier from incoming requests, 
 
 Headers prefixed with `x-client-*` are automatically captured from the incoming request and made available via `InvocationContext.ClientHeaders`, allowing end-to-end tracing context and client metadata to flow through the server.
 
+### Handler lifetime
+
+Handlers registered via `AddInvocations<THandler>()` or `InvocationsServer.Run<THandler>()` are resolved per request by default (scoped lifetime). Instance fields on your `InvocationHandler` subclass will not persist across requests. Store long-lived state in separate services or storage keyed by `InvocationContext.SessionId` or `InvocationContext.InvocationId`, or register a singleton handler explicitly if you require a single shared instance.
+
 ## Examples
 
 You can familiarise yourself with different APIs using [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Invocations/samples).

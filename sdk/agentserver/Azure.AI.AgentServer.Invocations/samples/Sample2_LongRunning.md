@@ -15,7 +15,10 @@ Override `HandleAsync` to accept the job and `GetAsync` to report status. Option
 ```C# Snippet:Invocations_Sample2_DocumentAnalysisHandler
 public class DocumentAnalysisHandler : InvocationHandler
 {
-    private JobState? _currentJob;
+    // Handlers are scoped (new instance per request), so state must live
+    // outside the handler. Use a static store here for simplicity; in
+    // production, use a database or distributed cache.
+    private static readonly ConcurrentDictionary<string, JobState> s_jobs = new();
 
     public override async Task HandleAsync(
         HttpRequest request,
@@ -26,9 +29,10 @@ public class DocumentAnalysisHandler : InvocationHandler
         var input = await request.ReadFromJsonAsync<AnalysisInput>(cancellationToken);
 
         // Store the job and kick off background work.
-        _currentJob = new JobState(context.InvocationId, input?.DocumentUrl ?? "", Status: "running");
+        var job = new JobState(context.InvocationId, input?.DocumentUrl ?? "", Status: "running");
+        s_jobs[context.InvocationId] = job;
 
-        _ = Task.Run(() => AnalyzeInBackground(), CancellationToken.None);
+        _ = Task.Run(() => AnalyzeInBackground(context.InvocationId), CancellationToken.None);
 
         // Return 202 Accepted — the caller should poll GET /invocations/{id}.
         response.StatusCode = 202;
@@ -46,13 +50,13 @@ public class DocumentAnalysisHandler : InvocationHandler
         HttpResponse response,
         CancellationToken cancellationToken)
     {
-        if (_currentJob is null || _currentJob.InvocationId != invocationId)
+        if (!s_jobs.TryGetValue(invocationId, out var job))
         {
             response.StatusCode = 404;
             return;
         }
 
-        if (_currentJob.Status == "running")
+        if (job.Status == "running")
         {
             response.Headers["Retry-After"] = "2";
         }
@@ -60,8 +64,8 @@ public class DocumentAnalysisHandler : InvocationHandler
         await response.WriteAsJsonAsync(new
         {
             invocation_id = invocationId,
-            status = _currentJob.Status,
-            result = _currentJob.Result
+            status = job.Status,
+            result = job.Result
         }, cancellationToken);
     }
 
@@ -71,9 +75,9 @@ public class DocumentAnalysisHandler : InvocationHandler
         HttpResponse response,
         CancellationToken cancellationToken)
     {
-        if (_currentJob is not null && _currentJob.InvocationId == invocationId)
+        if (s_jobs.TryGetValue(invocationId, out var job))
         {
-            _currentJob = _currentJob with { Status = "cancelled" };
+            s_jobs[invocationId] = job with { Status = "cancelled" };
             response.StatusCode = 200;
         }
         else
@@ -84,17 +88,17 @@ public class DocumentAnalysisHandler : InvocationHandler
         return Task.CompletedTask;
     }
 
-    private async Task AnalyzeInBackground()
+    private static async Task AnalyzeInBackground(string invocationId)
     {
         // Simulate analysis work.
         await Task.Delay(TimeSpan.FromSeconds(5));
 
-        if (_currentJob is not null && _currentJob.Status == "running")
+        if (s_jobs.TryGetValue(invocationId, out var job) && job.Status == "running")
         {
-            _currentJob = _currentJob with
+            s_jobs[invocationId] = job with
             {
                 Status = "completed",
-                Result = $"Analysis of {_currentJob.DocumentUrl}: 3 pages, 2 tables, 1 chart detected."
+                Result = $"Analysis of {job.DocumentUrl}: 3 pages, 2 tables, 1 chart detected."
             };
         }
     }

@@ -1,4 +1,3 @@
-````markdown
 # Sample 7: Tier 3 — Self-Hosted in an Existing ASP.NET App
 
 This sample demonstrates the **Tier 3** developer experience for the Invocations protocol: you own the HTTP host and use `AddInvocationsServer()` + `MapInvocationsServer()` to add Invocations API endpoints alongside your own routes. This is useful when you have an existing ASP.NET Core application and want to add agent endpoints without adopting the Core framework.
@@ -84,5 +83,3 @@ Use `WebApplication.CreateBuilder()` + `AddInvocationsServer()` + `MapInvocation
 
 For the simplest single-protocol experience, see [Tier 1 — Customize the One-Liner](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Invocations/samples/Sample5_Tier1HostingCustomize.md).
 For composition with the Core builder, see [Tier 2 — Builder](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Invocations/samples/Sample6_Tier2HostingBuilder.md).
-
-````
