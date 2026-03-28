@@ -94,6 +94,12 @@
 # ServiceLabel: %AI Projects
 # ServiceOwners:                                                   @dargilco @nick863 @trangevi
 
+# PRLabel: %AI Agent Server
+/sdk/agentserver/                                                  @RaviPidaparthi @ankitbko
+
+# ServiceLabel: %AI Agent Server
+# ServiceOwners:                                                   @RaviPidaparthi @ankitbko
+
 # PRLabel: %App Configuration
 /sdk/appconfiguration/                                             @avanigupta @zhiyuanliang-ms @linglingye001
 
