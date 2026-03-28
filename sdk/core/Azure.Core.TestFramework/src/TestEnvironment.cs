@@ -243,17 +243,31 @@ namespace Azure.Core.TestFramework
                     }
                     else
                     {
-                        _credential = new ChainedTokenCredential(
-                            new AzureCliCredential(),
-                            new AzurePowerShellCredential(),
-                            new AzureDeveloperCliCredential(),
-                            new VisualStudioCodeCredential(),
-                            new VisualStudioCredential());
+                        _credential = CreateDeveloperCredential();
                     }
                 }
 
                 return _credential;
             }
+        }
+
+        /// <summary>
+        /// Returns the credential used for local developer authentication when no service principal
+        /// or pipeline credentials are available. The default implementation returns a
+        /// <see cref="ChainedTokenCredential"/> that tries CLI-based credentials before IDE credentials,
+        /// ensuring the correct testing tenant is used during local test recording.
+        /// Subclasses can override this method to customize the credential chain (e.g., to use
+        /// <see cref="DefaultAzureCredential"/>).
+        /// </summary>
+        /// <returns>A <see cref="TokenCredential"/> for local developer authentication.</returns>
+        protected virtual TokenCredential CreateDeveloperCredential()
+        {
+            return new ChainedTokenCredential(
+                new AzureCliCredential(),
+                new AzurePowerShellCredential(),
+                new AzureDeveloperCliCredential(),
+                new VisualStudioCodeCredential(),
+                new VisualStudioCredential());
         }
 
         /// <summary>
