@@ -243,18 +243,20 @@ dotnet format Azure.AI.AgentServer.sln
 Run these **in this exact order** before every commit. Order matters — `dotnet format`
 must run **last** so it catches formatting issues introduced by earlier steps.
 
+Steps 1–2 run from the **repo root**; steps 3–4 run from `sdk/agentserver/`.
+
 ```powershell
-# 1. Export public API
+# 1. Export public API  (from repo root)
 eng/scripts/Export-API.ps1 agentserver
 
-# 2. Update doc snippets (syncs #region blocks into markdown)
+# 2. Update doc snippets  (from repo root — syncs #region blocks into markdown)
 eng/scripts/Update-Snippets.ps1 agentserver
 
-# 3. Build snippets (reproduces the CI "Build snippets" step locally)
+# 3. Build snippets  (from sdk/agentserver/ — reproduces CI "Build snippets" step)
 cd sdk/agentserver
 dotnet build Azure.AI.AgentServer.sln /p:BuildSnippets=true
 
-# 4. Format LAST — catches indent/whitespace from all prior steps
+# 4. Format LAST  (from sdk/agentserver/ — catches indent/whitespace from all prior steps)
 dotnet format Azure.AI.AgentServer.sln
 ```
 

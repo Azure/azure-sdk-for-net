@@ -22,9 +22,16 @@ The Azure AI Agent Server libraries let you build ASP.NET Core servers that impl
 The fastest way to get a server running:
 
 ```csharp
-using Azure.AI.AgentServer.Responses;
+using Azure.AI.AgentServer.Core;
 
-ResponsesServer.Run<MyHandler>();
+var builder = AgentHost.CreateBuilder();
+
+// Protocol packages provide extension methods to register their endpoints.
+// Example (requires a protocol package such as Azure.AI.AgentServer.Responses):
+// builder.AddResponses<MyHandler>();
+
+var app = builder.Build();
+app.Run();
 ```
 
 See each package's README for detailed getting started instructions.
