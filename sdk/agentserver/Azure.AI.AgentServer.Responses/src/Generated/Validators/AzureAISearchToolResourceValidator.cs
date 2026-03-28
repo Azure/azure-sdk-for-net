@@ -31,6 +31,13 @@ internal static partial class AzureAISearchToolResourceValidator
             return ValidationResult.Failure(errors);
         }
 
+        // Optional: description
+        if (element.TryGetProperty("description", out var descriptionProp))
+        {
+            if (descriptionProp.ValueKind != JsonValueKind.String)
+                errors.Add(new ValidationError("$.description", $"Expected string, got {descriptionProp.ValueKind}"));
+        }
+
         // Required: indexes
         if (!element.TryGetProperty("indexes", out var indexesProp))
             errors.Add(new ValidationError("$.indexes", "Required property 'indexes' is missing"));
@@ -52,6 +59,13 @@ internal static partial class AzureAISearchToolResourceValidator
                     indexesIdx++;
                 }
             }
+        }
+
+        // Optional: name
+        if (element.TryGetProperty("name", out var nameProp))
+        {
+            if (nameProp.ValueKind != JsonValueKind.String)
+                errors.Add(new ValidationError("$.name", $"Expected string, got {nameProp.ValueKind}"));
         }
 
         ValidateCustom(element, errors);

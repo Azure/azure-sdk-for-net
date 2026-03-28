@@ -45,6 +45,20 @@ internal static partial class A2APreviewToolValidator
                 errors.Add(new ValidationError("$.base_url", $"Expected string, got {baseUrlProp.ValueKind}"));
         }
 
+        // Optional: description
+        if (element.TryGetProperty("description", out var descriptionProp))
+        {
+            if (descriptionProp.ValueKind != JsonValueKind.String)
+                errors.Add(new ValidationError("$.description", $"Expected string, got {descriptionProp.ValueKind}"));
+        }
+
+        // Optional: name
+        if (element.TryGetProperty("name", out var nameProp))
+        {
+            if (nameProp.ValueKind != JsonValueKind.String)
+                errors.Add(new ValidationError("$.name", $"Expected string, got {nameProp.ValueKind}"));
+        }
+
         // Optional: project_connection_id
         if (element.TryGetProperty("project_connection_id", out var projectConnectionIdProp))
         {

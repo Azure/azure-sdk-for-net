@@ -103,6 +103,7 @@ internal static partial class ToolValidator
         "shell" => FunctionShellToolParamValidator.Validate(element),
         "web_search" => WebSearchToolValidator.Validate(element),
         "web_search_preview" => WebSearchPreviewToolValidator.Validate(element),
+        "work_iq_preview" => WorkIQPreviewToolValidator.Validate(element),
         _ => ValidationResult.Success,  // Unknown type — forward compatible
     };
 }

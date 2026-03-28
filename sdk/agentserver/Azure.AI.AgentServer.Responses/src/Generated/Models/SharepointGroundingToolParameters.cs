@@ -23,16 +23,26 @@ namespace Azure.AI.AgentServer.Responses.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SharepointGroundingToolParameters"/>. </summary>
+        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
+        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
         /// <param name="projectConnections">
         /// The project connections attached to this tool. There can be a maximum of 1 connection
         /// resource attached to the tool.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SharepointGroundingToolParameters(IList<ToolProjectConnection> projectConnections, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SharepointGroundingToolParameters(string name, string description, IList<ToolProjectConnection> projectConnections, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            Name = name;
+            Description = description;
             ProjectConnections = projectConnections;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Optional user-defined name for this tool or configuration. </summary>
+        public string Name { get; set; }
+
+        /// <summary> Optional user-defined description for this tool or configuration. </summary>
+        public string Description { get; set; }
 
         /// <summary>
         /// The project connections attached to this tool. There can be a maximum of 1 connection

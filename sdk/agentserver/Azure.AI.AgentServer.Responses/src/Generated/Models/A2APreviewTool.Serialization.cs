@@ -74,6 +74,16 @@ namespace Azure.AI.AgentServer.Responses.Models
                 throw new FormatException($"The model {nameof(A2APreviewTool)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
+            }
             if (Optional.IsDefined(BaseUrl))
             {
                 writer.WritePropertyName("base_url"u8);
@@ -118,6 +128,8 @@ namespace Azure.AI.AgentServer.Responses.Models
             }
             ToolType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            string name = default;
+            string description = default;
             Uri baseUrl = default;
             string agentCardPath = default;
             string projectConnectionId = default;
@@ -126,6 +138,16 @@ namespace Azure.AI.AgentServer.Responses.Models
                 if (prop.NameEquals("type"u8))
                 {
                     @type = new ToolType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("name"u8))
+                {
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("description"u8))
+                {
+                    description = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("base_url"u8))
@@ -152,7 +174,14 @@ namespace Azure.AI.AgentServer.Responses.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new A2APreviewTool(@type, additionalBinaryDataProperties, baseUrl, agentCardPath, projectConnectionId);
+            return new A2APreviewTool(
+                @type,
+                additionalBinaryDataProperties,
+                name,
+                description,
+                baseUrl,
+                agentCardPath,
+                projectConnectionId);
         }
     }
 }

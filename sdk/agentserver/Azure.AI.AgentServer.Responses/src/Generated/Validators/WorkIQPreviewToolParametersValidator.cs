@@ -16,7 +16,7 @@ namespace Azure.AI.AgentServer.Responses.Validators;
 /// Validates JSON payloads against the API schema.
 /// Extend via partial class in Custom/Validators/ to add custom rules.
 /// </summary>
-internal static partial class ToolProjectConnectionValidator
+internal static partial class WorkIQPreviewToolParametersValidator
 {
     /// <summary>
     /// Validates a parsed JSON element.
@@ -29,20 +29,6 @@ internal static partial class ToolProjectConnectionValidator
         {
             errors.Add(new ValidationError("$", $"Expected object, got {element.ValueKind}"));
             return ValidationResult.Failure(errors);
-        }
-
-        // Optional: description
-        if (element.TryGetProperty("description", out var descriptionProp))
-        {
-            if (descriptionProp.ValueKind != JsonValueKind.String)
-                errors.Add(new ValidationError("$.description", $"Expected string, got {descriptionProp.ValueKind}"));
-        }
-
-        // Optional: name
-        if (element.TryGetProperty("name", out var nameProp))
-        {
-            if (nameProp.ValueKind != JsonValueKind.String)
-                errors.Add(new ValidationError("$.name", $"Expected string, got {nameProp.ValueKind}"));
         }
 
         // Required: project_connection_id

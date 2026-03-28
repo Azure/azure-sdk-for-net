@@ -31,6 +31,13 @@ internal static partial class FileSearchToolValidator
             return ValidationResult.Failure(errors);
         }
 
+        // Optional: description
+        if (element.TryGetProperty("description", out var descriptionProp))
+        {
+            if (descriptionProp.ValueKind != JsonValueKind.String)
+                errors.Add(new ValidationError("$.description", $"Expected string, got {descriptionProp.ValueKind}"));
+        }
+
         // Optional: filters
         if (element.TryGetProperty("filters", out var filtersProp) && filtersProp.ValueKind != JsonValueKind.Null)
         {
@@ -47,6 +54,13 @@ internal static partial class FileSearchToolValidator
         {
             if (maxNumResultsProp.ValueKind != JsonValueKind.Number)
                 errors.Add(new ValidationError("$.max_num_results", $"Expected integer, got {maxNumResultsProp.ValueKind}"));
+        }
+
+        // Optional: name
+        if (element.TryGetProperty("name", out var nameProp))
+        {
+            if (nameProp.ValueKind != JsonValueKind.String)
+                errors.Add(new ValidationError("$.name", $"Expected string, got {nameProp.ValueKind}"));
         }
 
         // Optional: ranking_options

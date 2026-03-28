@@ -49,6 +49,13 @@ internal static partial class ImageGenToolValidator
                 errors.Add(new ValidationError("$.background", $"Value '{backgroundProp.GetString()}' is not valid. Allowed: transparent, opaque, auto"));
         }
 
+        // Optional: description
+        if (element.TryGetProperty("description", out var descriptionProp))
+        {
+            if (descriptionProp.ValueKind != JsonValueKind.String)
+                errors.Add(new ValidationError("$.description", $"Expected string, got {descriptionProp.ValueKind}"));
+        }
+
         // Optional: input_fidelity
         if (element.TryGetProperty("input_fidelity", out var inputFidelityProp) && inputFidelityProp.ValueKind != JsonValueKind.Null)
         {
@@ -83,6 +90,13 @@ internal static partial class ImageGenToolValidator
                 errors.Add(new ValidationError("$.moderation", $"Expected string, got {moderationProp.ValueKind}"));
             else if (moderationProp.GetString() is not ("auto" or "low"))
                 errors.Add(new ValidationError("$.moderation", $"Value '{moderationProp.GetString()}' is not valid. Allowed: auto, low"));
+        }
+
+        // Optional: name
+        if (element.TryGetProperty("name", out var nameProp))
+        {
+            if (nameProp.ValueKind != JsonValueKind.String)
+                errors.Add(new ValidationError("$.name", $"Expected string, got {nameProp.ValueKind}"));
         }
 
         // Optional: output_compression

@@ -16,7 +16,7 @@ namespace Azure.AI.AgentServer.Responses.Validators;
 /// Validates JSON payloads against the API schema.
 /// Extend via partial class in Custom/Validators/ to add custom rules.
 /// </summary>
-internal static partial class ToolProjectConnectionValidator
+internal static partial class WorkIQPreviewToolValidator
 {
     /// <summary>
     /// Validates a parsed JSON element.
@@ -31,27 +31,28 @@ internal static partial class ToolProjectConnectionValidator
             return ValidationResult.Failure(errors);
         }
 
-        // Optional: description
-        if (element.TryGetProperty("description", out var descriptionProp))
-        {
-            if (descriptionProp.ValueKind != JsonValueKind.String)
-                errors.Add(new ValidationError("$.description", $"Expected string, got {descriptionProp.ValueKind}"));
-        }
-
-        // Optional: name
-        if (element.TryGetProperty("name", out var nameProp))
-        {
-            if (nameProp.ValueKind != JsonValueKind.String)
-                errors.Add(new ValidationError("$.name", $"Expected string, got {nameProp.ValueKind}"));
-        }
-
-        // Required: project_connection_id
-        if (!element.TryGetProperty("project_connection_id", out var projectConnectionIdProp))
-            errors.Add(new ValidationError("$.project_connection_id", "Required property 'project_connection_id' is missing"));
+        // Required: type
+        if (!element.TryGetProperty("type", out var typeValProp))
+            errors.Add(new ValidationError("$.type", "Required property 'type' is missing"));
         else
         {
-            if (projectConnectionIdProp.ValueKind != JsonValueKind.String)
-                errors.Add(new ValidationError("$.project_connection_id", $"Expected string, got {projectConnectionIdProp.ValueKind}"));
+            if (typeValProp.ValueKind != JsonValueKind.String)
+                errors.Add(new ValidationError("$.type", $"Expected string, got {typeValProp.ValueKind}"));
+            else if (typeValProp.GetString() is not ("work_iq_preview"))
+                errors.Add(new ValidationError("$.type", $"Value '{typeValProp.GetString()}' is not valid. Allowed: work_iq_preview"));
+        }
+
+        // Required: work_iq_preview
+        if (!element.TryGetProperty("work_iq_preview", out var workIqPreviewProp))
+            errors.Add(new ValidationError("$.work_iq_preview", "Required property 'work_iq_preview' is missing"));
+        else
+        {
+            var workIqPreviewResult = WorkIQPreviewToolParametersValidator.Validate(workIqPreviewProp);
+            if (!workIqPreviewResult.IsValid)
+            {
+                foreach (var e in workIqPreviewResult.Errors)
+                    errors.Add(new ValidationError("$.work_iq_preview" + e.Path.Substring(1), e.Message));
+            }
         }
 
         ValidateCustom(element, errors);

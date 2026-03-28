@@ -31,6 +31,13 @@ internal static partial class AISearchIndexResourceValidator
             return ValidationResult.Failure(errors);
         }
 
+        // Optional: description
+        if (element.TryGetProperty("description", out var descriptionProp))
+        {
+            if (descriptionProp.ValueKind != JsonValueKind.String)
+                errors.Add(new ValidationError("$.description", $"Expected string, got {descriptionProp.ValueKind}"));
+        }
+
         // Optional: filter
         if (element.TryGetProperty("filter", out var filterProp))
         {
@@ -50,6 +57,13 @@ internal static partial class AISearchIndexResourceValidator
         {
             if (indexNameProp.ValueKind != JsonValueKind.String)
                 errors.Add(new ValidationError("$.index_name", $"Expected string, got {indexNameProp.ValueKind}"));
+        }
+
+        // Optional: name
+        if (element.TryGetProperty("name", out var nameProp))
+        {
+            if (nameProp.ValueKind != JsonValueKind.String)
+                errors.Add(new ValidationError("$.name", $"Expected string, got {nameProp.ValueKind}"));
         }
 
         // Optional: project_connection_id

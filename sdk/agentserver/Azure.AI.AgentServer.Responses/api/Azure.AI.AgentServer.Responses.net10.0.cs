@@ -8,14 +8,14 @@ namespace Azure.AI.AgentServer.Responses
     }
     public static partial class AzureAIAgentServerResponsesModelFactory
     {
-        public static Azure.AI.AgentServer.Responses.Models.A2APreviewTool A2APreviewTool(System.Uri baseUrl = null, string agentCardPath = null, string projectConnectionId = null) { throw null; }
+        public static Azure.AI.AgentServer.Responses.Models.A2APreviewTool A2APreviewTool(string name = null, string description = null, System.Uri baseUrl = null, string agentCardPath = null, string projectConnectionId = null) { throw null; }
         public static Azure.AI.AgentServer.Responses.Models.A2AToolCall A2AToolCall(System.BinaryData createdBy = null, Azure.AI.AgentServer.Responses.Models.AgentReference agentReference = null, string responseId = null, string callId = null, string name = null, string arguments = null, Azure.AI.AgentServer.Responses.Models.ToolCallStatus status = Azure.AI.AgentServer.Responses.Models.ToolCallStatus.InProgress, string id = null) { throw null; }
         public static Azure.AI.AgentServer.Responses.Models.A2AToolCallOutput A2AToolCallOutput(System.BinaryData createdBy = null, Azure.AI.AgentServer.Responses.Models.AgentReference agentReference = null, string responseId = null, string callId = null, string name = null, System.BinaryData output = null, Azure.AI.AgentServer.Responses.Models.ToolCallStatus status = Azure.AI.AgentServer.Responses.Models.ToolCallStatus.InProgress, string id = null) { throw null; }
         public static Azure.AI.AgentServer.Responses.Models.AgentId AgentId(string name = null, string version = null) { throw null; }
         public static Azure.AI.AgentServer.Responses.Models.AgentReference AgentReference(string name = null, string version = null) { throw null; }
         public static Azure.AI.AgentServer.Responses.Models.AgentsPagedResultOutputItem AgentsPagedResultOutputItem(System.Collections.Generic.IEnumerable<Azure.AI.AgentServer.Responses.Models.OutputItem> data = null, string firstId = null, string lastId = null, bool hasMore = false) { throw null; }
         public static Azure.AI.AgentServer.Responses.Models.AgentsPagedResultResponse AgentsPagedResultResponse(System.Collections.Generic.IEnumerable<Azure.AI.AgentServer.Responses.Models.ResponseObject> data = null, string firstId = null, string lastId = null, bool hasMore = false) { throw null; }
-        public static Azure.AI.AgentServer.Responses.Models.AISearchIndexResource AISearchIndexResource(string projectConnectionId = null, string indexName = null, Azure.AI.AgentServer.Responses.Models.AzureAISearchQueryType? queryType = default(Azure.AI.AgentServer.Responses.Models.AzureAISearchQueryType?), int? topK = default(int?), string filter = null, string indexAssetId = null) { throw null; }
+        public static Azure.AI.AgentServer.Responses.Models.AISearchIndexResource AISearchIndexResource(string projectConnectionId = null, string indexName = null, string name = null, string description = null, Azure.AI.AgentServer.Responses.Models.AzureAISearchQueryType? queryType = default(Azure.AI.AgentServer.Responses.Models.AzureAISearchQueryType?), int? topK = default(int?), string filter = null, string indexAssetId = null) { throw null; }
         public static Azure.AI.AgentServer.Responses.Models.Annotation Annotation(string type = null) { throw null; }
         public static Azure.AI.AgentServer.Responses.Models.ApiErrorResponse ApiErrorResponse(Azure.AI.AgentServer.Responses.Models.Error error = null) { throw null; }
         public static Azure.AI.AgentServer.Responses.Models.ApplyPatchCreateFileOperation ApplyPatchCreateFileOperation(string path = null, string diff = null) { throw null; }
@@ -31,10 +31,10 @@ namespace Azure.AI.AgentServer.Responses
         public static Azure.AI.AgentServer.Responses.Models.ApplyPatchUpdateFileOperationParam ApplyPatchUpdateFileOperationParam(string path = null, string diff = null) { throw null; }
         public static Azure.AI.AgentServer.Responses.Models.ApproximateLocation ApproximateLocation(string country = null, string region = null, string city = null, string timezone = null) { throw null; }
         public static Azure.AI.AgentServer.Responses.Models.AutoCodeInterpreterToolParam AutoCodeInterpreterToolParam(System.Collections.Generic.IEnumerable<string> fileIds = null, Azure.AI.AgentServer.Responses.Models.ContainerMemoryLimit? memoryLimit = default(Azure.AI.AgentServer.Responses.Models.ContainerMemoryLimit?), Azure.AI.AgentServer.Responses.Models.ContainerNetworkPolicyParam networkPolicy = null) { throw null; }
-        public static Azure.AI.AgentServer.Responses.Models.AzureAISearchTool AzureAISearchTool(Azure.AI.AgentServer.Responses.Models.AzureAISearchToolResource azureAiSearch = null) { throw null; }
+        public static Azure.AI.AgentServer.Responses.Models.AzureAISearchTool AzureAISearchTool(string name = null, string description = null, Azure.AI.AgentServer.Responses.Models.AzureAISearchToolResource azureAiSearch = null) { throw null; }
         public static Azure.AI.AgentServer.Responses.Models.AzureAISearchToolCall AzureAISearchToolCall(System.BinaryData createdBy = null, Azure.AI.AgentServer.Responses.Models.AgentReference agentReference = null, string responseId = null, string callId = null, string arguments = null, Azure.AI.AgentServer.Responses.Models.ToolCallStatus status = Azure.AI.AgentServer.Responses.Models.ToolCallStatus.InProgress, string id = null) { throw null; }
         public static Azure.AI.AgentServer.Responses.Models.AzureAISearchToolCallOutput AzureAISearchToolCallOutput(System.BinaryData createdBy = null, Azure.AI.AgentServer.Responses.Models.AgentReference agentReference = null, string responseId = null, string callId = null, System.BinaryData output = null, Azure.AI.AgentServer.Responses.Models.ToolCallStatus status = Azure.AI.AgentServer.Responses.Models.ToolCallStatus.InProgress, string id = null) { throw null; }
-        public static Azure.AI.AgentServer.Responses.Models.AzureAISearchToolResource AzureAISearchToolResource(System.Collections.Generic.IEnumerable<Azure.AI.AgentServer.Responses.Models.AISearchIndexResource> indexes = null) { throw null; }
+        public static Azure.AI.AgentServer.Responses.Models.AzureAISearchToolResource AzureAISearchToolResource(string name = null, string description = null, System.Collections.Generic.IEnumerable<Azure.AI.AgentServer.Responses.Models.AISearchIndexResource> indexes = null) { throw null; }
         public static Azure.AI.AgentServer.Responses.Models.AzureFunctionBinding AzureFunctionBinding(Azure.AI.AgentServer.Responses.Models.AzureFunctionStorageQueue storageQueue = null) { throw null; }
         public static Azure.AI.AgentServer.Responses.Models.AzureFunctionDefinition AzureFunctionDefinition(Azure.AI.AgentServer.Responses.Models.AzureFunctionDefinitionFunction function = null, Azure.AI.AgentServer.Responses.Models.AzureFunctionBinding inputBinding = null, Azure.AI.AgentServer.Responses.Models.AzureFunctionBinding outputBinding = null) { throw null; }
         public static Azure.AI.AgentServer.Responses.Models.AzureFunctionDefinitionFunction AzureFunctionDefinitionFunction(string name = null, string description = null, System.Collections.Generic.IDictionary<string, System.BinaryData> parameters = null) { throw null; }
@@ -42,27 +42,27 @@ namespace Azure.AI.AgentServer.Responses
         public static Azure.AI.AgentServer.Responses.Models.AzureFunctionTool AzureFunctionTool(Azure.AI.AgentServer.Responses.Models.AzureFunctionDefinition azureFunction = null) { throw null; }
         public static Azure.AI.AgentServer.Responses.Models.AzureFunctionToolCall AzureFunctionToolCall(System.BinaryData createdBy = null, Azure.AI.AgentServer.Responses.Models.AgentReference agentReference = null, string responseId = null, string callId = null, string name = null, string arguments = null, Azure.AI.AgentServer.Responses.Models.ToolCallStatus status = Azure.AI.AgentServer.Responses.Models.ToolCallStatus.InProgress, string id = null) { throw null; }
         public static Azure.AI.AgentServer.Responses.Models.AzureFunctionToolCallOutput AzureFunctionToolCallOutput(System.BinaryData createdBy = null, Azure.AI.AgentServer.Responses.Models.AgentReference agentReference = null, string responseId = null, string callId = null, string name = null, System.BinaryData output = null, Azure.AI.AgentServer.Responses.Models.ToolCallStatus status = Azure.AI.AgentServer.Responses.Models.ToolCallStatus.InProgress, string id = null) { throw null; }
-        public static Azure.AI.AgentServer.Responses.Models.BingCustomSearchConfiguration BingCustomSearchConfiguration(string projectConnectionId = null, string instanceName = null, string market = null, string setLang = null, long? count = default(long?), string freshness = null) { throw null; }
-        public static Azure.AI.AgentServer.Responses.Models.BingCustomSearchPreviewTool BingCustomSearchPreviewTool(Azure.AI.AgentServer.Responses.Models.BingCustomSearchToolParameters bingCustomSearchPreview = null) { throw null; }
+        public static Azure.AI.AgentServer.Responses.Models.BingCustomSearchConfiguration BingCustomSearchConfiguration(string name = null, string description = null, string projectConnectionId = null, string instanceName = null, string market = null, string setLang = null, long? count = default(long?), string freshness = null) { throw null; }
+        public static Azure.AI.AgentServer.Responses.Models.BingCustomSearchPreviewTool BingCustomSearchPreviewTool(string name = null, string description = null, Azure.AI.AgentServer.Responses.Models.BingCustomSearchToolParameters bingCustomSearchPreview = null) { throw null; }
         public static Azure.AI.AgentServer.Responses.Models.BingCustomSearchToolCall BingCustomSearchToolCall(System.BinaryData createdBy = null, Azure.AI.AgentServer.Responses.Models.AgentReference agentReference = null, string responseId = null, string callId = null, string arguments = null, Azure.AI.AgentServer.Responses.Models.ToolCallStatus status = Azure.AI.AgentServer.Responses.Models.ToolCallStatus.InProgress, string id = null) { throw null; }
         public static Azure.AI.AgentServer.Responses.Models.BingCustomSearchToolCallOutput BingCustomSearchToolCallOutput(System.BinaryData createdBy = null, Azure.AI.AgentServer.Responses.Models.AgentReference agentReference = null, string responseId = null, string callId = null, System.BinaryData output = null, Azure.AI.AgentServer.Responses.Models.ToolCallStatus status = Azure.AI.AgentServer.Responses.Models.ToolCallStatus.InProgress, string id = null) { throw null; }
-        public static Azure.AI.AgentServer.Responses.Models.BingCustomSearchToolParameters BingCustomSearchToolParameters(System.Collections.Generic.IEnumerable<Azure.AI.AgentServer.Responses.Models.BingCustomSearchConfiguration> searchConfigurations = null) { throw null; }
-        public static Azure.AI.AgentServer.Responses.Models.BingGroundingSearchConfiguration BingGroundingSearchConfiguration(string projectConnectionId = null, string market = null, string setLang = null, long? count = default(long?), string freshness = null) { throw null; }
-        public static Azure.AI.AgentServer.Responses.Models.BingGroundingSearchToolParameters BingGroundingSearchToolParameters(System.Collections.Generic.IEnumerable<Azure.AI.AgentServer.Responses.Models.BingGroundingSearchConfiguration> searchConfigurations = null) { throw null; }
-        public static Azure.AI.AgentServer.Responses.Models.BingGroundingTool BingGroundingTool(Azure.AI.AgentServer.Responses.Models.BingGroundingSearchToolParameters bingGrounding = null) { throw null; }
+        public static Azure.AI.AgentServer.Responses.Models.BingCustomSearchToolParameters BingCustomSearchToolParameters(string name = null, string description = null, System.Collections.Generic.IEnumerable<Azure.AI.AgentServer.Responses.Models.BingCustomSearchConfiguration> searchConfigurations = null) { throw null; }
+        public static Azure.AI.AgentServer.Responses.Models.BingGroundingSearchConfiguration BingGroundingSearchConfiguration(string name = null, string description = null, string projectConnectionId = null, string market = null, string setLang = null, long? count = default(long?), string freshness = null) { throw null; }
+        public static Azure.AI.AgentServer.Responses.Models.BingGroundingSearchToolParameters BingGroundingSearchToolParameters(string name = null, string description = null, System.Collections.Generic.IEnumerable<Azure.AI.AgentServer.Responses.Models.BingGroundingSearchConfiguration> searchConfigurations = null) { throw null; }
+        public static Azure.AI.AgentServer.Responses.Models.BingGroundingTool BingGroundingTool(string name = null, string description = null, Azure.AI.AgentServer.Responses.Models.BingGroundingSearchToolParameters bingGrounding = null) { throw null; }
         public static Azure.AI.AgentServer.Responses.Models.BingGroundingToolCall BingGroundingToolCall(System.BinaryData createdBy = null, Azure.AI.AgentServer.Responses.Models.AgentReference agentReference = null, string responseId = null, string callId = null, string arguments = null, Azure.AI.AgentServer.Responses.Models.ToolCallStatus status = Azure.AI.AgentServer.Responses.Models.ToolCallStatus.InProgress, string id = null) { throw null; }
         public static Azure.AI.AgentServer.Responses.Models.BingGroundingToolCallOutput BingGroundingToolCallOutput(System.BinaryData createdBy = null, Azure.AI.AgentServer.Responses.Models.AgentReference agentReference = null, string responseId = null, string callId = null, System.BinaryData output = null, Azure.AI.AgentServer.Responses.Models.ToolCallStatus status = Azure.AI.AgentServer.Responses.Models.ToolCallStatus.InProgress, string id = null) { throw null; }
-        public static Azure.AI.AgentServer.Responses.Models.BrowserAutomationPreviewTool BrowserAutomationPreviewTool(Azure.AI.AgentServer.Responses.Models.BrowserAutomationToolParameters browserAutomationPreview = null) { throw null; }
+        public static Azure.AI.AgentServer.Responses.Models.BrowserAutomationPreviewTool BrowserAutomationPreviewTool(string name = null, string description = null, Azure.AI.AgentServer.Responses.Models.BrowserAutomationToolParameters browserAutomationPreview = null) { throw null; }
         public static Azure.AI.AgentServer.Responses.Models.BrowserAutomationToolCall BrowserAutomationToolCall(System.BinaryData createdBy = null, Azure.AI.AgentServer.Responses.Models.AgentReference agentReference = null, string responseId = null, string callId = null, string arguments = null, Azure.AI.AgentServer.Responses.Models.ToolCallStatus status = Azure.AI.AgentServer.Responses.Models.ToolCallStatus.InProgress, string id = null) { throw null; }
         public static Azure.AI.AgentServer.Responses.Models.BrowserAutomationToolCallOutput BrowserAutomationToolCallOutput(System.BinaryData createdBy = null, Azure.AI.AgentServer.Responses.Models.AgentReference agentReference = null, string responseId = null, string callId = null, System.BinaryData output = null, Azure.AI.AgentServer.Responses.Models.ToolCallStatus status = Azure.AI.AgentServer.Responses.Models.ToolCallStatus.InProgress, string id = null) { throw null; }
-        public static Azure.AI.AgentServer.Responses.Models.BrowserAutomationToolConnectionParameters BrowserAutomationToolConnectionParameters(string projectConnectionId = null) { throw null; }
-        public static Azure.AI.AgentServer.Responses.Models.BrowserAutomationToolParameters BrowserAutomationToolParameters(Azure.AI.AgentServer.Responses.Models.BrowserAutomationToolConnectionParameters connection = null) { throw null; }
+        public static Azure.AI.AgentServer.Responses.Models.BrowserAutomationToolConnectionParameters BrowserAutomationToolConnectionParameters(string name = null, string description = null, string projectConnectionId = null) { throw null; }
+        public static Azure.AI.AgentServer.Responses.Models.BrowserAutomationToolParameters BrowserAutomationToolParameters(string name = null, string description = null, Azure.AI.AgentServer.Responses.Models.BrowserAutomationToolConnectionParameters connection = null) { throw null; }
         public static Azure.AI.AgentServer.Responses.Models.CaptureStructuredOutputsTool CaptureStructuredOutputsTool(Azure.AI.AgentServer.Responses.Models.StructuredOutputDefinition outputs = null) { throw null; }
         public static Azure.AI.AgentServer.Responses.Models.ChatSummaryMemoryItem ChatSummaryMemoryItem(string memoryId = null, System.DateTimeOffset updatedAt = default(System.DateTimeOffset), string scope = null, string content = null) { throw null; }
         public static Azure.AI.AgentServer.Responses.Models.ClickParam ClickParam(Azure.AI.AgentServer.Responses.Models.ClickButtonType button = Azure.AI.AgentServer.Responses.Models.ClickButtonType.Left, long x = (long)0, long y = (long)0) { throw null; }
         public static Azure.AI.AgentServer.Responses.Models.CodeInterpreterOutputImage CodeInterpreterOutputImage(System.Uri url = null) { throw null; }
         public static Azure.AI.AgentServer.Responses.Models.CodeInterpreterOutputLogs CodeInterpreterOutputLogs(string logs = null) { throw null; }
-        public static Azure.AI.AgentServer.Responses.Models.CodeInterpreterTool CodeInterpreterTool(System.BinaryData container = null) { throw null; }
+        public static Azure.AI.AgentServer.Responses.Models.CodeInterpreterTool CodeInterpreterTool(string name = null, string description = null, System.BinaryData container = null) { throw null; }
         public static Azure.AI.AgentServer.Responses.Models.CompactionSummaryItemParam CompactionSummaryItemParam(string id = null, string encryptedContent = null) { throw null; }
         public static Azure.AI.AgentServer.Responses.Models.CompactResource CompactResource(string id = null, System.Collections.Generic.IEnumerable<Azure.AI.AgentServer.Responses.Models.ItemField> output = null, System.DateTimeOffset createdAt = default(System.DateTimeOffset), Azure.AI.AgentServer.Responses.Models.ResponseUsage usage = null) { throw null; }
         public static Azure.AI.AgentServer.Responses.Models.CompactResponseMethodPublicBody CompactResponseMethodPublicBody(Azure.AI.AgentServer.Responses.Models.ModelIdsCompaction? model = default(Azure.AI.AgentServer.Responses.Models.ModelIdsCompaction?), System.BinaryData input = null, string previousResponseId = null, string instructions = null) { throw null; }
@@ -87,7 +87,7 @@ namespace Azure.AI.AgentServer.Responses
         public static Azure.AI.AgentServer.Responses.Models.ConversationReference ConversationReference(string id = null) { throw null; }
         public static Azure.AI.AgentServer.Responses.Models.CoordParam CoordParam(long x = (long)0, long y = (long)0) { throw null; }
         public static Azure.AI.AgentServer.Responses.Models.CreatedBy CreatedBy(Azure.AI.AgentServer.Responses.Models.AgentId agent = null, string responseId = null) { throw null; }
-        public static Azure.AI.AgentServer.Responses.Models.CreateResponse CreateResponse(Azure.AI.AgentServer.Responses.Models.Metadata metadata = null, long? topLogprobs = default(long?), double? temperature = default(double?), double? topP = default(double?), string user = null, string safetyIdentifier = null, string promptCacheKey = null, Azure.AI.AgentServer.Responses.Models.CreateResponseServiceTier? serviceTier = default(Azure.AI.AgentServer.Responses.Models.CreateResponseServiceTier?), Azure.AI.AgentServer.Responses.Models.CreateResponsePromptCacheRetention? promptCacheRetention = default(Azure.AI.AgentServer.Responses.Models.CreateResponsePromptCacheRetention?), string previousResponseId = null, string model = null, Azure.AI.AgentServer.Responses.Models.Reasoning reasoning = null, bool? background = default(bool?), long? maxOutputTokens = default(long?), long? maxToolCalls = default(long?), Azure.AI.AgentServer.Responses.Models.ResponseTextParam text = null, System.Collections.Generic.IEnumerable<Azure.AI.AgentServer.Responses.Models.Tool> tools = null, System.BinaryData toolChoice = null, Azure.AI.AgentServer.Responses.Models.Prompt prompt = null, Azure.AI.AgentServer.Responses.Models.CreateResponseTruncation? truncation = default(Azure.AI.AgentServer.Responses.Models.CreateResponseTruncation?), System.BinaryData input = null, System.Collections.Generic.IEnumerable<Azure.AI.AgentServer.Responses.Models.IncludeEnum> include = null, bool? parallelToolCalls = default(bool?), bool? store = default(bool?), string instructions = null, bool? stream = default(bool?), Azure.AI.AgentServer.Responses.Models.ResponseStreamOptions streamOptions = null, System.BinaryData conversation = null, System.Collections.Generic.IEnumerable<Azure.AI.AgentServer.Responses.Models.ContextManagementParam> contextManagement = null, Azure.AI.AgentServer.Responses.Models.AgentReference agent = null, Azure.AI.AgentServer.Responses.Models.AgentReference agentReference = null, System.Collections.Generic.IDictionary<string, System.BinaryData> structuredInputs = null, string agentSessionId = null) { throw null; }
+        public static Azure.AI.AgentServer.Responses.Models.CreateResponse CreateResponse(Azure.AI.AgentServer.Responses.Models.Metadata metadata = null, long? topLogprobs = default(long?), double? temperature = default(double?), double? topP = default(double?), string user = null, string safetyIdentifier = null, string promptCacheKey = null, Azure.AI.AgentServer.Responses.Models.CreateResponseServiceTier? serviceTier = default(Azure.AI.AgentServer.Responses.Models.CreateResponseServiceTier?), Azure.AI.AgentServer.Responses.Models.CreateResponsePromptCacheRetention? promptCacheRetention = default(Azure.AI.AgentServer.Responses.Models.CreateResponsePromptCacheRetention?), string previousResponseId = null, string model = null, Azure.AI.AgentServer.Responses.Models.Reasoning reasoning = null, bool? background = default(bool?), long? maxOutputTokens = default(long?), long? maxToolCalls = default(long?), Azure.AI.AgentServer.Responses.Models.ResponseTextParam text = null, System.Collections.Generic.IEnumerable<Azure.AI.AgentServer.Responses.Models.Tool> tools = null, System.BinaryData toolChoice = null, Azure.AI.AgentServer.Responses.Models.Prompt prompt = null, Azure.AI.AgentServer.Responses.Models.CreateResponseTruncation? truncation = default(Azure.AI.AgentServer.Responses.Models.CreateResponseTruncation?), System.BinaryData input = null, System.Collections.Generic.IEnumerable<Azure.AI.AgentServer.Responses.Models.IncludeEnum> include = null, bool? parallelToolCalls = default(bool?), bool? store = default(bool?), string instructions = null, bool? stream = default(bool?), Azure.AI.AgentServer.Responses.Models.ResponseStreamOptions streamOptions = null, System.BinaryData conversation = null, System.Collections.Generic.IEnumerable<Azure.AI.AgentServer.Responses.Models.ContextManagementParam> contextManagement = null, Azure.AI.AgentServer.Responses.Models.AgentReference agent = null, string agentSessionId = null, Azure.AI.AgentServer.Responses.Models.AgentReference agentReference = null, System.Collections.Generic.IDictionary<string, System.BinaryData> structuredInputs = null) { throw null; }
         public static Azure.AI.AgentServer.Responses.Models.CustomGrammarFormatParam CustomGrammarFormatParam(Azure.AI.AgentServer.Responses.Models.GrammarSyntax1 syntax = Azure.AI.AgentServer.Responses.Models.GrammarSyntax1.Lark, string definition = null) { throw null; }
         public static Azure.AI.AgentServer.Responses.Models.CustomTextFormatParam CustomTextFormatParam() { throw null; }
         public static Azure.AI.AgentServer.Responses.Models.CustomToolParam CustomToolParam(string name = null, string description = null, Azure.AI.AgentServer.Responses.Models.CustomToolParamFormat format = null) { throw null; }
@@ -98,10 +98,10 @@ namespace Azure.AI.AgentServer.Responses
         public static Azure.AI.AgentServer.Responses.Models.Error Error(string code = null, string message = null, string param = null, string type = null, System.Collections.Generic.IEnumerable<Azure.AI.AgentServer.Responses.Models.Error> details = null, System.Collections.Generic.IDictionary<string, System.BinaryData> additionalInfo = null, System.Collections.Generic.IDictionary<string, System.BinaryData> debugInfo = null) { throw null; }
         public static Azure.AI.AgentServer.Responses.Models.FabricDataAgentToolCall FabricDataAgentToolCall(System.BinaryData createdBy = null, Azure.AI.AgentServer.Responses.Models.AgentReference agentReference = null, string responseId = null, string callId = null, string arguments = null, Azure.AI.AgentServer.Responses.Models.ToolCallStatus status = Azure.AI.AgentServer.Responses.Models.ToolCallStatus.InProgress, string id = null) { throw null; }
         public static Azure.AI.AgentServer.Responses.Models.FabricDataAgentToolCallOutput FabricDataAgentToolCallOutput(System.BinaryData createdBy = null, Azure.AI.AgentServer.Responses.Models.AgentReference agentReference = null, string responseId = null, string callId = null, System.BinaryData output = null, Azure.AI.AgentServer.Responses.Models.ToolCallStatus status = Azure.AI.AgentServer.Responses.Models.ToolCallStatus.InProgress, string id = null) { throw null; }
-        public static Azure.AI.AgentServer.Responses.Models.FabricDataAgentToolParameters FabricDataAgentToolParameters(System.Collections.Generic.IEnumerable<Azure.AI.AgentServer.Responses.Models.ToolProjectConnection> projectConnections = null) { throw null; }
+        public static Azure.AI.AgentServer.Responses.Models.FabricDataAgentToolParameters FabricDataAgentToolParameters(string name = null, string description = null, System.Collections.Generic.IEnumerable<Azure.AI.AgentServer.Responses.Models.ToolProjectConnection> projectConnections = null) { throw null; }
         public static Azure.AI.AgentServer.Responses.Models.FileCitationBody FileCitationBody(string fileId = null, long index = (long)0, string filename = null) { throw null; }
         public static Azure.AI.AgentServer.Responses.Models.FilePath FilePath(string fileId = null, long index = (long)0) { throw null; }
-        public static Azure.AI.AgentServer.Responses.Models.FileSearchTool FileSearchTool(System.Collections.Generic.IEnumerable<string> vectorStoreIds = null, long? maxNumResults = default(long?), Azure.AI.AgentServer.Responses.Models.RankingOptions rankingOptions = null, System.BinaryData filters = null) { throw null; }
+        public static Azure.AI.AgentServer.Responses.Models.FileSearchTool FileSearchTool(System.Collections.Generic.IEnumerable<string> vectorStoreIds = null, long? maxNumResults = default(long?), Azure.AI.AgentServer.Responses.Models.RankingOptions rankingOptions = null, System.BinaryData filters = null, string name = null, string description = null) { throw null; }
         public static Azure.AI.AgentServer.Responses.Models.FileSearchToolCallResults FileSearchToolCallResults(string fileId = null, string text = null, string filename = null, Azure.AI.AgentServer.Responses.Models.VectorStoreFileAttributes attributes = null, float? score = default(float?)) { throw null; }
         public static Azure.AI.AgentServer.Responses.Models.FunctionAndCustomToolCallOutput FunctionAndCustomToolCallOutput(string type = null) { throw null; }
         public static Azure.AI.AgentServer.Responses.Models.FunctionAndCustomToolCallOutputInputFileContent FunctionAndCustomToolCallOutputInputFileContent(string fileId = null, string filename = null, System.Uri fileUrl = null, string fileData = null) { throw null; }
@@ -124,7 +124,7 @@ namespace Azure.AI.AgentServer.Responses
         public static Azure.AI.AgentServer.Responses.Models.FunctionShellCallOutputOutcomeParam FunctionShellCallOutputOutcomeParam(string type = null) { throw null; }
         public static Azure.AI.AgentServer.Responses.Models.FunctionShellCallOutputTimeoutOutcome FunctionShellCallOutputTimeoutOutcome() { throw null; }
         public static Azure.AI.AgentServer.Responses.Models.FunctionShellCallOutputTimeoutOutcomeParam FunctionShellCallOutputTimeoutOutcomeParam() { throw null; }
-        public static Azure.AI.AgentServer.Responses.Models.FunctionShellToolParam FunctionShellToolParam(Azure.AI.AgentServer.Responses.Models.FunctionShellToolParamEnvironment environment = null) { throw null; }
+        public static Azure.AI.AgentServer.Responses.Models.FunctionShellToolParam FunctionShellToolParam(Azure.AI.AgentServer.Responses.Models.FunctionShellToolParamEnvironment environment = null, string name = null, string description = null) { throw null; }
         public static Azure.AI.AgentServer.Responses.Models.FunctionShellToolParamEnvironment FunctionShellToolParamEnvironment(string type = null) { throw null; }
         public static Azure.AI.AgentServer.Responses.Models.FunctionShellToolParamEnvironmentContainerReferenceParam FunctionShellToolParamEnvironmentContainerReferenceParam(string containerId = null) { throw null; }
         public static Azure.AI.AgentServer.Responses.Models.FunctionShellToolParamEnvironmentLocalEnvironmentParam FunctionShellToolParamEnvironmentLocalEnvironmentParam(System.Collections.Generic.IEnumerable<Azure.AI.AgentServer.Responses.Models.LocalSkillParam> skills = null) { throw null; }
@@ -132,7 +132,7 @@ namespace Azure.AI.AgentServer.Responses
         public static Azure.AI.AgentServer.Responses.Models.FunctionToolCallOutput FunctionToolCallOutput(string id = null, string callId = null, System.BinaryData output = null, Azure.AI.AgentServer.Responses.Models.FunctionToolCallOutputResourceStatus? status = default(Azure.AI.AgentServer.Responses.Models.FunctionToolCallOutputResourceStatus?)) { throw null; }
         public static Azure.AI.AgentServer.Responses.Models.FunctionToolCallOutputResource FunctionToolCallOutputResource(System.BinaryData createdBy = null, Azure.AI.AgentServer.Responses.Models.AgentReference agentReference = null, string responseId = null, string id = null, string callId = null, System.BinaryData output = null, Azure.AI.AgentServer.Responses.Models.FunctionToolCallOutputResourceStatus? status = default(Azure.AI.AgentServer.Responses.Models.FunctionToolCallOutputResourceStatus?)) { throw null; }
         public static Azure.AI.AgentServer.Responses.Models.HybridSearchOptions HybridSearchOptions(double embeddingWeight = 0, double textWeight = 0) { throw null; }
-        public static Azure.AI.AgentServer.Responses.Models.ImageGenTool ImageGenTool(Azure.AI.AgentServer.Responses.Models.ImageGenToolModel? model = default(Azure.AI.AgentServer.Responses.Models.ImageGenToolModel?), Azure.AI.AgentServer.Responses.Models.ImageGenToolQuality? quality = default(Azure.AI.AgentServer.Responses.Models.ImageGenToolQuality?), Azure.AI.AgentServer.Responses.Models.ImageGenToolSize? size = default(Azure.AI.AgentServer.Responses.Models.ImageGenToolSize?), Azure.AI.AgentServer.Responses.Models.ImageGenToolOutputFormat? outputFormat = default(Azure.AI.AgentServer.Responses.Models.ImageGenToolOutputFormat?), long? outputCompression = default(long?), Azure.AI.AgentServer.Responses.Models.ImageGenToolModeration? moderation = default(Azure.AI.AgentServer.Responses.Models.ImageGenToolModeration?), Azure.AI.AgentServer.Responses.Models.ImageGenToolBackground? background = default(Azure.AI.AgentServer.Responses.Models.ImageGenToolBackground?), Azure.AI.AgentServer.Responses.Models.InputFidelity? inputFidelity = default(Azure.AI.AgentServer.Responses.Models.InputFidelity?), Azure.AI.AgentServer.Responses.Models.ImageGenToolInputImageMask inputImageMask = null, long? partialImages = default(long?), Azure.AI.AgentServer.Responses.Models.ImageGenActionEnum? action = default(Azure.AI.AgentServer.Responses.Models.ImageGenActionEnum?)) { throw null; }
+        public static Azure.AI.AgentServer.Responses.Models.ImageGenTool ImageGenTool(Azure.AI.AgentServer.Responses.Models.ImageGenToolModel? model = default(Azure.AI.AgentServer.Responses.Models.ImageGenToolModel?), Azure.AI.AgentServer.Responses.Models.ImageGenToolQuality? quality = default(Azure.AI.AgentServer.Responses.Models.ImageGenToolQuality?), Azure.AI.AgentServer.Responses.Models.ImageGenToolSize? size = default(Azure.AI.AgentServer.Responses.Models.ImageGenToolSize?), Azure.AI.AgentServer.Responses.Models.ImageGenToolOutputFormat? outputFormat = default(Azure.AI.AgentServer.Responses.Models.ImageGenToolOutputFormat?), long? outputCompression = default(long?), Azure.AI.AgentServer.Responses.Models.ImageGenToolModeration? moderation = default(Azure.AI.AgentServer.Responses.Models.ImageGenToolModeration?), Azure.AI.AgentServer.Responses.Models.ImageGenToolBackground? background = default(Azure.AI.AgentServer.Responses.Models.ImageGenToolBackground?), Azure.AI.AgentServer.Responses.Models.InputFidelity? inputFidelity = default(Azure.AI.AgentServer.Responses.Models.InputFidelity?), Azure.AI.AgentServer.Responses.Models.ImageGenToolInputImageMask inputImageMask = null, long? partialImages = default(long?), Azure.AI.AgentServer.Responses.Models.ImageGenActionEnum? action = default(Azure.AI.AgentServer.Responses.Models.ImageGenActionEnum?), string name = null, string description = null) { throw null; }
         public static Azure.AI.AgentServer.Responses.Models.ImageGenToolInputImageMask ImageGenToolInputImageMask(System.Uri imageUrl = null, string fileId = null) { throw null; }
         public static Azure.AI.AgentServer.Responses.Models.InlineSkillParam InlineSkillParam(string name = null, string description = null, Azure.AI.AgentServer.Responses.Models.InlineSkillSourceParam source = null) { throw null; }
         public static Azure.AI.AgentServer.Responses.Models.InlineSkillSourceParam InlineSkillSourceParam(string data = null) { throw null; }
@@ -185,7 +185,7 @@ namespace Azure.AI.AgentServer.Responses
         public static Azure.AI.AgentServer.Responses.Models.KeyPressAction KeyPressAction(System.Collections.Generic.IEnumerable<string> keys = null) { throw null; }
         public static Azure.AI.AgentServer.Responses.Models.LocalEnvironmentResource LocalEnvironmentResource() { throw null; }
         public static Azure.AI.AgentServer.Responses.Models.LocalShellExecAction LocalShellExecAction(System.Collections.Generic.IEnumerable<string> command = null, long? timeoutMs = default(long?), string workingDirectory = null, System.Collections.Generic.IDictionary<string, string> env = null, string user = null) { throw null; }
-        public static Azure.AI.AgentServer.Responses.Models.LocalShellToolParam LocalShellToolParam() { throw null; }
+        public static Azure.AI.AgentServer.Responses.Models.LocalShellToolParam LocalShellToolParam(string name = null, string description = null) { throw null; }
         public static Azure.AI.AgentServer.Responses.Models.LocalSkillParam LocalSkillParam(string name = null, string description = null, string path = null) { throw null; }
         public static Azure.AI.AgentServer.Responses.Models.LogProb LogProb(string token = null, double logprob = 0, System.Collections.Generic.IEnumerable<long> bytes = null, System.Collections.Generic.IEnumerable<Azure.AI.AgentServer.Responses.Models.TopLogProb> topLogprobs = null) { throw null; }
         public static Azure.AI.AgentServer.Responses.Models.MCPApprovalResponse MCPApprovalResponse(string id = null, string approvalRequestId = null, bool approve = false, string reason = null) { throw null; }
@@ -198,8 +198,8 @@ namespace Azure.AI.AgentServer.Responses
         public static Azure.AI.AgentServer.Responses.Models.MemoryItem MemoryItem(string memoryId = null, System.DateTimeOffset updatedAt = default(System.DateTimeOffset), string scope = null, string content = null, string kind = null) { throw null; }
         public static Azure.AI.AgentServer.Responses.Models.MemorySearchItem MemorySearchItem(Azure.AI.AgentServer.Responses.Models.MemoryItem memoryItem = null) { throw null; }
         public static Azure.AI.AgentServer.Responses.Models.MemorySearchOptions MemorySearchOptions(int? maxMemories = default(int?)) { throw null; }
-        public static Azure.AI.AgentServer.Responses.Models.MemorySearchPreviewTool MemorySearchPreviewTool(string memoryStoreName = null, string scope = null, Azure.AI.AgentServer.Responses.Models.MemorySearchOptions searchOptions = null, int? updateDelay = default(int?)) { throw null; }
-        public static Azure.AI.AgentServer.Responses.Models.MemorySearchTool MemorySearchTool(string memoryStoreName = null, string scope = null, Azure.AI.AgentServer.Responses.Models.MemorySearchOptions searchOptions = null, int? updateDelay = default(int?)) { throw null; }
+        public static Azure.AI.AgentServer.Responses.Models.MemorySearchPreviewTool MemorySearchPreviewTool(string name = null, string description = null, string memoryStoreName = null, string scope = null, Azure.AI.AgentServer.Responses.Models.MemorySearchOptions searchOptions = null, int? updateDelay = default(int?)) { throw null; }
+        public static Azure.AI.AgentServer.Responses.Models.MemorySearchTool MemorySearchTool(string name = null, string description = null, string memoryStoreName = null, string scope = null, Azure.AI.AgentServer.Responses.Models.MemorySearchOptions searchOptions = null, int? updateDelay = default(int?)) { throw null; }
         public static Azure.AI.AgentServer.Responses.Models.MemorySearchToolCallItemParam MemorySearchToolCallItemParam(System.Collections.Generic.IEnumerable<Azure.AI.AgentServer.Responses.Models.MemorySearchItem> results = null) { throw null; }
         public static Azure.AI.AgentServer.Responses.Models.MemorySearchToolCallItemResource MemorySearchToolCallItemResource(System.BinaryData createdBy = null, Azure.AI.AgentServer.Responses.Models.AgentReference agentReference = null, string responseId = null, Azure.AI.AgentServer.Responses.Models.MemorySearchToolCallItemResourceStatus status = Azure.AI.AgentServer.Responses.Models.MemorySearchToolCallItemResourceStatus.InProgress, System.Collections.Generic.IEnumerable<Azure.AI.AgentServer.Responses.Models.MemorySearchItem> results = null, string id = null) { throw null; }
         public static Azure.AI.AgentServer.Responses.Models.MessageContent MessageContent(string type = null) { throw null; }
@@ -210,7 +210,7 @@ namespace Azure.AI.AgentServer.Responses
         public static Azure.AI.AgentServer.Responses.Models.MessageContentReasoningTextContent MessageContentReasoningTextContent(string text = null) { throw null; }
         public static Azure.AI.AgentServer.Responses.Models.MessageContentRefusalContent MessageContentRefusalContent(string refusal = null) { throw null; }
         public static Azure.AI.AgentServer.Responses.Models.Metadata Metadata(System.Collections.Generic.IDictionary<string, string> additionalProperties = null) { throw null; }
-        public static Azure.AI.AgentServer.Responses.Models.MicrosoftFabricPreviewTool MicrosoftFabricPreviewTool(Azure.AI.AgentServer.Responses.Models.FabricDataAgentToolParameters fabricDataagentPreview = null) { throw null; }
+        public static Azure.AI.AgentServer.Responses.Models.MicrosoftFabricPreviewTool MicrosoftFabricPreviewTool(string name = null, string description = null, Azure.AI.AgentServer.Responses.Models.FabricDataAgentToolParameters fabricDataagentPreview = null) { throw null; }
         public static Azure.AI.AgentServer.Responses.Models.MoveParam MoveParam(long x = (long)0, long y = (long)0) { throw null; }
         public static Azure.AI.AgentServer.Responses.Models.OAuthConsentRequestOutputItem OAuthConsentRequestOutputItem(System.BinaryData createdBy = null, Azure.AI.AgentServer.Responses.Models.AgentReference agentReference = null, string responseId = null, string id = null, string consentLink = null, string serverLabel = null) { throw null; }
         public static Azure.AI.AgentServer.Responses.Models.OpenApiAnonymousAuthDetails OpenApiAnonymousAuthDetails() { throw null; }
@@ -296,7 +296,7 @@ namespace Azure.AI.AgentServer.Responses
         public static Azure.AI.AgentServer.Responses.Models.ResponseMCPListToolsCompletedEvent ResponseMCPListToolsCompletedEvent(long sequenceNumber = (long)0, string itemId = null, long outputIndex = (long)0) { throw null; }
         public static Azure.AI.AgentServer.Responses.Models.ResponseMCPListToolsFailedEvent ResponseMCPListToolsFailedEvent(long sequenceNumber = (long)0, string itemId = null, long outputIndex = (long)0) { throw null; }
         public static Azure.AI.AgentServer.Responses.Models.ResponseMCPListToolsInProgressEvent ResponseMCPListToolsInProgressEvent(long sequenceNumber = (long)0, string itemId = null, long outputIndex = (long)0) { throw null; }
-        public static Azure.AI.AgentServer.Responses.Models.ResponseObject ResponseObject(Azure.AI.AgentServer.Responses.Models.Metadata metadata = null, long? topLogprobs = default(long?), double? temperature = default(double?), double? topP = default(double?), string user = null, string safetyIdentifier = null, string promptCacheKey = null, Azure.AI.AgentServer.Responses.Models.CreateResponseServiceTier? serviceTier = default(Azure.AI.AgentServer.Responses.Models.CreateResponseServiceTier?), Azure.AI.AgentServer.Responses.Models.CreateResponsePromptCacheRetention? promptCacheRetention = default(Azure.AI.AgentServer.Responses.Models.CreateResponsePromptCacheRetention?), string previousResponseId = null, string model = null, Azure.AI.AgentServer.Responses.Models.Reasoning reasoning = null, bool? background = default(bool?), long? maxOutputTokens = default(long?), long? maxToolCalls = default(long?), Azure.AI.AgentServer.Responses.Models.ResponseTextParam text = null, System.Collections.Generic.IEnumerable<Azure.AI.AgentServer.Responses.Models.Tool> tools = null, System.BinaryData toolChoice = null, Azure.AI.AgentServer.Responses.Models.Prompt prompt = null, Azure.AI.AgentServer.Responses.Models.CreateResponseTruncation? truncation = default(Azure.AI.AgentServer.Responses.Models.CreateResponseTruncation?), string id = null, Azure.AI.AgentServer.Responses.Models.ResponseStatus? status = default(Azure.AI.AgentServer.Responses.Models.ResponseStatus?), System.DateTimeOffset createdAt = default(System.DateTimeOffset), System.DateTimeOffset? completedAt = default(System.DateTimeOffset?), Azure.AI.AgentServer.Responses.Models.ResponseErrorInfo error = null, Azure.AI.AgentServer.Responses.Models.ResponseIncompleteDetails incompleteDetails = null, System.Collections.Generic.IEnumerable<Azure.AI.AgentServer.Responses.Models.OutputItem> output = null, System.BinaryData instructions = null, string outputText = null, Azure.AI.AgentServer.Responses.Models.ResponseUsage usage = null, bool parallelToolCalls = false, Azure.AI.AgentServer.Responses.Models.ConversationReference conversation = null, Azure.AI.AgentServer.Responses.Models.AgentId agent = null, Azure.AI.AgentServer.Responses.Models.AgentReference agentReference = null, string agentSessionId = null) { throw null; }
+        public static Azure.AI.AgentServer.Responses.Models.ResponseObject ResponseObject(Azure.AI.AgentServer.Responses.Models.Metadata metadata = null, long? topLogprobs = default(long?), double? temperature = default(double?), double? topP = default(double?), string user = null, string safetyIdentifier = null, string promptCacheKey = null, Azure.AI.AgentServer.Responses.Models.CreateResponseServiceTier? serviceTier = default(Azure.AI.AgentServer.Responses.Models.CreateResponseServiceTier?), Azure.AI.AgentServer.Responses.Models.CreateResponsePromptCacheRetention? promptCacheRetention = default(Azure.AI.AgentServer.Responses.Models.CreateResponsePromptCacheRetention?), string previousResponseId = null, string model = null, Azure.AI.AgentServer.Responses.Models.Reasoning reasoning = null, bool? background = default(bool?), long? maxOutputTokens = default(long?), long? maxToolCalls = default(long?), Azure.AI.AgentServer.Responses.Models.ResponseTextParam text = null, System.Collections.Generic.IEnumerable<Azure.AI.AgentServer.Responses.Models.Tool> tools = null, System.BinaryData toolChoice = null, Azure.AI.AgentServer.Responses.Models.Prompt prompt = null, Azure.AI.AgentServer.Responses.Models.CreateResponseTruncation? truncation = default(Azure.AI.AgentServer.Responses.Models.CreateResponseTruncation?), string id = null, Azure.AI.AgentServer.Responses.Models.ResponseStatus? status = default(Azure.AI.AgentServer.Responses.Models.ResponseStatus?), System.DateTimeOffset createdAt = default(System.DateTimeOffset), System.DateTimeOffset? completedAt = default(System.DateTimeOffset?), Azure.AI.AgentServer.Responses.Models.ResponseErrorInfo error = null, Azure.AI.AgentServer.Responses.Models.ResponseIncompleteDetails incompleteDetails = null, System.Collections.Generic.IEnumerable<Azure.AI.AgentServer.Responses.Models.OutputItem> output = null, System.BinaryData instructions = null, string outputText = null, Azure.AI.AgentServer.Responses.Models.ResponseUsage usage = null, bool parallelToolCalls = false, Azure.AI.AgentServer.Responses.Models.ConversationReference conversation = null, Azure.AI.AgentServer.Responses.Models.AgentId agent = null, string agentSessionId = null, Azure.AI.AgentServer.Responses.Models.AgentReference agentReference = null) { throw null; }
         public static Azure.AI.AgentServer.Responses.Models.ResponseOutputItemAddedEvent ResponseOutputItemAddedEvent(long sequenceNumber = (long)0, long outputIndex = (long)0, Azure.AI.AgentServer.Responses.Models.OutputItem item = null) { throw null; }
         public static Azure.AI.AgentServer.Responses.Models.ResponseOutputItemDoneEvent ResponseOutputItemDoneEvent(long sequenceNumber = (long)0, long outputIndex = (long)0, Azure.AI.AgentServer.Responses.Models.OutputItem item = null) { throw null; }
         public static Azure.AI.AgentServer.Responses.Models.ResponseOutputTextAnnotationAddedEvent ResponseOutputTextAnnotationAddedEvent(long sequenceNumber = (long)0, string itemId = null, long outputIndex = (long)0, long contentIndex = (long)0, long annotationIndex = (long)0, Azure.AI.AgentServer.Responses.Models.Annotation annotation = null) { throw null; }
@@ -327,8 +327,8 @@ namespace Azure.AI.AgentServer.Responses
         public static Azure.AI.AgentServer.Responses.Models.ScrollParam ScrollParam(long x = (long)0, long y = (long)0, long scrollX = (long)0, long scrollY = (long)0) { throw null; }
         public static Azure.AI.AgentServer.Responses.Models.SharepointGroundingToolCall SharepointGroundingToolCall(System.BinaryData createdBy = null, Azure.AI.AgentServer.Responses.Models.AgentReference agentReference = null, string responseId = null, string callId = null, string arguments = null, Azure.AI.AgentServer.Responses.Models.ToolCallStatus status = Azure.AI.AgentServer.Responses.Models.ToolCallStatus.InProgress, string id = null) { throw null; }
         public static Azure.AI.AgentServer.Responses.Models.SharepointGroundingToolCallOutput SharepointGroundingToolCallOutput(System.BinaryData createdBy = null, Azure.AI.AgentServer.Responses.Models.AgentReference agentReference = null, string responseId = null, string callId = null, System.BinaryData output = null, Azure.AI.AgentServer.Responses.Models.ToolCallStatus status = Azure.AI.AgentServer.Responses.Models.ToolCallStatus.InProgress, string id = null) { throw null; }
-        public static Azure.AI.AgentServer.Responses.Models.SharepointGroundingToolParameters SharepointGroundingToolParameters(System.Collections.Generic.IEnumerable<Azure.AI.AgentServer.Responses.Models.ToolProjectConnection> projectConnections = null) { throw null; }
-        public static Azure.AI.AgentServer.Responses.Models.SharepointPreviewTool SharepointPreviewTool(Azure.AI.AgentServer.Responses.Models.SharepointGroundingToolParameters sharepointGroundingPreview = null) { throw null; }
+        public static Azure.AI.AgentServer.Responses.Models.SharepointGroundingToolParameters SharepointGroundingToolParameters(string name = null, string description = null, System.Collections.Generic.IEnumerable<Azure.AI.AgentServer.Responses.Models.ToolProjectConnection> projectConnections = null) { throw null; }
+        public static Azure.AI.AgentServer.Responses.Models.SharepointPreviewTool SharepointPreviewTool(string name = null, string description = null, Azure.AI.AgentServer.Responses.Models.SharepointGroundingToolParameters sharepointGroundingPreview = null) { throw null; }
         public static Azure.AI.AgentServer.Responses.Models.SkillReferenceParam SkillReferenceParam(string skillId = null, string version = null) { throw null; }
         public static Azure.AI.AgentServer.Responses.Models.SpecificApplyPatchParam SpecificApplyPatchParam() { throw null; }
         public static Azure.AI.AgentServer.Responses.Models.SpecificFunctionShellParam SpecificFunctionShellParam() { throw null; }
@@ -352,7 +352,7 @@ namespace Azure.AI.AgentServer.Responses
         public static Azure.AI.AgentServer.Responses.Models.ToolChoiceParam ToolChoiceParam(string type = null) { throw null; }
         public static Azure.AI.AgentServer.Responses.Models.ToolChoiceWebSearchPreview ToolChoiceWebSearchPreview() { throw null; }
         public static Azure.AI.AgentServer.Responses.Models.ToolChoiceWebSearchPreview20250311 ToolChoiceWebSearchPreview20250311() { throw null; }
-        public static Azure.AI.AgentServer.Responses.Models.ToolProjectConnection ToolProjectConnection(string projectConnectionId = null) { throw null; }
+        public static Azure.AI.AgentServer.Responses.Models.ToolProjectConnection ToolProjectConnection(string name = null, string description = null, string projectConnectionId = null) { throw null; }
         public static Azure.AI.AgentServer.Responses.Models.TopLogProb TopLogProb(string token = null, double logprob = 0, System.Collections.Generic.IEnumerable<long> bytes = null) { throw null; }
         public static Azure.AI.AgentServer.Responses.Models.TypeParam TypeParam(string text = null) { throw null; }
         public static Azure.AI.AgentServer.Responses.Models.UrlCitationBody UrlCitationBody(System.Uri url = null, long startIndex = (long)0, long endIndex = (long)0, string title = null) { throw null; }
@@ -364,11 +364,13 @@ namespace Azure.AI.AgentServer.Responses
         public static Azure.AI.AgentServer.Responses.Models.WebSearchActionSearch WebSearchActionSearch(string query = null, System.Collections.Generic.IEnumerable<string> queries = null, System.Collections.Generic.IEnumerable<Azure.AI.AgentServer.Responses.Models.WebSearchActionSearchSources> sources = null) { throw null; }
         public static Azure.AI.AgentServer.Responses.Models.WebSearchActionSearchSources WebSearchActionSearchSources(string url = null) { throw null; }
         public static Azure.AI.AgentServer.Responses.Models.WebSearchApproximateLocation WebSearchApproximateLocation(string country = null, string region = null, string city = null, string timezone = null) { throw null; }
-        public static Azure.AI.AgentServer.Responses.Models.WebSearchConfiguration WebSearchConfiguration(string projectConnectionId = null, string instanceName = null) { throw null; }
+        public static Azure.AI.AgentServer.Responses.Models.WebSearchConfiguration WebSearchConfiguration(string name = null, string description = null, string projectConnectionId = null, string instanceName = null) { throw null; }
         public static Azure.AI.AgentServer.Responses.Models.WebSearchPreviewTool WebSearchPreviewTool(Azure.AI.AgentServer.Responses.Models.ApproximateLocation userLocation = null, Azure.AI.AgentServer.Responses.Models.SearchContextSize? searchContextSize = default(Azure.AI.AgentServer.Responses.Models.SearchContextSize?)) { throw null; }
-        public static Azure.AI.AgentServer.Responses.Models.WebSearchTool WebSearchTool(Azure.AI.AgentServer.Responses.Models.WebSearchToolFilters filters = null, Azure.AI.AgentServer.Responses.Models.WebSearchApproximateLocation userLocation = null, Azure.AI.AgentServer.Responses.Models.WebSearchToolSearchContextSize? searchContextSize = default(Azure.AI.AgentServer.Responses.Models.WebSearchToolSearchContextSize?), Azure.AI.AgentServer.Responses.Models.WebSearchConfiguration customSearchConfiguration = null) { throw null; }
+        public static Azure.AI.AgentServer.Responses.Models.WebSearchTool WebSearchTool(Azure.AI.AgentServer.Responses.Models.WebSearchToolFilters filters = null, Azure.AI.AgentServer.Responses.Models.WebSearchApproximateLocation userLocation = null, Azure.AI.AgentServer.Responses.Models.WebSearchToolSearchContextSize? searchContextSize = default(Azure.AI.AgentServer.Responses.Models.WebSearchToolSearchContextSize?), string name = null, string description = null, Azure.AI.AgentServer.Responses.Models.WebSearchConfiguration customSearchConfiguration = null) { throw null; }
         public static Azure.AI.AgentServer.Responses.Models.WebSearchToolFilters WebSearchToolFilters(System.Collections.Generic.IEnumerable<string> allowedDomains = null) { throw null; }
         public static Azure.AI.AgentServer.Responses.Models.WorkflowActionOutputItem WorkflowActionOutputItem(System.BinaryData createdBy = null, Azure.AI.AgentServer.Responses.Models.AgentReference agentReference = null, string responseId = null, string kind = null, string actionId = null, string parentActionId = null, string previousActionId = null, Azure.AI.AgentServer.Responses.Models.WorkflowActionOutputItemStatus status = Azure.AI.AgentServer.Responses.Models.WorkflowActionOutputItemStatus.Completed, string id = null) { throw null; }
+        public static Azure.AI.AgentServer.Responses.Models.WorkIQPreviewTool WorkIQPreviewTool(Azure.AI.AgentServer.Responses.Models.WorkIQPreviewToolParameters workIqPreview = null) { throw null; }
+        public static Azure.AI.AgentServer.Responses.Models.WorkIQPreviewToolParameters WorkIQPreviewToolParameters(string projectConnectionId = null) { throw null; }
     }
     public partial class BadRequestException : System.Exception
     {
@@ -739,6 +741,8 @@ namespace Azure.AI.AgentServer.Responses.Models
         public A2APreviewTool() { }
         public string AgentCardPath { get { throw null; } set { } }
         public System.Uri BaseUrl { get { throw null; } set { } }
+        public string Description { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
         public string ProjectConnectionId { get { throw null; } set { } }
         protected override Azure.AI.AgentServer.Responses.Models.Tool JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -857,9 +861,11 @@ namespace Azure.AI.AgentServer.Responses.Models
     public partial class AISearchIndexResource : System.ClientModel.Primitives.IJsonModel<Azure.AI.AgentServer.Responses.Models.AISearchIndexResource>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.AISearchIndexResource>
     {
         public AISearchIndexResource() { }
+        public string Description { get { throw null; } set { } }
         public string Filter { get { throw null; } set { } }
         public string IndexAssetId { get { throw null; } set { } }
         public string IndexName { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
         public string ProjectConnectionId { get { throw null; } set { } }
         public Azure.AI.AgentServer.Responses.Models.AzureAISearchQueryType? QueryType { get { throw null; } set { } }
         public int? TopK { get { throw null; } set { } }
@@ -1195,6 +1201,8 @@ namespace Azure.AI.AgentServer.Responses.Models
     {
         public AzureAISearchTool(Azure.AI.AgentServer.Responses.Models.AzureAISearchToolResource azureAiSearch) { }
         public Azure.AI.AgentServer.Responses.Models.AzureAISearchToolResource AzureAiSearch { get { throw null; } set { } }
+        public string Description { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
         protected override Azure.AI.AgentServer.Responses.Models.Tool JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected override Azure.AI.AgentServer.Responses.Models.Tool PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1242,7 +1250,9 @@ namespace Azure.AI.AgentServer.Responses.Models
     public partial class AzureAISearchToolResource : System.ClientModel.Primitives.IJsonModel<Azure.AI.AgentServer.Responses.Models.AzureAISearchToolResource>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.AzureAISearchToolResource>
     {
         public AzureAISearchToolResource(System.Collections.Generic.IEnumerable<Azure.AI.AgentServer.Responses.Models.AISearchIndexResource> indexes) { }
+        public string Description { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.AI.AgentServer.Responses.Models.AISearchIndexResource> Indexes { get { throw null; } }
+        public string Name { get { throw null; } set { } }
         protected virtual Azure.AI.AgentServer.Responses.Models.AzureAISearchToolResource JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.AI.AgentServer.Responses.Models.AzureAISearchToolResource PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1369,9 +1379,11 @@ namespace Azure.AI.AgentServer.Responses.Models
     {
         public BingCustomSearchConfiguration(string projectConnectionId, string instanceName) { }
         public long? Count { get { throw null; } set { } }
+        public string Description { get { throw null; } set { } }
         public string Freshness { get { throw null; } set { } }
         public string InstanceName { get { throw null; } set { } }
         public string Market { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
         public string ProjectConnectionId { get { throw null; } set { } }
         public string SetLang { get { throw null; } set { } }
         protected virtual Azure.AI.AgentServer.Responses.Models.BingCustomSearchConfiguration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1388,6 +1400,8 @@ namespace Azure.AI.AgentServer.Responses.Models
     {
         public BingCustomSearchPreviewTool(Azure.AI.AgentServer.Responses.Models.BingCustomSearchToolParameters bingCustomSearchPreview) { }
         public Azure.AI.AgentServer.Responses.Models.BingCustomSearchToolParameters BingCustomSearchPreview { get { throw null; } set { } }
+        public string Description { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
         protected override Azure.AI.AgentServer.Responses.Models.Tool JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected override Azure.AI.AgentServer.Responses.Models.Tool PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1435,6 +1449,8 @@ namespace Azure.AI.AgentServer.Responses.Models
     public partial class BingCustomSearchToolParameters : System.ClientModel.Primitives.IJsonModel<Azure.AI.AgentServer.Responses.Models.BingCustomSearchToolParameters>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.BingCustomSearchToolParameters>
     {
         public BingCustomSearchToolParameters(System.Collections.Generic.IEnumerable<Azure.AI.AgentServer.Responses.Models.BingCustomSearchConfiguration> searchConfigurations) { }
+        public string Description { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.AI.AgentServer.Responses.Models.BingCustomSearchConfiguration> SearchConfigurations { get { throw null; } }
         protected virtual Azure.AI.AgentServer.Responses.Models.BingCustomSearchToolParameters JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1450,8 +1466,10 @@ namespace Azure.AI.AgentServer.Responses.Models
     {
         public BingGroundingSearchConfiguration(string projectConnectionId) { }
         public long? Count { get { throw null; } set { } }
+        public string Description { get { throw null; } set { } }
         public string Freshness { get { throw null; } set { } }
         public string Market { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
         public string ProjectConnectionId { get { throw null; } set { } }
         public string SetLang { get { throw null; } set { } }
         protected virtual Azure.AI.AgentServer.Responses.Models.BingGroundingSearchConfiguration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1467,6 +1485,8 @@ namespace Azure.AI.AgentServer.Responses.Models
     public partial class BingGroundingSearchToolParameters : System.ClientModel.Primitives.IJsonModel<Azure.AI.AgentServer.Responses.Models.BingGroundingSearchToolParameters>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.BingGroundingSearchToolParameters>
     {
         public BingGroundingSearchToolParameters(System.Collections.Generic.IEnumerable<Azure.AI.AgentServer.Responses.Models.BingGroundingSearchConfiguration> searchConfigurations) { }
+        public string Description { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.AI.AgentServer.Responses.Models.BingGroundingSearchConfiguration> SearchConfigurations { get { throw null; } }
         protected virtual Azure.AI.AgentServer.Responses.Models.BingGroundingSearchToolParameters JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1482,6 +1502,8 @@ namespace Azure.AI.AgentServer.Responses.Models
     {
         public BingGroundingTool(Azure.AI.AgentServer.Responses.Models.BingGroundingSearchToolParameters bingGrounding) { }
         public Azure.AI.AgentServer.Responses.Models.BingGroundingSearchToolParameters BingGrounding { get { throw null; } set { } }
+        public string Description { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
         protected override Azure.AI.AgentServer.Responses.Models.Tool JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected override Azure.AI.AgentServer.Responses.Models.Tool PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1530,6 +1552,8 @@ namespace Azure.AI.AgentServer.Responses.Models
     {
         public BrowserAutomationPreviewTool(Azure.AI.AgentServer.Responses.Models.BrowserAutomationToolParameters browserAutomationPreview) { }
         public Azure.AI.AgentServer.Responses.Models.BrowserAutomationToolParameters BrowserAutomationPreview { get { throw null; } set { } }
+        public string Description { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
         protected override Azure.AI.AgentServer.Responses.Models.Tool JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected override Azure.AI.AgentServer.Responses.Models.Tool PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1577,6 +1601,8 @@ namespace Azure.AI.AgentServer.Responses.Models
     public partial class BrowserAutomationToolConnectionParameters : System.ClientModel.Primitives.IJsonModel<Azure.AI.AgentServer.Responses.Models.BrowserAutomationToolConnectionParameters>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.BrowserAutomationToolConnectionParameters>
     {
         public BrowserAutomationToolConnectionParameters(string projectConnectionId) { }
+        public string Description { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
         public string ProjectConnectionId { get { throw null; } set { } }
         protected virtual Azure.AI.AgentServer.Responses.Models.BrowserAutomationToolConnectionParameters JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1592,6 +1618,8 @@ namespace Azure.AI.AgentServer.Responses.Models
     {
         public BrowserAutomationToolParameters(Azure.AI.AgentServer.Responses.Models.BrowserAutomationToolConnectionParameters connection) { }
         public Azure.AI.AgentServer.Responses.Models.BrowserAutomationToolConnectionParameters Connection { get { throw null; } set { } }
+        public string Description { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
         protected virtual Azure.AI.AgentServer.Responses.Models.BrowserAutomationToolParameters JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.AI.AgentServer.Responses.Models.BrowserAutomationToolParameters PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1687,6 +1715,8 @@ namespace Azure.AI.AgentServer.Responses.Models
     {
         public CodeInterpreterTool() { }
         public System.BinaryData Container { get { throw null; } set { } }
+        public string Description { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
         protected override Azure.AI.AgentServer.Responses.Models.Tool JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected override Azure.AI.AgentServer.Responses.Models.Tool PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2306,6 +2336,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         public DeleteResponseResult(string id) { }
         public bool Deleted { get { throw null; } }
         public string Id { get { throw null; } set { } }
+        public string Object { get { throw null; } }
         protected virtual Azure.AI.AgentServer.Responses.Models.DeleteResponseResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         public static explicit operator Azure.AI.AgentServer.Responses.Models.DeleteResponseResult (System.ClientModel.ClientResult result) { throw null; }
@@ -2409,6 +2440,8 @@ namespace Azure.AI.AgentServer.Responses.Models
     public partial class FabricDataAgentToolParameters : System.ClientModel.Primitives.IJsonModel<Azure.AI.AgentServer.Responses.Models.FabricDataAgentToolParameters>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.FabricDataAgentToolParameters>
     {
         public FabricDataAgentToolParameters() { }
+        public string Description { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.AI.AgentServer.Responses.Models.ToolProjectConnection> ProjectConnections { get { throw null; } }
         protected virtual Azure.AI.AgentServer.Responses.Models.FabricDataAgentToolParameters JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -2454,8 +2487,10 @@ namespace Azure.AI.AgentServer.Responses.Models
     public partial class FileSearchTool : Azure.AI.AgentServer.Responses.Models.Tool, System.ClientModel.Primitives.IJsonModel<Azure.AI.AgentServer.Responses.Models.FileSearchTool>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.FileSearchTool>
     {
         public FileSearchTool(System.Collections.Generic.IEnumerable<string> vectorStoreIds) { }
+        public string Description { get { throw null; } set { } }
         public System.BinaryData Filters { get { throw null; } set { } }
         public long? MaxNumResults { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
         public Azure.AI.AgentServer.Responses.Models.RankingOptions RankingOptions { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> VectorStoreIds { get { throw null; } }
         protected override Azure.AI.AgentServer.Responses.Models.Tool JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2899,7 +2934,9 @@ namespace Azure.AI.AgentServer.Responses.Models
     public partial class FunctionShellToolParam : Azure.AI.AgentServer.Responses.Models.Tool, System.ClientModel.Primitives.IJsonModel<Azure.AI.AgentServer.Responses.Models.FunctionShellToolParam>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.FunctionShellToolParam>
     {
         public FunctionShellToolParam() { }
+        public string Description { get { throw null; } set { } }
         public Azure.AI.AgentServer.Responses.Models.FunctionShellToolParamEnvironment Environment { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
         protected override Azure.AI.AgentServer.Responses.Models.Tool JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected override Azure.AI.AgentServer.Responses.Models.Tool PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3063,10 +3100,12 @@ namespace Azure.AI.AgentServer.Responses.Models
         public ImageGenTool() { }
         public Azure.AI.AgentServer.Responses.Models.ImageGenActionEnum? Action { get { throw null; } set { } }
         public Azure.AI.AgentServer.Responses.Models.ImageGenToolBackground? Background { get { throw null; } set { } }
+        public string Description { get { throw null; } set { } }
         public Azure.AI.AgentServer.Responses.Models.InputFidelity? InputFidelity { get { throw null; } set { } }
         public Azure.AI.AgentServer.Responses.Models.ImageGenToolInputImageMask InputImageMask { get { throw null; } set { } }
         public Azure.AI.AgentServer.Responses.Models.ImageGenToolModel? Model { get { throw null; } set { } }
         public Azure.AI.AgentServer.Responses.Models.ImageGenToolModeration? Moderation { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
         public long? OutputCompression { get { throw null; } set { } }
         public Azure.AI.AgentServer.Responses.Models.ImageGenToolOutputFormat? OutputFormat { get { throw null; } set { } }
         public long? PartialImages { get { throw null; } set { } }
@@ -4154,6 +4193,8 @@ namespace Azure.AI.AgentServer.Responses.Models
     public partial class LocalShellToolParam : Azure.AI.AgentServer.Responses.Models.Tool, System.ClientModel.Primitives.IJsonModel<Azure.AI.AgentServer.Responses.Models.LocalShellToolParam>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.LocalShellToolParam>
     {
         public LocalShellToolParam() { }
+        public string Description { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
         protected override Azure.AI.AgentServer.Responses.Models.Tool JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected override Azure.AI.AgentServer.Responses.Models.Tool PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4393,7 +4434,9 @@ namespace Azure.AI.AgentServer.Responses.Models
     public partial class MemorySearchPreviewTool : Azure.AI.AgentServer.Responses.Models.Tool, System.ClientModel.Primitives.IJsonModel<Azure.AI.AgentServer.Responses.Models.MemorySearchPreviewTool>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.MemorySearchPreviewTool>
     {
         public MemorySearchPreviewTool(string memoryStoreName, string scope) { }
+        public string Description { get { throw null; } set { } }
         public string MemoryStoreName { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
         public string Scope { get { throw null; } set { } }
         public Azure.AI.AgentServer.Responses.Models.MemorySearchOptions SearchOptions { get { throw null; } set { } }
         public int? UpdateDelay { get { throw null; } set { } }
@@ -4410,7 +4453,9 @@ namespace Azure.AI.AgentServer.Responses.Models
     public partial class MemorySearchTool : Azure.AI.AgentServer.Responses.Models.Tool, System.ClientModel.Primitives.IJsonModel<Azure.AI.AgentServer.Responses.Models.MemorySearchTool>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.MemorySearchTool>
     {
         public MemorySearchTool(string memoryStoreName, string scope) { }
+        public string Description { get { throw null; } set { } }
         public string MemoryStoreName { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
         public string Scope { get { throw null; } set { } }
         public Azure.AI.AgentServer.Responses.Models.MemorySearchOptions SearchOptions { get { throw null; } set { } }
         public int? UpdateDelay { get { throw null; } set { } }
@@ -4624,7 +4669,9 @@ namespace Azure.AI.AgentServer.Responses.Models
     public partial class MicrosoftFabricPreviewTool : Azure.AI.AgentServer.Responses.Models.Tool, System.ClientModel.Primitives.IJsonModel<Azure.AI.AgentServer.Responses.Models.MicrosoftFabricPreviewTool>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.MicrosoftFabricPreviewTool>
     {
         public MicrosoftFabricPreviewTool(Azure.AI.AgentServer.Responses.Models.FabricDataAgentToolParameters fabricDataagentPreview) { }
+        public string Description { get { throw null; } set { } }
         public Azure.AI.AgentServer.Responses.Models.FabricDataAgentToolParameters FabricDataagentPreview { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
         protected override Azure.AI.AgentServer.Responses.Models.Tool JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected override Azure.AI.AgentServer.Responses.Models.Tool PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -7012,6 +7059,8 @@ namespace Azure.AI.AgentServer.Responses.Models
     public partial class SharepointGroundingToolParameters : System.ClientModel.Primitives.IJsonModel<Azure.AI.AgentServer.Responses.Models.SharepointGroundingToolParameters>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.SharepointGroundingToolParameters>
     {
         public SharepointGroundingToolParameters() { }
+        public string Description { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.AI.AgentServer.Responses.Models.ToolProjectConnection> ProjectConnections { get { throw null; } }
         protected virtual Azure.AI.AgentServer.Responses.Models.SharepointGroundingToolParameters JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -7026,6 +7075,8 @@ namespace Azure.AI.AgentServer.Responses.Models
     public partial class SharepointPreviewTool : Azure.AI.AgentServer.Responses.Models.Tool, System.ClientModel.Primitives.IJsonModel<Azure.AI.AgentServer.Responses.Models.SharepointPreviewTool>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.SharepointPreviewTool>
     {
         public SharepointPreviewTool(Azure.AI.AgentServer.Responses.Models.SharepointGroundingToolParameters sharepointGroundingPreview) { }
+        public string Description { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
         public Azure.AI.AgentServer.Responses.Models.SharepointGroundingToolParameters SharepointGroundingPreview { get { throw null; } set { } }
         protected override Azure.AI.AgentServer.Responses.Models.Tool JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -7422,6 +7473,8 @@ namespace Azure.AI.AgentServer.Responses.Models
     public partial class ToolProjectConnection : System.ClientModel.Primitives.IJsonModel<Azure.AI.AgentServer.Responses.Models.ToolProjectConnection>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.ToolProjectConnection>
     {
         public ToolProjectConnection(string projectConnectionId) { }
+        public string Description { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
         public string ProjectConnectionId { get { throw null; } set { } }
         protected virtual Azure.AI.AgentServer.Responses.Models.ToolProjectConnection JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -7463,6 +7516,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         public static Azure.AI.AgentServer.Responses.Models.ToolType Shell { get { throw null; } }
         public static Azure.AI.AgentServer.Responses.Models.ToolType WebSearch { get { throw null; } }
         public static Azure.AI.AgentServer.Responses.Models.ToolType WebSearchPreview { get { throw null; } }
+        public static Azure.AI.AgentServer.Responses.Models.ToolType WorkIqPreview { get { throw null; } }
         public bool Equals(Azure.AI.AgentServer.Responses.Models.ToolType other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
@@ -7645,7 +7699,9 @@ namespace Azure.AI.AgentServer.Responses.Models
     public partial class WebSearchConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.AI.AgentServer.Responses.Models.WebSearchConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.WebSearchConfiguration>
     {
         public WebSearchConfiguration(string projectConnectionId, string instanceName) { }
+        public string Description { get { throw null; } set { } }
         public string InstanceName { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
         public string ProjectConnectionId { get { throw null; } set { } }
         protected virtual Azure.AI.AgentServer.Responses.Models.WebSearchConfiguration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -7676,7 +7732,9 @@ namespace Azure.AI.AgentServer.Responses.Models
     {
         public WebSearchTool() { }
         public Azure.AI.AgentServer.Responses.Models.WebSearchConfiguration CustomSearchConfiguration { get { throw null; } set { } }
+        public string Description { get { throw null; } set { } }
         public Azure.AI.AgentServer.Responses.Models.WebSearchToolFilters Filters { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
         public Azure.AI.AgentServer.Responses.Models.WebSearchToolSearchContextSize? SearchContextSize { get { throw null; } set { } }
         public Azure.AI.AgentServer.Responses.Models.WebSearchApproximateLocation UserLocation { get { throw null; } set { } }
         protected override Azure.AI.AgentServer.Responses.Models.Tool JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -7734,5 +7792,33 @@ namespace Azure.AI.AgentServer.Responses.Models
         Failed = 1,
         InProgress = 2,
         Cancelled = 3,
+    }
+    public partial class WorkIQPreviewTool : Azure.AI.AgentServer.Responses.Models.Tool, System.ClientModel.Primitives.IJsonModel<Azure.AI.AgentServer.Responses.Models.WorkIQPreviewTool>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.WorkIQPreviewTool>
+    {
+        public WorkIQPreviewTool(Azure.AI.AgentServer.Responses.Models.WorkIQPreviewToolParameters workIqPreview) { }
+        public Azure.AI.AgentServer.Responses.Models.WorkIQPreviewToolParameters WorkIqPreview { get { throw null; } set { } }
+        protected override Azure.AI.AgentServer.Responses.Models.Tool JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.AI.AgentServer.Responses.Models.Tool PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.AgentServer.Responses.Models.WorkIQPreviewTool System.ClientModel.Primitives.IJsonModel<Azure.AI.AgentServer.Responses.Models.WorkIQPreviewTool>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.AgentServer.Responses.Models.WorkIQPreviewTool>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.AgentServer.Responses.Models.WorkIQPreviewTool System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.WorkIQPreviewTool>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.WorkIQPreviewTool>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.WorkIQPreviewTool>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class WorkIQPreviewToolParameters : System.ClientModel.Primitives.IJsonModel<Azure.AI.AgentServer.Responses.Models.WorkIQPreviewToolParameters>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.WorkIQPreviewToolParameters>
+    {
+        public WorkIQPreviewToolParameters(string projectConnectionId) { }
+        public string ProjectConnectionId { get { throw null; } set { } }
+        protected virtual Azure.AI.AgentServer.Responses.Models.WorkIQPreviewToolParameters JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.AgentServer.Responses.Models.WorkIQPreviewToolParameters PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.AgentServer.Responses.Models.WorkIQPreviewToolParameters System.ClientModel.Primitives.IJsonModel<Azure.AI.AgentServer.Responses.Models.WorkIQPreviewToolParameters>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.AgentServer.Responses.Models.WorkIQPreviewToolParameters>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.AgentServer.Responses.Models.WorkIQPreviewToolParameters System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.WorkIQPreviewToolParameters>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.WorkIQPreviewToolParameters>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.WorkIQPreviewToolParameters>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
 }

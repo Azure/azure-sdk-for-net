@@ -31,6 +31,13 @@ internal static partial class WebSearchConfigurationValidator
             return ValidationResult.Failure(errors);
         }
 
+        // Optional: description
+        if (element.TryGetProperty("description", out var descriptionProp))
+        {
+            if (descriptionProp.ValueKind != JsonValueKind.String)
+                errors.Add(new ValidationError("$.description", $"Expected string, got {descriptionProp.ValueKind}"));
+        }
+
         // Required: instance_name
         if (!element.TryGetProperty("instance_name", out var instanceNameProp))
             errors.Add(new ValidationError("$.instance_name", "Required property 'instance_name' is missing"));
@@ -38,6 +45,13 @@ internal static partial class WebSearchConfigurationValidator
         {
             if (instanceNameProp.ValueKind != JsonValueKind.String)
                 errors.Add(new ValidationError("$.instance_name", $"Expected string, got {instanceNameProp.ValueKind}"));
+        }
+
+        // Optional: name
+        if (element.TryGetProperty("name", out var nameProp))
+        {
+            if (nameProp.ValueKind != JsonValueKind.String)
+                errors.Add(new ValidationError("$.name", $"Expected string, got {nameProp.ValueKind}"));
         }
 
         // Required: project_connection_id

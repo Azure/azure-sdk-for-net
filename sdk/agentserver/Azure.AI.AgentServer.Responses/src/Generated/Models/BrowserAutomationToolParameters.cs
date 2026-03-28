@@ -27,13 +27,23 @@ namespace Azure.AI.AgentServer.Responses.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="BrowserAutomationToolParameters"/>. </summary>
+        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
+        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
         /// <param name="connection"> The project connection parameters associated with the Browser Automation Tool. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BrowserAutomationToolParameters(BrowserAutomationToolConnectionParameters connection, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BrowserAutomationToolParameters(string name, string description, BrowserAutomationToolConnectionParameters connection, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            Name = name;
+            Description = description;
             Connection = connection;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Optional user-defined name for this tool or configuration. </summary>
+        public string Name { get; set; }
+
+        /// <summary> Optional user-defined description for this tool or configuration. </summary>
+        public string Description { get; set; }
 
         /// <summary> The project connection parameters associated with the Browser Automation Tool. </summary>
         public BrowserAutomationToolConnectionParameters Connection { get; set; }

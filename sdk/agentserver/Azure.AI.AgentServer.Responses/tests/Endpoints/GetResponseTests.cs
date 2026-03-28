@@ -35,6 +35,8 @@ public class GetResponseTests : IDisposable
         var body = await response.Content.ReadFromJsonAsync<JsonElement>();
         Assert.That(body.GetProperty("id").GetString(), Is.EqualTo(responseId));
         Assert.That(body.GetProperty("status").GetString(), Is.EqualTo("completed"));
+        Assert.That(body.GetProperty("object").GetString(), Is.EqualTo("response"),
+            "GET /responses/{id} must return 'object': 'response'");
     }
 
     [Test]

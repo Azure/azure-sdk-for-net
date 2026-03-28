@@ -26,11 +26,21 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <summary> Initializes a new instance of <see cref="AzureAISearchTool"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
+        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
         /// <param name="azureAiSearch"> The azure ai search index resource. </param>
-        internal AzureAISearchTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureAISearchToolResource azureAiSearch) : base(@type, additionalBinaryDataProperties)
+        internal AzureAISearchTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string description, AzureAISearchToolResource azureAiSearch) : base(@type, additionalBinaryDataProperties)
         {
+            Name = name;
+            Description = description;
             AzureAiSearch = azureAiSearch;
         }
+
+        /// <summary> Optional user-defined name for this tool or configuration. </summary>
+        public string Name { get; set; }
+
+        /// <summary> Optional user-defined description for this tool or configuration. </summary>
+        public string Description { get; set; }
 
         /// <summary> The azure ai search index resource. </summary>
         public AzureAISearchToolResource AzureAiSearch { get; set; }

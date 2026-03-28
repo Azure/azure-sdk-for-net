@@ -480,6 +480,8 @@ public class ModelRoundTripTests
 
         Assert.That(doc.RootElement.GetProperty("id").GetString(), Is.EqualTo("resp_del123"));
         Assert.That(doc.RootElement.GetProperty("deleted").GetBoolean(), Is.True);
+        Assert.That(doc.RootElement.GetProperty("object").GetString(), Is.EqualTo("response"),
+            "DeleteResponseResult must serialize 'object': 'response'");
     }
 
     [Test]
@@ -494,5 +496,23 @@ public class ModelRoundTripTests
         Assert.That(restored, Is.Not.Null);
         Assert.That(restored!.Id, Is.EqualTo("resp_del456"));
         Assert.That(restored.Deleted, Is.True);
+        Assert.That(restored.Object, Is.EqualTo("response"),
+            "DeleteResponseResult.Object must round-trip as 'response'");
+    }
+
+    [Test]
+    public void AgentsPagedResultOutputItem_Serialize_IncludesObjectList()
+    {
+        var options = CreateOptions();
+        var paged = ResponsesModelFactory.AgentsPagedResultOutputItem(
+            data: Array.Empty<OutputItem>(),
+            hasMore: false);
+
+        var json = JsonSerializer.Serialize(paged, options);
+        using var doc = JsonDocument.Parse(json);
+
+        Assert.That(doc.RootElement.GetProperty("object").GetString(), Is.EqualTo("list"),
+            "AgentsPagedResultOutputItem must serialize 'object': 'list'");
+        Assert.That(doc.RootElement.GetProperty("has_more").GetBoolean(), Is.False);
     }
 }

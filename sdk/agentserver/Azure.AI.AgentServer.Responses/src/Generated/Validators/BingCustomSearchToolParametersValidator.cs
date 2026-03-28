@@ -31,6 +31,20 @@ internal static partial class BingCustomSearchToolParametersValidator
             return ValidationResult.Failure(errors);
         }
 
+        // Optional: description
+        if (element.TryGetProperty("description", out var descriptionProp))
+        {
+            if (descriptionProp.ValueKind != JsonValueKind.String)
+                errors.Add(new ValidationError("$.description", $"Expected string, got {descriptionProp.ValueKind}"));
+        }
+
+        // Optional: name
+        if (element.TryGetProperty("name", out var nameProp))
+        {
+            if (nameProp.ValueKind != JsonValueKind.String)
+                errors.Add(new ValidationError("$.name", $"Expected string, got {nameProp.ValueKind}"));
+        }
+
         // Required: search_configurations
         if (!element.TryGetProperty("search_configurations", out var searchConfigurationsProp))
             errors.Add(new ValidationError("$.search_configurations", "Required property 'search_configurations' is missing"));

@@ -73,6 +73,16 @@ namespace Azure.AI.AgentServer.Responses.Models
             {
                 throw new FormatException($"The model {nameof(SharepointGroundingToolParameters)} does not support writing '{format}' format.");
             }
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
+            }
             if (Optional.IsCollectionDefined(ProjectConnections))
             {
                 writer.WritePropertyName("project_connections"u8);
@@ -125,10 +135,22 @@ namespace Azure.AI.AgentServer.Responses.Models
             {
                 return null;
             }
+            string name = default;
+            string description = default;
             IList<ToolProjectConnection> projectConnections = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
+                if (prop.NameEquals("name"u8))
+                {
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("description"u8))
+                {
+                    description = prop.Value.GetString();
+                    continue;
+                }
                 if (prop.NameEquals("project_connections"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -148,7 +170,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SharepointGroundingToolParameters(projectConnections ?? new ChangeTrackingList<ToolProjectConnection>(), additionalBinaryDataProperties);
+            return new SharepointGroundingToolParameters(name, description, projectConnections ?? new ChangeTrackingList<ToolProjectConnection>(), additionalBinaryDataProperties);
         }
     }
 }

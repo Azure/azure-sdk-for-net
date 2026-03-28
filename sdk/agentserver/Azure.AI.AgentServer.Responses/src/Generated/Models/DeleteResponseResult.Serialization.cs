@@ -91,6 +91,8 @@ namespace Azure.AI.AgentServer.Responses.Models
             writer.WriteStringValue(Id);
             writer.WritePropertyName("deleted"u8);
             writer.WriteBooleanValue(Deleted);
+            writer.WritePropertyName("object"u8);
+            writer.WriteStringValue(Object);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -135,6 +137,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             }
             string id = default;
             bool deleted = default;
+            string @object = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -148,12 +151,17 @@ namespace Azure.AI.AgentServer.Responses.Models
                     deleted = prop.Value.GetBoolean();
                     continue;
                 }
+                if (prop.NameEquals("object"u8))
+                {
+                    @object = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DeleteResponseResult(id, deleted, additionalBinaryDataProperties);
+            return new DeleteResponseResult(id, deleted, @object, additionalBinaryDataProperties);
         }
     }
 }

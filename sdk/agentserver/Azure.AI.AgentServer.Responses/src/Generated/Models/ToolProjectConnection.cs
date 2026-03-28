@@ -27,13 +27,23 @@ namespace Azure.AI.AgentServer.Responses.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ToolProjectConnection"/>. </summary>
+        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
+        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
         /// <param name="projectConnectionId"> A project connection in a ToolProjectConnectionList attached to this tool. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ToolProjectConnection(string projectConnectionId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ToolProjectConnection(string name, string description, string projectConnectionId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            Name = name;
+            Description = description;
             ProjectConnectionId = projectConnectionId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Optional user-defined name for this tool or configuration. </summary>
+        public string Name { get; set; }
+
+        /// <summary> Optional user-defined description for this tool or configuration. </summary>
+        public string Description { get; set; }
 
         /// <summary> A project connection in a ToolProjectConnectionList attached to this tool. </summary>
         public string ProjectConnectionId { get; set; }

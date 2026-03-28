@@ -45,6 +45,8 @@ public class GetInputItemsProtocolTests : IDisposable
         var data = doc.RootElement.GetProperty("data");
         Assert.That(data.GetArrayLength(), Is.EqualTo(3));
         Assert.That(doc.RootElement.GetProperty("has_more").GetBoolean(), Is.False);
+        Assert.That(doc.RootElement.GetProperty("object").GetString(), Is.EqualTo("list"),
+            "Input items list must include 'object': 'list'");
     }
 
     /// <summary>
@@ -64,6 +66,8 @@ public class GetInputItemsProtocolTests : IDisposable
         var data = doc.RootElement.GetProperty("data");
         Assert.That(data.GetArrayLength(), Is.EqualTo(0));
         Assert.That(doc.RootElement.GetProperty("has_more").GetBoolean(), Is.False);
+        Assert.That(doc.RootElement.GetProperty("object").GetString(), Is.EqualTo("list"),
+            "Empty input items list must still include 'object': 'list'");
     }
 
     /// <summary>

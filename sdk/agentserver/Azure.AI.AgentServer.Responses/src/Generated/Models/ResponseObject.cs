@@ -108,15 +108,15 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// (Deprecated) Use agent_reference instead.
         /// The agent used for this response
         /// </param>
-        /// <param name="agentReference"> The agent used for this response. </param>
         /// <param name="agentSessionId">
         /// The session identifier for this response. Currently only relevant for hosted agents.
         /// Always returned for hosted agents — either the caller-provided value, the auto-derived value,
         /// or an auto-generated UUID. Use for session-scoped operations and to maintain sandbox
         /// affinity in follow-up calls.
         /// </param>
+        /// <param name="agentReference"> The agent used for this response. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResponseObject(Metadata metadata, long? topLogprobs, double? temperature, double? topP, string user, string safetyIdentifier, string promptCacheKey, CreateResponseServiceTier? serviceTier, CreateResponsePromptCacheRetention? promptCacheRetention, string previousResponseId, string model, Reasoning reasoning, bool? background, long? maxOutputTokens, long? maxToolCalls, ResponseTextParam text, IList<Tool> tools, BinaryData toolChoice, Prompt prompt, CreateResponseTruncation? truncation, string id, string @object, ResponseStatus? status, DateTimeOffset createdAt, DateTimeOffset? completedAt, ResponseErrorInfo error, ResponseIncompleteDetails incompleteDetails, IList<OutputItem> output, BinaryData instructions, string outputText, ResponseUsage usage, bool parallelToolCalls, ConversationReference conversation, AgentId agent, AgentReference agentReference, string agentSessionId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResponseObject(Metadata metadata, long? topLogprobs, double? temperature, double? topP, string user, string safetyIdentifier, string promptCacheKey, CreateResponseServiceTier? serviceTier, CreateResponsePromptCacheRetention? promptCacheRetention, string previousResponseId, string model, Reasoning reasoning, bool? background, long? maxOutputTokens, long? maxToolCalls, ResponseTextParam text, IList<Tool> tools, BinaryData toolChoice, Prompt prompt, CreateResponseTruncation? truncation, string id, string @object, ResponseStatus? status, DateTimeOffset createdAt, DateTimeOffset? completedAt, ResponseErrorInfo error, ResponseIncompleteDetails incompleteDetails, IList<OutputItem> output, BinaryData instructions, string outputText, ResponseUsage usage, bool parallelToolCalls, ConversationReference conversation, AgentId agent, string agentSessionId, AgentReference agentReference, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Metadata = metadata;
             TopLogprobs = topLogprobs;
@@ -152,8 +152,8 @@ namespace Azure.AI.AgentServer.Responses.Models
             ParallelToolCalls = parallelToolCalls;
             Conversation = conversation;
             Agent = agent;
-            AgentReference = agentReference;
             AgentSessionId = agentSessionId;
+            AgentReference = agentReference;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -356,9 +356,6 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// </summary>
         public AgentId Agent { get; set; }
 
-        /// <summary> The agent used for this response. </summary>
-        public AgentReference AgentReference { get; set; }
-
         /// <summary>
         /// The session identifier for this response. Currently only relevant for hosted agents.
         /// Always returned for hosted agents — either the caller-provided value, the auto-derived value,
@@ -366,5 +363,8 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// affinity in follow-up calls.
         /// </summary>
         public string AgentSessionId { get; set; }
+
+        /// <summary> The agent used for this response. </summary>
+        public AgentReference AgentReference { get; set; }
     }
 }

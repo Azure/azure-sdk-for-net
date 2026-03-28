@@ -36,6 +36,8 @@ public class DeleteResponseProtocolTests : ProtocolTestBase
         using var doc = JsonDocument.Parse(body);
         Assert.That(doc.RootElement.GetProperty("id").GetString(), Is.EqualTo(responseId));
         Assert.That(doc.RootElement.GetProperty("deleted").GetBoolean(), Is.True);
+        Assert.That(doc.RootElement.GetProperty("object").GetString(), Is.EqualTo("response"),
+            "DELETE result must include 'object': 'response'");
     }
 
     /// <summary>
@@ -151,6 +153,8 @@ public class DeleteResponseProtocolTests : ProtocolTestBase
         using var doc = JsonDocument.Parse(body);
         Assert.That(doc.RootElement.GetProperty("id").GetString(), Is.EqualTo(responseId));
         Assert.That(doc.RootElement.GetProperty("deleted").GetBoolean(), Is.True);
+        Assert.That(doc.RootElement.GetProperty("object").GetString(), Is.EqualTo("response"),
+            "DELETE result must include 'object': 'response'");
     }
 
     private static async IAsyncEnumerable<ResponseStreamEvent> BlockingStream(

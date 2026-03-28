@@ -31,6 +31,20 @@ internal static partial class BrowserAutomationToolConnectionParametersValidator
             return ValidationResult.Failure(errors);
         }
 
+        // Optional: description
+        if (element.TryGetProperty("description", out var descriptionProp))
+        {
+            if (descriptionProp.ValueKind != JsonValueKind.String)
+                errors.Add(new ValidationError("$.description", $"Expected string, got {descriptionProp.ValueKind}"));
+        }
+
+        // Optional: name
+        if (element.TryGetProperty("name", out var nameProp))
+        {
+            if (nameProp.ValueKind != JsonValueKind.String)
+                errors.Add(new ValidationError("$.name", $"Expected string, got {nameProp.ValueKind}"));
+        }
+
         // Required: project_connection_id
         if (!element.TryGetProperty("project_connection_id", out var projectConnectionIdProp))
             errors.Add(new ValidationError("$.project_connection_id", "Required property 'project_connection_id' is missing"));

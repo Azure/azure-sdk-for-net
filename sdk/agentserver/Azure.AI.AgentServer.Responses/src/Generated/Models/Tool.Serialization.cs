@@ -13,7 +13,7 @@ namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary>
     /// A tool that can be used to generate a response.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="BingGroundingTool"/>, <see cref="MicrosoftFabricPreviewTool"/>, <see cref="SharepointPreviewTool"/>, <see cref="AzureAISearchTool"/>, <see cref="OpenApiTool"/>, <see cref="BingCustomSearchPreviewTool"/>, <see cref="BrowserAutomationPreviewTool"/>, <see cref="AzureFunctionTool"/>, <see cref="CaptureStructuredOutputsTool"/>, <see cref="A2APreviewTool"/>, <see cref="MemorySearchPreviewTool"/>, <see cref="MemorySearchTool"/>, <see cref="CodeInterpreterTool"/>, <see cref="FunctionTool"/>, <see cref="FileSearchTool"/>, <see cref="ComputerUsePreviewTool"/>, <see cref="WebSearchTool"/>, <see cref="MCPTool"/>, <see cref="ImageGenTool"/>, <see cref="LocalShellToolParam"/>, <see cref="FunctionShellToolParam"/>, <see cref="CustomToolParam"/>, <see cref="WebSearchPreviewTool"/>, and <see cref="ApplyPatchToolParam"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="BingGroundingTool"/>, <see cref="MicrosoftFabricPreviewTool"/>, <see cref="SharepointPreviewTool"/>, <see cref="AzureAISearchTool"/>, <see cref="OpenApiTool"/>, <see cref="BingCustomSearchPreviewTool"/>, <see cref="BrowserAutomationPreviewTool"/>, <see cref="AzureFunctionTool"/>, <see cref="CaptureStructuredOutputsTool"/>, <see cref="A2APreviewTool"/>, <see cref="WorkIQPreviewTool"/>, <see cref="MemorySearchPreviewTool"/>, <see cref="MemorySearchTool"/>, <see cref="CodeInterpreterTool"/>, <see cref="FunctionTool"/>, <see cref="FileSearchTool"/>, <see cref="ComputerUsePreviewTool"/>, <see cref="WebSearchTool"/>, <see cref="MCPTool"/>, <see cref="ImageGenTool"/>, <see cref="LocalShellToolParam"/>, <see cref="FunctionShellToolParam"/>, <see cref="CustomToolParam"/>, <see cref="WebSearchPreviewTool"/>, and <see cref="ApplyPatchToolParam"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownTool))]
     public abstract partial class Tool : IJsonModel<Tool>
@@ -149,6 +149,8 @@ namespace Azure.AI.AgentServer.Responses.Models
                         return CaptureStructuredOutputsTool.DeserializeCaptureStructuredOutputsTool(element, options);
                     case "a2a_preview":
                         return A2APreviewTool.DeserializeA2APreviewTool(element, options);
+                    case "work_iq_preview":
+                        return WorkIQPreviewTool.DeserializeWorkIQPreviewTool(element, options);
                     case "memory_search_preview":
                         return MemorySearchPreviewTool.DeserializeMemorySearchPreviewTool(element, options);
                     case "memory_search":

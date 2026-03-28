@@ -112,24 +112,15 @@ try {
 
         # Step 2: Compile TypeSpec (produces C# models + OpenAPI spec via client.tsp)
         Write-Host "Compiling TypeSpec -> C# models + OpenAPI spec..."
-        Push-Location $TspDir
+        $EntrypointTsp = Join-Path $TempTypeSpecDir "sdk-service-agentserver-contracts/client.tsp"
+        if (-not (Test-Path $EntrypointTsp)) {
+            throw "Entrypoint client.tsp not found at $EntrypointTsp. Check tsp-client sync and tsp-location.yaml."
+        }
+        Push-Location $TempTypeSpecDir
         try {
-            # Create a node_modules symlink so the TypeSpec compiler can resolve
-            # npm-packaged imports (tspconfig.yaml "imports" section) from the
-            # project directory (TypeSpec/) while using deps in TempTypeSpecFiles/.
-            $nodeModulesLink = Join-Path $TspDir "node_modules"
-            $nodeModulesTarget = Join-Path $TempTypeSpecDir "node_modules"
-            if (-not (Test-Path $nodeModulesLink)) {
-                New-Item -ItemType SymbolicLink -Path $nodeModulesLink -Target $nodeModulesTarget | Out-Null
-            }
-            npx --prefix TempTypeSpecFiles tsp compile .
+            npx tsp compile $EntrypointTsp --output-dir "$TspOut"
             if ($LASTEXITCODE -ne 0) { throw "tsp compile failed" }
         } finally {
-            # Clean up symlink
-            $nodeModulesLink = Join-Path $TspDir "node_modules"
-            if ((Test-Path $nodeModulesLink) -and ((Get-Item $nodeModulesLink).Attributes -band [IO.FileAttributes]::ReparsePoint)) {
-                Remove-Item $nodeModulesLink
-            }
             Pop-Location
         }
         Write-Host "TypeSpec compiled."

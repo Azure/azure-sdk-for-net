@@ -1,7 +1,8 @@
-directory: specification/ai-foundry/data-plane/Foundry
-commit: c1c762593f2c91877f6f76384bc8315404b64e8f
+directory: specification/ai-foundry/data-plane/Foundry/src/sdk-service-agentserver-contracts
+commit: d5cf570f983359ce3045f08715ae862455e1d501
 repo: Azure/azure-rest-api-specs
 emitterPackageJsonPath: eng/http-client-csharp-emitter-package.json
+entrypointFile: client.tsp
 additionalDirectories:
   - specification/ai-foundry/data-plane/Foundry/src/openai-responses
   - specification/ai-foundry/data-plane/Foundry/src/openai-conversations

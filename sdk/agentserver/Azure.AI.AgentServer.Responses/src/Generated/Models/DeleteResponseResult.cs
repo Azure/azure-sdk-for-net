@@ -29,11 +29,13 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <summary> Initializes a new instance of <see cref="DeleteResponseResult"/>. </summary>
         /// <param name="id"> The operation ID. </param>
         /// <param name="deleted"> Always return true. </param>
+        /// <param name="object"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeleteResponseResult(string id, bool deleted, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeleteResponseResult(string id, bool deleted, string @object, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Deleted = deleted;
+            Object = @object;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -42,5 +44,8 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <summary> Always return true. </summary>
         public bool Deleted { get; } = true;
+
+        /// <summary> Gets the Object. </summary>
+        public string Object { get; } = "response";
     }
 }

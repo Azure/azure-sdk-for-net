@@ -404,6 +404,8 @@ namespace Azure.AI.AgentServer.Responses
     [ModelReaderWriterBuildable(typeof(WebSearchTool))]
     [ModelReaderWriterBuildable(typeof(WebSearchToolFilters))]
     [ModelReaderWriterBuildable(typeof(WorkflowActionOutputItem))]
+    [ModelReaderWriterBuildable(typeof(WorkIQPreviewTool))]
+    [ModelReaderWriterBuildable(typeof(WorkIQPreviewToolParameters))]
     public partial class AzureAIAgentServerResponsesContext : ModelReaderWriterContext
     {
     }

@@ -38,6 +38,8 @@ public class CreateResponseTests : IDisposable
         Assert.That(body.TryGetProperty("id", out var id), Is.True);
         XAssert.StartsWith("caresp_", id.GetString());
         Assert.That(body.GetProperty("model").GetString(), Is.EqualTo("test-model"));
+        Assert.That(body.GetProperty("object").GetString(), Is.EqualTo("response"),
+            "POST /responses must return 'object': 'response'");
     }
 
     [Test]

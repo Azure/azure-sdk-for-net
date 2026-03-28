@@ -129,6 +129,16 @@ namespace Azure.AI.AgentServer.Responses.Models
                 writer.WritePropertyName("action"u8);
                 writer.WriteStringValue(Action.Value.ToSerialString());
             }
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -169,6 +179,8 @@ namespace Azure.AI.AgentServer.Responses.Models
             ImageGenToolInputImageMask inputImageMask = default;
             long? partialImages = default;
             ImageGenActionEnum? action = default;
+            string name = default;
+            string description = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -276,6 +288,16 @@ namespace Azure.AI.AgentServer.Responses.Models
                     action = prop.Value.GetString().ToImageGenActionEnum();
                     continue;
                 }
+                if (prop.NameEquals("name"u8))
+                {
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("description"u8))
+                {
+                    description = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -294,7 +316,9 @@ namespace Azure.AI.AgentServer.Responses.Models
                 inputFidelity,
                 inputImageMask,
                 partialImages,
-                action);
+                action,
+                name,
+                description);
         }
     }
 }

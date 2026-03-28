@@ -31,6 +31,13 @@ internal static partial class FunctionShellToolParamValidator
             return ValidationResult.Failure(errors);
         }
 
+        // Optional: description
+        if (element.TryGetProperty("description", out var descriptionProp))
+        {
+            if (descriptionProp.ValueKind != JsonValueKind.String)
+                errors.Add(new ValidationError("$.description", $"Expected string, got {descriptionProp.ValueKind}"));
+        }
+
         // Optional: environment
         if (element.TryGetProperty("environment", out var environmentProp) && environmentProp.ValueKind != JsonValueKind.Null)
         {
@@ -40,6 +47,13 @@ internal static partial class FunctionShellToolParamValidator
                 foreach (var e in environmentResult.Errors)
                     errors.Add(new ValidationError("$.environment" + e.Path.Substring(1), e.Message));
             }
+        }
+
+        // Optional: name
+        if (element.TryGetProperty("name", out var nameProp))
+        {
+            if (nameProp.ValueKind != JsonValueKind.String)
+                errors.Add(new ValidationError("$.name", $"Expected string, got {nameProp.ValueKind}"));
         }
 
         // Required: type

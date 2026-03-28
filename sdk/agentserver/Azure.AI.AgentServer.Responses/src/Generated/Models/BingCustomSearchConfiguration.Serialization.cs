@@ -78,6 +78,16 @@ namespace Azure.AI.AgentServer.Responses.Models
             {
                 throw new FormatException($"The model {nameof(BingCustomSearchConfiguration)} does not support writing '{format}' format.");
             }
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
+            }
             writer.WritePropertyName("project_connection_id"u8);
             writer.WriteStringValue(ProjectConnectionId);
             writer.WritePropertyName("instance_name"u8);
@@ -144,6 +154,8 @@ namespace Azure.AI.AgentServer.Responses.Models
             {
                 return null;
             }
+            string name = default;
+            string description = default;
             string projectConnectionId = default;
             string instanceName = default;
             string market = default;
@@ -153,6 +165,16 @@ namespace Azure.AI.AgentServer.Responses.Models
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
+                if (prop.NameEquals("name"u8))
+                {
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("description"u8))
+                {
+                    description = prop.Value.GetString();
+                    continue;
+                }
                 if (prop.NameEquals("project_connection_id"u8))
                 {
                     projectConnectionId = prop.Value.GetString();
@@ -193,6 +215,8 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
             }
             return new BingCustomSearchConfiguration(
+                name,
+                description,
                 projectConnectionId,
                 instanceName,
                 market,

@@ -278,6 +278,11 @@ namespace Azure.AI.AgentServer.Responses.Models
                 writer.WritePropertyName("agent"u8);
                 writer.WriteObjectValue(Agent, options);
             }
+            if (Optional.IsDefined(AgentSessionId))
+            {
+                writer.WritePropertyName("agent_session_id"u8);
+                writer.WriteStringValue(AgentSessionId);
+            }
             if (Optional.IsDefined(AgentReference))
             {
                 writer.WritePropertyName("agent_reference"u8);
@@ -286,11 +291,6 @@ namespace Azure.AI.AgentServer.Responses.Models
             else
             {
                 writer.WriteNull("agent_reference"u8);
-            }
-            if (Optional.IsDefined(AgentSessionId))
-            {
-                writer.WritePropertyName("agent_session_id"u8);
-                writer.WriteStringValue(AgentSessionId);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -368,8 +368,8 @@ namespace Azure.AI.AgentServer.Responses.Models
             bool parallelToolCalls = default;
             ConversationReference conversation = default;
             AgentId agent = default;
-            AgentReference agentReference = default;
             string agentSessionId = default;
+            AgentReference agentReference = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -671,6 +671,11 @@ namespace Azure.AI.AgentServer.Responses.Models
                     agent = AgentId.DeserializeAgentId(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("agent_session_id"u8))
+                {
+                    agentSessionId = prop.Value.GetString();
+                    continue;
+                }
                 if (prop.NameEquals("agent_reference"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -679,11 +684,6 @@ namespace Azure.AI.AgentServer.Responses.Models
                         continue;
                     }
                     agentReference = AgentReference.DeserializeAgentReference(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("agent_session_id"u8))
-                {
-                    agentSessionId = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -726,8 +726,8 @@ namespace Azure.AI.AgentServer.Responses.Models
                 parallelToolCalls,
                 conversation,
                 agent,
-                agentReference,
                 agentSessionId,
+                agentReference,
                 additionalBinaryDataProperties);
         }
     }

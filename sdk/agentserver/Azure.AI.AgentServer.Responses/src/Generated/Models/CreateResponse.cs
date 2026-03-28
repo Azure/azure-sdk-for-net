@@ -67,15 +67,15 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// (Deprecated) Use agent_reference instead.
         /// The agent to use for generating the response.
         /// </param>
-        /// <param name="agentReference"> The agent to use for generating the response. </param>
-        /// <param name="structuredInputs"> The structured inputs to the response that can participate in prompt template substitution or tool argument bindings. </param>
         /// <param name="agentSessionId">
         /// Optional session identifier for sandbox affinity. Currently only relevant for hosted agents.
         /// When provided, the request is routed to the same sandbox. When omitted, auto-derived from
         /// conversation_id/prev_response_id or a new UUID is generated.
         /// </param>
+        /// <param name="agentReference"> The agent to use for generating the response. </param>
+        /// <param name="structuredInputs"> The structured inputs to the response that can participate in prompt template substitution or tool argument bindings. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CreateResponse(Metadata metadata, long? topLogprobs, double? temperature, double? topP, string user, string safetyIdentifier, string promptCacheKey, CreateResponseServiceTier? serviceTier, CreateResponsePromptCacheRetention? promptCacheRetention, string previousResponseId, string model, Reasoning reasoning, bool? background, long? maxOutputTokens, long? maxToolCalls, ResponseTextParam text, IList<Tool> tools, BinaryData toolChoice, Prompt prompt, CreateResponseTruncation? truncation, BinaryData input, IList<IncludeEnum> include, bool? parallelToolCalls, bool? store, string instructions, bool? stream, ResponseStreamOptions streamOptions, BinaryData conversation, IList<ContextManagementParam> contextManagement, AgentReference agent, AgentReference agentReference, IDictionary<string, BinaryData> structuredInputs, string agentSessionId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CreateResponse(Metadata metadata, long? topLogprobs, double? temperature, double? topP, string user, string safetyIdentifier, string promptCacheKey, CreateResponseServiceTier? serviceTier, CreateResponsePromptCacheRetention? promptCacheRetention, string previousResponseId, string model, Reasoning reasoning, bool? background, long? maxOutputTokens, long? maxToolCalls, ResponseTextParam text, IList<Tool> tools, BinaryData toolChoice, Prompt prompt, CreateResponseTruncation? truncation, BinaryData input, IList<IncludeEnum> include, bool? parallelToolCalls, bool? store, string instructions, bool? stream, ResponseStreamOptions streamOptions, BinaryData conversation, IList<ContextManagementParam> contextManagement, AgentReference agent, string agentSessionId, AgentReference agentReference, IDictionary<string, BinaryData> structuredInputs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Metadata = metadata;
             TopLogprobs = topLogprobs;
@@ -107,9 +107,9 @@ namespace Azure.AI.AgentServer.Responses.Models
             Conversation = conversation;
             ContextManagement = contextManagement;
             Agent = agent;
+            AgentSessionId = agentSessionId;
             AgentReference = agentReference;
             StructuredInputs = structuredInputs;
-            AgentSessionId = agentSessionId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -327,6 +327,13 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// </summary>
         public AgentReference Agent { get; set; }
 
+        /// <summary>
+        /// Optional session identifier for sandbox affinity. Currently only relevant for hosted agents.
+        /// When provided, the request is routed to the same sandbox. When omitted, auto-derived from
+        /// conversation_id/prev_response_id or a new UUID is generated.
+        /// </summary>
+        public string AgentSessionId { get; set; }
+
         /// <summary> The agent to use for generating the response. </summary>
         public AgentReference AgentReference { get; set; }
 
@@ -357,12 +364,5 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// </para>
         /// </summary>
         public IDictionary<string, BinaryData> StructuredInputs { get; }
-
-        /// <summary>
-        /// Optional session identifier for sandbox affinity. Currently only relevant for hosted agents.
-        /// When provided, the request is routed to the same sandbox. When omitted, auto-derived from
-        /// conversation_id/prev_response_id or a new UUID is generated.
-        /// </summary>
-        public string AgentSessionId { get; set; }
     }
 }

@@ -38,6 +38,13 @@ internal static partial class BingCustomSearchConfigurationValidator
                 errors.Add(new ValidationError("$.count", $"Expected integer, got {countProp.ValueKind}"));
         }
 
+        // Optional: description
+        if (element.TryGetProperty("description", out var descriptionProp))
+        {
+            if (descriptionProp.ValueKind != JsonValueKind.String)
+                errors.Add(new ValidationError("$.description", $"Expected string, got {descriptionProp.ValueKind}"));
+        }
+
         // Optional: freshness
         if (element.TryGetProperty("freshness", out var freshnessProp))
         {
@@ -59,6 +66,13 @@ internal static partial class BingCustomSearchConfigurationValidator
         {
             if (marketProp.ValueKind != JsonValueKind.String)
                 errors.Add(new ValidationError("$.market", $"Expected string, got {marketProp.ValueKind}"));
+        }
+
+        // Optional: name
+        if (element.TryGetProperty("name", out var nameProp))
+        {
+            if (nameProp.ValueKind != JsonValueKind.String)
+                errors.Add(new ValidationError("$.name", $"Expected string, got {nameProp.ValueKind}"));
         }
 
         // Required: project_connection_id

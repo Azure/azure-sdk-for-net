@@ -42,6 +42,13 @@ internal static partial class WebSearchToolValidator
             }
         }
 
+        // Optional: description
+        if (element.TryGetProperty("description", out var descriptionProp))
+        {
+            if (descriptionProp.ValueKind != JsonValueKind.String)
+                errors.Add(new ValidationError("$.description", $"Expected string, got {descriptionProp.ValueKind}"));
+        }
+
         // Optional: filters
         if (element.TryGetProperty("filters", out var filtersProp) && filtersProp.ValueKind != JsonValueKind.Null)
         {
@@ -51,6 +58,13 @@ internal static partial class WebSearchToolValidator
                 foreach (var e in filtersResult.Errors)
                     errors.Add(new ValidationError("$.filters" + e.Path.Substring(1), e.Message));
             }
+        }
+
+        // Optional: name
+        if (element.TryGetProperty("name", out var nameProp))
+        {
+            if (nameProp.ValueKind != JsonValueKind.String)
+                errors.Add(new ValidationError("$.name", $"Expected string, got {nameProp.ValueKind}"));
         }
 
         // Optional: search_context_size
