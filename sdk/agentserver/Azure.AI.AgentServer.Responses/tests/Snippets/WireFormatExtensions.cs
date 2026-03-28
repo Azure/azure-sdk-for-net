@@ -5,7 +5,6 @@ using System.ClientModel.Primitives;
 
 namespace Azure.AI.AgentServer.Responses.Tests.Snippets
 {
-    #region Snippet:Responses_WireFormatTranslation
     /// <summary>
     /// Extension for translating between model types that share the same underlying
     /// JSON wire contract. This works because both the Azure.AI.AgentServer.Responses
@@ -57,5 +56,4 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
         public T To<T>() where T : IPersistableModel<T>
             => ModelReaderWriter.Read<T>(_data)!;
     }
-    #endregion
 }
