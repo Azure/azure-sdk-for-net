@@ -21,23 +21,21 @@ The Azure AI Agent Server libraries let you build ASP.NET Core servers that impl
 
 The fastest way to get an Invocations protocol server running:
 
-```C# Snippet:Invocations_ReadMe_Tier1
-InvocationsServer.Run<MyHandler>();
+```C# Snippet:Invocations_Sample1_StartServer
+InvocationsServer.Run<EchoHandler>();
 ```
 
-Where `MyHandler` implements the Invocations protocol:
+Where `EchoHandler` implements the Invocations protocol:
 
-```C# Snippet:Invocations_ReadMe_Handler
-public class MyHandler : InvocationHandler
+```C# Snippet:Invocations_Sample1_EchoHandler
+public class EchoHandler : InvocationHandler
 {
     public override async Task HandleAsync(
-        HttpRequest request,
-        HttpResponse response,
-        InvocationContext context,
-        CancellationToken cancellationToken)
+        HttpRequest request, HttpResponse response,
+        InvocationContext context, CancellationToken cancellationToken)
     {
-        response.ContentType = "application/json";
-        await response.WriteAsync("{\"status\":\"ok\"}", cancellationToken);
+        var input = await new StreamReader(request.Body).ReadToEndAsync(cancellationToken);
+        await response.WriteAsync($"You said: {input}", cancellationToken);
     }
 }
 ```
