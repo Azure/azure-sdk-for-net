@@ -1,9 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>$(RequiredRunnableTargetFrameworks)</TargetFrameworks>
     <!-- Server-side ASP.NET Core library — no netstandard2.0 support needed. -->
     <RequiredTargetFrameworks>$(RequiredRunnableTargetFrameworks)</RequiredTargetFrameworks>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <RootNamespace>Azure.AI.AgentServer.Responses</RootNamespace>
     <Description>An SDK for building ASP.NET Core servers that implement the Azure AI Responses API.</Description>
     <PackageTags>Microsoft Azure AI Agent Server Responses API SSE Streaming</PackageTags>
