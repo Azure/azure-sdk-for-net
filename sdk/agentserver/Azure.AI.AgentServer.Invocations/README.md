@@ -22,37 +22,28 @@ dotnet add package Azure.AI.AgentServer.Invocations --prerelease
 
 ### Configure the server
 
-Register the Invocations protocol on an `AgentHostBuilder`:
-
-```C# Snippet:Invocations_ReadMe_Builder
-var builder = AgentHost.CreateBuilder();
-builder.AddInvocations<MyHandler>();
-var app = builder.Build();
-app.Run();
-```
-
-Or use the one-line Tier 1 startup if Invocations is the only protocol:
+The fastest way to get running:
 
 ```C# Snippet:Invocations_ReadMe_Tier1
-InvocationsServer.Run<MyHandler>();
+InvocationsServer.Run<EchoHandler>();
 ```
 
-### Implement a handler
+Where `EchoHandler` implements the Invocations protocol:
 
-```C# Snippet:Invocations_ReadMe_Handler
-public class MyHandler : InvocationHandler
+```C# Snippet:Invocations_ReadMe_EchoHandler
+public class EchoHandler : InvocationHandler
 {
     public override async Task HandleAsync(
-        HttpRequest request,
-        HttpResponse response,
-        InvocationContext context,
-        CancellationToken cancellationToken)
+        HttpRequest request, HttpResponse response,
+        InvocationContext context, CancellationToken cancellationToken)
     {
-        response.ContentType = "application/json";
-        await response.WriteAsync("{\"status\":\"ok\"}", cancellationToken);
+        var input = await new StreamReader(request.Body).ReadToEndAsync(cancellationToken);
+        await response.WriteAsync($"You said: {input}", cancellationToken);
     }
 }
 ```
+
+For more control over the host (adding services, configuring middleware, composing multiple protocols), see [Customizing the host](#customizing-the-host) below.
 
 ## Key concepts
 
@@ -71,6 +62,19 @@ The library automatically extracts a session identifier from incoming requests, 
 ### Client header forwarding
 
 Headers prefixed with `x-client-*` are automatically captured from the incoming request and made available via `InvocationContext.ClientHeaders`, allowing end-to-end tracing context and client metadata to flow through the server.
+
+### Customizing the host
+
+When you need to add services, configure middleware, or compose multiple protocols on a single host, use `AgentHostBuilder` directly:
+
+```C# Snippet:Invocations_ReadMe_Builder
+var builder = AgentHost.CreateBuilder();
+builder.AddInvocations<EchoHandler>();
+var app = builder.Build();
+app.Run();
+```
+
+See [Tier 1 hosting customization](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Invocations/samples/Sample5_Tier1HostingCustomize.md), [Tier 2 builder](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Invocations/samples/Sample6_Tier2HostingBuilder.md), and [Tier 3 self-hosting](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Invocations/samples/Sample7_Tier3SelfHosting.md) for detailed examples.
 
 ### Handler lifetime
 

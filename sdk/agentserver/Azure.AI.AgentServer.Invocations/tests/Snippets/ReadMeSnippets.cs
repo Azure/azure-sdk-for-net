@@ -16,50 +16,48 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
     public class ReadMeSnippets
     {
         [Test]
+        public void Tier1_Startup()
+        {
+            #region Snippet:Invocations_ReadMe_Tier1
+
+            InvocationsServer.Run<EchoHandler>();
+
+            #endregion
+        }
+
+        [Test]
+        public void Implement_EchoHandler()
+        {
+            var handler = new EchoHandler();
+            Assert.That(handler, Is.Not.Null);
+        }
+
+        #region Snippet:Invocations_ReadMe_EchoHandler
+
+        public class EchoHandler : InvocationHandler
+        {
+            public override async Task HandleAsync(
+                HttpRequest request, HttpResponse response,
+                InvocationContext context, CancellationToken cancellationToken)
+            {
+                var input = await new StreamReader(request.Body).ReadToEndAsync(cancellationToken);
+                await response.WriteAsync($"You said: {input}", cancellationToken);
+            }
+        }
+
+        #endregion
+
+        [Test]
         public void Builder_Setup()
         {
             #region Snippet:Invocations_ReadMe_Builder
 
             var builder = AgentHost.CreateBuilder();
-            builder.AddInvocations<MyHandler>();
+            builder.AddInvocations<EchoHandler>();
             var app = builder.Build();
             app.Run();
 
             #endregion
         }
-
-        [Test]
-        public void Tier1_Startup()
-        {
-            #region Snippet:Invocations_ReadMe_Tier1
-
-            InvocationsServer.Run<MyHandler>();
-
-            #endregion
-        }
-
-        [Test]
-        public void Implement_Handler()
-        {
-            var handler = new MyHandler();
-            Assert.That(handler, Is.Not.Null);
-        }
-
-        #region Snippet:Invocations_ReadMe_Handler
-
-        public class MyHandler : InvocationHandler
-        {
-            public override async Task HandleAsync(
-                HttpRequest request,
-                HttpResponse response,
-                InvocationContext context,
-                CancellationToken cancellationToken)
-            {
-                response.ContentType = "application/json";
-                await response.WriteAsync("{\"status\":\"ok\"}", cancellationToken);
-            }
-        }
-
-        #endregion
     }
 }
