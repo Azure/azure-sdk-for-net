@@ -7,7 +7,7 @@ The Azure AI Agent Server libraries let you build ASP.NET Core servers that impl
 | Package | Description | NuGet |
 |---------|-------------|-------|
 | [Azure.AI.AgentServer.Core](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Core) | Shared hosting foundation: library-owned ASP.NET Core host with OpenTelemetry, health checks, server user-agent header, and multi-protocol composition. | [![NuGet](https://img.shields.io/nuget/vpre/Azure.AI.AgentServer.Core.svg)](https://www.nuget.org/packages/Azure.AI.AgentServer.Core) |
-| Azure.AI.AgentServer.Responses *(coming soon)* | Responses protocol implementation: SSE streaming, background execution, response lifecycle management, and `ResponseHandler` interface. | [![NuGet](https://img.shields.io/nuget/vpre/Azure.AI.AgentServer.Responses.svg)](https://www.nuget.org/packages/Azure.AI.AgentServer.Responses) |
+| [Azure.AI.AgentServer.Responses](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Responses) | Responses protocol implementation: SSE streaming, background execution, response lifecycle management, and `ResponseHandler` interface. | [![NuGet](https://img.shields.io/nuget/vpre/Azure.AI.AgentServer.Responses.svg)](https://www.nuget.org/packages/Azure.AI.AgentServer.Responses) |
 | Azure.AI.AgentServer.Invocations *(coming soon)* | Invocations protocol implementation: `InvocationHandler` abstract class, session resolution, client header forwarding, and invocation lifecycle. | [![NuGet](https://img.shields.io/nuget/vpre/Azure.AI.AgentServer.Invocations.svg)](https://www.nuget.org/packages/Azure.AI.AgentServer.Invocations) |
 
 ## When to use which package
