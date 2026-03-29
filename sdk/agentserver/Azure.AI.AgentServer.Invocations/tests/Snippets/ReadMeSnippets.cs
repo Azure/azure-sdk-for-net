@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.AI.AgentServer.Core;
 using Azure.AI.AgentServer.Invocations;
 using Microsoft.AspNetCore.Http;
 using NUnit.Framework;
@@ -46,18 +45,5 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
         }
 
         #endregion
-
-        [Test]
-        public void Builder_Setup()
-        {
-            #region Snippet:Invocations_ReadMe_Builder
-
-            var builder = AgentHost.CreateBuilder();
-            builder.AddInvocations<EchoHandler>();
-            var app = builder.Build();
-            app.Run();
-
-            #endregion
-        }
     }
 }

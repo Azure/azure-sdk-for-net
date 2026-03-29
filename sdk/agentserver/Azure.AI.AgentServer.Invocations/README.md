@@ -65,16 +65,10 @@ Headers prefixed with `x-client-*` are automatically captured from the incoming 
 
 ### Customizing the host
 
-When you need to add services, configure middleware, or compose multiple protocols on a single host, use `AgentHostBuilder` directly:
-
-```C# Snippet:Invocations_ReadMe_Builder
-var builder = AgentHost.CreateBuilder();
-builder.AddInvocations<EchoHandler>();
-var app = builder.Build();
-app.Run();
-```
-
-See [Tier 1 hosting customization](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Invocations/samples/Sample5_Tier1HostingCustomize.md), [Tier 2 builder](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Invocations/samples/Sample6_Tier2HostingBuilder.md), and [Tier 3 self-hosting](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Invocations/samples/Sample7_Tier3SelfHosting.md) for detailed examples.
+When you need to add services, configure middleware, or compose multiple protocols on a single host, see the hosting tier samples:
+- [Tier 1 hosting customization](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Invocations/samples/Sample5_Tier1HostingCustomize.md)
+- [Tier 2 builder](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Invocations/samples/Sample6_Tier2HostingBuilder.md)
+- [Tier 3 self-hosting](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Invocations/samples/Sample7_Tier3SelfHosting.md)
 
 ### Handler lifetime
 
