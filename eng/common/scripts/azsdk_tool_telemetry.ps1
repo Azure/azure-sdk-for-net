@@ -2,7 +2,6 @@ $ErrorActionPreference = "SilentlyContinue"
 . (Join-Path $PSScriptRoot '..' 'scripts' 'Helpers' 'AzSdkTool-Helpers.ps1')
 
 $cliPath = Get-CommonInstallDirectory
-
 # check for azsdk.exe on Windows or azsdk on Linux/Mac in the install directory
 if ($IsWindows)
 {
@@ -21,8 +20,7 @@ if (-not (Test-Path $cliPath))
 # Skip telemetry if opted out
 if ($env:AZSDKTOOLS_COLLECT_TELEMETRY -eq "false")
 {
-    Write-Output '{"continue":true}'
-    exit 0
+    Write-Success
 }
 
 $toolsToIgnore = @( "run_in_terminal", "apply_patch")
@@ -55,8 +53,15 @@ try
     Write-Success
 }
 
-$toolName = $inputData.toolName
-if (-not $toolName)
+$toolName = $null
+$sessionId = $null
+
+# Get tool name. Both vscode and copilot-cli uses different property names, so check for both.
+if ($inputData.PSObject.Properties['toolName'])
+{
+    $toolName = $inputData.toolName
+}
+if (-not $toolName -and $inputData.PSObject.Properties['tool_name'])
 {
     $toolName = $inputData.tool_name
 }
@@ -73,19 +78,26 @@ if ($toolsToIgnore -contains $toolName)
     Write-Success
 }
 
-$sessionId = $inputData.sessionId
-if (-not $sessionId) {
+# Session id
+if ($inputData.PSObject.Properties['sessionId'])
+{
+    $sessionId = $inputData.sessionId
+}
+if (-not $sessionId -and $inputData.PSObject.Properties['session_id'])
+{
     $sessionId = $inputData.session_id
 }
 
 # Get tool input arguments
-$toolInput = $inputData.toolArgs
-if (-not $toolInput)
+$toolInput = $null
+if ($inputData.PSObject.Properties['toolArgs'])
+{
+    $toolInput = $inputData.toolArgs
+}
+if (-not $toolInput -and $inputData.PSObject.Properties['tool_input'])
 {
     $toolInput = $inputData.tool_input
 }
-
-$timestamp = (Get-Date).ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ssZ")
 
 # Helper to extract path from tool input (handles 'path', 'filePath', 'file_path')
 function Get-ToolInputPath
@@ -113,11 +125,12 @@ else
     $clientType = "copilot-cli"
 }
 
+
 # Process skill invocations (looking for "azsdk" prefix in skill name)
 if ($toolName -eq "skill")
 {
     $skillName = $toolInput.skill
-    if ($skillName -and $skillName.StartsWith("azsdk"))
+    if ($skillName)
     {
         $eventType = "skill_invocation"
         $shouldTrack = $true
@@ -141,21 +154,6 @@ if ($toolName -eq "view" -or $toolName -eq "read_file")
     }
 }
 
-# Find property from tool input or output
-function Get-Property
-{
-    param (
-        [object]$Object,
-        [string]$PropertyName
-    )
-
-    if ($Object -and $Object.PSObject.Properties[$PropertyName])
-    {
-        return $Object.PSObject.Properties[$PropertyName].Value
-    }
-    return $null
-}
-
 # Check for Azure SDK Tools MCP invocation
 # Skip mcp tool telemetry since it's already tracked by MCP server
 if ($toolName.StartsWith("mcp_azure-sdk") -or $toolName.StartsWith("azure-sdk-mcp"))
@@ -164,13 +162,11 @@ if ($toolName.StartsWith("mcp_azure-sdk") -or $toolName.StartsWith("azure-sdk-mc
 }
 
 # === STEP 3: Publish event ===
-
 if ($shouldTrack)
 {
     # Build MCP command arguments
     $cliArgs = @(
         "ingest-telemetry",
-        "--timestamp", $timestamp,
         "--client-type", $clientType
     )
 

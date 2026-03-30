@@ -33,6 +33,20 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Specifications on how to scale a VirtualMachines agent pool. </summary>
         [WirePath("scale")]
-        public AgentPoolScaleProfile Scale { get; set; }
+        internal AgentPoolScaleProfile Scale { get; set; }
+
+        /// <summary> Specifications on how to scale the VirtualMachines agent pool to a fixed size. </summary>
+        [WirePath("scale.manual")]
+        public IList<ManualScaleProfile> ScaleManual
+        {
+            get
+            {
+                if (Scale is null)
+                {
+                    Scale = new AgentPoolScaleProfile();
+                }
+                return Scale.Manual;
+            }
+        }
     }
 }

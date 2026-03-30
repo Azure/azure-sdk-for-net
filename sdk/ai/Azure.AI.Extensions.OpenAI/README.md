@@ -34,6 +34,7 @@ Develop Agents using the Azure AI Foundry platform, leveraging an extensive ecos
   - [Computer use](#computer-use)
   - [Function call](#function-call)
   - [Web Search](#web-search)
+  - [Web Search Preview](#web-search-preview)
   - [Bing Grounding](#bing-grounding)
   - [Bing Custom Search](#bing-custom-search)
   - [MCP tool](#mcp-tool)
@@ -1036,6 +1037,22 @@ DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
     Tools = { webSearchTool }
 };
 ProjectsAgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
+    agentName: "myAgent",
+    options: new(agentDefinition));
+```
+
+### Web Search Preview
+**Note:** The Web Search Preview is deprecated, please use Web Search from the section above instead.
+
+The `WebSearchPreviewTool` also allows the agent to perform web search. To improve the results we can set up the search location. After the agent was created, it can be used as usual. When needed, it will use the Web Search Preview tool to answer the question.
+
+```C# Snippet:Sample_CreateAgent_WebSearchPreviewStreaming_Async
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
+{
+    Instructions = "You are a helpful assistant that can search the web.",
+    Tools = { ResponseTool.CreateWebSearchPreviewTool(userLocation: WebSearchToolLocation.CreateApproximateLocation(country: "GB", city: "London", region: "London")), }
+};
+ProjectsAgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
     agentName: "myAgent",
     options: new(agentDefinition));
 ```

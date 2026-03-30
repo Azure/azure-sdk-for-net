@@ -12,7 +12,7 @@ using Azure.ResourceManager.ContainerService;
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> Ingress profile for the container service cluster. </summary>
-    public partial class ManagedClusterIngressProfile
+    internal partial class ManagedClusterIngressProfile
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -24,45 +24,15 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterIngressProfile"/>. </summary>
         /// <param name="webAppRouting"> App Routing settings for the ingress profile. You can find an overview and onboarding guide for this feature at https://learn.microsoft.com/en-us/azure/aks/app-routing?tabs=default%2Cdeploy-app-default. </param>
-        /// <param name="gatewayApi"> Settings for the managed Gateway API installation. </param>
-        /// <param name="applicationLoadBalancer"> Settings for the managed Application Load Balancer installation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterIngressProfile(ManagedClusterIngressProfileWebAppRouting webAppRouting, ManagedClusterIngressProfileGatewayConfiguration gatewayApi, ManagedClusterIngressProfileApplicationLoadBalancer applicationLoadBalancer, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedClusterIngressProfile(ManagedClusterIngressProfileWebAppRouting webAppRouting, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             WebAppRouting = webAppRouting;
-            GatewayApi = gatewayApi;
-            ApplicationLoadBalancer = applicationLoadBalancer;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> App Routing settings for the ingress profile. You can find an overview and onboarding guide for this feature at https://learn.microsoft.com/en-us/azure/aks/app-routing?tabs=default%2Cdeploy-app-default. </summary>
         [WirePath("webAppRouting")]
         public ManagedClusterIngressProfileWebAppRouting WebAppRouting { get; set; }
-
-        /// <summary> Settings for the managed Gateway API installation. </summary>
-        [WirePath("gatewayAPI")]
-        internal ManagedClusterIngressProfileGatewayConfiguration GatewayApi { get; set; }
-
-        /// <summary> Settings for the managed Application Load Balancer installation. </summary>
-        [WirePath("applicationLoadBalancer")]
-        public ManagedClusterIngressProfileApplicationLoadBalancer ApplicationLoadBalancer { get; set; }
-
-        /// <summary> Configuration for the managed Gateway API installation. If not specified, the default is 'Disabled'. See https://aka.ms/k8s-gateway-api for more details. </summary>
-        [WirePath("gatewayAPI.installation")]
-        public ManagedGatewayType? GatewayApiInstallation
-        {
-            get
-            {
-                return GatewayApi is null ? default : GatewayApi.Installation;
-            }
-            set
-            {
-                if (GatewayApi is null)
-                {
-                    GatewayApi = new ManagedClusterIngressProfileGatewayConfiguration();
-                }
-                GatewayApi.Installation = value;
-            }
-        }
     }
 }

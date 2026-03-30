@@ -90,16 +90,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(OutboundIPPrefixes))
-            {
-                writer.WritePropertyName("outboundIPPrefixes"u8);
-                writer.WriteObjectValue(OutboundIPPrefixes, options);
-            }
-            if (Optional.IsDefined(OutboundIPs))
-            {
-                writer.WritePropertyName("outboundIPs"u8);
-                writer.WriteObjectValue(OutboundIPs, options);
-            }
             if (Optional.IsDefined(IdleTimeoutInMinutes))
             {
                 writer.WritePropertyName("idleTimeoutInMinutes"u8);
@@ -149,8 +139,6 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
             ManagedClusterManagedOutboundIPProfile managedOutboundIPProfile = default;
             IList<WritableSubResource> effectiveOutboundIPs = default;
-            ManagedClusterNATGatewayProfileOutboundIpPrefixes outboundIPPrefixes = default;
-            ManagedClusterNATGatewayProfileOutboundIPs outboundIPs = default;
             int? idleTimeoutInMinutes = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -169,24 +157,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                     DeserializeEffectiveOutboundIPs(prop, ref effectiveOutboundIPs);
                     continue;
                 }
-                if (prop.NameEquals("outboundIPPrefixes"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    outboundIPPrefixes = ManagedClusterNATGatewayProfileOutboundIpPrefixes.DeserializeManagedClusterNATGatewayProfileOutboundIpPrefixes(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("outboundIPs"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    outboundIPs = ManagedClusterNATGatewayProfileOutboundIPs.DeserializeManagedClusterNATGatewayProfileOutboundIPs(prop.Value, options);
-                    continue;
-                }
                 if (prop.NameEquals("idleTimeoutInMinutes"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -201,13 +171,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ManagedClusterNatGatewayProfile(
-                managedOutboundIPProfile,
-                effectiveOutboundIPs ?? new ChangeTrackingList<WritableSubResource>(),
-                outboundIPPrefixes,
-                outboundIPs,
-                idleTimeoutInMinutes,
-                additionalBinaryDataProperties);
+            return new ManagedClusterNatGatewayProfile(managedOutboundIPProfile, effectiveOutboundIPs ?? new ChangeTrackingList<WritableSubResource>(), idleTimeoutInMinutes, additionalBinaryDataProperties);
         }
     }
 }

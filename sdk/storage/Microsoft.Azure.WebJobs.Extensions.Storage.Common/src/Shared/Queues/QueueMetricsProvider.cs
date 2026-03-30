@@ -81,19 +81,18 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
                 if (queueLength > 0)
                 {
                     PeekedMessage message = (await _queue.PeekMessagesAsync(1).ConfigureAwait(false)).Value.FirstOrDefault();
-                    if (message != null)
+                    if (message != null && message.InsertedOn.HasValue)
                     {
-                        if (message.InsertedOn.HasValue)
-                        {
-                            queueTime = DateTime.UtcNow.Subtract(message.InsertedOn.Value.DateTime);
-                        }
+                        queueTime = DateTime.UtcNow.Subtract(message.InsertedOn.Value.DateTime);
                     }
-                    else
-                    {
-                        // ApproximateMessageCount often returns a stale value,
-                        // especially when the queue is empty.
-                        queueLength = 0;
-                    }
+                    // If peek returns null (e.g. message encoding mismatch where
+                    // MessageDecodingFailed handler silently filters out un-decodable
+                    // messages), we preserve ApproximateMessagesCount as the queue length.
+                    // Trade-off: ApproximateMessagesCount may briefly be stale after
+                    // a queue is fully drained, causing a transient over-count for one
+                    // poll cycle (~10s). This is preferable to the previous behavior
+                    // which permanently reported QueueLength=0 when messages existed
+                    // but couldn't be peeked.
                 }
             }
             catch (RequestFailedException ex)

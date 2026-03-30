@@ -281,10 +281,10 @@
 # ServiceOwners:                                                   @Drewm3 @hilaryw29 @MsGabsta @nikhilpatel909 @sandeepraichura @TravisCragg-MSFT @ushnaarshadkhan
 
 # PRLabel: %Confidential Ledger
-/sdk/confidentialledger/                                           @andpiccione @Azure/azure-sdk-write-acl @christothes @ivarprudnikov @msftsettiy @musabbir @PallabPaul @prathod09 @ryazhang-microsoft @weirenlai
+/sdk/confidentialledger/                                           @andpiccione @Azure/azure-sdk-write-acl @christothes @ivarprudnikov @msftsettiy @musabbir @PallabPaul @ryazhang-microsoft @weirenlai
 
 # ServiceLabel: %Confidential Ledger
-# ServiceOwners:                                                   @andpiccione @Azure/azure-sdk-write-acl @ivarprudnikov @msftsettiy @musabbir @PallabPaul @prathod09 @ryazhang-microsoft @weirenlai
+# ServiceOwners:                                                   @andpiccione @Azure/azure-sdk-write-acl @ivarprudnikov @msftsettiy @musabbir @PallabPaul @ryazhang-microsoft @weirenlai
 
 # PRLabel: %Container Registry
 /sdk/containerregistry/                                            @Azure/azure-sdk-write-acr
@@ -1058,9 +1058,6 @@
 
 # ServiceLabel: %Monitor
 # ServiceOwners:                                                   @thomasp98296
-
-# PRLabel: %Neon Postgres
-/sdk/neonpostgres/Azure.ResourceManager.*/                         @ArcturusZhang @ArthurMa1978
 
 # PRLabel: %NetApp Files
 /sdk/netapp/Azure.ResourceManager.*/                               @audunn @Azure/azure-sdk-write-netappfiles

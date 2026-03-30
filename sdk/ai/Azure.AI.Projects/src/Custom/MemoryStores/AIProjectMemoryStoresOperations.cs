@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using OpenAI;
 using OpenAI.Responses;
 
-namespace Azure.AI.Projects;
+namespace Azure.AI.Projects.Memory;
 
 [CodeGenSuppress("SearchMemories", typeof(string), typeof(string), typeof(IEnumerable<InternalItemParam>), typeof(string), typeof(MemorySearchResultOptions), typeof(CancellationToken))]
 [CodeGenSuppress("SearchMemoriesAsync", typeof(string), typeof(string), typeof(IEnumerable<InternalItemParam>), typeof(string), typeof(MemorySearchResultOptions), typeof(CancellationToken))]

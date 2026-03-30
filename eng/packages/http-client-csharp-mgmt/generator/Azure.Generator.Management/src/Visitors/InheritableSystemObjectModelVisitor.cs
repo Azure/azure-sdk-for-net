@@ -25,12 +25,12 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
 {
     protected override ModelProvider? PreVisitModel(InputModelType model, ModelProvider? type)
     {
-        if (type is InheritableSystemObjectModelProvider systemType)
+        if (type is InheritableSystemObjectModelProvider { IsSystemBase: true } systemType)
         {
             UpdateNamespace(systemType);
         }
 
-        if (type is not InheritableSystemObjectModelProvider && type?.BaseModelProvider is InheritableSystemObjectModelProvider baseSystemType)
+        if (type is not InheritableSystemObjectModelProvider { IsSystemBase: true } && type?.BaseModelProvider is InheritableSystemObjectModelProvider { IsSystemBase: true } baseSystemType)
         {
             // Defer serialization update for discriminated models to avoid infinite recursion.
             // Accessing serializationTypeDefinition.Methods triggers building DerivedModels ->
@@ -40,7 +40,7 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
             // (before properties and fields are modified later in Update).
             Update(baseSystemType, type, deferSerialization: model.DiscriminatorProperty != null);
         }
-        else if (type?.BaseModelProvider is not null && type is not InheritableSystemObjectModelProvider)
+        else if (type?.BaseModelProvider is not null && type is not InheritableSystemObjectModelProvider { IsSystemBase: true })
         {
             // Handle regular model inheritance where a non-system model extends another non-system model.
             // This fixes duplicate property generation when TypeSpec models redefine base model properties
@@ -58,16 +58,16 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
             UpdateModelFactory(modelFactory);
         }
 
-        if (type is InheritableSystemObjectModelProvider systemType)
+        if (type is InheritableSystemObjectModelProvider { IsSystemBase: true } systemType)
         {
             UpdateNamespace(systemType);
         }
 
-        if (type is ModelProvider model && model is not InheritableSystemObjectModelProvider && model.BaseModelProvider is InheritableSystemObjectModelProvider baseSystemType)
+        if (type is ModelProvider model && model is not InheritableSystemObjectModelProvider { IsSystemBase: true } && model.BaseModelProvider is InheritableSystemObjectModelProvider { IsSystemBase: true } baseSystemType)
         {
             Update(baseSystemType, model);
         }
-        else if (type is ModelProvider model2 && model2.BaseModelProvider is not null && model2 is not InheritableSystemObjectModelProvider)
+        else if (type is ModelProvider model2 && model2.BaseModelProvider is not null && model2 is not InheritableSystemObjectModelProvider { IsSystemBase: true })
         {
             // Handle regular model inheritance where a non-system model extends another non-system model.
             // This fixes duplicate property generation when TypeSpec models redefine base model properties
