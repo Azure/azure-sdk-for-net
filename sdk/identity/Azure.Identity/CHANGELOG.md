@@ -1,16 +1,10 @@
 # Release History
 
-## 1.20.0-beta.1 (Unreleased)
-
-### Features Added
+## 1.20.0 (2026-03-30)
 
 ### Breaking Changes
 
 - `AddAzureClient`, `AddKeyedAzureClient`, and `WithAzureCredential` return type changed from `IHostApplicationBuilder` to `IClientBuilder` to align with the `IClientBuilder` composition change in System.ClientModel.
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.19.0 (2026-03-11)
 
