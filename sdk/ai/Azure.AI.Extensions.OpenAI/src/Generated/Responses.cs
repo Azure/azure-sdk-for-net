@@ -76,7 +76,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         public virtual ClientResult<CompactResource> CompactResponseConversation(ModelIdsCompaction? model, BinaryData input = default, string previousResponseId = default, string instructions = default, CancellationToken cancellationToken = default)
         {
-            CompactResponseMethodPublicBody spreadModel = new CompactResponseMethodPublicBody(model, input, default, instructions, default);
+            CompactResponseMethodPublicBody spreadModel = new CompactResponseMethodPublicBody(model, input, previousResponseId, instructions, default);
             ClientResult result = CompactResponseConversation(spreadModel, cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((CompactResource)result, result.GetRawResponse());
         }
@@ -90,7 +90,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         public virtual async Task<ClientResult<CompactResource>> CompactResponseConversationAsync(ModelIdsCompaction? model, BinaryData input = default, string previousResponseId = default, string instructions = default, CancellationToken cancellationToken = default)
         {
-            CompactResponseMethodPublicBody spreadModel = new CompactResponseMethodPublicBody(model, input, default, instructions, default);
+            CompactResponseMethodPublicBody spreadModel = new CompactResponseMethodPublicBody(model, input, previousResponseId, instructions, default);
             ClientResult result = await CompactResponseConversationAsync(spreadModel, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((CompactResource)result, result.GetRawResponse());
         }

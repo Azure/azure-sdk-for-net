@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -14,47 +15,67 @@ namespace Azure.ResourceManager.Storage.Models
     public readonly partial struct StorageLeaseState : IEquatable<StorageLeaseState>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="StorageLeaseState"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public StorageLeaseState(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string AvailableValue = "Available";
         private const string LeasedValue = "Leased";
         private const string ExpiredValue = "Expired";
         private const string BreakingValue = "Breaking";
         private const string BrokenValue = "Broken";
 
-        /// <summary> Available. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageLeaseState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public StorageLeaseState(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Available. </summary>
         public static StorageLeaseState Available { get; } = new StorageLeaseState(AvailableValue);
-        /// <summary> Leased. </summary>
+
+        /// <summary> Gets the Leased. </summary>
         public static StorageLeaseState Leased { get; } = new StorageLeaseState(LeasedValue);
-        /// <summary> Expired. </summary>
+
+        /// <summary> Gets the Expired. </summary>
         public static StorageLeaseState Expired { get; } = new StorageLeaseState(ExpiredValue);
-        /// <summary> Breaking. </summary>
+
+        /// <summary> Gets the Breaking. </summary>
         public static StorageLeaseState Breaking { get; } = new StorageLeaseState(BreakingValue);
-        /// <summary> Broken. </summary>
+
+        /// <summary> Gets the Broken. </summary>
         public static StorageLeaseState Broken { get; } = new StorageLeaseState(BrokenValue);
+
         /// <summary> Determines if two <see cref="StorageLeaseState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(StorageLeaseState left, StorageLeaseState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="StorageLeaseState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(StorageLeaseState left, StorageLeaseState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="StorageLeaseState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="StorageLeaseState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator StorageLeaseState(string value) => new StorageLeaseState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="StorageLeaseState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator StorageLeaseState?(string value) => value == null ? null : new StorageLeaseState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is StorageLeaseState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(StorageLeaseState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

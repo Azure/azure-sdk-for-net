@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 return null;
             }
             int? snapshotsToKeep = default;
-            IList<DayOfWeek> days = default;
+            IList<NetAppDayOfWeek> days = default;
             int? hour = default;
             int? minute = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -119,10 +119,10 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    List<DayOfWeek> array = new List<DayOfWeek>();
+                    List<NetAppDayOfWeek> array = new List<NetAppDayOfWeek>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new DayOfWeek(item.GetString()));
+                        array.Add(new NetAppDayOfWeek(item.GetString()));
                     }
                     days = array;
                     continue;
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ElasticSnapshotPolicyWeeklySchedule(snapshotsToKeep, days ?? new ChangeTrackingList<DayOfWeek>(), hour, minute, serializedAdditionalRawData);
+            return new ElasticSnapshotPolicyWeeklySchedule(snapshotsToKeep, days ?? new ChangeTrackingList<NetAppDayOfWeek>(), hour, minute, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ElasticSnapshotPolicyWeeklySchedule>.Write(ModelReaderWriterOptions options)

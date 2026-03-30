@@ -9,9 +9,9 @@ namespace Azure.AI.Projects.Agents;
 
 public static partial class ResponseToolExtensions
 {
-    public static AgentTool AsAgentTool(this ResponseTool responseTool)
+    public static ProjectsAgentTool AsAgentTool(this ResponseTool responseTool)
     {
-        return ModelReaderWriter.Read<AgentTool>(
+        return ModelReaderWriter.Read<ProjectsAgentTool>(
             ModelReaderWriter.Write(responseTool, ModelSerializationExtensions.WireOptions, OpenAIContext.Default),
             ModelSerializationExtensions.WireOptions,
             AzureAIProjectsAgentsContext.Default);

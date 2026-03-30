@@ -159,7 +159,7 @@ DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         + "\"Foo says\" and then the response from the tool.",
     Tools = { GetFunctionTool(storageQueueUri) },
 };
-AgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
+ProjectsAgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
     agentName: "myAgent",
     options: new(agentDefinition));
 ```
@@ -175,7 +175,7 @@ DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         + "\"Foo says\" and then the response from the tool.",
     Tools = { GetFunctionTool(storageQueueUri) },
 };
-AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+ProjectsAgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
     agentName: "myAgent",
     options: new(agentDefinition));
 ```

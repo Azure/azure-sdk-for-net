@@ -10,13 +10,70 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class AccountSasContent : IUtf8JsonSerializable, IJsonModel<AccountSasContent>
+    /// <summary> The parameters to list SAS credentials of a storage account. </summary>
+    public partial class AccountSasContent : IJsonModel<AccountSasContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AccountSasContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="AccountSasContent"/> for deserialization. </summary>
+        internal AccountSasContent()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AccountSasContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AccountSasContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeAccountSasContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AccountSasContent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AccountSasContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(AccountSasContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AccountSasContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AccountSasContent IPersistableModel<AccountSasContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AccountSasContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="accountSasContent"> The <see cref="AccountSasContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(AccountSasContent accountSasContent)
+        {
+            if (accountSasContent == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(accountSasContent, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AccountSasContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +85,11 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AccountSasContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AccountSasContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AccountSasContent)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("signedServices"u8);
             writer.WriteStringValue(Services.ToString());
             writer.WritePropertyName("signedResourceTypes"u8);
@@ -62,15 +118,15 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("keyToSign"u8);
                 writer.WriteStringValue(KeyToSign);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -79,133 +135,105 @@ namespace Azure.ResourceManager.Storage.Models
             }
         }
 
-        AccountSasContent IJsonModel<AccountSasContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AccountSasContent IJsonModel<AccountSasContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AccountSasContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AccountSasContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AccountSasContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AccountSasContent)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeAccountSasContent(document.RootElement, options);
         }
 
-        internal static AccountSasContent DeserializeAccountSasContent(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static AccountSasContent DeserializeAccountSasContent(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            StorageAccountSasSignedService signedServices = default;
-            StorageAccountSasSignedResourceType signedResourceTypes = default;
-            StorageAccountSasPermission signedPermission = default;
-            string signedIP = default;
-            StorageAccountHttpProtocol? signedProtocol = default;
-            DateTimeOffset? signedStart = default;
-            DateTimeOffset signedExpiry = default;
+            StorageAccountSasSignedService services = default;
+            StorageAccountSasSignedResourceType resourceTypes = default;
+            StorageAccountSasPermission permissions = default;
+            string ipAddressOrRange = default;
+            StorageAccountHttpProtocol? protocols = default;
+            DateTimeOffset? sharedAccessStartOn = default;
+            DateTimeOffset sharedAccessExpireOn = default;
             string keyToSign = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("signedServices"u8))
+                if (prop.NameEquals("signedServices"u8))
                 {
-                    signedServices = new StorageAccountSasSignedService(property.Value.GetString());
+                    services = new StorageAccountSasSignedService(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("signedResourceTypes"u8))
+                if (prop.NameEquals("signedResourceTypes"u8))
                 {
-                    signedResourceTypes = new StorageAccountSasSignedResourceType(property.Value.GetString());
+                    resourceTypes = new StorageAccountSasSignedResourceType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("signedPermission"u8))
+                if (prop.NameEquals("signedPermission"u8))
                 {
-                    signedPermission = new StorageAccountSasPermission(property.Value.GetString());
+                    permissions = new StorageAccountSasPermission(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("signedIp"u8))
+                if (prop.NameEquals("signedIp"u8))
                 {
-                    signedIP = property.Value.GetString();
+                    ipAddressOrRange = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("signedProtocol"u8))
+                if (prop.NameEquals("signedProtocol"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    signedProtocol = property.Value.GetString().ToStorageAccountHttpProtocol();
+                    protocols = prop.Value.GetString().ToStorageAccountHttpProtocol();
                     continue;
                 }
-                if (property.NameEquals("signedStart"u8))
+                if (prop.NameEquals("signedStart"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    signedStart = property.Value.GetDateTimeOffset("O");
+                    sharedAccessStartOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("signedExpiry"u8))
+                if (prop.NameEquals("signedExpiry"u8))
                 {
-                    signedExpiry = property.Value.GetDateTimeOffset("O");
+                    sharedAccessExpireOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("keyToSign"u8))
+                if (prop.NameEquals("keyToSign"u8))
                 {
-                    keyToSign = property.Value.GetString();
+                    keyToSign = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new AccountSasContent(
-                signedServices,
-                signedResourceTypes,
-                signedPermission,
-                signedIP,
-                signedProtocol,
-                signedStart,
-                signedExpiry,
+                services,
+                resourceTypes,
+                permissions,
+                ipAddressOrRange,
+                protocols,
+                sharedAccessStartOn,
+                sharedAccessExpireOn,
                 keyToSign,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<AccountSasContent>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AccountSasContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(AccountSasContent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        AccountSasContent IPersistableModel<AccountSasContent>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AccountSasContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeAccountSasContent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AccountSasContent)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<AccountSasContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -9,8 +9,7 @@ using System.Text.Json;
 
 namespace Azure.AI.Projects
 {
-    /// <summary> Represents a target specifying an Azure AI agent. </summary>
-    public partial class AzureAIAgentTarget : Target, IJsonModel<AzureAIAgentTarget>
+    internal partial class AzureAIAgentTarget : EvaluationTarget, IJsonModel<AzureAIAgentTarget>
     {
         /// <summary> Initializes a new instance of <see cref="AzureAIAgentTarget"/> for deserialization. </summary>
         internal AzureAIAgentTarget()
@@ -19,7 +18,7 @@ namespace Azure.AI.Projects
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override Target PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override EvaluationTarget PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<AzureAIAgentTarget>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -101,7 +100,7 @@ namespace Azure.AI.Projects
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override Target JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override EvaluationTarget JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<AzureAIAgentTarget>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

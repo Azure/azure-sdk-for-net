@@ -8,155 +8,133 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.RecoveryServicesBackup;
 using Azure.ResourceManager.RecoveryServicesBackup.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableRecoveryServicesBackupResourceGroupResource : ArmResource
     {
         private ClientDiagnostics _backupProtectionIntentClientDiagnostics;
-        private BackupProtectionIntentRestOperations _backupProtectionIntentRestClient;
+        private BackupProtectionIntent _backupProtectionIntentRestClient;
         private ClientDiagnostics _backupUsageSummariesClientDiagnostics;
-        private BackupUsageSummariesRestOperations _backupUsageSummariesRestClient;
+        private BackupUsageSummaries _backupUsageSummariesRestClient;
         private ClientDiagnostics _jobsClientDiagnostics;
-        private JobsRestOperations _jobsRestClient;
+        private Jobs _jobsRestClient;
         private ClientDiagnostics _backupProtectedItemsClientDiagnostics;
-        private BackupProtectedItemsRestOperations _backupProtectedItemsRestClient;
+        private BackupProtectedItems _backupProtectedItemsRestClient;
         private ClientDiagnostics _protectableContainersClientDiagnostics;
-        private ProtectableContainersRestOperations _protectableContainersRestClient;
-        private ClientDiagnostics _backupProtectionContainerProtectionContainersClientDiagnostics;
-        private ProtectionContainersRestOperations _backupProtectionContainerProtectionContainersRestClient;
+        private ProtectableContainers _protectableContainersRestClient;
+        private ClientDiagnostics _protectionContainersOperationGroupClientDiagnostics;
+        private ProtectionContainersOperationGroup _protectionContainersOperationGroupRestClient;
         private ClientDiagnostics _backupProtectableItemsClientDiagnostics;
-        private BackupProtectableItemsRestOperations _backupProtectableItemsRestClient;
+        private BackupProtectableItems _backupProtectableItemsRestClient;
         private ClientDiagnostics _backupProtectionContainersClientDiagnostics;
-        private BackupProtectionContainersRestOperations _backupProtectionContainersRestClient;
+        private BackupProtectionContainers _backupProtectionContainersRestClient;
         private ClientDiagnostics _deletedProtectionContainersClientDiagnostics;
-        private DeletedProtectionContainersRestOperations _deletedProtectionContainersRestClient;
+        private DeletedProtectionContainers _deletedProtectionContainersRestClient;
         private ClientDiagnostics _securityPINsClientDiagnostics;
-        private SecurityPINsRestOperations _securityPINsRestClient;
+        private SecurityPINs _securityPINsRestClient;
         private ClientDiagnostics _fetchTieringCostClientDiagnostics;
-        private FetchTieringCostRestOperations _fetchTieringCostRestClient;
+        private FetchTieringCost _fetchTieringCostRestClient;
         private ClientDiagnostics _getTieringCostOperationResultClientDiagnostics;
-        private GetTieringCostOperationResultRestOperations _getTieringCostOperationResultRestClient;
+        private GetTieringCostOperationResult _getTieringCostOperationResultRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableRecoveryServicesBackupResourceGroupResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableRecoveryServicesBackupResourceGroupResource for mocking. </summary>
         protected MockableRecoveryServicesBackupResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableRecoveryServicesBackupResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableRecoveryServicesBackupResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableRecoveryServicesBackupResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics BackupProtectionIntentClientDiagnostics => _backupProtectionIntentClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private BackupProtectionIntentRestOperations BackupProtectionIntentRestClient => _backupProtectionIntentRestClient ??= new BackupProtectionIntentRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics BackupUsageSummariesClientDiagnostics => _backupUsageSummariesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private BackupUsageSummariesRestOperations BackupUsageSummariesRestClient => _backupUsageSummariesRestClient ??= new BackupUsageSummariesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics JobsClientDiagnostics => _jobsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private JobsRestOperations JobsRestClient => _jobsRestClient ??= new JobsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics BackupProtectedItemsClientDiagnostics => _backupProtectedItemsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private BackupProtectedItemsRestOperations BackupProtectedItemsRestClient => _backupProtectedItemsRestClient ??= new BackupProtectedItemsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics ProtectableContainersClientDiagnostics => _protectableContainersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private ProtectableContainersRestOperations ProtectableContainersRestClient => _protectableContainersRestClient ??= new ProtectableContainersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics BackupProtectionContainerProtectionContainersClientDiagnostics => _backupProtectionContainerProtectionContainersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", BackupProtectionContainerResource.ResourceType.Namespace, Diagnostics);
-        private ProtectionContainersRestOperations BackupProtectionContainerProtectionContainersRestClient => _backupProtectionContainerProtectionContainersRestClient ??= new ProtectionContainersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(BackupProtectionContainerResource.ResourceType));
-        private ClientDiagnostics BackupProtectableItemsClientDiagnostics => _backupProtectableItemsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private BackupProtectableItemsRestOperations BackupProtectableItemsRestClient => _backupProtectableItemsRestClient ??= new BackupProtectableItemsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics BackupProtectionContainersClientDiagnostics => _backupProtectionContainersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private BackupProtectionContainersRestOperations BackupProtectionContainersRestClient => _backupProtectionContainersRestClient ??= new BackupProtectionContainersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics DeletedProtectionContainersClientDiagnostics => _deletedProtectionContainersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private DeletedProtectionContainersRestOperations DeletedProtectionContainersRestClient => _deletedProtectionContainersRestClient ??= new DeletedProtectionContainersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics SecurityPINsClientDiagnostics => _securityPINsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private SecurityPINsRestOperations SecurityPINsRestClient => _securityPINsRestClient ??= new SecurityPINsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics FetchTieringCostClientDiagnostics => _fetchTieringCostClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private FetchTieringCostRestOperations FetchTieringCostRestClient => _fetchTieringCostRestClient ??= new FetchTieringCostRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics GetTieringCostOperationResultClientDiagnostics => _getTieringCostOperationResultClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private GetTieringCostOperationResultRestOperations GetTieringCostOperationResultRestClient => _getTieringCostOperationResultRestClient ??= new GetTieringCostOperationResultRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics BackupProtectionIntentClientDiagnostics => _backupProtectionIntentClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private BackupProtectionIntent BackupProtectionIntentRestClient => _backupProtectionIntentRestClient ??= new BackupProtectionIntent(BackupProtectionIntentClientDiagnostics, Pipeline, Endpoint, "2026-01-01-preview");
 
-        /// <summary> Gets a collection of BackupResourceConfigResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of BackupResourceConfigResources and their operations over a BackupResourceConfigResource. </returns>
-        public virtual BackupResourceConfigCollection GetBackupResourceConfigs()
-        {
-            return GetCachedClient(client => new BackupResourceConfigCollection(client, Id));
-        }
+        private ClientDiagnostics BackupUsageSummariesClientDiagnostics => _backupUsageSummariesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        /// <summary>
-        /// Fetches resource storage config.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/Subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupstorageconfig/vaultstorageconfig</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BackupResourceStorageConfigsNonCRR_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BackupResourceConfigResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<BackupResourceConfigResource>> GetBackupResourceConfigAsync(string vaultName, CancellationToken cancellationToken = default)
-        {
-            return await GetBackupResourceConfigs().GetAsync(vaultName, cancellationToken).ConfigureAwait(false);
-        }
+        private BackupUsageSummaries BackupUsageSummariesRestClient => _backupUsageSummariesRestClient ??= new BackupUsageSummaries(BackupUsageSummariesClientDiagnostics, Pipeline, Endpoint, "2026-01-01-preview");
+
+        private ClientDiagnostics JobsClientDiagnostics => _jobsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private Jobs JobsRestClient => _jobsRestClient ??= new Jobs(JobsClientDiagnostics, Pipeline, Endpoint, "2026-01-01-preview");
+
+        private ClientDiagnostics BackupProtectedItemsClientDiagnostics => _backupProtectedItemsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private BackupProtectedItems BackupProtectedItemsRestClient => _backupProtectedItemsRestClient ??= new BackupProtectedItems(BackupProtectedItemsClientDiagnostics, Pipeline, Endpoint, "2026-01-01-preview");
+
+        private ClientDiagnostics ProtectableContainersClientDiagnostics => _protectableContainersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private ProtectableContainers ProtectableContainersRestClient => _protectableContainersRestClient ??= new ProtectableContainers(ProtectableContainersClientDiagnostics, Pipeline, Endpoint, "2026-01-01-preview");
+
+        private ClientDiagnostics ProtectionContainersOperationGroupClientDiagnostics => _protectionContainersOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private ProtectionContainersOperationGroup ProtectionContainersOperationGroupRestClient => _protectionContainersOperationGroupRestClient ??= new ProtectionContainersOperationGroup(ProtectionContainersOperationGroupClientDiagnostics, Pipeline, Endpoint, "2026-01-01-preview");
+
+        private ClientDiagnostics BackupProtectableItemsClientDiagnostics => _backupProtectableItemsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private BackupProtectableItems BackupProtectableItemsRestClient => _backupProtectableItemsRestClient ??= new BackupProtectableItems(BackupProtectableItemsClientDiagnostics, Pipeline, Endpoint, "2026-01-01-preview");
+
+        private ClientDiagnostics BackupProtectionContainersClientDiagnostics => _backupProtectionContainersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private BackupProtectionContainers BackupProtectionContainersRestClient => _backupProtectionContainersRestClient ??= new BackupProtectionContainers(BackupProtectionContainersClientDiagnostics, Pipeline, Endpoint, "2026-01-01-preview");
+
+        private ClientDiagnostics DeletedProtectionContainersClientDiagnostics => _deletedProtectionContainersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private DeletedProtectionContainers DeletedProtectionContainersRestClient => _deletedProtectionContainersRestClient ??= new DeletedProtectionContainers(DeletedProtectionContainersClientDiagnostics, Pipeline, Endpoint, "2026-01-01-preview");
+
+        private ClientDiagnostics SecurityPINsClientDiagnostics => _securityPINsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private SecurityPINs SecurityPINsRestClient => _securityPINsRestClient ??= new SecurityPINs(SecurityPINsClientDiagnostics, Pipeline, Endpoint, "2026-01-01-preview");
+
+        private ClientDiagnostics FetchTieringCostClientDiagnostics => _fetchTieringCostClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private FetchTieringCost FetchTieringCostRestClient => _fetchTieringCostRestClient ??= new FetchTieringCost(FetchTieringCostClientDiagnostics, Pipeline, Endpoint, "2026-01-01-preview");
+
+        private ClientDiagnostics GetTieringCostOperationResultClientDiagnostics => _getTieringCostOperationResultClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private GetTieringCostOperationResult GetTieringCostOperationResultRestClient => _getTieringCostOperationResultRestClient ??= new GetTieringCostOperationResult(GetTieringCostOperationResultClientDiagnostics, Pipeline, Endpoint, "2026-01-01-preview");
 
         /// <summary>
         /// Fetches resource storage config.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/Subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupstorageconfig/vaultstorageconfig</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupstorageconfig/vaultstorageconfig. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BackupResourceStorageConfigsNonCRR_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> BackupResourceStorageConfigsNonCRR_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BackupResourceConfigResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BackupResourceConfigResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<BackupResourceConfigResource> GetBackupResourceConfig(string vaultName, CancellationToken cancellationToken = default)
+        /// <returns> Returns a <see cref="BackupResourceConfigResource"/> object. </returns>
+        public virtual BackupResourceConfigResource GetBackupResourceConfig()
         {
-            return GetBackupResourceConfigs().Get(vaultName, cancellationToken);
+            return new BackupResourceConfigResource(Client, Id.AppendProviderResource("Microsoft.RecoveryServices", "vaults", "vaultstorageconfig"));
         }
 
-        /// <summary> Gets a collection of BackupProtectionIntentResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of BackupProtectionIntentResources and their operations over a BackupProtectionIntentResource. </returns>
+        /// <summary> Gets a collection of BackupProtectionIntents in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of BackupProtectionIntents and their operations over a BackupProtectionIntentResource. </returns>
         public virtual BackupProtectionIntentCollection GetBackupProtectionIntents()
         {
             return GetCachedClient(client => new BackupProtectionIntentCollection(client, Id));
@@ -167,25 +145,21 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// call the GetItemOperationResult API.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/Subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/backupProtectionIntent/{intentObjectName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/backupProtectionIntent/{intentObjectName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProtectionIntent_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProtectionIntentResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BackupProtectionIntentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="fabricName"> Fabric name associated with the backed up item. </param>
+        /// <param name="vaultName"> The name of the VaultResource. </param>
+        /// <param name="fabricName"> The name of the BackupFabricResource. </param>
         /// <param name="intentObjectName"> Backed up item name whose details are to be fetched. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="intentObjectName"/> is null. </exception>
@@ -193,6 +167,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<BackupProtectionIntentResource>> GetBackupProtectionIntentAsync(string vaultName, string fabricName, string intentObjectName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
+            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
+            Argument.AssertNotNullOrEmpty(intentObjectName, nameof(intentObjectName));
+
             return await GetBackupProtectionIntents().GetAsync(vaultName, fabricName, intentObjectName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -201,25 +179,21 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// call the GetItemOperationResult API.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/Subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/backupProtectionIntent/{intentObjectName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/backupProtectionIntent/{intentObjectName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProtectionIntent_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProtectionIntentResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BackupProtectionIntentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="fabricName"> Fabric name associated with the backed up item. </param>
+        /// <param name="vaultName"> The name of the VaultResource. </param>
+        /// <param name="fabricName"> The name of the BackupFabricResource. </param>
         /// <param name="intentObjectName"> Backed up item name whose details are to be fetched. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="intentObjectName"/> is null. </exception>
@@ -227,149 +201,69 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         [ForwardsClientCalls]
         public virtual Response<BackupProtectionIntentResource> GetBackupProtectionIntent(string vaultName, string fabricName, string intentObjectName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
+            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
+            Argument.AssertNotNullOrEmpty(intentObjectName, nameof(intentObjectName));
+
             return GetBackupProtectionIntents().Get(vaultName, fabricName, intentObjectName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of BackupResourceVaultConfigResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of BackupResourceVaultConfigResources and their operations over a BackupResourceVaultConfigResource. </returns>
-        public virtual BackupResourceVaultConfigCollection GetBackupResourceVaultConfigs()
-        {
-            return GetCachedClient(client => new BackupResourceVaultConfigCollection(client, Id));
-        }
-
         /// <summary>
         /// Fetches resource vault config.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupconfig/vaultconfig</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupconfig/vaultconfig. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BackupResourceVaultConfigs_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> BackupResourceVaultConfigs_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BackupResourceVaultConfigResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BackupResourceVaultConfigResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<BackupResourceVaultConfigResource>> GetBackupResourceVaultConfigAsync(string vaultName, CancellationToken cancellationToken = default)
+        /// <returns> Returns a <see cref="BackupResourceVaultConfigResource"/> object. </returns>
+        public virtual BackupResourceVaultConfigResource GetBackupResourceVaultConfig()
         {
-            return await GetBackupResourceVaultConfigs().GetAsync(vaultName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Fetches resource vault config.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupconfig/vaultconfig</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BackupResourceVaultConfigs_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BackupResourceVaultConfigResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<BackupResourceVaultConfigResource> GetBackupResourceVaultConfig(string vaultName, CancellationToken cancellationToken = default)
-        {
-            return GetBackupResourceVaultConfigs().Get(vaultName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of BackupResourceEncryptionConfigExtendedResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of BackupResourceEncryptionConfigExtendedResources and their operations over a BackupResourceEncryptionConfigExtendedResource. </returns>
-        public virtual BackupResourceEncryptionConfigExtendedCollection GetBackupResourceEncryptionConfigExtendeds()
-        {
-            return GetCachedClient(client => new BackupResourceEncryptionConfigExtendedCollection(client, Id));
+            return new BackupResourceVaultConfigResource(Client, Id.AppendProviderResource("Microsoft.RecoveryServices", "vaults", "vaultconfig"));
         }
 
         /// <summary>
         /// Fetches Vault Encryption config.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupEncryptionConfigs/backupResourceEncryptionConfig</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupEncryptionConfigs/backupResourceEncryptionConfig. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BackupResourceEncryptionConfigs_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> BackupResourceEncryptionConfigs_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BackupResourceEncryptionConfigExtendedResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BackupResourceEncryptionConfigExtendedResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<BackupResourceEncryptionConfigExtendedResource>> GetBackupResourceEncryptionConfigExtendedAsync(string vaultName, CancellationToken cancellationToken = default)
+        /// <returns> Returns a <see cref="BackupResourceEncryptionConfigExtendedResource"/> object. </returns>
+        public virtual BackupResourceEncryptionConfigExtendedResource GetBackupResourceEncryptionConfigExtended()
         {
-            return await GetBackupResourceEncryptionConfigExtendeds().GetAsync(vaultName, cancellationToken).ConfigureAwait(false);
+            return new BackupResourceEncryptionConfigExtendedResource(Client, Id.AppendProviderResource("Microsoft.RecoveryServices", "vaults", "backupResourceEncryptionConfig"));
         }
 
-        /// <summary>
-        /// Fetches Vault Encryption config.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupEncryptionConfigs/backupResourceEncryptionConfig</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BackupResourceEncryptionConfigs_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BackupResourceEncryptionConfigExtendedResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<BackupResourceEncryptionConfigExtendedResource> GetBackupResourceEncryptionConfigExtended(string vaultName, CancellationToken cancellationToken = default)
-        {
-            return GetBackupResourceEncryptionConfigExtendeds().Get(vaultName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of BackupPrivateEndpointConnectionResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of BackupPrivateEndpointConnectionResources and their operations over a BackupPrivateEndpointConnectionResource. </returns>
+        /// <summary> Gets a collection of BackupPrivateEndpointConnections in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of BackupPrivateEndpointConnections and their operations over a BackupPrivateEndpointConnectionResource. </returns>
         public virtual BackupPrivateEndpointConnectionCollection GetBackupPrivateEndpointConnections()
         {
             return GetCachedClient(client => new BackupPrivateEndpointConnectionCollection(client, Id));
@@ -379,24 +273,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// Get Private Endpoint Connection. This call is made by Backup Admin.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/privateEndpointConnections/{privateEndpointConnectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateEndpointConnection_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateEndpointConnectionResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BackupPrivateEndpointConnectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
+        /// <param name="vaultName"> The name of the VaultResource. </param>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="privateEndpointConnectionName"/> is null. </exception>
@@ -404,6 +294,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<BackupPrivateEndpointConnectionResource>> GetBackupPrivateEndpointConnectionAsync(string vaultName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
+
             return await GetBackupPrivateEndpointConnections().GetAsync(vaultName, privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -411,24 +304,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// Get Private Endpoint Connection. This call is made by Backup Admin.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/privateEndpointConnections/{privateEndpointConnectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateEndpointConnection_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateEndpointConnectionResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BackupPrivateEndpointConnectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
+        /// <param name="vaultName"> The name of the VaultResource. </param>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="privateEndpointConnectionName"/> is null. </exception>
@@ -436,239 +325,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         [ForwardsClientCalls]
         public virtual Response<BackupPrivateEndpointConnectionResource> GetBackupPrivateEndpointConnection(string vaultName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
+
             return GetBackupPrivateEndpointConnections().Get(vaultName, privateEndpointConnectionName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of BackupProtectionPolicyResources in the ResourceGroupResource. </summary>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> An object representing collection of BackupProtectionPolicyResources and their operations over a BackupProtectionPolicyResource. </returns>
-        public virtual BackupProtectionPolicyCollection GetBackupProtectionPolicies(string vaultName)
-        {
-            return new BackupProtectionPolicyCollection(Client, Id, vaultName);
-        }
-
-        /// <summary>
-        /// Provides the details of the backup policies associated to Recovery Services Vault. This is an asynchronous
-        /// operation. Status of the operation can be fetched using GetPolicyOperationResult API.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupPolicies/{policyName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProtectionPolicies_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BackupProtectionPolicyResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="policyName"> Backup policy information to be fetched. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="policyName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> or <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<BackupProtectionPolicyResource>> GetBackupProtectionPolicyAsync(string vaultName, string policyName, CancellationToken cancellationToken = default)
-        {
-            return await GetBackupProtectionPolicies(vaultName).GetAsync(policyName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Provides the details of the backup policies associated to Recovery Services Vault. This is an asynchronous
-        /// operation. Status of the operation can be fetched using GetPolicyOperationResult API.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupPolicies/{policyName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProtectionPolicies_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BackupProtectionPolicyResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="policyName"> Backup policy information to be fetched. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="policyName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> or <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<BackupProtectionPolicyResource> GetBackupProtectionPolicy(string vaultName, string policyName, CancellationToken cancellationToken = default)
-        {
-            return GetBackupProtectionPolicies(vaultName).Get(policyName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of BackupJobResources in the ResourceGroupResource. </summary>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> An object representing collection of BackupJobResources and their operations over a BackupJobResource. </returns>
-        public virtual BackupJobCollection GetBackupJobs(string vaultName)
-        {
-            return new BackupJobCollection(Client, Id, vaultName);
-        }
-
-        /// <summary>
-        /// Gets extended information associated with the job.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupJobs/{jobName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>JobDetails_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BackupJobResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="jobName"> Name of the job whose details are to be fetched. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="jobName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<BackupJobResource>> GetBackupJobAsync(string vaultName, string jobName, CancellationToken cancellationToken = default)
-        {
-            return await GetBackupJobs(vaultName).GetAsync(jobName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets extended information associated with the job.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupJobs/{jobName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>JobDetails_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BackupJobResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="jobName"> Name of the job whose details are to be fetched. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="jobName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<BackupJobResource> GetBackupJob(string vaultName, string jobName, CancellationToken cancellationToken = default)
-        {
-            return GetBackupJobs(vaultName).Get(jobName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of BackupEngineResources in the ResourceGroupResource. </summary>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> An object representing collection of BackupEngineResources and their operations over a BackupEngineResource. </returns>
-        public virtual BackupEngineCollection GetBackupEngines(string vaultName)
-        {
-            return new BackupEngineCollection(Client, Id, vaultName);
-        }
-
-        /// <summary>
-        /// Returns backup management server registered to Recovery Services Vault.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupEngines/{backupEngineName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BackupEngines_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BackupEngineResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="backupEngineName"> Name of the backup management server. </param>
-        /// <param name="filter"> OData filter options. </param>
-        /// <param name="skipToken"> skipToken Filter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="backupEngineName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> or <paramref name="backupEngineName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<BackupEngineResource>> GetBackupEngineAsync(string vaultName, string backupEngineName, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
-        {
-            return await GetBackupEngines(vaultName).GetAsync(backupEngineName, filter, skipToken, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Returns backup management server registered to Recovery Services Vault.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupEngines/{backupEngineName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BackupEngines_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BackupEngineResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="backupEngineName"> Name of the backup management server. </param>
-        /// <param name="filter"> OData filter options. </param>
-        /// <param name="skipToken"> skipToken Filter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="backupEngineName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> or <paramref name="backupEngineName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<BackupEngineResource> GetBackupEngine(string vaultName, string backupEngineName, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
-        {
-            return GetBackupEngines(vaultName).Get(backupEngineName, filter, skipToken, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of BackupProtectionContainerResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of BackupProtectionContainerResources and their operations over a BackupProtectionContainerResource. </returns>
+        /// <summary> Gets a collection of BackupProtectionContainers in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of BackupProtectionContainers and their operations over a BackupProtectionContainerResource. </returns>
         public virtual BackupProtectionContainerCollection GetBackupProtectionContainers()
         {
             return GetCachedClient(client => new BackupProtectionContainerCollection(client, Id));
@@ -678,25 +342,21 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// Gets details of the specific container registered to your Recovery Services Vault.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/protectionContainers/{containerName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/protectionContainers/{containerName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProtectionContainers_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProtectionContainers_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BackupProtectionContainerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="fabricName"> Name of the fabric where the container belongs. </param>
+        /// <param name="vaultName"> The name of the VaultResource. </param>
+        /// <param name="fabricName"> The name of the BackupFabricResource. </param>
         /// <param name="containerName"> Name of the container whose details need to be fetched. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="containerName"/> is null. </exception>
@@ -704,6 +364,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<BackupProtectionContainerResource>> GetBackupProtectionContainerAsync(string vaultName, string fabricName, string containerName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
+            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
+            Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
+
             return await GetBackupProtectionContainers().GetAsync(vaultName, fabricName, containerName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -711,25 +375,21 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// Gets details of the specific container registered to your Recovery Services Vault.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/protectionContainers/{containerName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/protectionContainers/{containerName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProtectionContainers_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProtectionContainers_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BackupProtectionContainerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="fabricName"> Name of the fabric where the container belongs. </param>
+        /// <param name="vaultName"> The name of the VaultResource. </param>
+        /// <param name="fabricName"> The name of the BackupFabricResource. </param>
         /// <param name="containerName"> Name of the container whose details need to be fetched. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="containerName"/> is null. </exception>
@@ -737,48 +397,258 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         [ForwardsClientCalls]
         public virtual Response<BackupProtectionContainerResource> GetBackupProtectionContainer(string vaultName, string fabricName, string containerName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
+            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
+            Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
+
             return GetBackupProtectionContainers().Get(vaultName, fabricName, containerName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ResourceGuardProxyResources in the ResourceGroupResource. </summary>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> An object representing collection of ResourceGuardProxyResources and their operations over a ResourceGuardProxyResource. </returns>
+        /// <summary> Gets a collection of BackupProtectionPolicies in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <param name="vaultName"> The vaultName for the resource. </param>
+        /// <returns> An object representing collection of BackupProtectionPolicies and their operations over a BackupProtectionPolicyResource. </returns>
+        public virtual BackupProtectionPolicyCollection GetBackupProtectionPolicies(string vaultName)
+        {
+            return GetCachedClient(client => new BackupProtectionPolicyCollection(client, Id, vaultName));
+        }
+
+        /// <summary>
+        /// Provides the details of the backup policies associated to Recovery Services Vault. This is an asynchronous
+        /// operation. Status of the operation can be fetched using GetPolicyOperationResult API.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupPolicies/{policyName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ProtectionPolicies_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="vaultName"> The vaultName for the resource. </param>
+        /// <param name="policyName"> Backup policy information to be fetched. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<BackupProtectionPolicyResource>> GetBackupProtectionPolicyAsync(string vaultName, string policyName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(policyName, nameof(policyName));
+
+            return await GetBackupProtectionPolicies(vaultName).GetAsync(policyName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Provides the details of the backup policies associated to Recovery Services Vault. This is an asynchronous
+        /// operation. Status of the operation can be fetched using GetPolicyOperationResult API.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupPolicies/{policyName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ProtectionPolicies_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="vaultName"> The vaultName for the resource. </param>
+        /// <param name="policyName"> Backup policy information to be fetched. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<BackupProtectionPolicyResource> GetBackupProtectionPolicy(string vaultName, string policyName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(policyName, nameof(policyName));
+
+            return GetBackupProtectionPolicies(vaultName).Get(policyName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of BackupJobs in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <param name="vaultName"> The vaultName for the resource. </param>
+        /// <returns> An object representing collection of BackupJobs and their operations over a BackupJobResource. </returns>
+        public virtual BackupJobCollection GetBackupJobs(string vaultName)
+        {
+            return GetCachedClient(client => new BackupJobCollection(client, Id, vaultName));
+        }
+
+        /// <summary>
+        /// Gets extended information associated with the job.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupJobs/{jobName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> JobDetails_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="vaultName"> The vaultName for the resource. </param>
+        /// <param name="jobName"> Name of the job whose details are to be fetched. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<BackupJobResource>> GetBackupJobAsync(string vaultName, string jobName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
+
+            return await GetBackupJobs(vaultName).GetAsync(jobName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets extended information associated with the job.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupJobs/{jobName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> JobDetails_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="vaultName"> The vaultName for the resource. </param>
+        /// <param name="jobName"> Name of the job whose details are to be fetched. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<BackupJobResource> GetBackupJob(string vaultName, string jobName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
+
+            return GetBackupJobs(vaultName).Get(jobName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of BackupEngines in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <param name="vaultName"> The vaultName for the resource. </param>
+        /// <returns> An object representing collection of BackupEngines and their operations over a BackupEngineResource. </returns>
+        public virtual BackupEngineCollection GetBackupEngines(string vaultName)
+        {
+            return GetCachedClient(client => new BackupEngineCollection(client, Id, vaultName));
+        }
+
+        /// <summary>
+        /// Returns backup management server registered to Recovery Services Vault.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupEngines/{backupEngineName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> BackupEngines_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="vaultName"> The vaultName for the resource. </param>
+        /// <param name="backupEngineName"> Name of the backup management server. </param>
+        /// <param name="filter"> OData filter options. </param>
+        /// <param name="skipToken"> skipToken Filter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="backupEngineName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="backupEngineName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<BackupEngineResource>> GetBackupEngineAsync(string vaultName, string backupEngineName, string filter = default, string skipToken = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(backupEngineName, nameof(backupEngineName));
+
+            return await GetBackupEngines(vaultName).GetAsync(backupEngineName, filter, skipToken, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Returns backup management server registered to Recovery Services Vault.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupEngines/{backupEngineName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> BackupEngines_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="vaultName"> The vaultName for the resource. </param>
+        /// <param name="backupEngineName"> Name of the backup management server. </param>
+        /// <param name="filter"> OData filter options. </param>
+        /// <param name="skipToken"> skipToken Filter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="backupEngineName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="backupEngineName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<BackupEngineResource> GetBackupEngine(string vaultName, string backupEngineName, string filter = default, string skipToken = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(backupEngineName, nameof(backupEngineName));
+
+            return GetBackupEngines(vaultName).Get(backupEngineName, filter, skipToken, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ResourceGuardProxies in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <param name="vaultName"> The vaultName for the resource. </param>
+        /// <returns> An object representing collection of ResourceGuardProxies and their operations over a ResourceGuardProxyResource. </returns>
         public virtual ResourceGuardProxyCollection GetResourceGuardProxies(string vaultName)
         {
-            return new ResourceGuardProxyCollection(Client, Id, vaultName);
+            return GetCachedClient(client => new ResourceGuardProxyCollection(client, Id, vaultName));
         }
 
         /// <summary>
         /// Returns ResourceGuardProxy under vault and with the name referenced in request
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupResourceGuardProxies/{resourceGuardProxyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupResourceGuardProxies/{resourceGuardProxyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ResourceGuardProxy_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ResourceGuardProxy_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ResourceGuardProxyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="resourceGuardProxyName"> The <see cref="string"/> to use. </param>
+        /// <param name="vaultName"> The vaultName for the resource. </param>
+        /// <param name="resourceGuardProxyName"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="resourceGuardProxyName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> or <paramref name="resourceGuardProxyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGuardProxyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGuardProxyName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ResourceGuardProxyResource>> GetResourceGuardProxyAsync(string vaultName, string resourceGuardProxyName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(resourceGuardProxyName, nameof(resourceGuardProxyName));
+
             return await GetResourceGuardProxies(vaultName).GetAsync(resourceGuardProxyName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -786,31 +656,29 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// Returns ResourceGuardProxy under vault and with the name referenced in request
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupResourceGuardProxies/{resourceGuardProxyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupResourceGuardProxies/{resourceGuardProxyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ResourceGuardProxy_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ResourceGuardProxy_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ResourceGuardProxyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="resourceGuardProxyName"> The <see cref="string"/> to use. </param>
+        /// <param name="vaultName"> The vaultName for the resource. </param>
+        /// <param name="resourceGuardProxyName"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="resourceGuardProxyName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> or <paramref name="resourceGuardProxyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGuardProxyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGuardProxyName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ResourceGuardProxyResource> GetResourceGuardProxy(string vaultName, string resourceGuardProxyName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(resourceGuardProxyName, nameof(resourceGuardProxyName));
+
             return GetResourceGuardProxies(vaultName).Get(resourceGuardProxyName, cancellationToken);
         }
 
@@ -818,16 +686,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// Provides a pageable list of all intents that are present within a vault.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/Subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupProtectionIntents</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupProtectionIntents. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BackupProtectionIntent_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> BackupProtectionIntent_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -835,32 +703,41 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <param name="filter"> OData filter options. </param>
         /// <param name="skipToken"> skipToken Filter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="BackupProtectionIntentResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BackupProtectionIntentResource> GetBackupProtectionIntentsAsync(string vaultName, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="BackupProtectionIntentResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<BackupProtectionIntentResource> GetBackupProtectionIntentsAsync(string vaultName, string filter = default, string skipToken = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => BackupProtectionIntentRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter, skipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BackupProtectionIntentRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter, skipToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BackupProtectionIntentResource(Client, BackupProtectionIntentData.DeserializeBackupProtectionIntentData(e)), BackupProtectionIntentClientDiagnostics, Pipeline, "MockableRecoveryServicesBackupResourceGroupResource.GetBackupProtectionIntents", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<BackupProtectionIntentData, BackupProtectionIntentResource>(new BackupProtectionIntentGetBackupProtectionIntentsAsyncCollectionResultOfT(
+                BackupProtectionIntentRestClient,
+                vaultName,
+                Id.ResourceGroupName,
+                Id.SubscriptionId,
+                filter,
+                skipToken,
+                context), data => new BackupProtectionIntentResource(Client, data));
         }
 
         /// <summary>
         /// Provides a pageable list of all intents that are present within a vault.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/Subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupProtectionIntents</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupProtectionIntents. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BackupProtectionIntent_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> BackupProtectionIntent_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -868,32 +745,41 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <param name="filter"> OData filter options. </param>
         /// <param name="skipToken"> skipToken Filter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="BackupProtectionIntentResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BackupProtectionIntentResource> GetBackupProtectionIntents(string vaultName, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<BackupProtectionIntentResource> GetBackupProtectionIntents(string vaultName, string filter = default, string skipToken = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => BackupProtectionIntentRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter, skipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BackupProtectionIntentRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter, skipToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BackupProtectionIntentResource(Client, BackupProtectionIntentData.DeserializeBackupProtectionIntentData(e)), BackupProtectionIntentClientDiagnostics, Pipeline, "MockableRecoveryServicesBackupResourceGroupResource.GetBackupProtectionIntents", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<BackupProtectionIntentData, BackupProtectionIntentResource>(new BackupProtectionIntentGetBackupProtectionIntentsCollectionResultOfT(
+                BackupProtectionIntentRestClient,
+                vaultName,
+                Id.ResourceGroupName,
+                Id.SubscriptionId,
+                filter,
+                skipToken,
+                context), data => new BackupProtectionIntentResource(Client, data));
         }
 
         /// <summary>
         /// Fetches the backup management usage summaries of the vault.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/Subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupUsageSummaries</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupUsageSummaries. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BackupUsageSummaries_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> BackupUsageSummaries_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -901,80 +787,105 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <param name="filter"> OData filter options. </param>
         /// <param name="skipToken"> skipToken Filter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="BackupManagementUsage"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BackupManagementUsage> GetBackupUsageSummariesAsync(string vaultName, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => BackupUsageSummariesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter, skipToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => BackupManagementUsage.DeserializeBackupManagementUsage(e), BackupUsageSummariesClientDiagnostics, Pipeline, "MockableRecoveryServicesBackupResourceGroupResource.GetBackupUsageSummaries", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Fetches the backup management usage summaries of the vault.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/Subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupUsageSummaries</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BackupUsageSummaries_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="filter"> OData filter options. </param>
-        /// <param name="skipToken"> skipToken Filter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
         /// <returns> A collection of <see cref="BackupManagementUsage"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BackupManagementUsage> GetBackupUsageSummaries(string vaultName, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<BackupManagementUsage> GetBackupUsageSummariesAsync(string vaultName, string filter = default, string skipToken = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => BackupUsageSummariesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter, skipToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => BackupManagementUsage.DeserializeBackupManagementUsage(e), BackupUsageSummariesClientDiagnostics, Pipeline, "MockableRecoveryServicesBackupResourceGroupResource.GetBackupUsageSummaries", "value", null, cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new BackupUsageSummariesGetBackupUsageSummariesAsyncCollectionResultOfT(
+                BackupUsageSummariesRestClient,
+                vaultName,
+                Id.ResourceGroupName,
+                Id.SubscriptionId,
+                filter,
+                skipToken,
+                context);
+        }
+
+        /// <summary>
+        /// Fetches the backup management usage summaries of the vault.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupUsageSummaries. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> BackupUsageSummaries_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="vaultName"> The name of the recovery services vault. </param>
+        /// <param name="filter"> OData filter options. </param>
+        /// <param name="skipToken"> skipToken Filter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="BackupManagementUsage"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<BackupManagementUsage> GetBackupUsageSummaries(string vaultName, string filter = default, string skipToken = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new BackupUsageSummariesGetBackupUsageSummariesCollectionResultOfT(
+                BackupUsageSummariesRestClient,
+                vaultName,
+                Id.ResourceGroupName,
+                Id.SubscriptionId,
+                filter,
+                skipToken,
+                context);
         }
 
         /// <summary>
         /// Triggers export of jobs specified by filters and returns an OperationID to track.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupJobsExport</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupJobsExport. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Jobs_Export</description>
+        /// <term> Operation Id. </term>
+        /// <description> Jobs_Export. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
         /// <param name="filter"> OData filter options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
-        public virtual async Task<Response> ExportJobAsync(string vaultName, string filter = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response> ExportJobAsync(string vaultName, string filter = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
 
-            using var scope = JobsClientDiagnostics.CreateScope("MockableRecoveryServicesBackupResourceGroupResource.ExportJob");
+            using DiagnosticScope scope = JobsClientDiagnostics.CreateScope("MockableRecoveryServicesBackupResourceGroupResource.ExportJob");
             scope.Start();
             try
             {
-                var response = await JobsRestClient.ExportAsync(Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = JobsRestClient.CreateExportJobRequest(vaultName, Id.ResourceGroupName, Id.SubscriptionId, filter, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -988,33 +899,38 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// Triggers export of jobs specified by filters and returns an OperationID to track.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupJobsExport</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupJobsExport. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Jobs_Export</description>
+        /// <term> Operation Id. </term>
+        /// <description> Jobs_Export. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
         /// <param name="filter"> OData filter options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
-        public virtual Response ExportJob(string vaultName, string filter = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response ExportJob(string vaultName, string filter = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
 
-            using var scope = JobsClientDiagnostics.CreateScope("MockableRecoveryServicesBackupResourceGroupResource.ExportJob");
+            using DiagnosticScope scope = JobsClientDiagnostics.CreateScope("MockableRecoveryServicesBackupResourceGroupResource.ExportJob");
             scope.Start();
             try
             {
-                var response = JobsRestClient.Export(Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = JobsRestClient.CreateExportJobRequest(vaultName, Id.ResourceGroupName, Id.SubscriptionId, filter, context);
+                Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
             catch (Exception e)
@@ -1028,16 +944,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// Provides a pageable list of all items that are backed up within a vault.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupProtectedItems</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupProtectedItems. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BackupProtectedItems_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> BackupProtectedItems_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1045,117 +961,153 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <param name="filter"> OData filter options. </param>
         /// <param name="skipToken"> skipToken Filter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="BackupProtectedItemResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BackupProtectedItemResource> GetBackupProtectedItemsAsync(string vaultName, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => BackupProtectedItemsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter, skipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BackupProtectedItemsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter, skipToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BackupProtectedItemResource(Client, BackupProtectedItemData.DeserializeBackupProtectedItemData(e)), BackupProtectedItemsClientDiagnostics, Pipeline, "MockableRecoveryServicesBackupResourceGroupResource.GetBackupProtectedItems", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Provides a pageable list of all items that are backed up within a vault.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupProtectedItems</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BackupProtectedItems_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="filter"> OData filter options. </param>
-        /// <param name="skipToken"> skipToken Filter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
         /// <returns> A collection of <see cref="BackupProtectedItemResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BackupProtectedItemResource> GetBackupProtectedItems(string vaultName, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<BackupProtectedItemResource> GetBackupProtectedItemsAsync(string vaultName, string filter = default, string skipToken = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => BackupProtectedItemsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter, skipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BackupProtectedItemsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter, skipToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BackupProtectedItemResource(Client, BackupProtectedItemData.DeserializeBackupProtectedItemData(e)), BackupProtectedItemsClientDiagnostics, Pipeline, "MockableRecoveryServicesBackupResourceGroupResource.GetBackupProtectedItems", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<BackupProtectedItemData, BackupProtectedItemResource>(new BackupProtectedItemsGetBackupProtectedItemsAsyncCollectionResultOfT(
+                BackupProtectedItemsRestClient,
+                vaultName,
+                Id.ResourceGroupName,
+                Id.SubscriptionId,
+                filter,
+                skipToken,
+                context), data => new BackupProtectedItemResource(Client, data));
+        }
+
+        /// <summary>
+        /// Provides a pageable list of all items that are backed up within a vault.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupProtectedItems. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> BackupProtectedItems_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="vaultName"> The name of the recovery services vault. </param>
+        /// <param name="filter"> OData filter options. </param>
+        /// <param name="skipToken"> skipToken Filter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="BackupProtectedItemResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<BackupProtectedItemResource> GetBackupProtectedItems(string vaultName, string filter = default, string skipToken = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<BackupProtectedItemData, BackupProtectedItemResource>(new BackupProtectedItemsGetBackupProtectedItemsCollectionResultOfT(
+                BackupProtectedItemsRestClient,
+                vaultName,
+                Id.ResourceGroupName,
+                Id.SubscriptionId,
+                filter,
+                skipToken,
+                context), data => new BackupProtectedItemResource(Client, data));
         }
 
         /// <summary>
         /// Lists the containers that can be registered to Recovery Services Vault.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/protectableContainers</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/protectableContainers. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProtectableContainers_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProtectableContainers_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="fabricName"> The <see cref="string"/> to use. </param>
+        /// <param name="fabricName"></param>
         /// <param name="filter"> OData filter options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> or <paramref name="fabricName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="fabricName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="ProtectableContainerResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ProtectableContainerResource> GetProtectableContainersAsync(string vaultName, string fabricName, string filter = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
-            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ProtectableContainersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, filter);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ProtectableContainersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ProtectableContainerResource.DeserializeProtectableContainerResource(e), ProtectableContainersClientDiagnostics, Pipeline, "MockableRecoveryServicesBackupResourceGroupResource.GetProtectableContainers", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists the containers that can be registered to Recovery Services Vault.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/protectableContainers</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProtectableContainers_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="fabricName"> The <see cref="string"/> to use. </param>
-        /// <param name="filter"> OData filter options. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> or <paramref name="fabricName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="fabricName"/> is null. </exception>
         /// <returns> A collection of <see cref="ProtectableContainerResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ProtectableContainerResource> GetProtectableContainers(string vaultName, string fabricName, string filter = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ProtectableContainerResource> GetProtectableContainersAsync(string vaultName, string fabricName, string filter = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
             Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ProtectableContainersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, filter);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ProtectableContainersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ProtectableContainerResource.DeserializeProtectableContainerResource(e), ProtectableContainersClientDiagnostics, Pipeline, "MockableRecoveryServicesBackupResourceGroupResource.GetProtectableContainers", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ProtectableContainersGetProtectableContainersAsyncCollectionResultOfT(
+                ProtectableContainersRestClient,
+                vaultName,
+                Id.ResourceGroupName,
+                Id.SubscriptionId,
+                fabricName,
+                filter,
+                context);
+        }
+
+        /// <summary>
+        /// Lists the containers that can be registered to Recovery Services Vault.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/protectableContainers. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ProtectableContainers_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="vaultName"> The name of the recovery services vault. </param>
+        /// <param name="fabricName"></param>
+        /// <param name="filter"> OData filter options. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="fabricName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> or <paramref name="fabricName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="ProtectableContainerResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ProtectableContainerResource> GetProtectableContainers(string vaultName, string fabricName, string filter = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
+            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ProtectableContainersGetProtectableContainersCollectionResultOfT(
+                ProtectableContainersRestClient,
+                vaultName,
+                Id.ResourceGroupName,
+                Id.SubscriptionId,
+                fabricName,
+                filter,
+                context);
         }
 
         /// <summary>
@@ -1163,20 +1115,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// asynchronous operation. To know the status of the operation, call GetRefreshOperationResult API.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/refreshContainers</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/refreshContainers. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProtectionContainers_Refresh</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProtectionContainersOperationGroup_Refresh. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BackupProtectionContainerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1184,18 +1132,23 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <param name="fabricName"> Fabric name associated the container. </param>
         /// <param name="filter"> OData filter options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> or <paramref name="fabricName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="fabricName"/> is null. </exception>
-        public virtual async Task<Response> RefreshProtectionContainerAsync(string vaultName, string fabricName, string filter = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> or <paramref name="fabricName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response> RefreshProtectionContainerAsync(string vaultName, string fabricName, string filter = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
             Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
 
-            using var scope = BackupProtectionContainerProtectionContainersClientDiagnostics.CreateScope("MockableRecoveryServicesBackupResourceGroupResource.RefreshProtectionContainer");
+            using DiagnosticScope scope = ProtectionContainersOperationGroupClientDiagnostics.CreateScope("MockableRecoveryServicesBackupResourceGroupResource.RefreshProtectionContainer");
             scope.Start();
             try
             {
-                var response = await BackupProtectionContainerProtectionContainersRestClient.RefreshAsync(Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, filter, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ProtectionContainersOperationGroupRestClient.CreateRefreshProtectionContainerRequest(vaultName, Id.ResourceGroupName, Id.SubscriptionId, fabricName, filter, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -1210,20 +1163,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// asynchronous operation. To know the status of the operation, call GetRefreshOperationResult API.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/refreshContainers</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/refreshContainers. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProtectionContainers_Refresh</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProtectionContainersOperationGroup_Refresh. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BackupProtectionContainerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1231,18 +1180,23 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <param name="fabricName"> Fabric name associated the container. </param>
         /// <param name="filter"> OData filter options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> or <paramref name="fabricName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="fabricName"/> is null. </exception>
-        public virtual Response RefreshProtectionContainer(string vaultName, string fabricName, string filter = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> or <paramref name="fabricName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response RefreshProtectionContainer(string vaultName, string fabricName, string filter = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
             Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
 
-            using var scope = BackupProtectionContainerProtectionContainersClientDiagnostics.CreateScope("MockableRecoveryServicesBackupResourceGroupResource.RefreshProtectionContainer");
+            using DiagnosticScope scope = ProtectionContainersOperationGroupClientDiagnostics.CreateScope("MockableRecoveryServicesBackupResourceGroupResource.RefreshProtectionContainer");
             scope.Start();
             try
             {
-                var response = BackupProtectionContainerProtectionContainersRestClient.Refresh(Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, filter, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ProtectionContainersOperationGroupRestClient.CreateRefreshProtectionContainerRequest(vaultName, Id.ResourceGroupName, Id.SubscriptionId, fabricName, filter, context);
+                Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
             catch (Exception e)
@@ -1257,16 +1211,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// pagination parameters.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupProtectableItems</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupProtectableItems. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BackupProtectableItems_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> BackupProtectableItems_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1274,212 +1228,272 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <param name="filter"> OData filter options. </param>
         /// <param name="skipToken"> skipToken Filter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="WorkloadProtectableItemResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<WorkloadProtectableItemResource> GetBackupProtectableItemsAsync(string vaultName, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => BackupProtectableItemsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter, skipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BackupProtectableItemsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter, skipToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => WorkloadProtectableItemResource.DeserializeWorkloadProtectableItemResource(e), BackupProtectableItemsClientDiagnostics, Pipeline, "MockableRecoveryServicesBackupResourceGroupResource.GetBackupProtectableItems", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Provides a pageable list of protectable objects within your subscription according to the query filter and the
-        /// pagination parameters.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupProtectableItems</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BackupProtectableItems_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="filter"> OData filter options. </param>
-        /// <param name="skipToken"> skipToken Filter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
         /// <returns> A collection of <see cref="WorkloadProtectableItemResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<WorkloadProtectableItemResource> GetBackupProtectableItems(string vaultName, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<WorkloadProtectableItemResource> GetBackupProtectableItemsAsync(string vaultName, string filter = default, string skipToken = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => BackupProtectableItemsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter, skipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BackupProtectableItemsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter, skipToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => WorkloadProtectableItemResource.DeserializeWorkloadProtectableItemResource(e), BackupProtectableItemsClientDiagnostics, Pipeline, "MockableRecoveryServicesBackupResourceGroupResource.GetBackupProtectableItems", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new BackupProtectableItemsGetBackupProtectableItemsAsyncCollectionResultOfT(
+                BackupProtectableItemsRestClient,
+                vaultName,
+                Id.ResourceGroupName,
+                Id.SubscriptionId,
+                filter,
+                skipToken,
+                context);
+        }
+
+        /// <summary>
+        /// Provides a pageable list of protectable objects within your subscription according to the query filter and the
+        /// pagination parameters.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupProtectableItems. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> BackupProtectableItems_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="vaultName"> The name of the recovery services vault. </param>
+        /// <param name="filter"> OData filter options. </param>
+        /// <param name="skipToken"> skipToken Filter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="WorkloadProtectableItemResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<WorkloadProtectableItemResource> GetBackupProtectableItems(string vaultName, string filter = default, string skipToken = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new BackupProtectableItemsGetBackupProtectableItemsCollectionResultOfT(
+                BackupProtectableItemsRestClient,
+                vaultName,
+                Id.ResourceGroupName,
+                Id.SubscriptionId,
+                filter,
+                skipToken,
+                context);
         }
 
         /// <summary>
         /// Lists the containers registered to Recovery Services Vault.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupProtectionContainers</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupProtectionContainers. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BackupProtectionContainers_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> BackupProtectionContainers_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
         /// <param name="filter"> OData filter options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="BackupProtectionContainerResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BackupProtectionContainerResource> GetBackupProtectionContainersAsync(string vaultName, string filter = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="BackupProtectionContainerResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<BackupProtectionContainerResource> GetBackupProtectionContainersAsync(string vaultName, string filter = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => BackupProtectionContainersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BackupProtectionContainersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BackupProtectionContainerResource(Client, BackupProtectionContainerData.DeserializeBackupProtectionContainerData(e)), BackupProtectionContainersClientDiagnostics, Pipeline, "MockableRecoveryServicesBackupResourceGroupResource.GetBackupProtectionContainers", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<BackupProtectionContainerData, BackupProtectionContainerResource>(new BackupProtectionContainersGetBackupProtectionContainersAsyncCollectionResultOfT(
+                BackupProtectionContainersRestClient,
+                vaultName,
+                Id.ResourceGroupName,
+                Id.SubscriptionId,
+                filter,
+                context), data => new BackupProtectionContainerResource(Client, data));
         }
 
         /// <summary>
         /// Lists the containers registered to Recovery Services Vault.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupProtectionContainers</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupProtectionContainers. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BackupProtectionContainers_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> BackupProtectionContainers_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
         /// <param name="filter"> OData filter options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="BackupProtectionContainerResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BackupProtectionContainerResource> GetBackupProtectionContainers(string vaultName, string filter = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<BackupProtectionContainerResource> GetBackupProtectionContainers(string vaultName, string filter = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => BackupProtectionContainersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BackupProtectionContainersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BackupProtectionContainerResource(Client, BackupProtectionContainerData.DeserializeBackupProtectionContainerData(e)), BackupProtectionContainersClientDiagnostics, Pipeline, "MockableRecoveryServicesBackupResourceGroupResource.GetBackupProtectionContainers", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<BackupProtectionContainerData, BackupProtectionContainerResource>(new BackupProtectionContainersGetBackupProtectionContainersCollectionResultOfT(
+                BackupProtectionContainersRestClient,
+                vaultName,
+                Id.ResourceGroupName,
+                Id.SubscriptionId,
+                filter,
+                context), data => new BackupProtectionContainerResource(Client, data));
         }
 
         /// <summary>
         /// Lists the soft deleted containers registered to Recovery Services Vault.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupDeletedProtectionContainers</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupDeletedProtectionContainers. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DeletedProtectionContainers_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> DeletedProtectionContainers_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
         /// <param name="filter"> OData filter options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="BackupProtectionContainerResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BackupProtectionContainerResource> GetSoftDeletedProtectionContainersAsync(string vaultName, string filter = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="BackupProtectionContainerResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<BackupProtectionContainerResource> GetSoftDeletedProtectionContainersAsync(string vaultName, string filter = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DeletedProtectionContainersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DeletedProtectionContainersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BackupProtectionContainerResource(Client, BackupProtectionContainerData.DeserializeBackupProtectionContainerData(e)), DeletedProtectionContainersClientDiagnostics, Pipeline, "MockableRecoveryServicesBackupResourceGroupResource.GetSoftDeletedProtectionContainers", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<BackupProtectionContainerData, BackupProtectionContainerResource>(new DeletedProtectionContainersGetSoftDeletedProtectionContainersAsyncCollectionResultOfT(
+                DeletedProtectionContainersRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                vaultName,
+                filter,
+                context), data => new BackupProtectionContainerResource(Client, data));
         }
 
         /// <summary>
         /// Lists the soft deleted containers registered to Recovery Services Vault.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupDeletedProtectionContainers</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupDeletedProtectionContainers. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DeletedProtectionContainers_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> DeletedProtectionContainers_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
         /// <param name="filter"> OData filter options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="BackupProtectionContainerResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BackupProtectionContainerResource> GetSoftDeletedProtectionContainers(string vaultName, string filter = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<BackupProtectionContainerResource> GetSoftDeletedProtectionContainers(string vaultName, string filter = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DeletedProtectionContainersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DeletedProtectionContainersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BackupProtectionContainerResource(Client, BackupProtectionContainerData.DeserializeBackupProtectionContainerData(e)), DeletedProtectionContainersClientDiagnostics, Pipeline, "MockableRecoveryServicesBackupResourceGroupResource.GetSoftDeletedProtectionContainers", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<BackupProtectionContainerData, BackupProtectionContainerResource>(new DeletedProtectionContainersGetSoftDeletedProtectionContainersCollectionResultOfT(
+                DeletedProtectionContainersRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                vaultName,
+                filter,
+                context), data => new BackupProtectionContainerResource(Client, data));
         }
 
         /// <summary>
         /// Get the security PIN.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupSecurityPIN</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupSecurityPIN. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecurityPINs_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SecurityPINs_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
         /// <param name="content"> security pin request. </param>
-        /// <param name="xMsAuthorizationAuxiliary"> The <see cref="string"/> to use. </param>
+        /// <param name="xMsAuthorizationAuxiliary"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
-        public virtual async Task<Response<TokenInformation>> GetSecurityPinAsync(string vaultName, SecurityPinContent content = null, string xMsAuthorizationAuxiliary = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<TokenInformation>> GetSecurityPinAsync(string vaultName, SecurityPinContent content = default, string xMsAuthorizationAuxiliary = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
 
-            using var scope = SecurityPINsClientDiagnostics.CreateScope("MockableRecoveryServicesBackupResourceGroupResource.GetSecurityPin");
+            using DiagnosticScope scope = SecurityPINsClientDiagnostics.CreateScope("MockableRecoveryServicesBackupResourceGroupResource.GetSecurityPin");
             scope.Start();
             try
             {
-                var response = await SecurityPINsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, vaultName, content, xMsAuthorizationAuxiliary, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = SecurityPINsRestClient.CreateGetSecurityPinRequest(vaultName, Id.ResourceGroupName, Id.SubscriptionId, SecurityPinContent.ToRequestContent(content), xMsAuthorizationAuxiliary, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<TokenInformation> response = Response.FromValue(TokenInformation.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -1493,34 +1507,44 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// Get the security PIN.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupSecurityPIN</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupSecurityPIN. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecurityPINs_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SecurityPINs_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
         /// <param name="content"> security pin request. </param>
-        /// <param name="xMsAuthorizationAuxiliary"> The <see cref="string"/> to use. </param>
+        /// <param name="xMsAuthorizationAuxiliary"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
-        public virtual Response<TokenInformation> GetSecurityPin(string vaultName, SecurityPinContent content = null, string xMsAuthorizationAuxiliary = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<TokenInformation> GetSecurityPin(string vaultName, SecurityPinContent content = default, string xMsAuthorizationAuxiliary = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
 
-            using var scope = SecurityPINsClientDiagnostics.CreateScope("MockableRecoveryServicesBackupResourceGroupResource.GetSecurityPin");
+            using DiagnosticScope scope = SecurityPINsClientDiagnostics.CreateScope("MockableRecoveryServicesBackupResourceGroupResource.GetSecurityPin");
             scope.Start();
             try
             {
-                var response = SecurityPINsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, vaultName, content, xMsAuthorizationAuxiliary, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = SecurityPINsRestClient.CreateGetSecurityPinRequest(vaultName, Id.ResourceGroupName, Id.SubscriptionId, SecurityPinContent.ToRequestContent(content), xMsAuthorizationAuxiliary, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<TokenInformation> response = Response.FromValue(TokenInformation.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -1535,16 +1559,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// Status of the operation can be fetched using GetTieringCostOperationStatus API and result using GetTieringCostOperationResult API.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupTieringCost/default/fetchTieringCost</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupTieringCost/default/fetchTieringCost. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FetchTieringCost_Post</description>
+        /// <term> Operation Id. </term>
+        /// <description> FetchTieringCost_Post. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1552,21 +1576,34 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <param name="vaultName"> The name of the recovery services vault. </param>
         /// <param name="content"> Fetch Tiering Cost Request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<TieringCostInfo>> PostFetchTieringCostAsync(WaitUntil waitUntil, string vaultName, FetchTieringCostInfoContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = FetchTieringCostClientDiagnostics.CreateScope("MockableRecoveryServicesBackupResourceGroupResource.PostFetchTieringCost");
+            using DiagnosticScope scope = FetchTieringCostClientDiagnostics.CreateScope("MockableRecoveryServicesBackupResourceGroupResource.PostFetchTieringCost");
             scope.Start();
             try
             {
-                var response = await FetchTieringCostRestClient.PostAsync(Id.SubscriptionId, Id.ResourceGroupName, vaultName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesBackupArmOperation<TieringCostInfo>(new TieringCostInfoOperationSource(), FetchTieringCostClientDiagnostics, Pipeline, FetchTieringCostRestClient.CreatePostRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = FetchTieringCostRestClient.CreatePostFetchTieringCostRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, FetchTieringCostInfoContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                RecoveryServicesBackupArmOperation<TieringCostInfo> operation = new RecoveryServicesBackupArmOperation<TieringCostInfo>(
+                    new TieringCostInfoOperationSource(),
+                    FetchTieringCostClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -1581,16 +1618,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// Status of the operation can be fetched using GetTieringCostOperationStatus API and result using GetTieringCostOperationResult API.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupTieringCost/default/fetchTieringCost</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupTieringCost/default/fetchTieringCost. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FetchTieringCost_Post</description>
+        /// <term> Operation Id. </term>
+        /// <description> FetchTieringCost_Post. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1598,21 +1635,34 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <param name="vaultName"> The name of the recovery services vault. </param>
         /// <param name="content"> Fetch Tiering Cost Request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<TieringCostInfo> PostFetchTieringCost(WaitUntil waitUntil, string vaultName, FetchTieringCostInfoContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = FetchTieringCostClientDiagnostics.CreateScope("MockableRecoveryServicesBackupResourceGroupResource.PostFetchTieringCost");
+            using DiagnosticScope scope = FetchTieringCostClientDiagnostics.CreateScope("MockableRecoveryServicesBackupResourceGroupResource.PostFetchTieringCost");
             scope.Start();
             try
             {
-                var response = FetchTieringCostRestClient.Post(Id.SubscriptionId, Id.ResourceGroupName, vaultName, content, cancellationToken);
-                var operation = new RecoveryServicesBackupArmOperation<TieringCostInfo>(new TieringCostInfoOperationSource(), FetchTieringCostClientDiagnostics, Pipeline, FetchTieringCostRestClient.CreatePostRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = FetchTieringCostRestClient.CreatePostFetchTieringCostRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, FetchTieringCostInfoContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                RecoveryServicesBackupArmOperation<TieringCostInfo> operation = new RecoveryServicesBackupArmOperation<TieringCostInfo>(
+                    new TieringCostInfoOperationSource(),
+                    FetchTieringCostClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -1626,34 +1676,44 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// Gets the result of async operation for tiering cost
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupTieringCost/default/operationResults/{operationId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupTieringCost/default/operationResults/{operationId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GetTieringCostOperationResult_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> GetTieringCostOperationResult_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="operationId"> The <see cref="string"/> to use. </param>
+        /// <param name="operationId"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<TieringCostInfo>> GetGetTieringCostOperationResultAsync(string vaultName, string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
-            using var scope = GetTieringCostOperationResultClientDiagnostics.CreateScope("MockableRecoveryServicesBackupResourceGroupResource.GetGetTieringCostOperationResult");
+            using DiagnosticScope scope = GetTieringCostOperationResultClientDiagnostics.CreateScope("MockableRecoveryServicesBackupResourceGroupResource.GetGetTieringCostOperationResult");
             scope.Start();
             try
             {
-                var response = await GetTieringCostOperationResultRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, vaultName, operationId, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = GetTieringCostOperationResultRestClient.CreateGetGetTieringCostOperationResultRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, operationId, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<TieringCostInfo> response = Response.FromValue(TieringCostInfo.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -1667,34 +1727,44 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// Gets the result of async operation for tiering cost
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupTieringCost/default/operationResults/{operationId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupTieringCost/default/operationResults/{operationId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GetTieringCostOperationResult_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> GetTieringCostOperationResult_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="operationId"> The <see cref="string"/> to use. </param>
+        /// <param name="operationId"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<TieringCostInfo> GetGetTieringCostOperationResult(string vaultName, string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
-            using var scope = GetTieringCostOperationResultClientDiagnostics.CreateScope("MockableRecoveryServicesBackupResourceGroupResource.GetGetTieringCostOperationResult");
+            using DiagnosticScope scope = GetTieringCostOperationResultClientDiagnostics.CreateScope("MockableRecoveryServicesBackupResourceGroupResource.GetGetTieringCostOperationResult");
             scope.Start();
             try
             {
-                var response = GetTieringCostOperationResultRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, vaultName, operationId, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = GetTieringCostOperationResultRestClient.CreateGetGetTieringCostOperationResultRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, operationId, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<TieringCostInfo> response = Response.FromValue(TieringCostInfo.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)

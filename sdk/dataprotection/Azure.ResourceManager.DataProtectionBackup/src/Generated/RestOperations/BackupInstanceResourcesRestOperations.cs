@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             {
                 request.Headers.SetValue("x-ms-authorization-auxiliary", xMsAuthorizationAuxiliary);
             }
-            if ("application/json" != null)
+            if (content != null)
             {
                 request.Headers.SetValue("Content-Type", "application/json");
             }
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             {
                 request.Headers.SetValue("x-ms-authorization-auxiliary", xMsAuthorizationAuxiliary);
             }
-            if ("application/json" != null)
+            if (content != null)
             {
                 request.Headers.SetValue("Content-Type", "application/json");
             }
