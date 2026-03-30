@@ -12,10 +12,11 @@ using Microsoft.TypeSpec.Generator.Snippets;
 using NUnit.Framework;
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Text.Json;
+using System.Xml;
+using System.Xml.Linq;
 
 namespace Azure.Generator.Tests
 {
@@ -303,6 +304,33 @@ namespace Azure.Generator.Tests
             Assert.AreEqual(
                 "global::System.ClientModel.Primitives.ModelReaderWriter.Read<global::Azure.Core.Expressions.DataFactory.DataFactoryElement<string>>(data, global::Samples.ModelSerializationExtensions.WireOptions, global::Samples.SamplesContext.Default)",
                 displayString);
+        }
+
+        [TestCase(typeof(ETag), ExpectedResult = "writer.WriteValue(value.ToString());\n")]
+        public string ValidateXmlSerializationStatement(Type type)
+        {
+            var value = new ParameterProvider("value", $"", type).AsVariable().As(type);
+            var writer = new ParameterProvider("writer", $"", typeof(XmlWriter)).AsVariable().As<XmlWriter>();
+            var options = new ParameterProvider("options", $"", typeof(ModelReaderWriterOptions)).AsVariable().As<ModelReaderWriterOptions>();
+
+            var statement = AzureClientGenerator.Instance.TypeFactory.SerializeXmlValue(type, value, writer, options, SerializationFormat.Default);
+            Assert.IsNotNull(statement);
+
+            return statement.ToDisplayString();
+        }
+
+        [TestCase(typeof(ETag), ExpectedResult = "new global::Azure.ETag(element.Value)")]
+        public string ValidateXmlDeserializationExpression(Type type)
+        {
+            var element = new ParameterProvider("element", $"", typeof(XElement)).AsVariable().As<XElement>();
+            var expression = AzureClientGenerator.Instance.TypeFactory.DeserializeXmlValue(
+                type,
+                element,
+                new ScopedApi<ModelReaderWriterOptions>(new VariableExpression(typeof(ModelReaderWriterOptions), "options")),
+                SerializationFormat.Default);
+            Assert.IsNotNull(expression);
+
+            return expression.ToDisplayString();
         }
     }
 }
