@@ -25,10 +25,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
     {
         private readonly ClientDiagnostics _protectedItemsClientDiagnostics;
         private readonly ProtectedItems _protectedItemsRestClient;
-        private readonly ClientDiagnostics _backupsClientDiagnostics;
-        private readonly Backups _backupsRestClient;
         private readonly ClientDiagnostics _recoveryPointsRecommendedForMoveClientDiagnostics;
         private readonly RecoveryPointsRecommendedForMove _recoveryPointsRecommendedForMoveRestClient;
+        private readonly ClientDiagnostics _backupsClientDiagnostics;
+        private readonly Backups _backupsRestClient;
 
         /// <summary> Initializes a new instance of BackupProtectedItemCollection for mocking. </summary>
         protected BackupProtectedItemCollection()
@@ -43,10 +43,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             TryGetApiVersion(BackupProtectedItemResource.ResourceType, out string backupProtectedItemApiVersion);
             _protectedItemsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", BackupProtectedItemResource.ResourceType.Namespace, Diagnostics);
             _protectedItemsRestClient = new ProtectedItems(_protectedItemsClientDiagnostics, Pipeline, Endpoint, backupProtectedItemApiVersion ?? "2026-01-01-preview");
-            _backupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", BackupProtectedItemResource.ResourceType.Namespace, Diagnostics);
-            _backupsRestClient = new Backups(_backupsClientDiagnostics, Pipeline, Endpoint, backupProtectedItemApiVersion ?? "2026-01-01-preview");
             _recoveryPointsRecommendedForMoveClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", BackupProtectedItemResource.ResourceType.Namespace, Diagnostics);
             _recoveryPointsRecommendedForMoveRestClient = new RecoveryPointsRecommendedForMove(_recoveryPointsRecommendedForMoveClientDiagnostics, Pipeline, Endpoint, backupProtectedItemApiVersion ?? "2026-01-01-preview");
+            _backupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", BackupProtectedItemResource.ResourceType.Namespace, Diagnostics);
+            _backupsRestClient = new Backups(_backupsClientDiagnostics, Pipeline, Endpoint, backupProtectedItemApiVersion ?? "2026-01-01-preview");
             ValidateResourceId(id);
         }
 
