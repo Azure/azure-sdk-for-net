@@ -3,9 +3,6 @@
 
 namespace Azure.AI.Projects;
 
-// Public type renames
-
-[CodeGenType("CreateAgentVersionFromManifestRequest1")] public partial class AgentManifestOptions { }
 // Internal types
 
 [CodeGenType("AgentDefinition")] internal partial class InternalAgentDefinition { }

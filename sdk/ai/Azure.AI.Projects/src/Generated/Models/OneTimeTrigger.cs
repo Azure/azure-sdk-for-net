@@ -4,7 +4,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.Projects;
 
 namespace Azure.AI.Projects.Evaluation
 {
@@ -13,11 +12,8 @@ namespace Azure.AI.Projects.Evaluation
     {
         /// <summary> Initializes a new instance of <see cref="OneTimeTrigger"/>. </summary>
         /// <param name="triggerAt"> Date and time for the one-time trigger in ISO 8601 format. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="triggerAt"/> is null. </exception>
-        public OneTimeTrigger(string triggerAt) : base(TriggerType.OneTime)
+        public OneTimeTrigger(DateTimeOffset triggerAt) : base(TriggerType.OneTime)
         {
-            Argument.AssertNotNull(triggerAt, nameof(triggerAt));
-
             TriggerAt = triggerAt;
         }
 
@@ -26,14 +22,14 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="triggerAt"> Date and time for the one-time trigger in ISO 8601 format. </param>
         /// <param name="timeZone"> Time zone for the one-time trigger. </param>
-        internal OneTimeTrigger(TriggerType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string triggerAt, string timeZone) : base(@type, additionalBinaryDataProperties)
+        internal OneTimeTrigger(TriggerType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, DateTimeOffset triggerAt, string timeZone) : base(@type, additionalBinaryDataProperties)
         {
             TriggerAt = triggerAt;
             TimeZone = timeZone;
         }
 
         /// <summary> Date and time for the one-time trigger in ISO 8601 format. </summary>
-        public string TriggerAt { get; set; }
+        public DateTimeOffset TriggerAt { get; set; }
 
         /// <summary> Time zone for the one-time trigger. </summary>
         public string TimeZone { get; set; }

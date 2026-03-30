@@ -424,9 +424,9 @@ namespace Azure.AI.Projects
         /// <summary> Red team details. </summary>
         /// <param name="name"> Identifier of the red team run. </param>
         /// <param name="displayName"> Name of the red-team run. </param>
-        /// <param name="numTurns"> Number of simulation rounds. </param>
+        /// <param name="turnCount"> Number of simulation rounds. </param>
         /// <param name="attackStrategies"> List of attack strategies or nested lists of attack strategies. </param>
-        /// <param name="simulationOnly"> Simulation-only or Simulation + Evaluation. Default false, if true the scan outputs conversation not evaluation result. </param>
+        /// <param name="isSimulationOnly"> Simulation-only or Simulation + Evaluation. Default false, if true the scan outputs conversation not evaluation result. </param>
         /// <param name="riskCategories"> List of risk categories to generate attack objectives for. </param>
         /// <param name="applicationScenario"> Application scenario for the red team operation, to generate scenario specific attacks. </param>
         /// <param name="tags"> Red team's tags. Unlike properties, tags are fully mutable. </param>
@@ -434,7 +434,7 @@ namespace Azure.AI.Projects
         /// <param name="status"> Status of the red-team. It is set by service and is read-only. </param>
         /// <param name="target"> Target configuration for the red-team run. </param>
         /// <returns> A new <see cref="Evaluation.RedTeam"/> instance for mocking. </returns>
-        public static RedTeam RedTeam(string name = default, string displayName = default, int? numTurns = default, IEnumerable<AttackStrategy> attackStrategies = default, bool? simulationOnly = default, IEnumerable<RiskCategory> riskCategories = default, string applicationScenario = default, IDictionary<string, string> tags = default, IDictionary<string, string> properties = default, string status = default, TargetConfig target = default)
+        public static RedTeam RedTeam(string name = default, string displayName = default, int? turnCount = default, IEnumerable<AttackStrategy> attackStrategies = default, bool? isSimulationOnly = default, IEnumerable<RiskCategory> riskCategories = default, string applicationScenario = default, IDictionary<string, string> tags = default, IDictionary<string, string> properties = default, string status = default, TargetConfig target = default)
         {
             attackStrategies ??= new ChangeTrackingList<AttackStrategy>();
             riskCategories ??= new ChangeTrackingList<RiskCategory>();
@@ -444,9 +444,9 @@ namespace Azure.AI.Projects
             return new RedTeam(
                 name,
                 displayName,
-                numTurns,
+                turnCount,
                 attackStrategies.ToList(),
-                simulationOnly,
+                isSimulationOnly,
                 riskCategories.ToList(),
                 applicationScenario,
                 tags,
@@ -603,10 +603,10 @@ namespace Azure.AI.Projects
         /// <param name="id"> Unique identifier of the taxonomy sub-category. </param>
         /// <param name="name"> Name of the taxonomy sub-category. </param>
         /// <param name="description"> Description of the taxonomy sub-category. </param>
-        /// <param name="enabled"> List of taxonomy items under this sub-category. </param>
+        /// <param name="isEnabled"> List of taxonomy items under this sub-category. </param>
         /// <param name="properties"> Additional properties for the taxonomy sub-category. </param>
         /// <returns> A new <see cref="Evaluation.TaxonomySubCategory"/> instance for mocking. </returns>
-        public static TaxonomySubCategory TaxonomySubCategory(string id = default, string name = default, string description = default, bool enabled = default, IDictionary<string, string> properties = default)
+        public static TaxonomySubCategory TaxonomySubCategory(string id = default, string name = default, string description = default, bool isEnabled = default, IDictionary<string, string> properties = default)
         {
             properties ??= new ChangeTrackingDictionary<string, string>();
 
@@ -614,7 +614,7 @@ namespace Azure.AI.Projects
                 id,
                 name,
                 description,
-                enabled,
+                isEnabled,
                 properties,
                 additionalBinaryDataProperties: null);
         }
@@ -834,19 +834,19 @@ namespace Azure.AI.Projects
 
         /// <summary> Comparison results for treatment runs against the baseline. </summary>
         /// <param name="testingCriteria"> Name of the testing criteria. </param>
-        /// <param name="metric"> Metric being evaluated. </param>
-        /// <param name="evaluator"> Name of the evaluator for this testing criteria. </param>
+        /// <param name="metricName"> Metric being evaluated. </param>
+        /// <param name="evaluatorName"> Name of the evaluator for this testing criteria. </param>
         /// <param name="baselineRunSummary"> Summary statistics of the baseline run. </param>
         /// <param name="compareItems"> List of comparison results for each treatment run. </param>
         /// <returns> A new <see cref="Evaluation.EvalRunResultComparison"/> instance for mocking. </returns>
-        public static EvalRunResultComparison EvalRunResultComparison(string testingCriteria = default, string metric = default, string evaluator = default, EvalRunResultSummary baselineRunSummary = default, IEnumerable<EvalRunResultCompareItem> compareItems = default)
+        public static EvalRunResultComparison EvalRunResultComparison(string testingCriteria = default, string metricName = default, string evaluatorName = default, EvalRunResultSummary baselineRunSummary = default, IEnumerable<EvalRunResultCompareItem> compareItems = default)
         {
             compareItems ??= new ChangeTrackingList<EvalRunResultCompareItem>();
 
             return new EvalRunResultComparison(
                 testingCriteria,
-                metric,
-                evaluator,
+                metricName,
+                evaluatorName,
                 baselineRunSummary,
                 compareItems.ToList(),
                 additionalBinaryDataProperties: null);
@@ -921,16 +921,16 @@ namespace Azure.AI.Projects
         /// <param name="sampleCount"> Total number of samples analyzed. </param>
         /// <param name="uniqueSubclusterCount"> Total number of unique subcluster labels. </param>
         /// <param name="uniqueClusterCount"> Total number of unique clusters. </param>
-        /// <param name="method"> Method used for clustering. </param>
+        /// <param name="methodName"> Method used for clustering. </param>
         /// <param name="usage"> Token usage while performing clustering analysis. </param>
         /// <returns> A new <see cref="Evaluation.InsightSummary"/> instance for mocking. </returns>
-        public static InsightSummary InsightSummary(int sampleCount = default, int uniqueSubclusterCount = default, int uniqueClusterCount = default, string @method = default, ClusterTokenUsage usage = default)
+        public static InsightSummary InsightSummary(int sampleCount = default, int uniqueSubclusterCount = default, int uniqueClusterCount = default, string methodName = default, ClusterTokenUsage usage = default)
         {
             return new InsightSummary(
                 sampleCount,
                 uniqueSubclusterCount,
                 uniqueClusterCount,
-                @method,
+                methodName,
                 usage,
                 additionalBinaryDataProperties: null);
         }
@@ -976,11 +976,11 @@ namespace Azure.AI.Projects
         /// <param name="name"> name of the check. </param>
         /// <param name="type"> type of the check. </param>
         /// <param name="score"> score. </param>
-        /// <param name="passed"> indicates if the check passed or failed. </param>
+        /// <param name="isPassed"> indicates if the check passed or failed. </param>
         /// <returns> A new <see cref="Evaluation.EvalResult"/> instance for mocking. </returns>
-        public static EvalResult EvalResult(string name = default, string @type = default, float score = default, bool passed = default)
+        public static EvalResult EvalResult(string name = default, string @type = default, float score = default, bool isPassed = default)
         {
-            return new EvalResult(name, @type, score, passed, additionalBinaryDataProperties: null);
+            return new EvalResult(name, @type, score, isPassed, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Coordinates for the analysis chart. </summary>
@@ -1085,7 +1085,7 @@ namespace Azure.AI.Projects
         /// <param name="error"> Error information for the schedule run. </param>
         /// <param name="properties"> Properties of the schedule run. </param>
         /// <returns> A new <see cref="Evaluation.ScheduleRun"/> instance for mocking. </returns>
-        public static ScheduleRun ScheduleRun(string runId = default, string scheduleId = default, bool success = default, string triggerTime = default, string error = default, IReadOnlyDictionary<string, string> properties = default)
+        public static ScheduleRun ScheduleRun(string runId = default, string scheduleId = default, bool success = default, DateTimeOffset? triggerTime = default, string error = default, IReadOnlyDictionary<string, string> properties = default)
         {
             properties ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1100,13 +1100,13 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> Default memory store configurations. </summary>
-        /// <param name="userProfileEnabled"> Whether to enable user profile extraction and storage. Default is true. </param>
+        /// <param name="isUserProfileEnabled"> Whether to enable user profile extraction and storage. Default is true. </param>
         /// <param name="userProfileDetails"> Specific categories or types of user profile information to extract and store. </param>
-        /// <param name="chatSummaryEnabled"> Whether to enable chat summary extraction and storage. Default is true. </param>
+        /// <param name="isChatSummaryEnabled"> Whether to enable chat summary extraction and storage. Default is true. </param>
         /// <returns> A new <see cref="Memory.MemoryStoreDefaultOptions"/> instance for mocking. </returns>
-        public static MemoryStoreDefaultOptions MemoryStoreDefaultOptions(bool userProfileEnabled = default, string userProfileDetails = default, bool chatSummaryEnabled = default)
+        public static MemoryStoreDefaultOptions MemoryStoreDefaultOptions(bool isUserProfileEnabled = default, string userProfileDetails = default, bool isChatSummaryEnabled = default)
         {
-            return new MemoryStoreDefaultOptions(userProfileEnabled, userProfileDetails, chatSummaryEnabled, additionalBinaryDataProperties: null);
+            return new MemoryStoreDefaultOptions(isUserProfileEnabled, userProfileDetails, isChatSummaryEnabled, additionalBinaryDataProperties: null);
         }
 
         /// <summary> A memory store that can store and retrieve user memories. </summary>
@@ -1136,11 +1136,11 @@ namespace Azure.AI.Projects
 
         /// <summary> The DeleteMemoryStoreResponse. </summary>
         /// <param name="name"> The name of the memory store. </param>
-        /// <param name="deleted"> Whether the memory store was successfully deleted. </param>
+        /// <param name="isDeleted"> Whether the memory store was successfully deleted. </param>
         /// <returns> A new <see cref="Memory.DeleteMemoryStoreResponse"/> instance for mocking. </returns>
-        public static DeleteMemoryStoreResponse DeleteMemoryStoreResponse(string name = default, bool deleted = default)
+        public static DeleteMemoryStoreResponse DeleteMemoryStoreResponse(string name = default, bool isDeleted = default)
         {
-            return new DeleteMemoryStoreResponse("memory_store.deleted", name, deleted, additionalBinaryDataProperties: null);
+            return new DeleteMemoryStoreResponse("memory_store.deleted", name, isDeleted, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Input text. </summary>
@@ -1255,11 +1255,11 @@ namespace Azure.AI.Projects
         /// <summary> Response for deleting memories from a scope. </summary>
         /// <param name="name"> The name of the memory store. </param>
         /// <param name="scope"> The scope from which memories were deleted. </param>
-        /// <param name="deleted"> Whether the deletion operation was successful. </param>
+        /// <param name="isDeleted"> Whether the deletion operation was successful. </param>
         /// <returns> A new <see cref="Memory.MemoryStoreDeleteScopeResponse"/> instance for mocking. </returns>
-        public static MemoryStoreDeleteScopeResponse MemoryStoreDeleteScopeResponse(string name = default, string scope = default, bool deleted = default)
+        public static MemoryStoreDeleteScopeResponse MemoryStoreDeleteScopeResponse(string name = default, string scope = default, bool isDeleted = default)
         {
-            return new MemoryStoreDeleteScopeResponse("memory_store.scope.deleted", name, scope, deleted, additionalBinaryDataProperties: null);
+            return new MemoryStoreDeleteScopeResponse("memory_store.scope.deleted", name, scope, isDeleted, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Represents a request for a pending upload. </summary>

@@ -83,7 +83,7 @@ namespace Azure.AI.Projects.Evaluation
             writer.WritePropertyName("uniqueClusterCount"u8);
             writer.WriteNumberValue(UniqueClusterCount);
             writer.WritePropertyName("method"u8);
-            writer.WriteStringValue(Method);
+            writer.WriteStringValue(MethodName);
             writer.WritePropertyName("usage"u8);
             writer.WriteObjectValue(Usage, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
@@ -131,7 +131,7 @@ namespace Azure.AI.Projects.Evaluation
             int sampleCount = default;
             int uniqueSubclusterCount = default;
             int uniqueClusterCount = default;
-            string @method = default;
+            string methodName = default;
             ClusterTokenUsage usage = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -153,7 +153,7 @@ namespace Azure.AI.Projects.Evaluation
                 }
                 if (prop.NameEquals("method"u8))
                 {
-                    @method = prop.Value.GetString();
+                    methodName = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("usage"u8))
@@ -170,7 +170,7 @@ namespace Azure.AI.Projects.Evaluation
                 sampleCount,
                 uniqueSubclusterCount,
                 uniqueClusterCount,
-                @method,
+                methodName,
                 usage,
                 additionalBinaryDataProperties);
         }

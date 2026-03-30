@@ -12,22 +12,22 @@ using Azure.AI.Projects;
 
 namespace Azure.AI.Projects.Memory
 {
-    /// <summary> The AIProjectMemoryStoresOperations sub-client. </summary>
-    public partial class AIProjectMemoryStoresOperations
+    /// <summary> The AIProjectMemoryStores sub-client. </summary>
+    public partial class AIProjectMemoryStores
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of AIProjectMemoryStoresOperations for mocking. </summary>
-        protected AIProjectMemoryStoresOperations()
+        /// <summary> Initializes a new instance of AIProjectMemoryStores for mocking. </summary>
+        protected AIProjectMemoryStores()
         {
         }
 
-        /// <summary> Initializes a new instance of AIProjectMemoryStoresOperations. </summary>
+        /// <summary> Initializes a new instance of AIProjectMemoryStores. </summary>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal AIProjectMemoryStoresOperations(ClientPipeline pipeline, Uri endpoint, string apiVersion)
+        internal AIProjectMemoryStores(ClientPipeline pipeline, Uri endpoint, string apiVersion)
         {
             _endpoint = endpoint;
             Pipeline = pipeline;
