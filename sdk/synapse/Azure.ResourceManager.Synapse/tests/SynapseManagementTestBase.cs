@@ -41,14 +41,8 @@ namespace Azure.ResourceManager.Synapse.Tests
 
         private void ConfigureSanitizers()
         {
-            // TODO: Remove these sanitizers after re-recording (see https://github.com/Azure/azure-sdk-for-net/issues/57594)
-            // Storage Management SDK now uses api-version=2025-08-01 but recordings use 2022-09-01.
-            UriRegexSanitizers.Add(new UriRegexSanitizer(
-                @"Microsoft\.Storage/storageAccounts/[^?]+\?api-version=(?<group>[a-z0-9-]+)")
-            {
-                GroupForReplace = "group",
-                Value = "**"
-            });
+            // TODO: Remove this sanitizer after re-recording (see https://github.com/Azure/azure-sdk-for-net/issues/57594)
+            // Storage Management SDK now serializes empty "properties": {} unconditionally, but recordings predate that change.
             BodyRegexSanitizers.Add(new BodyRegexSanitizer(@",?\s*""properties""\s*:\s*\{\s*\}")
             {
                 Value = ""

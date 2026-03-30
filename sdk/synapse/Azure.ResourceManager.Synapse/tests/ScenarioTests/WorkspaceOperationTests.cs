@@ -12,7 +12,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Synapse.Tests
 {
-    [NUnit.Framework.Ignore("Test recordings need re-recording with current Storage SDK. See https://github.com/Azure/azure-sdk-for-net/issues/57594")]
+    [Ignore("Test recordings need re-recording with current Storage SDK. See https://github.com/Azure/azure-sdk-for-net/issues/57594")]
     public class WorkspaceOperationTests : SynapseManagementTestBase
     {
         public WorkspaceOperationTests(bool async) : base(async)
