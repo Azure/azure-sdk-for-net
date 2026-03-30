@@ -178,7 +178,7 @@ additional questions or comments.
 <!-- LINKS -->
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/storage/Azure.Storage.Files.Shares.ChangeFeed/src
 [package]: https://www.nuget.org/packages/Azure.Storage.Files.Shares.ChangeFeed/
-[product_docs]: https://learn.microsoft.com/azure/storage/files/storage-files-change-feed
+<!--[product_docs]: https://learn.microsoft.com/azure/storage/files/storage-files-change-feed-->
 [azure_sub]: https://azure.microsoft.com/free/dotnet/
 [nuget]: https://www.nuget.org/
 [storage_account_docs]: https://learn.microsoft.com/azure/storage/common/storage-account-overview
