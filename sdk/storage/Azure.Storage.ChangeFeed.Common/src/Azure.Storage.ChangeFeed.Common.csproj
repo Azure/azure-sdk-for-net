@@ -11,6 +11,7 @@
          not distributed as a separate NuGet package. -->
     <IsPackable>false</IsPackable>
     <IsShippable>false</IsShippable>
+    <IsShippingLibrary>false</IsShippingLibrary>
     <GenerateAPIListing>false</GenerateAPIListing>
     <NoWarn>$(NoWarn);CS1591;IL2026;IL3050</NoWarn>
     <AotCompatOptOut>true</AotCompatOptOut>
