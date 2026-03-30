@@ -40,8 +40,8 @@ public class Tier1InvocationsStartupTests
         // Verify x-platform-server identity header
         Assert.That(invocationResponse.Headers.Contains("x-platform-server"), Is.True);
 
-        // Verify GET /healthy returns 200
-        var healthResponse = await client.GetAsync("/healthy");
+        // Verify GET /readiness returns 200
+        var healthResponse = await client.GetAsync("/readiness");
         Assert.That(healthResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
         await app.App.StopAsync();

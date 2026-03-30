@@ -195,7 +195,7 @@ public class AgentHostBuilderTests
         await app.App.StartAsync();
 
         var client = app.App.GetTestClient();
-        var response = await client.GetAsync("/healthy");
+        var response = await client.GetAsync("/readiness");
         Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
         await app.App.StopAsync();

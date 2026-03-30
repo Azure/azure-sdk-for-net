@@ -36,7 +36,7 @@ var app = builder.Build();
 app.Run();
 ```
 
-This starts a Kestrel server with OpenTelemetry, a `/healthy` health endpoint, and the `x-platform-server` identity header.
+This starts a Kestrel server with OpenTelemetry, a `/readiness` health endpoint, and the `x-platform-server` identity header.
 
 ## Key concepts
 
@@ -46,7 +46,7 @@ The static entry point. `AgentHost.CreateBuilder()` returns an `AgentHostBuilder
 
 ### AgentHostBuilder
 
-Configures the underlying ASP.NET Core host with sensible defaults: Kestrel on the `PORT` environment variable (or 8088), OpenTelemetry traces and metrics, a `/healthy` health endpoint, and `x-platform-server` user-agent header. Protocol packages use `RegisterProtocol()` to add their endpoints — each protocol registers its identity segment with the `ServerUserAgentRegistry`.
+Configures the underlying ASP.NET Core host with sensible defaults: Kestrel on the `PORT` environment variable (or 8088), OpenTelemetry traces and metrics, a `/readiness` health endpoint, and `x-platform-server` user-agent header. Protocol packages use `RegisterProtocol()` to add their endpoints — each protocol registers its identity segment with the `ServerUserAgentRegistry`.
 
 ### AgentHostApp
 
@@ -62,7 +62,7 @@ OpenTelemetry is configured automatically via `Azure.Monitor.OpenTelemetry.AspNe
 
 ### Health endpoint
 
-A `/healthy` endpoint is registered by default, responding to liveness and readiness probes. It reports healthy as soon as the host finishes starting.
+A `/readiness` endpoint is registered by default, responding to liveness and readiness probes. It reports healthy as soon as the host finishes starting.
 
 ## Examples
 

@@ -50,7 +50,7 @@ public class Tier3SelfHostedInvocationsTests
         Assert.That(customResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
         // No implicit health endpoint (developer didn't set up one)
-        var healthResponse = await client.GetAsync("/healthy");
+        var healthResponse = await client.GetAsync("/readiness");
         Assert.That(healthResponse.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
 
         await app.StopAsync();

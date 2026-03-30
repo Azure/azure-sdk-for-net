@@ -24,7 +24,7 @@ var app = builder.Build();
 
 // Your existing endpoints.
 app.MapGet("/", () => "My existing app");
-app.MapGet("/healthy", () => Results.Ok());
+app.MapGet("/readiness", () => Results.Ok());
 
 // Map the Invocations protocol endpoints.
 app.MapInvocationsServer();

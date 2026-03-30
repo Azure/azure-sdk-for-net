@@ -11,7 +11,7 @@
 
 - Library-owned hosting foundation via `AgentHostBuilder` (composable builder pattern).
 - OpenTelemetry integration with `Azure.Monitor.OpenTelemetry.AspNetCore` and OTLP exporter support.
-- Health endpoint at `/healthy` for liveness and readiness probes.
+- Health endpoint at `/readiness` for liveness and readiness probes.
 - Multi-protocol composition via `AgentHostBuilder.RegisterProtocol()`. Protocol packages provide extension methods (e.g., `AddResponses<T>()`, `AddInvocations<T>()`) built on top of this API.
 - Graceful shutdown with configurable drain period.
 - Server user-agent `x-platform-server` header on every response with SDK version info.

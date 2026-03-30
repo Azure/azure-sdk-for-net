@@ -12,13 +12,13 @@ namespace Azure.AI.AgentServer.Core;
 internal static class HealthEndpointExtensions
 {
     /// <summary>
-    /// Maps the <c>GET /healthy</c> health probe endpoint that executes all
+    /// Maps the <c>GET /readiness</c> health probe endpoint that executes all
     /// registered <see cref="Microsoft.Extensions.Diagnostics.HealthChecks.IHealthCheck"/>
     /// instances and returns the aggregate status (200 Healthy, 503 Unhealthy).
     /// </summary>
     internal static IEndpointRouteBuilder MapHealthEndpoint(this IEndpointRouteBuilder endpoints)
     {
-        endpoints.MapHealthChecks("/healthy");
+        endpoints.MapHealthChecks("/readiness");
 
         return endpoints;
     }
