@@ -408,7 +408,7 @@ public sealed class ResponsesActivitySourceTests : IDisposable
 
         // Base defaults present
         Assert.That(activity.DisplayName, Is.EqualTo("invoke_agent test"));
-        Assert.That(activity.GetTagItem(ResponsesTracingConstants.Tags.OperationName), Is.EqualTo("create_response"));
+        Assert.That(activity.GetTagItem(ResponsesTracingConstants.Tags.OperationName), Is.EqualTo("invoke_agent"));
 
         // Overridden tags
         Assert.That(activity.GetTagItem(ResponsesTracingConstants.Tags.ProviderName), Is.EqualTo("my-service"));

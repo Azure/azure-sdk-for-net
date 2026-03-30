@@ -672,7 +672,7 @@ namespace Azure.AI.AgentServer.Responses
     }
     public static partial class ResponsesTracingConstants
     {
-        public const string OperationName = "create_response";
+        public const string OperationName = "invoke_agent";
         public const string ProviderName = "AzureAI Hosted Agents";
         public const string ServiceName = "azure.ai.agentserver";
         public static partial class Baggage
@@ -700,6 +700,8 @@ namespace Azure.AI.AgentServer.Responses
             public const string NamespacedResponseId = "azure.ai.agentserver.responses.response_id";
             public const string NamespacedStreaming = "azure.ai.agentserver.responses.streaming";
             public const string OperationName = "gen_ai.operation.name";
+            public const string OTelErrorType = "error.type";
+            public const string OTelStatusDescription = "otel.status_description";
             public const string ProviderName = "gen_ai.provider.name";
             public const string RequestModel = "gen_ai.request.model";
             public const string ResponseId = "gen_ai.response.id";

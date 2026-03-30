@@ -31,9 +31,9 @@ public static class ResponsesTracingConstants
 
     /// <summary>
     /// The <c>gen_ai.operation.name</c> tag value:
-    /// <c>"create_response"</c>.
+    /// <c>"invoke_agent"</c>.
     /// </summary>
-    public const string OperationName = "create_response";
+    public const string OperationName = "invoke_agent";
 
     // ── Span Tag Keys ────────────────────────────────────────────────────
 
@@ -72,6 +72,20 @@ public static class ResponsesTracingConstants
 
         /// <summary><c>azure.ai.agentserver.responses.error.message</c></summary>
         public const string ErrorMessage = "azure.ai.agentserver.responses.error.message";
+
+        // --- OTel semantic convention attributes ---
+
+        /// <summary>
+        /// <c>error.type</c> — OTel semantic convention attribute for the error type.
+        /// <see href="https://opentelemetry.io/docs/specs/semconv/registry/attributes/error/#error-type"/>
+        /// </summary>
+        public const string OTelErrorType = "error.type";
+
+        /// <summary>
+        /// <c>otel.status_description</c> — OTel semantic convention attribute for the status description.
+        /// <see href="https://opentelemetry.io/docs/specs/semconv/registry/attributes/otel/#otel-status-description"/>
+        /// </summary>
+        public const string OTelStatusDescription = "otel.status_description";
 
         // --- GenAI semantic convention tags (Responses-specific additions) ---
 

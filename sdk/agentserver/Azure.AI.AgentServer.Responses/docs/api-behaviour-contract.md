@@ -630,7 +630,7 @@ The library emits OpenTelemetry-compatible `Activity` spans for `POST /responses
 
 ### Activity Display Name
 
-The activity display name follows the pattern: `create_response {model}`, where `{model}` is the resolved model name from the request (see B22).
+The activity display name follows the pattern: `invoke_agent {model}`, where `{model}` is the resolved model name from the request (see B22).
 
 ### GenAI Parity Tags
 
@@ -649,7 +649,7 @@ These tags align with the OpenTelemetry GenAI semantic conventions:
 | Tag | Value | Description |
 |---|---|---|
 | `gen_ai.system` | System identifier | The GenAI system identifier |
-| `gen_ai.operation.name` | `"create_response"` | Fixed operation name for response creation |
+| `gen_ai.operation.name` | `"invoke_agent"` | Fixed operation name for agent invocation |
 | `gen_ai.request.model` | Resolved model name | Model from the request (B22 resolution) |
 | `gen_ai.conversation.id` | Conversation ID | The conversation identifier, if present on the request |
 | `gen_ai.agent.version` | Agent version | Agent version from `agent_reference`, if provided |

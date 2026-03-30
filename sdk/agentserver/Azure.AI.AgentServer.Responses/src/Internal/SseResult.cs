@@ -109,7 +109,9 @@ internal sealed class SseResult : IResult
         catch (Exception ex)
         {
             // Any error (pre-created failure, cancellation before response.created, etc.)
-            // — write a standalone SSE error event with full fidelity from the exception.
+            // — tag the Activity span and write a standalone SSE error event with
+            // full fidelity from the exception.
+            ResponsesExceptionFilter.RecordException(System.Diagnostics.Activity.Current, ex);
             _logger.LogWarning(ex,
                 "SSE stream error for response {ResponseId}", responseId);
             try

@@ -338,6 +338,7 @@ internal sealed class ResponseOrchestrator
                         eventResponse.Output.Count, outputItemCount, _handler.GetType().FullName);
 
                     // Post-created error — set failed status and emit response.failed
+                    RecordBadHandlerError($"Bad handler: Output item count mismatch ({eventResponse.Output.Count} vs {outputItemCount} output_item.added events)");
                     await EmitTerminalFailureAsync(execution, publisher);
                     yield break;
                 }
@@ -368,6 +369,7 @@ internal sealed class ResponseOrchestrator
                     _logger.LogError(
                         "Bad handler: {EventType} event has mismatched status '{ActualStatus}'. Expected '{ExpectedStatus}'. Handler: {HandlerType}",
                         evt.GetType().Name, execution.Response!.Status, expectedStatus, _handler.GetType().FullName);
+                    RecordBadHandlerError($"Bad handler: {evt.GetType().Name} event has mismatched status '{execution.Response!.Status}', expected '{expectedStatus}'");
                     await EmitTerminalFailureAsync(execution, publisher);
                     yield break;
                 }
@@ -501,6 +503,7 @@ internal sealed class ResponseOrchestrator
             _logger.LogError(
                 "Bad handler: ended without emitting a terminal event. Handler: {HandlerType}, Request: {RequestId}",
                 _handler.GetType().FullName, execution.ResponseId);
+            RecordBadHandlerError("Bad handler: ended without emitting a terminal event");
             await EmitTerminalFailureAsync(execution, publisher);
         }
     }
@@ -569,20 +572,25 @@ internal sealed class ResponseOrchestrator
                 {
                     { "exception.type", exception.GetType().FullName },
                     { "exception.message", exception.Message },
+                    { "exception.stacktrace", exception.ToString() },
                 }));
             currentActivity.SetStatus(System.Diagnostics.ActivityStatusCode.Error, exception.Message);
 
             if (exception is ResponsesApiException apiEx)
             {
-                currentActivity.SetTag(ResponsesTracingConstants.Tags.ErrorCode,
-                    apiEx.Error.Code ?? "server_error");
-                currentActivity.SetTag(ResponsesTracingConstants.Tags.ErrorMessage,
-                    apiEx.Error.Message);
+                var errorCode = apiEx.Error.Code ?? "server_error";
+                var errorMessage = apiEx.Error.Message;
+                currentActivity.SetTag(ResponsesTracingConstants.Tags.ErrorCode, errorCode);
+                currentActivity.SetTag(ResponsesTracingConstants.Tags.ErrorMessage, errorMessage);
+                currentActivity.SetTag(ResponsesTracingConstants.Tags.OTelErrorType, errorCode);
+                currentActivity.SetTag(ResponsesTracingConstants.Tags.OTelStatusDescription, errorMessage);
             }
             else if (exception is not OperationCanceledException)
             {
                 currentActivity.SetTag(ResponsesTracingConstants.Tags.ErrorCode, "server_error");
                 currentActivity.SetTag(ResponsesTracingConstants.Tags.ErrorMessage, exception.Message);
+                currentActivity.SetTag(ResponsesTracingConstants.Tags.OTelErrorType, exception.GetType().FullName!);
+                currentActivity.SetTag(ResponsesTracingConstants.Tags.OTelStatusDescription, exception.Message);
             }
         }
 
@@ -641,6 +649,26 @@ internal sealed class ResponseOrchestrator
             // General exception or ResponsesApiException — set failed with full fidelity
             await EmitTerminalFailureAsync(execution, publisher, exception);
         }
+    }
+
+    /// <summary>
+    /// Tags the current <see cref="System.Diagnostics.Activity"/> with error
+    /// information for bad-handler or missing-terminal paths that bypass
+    /// <see cref="HandleExecutionExceptionAsync"/>.
+    /// </summary>
+    private static void RecordBadHandlerError(string errorMessage)
+    {
+        var currentActivity = System.Diagnostics.Activity.Current;
+        if (currentActivity is null)
+        {
+            return;
+        }
+
+        currentActivity.SetStatus(System.Diagnostics.ActivityStatusCode.Error, errorMessage);
+        currentActivity.SetTag(ResponsesTracingConstants.Tags.ErrorCode, "server_error");
+        currentActivity.SetTag(ResponsesTracingConstants.Tags.ErrorMessage, errorMessage);
+        currentActivity.SetTag(ResponsesTracingConstants.Tags.OTelErrorType, "server_error");
+        currentActivity.SetTag(ResponsesTracingConstants.Tags.OTelStatusDescription, errorMessage);
     }
 
     /// <summary>
