@@ -16,18 +16,27 @@ internal static class InvocationsExceptionFilter
     /// </summary>
     internal static void RecordException(Activity? activity, Exception exception)
     {
-        if (activity is null)
+        if (activity is null || exception is null)
         {
             return;
         }
 
         activity.SetStatus(ActivityStatusCode.Error, exception.Message);
 
-        // Error tags per invocation protocol spec §4.2 / §4.4
-        activity.SetTag("azure.ai.agentserver.invocations.error.code", exception.GetType().FullName);
-        activity.SetTag("azure.ai.agentserver.invocations.error.message", exception.Message);
+        // Error tags per invocation protocol spec
+        string errorCode = exception.GetType().FullName!;
+        string errorMessage = exception.Message;
+        activity.SetTag("azure.ai.agentserver.invocations.error.code", errorCode);
+        activity.SetTag("azure.ai.agentserver.invocations.error.message", errorMessage);
+
+        // OTel semantic convention attributes
+        // https://opentelemetry.io/docs/specs/semconv/registry/attributes/error/#error-type
+        activity.SetTag("error.type", errorCode);
+        // https://opentelemetry.io/docs/specs/semconv/registry/attributes/otel/#otel-status-description
+        activity.SetTag("otel.status_description", errorMessage);
 
         // Add exception event per OTel semantic conventions
+        // https://opentelemetry.io/docs/specs/semconv/exceptions/
         var tags = new ActivityTagsCollection
         {
             { "exception.type", exception.GetType().FullName! },

@@ -52,6 +52,12 @@ public class InvocationsExceptionFilterTests
             Is.EqualTo(typeof(ArgumentException).FullName));
         Assert.That(activity.GetTagItem("azure.ai.agentserver.invocations.error.message"),
             Is.EqualTo("bad arg"));
+
+        // OTel semantic convention attributes
+        Assert.That(activity.GetTagItem("error.type"),
+            Is.EqualTo(typeof(ArgumentException).FullName));
+        Assert.That(activity.GetTagItem("otel.status_description"),
+            Is.EqualTo("bad arg"));
     }
 
     [Test]
@@ -89,5 +95,17 @@ public class InvocationsExceptionFilterTests
         Assert.That(
             () => InvocationsExceptionFilter.RecordException(null, exception),
             Throws.Nothing);
+    }
+
+    [Test]
+    public void RecordException_WithNullException_DoesNotThrow()
+    {
+        using var activity = new Activity("test").Start();
+
+        Assert.That(
+            () => InvocationsExceptionFilter.RecordException(activity, null!),
+            Throws.Nothing);
+
+        Assert.That(activity.Status, Is.Not.EqualTo(ActivityStatusCode.Error));
     }
 }
