@@ -109,12 +109,6 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
     private HashSet<ModelProvider> _updated = new();
     private HashSet<ModelProvider> _regularUpdated = new();
     private HashSet<ModelProvider> _pendingSerialization = new();
-    private static readonly System.Reflection.FieldInfo? s_baseTypeField =
-        typeof(TypeProvider).GetField("_baseType", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-
-    private static readonly System.Reflection.FieldInfo? s_csharpTypeBaseTypeField =
-        typeof(CSharpType).GetField("_baseType", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-
     private void Update(InheritableSystemObjectModelProvider baseSystemType, ModelProvider model, bool deferSerialization = false)
     {
         // Add cache to avoid duplicated update of PreVisitModel and VisitType
@@ -122,13 +116,6 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
         {
             return;
         }
-
-        // Fix the cached BaseType if it was resolved before the base model was available.
-        // The framework eagerly caches the CSharpType (including BaseType) during model construction.
-        // When model processing order causes the derived model to be created before its base model,
-        // BuildBaseType() returns a stale value (e.g., the framework's default). We correct it here
-        // once the InheritableSystemObjectModelProvider is available with the correct system type.
-        FixBaseType(model);
 
         // If the model property modifiers contain 'new', we should drop it because the base type already has it.
         // This must happen before UpdateFullConstructor to preserve constructor parameter ordering.
@@ -321,47 +308,6 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
     [return: NotNullIfNotNull(nameof(s))]
     private static FormattableString? FromString(string? s) =>
         s is null ? null : s.Length == 0 ? (FormattableString)$"" : $"{s}";
-
-    /// <summary>
-    /// Corrects the cached _baseType field on the model's TypeProvider if it doesn't match
-    /// the BaseModelProvider's Type. This can happen when the framework eagerly caches the
-    /// BaseType during model construction before the inheritable system base model has been
-    /// created and registered in the TypeFactory.
-    /// </summary>
-    private static void FixBaseType(ModelProvider model)
-    {
-        if (s_baseTypeField is null || s_csharpTypeBaseTypeField is null)
-        {
-            return;
-        }
-
-        var expectedBaseType = model.BaseModelProvider?.Type;
-        if (expectedBaseType is null)
-        {
-            return;
-        }
-
-        // Fix the cached _baseType on the model's TypeProvider
-        FixBaseTypeOnProvider(model, expectedBaseType);
-
-        // Also fix serialization providers which cache their own CSharpType with the model's BaseType
-        foreach (var serialization in model.SerializationProviders)
-        {
-            FixBaseTypeOnProvider(serialization, expectedBaseType);
-        }
-    }
-
-    private static void FixBaseTypeOnProvider(TypeProvider provider, CSharpType expectedBaseType)
-    {
-        var cachedBaseType = (CSharpType?)s_baseTypeField!.GetValue(provider);
-        if (cachedBaseType is not null && !cachedBaseType.Equals(expectedBaseType))
-        {
-            s_baseTypeField.SetValue(provider, expectedBaseType);
-            // Also update the _baseType on the cached CSharpType (provider.Type)
-            // CSharpType._baseType is an init-only field, use reflection to update it
-            s_csharpTypeBaseTypeField!.SetValue(provider.Type, expectedBaseType);
-        }
-    }
 
     private static HashSet<string> EnumerateBaseModelProperties(InheritableSystemObjectModelProvider baseSystemModel)
     {
