@@ -14,6 +14,8 @@ Thank you to our developer community members who helped to make the Service Bus 
 
 ### Bugs Fixed
 
+- Fixed a bug in the `ServiceBusProcessor` where terminal errors (such as DNS resolution failures) caused a tight retry loop with no delay between attempts, potentially overwhelming logs and consuming excessive resources.  ([#54572](https://github.com/Azure/azure-sdk-for-net/issues/54572))
+
 ### Other Changes
 
 - Several areas of the AMQP transport integration have been cleaned up, modernized, and made more efficient.  _(A community contribution, courtesy of [danielmarbach](https://github.com/danielmarbach))_

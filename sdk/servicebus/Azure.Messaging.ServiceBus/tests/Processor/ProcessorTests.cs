@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -491,6 +492,108 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
 
             await mockProcessor.Object.CloseAsync(cts.Token);
             mockProcessor.Verify(p => p.StopProcessingAsync(It.Is<CancellationToken>(ct => ct == cts.Token)));
+        }
+
+        [Test]
+        public async Task ProcessorAppliesDelayAfterTerminalError()
+        {
+            // Configure retry options with a known delay so the test can assert
+            // that errors are throttled rather than arriving in a tight loop.
+            var retryDelay = TimeSpan.FromMilliseconds(200);
+            const int targetErrorCount = 4;
+
+            // Mock transport receiver that always throws a terminal error,
+            // simulating the DNS resolution failure from issue #54572.
+            var mockTransportReceiver = new Mock<TransportReceiver>();
+            mockTransportReceiver
+                .Setup(receiver => receiver.ReceiveMessagesAsync(
+                    It.IsAny<int>(),
+                    It.IsAny<TimeSpan?>(),
+                    It.IsAny<CancellationToken>()))
+                .ThrowsAsync(
+                    new SocketException((int)SocketError.HostNotFound));
+
+            var retryOptions = new ServiceBusRetryOptions
+            {
+                Delay = retryDelay,
+                MaxRetries = 3
+            };
+
+            var mockConnection = ServiceBusTestUtilities.CreateMockConnection();
+            mockConnection
+                .Setup(connection => connection.RetryOptions)
+                .Returns(retryOptions);
+
+            mockConnection
+                .Setup(connection => connection.CreateTransportReceiver(
+                    It.IsAny<string>(),
+                    It.IsAny<ServiceBusRetryPolicy>(),
+                    It.IsAny<ServiceBusReceiveMode>(),
+                    It.IsAny<uint>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<bool>(),
+                    It.IsAny<bool>(),
+                    It.IsAny<CancellationToken>()))
+                .Returns(mockTransportReceiver.Object);
+
+            var processor = new ServiceBusProcessor(
+                mockConnection.Object,
+                "test-queue",
+                false,
+                new ServiceBusProcessorOptions());
+
+            var tcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            int errorCount = 0;
+            var stopwatch = new System.Diagnostics.Stopwatch();
+
+            processor.ProcessMessageAsync += _ => Task.CompletedTask;
+            processor.ProcessErrorAsync += _ =>
+            {
+                var currentCount = Interlocked.Increment(ref errorCount);
+
+                // Start measuring on the first error so startup overhead is not
+                // included in the elapsed time.
+                if (currentCount == 1)
+                {
+                    stopwatch.Start();
+                }
+                else if (currentCount >= targetErrorCount)
+                {
+                    stopwatch.Stop();
+                    tcs.TrySetResult(true);
+                }
+                return Task.CompletedTask;
+            };
+
+            try
+            {
+                await processor.StartProcessingAsync();
+
+                // Wait for the target number of errors, with a generous timeout to
+                // prevent hanging on failure. Without the fix, this completes almost
+                // instantly (tight loop). With exponential backoff, it takes
+                // sum(2^i * delay) for i=1..N-1, roughly 2.8s for 4 errors at 200ms.
+                var completed = await Task.WhenAny(tcs.Task, Task.Delay(TimeSpan.FromSeconds(30)));
+                await processor.StopProcessingAsync();
+
+                Assert.That(completed, Is.EqualTo(tcs.Task),
+                    $"Timed out waiting for {targetErrorCount} errors — only {errorCount} were raised.");
+
+                // With a 200ms base delay and default exponential mode, the delays are:
+                // error 1→2: 2^1 × 200ms ≈ 400ms, error 2→3: 2^2 × 200ms ≈ 800ms,
+                // error 3→4: 2^3 × 200ms ≈ 1600ms, total ≈ 2800ms.
+                // Use a conservative minimum of 1.5s to avoid flakiness on loaded CI
+                // while still asserting meaningful delay (vs ~0ms without the fix).
+                var minimumExpectedDuration = TimeSpan.FromMilliseconds(1500);
+                Assert.That(stopwatch.Elapsed, Is.GreaterThanOrEqualTo(minimumExpectedDuration),
+                    $"Errors arrived too quickly ({stopwatch.Elapsed.TotalMilliseconds:F0}ms for {targetErrorCount} errors). " +
+                    $"Expected at least {minimumExpectedDuration.TotalMilliseconds:F0}ms with a {retryDelay.TotalMilliseconds}ms delay.");
+            }
+            finally
+            {
+                await processor.DisposeAsync();
+            }
         }
     }
 
