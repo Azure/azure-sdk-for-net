@@ -12,8 +12,6 @@ using Azure.ResourceManager.NotificationHubs.Models;
 namespace Azure.ResourceManager.NotificationHubs
 {
     // Backward-compat: baseline had CreateOrUpdate overloads accepting SharedAccessAuthorizationRuleCreateOrUpdateContent.
-    // Preserves old behavior: GET existing resource first to retain metadata (Tags, Location),
-    // then merge with content.Properties before calling the new CreateOrUpdate.
     public partial class NotificationHubNamespaceAuthorizationRuleCollection
     {
         /// <summary> Creates an authorization rule for a namespace. </summary>
