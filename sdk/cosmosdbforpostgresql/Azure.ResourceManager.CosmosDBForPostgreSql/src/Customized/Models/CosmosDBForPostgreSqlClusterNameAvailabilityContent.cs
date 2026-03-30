@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
     {
         /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlClusterNameAvailabilityContent"/>. </summary>
         /// <param name="name"> Cluster name to verify. </param>
-        public CosmosDBForPostgreSqlClusterNameAvailabilityContent(string name) : this(name, default)
+        public CosmosDBForPostgreSqlClusterNameAvailabilityContent(string name) : this(name, CosmosDBForPostgreSqlNameAvailabilityResourceType.ServerGroupsV2)
         {
         }
     }
