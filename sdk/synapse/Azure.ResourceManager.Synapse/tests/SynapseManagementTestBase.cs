@@ -7,6 +7,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Core.TestFramework.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Storage;
@@ -29,11 +30,29 @@ namespace Azure.ResourceManager.Synapse.Tests
         protected SynapseManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
         {
+            ConfigureSanitizers();
         }
 
         protected SynapseManagementTestBase(bool isAsync)
             : base(isAsync)
         {
+            ConfigureSanitizers();
+        }
+
+        private void ConfigureSanitizers()
+        {
+            // TODO: Remove these sanitizers after re-recording (see https://github.com/Azure/azure-sdk-for-net/issues/57594)
+            // Storage Management SDK now uses api-version=2025-08-01 but recordings use 2022-09-01.
+            UriRegexSanitizers.Add(new UriRegexSanitizer(
+                @"Microsoft\.Storage/storageAccounts/[^?]+\?api-version=(?<group>[a-z0-9-]+)")
+            {
+                GroupForReplace = "group",
+                Value = "**"
+            });
+            BodyRegexSanitizers.Add(new BodyRegexSanitizer(@",?\s*""properties""\s*:\s*\{\s*\}")
+            {
+                Value = ""
+            });
         }
 
         [SetUp]
