@@ -24,8 +24,8 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.AzurePipelines
         {
             { "TenantId", "test-tenant" },
             { "ClientId", "test-client" },
-            { "AzurePipelinesServiceConnectionId", "test-connection" },
-            { "AzurePipelinesSystemAccessToken", "test-token" },
+            { "ServiceConnectionId", "test-connection" },
+            { "SystemAccessToken", "test-token" },
         };
 
         protected override Dictionary<string, string> GetRequiredEnvVars() => new()
@@ -66,8 +66,8 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.AzurePipelines
         {
             config["MyClient:Credential:TenantId"] = tenantId;
             config["MyClient:Credential:ClientId"] = clientId;
-            config["MyClient:Credential:AzurePipelinesServiceConnectionId"] = serviceConnectionId;
-            config["MyClient:Credential:AzurePipelinesSystemAccessToken"] = systemAccessToken;
+            config["MyClient:Credential:ServiceConnectionId"] = serviceConnectionId;
+            config["MyClient:Credential:SystemAccessToken"] = systemAccessToken;
         }
 
         [Test]
@@ -103,8 +103,8 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.AzurePipelines
                 IConfiguration config = Helper.GetConfiguration();
                 // TenantId intentionally not set in config — should fall back to env var.
                 config["MyClient:Credential:ClientId"] = "test-client";
-                config["MyClient:Credential:AzurePipelinesServiceConnectionId"] = "test-connection";
-                config["MyClient:Credential:AzurePipelinesSystemAccessToken"] = "test-token";
+                config["MyClient:Credential:ServiceConnectionId"] = "test-connection";
+                config["MyClient:Credential:SystemAccessToken"] = "test-token";
 
                 var cred = GetUnderlying(CreateFromConfig(config));
 
@@ -160,8 +160,8 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.AzurePipelines
                 IConfiguration config = Helper.GetConfiguration();
                 // TenantId not set in config and env var is null.
                 config["MyClient:Credential:ClientId"] = "test-client";
-                config["MyClient:Credential:AzurePipelinesServiceConnectionId"] = "test-connection";
-                config["MyClient:Credential:AzurePipelinesSystemAccessToken"] = "test-token";
+                config["MyClient:Credential:ServiceConnectionId"] = "test-connection";
+                config["MyClient:Credential:SystemAccessToken"] = "test-token";
 
                 Assert.That(() => CreateFromConfig(config), Throws.InstanceOf<ArgumentException>());
             }
@@ -177,8 +177,8 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.AzurePipelines
                 IConfiguration config = Helper.GetConfiguration();
                 config["MyClient:Credential:TenantId"] = "test-tenant";
                 // ClientId not set.
-                config["MyClient:Credential:AzurePipelinesServiceConnectionId"] = "test-connection";
-                config["MyClient:Credential:AzurePipelinesSystemAccessToken"] = "test-token";
+                config["MyClient:Credential:ServiceConnectionId"] = "test-connection";
+                config["MyClient:Credential:SystemAccessToken"] = "test-token";
 
                 Assert.That(() => CreateFromConfig(config), Throws.InstanceOf<ArgumentException>());
             }
@@ -194,8 +194,8 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.AzurePipelines
                 IConfiguration config = Helper.GetConfiguration();
                 config["MyClient:Credential:TenantId"] = "test-tenant";
                 config["MyClient:Credential:ClientId"] = "test-client";
-                // AzurePipelinesServiceConnectionId not set.
-                config["MyClient:Credential:AzurePipelinesSystemAccessToken"] = "test-token";
+                // ServiceConnectionId not set.
+                config["MyClient:Credential:SystemAccessToken"] = "test-token";
 
                 Assert.That(() => CreateFromConfig(config), Throws.InstanceOf<ArgumentException>());
             }
@@ -211,8 +211,8 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.AzurePipelines
                 IConfiguration config = Helper.GetConfiguration();
                 config["MyClient:Credential:TenantId"] = "test-tenant";
                 config["MyClient:Credential:ClientId"] = "test-client";
-                config["MyClient:Credential:AzurePipelinesServiceConnectionId"] = "test-connection";
-                // AzurePipelinesSystemAccessToken not set.
+                config["MyClient:Credential:ServiceConnectionId"] = "test-connection";
+                // SystemAccessToken not set.
 
                 Assert.That(() => CreateFromConfig(config), Throws.InstanceOf<ArgumentException>());
             }
@@ -404,8 +404,8 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.AzurePipelines
                 IConfiguration config = Helper.GetConfiguration();
                 config["MyClient:Credential:TenantId"] = configTenant;
                 config["MyClient:Credential:ClientId"] = configClient;
-                config["MyClient:Credential:AzurePipelinesServiceConnectionId"] = configConnectionId;
-                config["MyClient:Credential:AzurePipelinesSystemAccessToken"] = "config-token";
+                config["MyClient:Credential:ServiceConnectionId"] = configConnectionId;
+                config["MyClient:Credential:SystemAccessToken"] = "config-token";
                 config["MyClient:Credential:AuthorityHost"] = configAuthority.ToString();
                 config["MyClient:Credential:DisableInstanceDiscovery"] = "true";
                 config["MyClient:Credential:AdditionallyAllowedTenants:0"] = "*";

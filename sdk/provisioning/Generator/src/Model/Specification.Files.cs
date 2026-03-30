@@ -182,7 +182,7 @@ public abstract partial class Specification : ModelBase
                     <LangVersion>12</LangVersion>
 
                     <!-- Disable warning CS1591: Missing XML comment for publicly visible type or member -->
-                    <NoWarn>CS1591</NoWarn>
+                    <NoWarn>$(NoWarn);CS1591</NoWarn>
                   </PropertyGroup>
 
                   <ItemGroup>

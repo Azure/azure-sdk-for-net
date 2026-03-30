@@ -21,7 +21,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override CustomPatchBase PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<DerivedPatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -91,7 +91,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override CustomPatchBase JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<DerivedPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

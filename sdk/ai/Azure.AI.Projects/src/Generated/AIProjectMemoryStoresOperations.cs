@@ -8,8 +8,9 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Memory
 {
     /// <summary> The AIProjectMemoryStoresOperations sub-client. </summary>
     public partial class AIProjectMemoryStoresOperations

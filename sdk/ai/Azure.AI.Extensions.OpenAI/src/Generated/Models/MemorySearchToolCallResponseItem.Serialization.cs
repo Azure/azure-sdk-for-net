@@ -82,7 +82,7 @@ namespace Azure.AI.Extensions.OpenAI
             {
                 writer.WritePropertyName("results"u8);
                 writer.WriteStartArray();
-                foreach (MemorySearchItem item in Results)
+                foreach (MemoryToolSearchItem item in Results)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -121,7 +121,7 @@ namespace Azure.AI.Extensions.OpenAI
             string responseId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             MemorySearchToolCallStatus status = default;
-            IList<MemorySearchItem> results = default;
+            IList<MemoryToolSearchItem> results = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -159,10 +159,10 @@ namespace Azure.AI.Extensions.OpenAI
                     {
                         continue;
                     }
-                    List<MemorySearchItem> array = new List<MemorySearchItem>();
+                    List<MemoryToolSearchItem> array = new List<MemoryToolSearchItem>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(MemorySearchItem.DeserializeMemorySearchItem(item, options));
+                        array.Add(MemoryToolSearchItem.DeserializeMemoryToolSearchItem(item, options));
                     }
                     results = array;
                     continue;
@@ -179,7 +179,7 @@ namespace Azure.AI.Extensions.OpenAI
                 responseId,
                 additionalBinaryDataProperties,
                 status,
-                results ?? new ChangeTrackingList<MemorySearchItem>());
+                results ?? new ChangeTrackingList<MemoryToolSearchItem>());
         }
     }
 }

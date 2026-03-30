@@ -4,9 +4,8 @@
 
 using System;
 using System.Collections.Generic;
-using OpenAI;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Memory
 {
     /// <summary> The DeleteMemoryStoreResponse. </summary>
     public partial class DeleteMemoryStoreResponse
