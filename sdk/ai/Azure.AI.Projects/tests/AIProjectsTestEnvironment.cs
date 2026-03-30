@@ -12,13 +12,14 @@ namespace Azure.AI.Projects.Tests
 {
     public class AIProjectsTestEnvironment : TestEnvironment
     {
-        public string PROJECT_ENDPOINT => GetRecordedVariable(nameof(PROJECT_ENDPOINT), options => options.IsSecret("https://sanitized-host.services.ai.azure.com/api/projects/sanitized-project"));
+        public string FOUNDRY_PROJECT_ENDPOINT => GetRecordedVariable(nameof(FOUNDRY_PROJECT_ENDPOINT), options => options.IsSecret("https://sanitized-host.services.ai.azure.com/api/projects/sanitized-project"));
         public string DATASETNAME => GetRecordedVariable("DATASET_NAME");
         public string DATASETVERSION1 => GetRecordedVariable("DATASET_VERSION_1");
         public string DATASETVERSION2 => GetRecordedVariable("DATASET_VERSION_2");
-        public string MODELDEPLOYMENTNAME => GetRecordedVariable("MODEL_DEPLOYMENT_NAME");
-        public string EMBEDDINGMODELDEPLOYMENTNAME => GetRecordedVariable("EMBEDDING_MODEL_DEPLOYMENT_NAME");
-        public string TEXTEMBEDDINGSMODELDEPLOYMENTNAME => GetRecordedVariable("TEXT_EMBEDDINGS_MODEL_DEPLOYMENT_NAME");
+        public string FOUNDRY_MODEL_NAME => GetRecordedVariable(nameof(FOUNDRY_MODEL_NAME));
+        public string MEMORY_STORE_EMBEDDING_MODEL_DEPLOYMENT_NAME => GetRecordedVariable(nameof(MEMORY_STORE_EMBEDDING_MODEL_DEPLOYMENT_NAME));
+        public string MEMORY_STORE_CHAT_MODEL_DEPLOYMENT_NAME => GetRecordedVariable(nameof(MEMORY_STORE_CHAT_MODEL_DEPLOYMENT_NAME));
+        public string EMBEDDING_MODEL_NAME => GetRecordedVariable(nameof(EMBEDDING_MODEL_NAME));
         public string MODELPUBLISHER => GetRecordedVariable("MODEL_PUBLISHER");
         public string INDEX_NAME => GetRecordedVariable(nameof(INDEX_NAME));
         public string INDEX_VERSION => GetRecordedVariable(nameof(INDEX_VERSION));
@@ -60,7 +61,7 @@ namespace Azure.AI.Projects.Tests
         public string APPLICATIONINSIGHTS_CONNECTION_STRING => GetRecordedVariable(nameof(APPLICATIONINSIGHTS_CONNECTION_STRING), options => options.IsSecret("Sanitized"));
         public string AGENT_DOCKER_IMAGE => GetRecordedOptionalVariable(nameof(AGENT_DOCKER_IMAGE));
         public string APPLICATIONINSIGHTS_RESOURCE_ID => GetRecordedVariable(nameof(APPLICATIONINSIGHTS_RESOURCE_ID));
-        public string AGENT_ID => GetRecordedVariable(nameof(AGENT_ID));
+        public string FOUNDRY_AGENT_ID => GetRecordedVariable(nameof(FOUNDRY_AGENT_ID));
         public string TRACE_LOOKBACK_HOURS => GetRecordedVariable(nameof(TRACE_LOOKBACK_HOURS));
         public string STORAGE_QUEUE_URI => GetRecordedVariable(nameof(STORAGE_QUEUE_URI));
         public override Dictionary<string, string> ParseEnvironmentFile() => new()

@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="identity"> The identity of the cache rule. </param>
         /// <param name="credentialSetResourceId"> The ARM resource ID of the credential store which is associated with the cache rule. </param>
         /// <param name="sourceRepository"> Source repository pulled from upstream. </param>
         /// <param name="targetRepository">
@@ -70,8 +71,9 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="createdOn"> The creation date of the cache rule. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerRegistryCacheRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier credentialSetResourceId, string sourceRepository, string targetRepository, DateTimeOffset? createdOn, ContainerRegistryProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ContainerRegistryCacheRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedServiceIdentity identity, ResourceIdentifier credentialSetResourceId, string sourceRepository, string targetRepository, DateTimeOffset? createdOn, ContainerRegistryProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
+            Identity = identity;
             CredentialSetResourceId = credentialSetResourceId;
             SourceRepository = sourceRepository;
             TargetRepository = targetRepository;
@@ -80,6 +82,9 @@ namespace Azure.ResourceManager.ContainerRegistry
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> The identity of the cache rule. </summary>
+        [WirePath("identity")]
+        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The ARM resource ID of the credential store which is associated with the cache rule. </summary>
         [WirePath("properties.credentialSetResourceId")]
         public ResourceIdentifier CredentialSetResourceId { get; set; }

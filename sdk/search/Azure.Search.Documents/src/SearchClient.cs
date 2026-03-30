@@ -56,6 +56,26 @@ namespace Azure.Search.Documents
         internal ObjectSerializer Serializer { get; private set; }
 
         #region ctors
+
+        /// <summary> Initializes a new instance of SearchClient. </summary>
+        /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="indexName"> The name of the index. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        internal SearchClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, string indexName, SearchClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNullOrEmpty(indexName, nameof(indexName));
+
+            options ??= new SearchClientOptions();
+
+            _endpoint = endpoint;
+            _indexName = indexName;
+            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
+            _apiVersion = options.Version.ToVersionString();
+            ClientDiagnostics = new ClientDiagnostics(options, true);
+        }
+
         /// <summary>
         /// Initializes a new instance of the SearchClient class for
         /// mocking.
@@ -177,7 +197,6 @@ namespace Azure.Search.Documents
 
             options ??= new SearchClientOptions();
             _endpoint = endpoint;
-            _keyCredential = credential;
             _indexName = indexName;
             Serializer = options.Serializer;
             _apiVersion = options.Version.ToVersionString();
@@ -229,7 +248,6 @@ namespace Azure.Search.Documents
             options ??= new SearchClientOptions();
             _endpoint = endpoint;
             _indexName = indexName;
-            _tokenCredential = tokenCredential;
             Pipeline = options.Build(tokenCredential);
             Serializer = options.Serializer;
             _apiVersion = options.Version.ToVersionString();
@@ -1728,6 +1746,46 @@ namespace Azure.Search.Documents
         }
         #endregion Suggest
 
+        #region SuggestPost
+        internal virtual Response<SuggestDocumentsResult> SuggestPost(string searchText, string suggesterName, string filter = default, bool? useFuzzyMatching = default, string highlightPostTag = default, string highlightPreTag = default, double? minimumCoverage = default, IEnumerable<string> orderBy = default, IEnumerable<string> searchFields = default, IEnumerable<string> @select = default, int? top = default, CancellationToken cancellationToken = default)
+        {
+            SuggestOptions spreadModel = new SuggestOptions(
+                filter,
+                useFuzzyMatching,
+                highlightPostTag,
+                highlightPreTag,
+                minimumCoverage,
+                orderBy.CommaJoin(),
+                searchText,
+                searchFields.CommaJoin(),
+                @select.CommaJoin(),
+                suggesterName,
+                top,
+                default);
+            Response result = SuggestPost(spreadModel, cancellationToken.ToRequestContext());
+            return Response.FromValue((SuggestDocumentsResult)result, result);
+        }
+
+        internal virtual async Task<Response<SuggestDocumentsResult>> SuggestPostAsync(string searchText, string suggesterName, string filter = default, bool? useFuzzyMatching = default, string highlightPostTag = default, string highlightPreTag = default, double? minimumCoverage = default, IEnumerable<string> orderBy = default, IEnumerable<string> searchFields = default, IEnumerable<string> @select = default, int? top = default, CancellationToken cancellationToken = default)
+        {
+            SuggestOptions spreadModel = new SuggestOptions(
+                filter,
+                useFuzzyMatching,
+                highlightPostTag,
+                highlightPreTag,
+                minimumCoverage,
+                orderBy.CommaJoin(),
+                searchText,
+                searchFields.CommaJoin(),
+                @select.CommaJoin(),
+                suggesterName,
+                top,
+                default);
+            Response result = await SuggestPostAsync(spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((SuggestDocumentsResult)result, result);
+        }
+        #endregion SuggestPost
+
         #region Autocomplete
         /// <summary>
         /// Suggests query terms based on input text and matching documents in
@@ -1825,6 +1883,44 @@ namespace Azure.Search.Documents
         }
 
         #endregion Autocomplete
+
+        #region AutocompletePost
+        internal virtual Response<AutocompleteResults> AutocompletePost(string searchText, string suggesterName, AutocompleteMode? autocompleteMode = default, string filter = default, bool? useFuzzyMatching = default, string highlightPostTag = default, string highlightPreTag = default, double? minimumCoverage = default, IEnumerable<string> searchFields = default, int? top = default, CancellationToken cancellationToken = default)
+        {
+            AutocompleteOptions spreadModel = new AutocompleteOptions(
+                searchText,
+                autocompleteMode,
+                filter,
+                useFuzzyMatching,
+                highlightPostTag,
+                highlightPreTag,
+                minimumCoverage,
+                searchFields.CommaJoin(),
+                suggesterName,
+                top,
+                default);
+            Response result = AutocompletePost(spreadModel, cancellationToken.ToRequestContext());
+            return Response.FromValue((AutocompleteResults)result, result);
+        }
+
+        internal virtual async Task<Response<AutocompleteResults>> AutocompletePostAsync(string searchText, string suggesterName, AutocompleteMode? autocompleteMode = default, string filter = default, bool? useFuzzyMatching = default, string highlightPostTag = default, string highlightPreTag = default, double? minimumCoverage = default, IEnumerable<string> searchFields = default, int? top = default, CancellationToken cancellationToken = default)
+        {
+            AutocompleteOptions spreadModel = new AutocompleteOptions(
+                searchText,
+                autocompleteMode,
+                filter,
+                useFuzzyMatching,
+                highlightPostTag,
+                highlightPreTag,
+                minimumCoverage,
+                searchFields.CommaJoin(),
+                suggesterName,
+                top,
+                default);
+            Response result = await AutocompletePostAsync(spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((AutocompleteResults)result, result);
+        }
+        #endregion AutocompletePost
 
         #region IndexDocuments
         /// <summary>

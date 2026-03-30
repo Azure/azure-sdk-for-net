@@ -9,14 +9,69 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
+    /// <summary>
+    /// Base class for feature request
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="BackupGoalFeatureSupportContent"/> and <see cref="VmResourceFeatureSupportContent"/>.
+    /// </summary>
     [PersistableModelProxy(typeof(UnknownFeatureSupportRequest))]
-    public partial class FeatureSupportContent : IUtf8JsonSerializable, IJsonModel<FeatureSupportContent>
+    public abstract partial class FeatureSupportContent : IJsonModel<FeatureSupportContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FeatureSupportContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual FeatureSupportContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<FeatureSupportContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeFeatureSupportContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(FeatureSupportContent)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<FeatureSupportContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(FeatureSupportContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<FeatureSupportContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        FeatureSupportContent IPersistableModel<FeatureSupportContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<FeatureSupportContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="featureSupportContent"> The <see cref="FeatureSupportContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(FeatureSupportContent featureSupportContent)
+        {
+            if (featureSupportContent == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(featureSupportContent, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<FeatureSupportContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,23 +83,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FeatureSupportContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FeatureSupportContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(FeatureSupportContent)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("featureType"u8);
             writer.WriteStringValue(FeatureType);
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -53,66 +107,42 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
         }
 
-        FeatureSupportContent IJsonModel<FeatureSupportContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        FeatureSupportContent IJsonModel<FeatureSupportContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual FeatureSupportContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FeatureSupportContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FeatureSupportContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(FeatureSupportContent)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeFeatureSupportContent(document.RootElement, options);
         }
 
-        internal static FeatureSupportContent DeserializeFeatureSupportContent(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static FeatureSupportContent DeserializeFeatureSupportContent(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            if (element.TryGetProperty("featureType", out JsonElement discriminator))
+            if (element.TryGetProperty("featureType"u8, out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureBackupGoals": return BackupGoalFeatureSupportContent.DeserializeBackupGoalFeatureSupportContent(element, options);
-                    case "AzureVMResourceBackup": return VmResourceFeatureSupportContent.DeserializeVmResourceFeatureSupportContent(element, options);
+                    case "AzureBackupGoals":
+                        return BackupGoalFeatureSupportContent.DeserializeBackupGoalFeatureSupportContent(element, options);
+                    case "AzureVMResourceBackup":
+                        return VmResourceFeatureSupportContent.DeserializeVmResourceFeatureSupportContent(element, options);
                 }
             }
             return UnknownFeatureSupportRequest.DeserializeUnknownFeatureSupportRequest(element, options);
         }
-
-        BinaryData IPersistableModel<FeatureSupportContent>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<FeatureSupportContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(FeatureSupportContent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        FeatureSupportContent IPersistableModel<FeatureSupportContent>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<FeatureSupportContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeFeatureSupportContent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(FeatureSupportContent)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<FeatureSupportContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

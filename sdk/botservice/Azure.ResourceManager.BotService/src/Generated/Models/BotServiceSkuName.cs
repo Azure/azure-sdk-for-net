@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.BotService;
 
 namespace Azure.ResourceManager.BotService.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.BotService.Models
     public readonly partial struct BotServiceSkuName : IEquatable<BotServiceSkuName>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="BotServiceSkuName"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public BotServiceSkuName(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string F0Value = "F0";
         private const string S1Value = "S1";
 
-        /// <summary> F0. </summary>
+        /// <summary> Initializes a new instance of <see cref="BotServiceSkuName"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public BotServiceSkuName(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the F0. </summary>
         public static BotServiceSkuName F0 { get; } = new BotServiceSkuName(F0Value);
-        /// <summary> S1. </summary>
+
+        /// <summary> Gets the S1. </summary>
         public static BotServiceSkuName S1 { get; } = new BotServiceSkuName(S1Value);
+
         /// <summary> Determines if two <see cref="BotServiceSkuName"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BotServiceSkuName left, BotServiceSkuName right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BotServiceSkuName"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BotServiceSkuName left, BotServiceSkuName right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BotServiceSkuName"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BotServiceSkuName"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BotServiceSkuName(string value) => new BotServiceSkuName(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BotServiceSkuName"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BotServiceSkuName?(string value) => value == null ? null : new BotServiceSkuName(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BotServiceSkuName other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BotServiceSkuName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

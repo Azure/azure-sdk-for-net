@@ -345,36 +345,36 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// List all guest configuration assignments for a resource group.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableGuestConfigurationResourceGroupResource.RGListAsync(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableGuestConfigurationResourceGroupResource.GetGuestConfigurationAssignmentsAsync(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="GuestConfigurationVmAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<GuestConfigurationVmAssignmentResource> RGListAsync(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="GuestConfigurationAssignmentData"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<GuestConfigurationAssignmentData> GetGuestConfigurationAssignmentsAsync(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableGuestConfigurationResourceGroupResource(resourceGroupResource).RGListAsync(cancellationToken);
+            return GetMockableGuestConfigurationResourceGroupResource(resourceGroupResource).GetGuestConfigurationAssignmentsAsync(cancellationToken);
         }
 
         /// <summary>
         /// List all guest configuration assignments for a resource group.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableGuestConfigurationResourceGroupResource.RGList(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableGuestConfigurationResourceGroupResource.GetGuestConfigurationAssignments(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="GuestConfigurationVmAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<GuestConfigurationVmAssignmentResource> RGList(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="GuestConfigurationAssignmentData"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<GuestConfigurationAssignmentData> GetGuestConfigurationAssignments(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableGuestConfigurationResourceGroupResource(resourceGroupResource).RGList(cancellationToken);
+            return GetMockableGuestConfigurationResourceGroupResource(resourceGroupResource).GetGuestConfigurationAssignments(cancellationToken);
         }
 
         /// <summary>

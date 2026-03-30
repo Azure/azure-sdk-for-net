@@ -67,9 +67,7 @@ namespace Azure.ResourceManager.Confluent
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(scEnvironmentRecordData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(scEnvironmentRecordData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SCEnvironmentRecordData"/> from. </param>

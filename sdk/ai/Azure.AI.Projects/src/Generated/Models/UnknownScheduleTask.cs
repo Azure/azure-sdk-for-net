@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Projects
 {
-    internal partial class UnknownScheduleTask : ScheduleTask
+    internal partial class UnknownScheduleTask : ProjectsScheduleTask
     {
         /// <summary> Initializes a new instance of <see cref="UnknownScheduleTask"/>. </summary>
         /// <param name="type"> Type of the task. </param>

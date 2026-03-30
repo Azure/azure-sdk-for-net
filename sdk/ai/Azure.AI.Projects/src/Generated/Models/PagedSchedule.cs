@@ -17,7 +17,7 @@ namespace Azure.Core
 
         /// <summary> Initializes a new instance of <see cref="PagedSchedule"/>. </summary>
         /// <param name="value"> The Schedule items on this page. </param>
-        internal PagedSchedule(IEnumerable<Schedule> value)
+        internal PagedSchedule(IEnumerable<ProjectsSchedule> value)
         {
             Value = value.ToList();
         }
@@ -26,7 +26,7 @@ namespace Azure.Core
         /// <param name="value"> The Schedule items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PagedSchedule(IList<Schedule> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PagedSchedule(IList<ProjectsSchedule> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -34,7 +34,7 @@ namespace Azure.Core
         }
 
         /// <summary> The Schedule items on this page. </summary>
-        public IList<Schedule> Value { get; }
+        public IList<ProjectsSchedule> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }

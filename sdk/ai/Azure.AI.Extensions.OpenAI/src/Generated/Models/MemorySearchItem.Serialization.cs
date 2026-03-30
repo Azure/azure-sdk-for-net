@@ -119,13 +119,13 @@ namespace Azure.AI.Extensions.OpenAI
             {
                 return null;
             }
-            MemoryItem memoryItem = default;
+            MemoryOutputItem memoryItem = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("memory_item"u8))
                 {
-                    memoryItem = MemoryItem.DeserializeMemoryItem(prop.Value, options);
+                    memoryItem = MemoryOutputItem.DeserializeMemoryOutputItem(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

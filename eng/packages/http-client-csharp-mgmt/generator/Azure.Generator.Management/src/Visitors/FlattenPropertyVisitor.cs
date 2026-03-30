@@ -419,15 +419,15 @@ namespace Azure.Generator.Management.Visitors
                         continue;
                     }
 
-                    // skip discriminator property
-                    if (internalProperty.IsDiscriminator)
+                    // skip if internal property type is base abstract discriminator model
+                    if (modelProvider.DeclarationModifiers.HasFlag(TypeSignatureModifiers.Abstract))
                     {
-                        ManagementClientGenerator.Instance.Emitter.ReportDiagnostic("general-warning", "Discriminator property should not be flattened.");
                         continue;
                     }
 
-                    // skip if internal property type is base abstract discriminator model
-                    if (modelProvider.DeclarationModifiers.HasFlag(TypeSignatureModifiers.Abstract))
+                    // skip if internal property type is a discriminator base model (has a discriminator property),
+                    // because flattening would make the base type internal, breaking the polymorphic hierarchy
+                    if (innerProperties.Any(p => p.IsDiscriminator))
                     {
                         continue;
                     }

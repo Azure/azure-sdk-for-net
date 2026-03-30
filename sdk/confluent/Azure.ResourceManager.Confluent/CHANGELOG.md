@@ -1,6 +1,16 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
+## 1.3.0-beta.2 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.3.0-beta.1 (2026-03-18)
 
 ### Features Added
 
@@ -12,10 +22,6 @@
 ### Breaking Changes
 
 - Deprecated flat organization-level methods (`GetEnvironments`, `GetClusters`, `GetSchemaRegistryClusters`, `CreateApiKey`, `GetCluster`, `GetSchemaRegistryCluster`) in favor of the new resource hierarchy pattern (organization → environment → cluster).
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.2.1 (2025-03-11)
 

@@ -8,13 +8,13 @@ To enable your Agent to use Bing search API, we need to use `BingGroundingAgentT
 
 1. First, we need to read the environment variables, which will be used in the next steps.
 ```C# Snippet:Sample_CreateAgentClient_BingGrounding
-var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
 var connectionName = System.Environment.GetEnvironmentVariable("BING_CONNECTION_NAME");
 AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 ```
 
-2. `BingGroundingAgentTool` requires an ID of Bing connection. In this example we will use the name of a Bing project connection as found in the "Connections" tab in your Microsoft Foundry project to get connection ID from `AIProjectConnection`. We will use created tool in the constructor of a `PromptAgentDefinition` object.
+2. `BingGroundingAgentTool` requires an ID of Bing connection. In this example we will use the name of a Bing project connection as found in the "Connections" tab in your Microsoft Foundry project to get connection ID from `AIProjectConnection`. We will use created tool in the constructor of a `DeclarativeAgentDefinition` object.
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateAgent_BingGrounding_Sync
@@ -23,12 +23,12 @@ BingGroundingTool bingGroundingAgentTool = new(new BingGroundingSearchToolOption
     searchConfigurations: [new BingGroundingSearchConfiguration(projectConnectionId: bingConnectionName.Id)]
     )
 );
-PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a helpful agent.",
     Tools = { bingGroundingAgentTool, }
 };
-AgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
+ProjectsAgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
     agentName: "myAgent",
     options: new(agentDefinition));
 ```
@@ -40,12 +40,12 @@ BingGroundingTool bingGroundingAgentTool = new(new BingGroundingSearchToolOption
     searchConfigurations: [new BingGroundingSearchConfiguration(projectConnectionId: bingConnectionName.Id)]
     )
 );
-PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a helpful agent.",
     Tools = { bingGroundingAgentTool, }
 };
-AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+ProjectsAgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
     agentName: "myAgent",
     options: new(agentDefinition));
 ```
