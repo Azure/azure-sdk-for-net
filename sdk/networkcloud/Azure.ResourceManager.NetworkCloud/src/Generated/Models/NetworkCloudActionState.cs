@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="correlationId"> The correlation ID for the original action request. Omitted if there is no related correlation ID. </param>
         /// <param name="endOn"> The timestamp of when the action reached its final, terminal state. Uses ISO 8601 format. </param>
         /// <param name="message"> The description providing additional context for the status value. May be empty or contain guidance in the case of a failure. </param>
-        /// <param name="startOn"> The timestamp of when the action began, in ISO 8601 format. </param>
+        /// <param name="startTime"> The timestamp of when the action began, in ISO 8601 format. </param>
         /// <param name="status"> The status of the action. </param>
         /// <param name="stepStates"> The ordered list of the individual steps which make up the action. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkCloudActionState(string actionType, string correlationId, DateTimeOffset? endOn, string message, DateTimeOffset? startOn, NetworkCloudActionStateStatus? status, IReadOnlyList<NetworkCloudStepState> stepStates, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetworkCloudActionState(string actionType, string correlationId, DateTimeOffset? endOn, string message, string startTime, NetworkCloudActionStateStatus? status, IReadOnlyList<NetworkCloudStepState> stepStates, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ActionType = actionType;
             CorrelationId = correlationId;
             EndOn = endOn;
             Message = message;
-            StartOn = startOn;
+            StartTime = startTime;
             Status = status;
             StepStates = stepStates;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public string Message { get; }
 
         /// <summary> The timestamp of when the action began, in ISO 8601 format. </summary>
-        public DateTimeOffset? StartOn { get; }
+        public string StartTime { get; }
 
         /// <summary> The status of the action. </summary>
         public NetworkCloudActionStateStatus? Status { get; }

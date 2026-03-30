@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     List<SecretRotationStatus> array = new List<SecretRotationStatus>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(NetworkCloud.Models.SecretRotationStatus.DeserializeSecretRotationStatus(item, options));
+                        array.Add(Models.SecretRotationStatus.DeserializeSecretRotationStatus(item, options));
                     }
                     secretRotationStatus = array;
                     continue;

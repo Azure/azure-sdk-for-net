@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            if (options.Format != "W" && Optional.IsDefined(StartTime))
             {
                 writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                writer.WriteStringValue(StartTime);
             }
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             string correlationId = default;
             DateTimeOffset? endOn = default;
             string message = default;
-            DateTimeOffset? startOn = default;
+            string startTime = default;
             NetworkCloudActionStateStatus? status = default;
             IReadOnlyList<NetworkCloudStepState> stepStates = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -192,11 +192,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
                 if (prop.NameEquals("startTime"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startTime = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("status"u8))
@@ -232,7 +228,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 correlationId,
                 endOn,
                 message,
-                startOn,
+                startTime,
                 status,
                 stepStates ?? new ChangeTrackingList<NetworkCloudStepState>(),
                 additionalBinaryDataProperties);

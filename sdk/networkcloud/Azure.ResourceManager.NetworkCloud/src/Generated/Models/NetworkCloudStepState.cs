@@ -38,8 +38,14 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> The timestamp for when processing of the step reached its terminal state, in ISO 8601 format. </summary>
+        public DateTimeOffset? EndOn { get; }
+
         /// <summary> The message providing additional context for the status value. May be empty, or contain diagnostic information in the case of a failure. </summary>
         public string Message { get; }
+
+        /// <summary> The timestamp for when processing of the step began, in ISO 8601 format. </summary>
+        public DateTimeOffset? StartOn { get; }
 
         /// <summary> The status of the step. A value of Completed or Failed indicates a terminal state for the step. </summary>
         public NetworkCloudStepStateStatus? Status { get; }

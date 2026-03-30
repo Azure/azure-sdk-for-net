@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> Initializes a new instance of <see cref="L2ServiceLoadBalancerConfiguration"/>. </summary>
         public L2ServiceLoadBalancerConfiguration()
         {
-            IpAddressPools = new ChangeTrackingList<IPAddressPool>();
+            L2ServiceLoadBalancerIPAddressPools = new ChangeTrackingList<IPAddressPool>();
         }
 
         /// <summary> Initializes a new instance of <see cref="L2ServiceLoadBalancerConfiguration"/>. </summary>
-        /// <param name="ipAddressPools"> The list of pools of IP addresses that can be allocated to load balancer services. </param>
+        /// <param name="l2ServiceLoadBalancerIPAddressPools"> The list of pools of IP addresses that can be allocated to load balancer services. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal L2ServiceLoadBalancerConfiguration(IList<IPAddressPool> ipAddressPools, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal L2ServiceLoadBalancerConfiguration(IList<IPAddressPool> l2ServiceLoadBalancerIPAddressPools, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            IpAddressPools = ipAddressPools;
+            L2ServiceLoadBalancerIPAddressPools = l2ServiceLoadBalancerIPAddressPools;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The list of pools of IP addresses that can be allocated to load balancer services. </summary>
-        public IList<IPAddressPool> IpAddressPools { get; }
+        public IList<IPAddressPool> L2ServiceLoadBalancerIPAddressPools { get; }
     }
 }

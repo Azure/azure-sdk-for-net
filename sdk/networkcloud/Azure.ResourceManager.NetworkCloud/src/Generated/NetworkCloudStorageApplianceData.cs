@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -130,6 +131,15 @@ namespace Azure.ResourceManager.NetworkCloud
             }
         }
 
+        /// <summary> The CA certificate information issued by the platform for connecting to TLS interfaces for the storage appliance. Callers add this certificate to their trusted CA store to allow secure communication with the storage appliance. </summary>
+        public NetworkCloudCertificateInfo CACertificate
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CACertificate;
+            }
+        }
+
         /// <summary> The total capacity of the storage appliance. Measured in GiB. </summary>
         public long? Capacity
         {
@@ -185,6 +195,15 @@ namespace Azure.ResourceManager.NetworkCloud
                     Properties = new StorageApplianceProperties();
                 }
                 return Properties.ExpansionShelves;
+            }
+        }
+
+        /// <summary> The endpoint for the management interface of the storage appliance. </summary>
+        public IPAddress ManagementIPv4Address
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ManagementIPv4Address;
             }
         }
 

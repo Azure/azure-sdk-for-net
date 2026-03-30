@@ -48,5 +48,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> The indicator to specify if the load balancer peers with the network fabric. </summary>
         public FabricPeeringEnabled? FabricPeeringEnabled { get; set; }
+
+        /// <summary> The list of pools of IP addresses that can be allocated to load balancer services. </summary>
+        public IList<IPAddressPool> IPAddressPools { get; }
     }
 }

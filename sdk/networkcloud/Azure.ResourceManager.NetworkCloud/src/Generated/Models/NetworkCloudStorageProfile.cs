@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> The disk to use with this virtual machine. </summary>
+        public NetworkCloudOSDisk OSDisk { get; set; }
+
         /// <summary> The resource IDs of volumes that are requested to be attached to the virtual machine. </summary>
         public IList<ResourceIdentifier> VolumeAttachments { get; }
     }

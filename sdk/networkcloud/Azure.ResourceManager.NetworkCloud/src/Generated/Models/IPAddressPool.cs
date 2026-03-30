@@ -54,5 +54,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> The name used to identify this IP address pool for association with a BGP advertisement. </summary>
         public string Name { get; set; }
+
+        /// <summary> The indicator to prevent the use of IP addresses ending with .0 and .255 for this pool. Enabling this option will only use IP addresses between .1 and .254 inclusive. </summary>
+        public BfdEnabled? OnlyUseHostIPs { get; set; }
     }
 }

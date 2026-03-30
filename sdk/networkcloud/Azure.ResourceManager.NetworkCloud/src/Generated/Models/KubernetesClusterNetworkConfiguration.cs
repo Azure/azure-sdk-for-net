@@ -69,6 +69,9 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> The resource ID of the Layer 3 network that is used for creation of the Container Networking Interface network. </summary>
         public ResourceIdentifier CniNetworkId { get; set; }
 
+        /// <summary> The IP address assigned to the Kubernetes DNS service. It must be within the Kubernetes service address range specified in service CIDR. </summary>
+        public IPAddress DnsServiceIP { get; set; }
+
         /// <summary> The configuration of the Layer 2 service load balancer for this Kubernetes cluster. A maximum of one service load balancer may be specified, either Layer 2 or BGP. </summary>
         internal L2ServiceLoadBalancerConfiguration L2ServiceLoadBalancerConfiguration { get; set; }
 
@@ -79,7 +82,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public IList<string> ServiceCidrs { get; }
 
         /// <summary> The list of pools of IP addresses that can be allocated to load balancer services. </summary>
-        public IList<IPAddressPool> L2ServiceLoadBalancerIpAddressPools
+        public IList<IPAddressPool> L2ServiceLoadBalancerIPAddressPools
         {
             get
             {
@@ -87,7 +90,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 {
                     L2ServiceLoadBalancerConfiguration = new L2ServiceLoadBalancerConfiguration();
                 }
-                return L2ServiceLoadBalancerConfiguration.IpAddressPools;
+                return L2ServiceLoadBalancerConfiguration.L2ServiceLoadBalancerIPAddressPools;
             }
         }
     }

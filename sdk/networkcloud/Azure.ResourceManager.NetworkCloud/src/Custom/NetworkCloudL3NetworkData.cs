@@ -3,60 +3,18 @@
 
 #nullable disable
 
-using System.ComponentModel;
 using Azure.Core;
 using Azure.ResourceManager.NetworkCloud.Models;
 using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
-    // Backward compat: The old Swagger/AutoRest API used a constructor with the local
-    // ExtendedLocation type and exposed IPAllocationType, IPv4ConnectedPrefix, and
-    // IPv6ConnectedPrefix as flat properties. The new TypeSpec-generated code uses the ARM
-    // common ExtendedLocation type and nests these properties under Properties. This file
-    // suppresses the generated constructor and preserves the old flat API surface.
+    // Customization: Suppresses the generated constructor (which uses ARM common ExtendedLocation)
+    // and provides a custom constructor accepting the local ExtendedLocation type.
+    // Also exposes a local ExtendedLocation property for backward compatibility.
     [CodeGenSuppress("NetworkCloudL3NetworkData", typeof(AzureLocation), typeof(ResourceIdentifier), typeof(long), typeof(ExtendedLocation))]
     public partial class NetworkCloudL3NetworkData
     {
-        /// <summary> The type of the IP address allocation. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public IPAllocationType? IPAllocationType
-        {
-            get => Properties is null ? default : Properties.IPAllocationType;
-            set
-            {
-                if (Properties is null)
-                    Properties = new Models.L3NetworkProperties();
-                Properties.IPAllocationType = value;
-            }
-        }
-
-        /// <summary> The IPV4 prefix (CIDR) assigned to this L3 network. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public string IPv4ConnectedPrefix
-        {
-            get => Properties?.IPv4ConnectedPrefix;
-            set
-            {
-                if (Properties is null)
-                    Properties = new Models.L3NetworkProperties();
-                Properties.IPv4ConnectedPrefix = value;
-            }
-        }
-
-        /// <summary> The IPV6 prefix (CIDR) assigned to this L3 network. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public string IPv6ConnectedPrefix
-        {
-            get => Properties?.IPv6ConnectedPrefix;
-            set
-            {
-                if (Properties is null)
-                    Properties = new Models.L3NetworkProperties();
-                Properties.IPv6ConnectedPrefix = value;
-            }
-        }
-
         /// <summary> Initializes a new instance of <see cref="NetworkCloudL3NetworkData"/>. </summary>
         public NetworkCloudL3NetworkData(AzureLocation location, ExtendedLocation extendedLocation, ResourceIdentifier l3IsolationDomainId, long vlan)
             : base(location)

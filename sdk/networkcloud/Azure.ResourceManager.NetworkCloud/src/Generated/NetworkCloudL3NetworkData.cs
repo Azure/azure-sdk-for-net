@@ -96,6 +96,57 @@ namespace Azure.ResourceManager.NetworkCloud
             }
         }
 
+        /// <summary> The type of the IP address allocation, defaulted to "DualStack". </summary>
+        public IPAllocationType? IPAllocationType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IPAllocationType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new L3NetworkProperties();
+                }
+                Properties.IPAllocationType = value.Value;
+            }
+        }
+
+        /// <summary> The IPV4 prefix (CIDR) assigned to this L3 network. Required when the IP allocation type is IPV4 or DualStack. </summary>
+        public string IPv4ConnectedPrefix
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IPv4ConnectedPrefix;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new L3NetworkProperties();
+                }
+                Properties.IPv4ConnectedPrefix = value;
+            }
+        }
+
+        /// <summary> The IPV6 prefix (CIDR) assigned to this L3 network. Required when the IP allocation type is IPV6 or DualStack. </summary>
+        public string IPv6ConnectedPrefix
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IPv6ConnectedPrefix;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new L3NetworkProperties();
+                }
+                Properties.IPv6ConnectedPrefix = value;
+            }
+        }
+
         /// <summary> The resource ID of the Network Fabric l3IsolationDomain. </summary>
         public ResourceIdentifier L3IsolationDomainId
         {

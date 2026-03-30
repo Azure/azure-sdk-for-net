@@ -74,11 +74,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 throw new FormatException($"The model {nameof(L2ServiceLoadBalancerConfiguration)} does not support writing '{format}' format.");
             }
-            if (Optional.IsCollectionDefined(IpAddressPools))
+            if (Optional.IsCollectionDefined(L2ServiceLoadBalancerIPAddressPools))
             {
                 writer.WritePropertyName("ipAddressPools"u8);
                 writer.WriteStartArray();
-                foreach (IPAddressPool item in IpAddressPools)
+                foreach (IPAddressPool item in L2ServiceLoadBalancerIPAddressPools)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            IList<IPAddressPool> ipAddressPools = default;
+            IList<IPAddressPool> l2ServiceLoadBalancerIPAddressPools = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     {
                         array.Add(IPAddressPool.DeserializeIPAddressPool(item, options));
                     }
-                    ipAddressPools = array;
+                    l2ServiceLoadBalancerIPAddressPools = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new L2ServiceLoadBalancerConfiguration(ipAddressPools ?? new ChangeTrackingList<IPAddressPool>(), additionalBinaryDataProperties);
+            return new L2ServiceLoadBalancerConfiguration(l2ServiceLoadBalancerIPAddressPools ?? new ChangeTrackingList<IPAddressPool>(), additionalBinaryDataProperties);
         }
     }
 }

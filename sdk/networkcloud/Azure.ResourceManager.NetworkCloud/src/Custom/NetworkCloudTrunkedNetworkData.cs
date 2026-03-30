@@ -4,7 +4,6 @@
 #nullable disable
 
 using System.Collections.Generic;
-using System.ComponentModel;
 using Azure.Core;
 using Azure.ResourceManager.NetworkCloud.Models;
 using Microsoft.TypeSpec.Generator.Customizations;

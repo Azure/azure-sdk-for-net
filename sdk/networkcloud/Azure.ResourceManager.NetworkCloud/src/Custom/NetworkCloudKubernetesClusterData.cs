@@ -7,14 +7,16 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using Azure.Core;
 using Azure.ResourceManager.NetworkCloud.Models;
-using Microsoft.TypeSpec.Generator.Customizations;
 using CodeGenSuppressAttribute = Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppressAttribute;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
-    // CodeGenSuppress for AadAdminGroupObjectIds: old API had a setter; new generated code is get-only.
-    // After regeneration, only the custom property below will remain.
-    [CodeGenSuppress("AadAdminGroupObjectIds")]
+    // Customization: Suppresses the generated constructor (which uses ARM common ExtendedLocation)
+    // and provides a custom constructor accepting the local ExtendedLocation type.
+    // Also exposes a local ExtendedLocation property for backward compatibility.
+    // AadAdminGroupObjectIds provides a flat getter delegating to
+    // Properties.AadAdminGroupObjectIds, and a hidden setter that maps to
+    // Properties.AadConfiguration.AdminGroupObjectIds.
     [CodeGenSuppress("NetworkCloudKubernetesClusterData", typeof(AzureLocation), typeof(ControlPlaneNodeConfiguration), typeof(IEnumerable<InitialAgentPoolConfiguration>), typeof(string), typeof(KubernetesClusterNetworkConfiguration), typeof(ExtendedLocation))]
     public partial class NetworkCloudKubernetesClusterData
     {
@@ -31,9 +33,9 @@ namespace Azure.ResourceManager.NetworkCloud
             ExtendedLocation = extendedLocation;
         }
 
-        // Backward compat: old API had a setter for AadAdminGroupObjectIds.
+        // Flat accessor: getter delegates to Properties.AadAdminGroupObjectIds,
+        // setter maps to Properties.AadConfiguration.AdminGroupObjectIds.
         /// <summary> The list of Azure Active Directory group object IDs. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public IList<string> AadAdminGroupObjectIds
         {
             get
@@ -44,6 +46,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
                 return Properties.AadAdminGroupObjectIds;
             }
+            [EditorBrowsable(EditorBrowsableState.Never)]
             set
             {
                 if (Properties is null)

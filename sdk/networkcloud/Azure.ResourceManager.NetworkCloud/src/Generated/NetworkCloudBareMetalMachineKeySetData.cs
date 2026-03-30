@@ -93,6 +93,23 @@ namespace Azure.ResourceManager.NetworkCloud
             }
         }
 
+        /// <summary> The name of the group that users will be assigned to on the operating system of the machines. </summary>
+        public string OSGroupName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OSGroupName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BareMetalMachineKeySetProperties();
+                }
+                Properties.OSGroupName = value;
+            }
+        }
+
         /// <summary> The access level allowed for the users in this key set. </summary>
         public BareMetalMachineKeySetPrivilegeLevel PrivilegeLevel
         {

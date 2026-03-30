@@ -3,8 +3,6 @@
 
 #nullable disable
 
-using System.ComponentModel;
-using System.Net;
 using Azure.Core;
 using Azure.ResourceManager.NetworkCloud.Models;
 using Microsoft.TypeSpec.Generator.Customizations;

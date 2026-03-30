@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="ipv4Addresses"> The set of IPv4 addresses permitted as the source or destination of the security rule. For as single address, utilize a /32 (CIDR notation). One or both Ipv4Addresses and Ipv6Addresses must be specified. Example formats: 10.10.10.10-10.10.10.20 or 10.10.10.10/24. </param>
         /// <param name="ipv6Addresses"> The set of IPv6 addresses permitted as the source or destination of the security rule. For as single address, utilize a /128 (CIDR notation). One or both Ipv4Addresses and Ipv6Addresses must be specified. Example formats: 2001:db8:abcd::1-2001:db8:abcd::ff or 2001:db8:abcd::1/64. </param>
         /// <param name="port"> The source or destination port or port range. Example 24562 or 24562-24570. </param>
-        /// <returns> A new <see cref="NetworkCloud.Models.AccessBridgeSecurityRule"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.AccessBridgeSecurityRule"/> instance for mocking. </returns>
         public static AccessBridgeSecurityRule AccessBridgeSecurityRule(string description = default, SecurityRuleDirection direction = default, IEnumerable<string> ipv4Addresses = default, IEnumerable<string> ipv6Addresses = default, string port = default)
         {
             ipv4Addresses ??= new ChangeTrackingList<string>();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="ipv4Address"> The IPv4 address associated with the endpoint. </param>
         /// <param name="ipv6Address"> The IPv6 address associated with the endpoint. </param>
         /// <param name="name"> The name that identifies the type of endpoint (for example VIP or host). </param>
-        /// <returns> A new <see cref="NetworkCloud.Models.AccessBridgeEndpoint"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.AccessBridgeEndpoint"/> instance for mocking. </returns>
         public static AccessBridgeEndpoint AccessBridgeEndpoint(string fqdn = default, string ipv4Address = default, string ipv6Address = default, string name = default)
         {
             return new AccessBridgeEndpoint(fqdn, ipv4Address, ipv6Address, name, additionalBinaryDataProperties: null);
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <param name="accessBridgePatchSecurityRules"> The list of security rules enforced by the access bridge. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="NetworkCloud.Models.NetworkCloudAccessBridgePatch"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.NetworkCloudAccessBridgePatch"/> instance for mocking. </returns>
         public static NetworkCloudAccessBridgePatch NetworkCloudAccessBridgePatch(IEnumerable<AccessBridgeSecurityRule> accessBridgePatchSecurityRules = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
@@ -215,11 +215,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="correlationId"> The correlation ID for the original action request. Omitted if there is no related correlation ID. </param>
         /// <param name="endOn"> The timestamp of when the action reached its final, terminal state. Uses ISO 8601 format. </param>
         /// <param name="message"> The description providing additional context for the status value. May be empty or contain guidance in the case of a failure. </param>
-        /// <param name="startOn"> The timestamp of when the action began, in ISO 8601 format. </param>
+        /// <param name="startTime"> The timestamp of when the action began, in ISO 8601 format. </param>
         /// <param name="status"> The status of the action. </param>
         /// <param name="stepStates"> The ordered list of the individual steps which make up the action. </param>
-        /// <returns> A new <see cref="NetworkCloud.Models.NetworkCloudActionState"/> instance for mocking. </returns>
-        public static NetworkCloudActionState NetworkCloudActionState(string actionType = default, string correlationId = default, DateTimeOffset? endOn = default, string message = default, DateTimeOffset? startOn = default, NetworkCloudActionStateStatus? status = default, IEnumerable<NetworkCloudStepState> stepStates = default)
+        /// <returns> A new <see cref="Models.NetworkCloudActionState"/> instance for mocking. </returns>
+        public static NetworkCloudActionState NetworkCloudActionState(string actionType = default, string correlationId = default, DateTimeOffset? endOn = default, string message = default, string startTime = default, NetworkCloudActionStateStatus? status = default, IEnumerable<NetworkCloudStepState> stepStates = default)
         {
             stepStates ??= new ChangeTrackingList<NetworkCloudStepState>();
 
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 correlationId,
                 endOn,
                 message,
-                startOn,
+                startTime,
                 status,
                 stepStates.ToList(),
                 additionalBinaryDataProperties: null);
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="startOn"> The timestamp for when processing of the step began, in ISO 8601 format. </param>
         /// <param name="status"> The status of the step. A value of Completed or Failed indicates a terminal state for the step. </param>
         /// <param name="stepName"> The name for the step. </param>
-        /// <returns> A new <see cref="NetworkCloud.Models.NetworkCloudStepState"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.NetworkCloudStepState"/> instance for mocking. </returns>
         public static NetworkCloudStepState NetworkCloudStepState(DateTimeOffset? endOn = default, string message = default, DateTimeOffset? startOn = default, NetworkCloudStepStateStatus? status = default, string stepName = default)
         {
             return new NetworkCloudStepState(
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> CertificateInfo represents the non-private information of an X.509 Certificate. </summary>
         /// <param name="hash"> The hash value of the X.509 Certificate. </param>
         /// <param name="value"> The textual value of the X.509 Certificate. </param>
-        /// <returns> A new <see cref="NetworkCloud.Models.NetworkCloudCertificateInfo"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.NetworkCloudCertificateInfo"/> instance for mocking. </returns>
         public static NetworkCloudCertificateInfo NetworkCloudCertificateInfo(string hash = default, string value = default)
         {
             return new NetworkCloudCertificateInfo(hash, value, additionalBinaryDataProperties: null);
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="additionalHostInformation"> Freeform data extracted from the environment about this machine. This information varies depending on the specific hardware and configuration. </param>
         /// <param name="interfaces"> The list of network interfaces and associated details for the bare metal machine. </param>
         /// <param name="nics"> Field Deprecated. Will be removed in an upcoming version. The list of network interface cards and associated details for the bare metal machine. </param>
-        /// <returns> A new <see cref="NetworkCloud.Models.HardwareInventory"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.HardwareInventory"/> instance for mocking. </returns>
         public static HardwareInventory HardwareInventory(string additionalHostInformation = default, IEnumerable<HardwareInventoryNetworkInterface> interfaces = default, IEnumerable<NetworkCloudNic> nics = default)
         {
             interfaces ??= new ChangeTrackingList<HardwareInventoryNetworkInterface>();
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="macAddress"> The MAC address associated with this interface. </param>
         /// <param name="name"> The name of the interface. </param>
         /// <param name="networkInterfaceId"> The resource ID of the network interface for the port on the switch that this machine's interface is connected to. </param>
-        /// <returns> A new <see cref="NetworkCloud.Models.HardwareInventoryNetworkInterface"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.HardwareInventoryNetworkInterface"/> instance for mocking. </returns>
         public static HardwareInventoryNetworkInterface HardwareInventoryNetworkInterface(string linkStatus = default, string macAddress = default, string name = default, string networkInterfaceId = default)
         {
             return new HardwareInventoryNetworkInterface(linkStatus, macAddress, name, networkInterfaceId, additionalBinaryDataProperties: null);
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="lldpNeighbor"> The information about the device connected to this NIC. </param>
         /// <param name="macAddress"> The MAC address associated with this NIC. </param>
         /// <param name="name"> The name of the NIC/interface. </param>
-        /// <returns> A new <see cref="NetworkCloud.Models.NetworkCloudNic"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.NetworkCloudNic"/> instance for mocking. </returns>
         public static NetworkCloudNic NetworkCloudNic(LldpNeighbor lldpNeighbor = default, string macAddress = default, string name = default)
         {
             return new NetworkCloudNic(lldpNeighbor, macAddress, name, additionalBinaryDataProperties: null);
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="portName"> The system-assigned name of the port on the connected device. </param>
         /// <param name="systemDescription"> The descriptive information about the connected device. </param>
         /// <param name="systemName"> The system-assigned name of the connected device. </param>
-        /// <returns> A new <see cref="NetworkCloud.Models.LldpNeighbor"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.LldpNeighbor"/> instance for mocking. </returns>
         public static LldpNeighbor LldpNeighbor(string portDescription = default, string portName = default, string systemDescription = default, string systemName = default)
         {
             return new LldpNeighbor(portDescription, portName, systemDescription, systemName, additionalBinaryDataProperties: null);
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> HardwareValidationStatus represents the latest hardware validation details performed for this bare metal machine. </summary>
         /// <param name="lastValidationOn"> The timestamp of the hardware validation execution. </param>
         /// <param name="result"> The outcome of the hardware validation. </param>
-        /// <returns> A new <see cref="NetworkCloud.Models.HardwareValidationStatus"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.HardwareValidationStatus"/> instance for mocking. </returns>
         public static HardwareValidationStatus HardwareValidationStatus(DateTimeOffset? lastValidationOn = default, BareMetalMachineHardwareValidationResult? result = default)
         {
             return new HardwareValidationStatus(lastValidationOn, result, additionalBinaryDataProperties: null);
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="scanCompletedOn"> The timestamp of the most recently completed scan, or empty if there has never been a scan. </param>
         /// <param name="scanScheduledOn"> The timestamp of the most recently scheduled scan, or empty if no scan has been scheduled. </param>
         /// <param name="scanStartedOn"> The timestamp of the most recently started scan, or empty if there has never been a scan. </param>
-        /// <returns> A new <see cref="NetworkCloud.Models.RuntimeProtectionStatus"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.RuntimeProtectionStatus"/> instance for mocking. </returns>
         public static RuntimeProtectionStatus RuntimeProtectionStatus(RuntimeProtectionAgentHealthStatus? agentHealthStatus = default, IEnumerable<string> agentHealthStatusIssues = default, RuntimeProtectionAgentLicenseStatus? agentLicenseStatus = default, RuntimeProtectionDefinitionUpdateMode? definitionUpdateMode = default, DateTimeOffset? definitionsLastUpdated = default, string definitionsVersion = default, RuntimeProtectionEnforcementLevel? enforcementLevel = default, DateTimeOffset? scanCompletedOn = default, DateTimeOffset? scanScheduledOn = default, DateTimeOffset? scanStartedOn = default)
         {
             agentHealthStatusIssues ??= new ChangeTrackingList<string>();
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="rotationPeriodDays"> The number of days a secret exists before rotations will be attempted. </param>
         /// <param name="secretArchiveReference"> The reference to the secret in a key vault. </param>
         /// <param name="secretType"> The type name used to identify the purpose of the secret. </param>
-        /// <returns> A new <see cref="NetworkCloud.Models.SecretRotationStatus"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.SecretRotationStatus"/> instance for mocking. </returns>
         public static SecretRotationStatus SecretRotationStatus(long? expirePeriodDays = default, DateTimeOffset? lastRotationOn = default, long? rotationPeriodDays = default, SecretArchiveReference secretArchiveReference = default, string secretType = default)
         {
             return new SecretRotationStatus(
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="keyVaultUri"> The URI of the key containing the secret. </param>
         /// <param name="secretName"> The name of the secret in the key vault. </param>
         /// <param name="secretVersion"> The version of the secret in the key vault. </param>
-        /// <returns> A new <see cref="NetworkCloud.Models.SecretArchiveReference"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.SecretArchiveReference"/> instance for mocking. </returns>
         public static SecretArchiveReference SecretArchiveReference(ResourceIdentifier keyVaultId = default, Uri keyVaultUri = default, string secretName = default, string secretVersion = default)
         {
             return new SecretArchiveReference(keyVaultId, keyVaultUri, secretName, secretVersion, additionalBinaryDataProperties: null);
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <param name="machineDetails"> The details provided by the customer during the creation of rack manifests that allows for custom data to be associated with this machine. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="NetworkCloud.Models.NetworkCloudBareMetalMachinePatch"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.NetworkCloudBareMetalMachinePatch"/> instance for mocking. </returns>
         public static NetworkCloudBareMetalMachinePatch NetworkCloudBareMetalMachinePatch(string machineDetails = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="arguments"> The list of string arguments that will be passed to the script in order as separate arguments. </param>
         /// <param name="limitTimeSeconds"> The maximum time the script is allowed to run. If the execution time exceeds the maximum, the script will be stopped, any output produced until then will be captured, and the exit code matching a timeout will be returned (252). </param>
         /// <param name="script"> The base64 encoded script to execute on the bare metal machine. </param>
-        /// <returns> A new <see cref="NetworkCloud.Models.BareMetalMachineRunCommandContent"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.BareMetalMachineRunCommandContent"/> instance for mocking. </returns>
         public static BareMetalMachineRunCommandContent BareMetalMachineRunCommandContent(IEnumerable<string> arguments = default, long limitTimeSeconds = default, string script = default)
         {
             arguments ??= new ChangeTrackingList<string>();
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> BareMetalMachineRunDataExtractsParameters represents the body of request containing list of curated data extraction commands to run on the bare metal machine. </summary>
         /// <param name="commands"> The list of curated data extraction commands to be executed directly against the target machine. </param>
         /// <param name="limitTimeSeconds"> The maximum time the commands are allowed to run. If the execution time exceeds the maximum, the script will be stopped, any output produced until then will be captured, and the exit code matching a timeout will be returned (252). </param>
-        /// <returns> A new <see cref="NetworkCloud.Models.BareMetalMachineRunDataExtractsContent"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.BareMetalMachineRunDataExtractsContent"/> instance for mocking. </returns>
         public static BareMetalMachineRunDataExtractsContent BareMetalMachineRunDataExtractsContent(IEnumerable<BareMetalMachineCommandSpecification> commands = default, long limitTimeSeconds = default)
         {
             commands ??= new ChangeTrackingList<BareMetalMachineCommandSpecification>();
@@ -410,7 +410,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> BareMetalMachineCommandSpecification represents the command and optional arguments to exercise against the bare metal machine. </summary>
         /// <param name="arguments"> The list of string arguments that will be passed to the script in order as separate arguments. </param>
         /// <param name="command"> The command to execute against the bare metal machine. </param>
-        /// <returns> A new <see cref="NetworkCloud.Models.BareMetalMachineCommandSpecification"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.BareMetalMachineCommandSpecification"/> instance for mocking. </returns>
         public static BareMetalMachineCommandSpecification BareMetalMachineCommandSpecification(IEnumerable<string> arguments = default, string command = default)
         {
             arguments ??= new ChangeTrackingList<string>();
@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> BareMetalMachineRunReadCommandsParameters represents the body of request containing list of read-only commands to run on the bare metal machine. </summary>
         /// <param name="commands"> The list of read-only commands to be executed directly against the target machine. </param>
         /// <param name="limitTimeSeconds"> The maximum time the commands are allowed to run. If the execution time exceeds the maximum, the script will be stopped, any output produced until then will be captured, and the exit code matching a timeout will be returned (252). </param>
-        /// <returns> A new <see cref="NetworkCloud.Models.BareMetalMachineRunReadCommandsContent"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.BareMetalMachineRunReadCommandsContent"/> instance for mocking. </returns>
         public static BareMetalMachineRunReadCommandsContent BareMetalMachineRunReadCommandsContent(IEnumerable<BareMetalMachineCommandSpecification> commands = default, long limitTimeSeconds = default)
         {
             commands ??= new ChangeTrackingList<BareMetalMachineCommandSpecification>();
@@ -432,7 +432,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> EgressEndpoint represents the connection from a cloud services network to the specified endpoint for a common purpose. </summary>
         /// <param name="category"> The descriptive category name of endpoints accessible by the AKS agent node. For example, azure-resource-management, API server, etc. The platform egress endpoints provided by default will use the category 'default'. </param>
         /// <param name="endpoints"> The list of endpoint dependencies. </param>
-        /// <returns> A new <see cref="NetworkCloud.Models.EgressEndpoint"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.EgressEndpoint"/> instance for mocking. </returns>
         public static EgressEndpoint EgressEndpoint(string category = default, IEnumerable<EndpointDependency> endpoints = default)
         {
             endpoints ??= new ChangeTrackingList<EndpointDependency>();
@@ -446,7 +446,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="status"> The status of the storage allocation for the cloud services network. </param>
         /// <param name="statusMessage"> The description for the status of the shared storage. </param>
         /// <param name="volumeId"> The resource ID of the volume created to host the shared storage. </param>
-        /// <returns> A new <see cref="NetworkCloud.Models.CloudServicesNetworkStorageStatus"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.CloudServicesNetworkStorageStatus"/> instance for mocking. </returns>
         public static CloudServicesNetworkStorageStatus CloudServicesNetworkStorageStatus(CloudServicesNetworkStorageMode? mode = default, long? sizeMiB = default, CloudServicesNetworkStorageStatusStatus? status = default, string statusMessage = default, ResourceIdentifier volumeId = default)
         {
             return new CloudServicesNetworkStorageStatus(
@@ -462,7 +462,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="enableDefaultEgressEndpoints"> The indicator of whether the platform default endpoints are allowed for the egress traffic. </param>
         /// <param name="storageOptions"> The storage options for the cloud services network. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="NetworkCloud.Models.NetworkCloudCloudServicesNetworkPatch"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.NetworkCloudCloudServicesNetworkPatch"/> instance for mocking. </returns>
         public static NetworkCloudCloudServicesNetworkPatch NetworkCloudCloudServicesNetworkPatch(IEnumerable<EgressEndpoint> additionalEgressEndpoints = default, CloudServicesNetworkEnableDefaultEgressEndpoint? enableDefaultEgressEndpoints = default, CloudServicesNetworkStorageOptionsPatch storageOptions = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
@@ -525,7 +525,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> ClusterAvailableVersion represents the cluster version that the cluster manager can be asked to create and manage. </summary>
         /// <param name="supportExpiryDate"> The last date the version of the platform is supported. </param>
         /// <param name="targetClusterVersion"> The version of the cluster to be deployed. </param>
-        /// <returns> A new <see cref="NetworkCloud.Models.ClusterAvailableVersion"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.ClusterAvailableVersion"/> instance for mocking. </returns>
         public static ClusterAvailableVersion ClusterAvailableVersion(string supportExpiryDate = default, string targetClusterVersion = default)
         {
             return new ClusterAvailableVersion(supportExpiryDate, targetClusterVersion, additionalBinaryDataProperties: null);
@@ -534,7 +534,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> ClusterManagerPatchParameters represents the body of the request to patch the cluster properties. </summary>
         /// <param name="identity"> The identity for the resource. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="NetworkCloud.Models.NetworkCloudClusterManagerPatch"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.NetworkCloudClusterManagerPatch"/> instance for mocking. </returns>
         public static NetworkCloudClusterManagerPatch NetworkCloudClusterManagerPatch(ManagedServiceIdentity identity = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
@@ -546,7 +546,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="connectionState"> The state to set for the private endpoint connection. </param>
         /// <param name="description"> The description to associate with the private endpoint connection. </param>
         /// <param name="privateEndpointResourceId"> The resource ID of private endpoint to be permitted or denied connection to the relay namespace. </param>
-        /// <returns> A new <see cref="NetworkCloud.Models.ClusterManagerUpdateRelayPrivateEndpointConnectionContent"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.ClusterManagerUpdateRelayPrivateEndpointConnectionContent"/> instance for mocking. </returns>
         public static ClusterManagerUpdateRelayPrivateEndpointConnectionContent ClusterManagerUpdateRelayPrivateEndpointConnectionContent(RelayPrivateEndpointConnectionState connectionState = default, string description = default, ResourceIdentifier privateEndpointResourceId = default)
         {
             return new ClusterManagerUpdateRelayPrivateEndpointConnectionContent(connectionState, description, privateEndpointResourceId, additionalBinaryDataProperties: null);
@@ -654,7 +654,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="rackSerialNumber"> The unique identifier for the rack within Network Cloud cluster. An alternate unique alphanumeric value other than a serial number may be provided if desired. </param>
         /// <param name="rackSkuId"> The resource ID of the sku for the rack being added. </param>
         /// <param name="storageApplianceConfigurationData"> The list of storage appliance configuration data for this rack. </param>
-        /// <returns> A new <see cref="NetworkCloud.Models.NetworkCloudRackDefinition"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.NetworkCloudRackDefinition"/> instance for mocking. </returns>
         public static NetworkCloudRackDefinition NetworkCloudRackDefinition(string availabilityZone = default, IEnumerable<BareMetalMachineConfiguration> bareMetalMachineConfigurationData = default, ResourceIdentifier networkRackId = default, string rackLocation = default, string rackSerialNumber = default, ResourceIdentifier rackSkuId = default, IEnumerable<StorageApplianceConfiguration> storageApplianceConfigurationData = default)
         {
             bareMetalMachineConfigurationData ??= new ChangeTrackingList<BareMetalMachineConfiguration>();
@@ -680,7 +680,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="machineName"> The user-provided name for the bare metal machine created from this specification. If not provided, the machine name will be generated programmatically. </param>
         /// <param name="rackSlot"> The slot the physical machine is in the rack based on the BOM configuration. </param>
         /// <param name="serialNumber"> The serial number of the machine. Hardware suppliers may use an alternate value. For example, service tag. </param>
-        /// <returns> A new <see cref="NetworkCloud.Models.BareMetalMachineConfiguration"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.BareMetalMachineConfiguration"/> instance for mocking. </returns>
         public static BareMetalMachineConfiguration BareMetalMachineConfiguration(string bmcConnectionString = default, AdministrativeCredentials bmcCredentials = default, string bmcMacAddress = default, string bootMacAddress = default, string machineDetails = default, string machineName = default, long rackSlot = default, string serialNumber = default)
         {
             return new BareMetalMachineConfiguration(
@@ -699,7 +699,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="associatedIdentity"> The selection of the managed identity to use with this storage account container. The identity type must be either system assigned or user assigned. </param>
         /// <param name="containerUri"> The URL of the storage account container that is to be used by the specified identities. </param>
         /// <param name="overrides"> The list of optional overrides allowing for association of storage containers and identities to specific types of command output. If a type is not overridden, the default identity and storage container will be utilized. </param>
-        /// <returns> A new <see cref="NetworkCloud.Models.CommandOutputSettings"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.CommandOutputSettings"/> instance for mocking. </returns>
         public static CommandOutputSettings CommandOutputSettings(ManagedServiceIdentitySelector associatedIdentity = default, Uri containerUri = default, IEnumerable<CommandOutputOverride> overrides = default)
         {
             overrides ??= new ChangeTrackingList<CommandOutputOverride>();
@@ -714,7 +714,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="supportExpireOn"> The last date the version of the platform is supported. </param>
         /// <param name="targetClusterVersion"> The target version this cluster will be upgraded to. </param>
         /// <param name="workloadImpact"> The indicator of whether the workload will be impacted during the upgrade. </param>
-        /// <returns> A new <see cref="NetworkCloud.Models.ClusterAvailableUpgradeVersion"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.ClusterAvailableUpgradeVersion"/> instance for mocking. </returns>
         public static ClusterAvailableUpgradeVersion ClusterAvailableUpgradeVersion(ControlImpact? controlImpact = default, string expectedDuration = default, string impactDescription = default, DateTimeOffset? supportExpireOn = default, string targetClusterVersion = default, WorkloadImpact? workloadImpact = default)
         {
             return new ClusterAvailableUpgradeVersion(
@@ -736,7 +736,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="totalCoreCount"> The total number of cores that are supported by this cluster for workload use. </param>
         /// <param name="totalHostStorageGB"> The total machine or host-based storage in GB supported by this cluster for workload use. Measured in gibibytes. </param>
         /// <param name="totalMemoryGB"> The total memory supported by this cluster for workload use. Measured in gibibytes. </param>
-        /// <returns> A new <see cref="NetworkCloud.Models.ClusterCapacity"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.ClusterCapacity"/> instance for mocking. </returns>
         public static ClusterCapacity ClusterCapacity(long? availableApplianceStorageGB = default, long? availableCoreCount = default, long? availableHostStorageGB = default, long? availableMemoryGB = default, long? totalApplianceStorageGB = default, long? totalCoreCount = default, long? totalHostStorageGB = default, long? totalMemoryGB = default)
         {
             return new ClusterCapacity(
@@ -765,7 +765,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="updateStrategy"> The strategy for updating the cluster. </param>
         /// <param name="vulnerabilityScanningContainerScan"> The mode selection for container vulnerability scanning. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="NetworkCloud.Models.NetworkCloudClusterPatch"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.NetworkCloudClusterPatch"/> instance for mocking. </returns>
         public static NetworkCloudClusterPatch NetworkCloudClusterPatch(ManagedServiceIdentity identity = default, NetworkCloudRackDefinition aggregatorOrSingleRackDefinition = default, AnalyticsOutputSettings analyticsOutputSettings = default, string clusterLocation = default, ServicePrincipalInformation clusterServicePrincipal = default, CommandOutputSettings commandOutputSettings = default, ValidationThreshold computeDeploymentThreshold = default, IEnumerable<NetworkCloudRackDefinition> computeRackDefinitions = default, RuntimeProtectionConfiguration runtimeProtectionConfiguration = default, ClusterSecretArchive secretArchive = default, SecretArchiveSettings secretArchiveSettings = default, ClusterUpdateStrategy updateStrategy = default, VulnerabilityScanningSettingsContainerScan? vulnerabilityScanningContainerScan = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
@@ -788,7 +788,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> ClusterDeployParameters represents the body of the request to deploy cluster. </summary>
         /// <param name="skipValidationsForMachines"> The names of bare metal machines in the cluster that should be skipped during environment validation. </param>
-        /// <returns> A new <see cref="NetworkCloud.Models.ClusterDeployContent"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.ClusterDeployContent"/> instance for mocking. </returns>
         public static ClusterDeployContent ClusterDeployContent(IEnumerable<string> skipValidationsForMachines = default)
         {
             skipValidationsForMachines ??= new ChangeTrackingList<string>();
@@ -799,7 +799,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> ClusterInspectParameters represents the body of the request to inspect the cluster. </summary>
         /// <param name="additionalActions"> Additional actions supplement the default non-disruptive cluster inspection. Additional actions may be disallowed if the cluster is in a deployed and running state. </param>
         /// <param name="filterDevices"> Indicates which devices are included in the inspection. By default, all devices that can be targeted will be included in the inspection. </param>
-        /// <returns> A new <see cref="NetworkCloud.Models.ClusterInspectContent"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.ClusterInspectContent"/> instance for mocking. </returns>
         public static ClusterInspectContent ClusterInspectContent(IEnumerable<ClusterInspectAdditionalAction> additionalActions = default, NetworkCloudFilterDevices filterDevices = default)
         {
             additionalActions ??= new ChangeTrackingList<ClusterInspectAdditionalAction>();
@@ -810,7 +810,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> FilterDevices defines the filtered target of the inspection. </summary>
         /// <param name="bareMetalMachineNames"> The list of bare metal machine names to include in the inspection. </param>
         /// <param name="rackNames"> The list of rack names to include in the inspection. </param>
-        /// <returns> A new <see cref="NetworkCloud.Models.NetworkCloudFilterDevices"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.NetworkCloudFilterDevices"/> instance for mocking. </returns>
         public static NetworkCloudFilterDevices NetworkCloudFilterDevices(IEnumerable<string> bareMetalMachineNames = default, IEnumerable<string> rackNames = default)
         {
             bareMetalMachineNames ??= new ChangeTrackingList<string>();
@@ -821,7 +821,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> ClusterUpdateVersionParameters represents the body of the request to update cluster version. </summary>
         /// <param name="targetClusterVersion"> The version to be applied to the cluster during update. </param>
-        /// <returns> A new <see cref="NetworkCloud.Models.ClusterUpdateVersionContent"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.ClusterUpdateVersionContent"/> instance for mocking. </returns>
         public static ClusterUpdateVersionContent ClusterUpdateVersionContent(string targetClusterVersion = default)
         {
             return new ClusterUpdateVersionContent(targetClusterVersion, additionalBinaryDataProperties: null);
@@ -830,7 +830,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> AdministratorConfiguration represents the administrative credentials that will be applied to the control plane and agent pool nodes in Kubernetes clusters. </summary>
         /// <param name="adminUsername"> The user name for the administrator that will be applied to the operating systems that run Kubernetes nodes. If not supplied, a user name will be chosen by the service. </param>
         /// <param name="sshPublicKeys"> The SSH configuration for the operating systems that run the nodes in the Kubernetes cluster. In some cases, specification of public keys may be required to produce a working environment. </param>
-        /// <returns> A new <see cref="NetworkCloud.Models.AdministratorConfiguration"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.AdministratorConfiguration"/> instance for mocking. </returns>
         public static AdministratorConfiguration AdministratorConfiguration(string adminUsername = default, IEnumerable<NetworkCloudSshPublicKey> sshPublicKeys = default)
         {
             sshPublicKeys ??= new ChangeTrackingList<NetworkCloudSshPublicKey>();
@@ -843,7 +843,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="availabilityZones"> The list of availability zones of the Network Cloud cluster to be used for the provisioning of nodes in the control plane. If not specified, all availability zones will be used. </param>
         /// <param name="count"> The number of virtual machines that use this configuration. </param>
         /// <param name="vmSkuName"> The name of the VM SKU supplied during creation. </param>
-        /// <returns> A new <see cref="NetworkCloud.Models.ControlPlaneNodeConfiguration"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.ControlPlaneNodeConfiguration"/> instance for mocking. </returns>
         public static ControlPlaneNodeConfiguration ControlPlaneNodeConfiguration(AdministratorConfiguration administratorConfiguration = default, IEnumerable<string> availabilityZones = default, long count = default, string vmSkuName = default)
         {
             availabilityZones ??= new ChangeTrackingList<string>();
@@ -863,7 +863,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="upgradeSettings"> The configuration of the agent pool. </param>
         /// <param name="vmSkuName"> The name of the VM SKU that determines the size of resources allocated for node VMs. </param>
         /// <param name="name"> The name that will be used for the agent pool resource representing this agent pool. </param>
-        /// <returns> A new <see cref="NetworkCloud.Models.InitialAgentPoolConfiguration"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.InitialAgentPoolConfiguration"/> instance for mocking. </returns>
         public static InitialAgentPoolConfiguration InitialAgentPoolConfiguration(AdministratorConfiguration administratorConfiguration = default, NetworkCloudAgentConfiguration agentOptions = default, AttachedNetworkConfiguration attachedNetworkConfiguration = default, IEnumerable<string> availabilityZones = default, long count = default, IEnumerable<KubernetesLabel> labels = default, NetworkCloudAgentPoolMode mode = default, IEnumerable<KubernetesLabel> taints = default, AgentPoolUpgradeSettings upgradeSettings = default, string vmSkuName = default, string name = default)
         {
             availabilityZones ??= new ChangeTrackingList<string>();
@@ -889,7 +889,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="l2Networks"> The list of Layer 2 Networks and related configuration for attachment. </param>
         /// <param name="l3Networks"> The list of Layer 3 Networks and related configuration for attachment. </param>
         /// <param name="trunkedNetworks"> The list of Trunked Networks and related configuration for attachment. </param>
-        /// <returns> A new <see cref="NetworkCloud.Models.AttachedNetworkConfiguration"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.AttachedNetworkConfiguration"/> instance for mocking. </returns>
         public static AttachedNetworkConfiguration AttachedNetworkConfiguration(IEnumerable<L2NetworkAttachmentConfiguration> l2Networks = default, IEnumerable<L3NetworkAttachmentConfiguration> l3Networks = default, IEnumerable<TrunkedNetworkAttachmentConfiguration> trunkedNetworks = default)
         {
             l2Networks ??= new ChangeTrackingList<L2NetworkAttachmentConfiguration>();
@@ -904,11 +904,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="cloudServicesNetworkId"> The resource ID of the associated Cloud Services network. </param>
         /// <param name="cniNetworkId"> The resource ID of the Layer 3 network that is used for creation of the Container Networking Interface network. </param>
         /// <param name="dnsServiceIP"> The IP address assigned to the Kubernetes DNS service. It must be within the Kubernetes service address range specified in service CIDR. </param>
-        /// <param name="l2ServiceLoadBalancerIpAddressPools"> The list of pools of IP addresses that can be allocated to load balancer services. </param>
+        /// <param name="l2ServiceLoadBalancerIPAddressPools"> The list of pools of IP addresses that can be allocated to load balancer services. </param>
         /// <param name="podCidrs"> The CIDR notation IP ranges from which to assign pod IPs. One IPv4 CIDR is expected for single-stack networking. Two CIDRs, one for each IP family (IPv4/IPv6), is expected for dual-stack networking. </param>
         /// <param name="serviceCidrs"> The CIDR notation IP ranges from which to assign service IPs. One IPv4 CIDR is expected for single-stack networking. Two CIDRs, one for each IP family (IPv4/IPv6), is expected for dual-stack networking. </param>
-        /// <returns> A new <see cref="NetworkCloud.Models.KubernetesClusterNetworkConfiguration"/> instance for mocking. </returns>
-        public static KubernetesClusterNetworkConfiguration KubernetesClusterNetworkConfiguration(AttachedNetworkConfiguration attachedNetworkConfiguration = default, BgpServiceLoadBalancerConfiguration bgpServiceLoadBalancerConfiguration = default, ResourceIdentifier cloudServicesNetworkId = default, ResourceIdentifier cniNetworkId = default, IPAddress dnsServiceIP = default, IEnumerable<IPAddressPool> l2ServiceLoadBalancerIpAddressPools = default, IEnumerable<string> podCidrs = default, IEnumerable<string> serviceCidrs = default)
+        /// <returns> A new <see cref="Models.KubernetesClusterNetworkConfiguration"/> instance for mocking. </returns>
+        public static KubernetesClusterNetworkConfiguration KubernetesClusterNetworkConfiguration(AttachedNetworkConfiguration attachedNetworkConfiguration = default, BgpServiceLoadBalancerConfiguration bgpServiceLoadBalancerConfiguration = default, ResourceIdentifier cloudServicesNetworkId = default, ResourceIdentifier cniNetworkId = default, IPAddress dnsServiceIP = default, IEnumerable<IPAddressPool> l2ServiceLoadBalancerIPAddressPools = default, IEnumerable<string> podCidrs = default, IEnumerable<string> serviceCidrs = default)
         {
             podCidrs ??= new ChangeTrackingList<string>();
             serviceCidrs ??= new ChangeTrackingList<string>();
@@ -919,7 +919,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 cloudServicesNetworkId,
                 cniNetworkId,
                 dnsServiceIP,
-                l2ServiceLoadBalancerIpAddressPools is null ? default : new L2ServiceLoadBalancerConfiguration((l2ServiceLoadBalancerIpAddressPools ?? new ChangeTrackingList<IPAddressPool>()).ToList(), null),
+                l2ServiceLoadBalancerIPAddressPools is null ? default : new L2ServiceLoadBalancerConfiguration((l2ServiceLoadBalancerIPAddressPools ?? new ChangeTrackingList<IPAddressPool>()).ToList(), null),
                 podCidrs.ToList(),
                 serviceCidrs.ToList(),
                 additionalBinaryDataProperties: null);
@@ -930,7 +930,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="bgpPeers"> The list of additional BgpPeer entities that the Kubernetes cluster will peer with. All peering must be explicitly defined. </param>
         /// <param name="fabricPeeringEnabled"> The indicator to specify if the load balancer peers with the network fabric. </param>
         /// <param name="ipAddressPools"> The list of pools of IP addresses that can be allocated to load balancer services. </param>
-        /// <returns> A new <see cref="NetworkCloud.Models.BgpServiceLoadBalancerConfiguration"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.BgpServiceLoadBalancerConfiguration"/> instance for mocking. </returns>
         public static BgpServiceLoadBalancerConfiguration BgpServiceLoadBalancerConfiguration(IEnumerable<BgpAdvertisement> bgpAdvertisements = default, IEnumerable<ServiceLoadBalancerBgpPeer> bgpPeers = default, FabricPeeringEnabled? fabricPeeringEnabled = default, IEnumerable<IPAddressPool> ipAddressPools = default)
         {
             bgpAdvertisements ??= new ChangeTrackingList<BgpAdvertisement>();
@@ -945,7 +945,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="communities"> The names of the BGP communities to be associated with the announcement, utilizing a BGP community string in 1234:1234 format. </param>
         /// <param name="ipAddressPools"> The names of the IP address pools associated with this announcement. </param>
         /// <param name="peers"> The names of the BGP peers to limit this advertisement to. If no values are specified, all BGP peers will receive this advertisement. </param>
-        /// <returns> A new <see cref="NetworkCloud.Models.BgpAdvertisement"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.BgpAdvertisement"/> instance for mocking. </returns>
         public static BgpAdvertisement BgpAdvertisement(AdvertiseToFabric? advertiseToFabric = default, IEnumerable<string> communities = default, IEnumerable<string> ipAddressPools = default, IEnumerable<string> peers = default)
         {
             communities ??= new ChangeTrackingList<string>();
@@ -960,7 +960,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="autoAssign"> The indicator to determine if automatic allocation from the pool should occur. </param>
         /// <param name="name"> The name used to identify this IP address pool for association with a BGP advertisement. </param>
         /// <param name="onlyUseHostIPs"> The indicator to prevent the use of IP addresses ending with .0 and .255 for this pool. Enabling this option will only use IP addresses between .1 and .254 inclusive. </param>
-        /// <returns> A new <see cref="NetworkCloud.Models.IPAddressPool"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.IPAddressPool"/> instance for mocking. </returns>
         public static IPAddressPool IPAddressPool(IEnumerable<string> addresses = default, BfdEnabled? autoAssign = default, string name = default, BfdEnabled? onlyUseHostIPs = default)
         {
             addresses ??= new ChangeTrackingList<string>();
@@ -971,7 +971,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> AvailableUpgrade represents an upgrade available for a Kubernetes cluster. </summary>
         /// <param name="availabilityLifecycle"> The version lifecycle indicator. </param>
         /// <param name="version"> The version available for upgrading. </param>
-        /// <returns> A new <see cref="NetworkCloud.Models.AvailableUpgrade"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.AvailableUpgrade"/> instance for mocking. </returns>
         public static AvailableUpgrade AvailableUpgrade(AvailabilityLifecycle? availabilityLifecycle = default, string version = default)
         {
             return new AvailableUpgrade(availabilityLifecycle, version, additionalBinaryDataProperties: null);
@@ -982,7 +982,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="detailedStatusMessage"> The descriptive message about the current detailed status. </param>
         /// <param name="name"> The name of the feature. </param>
         /// <param name="version"> The version of the feature. </param>
-        /// <returns> A new <see cref="NetworkCloud.Models.FeatureStatus"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.FeatureStatus"/> instance for mocking. </returns>
         public static FeatureStatus FeatureStatus(FeatureDetailedStatus? detailedStatus = default, string detailedStatusMessage = default, string name = default, string version = default)
         {
             return new FeatureStatus(detailedStatus, detailedStatusMessage, name, version, additionalBinaryDataProperties: null);
@@ -1007,7 +1007,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="role"> The role of this node in the cluster. </param>
         /// <param name="taints"> The list of taints that have been assigned to the agent pool containing this node. </param>
         /// <param name="vmSkuName"> The VM SKU name that was used to create this cluster node. </param>
-        /// <returns> A new <see cref="NetworkCloud.Models.KubernetesClusterNode"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.KubernetesClusterNode"/> instance for mocking. </returns>
         public static KubernetesClusterNode KubernetesClusterNode(ResourceIdentifier agentPoolArmId = default, string availabilityZone = default, ResourceIdentifier bareMetalMachineArmId = default, long? cpuCores = default, KubernetesClusterNodeDetailedStatus? detailedStatus = default, string detailedStatusMessage = default, long? diskSizeGB = default, string image = default, string kubernetesVersion = default, IEnumerable<KubernetesLabel> labels = default, long? memorySizeGB = default, NetworkCloudAgentPoolMode? mode = default, string name = default, IEnumerable<NetworkAttachment> networkAttachments = default, KubernetesNodePowerState? powerState = default, KubernetesNodeRole? role = default, IEnumerable<KubernetesLabel> taints = default, string vmSkuName = default)
         {
             labels ??= new ChangeTrackingList<KubernetesLabel>();
@@ -1044,7 +1044,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="iPv6Address"> The IPv6 address of the virtual machine.  This field is used only if the attached network has IPAllocationType of IPV6 or DualStack.  If IPAllocationMethod is: Static - this field must contain an IPv6 address range from within the range specified in the attached network. Dynamic - this field is read-only, but will be populated with an range from within the subnet specified in the attached network. Disabled - this field will be empty. </param>
         /// <param name="macAddress"> The MAC address of the interface for the virtual machine that corresponds to this network attachment. </param>
         /// <param name="networkAttachmentName"> The associated network's interface name. If specified, the network attachment name has a maximum length of 15 characters and must be unique to this virtual machine. If the user doesn’t specify this value, the default interface name of the network resource will be used. For a CloudServicesNetwork resource, this name will be ignored. </param>
-        /// <returns> A new <see cref="NetworkCloud.Models.NetworkAttachment"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.NetworkAttachment"/> instance for mocking. </returns>
         public static NetworkAttachment NetworkAttachment(ResourceIdentifier attachedNetworkArmId = default, DefaultGateway? defaultGateway = default, VirtualMachineIPAllocationMethod ipAllocationMethod = default, string iPv4Address = default, string iPv6Address = default, string macAddress = default, string networkAttachmentName = default)
         {
             return new NetworkAttachment(
@@ -1062,7 +1062,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="kubernetesVersion"> The Kubernetes version for this cluster. </param>
         /// <param name="administratorSshPublicKeys"> SshPublicKey represents the public key used to authenticate with a resource through SSH. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="NetworkCloud.Models.NetworkCloudKubernetesClusterPatch"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.NetworkCloudKubernetesClusterPatch"/> instance for mocking. </returns>
         public static NetworkCloudKubernetesClusterPatch NetworkCloudKubernetesClusterPatch(ControlPlaneNodePatchConfiguration controlPlaneNodeConfiguration = default, string kubernetesVersion = default, IEnumerable<NetworkCloudSshPublicKey> administratorSshPublicKeys = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
@@ -1072,7 +1072,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> KubernetesClusterRestartNodeParameters represents the body of the request to restart the node of a Kubernetes cluster. </summary>
         /// <param name="nodeName"> The name of the node to restart. </param>
-        /// <returns> A new <see cref="NetworkCloud.Models.KubernetesClusterRestartNodeContent"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.KubernetesClusterRestartNodeContent"/> instance for mocking. </returns>
         public static KubernetesClusterRestartNodeContent KubernetesClusterRestartNodeContent(string nodeName = default)
         {
             return new KubernetesClusterRestartNodeContent(nodeName, additionalBinaryDataProperties: null);
@@ -1109,7 +1109,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> KubernetesVersionValue describes a specific Kubernetes version that can be deployed. </summary>
         /// <param name="description"> Additional description for the Kubernetes version. </param>
         /// <param name="version"> The Kubernetes version identifier. </param>
-        /// <returns> A new <see cref="NetworkCloud.Models.KubernetesVersionValue"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.KubernetesVersionValue"/> instance for mocking. </returns>
         public static KubernetesVersionValue KubernetesVersionValue(string description = default, string version = default)
         {
             return new KubernetesVersionValue(description, version, additionalBinaryDataProperties: null);
@@ -1117,7 +1117,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> KubernetesVersionPatchParameters represents the body of the request to patch Kubernetes version tags. </summary>
         /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="NetworkCloud.Models.NetworkCloudKubernetesVersionPatch"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.NetworkCloudKubernetesVersionPatch"/> instance for mocking. </returns>
         public static NetworkCloudKubernetesVersionPatch NetworkCloudKubernetesVersionPatch(IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
@@ -1127,7 +1127,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> L2NetworkPatchParameters represents the body of the request to patch the L2 network. </summary>
         /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="NetworkCloud.Models.NetworkCloudL2NetworkPatch"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.NetworkCloudL2NetworkPatch"/> instance for mocking. </returns>
         public static NetworkCloudL2NetworkPatch NetworkCloudL2NetworkPatch(IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
@@ -1195,7 +1195,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> L3NetworkPatchParameters represents the body of the request to patch the cloud services network. </summary>
         /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="NetworkCloud.Models.NetworkCloudL3NetworkPatch"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.NetworkCloudL3NetworkPatch"/> instance for mocking. </returns>
         public static NetworkCloudL3NetworkPatch NetworkCloudL3NetworkPatch(IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
@@ -1242,7 +1242,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="capacityGB"> The maximum amount of storage. Measured in gibibytes. </param>
         /// <param name="connection"> The connection type of the rack SKU resource. </param>
         /// <param name="diskType"> The disk type of rack SKU resource. </param>
-        /// <returns> A new <see cref="NetworkCloud.Models.MachineDisk"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.MachineDisk"/> instance for mocking. </returns>
         public static MachineDisk MachineDisk(long? capacityGB = default, MachineSkuDiskConnectionType? connection = default, DiskType? diskType = default)
         {
             return new MachineDisk(capacityGB, connection, diskType, additionalBinaryDataProperties: null);
@@ -1256,7 +1256,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="portCount"> The number of ports on the device. </param>
         /// <param name="portSpeed"> The maximum amount of data in gigabits that the line card transmits through a port at any given second. </param>
         /// <param name="vendor"> The vendor name of the device. </param>
-        /// <returns> A new <see cref="NetworkCloud.Models.NetworkCloudNetworkInterface"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.NetworkCloudNetworkInterface"/> instance for mocking. </returns>
         public static NetworkCloudNetworkInterface NetworkCloudNetworkInterface(string address = default, DeviceConnectionType? deviceConnectionType = default, string model = default, long? physicalSlot = default, long? portCount = default, long? portSpeed = default, string vendor = default)
         {
             return new NetworkCloudNetworkInterface(
@@ -1273,7 +1273,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="rackLocation"> The free-form description of the rack location. (e.g. "DTN Datacenter, Floor 3, Isle 9, Rack 2B"). </param>
         /// <param name="rackSerialNumber"> The globally unique identifier for the rack. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="NetworkCloud.Models.NetworkCloudRackPatch"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.NetworkCloudRackPatch"/> instance for mocking. </returns>
         public static NetworkCloudRackPatch NetworkCloudRackPatch(string rackLocation = default, string rackSerialNumber = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
@@ -1352,7 +1352,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> StorageApplianceExpansionShelf represents an expansion shelf connected to a storage appliance. </summary>
         /// <param name="model"> The model of the expansion shelf. </param>
         /// <param name="version"> The version of the expansion shelf. </param>
-        /// <returns> A new <see cref="NetworkCloud.Models.StorageApplianceExpansionShelf"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.StorageApplianceExpansionShelf"/> instance for mocking. </returns>
         public static StorageApplianceExpansionShelf StorageApplianceExpansionShelf(string model = default, string version = default)
         {
             return new StorageApplianceExpansionShelf(model, version, additionalBinaryDataProperties: null);
@@ -1360,7 +1360,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <param name="serialNumber"> The serial number for the storage appliance. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="NetworkCloud.Models.NetworkCloudStorageAppliancePatch"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.NetworkCloudStorageAppliancePatch"/> instance for mocking. </returns>
         public static NetworkCloudStorageAppliancePatch NetworkCloudStorageAppliancePatch(string serialNumber = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
@@ -1370,7 +1370,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> StorageApplianceEnableRemoteVendorManagementParameters represents the body of the request to enable remote vendor management of a storage appliance. </summary>
         /// <param name="supportEndpoints"> Field Deprecated. This field is not used and will be rejected if provided. The list of IPv4 subnets (in CIDR format), IPv6 subnets (in CIDR format), or hostnames that the storage appliance needs accessible in order to turn on the remote vendor management. </param>
-        /// <returns> A new <see cref="NetworkCloud.Models.StorageApplianceEnableRemoteVendorManagementContent"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.StorageApplianceEnableRemoteVendorManagementContent"/> instance for mocking. </returns>
         public static StorageApplianceEnableRemoteVendorManagementContent StorageApplianceEnableRemoteVendorManagementContent(IEnumerable<string> supportEndpoints = default)
         {
             supportEndpoints ??= new ChangeTrackingList<string>();
@@ -1381,7 +1381,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> StorageApplianceRunReadCommandsParameters represents the body of request containing list of read-only commands to run on the storage appliance. </summary>
         /// <param name="commands"> The list of read-only commands to be executed directly against the target storage appliance. </param>
         /// <param name="limitTimeSeconds"> The maximum time the commands are allowed to run. </param>
-        /// <returns> A new <see cref="NetworkCloud.Models.StorageApplianceRunReadCommandsContent"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.StorageApplianceRunReadCommandsContent"/> instance for mocking. </returns>
         public static StorageApplianceRunReadCommandsContent StorageApplianceRunReadCommandsContent(IEnumerable<StorageApplianceCommandSpecification> commands = default, long limitTimeSeconds = default)
         {
             commands ??= new ChangeTrackingList<StorageApplianceCommandSpecification>();
@@ -1392,7 +1392,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> StorageApplianceCommandSpecification represents the command and optional arguments to run. </summary>
         /// <param name="arguments"> The list of strings that will be passed to the script in order as separate arguments. </param>
         /// <param name="command"> The command to execute. </param>
-        /// <returns> A new <see cref="NetworkCloud.Models.StorageApplianceCommandSpecification"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.StorageApplianceCommandSpecification"/> instance for mocking. </returns>
         public static StorageApplianceCommandSpecification StorageApplianceCommandSpecification(IEnumerable<string> arguments = default, string command = default)
         {
             arguments ??= new ChangeTrackingList<string>();
@@ -1402,7 +1402,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> TrunkedNetworkPatchParameters represents the body of the request to patch the Trunked network. </summary>
         /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="NetworkCloud.Models.NetworkCloudTrunkedNetworkPatch"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.NetworkCloudTrunkedNetworkPatch"/> instance for mocking. </returns>
         public static NetworkCloudTrunkedNetworkPatch NetworkCloudTrunkedNetworkPatch(IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
@@ -1497,7 +1497,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> StorageProfile represents information about a disk. </summary>
         /// <param name="osDisk"> The disk to use with this virtual machine. </param>
         /// <param name="volumeAttachments"> The resource IDs of volumes that are requested to be attached to the virtual machine. </param>
-        /// <returns> A new <see cref="NetworkCloud.Models.NetworkCloudStorageProfile"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.NetworkCloudStorageProfile"/> instance for mocking. </returns>
         public static NetworkCloudStorageProfile NetworkCloudStorageProfile(NetworkCloudOSDisk osDisk = default, IEnumerable<ResourceIdentifier> volumeAttachments = default)
         {
             volumeAttachments ??= new ChangeTrackingList<ResourceIdentifier>();
@@ -1508,7 +1508,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="identity"> The identity for the resource. </param>
         /// <param name="vmImageRepositoryCredentials"> The credentials used to login to the image repository that has access to the specified image. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="NetworkCloud.Models.NetworkCloudVirtualMachinePatch"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.NetworkCloudVirtualMachinePatch"/> instance for mocking. </returns>
         public static NetworkCloudVirtualMachinePatch NetworkCloudVirtualMachinePatch(ManagedServiceIdentity identity = default, ImageRepositoryCredentials vmImageRepositoryCredentials = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
@@ -1519,7 +1519,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> VirtualMachineAssignRelayParameters represents the body of the request to update the relay used for a Microsoft.HybridCompute machine associated with the virtual machine. </summary>
         /// <param name="machineId"> The resourceId of the Microsoft.HybridCompute machine resource to assign relay usage. </param>
         /// <param name="relayType"> The indicator of which relay type the machine should be assigned to use. Platform indicates the use of a platform-dedicated relay. Public indicates the use of the standard public relay for Arc services. </param>
-        /// <returns> A new <see cref="NetworkCloud.Models.VirtualMachineAssignRelayContent"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.VirtualMachineAssignRelayContent"/> instance for mocking. </returns>
         public static VirtualMachineAssignRelayContent VirtualMachineAssignRelayContent(ResourceIdentifier machineId = default, VirtualMachineAssignRelayType? relayType = default)
         {
             return new VirtualMachineAssignRelayContent(machineId, relayType, additionalBinaryDataProperties: null);
@@ -1527,7 +1527,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> VolumePatchParameters represents the body of the request to patch the volume resource. </summary>
         /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="NetworkCloud.Models.NetworkCloudVolumePatch"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.NetworkCloudVolumePatch"/> instance for mocking. </returns>
         public static NetworkCloudVolumePatch NetworkCloudVolumePatch(IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
@@ -1539,7 +1539,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="azureUserName"> The user name that will be used for access. </param>
         /// <param name="status"> The indicator of whether the user is currently deployed for access. </param>
         /// <param name="statusMessage"> The additional information describing the current status of this user, if any available. </param>
-        /// <returns> A new <see cref="NetworkCloud.Models.KeySetUserStatus"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.KeySetUserStatus"/> instance for mocking. </returns>
         public static KeySetUserStatus KeySetUserStatus(string azureUserName = default, BareMetalMachineKeySetUserSetupStatus? status = default, string statusMessage = default)
         {
             return new KeySetUserStatus(azureUserName, status, statusMessage, additionalBinaryDataProperties: null);
@@ -1549,7 +1549,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="jumpHostsAllowed"> The list of IP addresses of jump hosts with management network access from which a login will be allowed for the users. </param>
         /// <param name="userList"> The unique list of permitted users. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="NetworkCloud.Models.NetworkCloudBareMetalMachineKeySetPatch"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.NetworkCloudBareMetalMachineKeySetPatch"/> instance for mocking. </returns>
         public static NetworkCloudBareMetalMachineKeySetPatch NetworkCloudBareMetalMachineKeySetPatch(DateTimeOffset? expireOn = default, IEnumerable<IPAddress> jumpHostsAllowed = default, IEnumerable<KeySetUser> userList = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
@@ -1560,7 +1560,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="expireOn"> The date and time after which the users in this key set will be removed from the baseboard management controllers. </param>
         /// <param name="userList"> The unique list of permitted users. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="NetworkCloud.Models.NetworkCloudBmcKeySetPatch"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.NetworkCloudBmcKeySetPatch"/> instance for mocking. </returns>
         public static NetworkCloudBmcKeySetPatch NetworkCloudBmcKeySetPatch(DateTimeOffset? expireOn = default, IEnumerable<KeySetUser> userList = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
@@ -1571,7 +1571,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="collectionInterval"> The interval in minutes by which metrics will be collected. </param>
         /// <param name="enabledMetrics"> The list of metric names that have been chosen to be enabled in addition to the core set of enabled metrics. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="NetworkCloud.Models.NetworkCloudClusterMetricsConfigurationPatch"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.NetworkCloudClusterMetricsConfigurationPatch"/> instance for mocking. </returns>
         public static NetworkCloudClusterMetricsConfigurationPatch NetworkCloudClusterMetricsConfigurationPatch(long? collectionInterval = default, IEnumerable<string> enabledMetrics = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
@@ -1583,7 +1583,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="upgradeSettings"> The configuration of the agent pool. </param>
         /// <param name="administratorSshPublicKeys"> SshPublicKey represents the public key used to authenticate with a resource through SSH. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="NetworkCloud.Models.NetworkCloudAgentPoolPatch"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.NetworkCloudAgentPoolPatch"/> instance for mocking. </returns>
         public static NetworkCloudAgentPoolPatch NetworkCloudAgentPoolPatch(long? count = default, AgentPoolUpgradeSettings upgradeSettings = default, IEnumerable<NetworkCloudSshPublicKey> administratorSshPublicKeys = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
@@ -1593,7 +1593,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <param name="options"> The configured options for the feature. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="NetworkCloud.Models.NetworkCloudKubernetesClusterFeaturePatch"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.NetworkCloudKubernetesClusterFeaturePatch"/> instance for mocking. </returns>
         public static NetworkCloudKubernetesClusterFeaturePatch NetworkCloudKubernetesClusterFeaturePatch(IEnumerable<StringKeyValuePair> options = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
@@ -1605,7 +1605,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="expireOn"> The date and time after which the key will be disallowed access. </param>
         /// <param name="keyData"> The SSH public key data. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="NetworkCloud.Models.NetworkCloudVirtualMachineConsolePatch"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.NetworkCloudVirtualMachineConsolePatch"/> instance for mocking. </returns>
         public static NetworkCloudVirtualMachineConsolePatch NetworkCloudVirtualMachineConsolePatch(ConsoleEnabled? enabled = default, DateTimeOffset? expireOn = default, string keyData = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
@@ -1663,38 +1663,13 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             return NetworkCloudBareMetalMachineData(id, name, resourceType, systemData, tags, location, bmcConnectionString, bmcCredentials, bmcMacAddress, bootMacAddress, machineDetails, machineName, machineSkuId, rackId, rackSlot, serialNumber, actionStates, associatedResourceIds, bmcIpv4Address: default, bmcIpv6Address: default, caCertificate, clusterId, cordonStatus, detailedStatus, detailedStatusMessage, hardwareInventory, hardwareValidationStatus, hybridAksClustersAssociatedIds, kubernetesNodeName, kubernetesVersion, machineClusterVersion, machineRoles, oamIPv4Address, oamIPv6Address, osImage, powerState, readyState, runtimeProtectionStatus, secretRotationStatus, serviceTag, virtualMachinesAssociatedIds, provisioningState, etag, extendedLocation);
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetworkCloud.Models.NetworkCloudActionState"/>. </summary>
-        /// <param name="actionType"> The representation of the action for which this is a status. Matches ARM resource action format when the action is an ARM-based action. </param>
-        /// <param name="correlationId"> The correlation ID for the original action request. Omitted if there is no related correlation ID. </param>
-        /// <param name="endOn"> The timestamp of when the action reached its final, terminal state. Uses ISO 8601 format. </param>
-        /// <param name="message"> The description providing additional context for the status value. May be empty or contain guidance in the case of a failure. </param>
-        /// <param name="startTime"> The timestamp of when the action began, in ISO 8601 format. </param>
-        /// <param name="status"> The status of the action. </param>
-        /// <param name="stepStates"> The ordered list of the individual steps which make up the action. </param>
-        /// <returns> A new <see cref="NetworkCloud.Models.NetworkCloudActionState"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetworkCloudActionState NetworkCloudActionState(string actionType, string correlationId, DateTimeOffset? endOn, string message, string startTime, NetworkCloudActionStateStatus? status, IEnumerable<NetworkCloudStepState> stepStates)
-        {
-            stepStates ??= new ChangeTrackingList<NetworkCloudStepState>();
-
-            return new NetworkCloudActionState(
-                actionType,
-                correlationId,
-                endOn,
-                message,
-                default,
-                status,
-                stepStates.ToList(),
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="NetworkCloud.Models.RuntimeProtectionStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.RuntimeProtectionStatus"/>. </summary>
         /// <param name="definitionsLastUpdated"> The timestamp when the malware definitions were last updated. </param>
         /// <param name="definitionsVersion"> The version of the malware definitions. </param>
         /// <param name="scanCompletedOn"> The timestamp of the most recently completed scan, or empty if there has never been a scan. </param>
         /// <param name="scanScheduledOn"> The timestamp of the most recently scheduled scan, or empty if no scan has been scheduled. </param>
         /// <param name="scanStartedOn"> The timestamp of the most recently started scan, or empty if there has never been a scan. </param>
-        /// <returns> A new <see cref="NetworkCloud.Models.RuntimeProtectionStatus"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.RuntimeProtectionStatus"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static RuntimeProtectionStatus RuntimeProtectionStatus(DateTimeOffset? definitionsLastUpdated, string definitionsVersion, DateTimeOffset? scanCompletedOn, DateTimeOffset? scanScheduledOn, DateTimeOffset? scanStartedOn)
         {
@@ -2009,7 +1984,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             return NetworkCloudRackSkuData(id, name, resourceType, systemData, computeMachines, controllerMachines, deploymentType: default, description, maxClusterSlots, provisioningState, rackType, storageAppliances, supportedRackSkuIds);
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetworkCloud.Models.MachineSkuSlot"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MachineSkuSlot"/>. </summary>
         /// <param name="rackSlot"> The position in the rack for the machine. </param>
         /// <param name="bootstrapProtocol"> The type of bootstrap protocol used. </param>
         /// <param name="cpuCores"> The count of CPU cores for this machine. </param>
@@ -2022,7 +1997,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="networkInterfaces"> The list of network interfaces. </param>
         /// <param name="totalThreads"> The count of SMT and physical core threads for this machine. </param>
         /// <param name="vendor"> The make of the machine. </param>
-        /// <returns> A new <see cref="NetworkCloud.Models.MachineSkuSlot"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.MachineSkuSlot"/> instance for mocking. </returns>
         public static MachineSkuSlot MachineSkuSlot(long? rackSlot = default, BootstrapProtocol? bootstrapProtocol = default, long? cpuCores = default, long? cpuSockets = default, IEnumerable<MachineDisk> disks = default, string generation = default, string hardwareVersion = default, long? memoryCapacityGB = default, string model = default, IEnumerable<NetworkCloudNetworkInterface> networkInterfaces = default, long? totalThreads = default, string vendor = default)
         {
             disks ??= new ChangeTrackingList<MachineDisk>();
@@ -2031,11 +2006,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             return new MachineSkuSlot(default, rackSlot, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetworkCloud.Models.StorageApplianceSkuSlot"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.StorageApplianceSkuSlot"/>. </summary>
         /// <param name="rackSlot"> The position in the rack for the storage appliance. </param>
         /// <param name="capacityGB"> The maximum capacity of the storage appliance. Measured in gibibytes. </param>
         /// <param name="model"> The model of the storage appliance. </param>
-        /// <returns> A new <see cref="NetworkCloud.Models.StorageApplianceSkuSlot"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.StorageApplianceSkuSlot"/> instance for mocking. </returns>
         public static StorageApplianceSkuSlot StorageApplianceSkuSlot(long? rackSlot = default, long? capacityGB = default, string model = default)
         {
             return new StorageApplianceSkuSlot(default, rackSlot, additionalBinaryDataProperties: null);
@@ -2251,7 +2226,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 extendedLocation);
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetworkCloud.Models.NetworkCloudOperationStatusResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NetworkCloudOperationStatusResult"/>. </summary>
         /// <param name="endOn"> The end time of the operation. </param>
         /// <param name="error"> If present, details of the operation error. </param>
         /// <param name="id"> Fully qualified ID for the async operation. </param>
@@ -2265,7 +2240,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="outputHead"> For actions that run commands or scripts, the leading bytes of the output of the script execution. </param>
         /// <param name="resultRef"> For actions that run commands or scripts, a reference to the location of the result. </param>
         /// <param name="resultUri"> For actions that run commands or scripts, the URL where the full output of the script output can be retrieved. </param>
-        /// <returns> A new <see cref="NetworkCloud.Models.NetworkCloudOperationStatusResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.NetworkCloudOperationStatusResult"/> instance for mocking. </returns>
         public static NetworkCloudOperationStatusResult NetworkCloudOperationStatusResult(DateTimeOffset? endOn = default, ResponseError error = default, ResourceIdentifier id = default, string name = default, IEnumerable<NetworkCloudOperationStatusResult> operations = default, float? percentComplete = default, ResourceIdentifier resourceId = default, DateTimeOffset? startOn = default, string status = default, string exitCode = default, string outputHead = default, Uri resultRef = default, Uri resultUri = default)
         {
             operations ??= new ChangeTrackingList<NetworkCloudOperationStatusResult>();
@@ -2559,11 +2534,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             return NetworkCloudBareMetalMachineData(id, name, resourceType, systemData, tags, location, bmcConnectionString, bmcCredentials, bmcMacAddress, bootMacAddress, machineDetails, machineName, machineSkuId, rackId, rackSlot, serialNumber, actionStates: default, associatedResourceIds, bmcIpv4Address: default, bmcIpv6Address: default, caCertificate: default, clusterId, cordonStatus, detailedStatus, detailedStatusMessage, hardwareInventory, hardwareValidationStatus, hybridAksClustersAssociatedIds, kubernetesNodeName, kubernetesVersion, machineClusterVersion, machineRoles, oamIPv4Address, oamIPv6Address, osImage, powerState, readyState, runtimeProtectionStatus, secretRotationStatus, serviceTag, virtualMachinesAssociatedIds, provisioningState, etag, extendedLocation);
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetworkCloud.Models.SecretArchiveReference"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SecretArchiveReference"/>. </summary>
         /// <param name="keyVaultId"> The resource ID of the key vault containing the secret. </param>
         /// <param name="secretName"> The name of the secret in the key vault. </param>
         /// <param name="secretVersion"> The version of the secret in the key vault. </param>
-        /// <returns> A new <see cref="NetworkCloud.Models.SecretArchiveReference"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.SecretArchiveReference"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static SecretArchiveReference SecretArchiveReference(ResourceIdentifier keyVaultId, string secretName, string secretVersion)
         {

@@ -79,6 +79,15 @@ namespace Azure.ResourceManager.NetworkCloud
             }
         }
 
+        /// <summary> The allocated size of the volume in Mebibytes. </summary>
+        public long? AllocatedInSizeMiB
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AllocatedInSizeMiB;
+            }
+        }
+
         /// <summary> The list of resource IDs that attach the volume. It may include virtual machines and Hybrid AKS clusters. </summary>
         public IReadOnlyList<string> AttachedTo
         {

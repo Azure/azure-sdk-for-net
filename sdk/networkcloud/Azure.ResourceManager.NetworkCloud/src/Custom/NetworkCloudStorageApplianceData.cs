@@ -3,32 +3,18 @@
 
 #nullable disable
 
-using System.ComponentModel;
-using System.Net;
 using Azure.Core;
 using Azure.ResourceManager.NetworkCloud.Models;
 using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
-    // Backward compat: The old Swagger/AutoRest API used a constructor with the local
-    // ExtendedLocation type and flattened CACertificate and ManagementIPv4Address as
-    // top-level properties. The new TypeSpec-generated code uses the ARM common
-    // ExtendedLocation type and nests these properties under Properties. This file
-    // suppresses the generated constructor and preserves the old flat API surface.
+    // Customization: Suppresses the generated constructor (which uses ARM common ExtendedLocation)
+    // and provides a custom constructor accepting the local ExtendedLocation type.
+    // Also exposes a local ExtendedLocation property for backward compatibility.
     [CodeGenSuppress("NetworkCloudStorageApplianceData", typeof(AzureLocation), typeof(ResourceIdentifier), typeof(string), typeof(long), typeof(string), typeof(AdministrativeCredentials), typeof(ExtendedLocation))]
     public partial class NetworkCloudStorageApplianceData
     {
-        // Backward compat: CACertificate was flattened in old autorest code but not in new generator.
-
-        /// <summary> The information of the certificate authority for the storage appliance. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public NetworkCloudCertificateInfo CACertificate => Properties?.CACertificate;
-
-        /// <summary> The IPv4 address assigned to the storage appliance management network. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public IPAddress ManagementIPv4Address => Properties?.ManagementIPv4Address;
-
         /// <summary> Initializes a new instance of <see cref="NetworkCloudStorageApplianceData"/>. </summary>
         public NetworkCloudStorageApplianceData(AzureLocation location, ExtendedLocation extendedLocation, AdministrativeCredentials administratorCredentials, ResourceIdentifier rackId, long rackSlot, string serialNumber, string storageApplianceSkuId)
             : base(location)
