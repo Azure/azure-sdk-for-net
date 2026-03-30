@@ -40,7 +40,7 @@
 ################
 
 # Git Hub integration and bot rules
-/.github/                                                          @jsquire @ronniegeraghty
+/.github/                                                          @jsquire @ronniegeraghty @ArthurMa1978
 
 # PRLabel: %EngSys
 /sdk/template/                                                     @hallipr @weshaggard @benbp @jsquire
