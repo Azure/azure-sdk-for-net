@@ -14,33 +14,34 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public partial class LongTermRetentionPolicy : BackupRetentionPolicy
     {
         /// <summary> Initializes a new instance of <see cref="LongTermRetentionPolicy"/>. </summary>
-        public LongTermRetentionPolicy()
+        public LongTermRetentionPolicy() : base("LongTermRetentionPolicy")
         {
-            RetentionPolicyType = "LongTermRetentionPolicy";
         }
 
         /// <summary> Initializes a new instance of <see cref="LongTermRetentionPolicy"/>. </summary>
         /// <param name="retentionPolicyType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="dailySchedule"> Daily retention schedule of the protection policy. </param>
         /// <param name="weeklySchedule"> Weekly retention schedule of the protection policy. </param>
         /// <param name="monthlySchedule"> Monthly retention schedule of the protection policy. </param>
         /// <param name="yearlySchedule"> Yearly retention schedule of the protection policy. </param>
-        internal LongTermRetentionPolicy(string retentionPolicyType, IDictionary<string, BinaryData> serializedAdditionalRawData, DailyRetentionSchedule dailySchedule, WeeklyRetentionSchedule weeklySchedule, MonthlyRetentionSchedule monthlySchedule, YearlyRetentionSchedule yearlySchedule) : base(retentionPolicyType, serializedAdditionalRawData)
+        internal LongTermRetentionPolicy(string retentionPolicyType, IDictionary<string, BinaryData> additionalBinaryDataProperties, DailyRetentionSchedule dailySchedule, WeeklyRetentionSchedule weeklySchedule, MonthlyRetentionSchedule monthlySchedule, YearlyRetentionSchedule yearlySchedule) : base(retentionPolicyType, additionalBinaryDataProperties)
         {
             DailySchedule = dailySchedule;
             WeeklySchedule = weeklySchedule;
             MonthlySchedule = monthlySchedule;
             YearlySchedule = yearlySchedule;
-            RetentionPolicyType = retentionPolicyType ?? "LongTermRetentionPolicy";
         }
 
         /// <summary> Daily retention schedule of the protection policy. </summary>
         public DailyRetentionSchedule DailySchedule { get; set; }
+
         /// <summary> Weekly retention schedule of the protection policy. </summary>
         public WeeklyRetentionSchedule WeeklySchedule { get; set; }
+
         /// <summary> Monthly retention schedule of the protection policy. </summary>
         public MonthlyRetentionSchedule MonthlySchedule { get; set; }
+
         /// <summary> Yearly retention schedule of the protection policy. </summary>
         public YearlyRetentionSchedule YearlySchedule { get; set; }
     }

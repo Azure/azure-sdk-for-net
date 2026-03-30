@@ -14,37 +14,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> BackupStatus response. </summary>
     public partial class BackupStatusResult
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BackupStatusResult"/>. </summary>
         internal BackupStatusResult()
@@ -63,8 +34,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="registrationStatus"> Container registration status. </param>
         /// <param name="protectedItemsCount"> Number of protected items. </param>
         /// <param name="acquireStorageAccountLock"> Specifies whether the storage account lock has been acquired or not. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BackupStatusResult(BackupProtectionStatus? protectionStatus, ResourceIdentifier vaultId, BackupFabricName? fabricName, string containerName, string protectedItemName, string errorCode, string errorMessage, string policyName, string registrationStatus, int? protectedItemsCount, AcquireStorageAccountLock? acquireStorageAccountLock, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BackupStatusResult(BackupProtectionStatus? protectionStatus, ResourceIdentifier vaultId, BackupFabricName? fabricName, string containerName, string protectedItemName, string errorCode, string errorMessage, string policyName, string registrationStatus, int? protectedItemsCount, AcquireStorageAccountLock? acquireStorageAccountLock, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProtectionStatus = protectionStatus;
             VaultId = vaultId;
@@ -77,29 +48,39 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             RegistrationStatus = registrationStatus;
             ProtectedItemsCount = protectedItemsCount;
             AcquireStorageAccountLock = acquireStorageAccountLock;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Specifies whether the container is registered or not. </summary>
         public BackupProtectionStatus? ProtectionStatus { get; }
+
         /// <summary> Specifies the arm resource id of the vault. </summary>
         public ResourceIdentifier VaultId { get; }
+
         /// <summary> Specifies the fabric name - Azure or AD. </summary>
         public BackupFabricName? FabricName { get; }
+
         /// <summary> Specifies the product specific container name. E.g. iaasvmcontainer;iaasvmcontainer;csname;vmname. </summary>
         public string ContainerName { get; }
+
         /// <summary> Specifies the product specific ds name. E.g. vm;iaasvmcontainer;csname;vmname. </summary>
         public string ProtectedItemName { get; }
+
         /// <summary> ErrorCode in case of intent failed. </summary>
         public string ErrorCode { get; }
+
         /// <summary> ErrorMessage in case of intent failed. </summary>
         public string ErrorMessage { get; }
+
         /// <summary> Specifies the policy name which is used for protection. </summary>
         public string PolicyName { get; }
+
         /// <summary> Container registration status. </summary>
         public string RegistrationStatus { get; }
+
         /// <summary> Number of protected items. </summary>
         public int? ProtectedItemsCount { get; }
+
         /// <summary> Specifies whether the storage account lock has been acquired or not. </summary>
         public AcquireStorageAccountLock? AcquireStorageAccountLock { get; }
     }
