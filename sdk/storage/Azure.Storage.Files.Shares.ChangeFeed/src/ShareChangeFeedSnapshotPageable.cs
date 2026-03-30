@@ -44,7 +44,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
 
             if (endMeta.Status != null && !endMeta.Status.Equals("Finalized", StringComparison.OrdinalIgnoreCase))
             {
-                throw new InvalidOperationException(
+                throw new ArgumentException(
                     $"End snapshot '{_endSnapshot}' is not finalized (status: {endMeta.Status}). " +
                     "Wait for the snapshot to be finalized before querying.");
             }
