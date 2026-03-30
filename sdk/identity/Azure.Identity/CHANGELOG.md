@@ -2,6 +2,10 @@
 
 ## 1.20.0 (2026-03-30)
 
+### Features Added
+
+- Added a JSON schema segment to the NuGet package that provides IntelliSense and validation for Azure.Identity credential configuration in `appsettings.json`.
+
 ### Breaking Changes
 
 - `AddAzureClient`, `AddKeyedAzureClient`, and `WithAzureCredential` return type changed from `IHostApplicationBuilder` to `IClientBuilder` to align with the `IClientBuilder` composition change in System.ClientModel.
