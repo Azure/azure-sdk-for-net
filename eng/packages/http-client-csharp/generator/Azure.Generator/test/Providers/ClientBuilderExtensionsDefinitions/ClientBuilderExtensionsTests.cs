@@ -137,6 +137,28 @@ namespace Azure.Generator.Tests.Providers.ClientBuilderExtensionsDefinitions
         }
 
         [Test]
+        public void SkipsConstructorWithUnresolvableParameterType()
+        {
+            var inputClient = InputFactory.Client("TestClient", "Samples", "");
+            var plugin = MockHelpers.LoadMockGenerator(
+                apiKeyAuth: () => new InputApiKeyAuth("mock", null),
+                clients: () => [inputClient]);
+
+            var client = plugin.Object.OutputLibrary.TypeProviders
+                .OfType<ClientProvider>().Single();
+            Assert.IsNotNull(client);
+            MockHelpers.SetCustomCodeView(client, new TestUnresolvableParamCustomCodeView(client));
+
+            var builderExtensions = plugin.Object.OutputLibrary.TypeProviders
+                .OfType<ClientBuilderExtensionsDefinition>().SingleOrDefault();
+
+            Assert.IsNotNull(builderExtensions);
+            var writer = new TypeProviderWriter(builderExtensions!);
+            var file = writer.Write();
+            Assert.AreEqual(Helpers.GetExpectedFromFile(), file.Content);
+        }
+
+        [Test]
         public void DoesNotAddExtensionMethodsClassIfOnlyInternalClients()
         {
             var client = InputFactory.Client("TestClient", "Samples", "");
@@ -246,6 +268,47 @@ namespace Azure.Generator.Tests.Providers.ClientBuilderExtensionsDefinitions
                         ThrowExpression(Null),
                         this)
                 ];
+        }
+
+        private class TestUnresolvableParamCustomCodeView : TypeProvider
+        {
+            private readonly ClientProvider _clientProvider;
+
+            public TestUnresolvableParamCustomCodeView(ClientProvider clientProvider)
+            {
+                _clientProvider = clientProvider;
+            }
+
+            protected override string BuildRelativeFilePath() => _clientProvider.RelativeFilePath;
+
+            protected override string BuildName() => _clientProvider.Name;
+
+            protected override ConstructorProvider[] BuildConstructors()
+                =>
+                [
+                    new ConstructorProvider(
+                        new ConstructorSignature(
+                            Type,
+                            $"",
+                            MethodSignatureModifiers.Public,
+                            [
+                                new ParameterProvider("endpoint", $"", typeof(Uri)),
+                                new ParameterProvider("unresolvableParam", $"", new TestUnresolvableTypeProvider().Type),
+                                new ParameterProvider("options", $"", new TestClientOptionsProvider(_clientProvider.ClientOptions!).Type),
+                            ]),
+                        ThrowExpression(Null),
+                        this)
+                ];
+        }
+
+        private class TestUnresolvableTypeProvider : TypeProvider
+        {
+            protected override string BuildRelativeFilePath() => "";
+
+            protected override string BuildName() => "UnresolvableType";
+
+            // simulate unresolvable namespace (empty)
+            protected override string BuildNamespace() => "";
         }
 
         private class TestClientOptionsProvider : TypeProvider
