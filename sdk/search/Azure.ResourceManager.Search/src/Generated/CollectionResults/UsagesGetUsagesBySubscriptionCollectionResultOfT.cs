@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Search
         /// <summary> Initializes a new instance of UsagesGetUsagesBySubscriptionCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Usages client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="location"> The location name. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="clientRequestId"> A client-generated GUID value that identifies this request. If specified, this will be included in response information as a way to track the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         public UsagesGetUsagesBySubscriptionCollectionResultOfT(Usages client, Guid subscriptionId, AzureLocation location, string clientRequestId, RequestContext context) : base(context?.CancellationToken ?? default)

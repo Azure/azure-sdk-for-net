@@ -25,11 +25,13 @@ namespace Azure.ResourceManager.Search.Models
         /// <summary> Initializes a new instance of <see cref="SearchEncryptionWithCmk"/>. </summary>
         /// <param name="enforcement"> Describes how a search service should enforce compliance if it finds objects that aren't encrypted with the customer-managed key. </param>
         /// <param name="encryptionComplianceStatus"> Returns the status of search service compliance with respect to non-CMK-encrypted objects. If a service has more than one unencrypted object, and enforcement is enabled, the service is marked as noncompliant. </param>
+        /// <param name="serviceLevelEncryptionKey"> Describes the customer-managed key configuration for encrypting the search service. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SearchEncryptionWithCmk(SearchEncryptionWithCmkEnforcement? enforcement, SearchEncryptionComplianceStatus? encryptionComplianceStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SearchEncryptionWithCmk(SearchEncryptionWithCmkEnforcement? enforcement, SearchEncryptionComplianceStatus? encryptionComplianceStatus, SearchResourceEncryptionKey serviceLevelEncryptionKey, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Enforcement = enforcement;
             EncryptionComplianceStatus = encryptionComplianceStatus;
+            ServiceLevelEncryptionKey = serviceLevelEncryptionKey;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -40,5 +42,9 @@ namespace Azure.ResourceManager.Search.Models
         /// <summary> Returns the status of search service compliance with respect to non-CMK-encrypted objects. If a service has more than one unencrypted object, and enforcement is enabled, the service is marked as noncompliant. </summary>
         [WirePath("encryptionComplianceStatus")]
         public SearchEncryptionComplianceStatus? EncryptionComplianceStatus { get; }
+
+        /// <summary> Describes the customer-managed key configuration for encrypting the search service. </summary>
+        [WirePath("serviceLevelEncryptionKey")]
+        public SearchResourceEncryptionKey ServiceLevelEncryptionKey { get; set; }
     }
 }

@@ -216,8 +216,9 @@ namespace Azure.Generator.Provisioning
                 var info = infoProvider.GetProvisioningPropertyInfo(inputModelProperty);
                 if (info == null) return null;
                 var resolvedName = baseProperty?.Name ?? info.PropertyName;
-                var bicepType = CreateCSharpType(inputModelProperty.Type);
+                var bicepType = info.TypeOverride ?? CreateCSharpType(inputModelProperty.Type);
                 if (bicepType == null) return null;
+
                 return ProvisioningPropertyProvider.Create(
                     resolvedName, bicepType,
                     info.IsOutput, info.IsRequired, info.BicepPath, info.DefaultValue,

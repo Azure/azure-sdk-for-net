@@ -2,7 +2,6 @@ $ErrorActionPreference = "SilentlyContinue"
 . (Join-Path $PSScriptRoot '..' 'scripts' 'Helpers' 'AzSdkTool-Helpers.ps1')
 
 $cliPath = Get-CommonInstallDirectory
-
 # check for azsdk.exe on Windows or azsdk on Linux/Mac in the install directory
 if ($IsWindows)
 {
@@ -54,8 +53,15 @@ try
     Write-Success
 }
 
-$toolName = $inputData.toolName
-if (-not $toolName)
+$toolName = $null
+$sessionId = $null
+
+# Get tool name. Both vscode and copilot-cli uses different property names, so check for both.
+if ($inputData.PSObject.Properties['toolName'])
+{
+    $toolName = $inputData.toolName
+}
+if (-not $toolName -and $inputData.PSObject.Properties['tool_name'])
 {
     $toolName = $inputData.tool_name
 }
@@ -72,19 +78,26 @@ if ($toolsToIgnore -contains $toolName)
     Write-Success
 }
 
-$sessionId = $inputData.sessionId
-if (-not $sessionId) {
+# Session id
+if ($inputData.PSObject.Properties['sessionId'])
+{
+    $sessionId = $inputData.sessionId
+}
+if (-not $sessionId -and $inputData.PSObject.Properties['session_id'])
+{
     $sessionId = $inputData.session_id
 }
 
 # Get tool input arguments
-$toolInput = $inputData.toolArgs
-if (-not $toolInput)
+$toolInput = $null
+if ($inputData.PSObject.Properties['toolArgs'])
+{
+    $toolInput = $inputData.toolArgs
+}
+if (-not $toolInput -and $inputData.PSObject.Properties['tool_input'])
 {
     $toolInput = $inputData.tool_input
 }
-
-$timestamp = (Get-Date).ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ssZ")
 
 # Helper to extract path from tool input (handles 'path', 'filePath', 'file_path')
 function Get-ToolInputPath
@@ -112,11 +125,12 @@ else
     $clientType = "copilot-cli"
 }
 
+
 # Process skill invocations (looking for "azsdk" prefix in skill name)
 if ($toolName -eq "skill")
 {
     $skillName = $toolInput.skill
-    if ($skillName -and $skillName.StartsWith("azsdk"))
+    if ($skillName)
     {
         $eventType = "skill_invocation"
         $shouldTrack = $true
@@ -148,7 +162,6 @@ if ($toolName.StartsWith("mcp_azure-sdk") -or $toolName.StartsWith("azure-sdk-mc
 }
 
 # === STEP 3: Publish event ===
-
 if ($shouldTrack)
 {
     # Build MCP command arguments

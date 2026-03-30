@@ -4,7 +4,7 @@
 import { EmitContext, NoTarget, resolvePath } from "@typespec/compiler";
 import { createSdkContext } from "@azure-tools/typespec-client-generator-core";
 
-import { $onEmit as $onMTGEmit } from "@typespec/http-client-csharp";
+import { emitCodeModel } from "@typespec/http-client-csharp";
 import { AzureEmitterOptions } from "./options.js";
 import { $lib } from "./lib/lib.js";
 
@@ -38,7 +38,8 @@ export async function $onEmit(context: EmitContext<AzureEmitterOptions>) {
   // Generate metadata.json file
   await generateMetadataFile(context);
 
-  await $onMTGEmit(context);
+  const [, diagnostics] = await emitCodeModel(context);
+  context.program.reportDiagnostics(diagnostics);
 }
 
 /**

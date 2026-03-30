@@ -18,13 +18,13 @@ namespace Azure.Provisioning.Batch
     /// <summary> Contains information about a pool. </summary>
     public partial class BatchAccountPool : ProvisionableResource
     {
-        private PoolProperties _properties;
+        private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
+        private SystemData _systemData;
+        private PoolProperties _properties;
         private ManagedServiceIdentity _identity;
         private BicepValue<ETag> _eTag;
         private BicepDictionary<string> _tags;
-        private BicepValue<ResourceIdentifier> _id;
-        private SystemData _systemData;
         private ResourceReference<BatchAccount> _parent;
 
         /// <summary> Creates a new BatchAccountPool. </summary>
@@ -34,18 +34,13 @@ namespace Azure.Provisioning.Batch
         {
         }
 
-        /// <summary> Gets or sets the Properties. </summary>
-        internal PoolProperties Properties
+        /// <summary> Gets the Id. </summary>
+        public BicepValue<ResourceIdentifier> Id
         {
             get
             {
                 Initialize();
-                return _properties;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _properties, value);
+                return _id;
             }
         }
 
@@ -61,6 +56,31 @@ namespace Azure.Provisioning.Batch
             {
                 Initialize();
                 _name.Assign(value);
+            }
+        }
+
+        /// <summary> Gets the SystemData. </summary>
+        public SystemData SystemData
+        {
+            get
+            {
+                Initialize();
+                return _systemData;
+            }
+        }
+
+        /// <summary> Gets or sets the Properties. </summary>
+        internal PoolProperties Properties
+        {
+            get
+            {
+                Initialize();
+                return _properties;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _properties, value);
             }
         }
 
@@ -101,26 +121,6 @@ namespace Azure.Provisioning.Batch
             {
                 Initialize();
                 _tags.Assign(value);
-            }
-        }
-
-        /// <summary> Gets the Id. </summary>
-        public BicepValue<ResourceIdentifier> Id
-        {
-            get
-            {
-                Initialize();
-                return _id;
-            }
-        }
-
-        /// <summary> Gets the SystemData. </summary>
-        public SystemData SystemData
-        {
-            get
-            {
-                Initialize();
-                return _systemData;
             }
         }
 
@@ -503,13 +503,13 @@ namespace Azure.Provisioning.Batch
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _properties = DefineModelProperty<PoolProperties>(nameof(Properties), new string[] { "properties" });
+            _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
+            _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
+            _properties = DefineModelProperty<PoolProperties>(nameof(Properties), new string[] { "properties" });
             _identity = DefineModelProperty<ManagedServiceIdentity>(nameof(Identity), new string[] { "identity" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
-            _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
-            _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _parent = DefineResource<BatchAccount>("Parent", new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }

@@ -21,10 +21,14 @@ namespace Azure.ResourceManager.Search.Models
 
         public static SharedSearchServicePrivateLinkResourceStatus ToSharedSearchServicePrivateLinkResourceStatus(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Pending")) return SharedSearchServicePrivateLinkResourceStatus.Pending;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Approved")) return SharedSearchServicePrivateLinkResourceStatus.Approved;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Rejected")) return SharedSearchServicePrivateLinkResourceStatus.Rejected;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disconnected")) return SharedSearchServicePrivateLinkResourceStatus.Disconnected;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Pending"))
+                return SharedSearchServicePrivateLinkResourceStatus.Pending;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Approved"))
+                return SharedSearchServicePrivateLinkResourceStatus.Approved;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Rejected"))
+                return SharedSearchServicePrivateLinkResourceStatus.Rejected;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disconnected"))
+                return SharedSearchServicePrivateLinkResourceStatus.Disconnected;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SharedSearchServicePrivateLinkResourceStatus value.");
         }
     }

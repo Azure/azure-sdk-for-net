@@ -1,6 +1,6 @@
 # Azure SDK for .NET Libraries Inventory
 
-> **Auto-generated** by `Library_Inventory` on 2026-03-26 03:09:25 UTC.
+> **Auto-generated** by `Library_Inventory` on 2026-03-26 05:27:23 UTC.
 > Run that script to refresh this file.
 
 ## Table of Contents
@@ -16,12 +16,12 @@
 
 ## Summary
 
-- Total libraries: 412
+- Total libraries: 411
 - Management Plane (MPG): 231
   - Autorest/Swagger: 114
   - New Emitter (TypeSpec): 117
   - Old TypeSpec: 0
-- Data Plane (DPG): 145
+- Data Plane (DPG): 144
   - Autorest/Swagger: 53
   - New Emitter (TypeSpec): 39
   - Old TypeSpec: 4
@@ -29,7 +29,7 @@
   - Reflection-based generator: 33
   - TypeSpec-based generator: 1
   - No generator: 2
-- No generator: 49
+- No generator: 48
 
 
 ## Data Plane Libraries (DPG) - Migrated to New Emitter
@@ -443,7 +443,7 @@ Libraries that provide infrastructure-as-code capabilities for Azure services. T
 
 ## Libraries with No Generator
 
-Libraries with no generator have neither autorest.md nor tsp-location.yaml files. Total: 49
+Libraries with no generator have neither autorest.md nor tsp-location.yaml files. Total: 48
 
 | Service | Library |
 | ------- | ------- |
@@ -477,7 +477,6 @@ Libraries with no generator have neither autorest.md nor tsp-location.yaml files
 | keyvault | Azure.Security.KeyVault.Certificates |
 | keyvault | Azure.Security.KeyVault.Keys |
 | keyvault | Azure.Security.KeyVault.Secrets |
-| keyvault | Azure.Security.KeyVault.Shared |
 | loadtestservice | Azure.Developer.Playwright |
 | loadtestservice | Azure.Developer.Playwright.MSTest |
 | loadtestservice | Azure.Developer.Playwright.NUnit |
@@ -490,9 +489,9 @@ Libraries with no generator have neither autorest.md nor tsp-location.yaml files
 | storage | Azure.Storage.Common |
 | storage | Azure.Storage.DataMovement |
 | storage | Azure.Storage.DataMovement.Blobs |
+| storage | Azure.Storage.DataMovement.Blobs.Files.Shares |
 | storage | Azure.Storage.DataMovement.Files.Shares |
 | storage | Azure.Storage.Internal.Avro |
-| synapse | Azure.Analytics.Synapse.Shared |
 | tools | Azure.GeneratorAgent |
 | tools | Azure.SdkAnalyzers |
 | webpubsub | Azure.Messaging.WebPubSub.Client |
