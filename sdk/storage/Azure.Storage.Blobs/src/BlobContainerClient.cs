@@ -3008,14 +3008,14 @@ namespace Azure.Storage.Blobs
                         creationTime: creationTimeCol?.GetTimestamp(i),
                         lastModified: lastModifiedCol?.GetTimestamp(i) ?? default,
                         etag: etagCol?.GetString(i),
-                        contentLength: ReadNullableInt64(contentLengthCol, i),
+                        contentLength: ReadNullableLong(contentLengthCol, i),
                         contentType: contentTypeCol?.GetString(i),
                         contentEncoding: contentEncodingCol?.GetString(i),
                         contentLanguage: contentLanguageCol?.GetString(i),
                         contentMD5: contentMD5,
                         contentDisposition: contentDispositionCol?.GetString(i),
                         cacheControl: cacheControlCol?.GetString(i),
-                        blobSequenceNumber: ReadNullableInt64(blobSequenceNumberCol, i),
+                        blobSequenceNumber: ReadNullableLong(blobSequenceNumberCol, i),
                         blobType: ReadEnum(blobTypeCol, i, s => s.ToBlobType()),
                         leaseStatus: ReadEnum(leaseStatusCol, i, s => s.ToLeaseStatus()),
                         leaseState: ReadEnum(leaseStateCol, i, s => s.ToLeaseState()),
@@ -3030,7 +3030,7 @@ namespace Azure.Storage.Blobs
                         incrementalCopy: ReadNullableBool(incrementalCopyCol, i),
                         destinationSnapshot: destinationSnapshotCol?.GetString(i),
                         deletedTime: deletedTimeCol?.GetTimestamp(i),
-                        remainingRetentionDays: ReadNullableInt32(remainingRetentionDaysCol, i),
+                        remainingRetentionDays: ReadNullableInt(remainingRetentionDaysCol, i),
                         accessTier: ReadEnum(accessTierCol, i, s => new AccessTier(s)),
                         accessTierInferred: ReadNullableBool(accessTierInferredCol, i),
                         archiveStatus: ReadEnum(archiveStatusCol, i, s => s.ToArchiveStatus()),
@@ -3038,7 +3038,7 @@ namespace Azure.Storage.Blobs
                         customerProvidedKeySha256: customerProvidedKeySha256Col?.GetString(i),
                         encryptionScope: encryptionScopeCol?.GetString(i),
                         accessTierChangeTime: accessTierChangeTimeCol?.GetTimestamp(i),
-                        tagCount: ReadNullableInt32(tagCountCol, i),
+                        tagCount: ReadNullableInt(tagCountCol, i),
                         expiresOn: null,
                         isSealed: ReadNullableBool(sealedCol, i),
                         rehydratePriority: ReadEnum(rehydratePriorityCol, i, s => s.ToRehydratePriority().Value),
@@ -3115,12 +3115,12 @@ namespace Azure.Storage.Blobs
             return array != null && !array.IsNull(index) ? (bool?)array.GetValue(index) : null;
         }
 
-        private static long? ReadNullableInt64(UInt64Array array, int index)
+        private static long? ReadNullableLong(UInt64Array array, int index)
         {
             return array != null && !array.IsNull(index) ? (long?)array.GetValue(index) : null;
         }
 
-        private static int? ReadNullableInt32(UInt64Array array, int index)
+        private static int? ReadNullableInt(UInt64Array array, int index)
         {
             return array != null && !array.IsNull(index) ? (int?)array.GetValue(index) : null;
         }

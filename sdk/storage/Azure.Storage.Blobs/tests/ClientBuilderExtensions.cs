@@ -70,6 +70,9 @@ namespace Azure.Storage.Blobs.Tests
         public static BlobServiceClient GetServiceClient_SoftDelete(this BlobsClientBuilder clientBuilder) =>
             clientBuilder.GetServiceClientFromSharedKeyConfig(clientBuilder.Tenants.TestConfigSoftDelete);
 
+        public static BlobServiceClient GetServiceClient_SoftDelete_OAuth(this BlobsClientBuilder clientBuilder, TokenCredential tokenCredential) =>
+            clientBuilder.GetServiceClientFromOauthConfig(clientBuilder.Tenants.TestConfigSoftDelete, tokenCredential);
+
         public static async Task<DisposingContainer> GetTestContainerAsync(
             this BlobsClientBuilder clientBuilder,
             BlobServiceClient service = default,
