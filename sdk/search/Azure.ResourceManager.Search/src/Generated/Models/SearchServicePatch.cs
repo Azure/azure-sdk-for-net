@@ -7,194 +7,398 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Search;
 
 namespace Azure.ResourceManager.Search.Models
 {
     /// <summary> The parameters used to update an Azure AI Search service. </summary>
     public partial class SearchServicePatch : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SearchServicePatch"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public SearchServicePatch(AzureLocation location) : base(location)
         {
-            DataExfiltrationProtections = new ChangeTrackingList<SearchDataExfiltrationProtection>();
-            PrivateEndpointConnections = new ChangeTrackingList<SearchPrivateEndpointConnectionData>();
-            SharedPrivateLinkResources = new ChangeTrackingList<SharedSearchServicePrivateLinkResourceData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SearchServicePatch"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="searchSku"> The SKU of the search service, which determines price tier and capacity limits. This property is required when creating a new search service. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Properties of the search service. </param>
+        /// <param name="sku"> The SKU of the search service, which determines price tier and capacity limits. This property is required when creating a new search service. </param>
+        /// <param name="tags"> Tags to help categorize the resource in the Azure portal. </param>
         /// <param name="identity"> Details about the search service identity. A null value indicates that the search service has no identity assigned. </param>
-        /// <param name="replicaCount"> The number of replicas in the search service. If specified, it must be a value between 1 and 12 inclusive for standard SKUs or between 1 and 3 inclusive for basic SKU. </param>
-        /// <param name="partitionCount"> The number of partitions in the search service; if specified, it can be 1, 2, 3, 4, 6, or 12. Values greater than 1 are only valid for standard SKUs. For 'standard3' services with hostingMode set to 'highDensity', the allowed values are between 1 and 3. </param>
-        /// <param name="endpoint"> The endpoint of the Azure AI Search service. </param>
-        /// <param name="hostingMode"> Applicable only for the standard3 SKU. You can set this property to enable up to 3 high density partitions that allow up to 1000 indexes, which is much higher than the maximum indexes allowed for any other SKU. For the standard3 SKU, the value is either 'default' or 'highDensity'. For all other SKUs, this value must be 'default'. </param>
-        /// <param name="computeType"> Configure this property to support the search service using either the Default Compute or Azure Confidential Compute. </param>
-        /// <param name="publicInternetAccess"> This value can be set to 'enabled' to avoid breaking changes on existing customer resources and templates. If set to 'disabled', traffic over public interface is not allowed, and private endpoint connections would be the exclusive access method. </param>
-        /// <param name="status"> The status of the search service. Possible values include: 'running': The search service is running and no provisioning operations are underway. 'provisioning': The search service is being provisioned or scaled up or down. 'deleting': The search service is being deleted. 'degraded': The search service is degraded. This can occur when the underlying search units are not healthy. The search service is most likely operational, but performance might be slow and some requests might be dropped. 'disabled': The search service is disabled. In this state, the service will reject all API requests. 'error': The search service is in an error state. 'stopped': The search service is in a subscription that's disabled. If your service is in the degraded, disabled, or error states, it means the Azure AI Search team is actively investigating the underlying issue. Dedicated services in these states are still chargeable based on the number of search units provisioned. </param>
-        /// <param name="statusDetails"> The details of the search service status. </param>
-        /// <param name="provisioningState"> The state of the last provisioning operation performed on the search service. Provisioning is an intermediate state that occurs while service capacity is being established. After capacity is set up, provisioningState changes to either 'Succeeded' or 'Failed'. Client applications can poll provisioning status (the recommended polling interval is from 30 seconds to one minute) by using the Get Search Service operation to see when an operation is completed. If you are using the free service, this value tends to come back as 'Succeeded' directly in the call to Create search service. This is because the free service uses capacity that is already set up. </param>
-        /// <param name="networkRuleSet"> Network specific rules that determine how the Azure AI Search service may be reached. </param>
-        /// <param name="dataExfiltrationProtections"> A list of data exfiltration scenarios that are explicitly disallowed for the search service. Currently, the only supported value is 'All' to disable all possible data export scenarios with more fine grained controls planned for the future. </param>
-        /// <param name="encryptionWithCmk"> Specifies any policy regarding encryption of resources (such as indexes) using customer manager keys within a search service. </param>
-        /// <param name="isLocalAuthDisabled"> When set to true, calls to the search service will not be permitted to utilize API keys for authentication. This cannot be set to true if 'dataPlaneAuthOptions' are defined. </param>
-        /// <param name="authOptions"> Defines the options for how the data plane API of a search service authenticates requests. This cannot be set if 'disableLocalAuth' is set to true. </param>
-        /// <param name="semanticSearch"> Sets options that control the availability of semantic search. This configuration is only possible for certain Azure AI Search SKUs in certain locations. </param>
-        /// <param name="privateEndpointConnections"> The list of private endpoint connections to the Azure AI Search service. </param>
-        /// <param name="sharedPrivateLinkResources"> The list of shared private link resources managed by the Azure AI Search service. </param>
-        /// <param name="eTag"> A system generated property representing the service's etag that can be for optimistic concurrency control during updates. </param>
-        /// <param name="isUpgradeAvailable"> Indicates if the search service has an upgrade available. </param>
-        /// <param name="serviceUpgradedOn"> The date and time the search service was last upgraded. This field will be null until the service gets upgraded for the first time. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SearchServicePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SearchSku searchSku, ManagedServiceIdentity identity, int? replicaCount, int? partitionCount, Uri endpoint, SearchServiceHostingMode? hostingMode, SearchServiceComputeType? computeType, SearchServicePublicInternetAccess? publicInternetAccess, SearchServiceStatus? status, string statusDetails, SearchServiceProvisioningState? provisioningState, SearchServiceNetworkRuleSet networkRuleSet, IList<SearchDataExfiltrationProtection> dataExfiltrationProtections, SearchEncryptionWithCmk encryptionWithCmk, bool? isLocalAuthDisabled, SearchAadAuthDataPlaneAuthOptions authOptions, SearchSemanticSearch? semanticSearch, IReadOnlyList<SearchPrivateEndpointConnectionData> privateEndpointConnections, IReadOnlyList<SharedSearchServicePrivateLinkResourceData> sharedPrivateLinkResources, ETag? eTag, SearchServiceUpgradeAvailable? isUpgradeAvailable, DateTimeOffset? serviceUpgradedOn, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal SearchServicePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureLocation location, SearchServiceProperties properties, SearchSku sku, IDictionary<string, string> tags, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
         {
-            SearchSku = searchSku;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
+            Sku = sku;
             Identity = identity;
-            ReplicaCount = replicaCount;
-            PartitionCount = partitionCount;
-            Endpoint = endpoint;
-            HostingMode = hostingMode;
-            ComputeType = computeType;
-            PublicInternetAccess = publicInternetAccess;
-            Status = status;
-            StatusDetails = statusDetails;
-            ProvisioningState = provisioningState;
-            NetworkRuleSet = networkRuleSet;
-            DataExfiltrationProtections = dataExfiltrationProtections;
-            EncryptionWithCmk = encryptionWithCmk;
-            IsLocalAuthDisabled = isLocalAuthDisabled;
-            AuthOptions = authOptions;
-            SemanticSearch = semanticSearch;
-            PrivateEndpointConnections = privateEndpointConnections;
-            SharedPrivateLinkResources = sharedPrivateLinkResources;
-            ETag = eTag;
-            IsUpgradeAvailable = isUpgradeAvailable;
-            ServiceUpgradedOn = serviceUpgradedOn;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SearchServicePatch"/> for deserialization. </summary>
-        internal SearchServicePatch()
-        {
-        }
+        /// <summary> Properties of the search service. </summary>
+        [WirePath("properties")]
+        internal SearchServiceProperties Properties { get; set; }
 
         /// <summary> The SKU of the search service, which determines price tier and capacity limits. This property is required when creating a new search service. </summary>
-        internal SearchSku SearchSku { get; set; }
-        /// <summary> The SKU of the search service. Valid values include: 'free': Shared service. 'basic': Dedicated service with up to 3 replicas. 'standard': Dedicated service with up to 12 partitions and 12 replicas. 'standard2': Similar to standard, but with more capacity per search unit. 'standard3': The largest Standard offering with up to 12 partitions and 12 replicas (or up to 3 partitions with more indexes if you also set the hostingMode property to 'highDensity'). 'storage_optimized_l1': Supports 1TB per partition, up to 12 partitions. 'storage_optimized_l2': Supports 2TB per partition, up to 12 partitions.'. </summary>
-        [WirePath("sku.name")]
-        public SearchServiceSkuName? SearchSkuName
-        {
-            get => SearchSku is null ? default : SearchSku.Name;
-            set
-            {
-                if (SearchSku is null)
-                    SearchSku = new SearchSku();
-                SearchSku.Name = value;
-            }
-        }
+        [WirePath("sku")]
+        internal SearchSku Sku { get; set; }
 
         /// <summary> Details about the search service identity. A null value indicates that the search service has no identity assigned. </summary>
         [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
-        /// <summary> The number of replicas in the search service. If specified, it must be a value between 1 and 12 inclusive for standard SKUs or between 1 and 3 inclusive for basic SKU. </summary>
+
+        /// <summary> The number of replicas in the dedicated search service. If specified, it must be a value between 1 and 12 inclusive for standard SKUs or between 1 and 3 inclusive for basic SKU. </summary>
         [WirePath("properties.replicaCount")]
-        public int? ReplicaCount { get; set; }
-        /// <summary> The number of partitions in the search service; if specified, it can be 1, 2, 3, 4, 6, or 12. Values greater than 1 are only valid for standard SKUs. For 'standard3' services with hostingMode set to 'highDensity', the allowed values are between 1 and 3. </summary>
+        public int? ReplicaCount
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ReplicaCount;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SearchServiceProperties();
+                }
+                Properties.ReplicaCount = value.Value;
+            }
+        }
+
+        /// <summary> The number of partitions in the dedicated search service; if specified, it can be 1, 2, 3, 4, 6, or 12. Values greater than 1 are only valid for standard SKUs. For 'standard3' services with hostingMode set to 'highDensity', the allowed values are between 1 and 3. </summary>
         [WirePath("properties.partitionCount")]
-        public int? PartitionCount { get; set; }
+        public int? PartitionCount
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PartitionCount;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SearchServiceProperties();
+                }
+                Properties.PartitionCount = value.Value;
+            }
+        }
+
         /// <summary> The endpoint of the Azure AI Search service. </summary>
         [WirePath("properties.endpoint")]
-        public Uri Endpoint { get; set; }
-        /// <summary> Applicable only for the standard3 SKU. You can set this property to enable up to 3 high density partitions that allow up to 1000 indexes, which is much higher than the maximum indexes allowed for any other SKU. For the standard3 SKU, the value is either 'default' or 'highDensity'. For all other SKUs, this value must be 'default'. </summary>
+        public Uri Endpoint
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Endpoint;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SearchServiceProperties();
+                }
+                Properties.Endpoint = value;
+            }
+        }
+
+        /// <summary> Applicable only for the standard3 SKU. You can set this property to enable up to 3 high density partitions that allow up to 1000 indexes, which is much higher than the maximum indexes allowed for any other SKU. For the standard3 SKU, the value is either 'Default' or 'HighDensity'. For all other SKUs, this value must be 'Default'. </summary>
         [WirePath("properties.hostingMode")]
-        public SearchServiceHostingMode? HostingMode { get; set; }
+        public SearchServiceHostingMode? HostingMode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HostingMode;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SearchServiceProperties();
+                }
+                Properties.HostingMode = value.Value;
+            }
+        }
+
         /// <summary> Configure this property to support the search service using either the Default Compute or Azure Confidential Compute. </summary>
         [WirePath("properties.computeType")]
-        public SearchServiceComputeType? ComputeType { get; set; }
-        /// <summary> This value can be set to 'enabled' to avoid breaking changes on existing customer resources and templates. If set to 'disabled', traffic over public interface is not allowed, and private endpoint connections would be the exclusive access method. </summary>
+        public SearchServiceComputeType? ComputeType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ComputeType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SearchServiceProperties();
+                }
+                Properties.ComputeType = value.Value;
+            }
+        }
+
+        /// <summary> This value can be set to 'Enabled' to avoid breaking changes on existing customer resources and templates. If set to 'Disabled', traffic over public interface is not allowed, and private endpoint connections would be the exclusive access method. </summary>
         [WirePath("properties.publicNetworkAccess")]
-        public SearchServicePublicInternetAccess? PublicInternetAccess { get; set; }
+        public SearchServicePublicInternetAccess? PublicInternetAccess
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PublicInternetAccess;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SearchServiceProperties();
+                }
+                Properties.PublicInternetAccess = value.Value;
+            }
+        }
+
         /// <summary> The status of the search service. Possible values include: 'running': The search service is running and no provisioning operations are underway. 'provisioning': The search service is being provisioned or scaled up or down. 'deleting': The search service is being deleted. 'degraded': The search service is degraded. This can occur when the underlying search units are not healthy. The search service is most likely operational, but performance might be slow and some requests might be dropped. 'disabled': The search service is disabled. In this state, the service will reject all API requests. 'error': The search service is in an error state. 'stopped': The search service is in a subscription that's disabled. If your service is in the degraded, disabled, or error states, it means the Azure AI Search team is actively investigating the underlying issue. Dedicated services in these states are still chargeable based on the number of search units provisioned. </summary>
         [WirePath("properties.status")]
-        public SearchServiceStatus? Status { get; }
+        public SearchServiceStatus? Status
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Status;
+            }
+        }
+
         /// <summary> The details of the search service status. </summary>
         [WirePath("properties.statusDetails")]
-        public string StatusDetails { get; }
+        public string StatusDetails
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StatusDetails;
+            }
+        }
+
         /// <summary> The state of the last provisioning operation performed on the search service. Provisioning is an intermediate state that occurs while service capacity is being established. After capacity is set up, provisioningState changes to either 'Succeeded' or 'Failed'. Client applications can poll provisioning status (the recommended polling interval is from 30 seconds to one minute) by using the Get Search Service operation to see when an operation is completed. If you are using the free service, this value tends to come back as 'Succeeded' directly in the call to Create search service. This is because the free service uses capacity that is already set up. </summary>
         [WirePath("properties.provisioningState")]
-        public SearchServiceProvisioningState? ProvisioningState { get; }
+        public SearchServiceProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> Network specific rules that determine how the Azure AI Search service may be reached. </summary>
         [WirePath("properties.networkRuleSet")]
-        public SearchServiceNetworkRuleSet NetworkRuleSet { get; set; }
+        public SearchServiceNetworkRuleSet NetworkRuleSet
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NetworkRuleSet;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SearchServiceProperties();
+                }
+                Properties.NetworkRuleSet = value;
+            }
+        }
+
         /// <summary> A list of data exfiltration scenarios that are explicitly disallowed for the search service. Currently, the only supported value is 'All' to disable all possible data export scenarios with more fine grained controls planned for the future. </summary>
         [WirePath("properties.dataExfiltrationProtections")]
-        public IList<SearchDataExfiltrationProtection> DataExfiltrationProtections { get; }
+        public IList<SearchDataExfiltrationProtection> DataExfiltrationProtections
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new SearchServiceProperties();
+                }
+                return Properties.DataExfiltrationProtections;
+            }
+        }
+
         /// <summary> Specifies any policy regarding encryption of resources (such as indexes) using customer manager keys within a search service. </summary>
         [WirePath("properties.encryptionWithCmk")]
-        public SearchEncryptionWithCmk EncryptionWithCmk { get; set; }
+        public SearchEncryptionWithCmk EncryptionWithCmk
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EncryptionWithCmk;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SearchServiceProperties();
+                }
+                Properties.EncryptionWithCmk = value;
+            }
+        }
+
         /// <summary> When set to true, calls to the search service will not be permitted to utilize API keys for authentication. This cannot be set to true if 'dataPlaneAuthOptions' are defined. </summary>
         [WirePath("properties.disableLocalAuth")]
-        public bool? IsLocalAuthDisabled { get; set; }
+        public bool? IsLocalAuthDisabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsLocalAuthDisabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SearchServiceProperties();
+                }
+                Properties.IsLocalAuthDisabled = value.Value;
+            }
+        }
+
         /// <summary> Defines the options for how the data plane API of a search service authenticates requests. This cannot be set if 'disableLocalAuth' is set to true. </summary>
         [WirePath("properties.authOptions")]
-        public SearchAadAuthDataPlaneAuthOptions AuthOptions { get; set; }
-        /// <summary> Sets options that control the availability of semantic search. This configuration is only possible for certain Azure AI Search SKUs in certain locations. </summary>
+        public SearchAadAuthDataPlaneAuthOptions AuthOptions
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AuthOptions;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SearchServiceProperties();
+                }
+                Properties.AuthOptions = value;
+            }
+        }
+
+        /// <summary> Specifies the availability and billing plan for semantic search on the Azure AI Search service. This configuration is only available for certain pricing tiers in certain regions. </summary>
         [WirePath("properties.semanticSearch")]
-        public SearchSemanticSearch? SemanticSearch { get; set; }
+        public SearchSemanticSearch? SemanticSearch
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SemanticSearch;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SearchServiceProperties();
+                }
+                Properties.SemanticSearch = value.Value;
+            }
+        }
+
+        /// <summary> Specifies the billing plan for agentic retrieval on the Azure AI Search service. This configuration is only available for certain pricing tiers in certain regions. </summary>
+        [WirePath("properties.knowledgeRetrieval")]
+        public SearchKnowledgeRetrieval? KnowledgeRetrieval
+        {
+            get
+            {
+                return Properties is null ? default : Properties.KnowledgeRetrieval;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SearchServiceProperties();
+                }
+                Properties.KnowledgeRetrieval = value.Value;
+            }
+        }
+
         /// <summary> The list of private endpoint connections to the Azure AI Search service. </summary>
         [WirePath("properties.privateEndpointConnections")]
-        public IReadOnlyList<SearchPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
+        public IReadOnlyList<SearchPrivateEndpointConnectionData> PrivateEndpointConnections
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new SearchServiceProperties();
+                }
+                return Properties.PrivateEndpointConnections;
+            }
+        }
+
         /// <summary> The list of shared private link resources managed by the Azure AI Search service. </summary>
         [WirePath("properties.sharedPrivateLinkResources")]
-        public IReadOnlyList<SharedSearchServicePrivateLinkResourceData> SharedPrivateLinkResources { get; }
+        public IReadOnlyList<SharedSearchServicePrivateLinkResourceData> SharedPrivateLinkResources
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new SearchServiceProperties();
+                }
+                return Properties.SharedPrivateLinkResources;
+            }
+        }
+
         /// <summary> A system generated property representing the service's etag that can be for optimistic concurrency control during updates. </summary>
         [WirePath("properties.eTag")]
-        public ETag? ETag { get; }
+        public ETag? ETag
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ETag;
+            }
+        }
+
         /// <summary> Indicates if the search service has an upgrade available. </summary>
         [WirePath("properties.upgradeAvailable")]
-        public SearchServiceUpgradeAvailable? IsUpgradeAvailable { get; set; }
+        public SearchServiceUpgradeAvailable? IsUpgradeAvailable
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsUpgradeAvailable;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SearchServiceProperties();
+                }
+                Properties.IsUpgradeAvailable = value.Value;
+            }
+        }
+
         /// <summary> The date and time the search service was last upgraded. This field will be null until the service gets upgraded for the first time. </summary>
         [WirePath("properties.serviceUpgradedAt")]
-        public DateTimeOffset? ServiceUpgradedOn { get; }
+        public DateTimeOffset? ServiceUpgradedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ServiceUpgradedOn;
+            }
+        }
+
+        /// <summary> The SKU of the search service. Valid values include: 'free': Shared service. 'basic': Dedicated service with up to 3 replicas. 'standard': Dedicated service with up to 12 partitions and 12 replicas. 'standard2': Similar to standard, but with more capacity per search unit. 'standard3': The largest Standard offering with up to 12 partitions and 12 replicas (or up to 3 partitions with more indexes if you also set the hostingMode property to 'highDensity'). 'storage_optimized_l1': Supports 1TB per partition, up to 12 partitions. 'storage_optimized_l2': Supports 2TB per partition, up to 12 partitions. 'serverless': Serverless tier with auto-scaling capabilities. </summary>
+        [WirePath("sku.name")]
+        public SearchServiceSkuName? SearchSkuName
+        {
+            get
+            {
+                return Sku is null ? default : Sku.SearchSkuName;
+            }
+            set
+            {
+                if (Sku is null)
+                {
+                    Sku = new SearchSku();
+                }
+                Sku.SearchSkuName = value.Value;
+            }
+        }
     }
 }

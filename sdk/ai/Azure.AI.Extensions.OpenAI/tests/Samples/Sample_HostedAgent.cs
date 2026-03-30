@@ -19,7 +19,7 @@ public class Sample_HostedAgent : ProjectsOpenAITestBase
     private static  HostedAgentDefinition GetAgentDefinition(string dockerImage, string modelDeploymentName, string accountId, string applicationInsightConnectionString, string projectEndpoint)
     {
         HostedAgentDefinition agentDefinition = new(
-            versions: [new ProtocolVersionRecord(AgentProtocol.ActivityProtocol, "v1")],
+            versions: [new ProtocolVersionRecord(ProjectsAgentProtocol.ActivityProtocol, "v1")],
             cpu: "1",
             memory: "2Gi"
         )
@@ -69,7 +69,7 @@ public class Sample_HostedAgent : ProjectsOpenAITestBase
             applicationInsightConnectionString: projectName,
             projectEndpoint: projectEndpoint
         );
-        AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+        ProjectsAgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
             agentName: "myHostedAgent",
             options: new(agentDefinition));
         #endregion
@@ -101,7 +101,7 @@ public class Sample_HostedAgent : ProjectsOpenAITestBase
         string accountId = uriEndpoint.Authority.Substring(0, uriEndpoint.Authority.IndexOf('.'));
         AIProjectClient projectClient = new(endpoint: uriEndpoint, tokenProvider: new DefaultAzureCredential());
         #region Snippet:Sample_GetAgent_HostedAgent_Async
-        AgentVersion agentVersion = await projectClient.Agents.GetAgentVersionAsync(
+        ProjectsAgentVersion agentVersion = await projectClient.Agents.GetAgentVersionAsync(
             agentName: "myHostedAgent", agentVersion: "1");
         #endregion
         #region Snippet:Sample_CreateResponse_HostedAgent_Async
@@ -152,7 +152,7 @@ public class Sample_HostedAgent : ProjectsOpenAITestBase
             applicationInsightConnectionString: projectName,
             projectEndpoint: projectEndpoint
         );
-        AgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
+        ProjectsAgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
             agentName: "myHostedAgent",
             options: new(agentDefinition));
         #endregion
@@ -182,7 +182,7 @@ public class Sample_HostedAgent : ProjectsOpenAITestBase
         string accountId = uriEndpoint.Authority.Substring(0, uriEndpoint.Authority.IndexOf('.'));
         AIProjectClient projectClient = new(endpoint: uriEndpoint, tokenProvider: new DefaultAzureCredential());
         #region Snippet:Sample_GetAgent_HostedAgent_Sync
-        AgentVersion agentVersion = projectClient.Agents.GetAgentVersion(
+        ProjectsAgentVersion agentVersion = projectClient.Agents.GetAgentVersion(
             agentName: "myHostedAgent", agentVersion: "1");
         #endregion
         #region Snippet:Sample_CreateResponse_HostedAgent_Sync

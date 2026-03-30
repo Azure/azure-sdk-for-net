@@ -39,6 +39,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         private const string AvailabilitySuccessAttributeName = "microsoft.availability.success";
         private const string AvailabilityRunLocationAttributeName = "microsoft.availability.runLocation";
         private const string AvailabilityMessageAttributeName = "microsoft.availability.message";
+        private const string AvailabilityTestTimestampAttributeName = "microsoft.availability.testTimestamp";
         private const int Version = 2;
         private static readonly Action<LogRecordScope, IDictionary<string, string>> s_processScope = (scope, properties) =>
         {
@@ -56,9 +57,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     {
                         if (!properties.ContainsKey(scopeItem.Key))
                         {
-                            var stringValue = SchemaConstants.TruncationExemptProperties.Contains(scopeItem.Key)
-                                ? Convert.ToString(scopeItem.Value, CultureInfo.InvariantCulture)!
-                                : Convert.ToString(scopeItem.Value, CultureInfo.InvariantCulture)?.Truncate(SchemaConstants.MessageData_Properties_MaxValueLength)!;
+                            var maxValueLength = SchemaConstants.GenAiProperties.Contains(scopeItem.Key)
+                                ? SchemaConstants.GenAi_Properties_MaxValueLength
+                                : SchemaConstants.MessageData_Properties_MaxValueLength;
+                            var stringValue = Convert.ToString(scopeItem.Value, CultureInfo.InvariantCulture)?.Truncate(maxValueLength)!;
                             properties.Add(scopeItem.Key, stringValue);
                         }
                     }
@@ -109,7 +111,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     }
                     else if (availabilityInfo is not null)
                     {
-                        telemetryItem = new TelemetryItem("Availability", logRecord, resource, instrumentationKey, logContext)
+                        DateTimeOffset envelopeTime = availabilityInfo.Value.TestTimestamp != null
+                            && DateTimeOffset.TryParse(
+                                availabilityInfo.Value.TestTimestamp,
+                                CultureInfo.InvariantCulture,
+                                System.Globalization.DateTimeStyles.RoundtripKind,
+                                out var parsedTs)
+                            ? parsedTs.ToUniversalTime()
+                            : TelemetryItem.FormatUtcTimestamp(logRecord.Timestamp);
+
+                        telemetryItem = new TelemetryItem("Availability", envelopeTime, logRecord, resource, instrumentationKey, logContext)
                         {
                             Data = new MonitorBase
                             {
@@ -218,9 +229,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                                 {
                                     if (!properties.ContainsKey(item.Key))
                                     {
-                                        var stringValue = SchemaConstants.TruncationExemptProperties.Contains(item.Key)
-                                            ? item.Value.ToString()!
-                                            : item.Value.ToString().Truncate(SchemaConstants.MessageData_Properties_MaxValueLength)!;
+                                        var maxValueLength = SchemaConstants.GenAiProperties.Contains(item.Key)
+                                            ? SchemaConstants.GenAi_Properties_MaxValueLength
+                                            : SchemaConstants.MessageData_Properties_MaxValueLength;
+                                        var stringValue = item.Value.ToString().Truncate(maxValueLength)!;
                                         properties.Add(item.Key, stringValue);
                                     }
                                 }
@@ -276,6 +288,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             string? availabilitySuccess = null;
             string? availabilityRunLocation = null;
             string? availabilityMessage = null;
+            string? availabilityTestTimestamp = null;
             logContext = default;
 
             foreach (KeyValuePair<string, object?> item in logRecord.Attributes ?? Enumerable.Empty<KeyValuePair<string, object?>>())
@@ -299,6 +312,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                         break;
                     case AvailabilityMessageAttributeName:
                         availabilityMessage = item.Value?.ToString();
+                        break;
+                    case AvailabilityTestTimestampAttributeName:
+                        availabilityTestTimestamp = item.Value?.ToString();
                         break;
                     case ClientIpAttributeName:
                         logContext.MicrosoftClientIp = item.Value?.ToString().Truncate(SchemaConstants.AvailabilityData_Properties_MaxValueLength);
@@ -357,7 +373,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     Duration = availabilityDuration!,
                     Success = bool.TryParse(availabilitySuccess, out var success) ? success : false,
                     RunLocation = availabilityRunLocation,
-                    Message = availabilityMessage ?? message
+                    Message = availabilityMessage ?? message,
+                    TestTimestamp = availabilityTestTimestamp
                 };
             }
 
@@ -439,5 +456,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         public bool Success { get; set; }
         public string? RunLocation { get; set; }
         public string? Message { get; set; }
+        public string? TestTimestamp { get; set; }
     }
 }

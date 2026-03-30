@@ -36,12 +36,12 @@ public class PromptAgentSamples : ProjectsOpenAITestBase
 
         AIProjectClient projectClient = new(new Uri(RAW_FOUNDRY_PROJECT_ENDPOINT), new AzureCliCredential());
 
-        AgentDefinition agentDefinition = new DeclarativeAgentDefinition(MODEL_DEPLOYMENT)
+        ProjectsAgentDefinition agentDefinition = new DeclarativeAgentDefinition(MODEL_DEPLOYMENT)
         {
             Instructions = "You are a foo bar agent. In EVERY response you give, ALWAYS include both `foo` and `bar` strings somewhere in the response.",
         };
 
-        AgentVersion newAgentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+        ProjectsAgentVersion newAgentVersion = await projectClient.Agents.CreateAgentVersionAsync(
             agentName: FOUNDRY_AGENT_NAME,
             options: new(agentDefinition));
         Console.WriteLine($"Created new agent version: {newAgentVersion.Name}");
@@ -69,7 +69,7 @@ public class PromptAgentSamples : ProjectsOpenAITestBase
         {
             Instructions = "You are a physics teacher with a sense of humor.",
         };
-        AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+        ProjectsAgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
             agentName: "myAgent",
             options: new(agentDefinition)
         );
@@ -118,7 +118,7 @@ public class PromptAgentSamples : ProjectsOpenAITestBase
         {
             Instructions = "You are a physics teacher with a sense of humor.",
         };
-        AgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
+        ProjectsAgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
             agentName: "myAgent",
             options: new(agentDefinition)
         );
@@ -159,7 +159,7 @@ public class PromptAgentSamples : ProjectsOpenAITestBase
         #region Snippet:ConversationClient
         CreateResponseOptions CreateResponseOptions = new();
         // Optionally, use a conversation to automatically maintain state between calls.
-        ProjectConversation conversation = await projectClient.OpenAI.Conversations.CreateProjectConversationAsync();
+        ProjectConversation conversation = await projectClient.OpenAI.GetProjectConversationsClient().CreateProjectConversationAsync();
         ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(FOUNDRY_AGENT_NAME, conversation);
         #endregion
         List<ResponseItem> items = [ResponseItem.CreateUserMessageItem("Tell me a one-line story.")];
@@ -194,11 +194,11 @@ public class PromptAgentSamples : ProjectsOpenAITestBase
         // Create an agent version for a new prompt agent
         //
 
-        AgentDefinition agentDefinition = new DeclarativeAgentDefinition(MODEL_DEPLOYMENT)
+        ProjectsAgentDefinition agentDefinition = new DeclarativeAgentDefinition(MODEL_DEPLOYMENT)
         {
             Instructions = "You are a foo bar agent. In EVERY response you give, ALWAYS include both `foo` and `bar` strings somewhere in the response.",
         };
-        AgentVersion newAgentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+        ProjectsAgentVersion newAgentVersion = await projectClient.Agents.CreateAgentVersionAsync(
             agentName: FOUNDRY_AGENT_NAME,
             options: new(agentDefinition));
 
@@ -211,14 +211,14 @@ public class PromptAgentSamples : ProjectsOpenAITestBase
             Items = { ResponseItem.CreateSystemMessageItem("Your preferred genre of story today is: horror.") },
             Metadata = { ["foo"] = "bar" },
         };
-        ProjectConversation conversation = await projectClient.OpenAI.Conversations.CreateProjectConversationAsync(conversationOptions);
+        ProjectConversation conversation = await projectClient.OpenAI.GetProjectConversationsClient().CreateProjectConversationAsync(conversationOptions);
 
         //
         // Add items to an existing conversation to supplement the interaction state
         //
         string EXISTING_CONVERSATION_ID = conversation.Id;
 
-        _ = await projectClient.OpenAI.Conversations.CreateProjectConversationItemsAsync(
+        _ = await projectClient.OpenAI.GetProjectConversationsClient().CreateProjectConversationItemsAsync(
             EXISTING_CONVERSATION_ID,
             [ResponseItem.CreateSystemMessageItem(inputTextContent: "Story theme to use: department of licensing.")]);
         //
@@ -261,7 +261,7 @@ public class PromptAgentSamples : ProjectsOpenAITestBase
         #region Snippet:ErrorHandling
         try
         {
-            AgentVersion agent = await projectClient.Agents.GetAgentVersionAsync(
+            ProjectsAgentVersion agent = await projectClient.Agents.GetAgentVersionAsync(
                 agentName: "agent_which_dies_not_exist", agentVersion: "1");
         }
         catch (ClientResultException e) when (e.Status == 404)

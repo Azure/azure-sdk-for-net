@@ -82,7 +82,7 @@ public class Sample_ResponseBasic : ProjectsOpenAITestBase
 
         #region Snippet:Sample_ListResponses_Async
         await foreach (ResponseResult response
-            in projectClient.OpenAI.Responses.GetProjectResponsesAsync(agent: new AgentReference(agentName), conversationId: conversationId))
+            in projectClient.OpenAI.GetProjectResponsesClient().GetProjectResponsesAsync(agent: new AgentReference(agentName), conversationId: conversationId))
         {
             Console.WriteLine($"Matching response: {response.Id}");
         }
