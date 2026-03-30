@@ -29,6 +29,11 @@ namespace Azure.ResourceManager.Storage
         {
         }
 
+        // Deserialization constructor – called by the JSON serializer to fully hydrate the object.
+        // It accepts a DeletedAccountProperties envelope so that the flattened public properties
+        // (StorageAccountResourceId, Location, etc.) can delegate to it.  Internal because the
+        // prior GA public API only exposed the parameterless constructor above; adding a public
+        // constructor with a different signature would be a new API surface that was never shipped.
         /// <summary> Initializes a new instance of <see cref="DeletedAccountData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -42,6 +47,12 @@ namespace Azure.ResourceManager.Storage
             Properties = properties;
         }
 
+        // Internal because the prior GA API flattened all nested properties directly onto
+        // DeletedAccountData (StorageAccountResourceId, Location, RestoreReference, CreatedOn,
+        // DeletedOn) rather than exposing the REST JSON "properties" envelope.  The TypeSpec
+        // generator models that envelope as a separate DeletedAccountProperties class.  We keep
+        // the wrapper internal so the public surface stays flat and backward-compatible, while
+        // the flattened public properties below delegate into it.
         /// <summary> Properties of the deleted account. </summary>
         [WirePath("properties")]
         internal DeletedAccountProperties Properties { get; }
