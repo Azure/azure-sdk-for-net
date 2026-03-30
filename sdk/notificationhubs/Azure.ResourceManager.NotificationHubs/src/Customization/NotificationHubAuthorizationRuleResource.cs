@@ -23,16 +23,7 @@ namespace Azure.ResourceManager.NotificationHubs
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<NotificationHubAuthorizationRuleResource>> UpdateAsync(WaitUntil waitUntil, SharedAccessAuthorizationRuleCreateOrUpdateContent content, CancellationToken cancellationToken)
         {
-            var data = new NotificationHubAuthorizationRuleData(
-                Data.Id,
-                Data.Name,
-                Data.ResourceType,
-                Data.SystemData,
-                null,
-                Data.Location,
-                content.Properties,
-                Data.Tags);
-            return await UpdateAsync(waitUntil, data, cancellationToken).ConfigureAwait(false);
+            throw new NotSupportedException("This method is obsolete and not supported.");
         }
 
         /// <summary> Creates/Updates an authorization rule for a NotificationHub. </summary>
@@ -43,16 +34,7 @@ namespace Azure.ResourceManager.NotificationHubs
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<NotificationHubAuthorizationRuleResource> Update(WaitUntil waitUntil, SharedAccessAuthorizationRuleCreateOrUpdateContent content, CancellationToken cancellationToken)
         {
-            var data = new NotificationHubAuthorizationRuleData(
-                Data.Id,
-                Data.Name,
-                Data.ResourceType,
-                Data.SystemData,
-                null,
-                Data.Location,
-                content.Properties,
-                Data.Tags);
-            return Update(waitUntil, data, cancellationToken);
+            throw new NotSupportedException("This method is obsolete and not supported.");
         }
     }
 }

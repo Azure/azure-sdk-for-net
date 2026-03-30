@@ -25,17 +25,7 @@ namespace Azure.ResourceManager.NotificationHubs
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<NotificationHubNamespaceAuthorizationRuleResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string authorizationRuleName, SharedAccessAuthorizationRuleCreateOrUpdateContent content, CancellationToken cancellationToken)
         {
-            Response<NotificationHubNamespaceAuthorizationRuleResource> resource = await GetAsync(authorizationRuleName, cancellationToken).ConfigureAwait(false);
-            var data = new NotificationHubAuthorizationRuleData(
-                resource.Value.Data.Id,
-                resource.Value.Data.Name,
-                resource.Value.Data.ResourceType,
-                resource.Value.Data.SystemData,
-                null,
-                resource.Value.Data.Location,
-                content.Properties,
-                resource.Value.Data.Tags);
-            return await CreateOrUpdateAsync(waitUntil, authorizationRuleName, data, cancellationToken).ConfigureAwait(false);
+            throw new NotSupportedException("This method is obsolete and not supported.");
         }
 
         /// <summary> Creates an authorization rule for a namespace. </summary>
@@ -47,17 +37,7 @@ namespace Azure.ResourceManager.NotificationHubs
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<NotificationHubNamespaceAuthorizationRuleResource> CreateOrUpdate(WaitUntil waitUntil, string authorizationRuleName, SharedAccessAuthorizationRuleCreateOrUpdateContent content, CancellationToken cancellationToken)
         {
-            Response<NotificationHubNamespaceAuthorizationRuleResource> resource = Get(authorizationRuleName, cancellationToken);
-            var data = new NotificationHubAuthorizationRuleData(
-                resource.Value.Data.Id,
-                resource.Value.Data.Name,
-                resource.Value.Data.ResourceType,
-                resource.Value.Data.SystemData,
-                null,
-                resource.Value.Data.Location,
-                content.Properties,
-                resource.Value.Data.Tags);
-            return CreateOrUpdate(waitUntil, authorizationRuleName, data, cancellationToken);
+            throw new NotSupportedException("This method is obsolete and not supported.");
         }
     }
 }

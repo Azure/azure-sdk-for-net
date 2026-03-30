@@ -24,8 +24,7 @@ namespace Azure.ResourceManager.NotificationHubs
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<NotificationHubResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string notificationHubName, NotificationHubCreateOrUpdateContent content, CancellationToken cancellationToken)
         {
-            var data = ContentToData(content);
-            return await CreateOrUpdateAsync(waitUntil, notificationHubName, data, cancellationToken).ConfigureAwait(false);
+            throw new NotSupportedException("This method is obsolete and not supported.");
         }
 
         /// <summary> Creates/Update a NotificationHub in a namespace. </summary>
@@ -37,8 +36,7 @@ namespace Azure.ResourceManager.NotificationHubs
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<NotificationHubResource> CreateOrUpdate(WaitUntil waitUntil, string notificationHubName, NotificationHubCreateOrUpdateContent content, CancellationToken cancellationToken)
         {
-            var data = ContentToData(content);
-            return CreateOrUpdate(waitUntil, notificationHubName, data, cancellationToken);
+            throw new NotSupportedException("This method is obsolete and not supported.");
         }
 
         /// <summary> Lists the notification hubs associated with a namespace. </summary>
@@ -52,30 +50,5 @@ namespace Azure.ResourceManager.NotificationHubs
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<NotificationHubResource> GetAll(CancellationToken cancellationToken)
             => GetAll(null, null, cancellationToken);
-
-        // AuthorizationRules is intentionally not mapped — the generated NotificationHubProperties
-        // exposes it as IReadOnlyList<T> (output-only). Auth rules are managed via the
-        // AuthorizationRule sub-resource CRUD operations, not via the NotificationHub body.
-        [Obsolete]
-        private static NotificationHubData ContentToData(NotificationHubCreateOrUpdateContent content)
-        {
-            var data = new NotificationHubData(content.Location);
-            data.Properties = new NotificationHubProperties();
-            data.Properties.NotificationHubName = content.NotificationHubName;
-            data.Properties.RegistrationTtl = content.RegistrationTtl;
-            data.Properties.ApnsCredential = content.ApnsCredential;
-            data.Properties.WnsCredential = content.WnsCredential;
-            data.Properties.GcmCredential = content.GcmCredential;
-            data.Properties.MpnsCredential = content.MpnsCredential;
-            data.Properties.AdmCredential = content.AdmCredential;
-            data.Properties.BaiduCredential = content.BaiduCredential;
-            data.Sku = content.Sku;
-            if (content.Tags != null)
-            {
-                foreach (var tag in content.Tags)
-                    data.Tags[tag.Key] = tag.Value;
-            }
-            return data;
-        }
     }
 }
