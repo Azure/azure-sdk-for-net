@@ -37,14 +37,39 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         }
 
         /// <summary> The Base 64 encoded certificate raw data. </summary>
-        internal RawCertificateData Properties { get; }
+        internal RawCertificateData Properties { get; set; }
+
+        /// <summary> The authentication type. </summary>
+        public DataBoxEdgeAuthenticationType? AuthenticationType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AuthenticationType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RawCertificateData();
+                }
+                Properties.AuthenticationType = value.Value;
+            }
+        }
 
         /// <summary> The base64 encoded certificate raw data. </summary>
         public string Certificate
         {
             get
             {
-                return Properties.Certificate;
+                return Properties is null ? default : Properties.Certificate;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RawCertificateData();
+                }
+                Properties.Certificate = value;
             }
         }
     }

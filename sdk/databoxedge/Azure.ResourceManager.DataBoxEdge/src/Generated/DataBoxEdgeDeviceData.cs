@@ -231,11 +231,11 @@ namespace Azure.ResourceManager.DataBoxEdge
         }
 
         /// <summary> DataResidencyType enum. </summary>
-        public DataBoxEdgeDataResidencyType? DataResidencyType
+        public DataBoxEdgeDataResidencyType? ResidencyType
         {
             get
             {
-                return Properties is null ? default : Properties.DataResidencyType;
+                return Properties is null ? default : Properties.ResidencyType;
             }
             set
             {
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 {
                     Properties = new DataBoxEdgeDeviceProperties();
                 }
-                Properties.DataResidencyType = value.Value;
+                Properties.ResidencyType = value.Value;
             }
         }
     }

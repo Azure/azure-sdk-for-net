@@ -185,13 +185,13 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="resourceMoveDetails"> The details of the move operation on this resource. </param>
         /// <param name="kubernetesWorkloadProfile"> Kubernetes Workload Profile. </param>
         /// <param name="edgeSubscription"> Edge Profile Subscription. </param>
-        /// <param name="dataResidencyType"> DataResidencyType enum. </param>
+        /// <param name="residencyType"> DataResidencyType enum. </param>
         /// <param name="sku"> The SKU type. </param>
         /// <param name="etag"> The etag for the devices. </param>
         /// <param name="identity"> Msi identity of the resource. </param>
         /// <param name="kind"> The kind of the device. </param>
         /// <returns> A new <see cref="DataBoxEdge.DataBoxEdgeDeviceData"/> instance for mocking. </returns>
-        public static DataBoxEdgeDeviceData DataBoxEdgeDeviceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, SystemData dataBoxEdgeSystemData = default, DataBoxEdgeDeviceStatus? dataBoxEdgeDeviceStatus = default, string serialNumber = default, string description = default, string modelDescription = default, DataBoxEdgeDeviceType? deviceType = default, string friendlyName = default, string culture = default, string deviceModel = default, string deviceSoftwareVersion = default, long? deviceLocalCapacity = default, string timeZone = default, string deviceHcsVersion = default, IEnumerable<DataBoxEdgeRoleType> configuredRoleTypes = default, int? nodeCount = default, DataBoxEdgeResourceMoveDetails resourceMoveDetails = default, string kubernetesWorkloadProfile = default, EdgeProfileSubscription edgeSubscription = default, DataBoxEdgeDataResidencyType? dataResidencyType = default, DataBoxEdgeSku sku = default, ETag? etag = default, ManagedServiceIdentity identity = default, DataBoxEdgeDeviceKind? kind = default)
+        public static DataBoxEdgeDeviceData DataBoxEdgeDeviceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, SystemData dataBoxEdgeSystemData = default, DataBoxEdgeDeviceStatus? dataBoxEdgeDeviceStatus = default, string serialNumber = default, string description = default, string modelDescription = default, DataBoxEdgeDeviceType? deviceType = default, string friendlyName = default, string culture = default, string deviceModel = default, string deviceSoftwareVersion = default, long? deviceLocalCapacity = default, string timeZone = default, string deviceHcsVersion = default, IEnumerable<DataBoxEdgeRoleType> configuredRoleTypes = default, int? nodeCount = default, DataBoxEdgeResourceMoveDetails resourceMoveDetails = default, string kubernetesWorkloadProfile = default, EdgeProfileSubscription edgeSubscription = default, DataBoxEdgeDataResidencyType? residencyType = default, DataBoxEdgeSku sku = default, ETag? etag = default, ManagedServiceIdentity identity = default, DataBoxEdgeDeviceKind? kind = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                dataBoxEdgeSystemData is null && dataBoxEdgeDeviceStatus is null && serialNumber is null && description is null && modelDescription is null && deviceType is null && friendlyName is null && culture is null && deviceModel is null && deviceSoftwareVersion is null && deviceLocalCapacity is null && timeZone is null && deviceHcsVersion is null && configuredRoleTypes is null && nodeCount is null && resourceMoveDetails is null && kubernetesWorkloadProfile is null && edgeSubscription is null && dataResidencyType is null ? default : new DataBoxEdgeDeviceProperties(
+                dataBoxEdgeSystemData is null && dataBoxEdgeDeviceStatus is null && serialNumber is null && description is null && modelDescription is null && deviceType is null && friendlyName is null && culture is null && deviceModel is null && deviceSoftwareVersion is null && deviceLocalCapacity is null && timeZone is null && deviceHcsVersion is null && configuredRoleTypes is null && nodeCount is null && resourceMoveDetails is null && kubernetesWorkloadProfile is null && edgeSubscription is null && residencyType is null ? default : new DataBoxEdgeDeviceProperties(
                     dataBoxEdgeSystemData,
                     dataBoxEdgeDeviceStatus,
                     serialNumber,
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     nodeCount,
                     resourceMoveDetails,
                     new EdgeProfile(edgeSubscription, null),
-                    new DataResidency(dataResidencyType, null),
+                    new DataResidency(residencyType, null),
                     kubernetesWorkloadProfile,
                     null),
                 sku,
@@ -319,14 +319,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 systemData,
                 additionalBinaryDataProperties: null,
                 deviceAdminPassword is null ? default : new SecuritySettingsProperties(deviceAdminPassword, null));
-        }
-
-        /// <param name="authenticationType"> The authentication type. </param>
-        /// <param name="certificate"> The base64 encoded certificate raw data. </param>
-        /// <returns> A new <see cref="Models.UploadCertificateContent"/> instance for mocking. </returns>
-        public static UploadCertificateContent UploadCertificateContent(DataBoxEdgeAuthenticationType? authenticationType = default, string certificate = default)
-        {
-            return new UploadCertificateContent(authenticationType is null && certificate is null ? default : new RawCertificateData(authenticationType, certificate, null), additionalBinaryDataProperties: null);
         }
 
         /// <summary> The upload registration certificate response. </summary>
@@ -1177,22 +1169,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static DataBoxEdgeDeviceData DataBoxEdgeDeviceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DataBoxEdgeSku sku, ETag? etag, ManagedServiceIdentity identity, DataBoxEdgeDeviceKind? kind, DataBoxEdgeDeviceStatus? dataBoxEdgeDeviceStatus, string serialNumber, string description, string modelDescription, DataBoxEdgeDeviceType? deviceType, string friendlyName, string culture, string deviceModel, string deviceSoftwareVersion, long? deviceLocalCapacity, string timeZone, string deviceHcsVersion, IEnumerable<DataBoxEdgeRoleType> configuredRoleTypes, int? nodeCount, DataBoxEdgeResourceMoveDetails resourceMoveDetails, EdgeProfileSubscription edgeSubscription, DataBoxEdgeDataResidencyType? residencyType)
         {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-            configuredRoleTypes ??= new ChangeTrackingList<DataBoxEdgeRoleType>();
-
-            return new DataBoxEdgeDeviceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                tags,
-                location,
-                default,
-                sku,
-                default,
-                identity,
-                kind);
+            return DataBoxEdgeDeviceData(id, name, resourceType, systemData, tags, location, dataBoxEdgeSystemData: default, dataBoxEdgeDeviceStatus, serialNumber, description, modelDescription, deviceType, friendlyName, culture, deviceModel, deviceSoftwareVersion, deviceLocalCapacity, timeZone, deviceHcsVersion, configuredRoleTypes, nodeCount, resourceMoveDetails, kubernetesWorkloadProfile: default, edgeSubscription, residencyType, sku, etag, identity, kind);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataBoxEdgeDeviceExtendedInfo"/>. </summary>
@@ -1304,6 +1281,16 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 additionalBinaryDataProperties: null,
                 default,
                 kind);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.UploadCertificateContent"/>. </summary>
+        /// <param name="authenticationType"> The authentication type. </param>
+        /// <param name="certificate"> The base64 encoded certificate raw data. </param>
+        /// <returns> A new <see cref="Models.UploadCertificateContent"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static UploadCertificateContent UploadCertificateContent(DataBoxEdgeAuthenticationType? authenticationType, string certificate)
+        {
+            return new UploadCertificateContent(default, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CloudEdgeManagementRole"/>. </summary>

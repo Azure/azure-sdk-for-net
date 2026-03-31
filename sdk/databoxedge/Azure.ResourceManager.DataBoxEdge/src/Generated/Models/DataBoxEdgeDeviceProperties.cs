@@ -42,10 +42,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="nodeCount"> The number of nodes in the cluster. </param>
         /// <param name="resourceMoveDetails"> The details of the move operation on this resource. </param>
         /// <param name="edgeProfile"> The details of Edge Profile for this resource. </param>
-        /// <param name="dataResidency"> The details of data-residency related properties for this resource. </param>
+        /// <param name="residency"> The details of data-residency related properties for this resource. </param>
         /// <param name="kubernetesWorkloadProfile"> Kubernetes Workload Profile. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataBoxEdgeDeviceProperties(SystemData dataBoxEdgeSystemData, DataBoxEdgeDeviceStatus? dataBoxEdgeDeviceStatus, string serialNumber, string description, string modelDescription, DataBoxEdgeDeviceType? deviceType, string friendlyName, string culture, string deviceModel, string deviceSoftwareVersion, long? deviceLocalCapacity, string timeZone, string deviceHcsVersion, IReadOnlyList<DataBoxEdgeRoleType> configuredRoleTypes, int? nodeCount, DataBoxEdgeResourceMoveDetails resourceMoveDetails, EdgeProfile edgeProfile, DataResidency dataResidency, string kubernetesWorkloadProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataBoxEdgeDeviceProperties(SystemData dataBoxEdgeSystemData, DataBoxEdgeDeviceStatus? dataBoxEdgeDeviceStatus, string serialNumber, string description, string modelDescription, DataBoxEdgeDeviceType? deviceType, string friendlyName, string culture, string deviceModel, string deviceSoftwareVersion, long? deviceLocalCapacity, string timeZone, string deviceHcsVersion, IReadOnlyList<DataBoxEdgeRoleType> configuredRoleTypes, int? nodeCount, DataBoxEdgeResourceMoveDetails resourceMoveDetails, EdgeProfile edgeProfile, DataResidency residency, string kubernetesWorkloadProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DataBoxEdgeSystemData = dataBoxEdgeSystemData;
             DataBoxEdgeDeviceStatus = dataBoxEdgeDeviceStatus;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             NodeCount = nodeCount;
             ResourceMoveDetails = resourceMoveDetails;
             EdgeProfile = edgeProfile;
-            DataResidency = dataResidency;
+            Residency = residency;
             KubernetesWorkloadProfile = kubernetesWorkloadProfile;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         internal EdgeProfile EdgeProfile { get; }
 
         /// <summary> The details of data-residency related properties for this resource. </summary>
-        internal DataResidency DataResidency { get; set; }
+        internal DataResidency Residency { get; set; }
 
         /// <summary> Kubernetes Workload Profile. </summary>
         public string KubernetesWorkloadProfile { get; }
@@ -136,19 +136,19 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         }
 
         /// <summary> DataResidencyType enum. </summary>
-        public DataBoxEdgeDataResidencyType? DataResidencyType
+        public DataBoxEdgeDataResidencyType? ResidencyType
         {
             get
             {
-                return DataResidency is null ? default : DataResidency.Type;
+                return Residency is null ? default : Residency.Type;
             }
             set
             {
-                if (DataResidency is null)
+                if (Residency is null)
                 {
-                    DataResidency = new DataResidency();
+                    Residency = new DataResidency();
                 }
-                DataResidency.Type = value;
+                Residency.Type = value;
             }
         }
     }
