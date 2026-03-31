@@ -617,12 +617,19 @@ namespace Azure.Generator.Management.Visitors
 
             if (updated)
             {
-                // if the public constructor became parameterless, we need to remove it
                 if (updateParameters.Count == 0)
                 {
-                    var updatedConstructors = model.Constructors.ToList();
-                    updatedConstructors.Remove(publicConstructor);
-                    model.Update(constructors: updatedConstructors);
+                    // All flattened parameters were optional — the public constructor becomes
+                    // parameterless. This is valid: users create the object and set optional
+                    // properties via setters. Update the signature to remove the old parameters.
+                    publicConstructor.Signature.Update(parameters: updateParameters);
+                    publicConstructor.Update(signature: publicConstructor.Signature);
+
+                    // The serialization type may have already added an internal parameterless
+                    // constructor (for deserialization) before this visitor ran. Now that the
+                    // model has a public parameterless constructor, the internal one is redundant
+                    // and would cause CS0111. Remove it.
+                    RemoveDuplicateSerializationConstructor(model);
                 }
                 else
                 {
@@ -636,6 +643,26 @@ namespace Azure.Generator.Management.Visitors
         {
             // We only include the flattened property in the public constructor if it is required
             return flattenedProperty.WireInfo?.IsRequired == true;
+        }
+
+        /// <summary>
+        /// Removes the internal parameterless constructor from the serialization type if one exists.
+        /// The serialization type adds an internal parameterless constructor for deserialization
+        /// before the flatten visitor runs. When flattening makes the model's public constructor
+        /// parameterless, the serialization constructor becomes a duplicate and must be removed.
+        /// </summary>
+        private static void RemoveDuplicateSerializationConstructor(ModelProvider model)
+        {
+            foreach (var serializationType in model.SerializationProviders)
+            {
+                var ctors = serializationType.Constructors;
+                var parameterlessCtor = ctors.SingleOrDefault(c => !c.Signature.Parameters.Any());
+                if (parameterlessCtor is not null)
+                {
+                    var updatedCtors = ctors.Where(c => c != parameterlessCtor).ToList();
+                    serializationType.Update(constructors: updatedCtors);
+                }
+            }
         }
 
         private void UpdatePublicConstructorBody(ModelProvider model, Dictionary<string, List<FlattenPropertyInfo>> flattenPropertyMap, ConstructorProvider publicConstructor)
