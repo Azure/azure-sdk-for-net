@@ -3,6 +3,8 @@
 
 #nullable disable
 
+#pragma warning disable CS1591
+
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerInstance.Models

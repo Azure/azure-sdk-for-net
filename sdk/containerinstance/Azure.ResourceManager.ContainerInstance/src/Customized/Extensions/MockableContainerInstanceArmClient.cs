@@ -6,6 +6,8 @@
 
 #nullable disable
 
+#pragma warning disable CS1591
+
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.ContainerInstance;

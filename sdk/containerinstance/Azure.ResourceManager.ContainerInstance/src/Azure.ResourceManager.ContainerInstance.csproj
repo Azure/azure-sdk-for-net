@@ -7,6 +7,8 @@
     <Description>Microsoft Azure Resource Manager client SDK for Azure resource provider Microsoft.ContainerInstance.</Description>
     <PackageTags>azure;management;arm;resource manager;containerinstance</PackageTags>
     <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
+    <!-- Suppress AZC0012 for generic type names from TypeSpec generator (Container, Volume, Event, etc.) -->
+    <NoWarn>$(NoWarn);AZC0012</NoWarn>
   </PropertyGroup>
   <ItemGroup>
     <!-- Exclude generated files with duplicate method definitions (generator bug: GetCGProfileResource duplicated) -->

@@ -3,6 +3,8 @@
 
 #nullable disable
 
+#pragma warning disable CS1591
+
 using System;
 using System.ComponentModel;
 
@@ -21,6 +23,11 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             _value = value;
         }
 
+        /// <summary> Linux. </summary>
+        public static ContainerInstanceOperatingSystemType Linux { get; } = new ContainerInstanceOperatingSystemType("Linux");
+        /// <summary> Windows. </summary>
+        public static ContainerInstanceOperatingSystemType Windows { get; } = new ContainerInstanceOperatingSystemType("Windows");
+
         /// <summary> Converts from <see cref="OperatingSystemTypes"/>. </summary>
         /// <param name="osType"> The OS type. </param>
         public static implicit operator ContainerInstanceOperatingSystemType(OperatingSystemTypes osType)
@@ -30,6 +37,14 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="osType"> The OS type. </param>
         public static implicit operator OperatingSystemTypes(ContainerInstanceOperatingSystemType osType)
             => new OperatingSystemTypes(osType._value);
+
+        /// <summary> Converts from string. </summary>
+        public static implicit operator ContainerInstanceOperatingSystemType(string value) => new ContainerInstanceOperatingSystemType(value);
+
+        /// <summary> Determines equality. </summary>
+        public static bool operator ==(ContainerInstanceOperatingSystemType left, ContainerInstanceOperatingSystemType right) => left.Equals(right);
+        /// <summary> Determines inequality. </summary>
+        public static bool operator !=(ContainerInstanceOperatingSystemType left, ContainerInstanceOperatingSystemType right) => !left.Equals(right);
 
         /// <inheritdoc />
         public bool Equals(ContainerInstanceOperatingSystemType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);

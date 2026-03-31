@@ -6,6 +6,8 @@
 
 #nullable disable
 
+#pragma warning disable CS1591
+
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;

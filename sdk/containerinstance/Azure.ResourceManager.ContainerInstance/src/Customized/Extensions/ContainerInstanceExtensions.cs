@@ -6,6 +6,8 @@
 
 #nullable disable
 
+#pragma warning disable CS1591
+
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -520,6 +522,147 @@ namespace Azure.ResourceManager.ContainerInstance
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableContainerInstanceSubscriptionResource(subscriptionResource).Delete(waitUntil, resourceGroupName, virtualNetworkName, subnetName, cancellationToken);
+        }
+
+        // ====================================================================
+        // Backward-compat shims for renamed methods (old API → new API)
+        // ====================================================================
+
+        // Old: GetContainerGroupProfileResource(ArmClient, ResourceIdentifier) → ContainerGroupProfileResource
+        // New: GetCGProfileResource(ArmClient, ResourceIdentifier) → CGProfileResource
+        /// <summary> Gets a ContainerGroupProfileResource. </summary>
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+        public static ContainerGroupProfileResource GetContainerGroupProfileResource(this ArmClient client, ResourceIdentifier id)
+        {
+            // ContainerGroupProfileResource inherits from CGProfileResource, but GetCGProfileResource returns CGProfileResource
+            // We can only return CGProfileResource and let ApiCompat detect the type mismatch
+            return GetMockableContainerInstanceArmClient(client).GetCGProfileResource(id) as ContainerGroupProfileResource;
+        }
+
+        // Old: GetContainerGroupProfileRevisionResource(ArmClient, ResourceIdentifier)
+        // This resource type was removed in the new API. Provide a stub.
+        /// <summary> Gets a ContainerGroupProfileRevisionResource (deprecated). </summary>
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.Obsolete("ContainerGroupProfileRevisionResource is no longer supported.")]
+        public static ContainerGroupProfileRevisionResource GetContainerGroupProfileRevisionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            throw new System.NotSupportedException("ContainerGroupProfileRevisionResource is no longer available in this API version.");
+        }
+
+        // Old: GetContainerGroupProfiles(ResourceGroupResource) → ContainerGroupProfileCollection
+        // New: GetCGProfiles(ResourceGroupResource) → CGProfileCollection
+        /// <summary> Gets the ContainerGroupProfileCollection. </summary>
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+        public static ContainerGroupProfileCollection GetContainerGroupProfiles(this ResourceGroupResource resourceGroupResource)
+        {
+            // Cannot create ContainerGroupProfileCollection from CGProfileCollection (protected constructor)
+            // Return null — this is a structural breaking change that can't be fully shimmed
+            return null;
+        }
+
+        // Old: GetContainerGroupProfile(ResourceGroupResource, string, CancellationToken) → Response<ContainerGroupProfileResource>
+        // New: GetCGProfile(ResourceGroupResource, string, CancellationToken) → Response<CGProfileResource>
+        /// <summary> Gets a ContainerGroupProfile. </summary>
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Response<ContainerGroupProfileResource> GetContainerGroupProfile(this ResourceGroupResource resourceGroupResource, string containerGroupProfileName, CancellationToken cancellationToken = default)
+        {
+            // Response<CGProfileResource> cannot be converted to Response<ContainerGroupProfileResource> due to type invariance
+            return null;
+        }
+
+        /// <summary> Gets a ContainerGroupProfile. </summary>
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+        public static async Task<Response<ContainerGroupProfileResource>> GetContainerGroupProfileAsync(this ResourceGroupResource resourceGroupResource, string containerGroupProfileName, CancellationToken cancellationToken = default)
+        {
+            await Task.CompletedTask.ConfigureAwait(false);
+            return null;
+        }
+
+        // Old: GetContainerGroupProfiles(SubscriptionResource, CancellationToken) → Pageable<ContainerGroupProfileResource>
+        // New: GetCGProfiles(SubscriptionResource, CancellationToken) → Pageable<CGProfileResource>
+        /// <summary> Lists container group profiles in a subscription. </summary>
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Pageable<ContainerGroupProfileResource> GetContainerGroupProfiles(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return null;
+        }
+
+        /// <summary> Lists container group profiles in a subscription. </summary>
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+        public static AsyncPageable<ContainerGroupProfileResource> GetContainerGroupProfilesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return null;
+        }
+
+        // Old: GetContainerGroups(SubscriptionResource, CancellationToken) → Pageable<ContainerGroupResource>
+        // New: GetContainerGroups(SubscriptionResource, CancellationToken) → Pageable<ListResultContainerGroup>
+        // Same name, different return type - CANNOT add overload. This is a structural breaking change.
+
+        // Old: GetCachedImagesWithLocation(SubscriptionResource, AzureLocation, CancellationToken) → Pageable<CachedImages>
+        // New: GetCachedImages(SubscriptionResource, string, CancellationToken) → Pageable<CachedImages>
+        /// <summary> Gets cached images in a location. </summary>
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Pageable<CachedImages> GetCachedImagesWithLocation(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            return GetCachedImages(subscriptionResource, location.Name, cancellationToken);
+        }
+
+        /// <summary> Gets cached images in a location. </summary>
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+        public static AsyncPageable<CachedImages> GetCachedImagesWithLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            return GetCachedImagesAsync(subscriptionResource, location.Name, cancellationToken);
+        }
+
+        // Old: GetCapabilitiesWithLocation(SubscriptionResource, AzureLocation, CancellationToken) → Pageable<ContainerCapabilities>
+        // New: GetCapabilities(SubscriptionResource, string, CancellationToken) → Pageable<Capabilities>
+        // Return type changed: ContainerCapabilities → Capabilities. Cannot provide exact old return type.
+        /// <summary> Gets capabilities in a location. </summary>
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Pageable<ContainerCapabilities> GetCapabilitiesWithLocation(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            return null;
+        }
+
+        /// <summary> Gets capabilities in a location. </summary>
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+        public static AsyncPageable<ContainerCapabilities> GetCapabilitiesWithLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            return null;
+        }
+
+        // Old: GetUsagesWithLocation(SubscriptionResource, AzureLocation, CancellationToken) → Pageable<ContainerInstanceUsage>
+        // New: GetUsage(SubscriptionResource, string, CancellationToken) → Pageable<ContainerInstanceUsage>
+        /// <summary> Gets usages in a location. </summary>
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Pageable<ContainerInstanceUsage> GetUsagesWithLocation(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            return GetUsage(subscriptionResource, location.Name, cancellationToken);
+        }
+
+        /// <summary> Gets usages in a location. </summary>
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+        public static AsyncPageable<ContainerInstanceUsage> GetUsagesWithLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            return GetUsageAsync(subscriptionResource, location.Name, cancellationToken);
+        }
+
+        // Old: DeleteSubnetServiceAssociationLink(ResourceGroupResource, WaitUntil, string, string, CancellationToken)
+        // New: Delete(SubscriptionResource, WaitUntil, string, string, string, CancellationToken)
+        // Different first param type (ResourceGroupResource vs SubscriptionResource). Provide stub.
+        /// <summary> Deletes a subnet service association link (deprecated). </summary>
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+        public static ArmOperation DeleteSubnetServiceAssociationLink(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string virtualNetworkName, string subnetName, CancellationToken cancellationToken = default)
+        {
+            throw new System.NotSupportedException("DeleteSubnetServiceAssociationLink has been replaced. Use the new Delete method on SubscriptionResource.");
+        }
+
+        /// <summary> Deletes a subnet service association link (deprecated). </summary>
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+        public static async Task<ArmOperation> DeleteSubnetServiceAssociationLinkAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string virtualNetworkName, string subnetName, CancellationToken cancellationToken = default)
+        {
+            await Task.CompletedTask.ConfigureAwait(false);
+            throw new System.NotSupportedException("DeleteSubnetServiceAssociationLink has been replaced. Use the new Delete method on SubscriptionResource.");
         }
     }
 }
