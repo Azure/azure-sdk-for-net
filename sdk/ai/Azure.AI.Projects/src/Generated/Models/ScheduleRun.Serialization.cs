@@ -100,7 +100,7 @@ namespace Azure.AI.Projects.Evaluation
             if (Optional.IsDefined(TriggerTime))
             {
                 writer.WritePropertyName("triggerTime"u8);
-                writer.WriteStringValue(TriggerTime);
+                writer.WriteStringValue(TriggerTime.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(Error))
             {
@@ -168,7 +168,7 @@ namespace Azure.AI.Projects.Evaluation
             string runId = default;
             string scheduleId = default;
             bool success = default;
-            string triggerTime = default;
+            DateTimeOffset? triggerTime = default;
             string error = default;
             IReadOnlyDictionary<string, string> properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -191,7 +191,11 @@ namespace Azure.AI.Projects.Evaluation
                 }
                 if (prop.NameEquals("triggerTime"u8))
                 {
-                    triggerTime = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    triggerTime = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("error"u8))

@@ -104,10 +104,10 @@ public class ProjectOpenAIClientSmokeTest : ProjectsOpenAITestBase
             await responsesClient.CreateResponseAsync(options);
         }
 
-        VerifyCall(DoCreateAgentAsync(projectClientWithoutApp.Agents), "Azure.AI.Projects.*");
-        VerifyCall(DoCreateAgentAsync(projectClientWithApp.Agents), "MyApplication Azure.AI.Projects.*");
-        VerifyCall(DoResponseAsync(projectClientWithoutApp.OpenAI.GetProjectResponsesClient()), "Azure.AI.Projects.*");
-        VerifyCall(DoResponseAsync(projectClientWithApp.OpenAI.GetProjectResponsesClient()), "MyApplication Azure.AI.Projects.*");
+        VerifyCall(DoCreateAgentAsync(projectClientWithoutApp.AgentAdministrationClient), "Azure.AI.Projects.*");
+        VerifyCall(DoCreateAgentAsync(projectClientWithApp.AgentAdministrationClient), "MyApplication Azure.AI.Projects.*");
+        VerifyCall(DoResponseAsync(projectClientWithoutApp.ProjectOpenAIClient.GetProjectResponsesClient()), "Azure.AI.Projects.*");
+        VerifyCall(DoResponseAsync(projectClientWithApp.ProjectOpenAIClient.GetProjectResponsesClient()), "MyApplication Azure.AI.Projects.*");
         VerifyCall(DoResponseAsync(openAIClientWithoutApp.GetProjectResponsesClient()), "AIProjectClient OpenAI.*");
         VerifyCall(DoResponseAsync(openAIClientWithApp.GetProjectResponsesClient()), "MyOtherApplication-AIProjectClient OpenAI.*");
         VerifyCall(DoResponseAsync(responsesClientWithoutApp), "AIProjectClient.*");
@@ -121,7 +121,7 @@ public class ProjectOpenAIClientSmokeTest : ProjectsOpenAITestBase
         System.IO.File.WriteAllText(
             path: filePath,
             contents: "The word 'apple' uses the code 442345, while the word 'banana' uses the code 673457.");
-        OpenAIFileClient fileClient = projectClient.OpenAI.GetOpenAIFileClient();
+        OpenAIFileClient fileClient = projectClient.ProjectOpenAIClient.GetOpenAIFileClient();
         OpenAIFile uploadedFile = await fileClient.UploadFileAsync(filePath: filePath, purpose: FileUploadPurpose.Assistants);
         FileDeletionResult deletion = await fileClient.DeleteFileAsync(fileId: uploadedFile.Id);
         Assert.That(deletion.Deleted, Is.True);
@@ -135,9 +135,9 @@ public class ProjectOpenAIClientSmokeTest : ProjectsOpenAITestBase
         Uri connectionString = new(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT);
         AIProjectClient projectClient = new(connectionString, TestEnvironment.Credential);
         // Remove Agents.
-        foreach (ProjectsAgentVersion ag in projectClient.Agents.GetAgentVersions(agentName: FOUNDRY_AGENT_NAME))
+        foreach (ProjectsAgentVersion ag in projectClient.AgentAdministrationClient.GetAgentVersions(agentName: FOUNDRY_AGENT_NAME))
         {
-            projectClient.Agents.DeleteAgentVersion(agentName: ag.Name, agentVersion: ag.Version);
+            projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: ag.Name, agentVersion: ag.Version);
         }
     }
 }

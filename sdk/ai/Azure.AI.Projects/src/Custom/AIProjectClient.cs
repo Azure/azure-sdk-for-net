@@ -168,27 +168,27 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> Initializes a new instance of ProjectEvaluators. </summary>
-        internal virtual ProjectEvaluators GetEvaluatorsClient()
+        internal virtual ProjectEvaluators GetProjectEvaluatorsClient()
         {
             return Volatile.Read(ref _cachedProjectEvaluators) ?? Interlocked.CompareExchange(ref _cachedProjectEvaluators, new ProjectEvaluators(Pipeline, _endpoint, _apiVersion), null) ?? _cachedProjectEvaluators;
         }
 
         /// <summary> Initializes a new instance of ProjectInsights. </summary>
-        internal virtual ProjectInsights GetInsightsClient()
+        internal virtual ProjectInsights GetProjectInsightsClient()
         {
             return Volatile.Read(ref _cachedProjectInsights) ?? Interlocked.CompareExchange(ref _cachedProjectInsights, new ProjectInsights(Pipeline, _endpoint, _apiVersion), null) ?? _cachedProjectInsights;
         }
 
         /// <summary> Initializes a new instance of ProjectSchedules. </summary>
-        internal virtual ProjectSchedules GetSchedulesClient()
+        internal virtual ProjectSchedules GetProjectSchedulesClient()
         {
             return Volatile.Read(ref _cachedProjectSchedules) ?? Interlocked.CompareExchange(ref _cachedProjectSchedules, new ProjectSchedules(Pipeline, _endpoint, _apiVersion), null) ?? _cachedProjectSchedules;
         }
 
         /// <summary> Initializes a new instance of AIProjectMemoryStoresOperations. </summary>
-        internal virtual AIProjectMemoryStoresOperations GetAIProjectMemoryStoresOperationsClient()
+        internal virtual AIProjectMemoryStores GetAIProjectMemoryStoresOperationsClient()
         {
-            return Volatile.Read(ref _cachedAIProjectMemoryStoresOperations) ?? Interlocked.CompareExchange(ref _cachedAIProjectMemoryStoresOperations, new AIProjectMemoryStoresOperations(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAIProjectMemoryStoresOperations;
+            return Volatile.Read(ref _cachedAIProjectMemoryStores) ?? Interlocked.CompareExchange(ref _cachedAIProjectMemoryStores, new AIProjectMemoryStores(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAIProjectMemoryStores;
         }
 
         /// <summary> Gets the client for managing connections. </summary>
@@ -199,15 +199,15 @@ namespace Azure.AI.Projects
         public virtual AIProjectDeploymentsOperations Deployments { get => GetAIProjectDeploymentsOperationsClient(); }
         /// <summary> Gets the client for managing indexes. </summary>
         public virtual AIProjectIndexesOperations Indexes { get => GetAIProjectIndexesOperationsClient(); }
-        public virtual ProjectOpenAIClient OpenAI => GetCachedOpenAIClient();
-        public virtual AgentAdministrationClient Agents => GetCachedAgentsClient();
-        public virtual AIProjectMemoryStoresOperations MemoryStores => GetAIProjectMemoryStoresOperationsClient();
+        public virtual ProjectOpenAIClient ProjectOpenAIClient => GetCachedOpenAIClient();
+        public virtual AgentAdministrationClient AgentAdministrationClient => GetCachedAgentsClient();
+        public virtual AIProjectMemoryStores MemoryStores => GetAIProjectMemoryStoresClient();
         public virtual RedTeams RedTeams => GetRedTeamsClient();
         public virtual EvaluationRules EvaluationRules => GetEvaluationRulesClient();
         public virtual EvaluationTaxonomies EvaluationTaxonomies => GetEvaluationTaxonomiesClient();
-        public virtual ProjectEvaluators Evaluators => GetEvaluatorsClient();
-        public virtual ProjectInsights Insights => GetInsightsClient();
-        public virtual ProjectSchedules Schedules => GetSchedulesClient();
+        public virtual ProjectEvaluators Evaluators => GetProjectEvaluatorsClient();
+        public virtual ProjectInsights Insights => GetProjectInsightsClient();
+        public virtual ProjectSchedules Schedules => GetProjectSchedulesClient();
         /// <summary> Gets the client for telemetry operations. </summary>
         public virtual AIProjectTelemetry Telemetry { get => new AIProjectTelemetry(this); }
 

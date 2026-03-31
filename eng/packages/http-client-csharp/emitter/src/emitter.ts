@@ -1,14 +1,46 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-import { EmitContext, NoTarget, resolvePath } from "@typespec/compiler";
+import {
+  Diagnostic,
+  EmitContext,
+  NoTarget,
+  resolvePath
+} from "@typespec/compiler";
 import { createSdkContext } from "@azure-tools/typespec-client-generator-core";
 
-import { emitCodeModel } from "@typespec/http-client-csharp";
+import {
+  CodeModel,
+  CSharpEmitterContext,
+  emitCodeModel
+} from "@typespec/http-client-csharp";
 import { AzureEmitterOptions } from "./options.js";
 import { $lib } from "./lib/lib.js";
 
 export async function $onEmit(context: EmitContext<AzureEmitterOptions>) {
+  const [, diagnostics] = await emitAzureCodeModel(context);
+  context.program.reportDiagnostics(diagnostics);
+}
+
+/**
+ * Emits Azure code model with optional customization callback.
+ *
+ * This function applies Azure-specific defaults (generator name, license, decorators, etc.),
+ * generates the metadata.json file, and delegates to the base emitter's `emitCodeModel`.
+ * Downstream emitters (e.g., management plane) can call this instead of `$onEmit` to pass
+ * an `updateCodeModel` callback for additional code model transformations.
+ *
+ * @param context - The emit context
+ * @param updateCodeModel - Optional callback to modify the code model before emission
+ * @returns A tuple containing void and any diagnostics generated during emission
+ */
+export async function emitAzureCodeModel(
+  context: EmitContext<AzureEmitterOptions>,
+  updateCodeModel?: (
+    model: CodeModel,
+    context: CSharpEmitterContext
+  ) => CodeModel
+): Promise<[void, readonly Diagnostic[]]> {
   context.options["generator-name"] ??= "AzureClientGenerator";
   context.options["emitter-extension-path"] ??= import.meta.url;
   context.options["license"] ??= {
@@ -38,8 +70,7 @@ export async function $onEmit(context: EmitContext<AzureEmitterOptions>) {
   // Generate metadata.json file
   await generateMetadataFile(context);
 
-  const [, diagnostics] = await emitCodeModel(context);
-  context.program.reportDiagnostics(diagnostics);
+  return await emitCodeModel(context, updateCodeModel);
 }
 
 /**

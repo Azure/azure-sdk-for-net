@@ -9,7 +9,7 @@ using Azure.AI.Projects;
 namespace Azure.AI.Projects.Memory
 {
     /// <summary></summary>
-    public partial class AIProjectMemoryStoresOperations
+    public partial class AIProjectMemoryStores
     {
         private static PipelineMessageClassifier _pipelineMessageClassifier200;
         private static PipelineMessageClassifier _pipelineMessageClassifier202;

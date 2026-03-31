@@ -35,27 +35,15 @@ namespace Azure.AI.Projects
         private ProjectEvaluators _cachedProjectEvaluators;
         private ProjectInsights _cachedProjectInsights;
         private ProjectSchedules _cachedProjectSchedules;
-        private AIProjectMemoryStoresOperations _cachedAIProjectMemoryStoresOperations;
+        private AIProjectMemoryStores _cachedAIProjectMemoryStores;
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public ClientPipeline Pipeline { get; }
 
-        /// <summary> Initializes a new instance of ProjectEvaluators. </summary>
-        public virtual ProjectEvaluators GetProjectEvaluatorsClient()
+        /// <summary> Initializes a new instance of AIProjectMemoryStores. </summary>
+        public virtual AIProjectMemoryStores GetAIProjectMemoryStoresClient()
         {
-            return Volatile.Read(ref _cachedProjectEvaluators) ?? Interlocked.CompareExchange(ref _cachedProjectEvaluators, new ProjectEvaluators(Pipeline, _endpoint, _apiVersion), null) ?? _cachedProjectEvaluators;
-        }
-
-        /// <summary> Initializes a new instance of ProjectInsights. </summary>
-        public virtual ProjectInsights GetProjectInsightsClient()
-        {
-            return Volatile.Read(ref _cachedProjectInsights) ?? Interlocked.CompareExchange(ref _cachedProjectInsights, new ProjectInsights(Pipeline, _endpoint, _apiVersion), null) ?? _cachedProjectInsights;
-        }
-
-        /// <summary> Initializes a new instance of ProjectSchedules. </summary>
-        public virtual ProjectSchedules GetProjectSchedulesClient()
-        {
-            return Volatile.Read(ref _cachedProjectSchedules) ?? Interlocked.CompareExchange(ref _cachedProjectSchedules, new ProjectSchedules(Pipeline, _endpoint, _apiVersion), null) ?? _cachedProjectSchedules;
+            return Volatile.Read(ref _cachedAIProjectMemoryStores) ?? Interlocked.CompareExchange(ref _cachedAIProjectMemoryStores, new AIProjectMemoryStores(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAIProjectMemoryStores;
         }
     }
 }

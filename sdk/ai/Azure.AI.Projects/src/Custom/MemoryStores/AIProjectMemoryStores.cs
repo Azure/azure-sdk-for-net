@@ -19,7 +19,7 @@ namespace Azure.AI.Projects.Memory;
 [CodeGenSuppress("GetMemoryStoresAsync", typeof(int?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
 [CodeGenType("MemoryStores")]
 [Experimental("AAIP001")]
-public partial class AIProjectMemoryStoresOperations
+public partial class AIProjectMemoryStores
 {
     /// <summary> Search for relevant memories from a memory store based on conversation context. </summary>
     /// <param name="memoryStoreName"> The ID of the memory store to search. </param>
