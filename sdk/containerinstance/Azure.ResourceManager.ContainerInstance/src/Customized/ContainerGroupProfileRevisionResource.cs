@@ -9,6 +9,8 @@ using System;
 using System.ClientModel.Primitives;
 using System.ComponentModel;
 using System.Text.Json;
+using System.Threading;
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.ResourceManager.Resources;
 
@@ -50,6 +52,16 @@ namespace Azure.ResourceManager.ContainerInstance
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroupProfiles/{containerGroupProfileName}/revisions/{revisionNumber}";
             return new ResourceIdentifier(resourceId);
         }
+
+        // backward-compat shim: Get
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Response<ContainerGroupProfileRevisionResource> Get(CancellationToken cancellationToken = default)
+            => throw new NotSupportedException("Backward compat shim - use CGProfileResource.GetCGProfile() instead.");
+
+        // backward-compat shim: GetAsync
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Task<Response<ContainerGroupProfileRevisionResource>> GetAsync(CancellationToken cancellationToken = default)
+            => throw new NotSupportedException("Backward compat shim - use CGProfileResource.GetCGProfileAsync() instead.");
 
         ContainerGroupProfileData IJsonModel<ContainerGroupProfileData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
             => throw new NotSupportedException("Backward compat type.");

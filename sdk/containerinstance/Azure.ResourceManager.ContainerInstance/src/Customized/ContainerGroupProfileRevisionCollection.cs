@@ -5,10 +5,12 @@
 
 #pragma warning disable CS1591
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading;
+using System.Threading.Tasks;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ContainerInstance
@@ -26,13 +28,53 @@ namespace Azure.ResourceManager.ContainerInstance
         {
         }
 
+        // backward-compat shim: Exists
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Response<bool> Exists(string revisionNumber, CancellationToken cancellationToken = default)
+            => throw new NotSupportedException("Backward compat shim - use CGProfileResource.GetCGProfiles() instead.");
+
+        // backward-compat shim: ExistsAsync
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Task<Response<bool>> ExistsAsync(string revisionNumber, CancellationToken cancellationToken = default)
+            => throw new NotSupportedException("Backward compat shim - use CGProfileResource.GetCGProfiles() instead.");
+
+        // backward-compat shim: Get
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Response<ContainerGroupProfileRevisionResource> Get(string revisionNumber, CancellationToken cancellationToken = default)
+            => throw new NotSupportedException("Backward compat shim - use CGProfileResource.GetCGProfile() instead.");
+
+        // backward-compat shim: GetAsync
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Task<Response<ContainerGroupProfileRevisionResource>> GetAsync(string revisionNumber, CancellationToken cancellationToken = default)
+            => throw new NotSupportedException("Backward compat shim - use CGProfileResource.GetCGProfileAsync() instead.");
+
+        // backward-compat shim: GetAll
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Pageable<ContainerGroupProfileRevisionResource> GetAll(CancellationToken cancellationToken = default)
+            => throw new NotSupportedException("Backward compat shim - use CGProfileResource.GetCGProfiles().GetAll() instead.");
+
+        // backward-compat shim: GetAllAsync
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual AsyncPageable<ContainerGroupProfileRevisionResource> GetAllAsync(CancellationToken cancellationToken = default)
+            => throw new NotSupportedException("Backward compat shim - use CGProfileResource.GetCGProfiles().GetAllAsync() instead.");
+
+        // backward-compat shim: GetIfExists
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual NullableResponse<ContainerGroupProfileRevisionResource> GetIfExists(string revisionNumber, CancellationToken cancellationToken = default)
+            => throw new NotSupportedException("Backward compat shim - use CGProfileResource.GetCGProfiles() instead.");
+
+        // backward-compat shim: GetIfExistsAsync
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Task<NullableResponse<ContainerGroupProfileRevisionResource>> GetIfExistsAsync(string revisionNumber, CancellationToken cancellationToken = default)
+            => throw new NotSupportedException("Backward compat shim - use CGProfileResource.GetCGProfiles() instead.");
+
         IEnumerator<ContainerGroupProfileRevisionResource> IEnumerable<ContainerGroupProfileRevisionResource>.GetEnumerator()
-            => throw new System.NotSupportedException("Backward compat type - use CGProfileResource.GetAllRevisions() instead.");
+            => throw new NotSupportedException("Backward compat type - use CGProfileResource.GetAllRevisions() instead.");
 
         IEnumerator IEnumerable.GetEnumerator()
-            => throw new System.NotSupportedException("Backward compat type - use CGProfileResource.GetAllRevisions() instead.");
+            => throw new NotSupportedException("Backward compat type - use CGProfileResource.GetAllRevisions() instead.");
 
         IAsyncEnumerator<ContainerGroupProfileRevisionResource> IAsyncEnumerable<ContainerGroupProfileRevisionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
-            => throw new System.NotSupportedException("Backward compat type - use CGProfileResource.GetAllRevisions() instead.");
+            => throw new NotSupportedException("Backward compat type - use CGProfileResource.GetAllRevisions() instead.");
     }
 }

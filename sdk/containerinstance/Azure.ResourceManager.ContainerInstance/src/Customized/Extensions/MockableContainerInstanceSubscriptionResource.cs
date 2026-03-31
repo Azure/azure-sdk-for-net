@@ -5,8 +5,10 @@
 
 #pragma warning disable CS1591
 
+using System;
 using System.ComponentModel;
 using System.Threading;
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.ResourceManager.ContainerInstance.Models;
 
@@ -33,5 +35,25 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AsyncPageable<ContainerInstanceUsage> GetUsagesWithLocationAsync(AzureLocation location, CancellationToken cancellationToken = default)
             => GetUsageAsync(location.Name, cancellationToken);
+
+        // backward-compat shim: old return type was Pageable<ContainerCapabilities>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Pageable<ContainerCapabilities> GetCapabilitiesWithLocation(AzureLocation location, CancellationToken cancellationToken = default)
+            => throw new NotSupportedException("Backward compat shim - use GetCapabilities() instead.");
+
+        // backward-compat shim: old return type was AsyncPageable<ContainerCapabilities>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual AsyncPageable<ContainerCapabilities> GetCapabilitiesWithLocationAsync(AzureLocation location, CancellationToken cancellationToken = default)
+            => throw new NotSupportedException("Backward compat shim - use GetCapabilitiesAsync() instead.");
+
+        // backward-compat shim: old return type was Pageable<ContainerGroupProfileResource>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Pageable<ContainerGroupProfileResource> GetContainerGroupProfiles(CancellationToken cancellationToken = default)
+            => throw new NotSupportedException("Backward compat shim - use GetCGProfiles() instead.");
+
+        // backward-compat shim: old return type was AsyncPageable<ContainerGroupProfileResource>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual AsyncPageable<ContainerGroupProfileResource> GetContainerGroupProfilesAsync(CancellationToken cancellationToken = default)
+            => throw new NotSupportedException("Backward compat shim - use GetCGProfilesAsync() instead.");
     }
 }
