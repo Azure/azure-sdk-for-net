@@ -36,5 +36,27 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             Console.WriteLine($"Total count: {count}");
         }
+
+        [Test]
+        [RecordedTest]
+        //[Ignore("Pending recording")]
+        public async Task GetActivityRuns()
+        {
+            string subscriptionId = "xxx";
+            string resourceGroupName = "test";
+            string factoryName = "test";
+            string runId = "xxx";
+            ResourceIdentifier dataFactoryResourceId = DataFactoryResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, factoryName);
+            DataFactoryResource dataFactory = GetArmClient().GetDataFactoryResource(dataFactoryResourceId);
+
+            RunFilterContent content = new RunFilterContent(DateTimeOffset.Parse("2024-02-27T00:36:44.3345758Z"), DateTimeOffset.Parse("2024-06-16T00:49:48.3686473Z"));
+            int count = 0;
+            await foreach (PipelineActivityRunInformation item in dataFactory.GetActivityRunAsync(runId, content))
+            {
+                count++;
+            }
+
+            Console.WriteLine($"Total count: {count}");
+        }
     }
 }

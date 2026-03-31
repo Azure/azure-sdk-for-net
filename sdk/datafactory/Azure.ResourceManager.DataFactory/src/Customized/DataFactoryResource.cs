@@ -79,6 +79,72 @@ namespace Azure.ResourceManager.DataFactory
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DataFactoryPipelineRunInfo.DeserializeDataFactoryPipelineRunInfo(e), _pipelineRunsClientDiagnostics, Pipeline, "DataFactoryResource.GetPipelineRuns", "value", "continuationToken", cancellationToken);
         }
 
+        /// <summary>
+        /// Query activity runs based on input filter conditions.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/pipelineruns/{runId}/queryActivityruns</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ActivityRuns_QueryByPipelineRun</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="runId"> The pipeline run identifier. </param>
+        /// <param name="content"> Parameters to filter the activity runs. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="runId"/> or <paramref name="content"/> is null. </exception>
+        /// <returns> An async collection of <see cref="PipelineActivityRunInformation"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PipelineActivityRunInformation> GetActivityRunAsync(string runId, RunFilterContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
+            Argument.AssertNotNull(content, nameof(content));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _activityRunsRestClient.CreateQueryByPipelineRunRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runId, content);
+            HttpMessage NextPageRequest(int? pageSizeHint, string continuationToken) => _activityRunsRestClient.CreateQueryByPipelineRunNextPageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runId, content, continuationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => PipelineActivityRunInformation.DeserializePipelineActivityRunInformation(e), _activityRunsClientDiagnostics, Pipeline, "DataFactoryResource.GetActivityRun", "value", "continuationToken", cancellationToken);
+        }
+
+        /// <summary>
+        /// Query activity runs based on input filter conditions.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/pipelineruns/{runId}/queryActivityruns</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ActivityRuns_QueryByPipelineRun</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="runId"> The pipeline run identifier. </param>
+        /// <param name="content"> Parameters to filter the activity runs. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="runId"/> or <paramref name="content"/> is null. </exception>
+        /// <returns> A collection of <see cref="PipelineActivityRunInformation"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PipelineActivityRunInformation> GetActivityRun(string runId, RunFilterContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
+            Argument.AssertNotNull(content, nameof(content));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _activityRunsRestClient.CreateQueryByPipelineRunRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runId, content);
+            HttpMessage NextPageRequest(int? pageSizeHint, string continuationToken) => _activityRunsRestClient.CreateQueryByPipelineRunNextPageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runId, content, continuationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => PipelineActivityRunInformation.DeserializePipelineActivityRunInformation(e), _activityRunsClientDiagnostics, Pipeline, "DataFactoryResource.GetActivityRun", "value", "continuationToken", cancellationToken);
+        }
+
         /// <summary> Gets a collection of DataFactoryManagedIdentityCredentialResources in the DataFactory. </summary>
         /// <returns> An object representing collection of DataFactoryManagedIdentityCredentialResources and their operations over a DataFactoryManagedIdentityCredentialResource. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
