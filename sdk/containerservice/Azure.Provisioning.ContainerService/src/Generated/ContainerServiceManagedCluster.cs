@@ -5,12 +5,16 @@
 
 #nullable disable
 
+using System;
 using System.ComponentModel;
 using Azure;
 using Azure.Core;
 using Azure.Provisioning;
+using Azure.Provisioning.Authorization;
+using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
+using Azure.Provisioning.Roles;
 
 namespace Azure.Provisioning.ContainerService
 {
@@ -950,6 +954,41 @@ namespace Azure.Provisioning.ContainerService
         /// <returns> Naming requirements. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override ResourceNameRequirements GetResourceNameRequirements() => new ResourceNameRequirements(1, 63, ResourceNameCharacters.LowercaseLetters | ResourceNameCharacters.UppercaseLetters | ResourceNameCharacters.Numbers | ResourceNameCharacters.Hyphen | ResourceNameCharacters.Underscore);
+
+        /// <summary> Creates a role assignment for a user-assigned identity that grants access to this ContainerServiceManagedCluster. </summary>
+        /// <param name="role"> The role to grant. </param>
+        /// <param name="identity"> The <see cref="UserAssignedIdentity"/>. </param>
+        /// <returns> The <see cref="RoleAssignment"/>. </returns>
+        public RoleAssignment CreateRoleAssignment(ContainerServiceBuiltInRole role, UserAssignedIdentity identity)
+        {
+            string roleName = ContainerServiceBuiltInRole.GetBuiltInRoleName(role);
+            RoleAssignment result = new RoleAssignment($"{BicepIdentifier}_{identity.BicepIdentifier}_{roleName}");
+            result.Name = BicepFunction.CreateGuid(Id, identity.PrincipalId, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString()));
+            result.Scope = new IdentifierExpression(BicepIdentifier);
+            result.PrincipalType = RoleManagementPrincipalType.ServicePrincipal;
+            result.RoleDefinitionId = BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString());
+            result.PrincipalId = identity.PrincipalId;
+            return result;
+        }
+
+        /// <summary> Creates a role assignment for a principal that grants access to this ContainerServiceManagedCluster. </summary>
+        /// <param name="role"> The role to grant. </param>
+        /// <param name="principalType"> The type of the principal to assign to. </param>
+        /// <param name="principalId"> The principal to assign to. </param>
+        /// <param name="bicepIdentifierSuffix"> Optional role assignment identifier name suffix. </param>
+        /// <returns> The <see cref="RoleAssignment"/>. </returns>
+        public RoleAssignment CreateRoleAssignment(ContainerServiceBuiltInRole role, BicepValue<RoleManagementPrincipalType> principalType, BicepValue<Guid> principalId, string bicepIdentifierSuffix = null)
+        {
+            string roleName = ContainerServiceBuiltInRole.GetBuiltInRoleName(role);
+            string suffixSep = bicepIdentifierSuffix is null ? "" : "_";
+            RoleAssignment result = new RoleAssignment($"{BicepIdentifier}_{roleName}{suffixSep}{bicepIdentifierSuffix}");
+            result.Name = BicepFunction.CreateGuid(Id, principalId, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString()));
+            result.Scope = new IdentifierExpression(BicepIdentifier);
+            result.PrincipalType = principalType;
+            result.RoleDefinitionId = BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString());
+            result.PrincipalId = principalId;
+            return result;
+        }
 
         /// <summary></summary>
         public static partial class ResourceVersions

@@ -214,6 +214,29 @@ namespace Azure.Provisioning.ContainerService
         Cache = 0,
         Direct = 1,
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ContainerServiceBuiltInRole : System.IEquatable<Azure.Provisioning.ContainerService.ContainerServiceBuiltInRole>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ContainerServiceBuiltInRole(string value) { throw null; }
+        public static Azure.Provisioning.ContainerService.ContainerServiceBuiltInRole AzureKubernetesServiceClusterAdminRole { get { throw null; } }
+        public static Azure.Provisioning.ContainerService.ContainerServiceBuiltInRole AzureKubernetesServiceClusterMonitoringUser { get { throw null; } }
+        public static Azure.Provisioning.ContainerService.ContainerServiceBuiltInRole AzureKubernetesServiceClusterUserRole { get { throw null; } }
+        public static Azure.Provisioning.ContainerService.ContainerServiceBuiltInRole AzureKubernetesServiceContributorRole { get { throw null; } }
+        public static Azure.Provisioning.ContainerService.ContainerServiceBuiltInRole AzureKubernetesServiceRbacAdmin { get { throw null; } }
+        public static Azure.Provisioning.ContainerService.ContainerServiceBuiltInRole AzureKubernetesServiceRbacClusterAdmin { get { throw null; } }
+        public static Azure.Provisioning.ContainerService.ContainerServiceBuiltInRole AzureKubernetesServiceRbacReader { get { throw null; } }
+        public static Azure.Provisioning.ContainerService.ContainerServiceBuiltInRole AzureKubernetesServiceRbacWriter { get { throw null; } }
+        public bool Equals(Azure.Provisioning.ContainerService.ContainerServiceBuiltInRole other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public static string GetBuiltInRoleName(Azure.Provisioning.ContainerService.ContainerServiceBuiltInRole value) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Provisioning.ContainerService.ContainerServiceBuiltInRole left, Azure.Provisioning.ContainerService.ContainerServiceBuiltInRole right) { throw null; }
+        public static implicit operator Azure.Provisioning.ContainerService.ContainerServiceBuiltInRole (string value) { throw null; }
+        public static bool operator !=(Azure.Provisioning.ContainerService.ContainerServiceBuiltInRole left, Azure.Provisioning.ContainerService.ContainerServiceBuiltInRole right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class ContainerServiceDateSpan : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ContainerServiceDateSpan() { }
@@ -405,6 +428,8 @@ namespace Azure.Provisioning.ContainerService
         public Azure.Provisioning.ContainerService.UpgradeOverrideSettings UpgradeOverrideSettings { get { throw null; } set { } }
         public Azure.Provisioning.ContainerService.ManagedClusterWindowsProfile WindowsProfile { get { throw null; } set { } }
         public Azure.Provisioning.ContainerService.ManagedClusterWorkloadAutoScalerProfile WorkloadAutoScalerProfile { get { throw null; } set { } }
+        public Azure.Provisioning.Authorization.RoleAssignment CreateRoleAssignment(Azure.Provisioning.ContainerService.ContainerServiceBuiltInRole role, Azure.Provisioning.BicepValue<Azure.Provisioning.Authorization.RoleManagementPrincipalType> principalType, Azure.Provisioning.BicepValue<System.Guid> principalId, string bicepIdentifierSuffix = null) { throw null; }
+        public Azure.Provisioning.Authorization.RoleAssignment CreateRoleAssignment(Azure.Provisioning.ContainerService.ContainerServiceBuiltInRole role, Azure.Provisioning.Roles.UserAssignedIdentity identity) { throw null; }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.ContainerService.ContainerServiceManagedCluster FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
