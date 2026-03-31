@@ -99,7 +99,8 @@ namespace Azure.Storage.ChangeFeed.Common
         internal static async Task<Queue<string>> GetSegmentsInYearInternal(
             BlobContainerClient containerClient, string yearPath, DateTimeOffset? startTime, DateTimeOffset? endTime, bool async, CancellationToken cancellationToken)
         {
-            List<string> list = new List<string>();
+            // Collect all segments in this year with their parsed timestamps.
+            List<(string Path, DateTimeOffset DateTime)> allSegments = new List<(string, DateTimeOffset)>();
             GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions { Prefix = yearPath };
 
             if (async)
@@ -107,9 +108,7 @@ namespace Azure.Storage.ChangeFeed.Common
                 await foreach (BlobHierarchyItem item in containerClient.GetBlobsByHierarchyAsync(options: options, cancellationToken: cancellationToken).ConfigureAwait(false))
                 {
                     if (item.IsPrefix) continue;
-                    DateTimeOffset segmentDateTime = ToDateTimeOffset(item.Blob.Name).Value;
-                    if (startTime.HasValue && segmentDateTime < startTime || endTime.HasValue && segmentDateTime > endTime) continue;
-                    list.Add(item.Blob.Name);
+                    allSegments.Add((item.Blob.Name, ToDateTimeOffset(item.Blob.Name).Value));
                 }
             }
             else
@@ -117,12 +116,40 @@ namespace Azure.Storage.ChangeFeed.Common
                 foreach (BlobHierarchyItem item in containerClient.GetBlobsByHierarchy(options: options, cancellationToken: cancellationToken))
                 {
                     if (item.IsPrefix) continue;
-                    DateTimeOffset segmentDateTime = ToDateTimeOffset(item.Blob.Name).Value;
-                    if (startTime.HasValue && segmentDateTime < startTime || endTime.HasValue && segmentDateTime > endTime) continue;
-                    list.Add(item.Blob.Name);
+                    allSegments.Add((item.Blob.Name, ToDateTimeOffset(item.Blob.Name).Value));
                 }
             }
-            return new Queue<string>(list);
+
+            // Filter segments to those that could contain events in [startTime, endTime].
+            // A segment at time T covers events from T until the next segment starts, so:
+            // - For startTime: include the last segment whose timestamp is <= startTime
+            //   (that segment's window may contain events at startTime).
+            // - For endTime: include all segments whose timestamp is <= endTime
+            //   (a segment starting at endTime could still contain events at endTime).
+            int startIndex = 0;
+            if (startTime.HasValue)
+            {
+                // Find the last segment at or before startTime (the enclosing segment).
+                int enclosing = -1;
+                for (int i = 0; i < allSegments.Count; i++)
+                {
+                    if (allSegments[i].DateTime <= startTime.Value)
+                        enclosing = i;
+                    else
+                        break;
+                }
+                startIndex = enclosing >= 0 ? enclosing : 0;
+            }
+
+            List<string> result = new List<string>();
+            for (int i = startIndex; i < allSegments.Count; i++)
+            {
+                if (endTime.HasValue && allSegments[i].DateTime > endTime.Value)
+                    break;
+                result.Add(allSegments[i].Path);
+            }
+
+            return new Queue<string>(result);
         }
 
         /// <summary>

@@ -12,11 +12,6 @@ namespace Azure.Storage.ChangeFeed.Common
     internal class ChangeFeedConfiguration<TEvent>
     {
         /// <summary>
-        /// The time interval that each segment covers (e.g. one hour for Blob, one minute for Files).
-        /// </summary>
-        public TimeSpan TimeWindowInterval { get; set; }
-
-        /// <summary>
         /// The container-level prefix that the service prepends to shard paths in the segment manifest.
         /// This is stripped when resolving actual blob paths.
         /// </summary>

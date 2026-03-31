@@ -255,7 +255,6 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         internal static ChangeFeedConfiguration<ShareChangeFeedEvent> CreateConfiguration(string containerName)
             => new ChangeFeedConfiguration<ShareChangeFeedEvent>
             {
-                TimeWindowInterval = TimeSpan.FromMinutes(Constants.FilesChangeFeed.TimeWindowMinutes),
                 ContainerPrefix = containerName + "/",
                 EventParser = record => new ShareChangeFeedEvent(record),
                 DefaultPageSize = Constants.FilesChangeFeed.DefaultPageSize,

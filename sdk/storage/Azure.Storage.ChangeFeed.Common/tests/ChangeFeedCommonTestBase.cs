@@ -60,7 +60,6 @@ namespace Azure.Storage.ChangeFeed.Common.Tests
         internal static ChangeFeedConfiguration<TestEvent> CreateTestConfig()
             => new ChangeFeedConfiguration<TestEvent>
             {
-                TimeWindowInterval = TimeSpan.FromMinutes(15),
                 ContainerPrefix = "$fileschangefeed-testguid/",
                 EventParser = dict => new TestEvent(dict),
                 DefaultPageSize = 5000,

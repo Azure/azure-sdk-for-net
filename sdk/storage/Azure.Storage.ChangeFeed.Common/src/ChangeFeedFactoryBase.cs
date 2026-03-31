@@ -82,12 +82,8 @@ namespace Azure.Storage.ChangeFeed.Common
                 startTime = ChangeFeedExtensionsBase.ToDateTimeOffset(cursor.CurrentSegmentCursor.SegmentPath).Value;
                 endTime = cursor.EndTime;
             }
-            else
-            {
-                // Fresh start: round the requested time window to align with segment boundaries.
-                startTime = startTime.RoundDownToNearestInterval(_config.TimeWindowInterval);
-                endTime = endTime.RoundUpToNearestInterval(_config.TimeWindowInterval);
-            }
+            // No rounding is applied — raw user-provided times are passed directly to the
+            // segment filter, which supports variable-length segments.
 
             bool changeFeedContainerExists;
             if (async)
