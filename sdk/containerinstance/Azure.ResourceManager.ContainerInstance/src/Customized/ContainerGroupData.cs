@@ -52,10 +52,10 @@ namespace Azure.ResourceManager.ContainerInstance
 
         /// <summary> The operating system type required by the containers in the container group. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public OperatingSystemTypes OSType
+        public ContainerInstanceOperatingSystemType OSType
         {
-            get => OsType.ToString();
-            set => OsType = value.ToString();
+            get => OsType.HasValue ? new ContainerInstanceOperatingSystemType(OsType.Value.ToString()) : default;
+            set => OsType = new OperatingSystemTypes(value.ToString());
         }
 
         /// <summary> The provisioning state of the container group. This only appears in the response. </summary>
