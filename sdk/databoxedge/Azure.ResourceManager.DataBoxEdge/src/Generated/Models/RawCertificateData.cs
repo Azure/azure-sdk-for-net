@@ -42,6 +42,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public DataBoxEdgeAuthenticationType? AuthenticationType { get; set; }
 
         /// <summary> The base64 encoded certificate raw data. </summary>
-        public string Certificate { get; }
+        public string Certificate { get; set; }
     }
 }
