@@ -1,0 +1,8 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="..\src\Azure.ResourceManager.HorizonDb.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="$(AzureCoreTestFramework)" />
+  </ItemGroup>
+</Project>
