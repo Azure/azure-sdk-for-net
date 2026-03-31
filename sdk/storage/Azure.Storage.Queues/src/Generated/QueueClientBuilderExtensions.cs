@@ -9,10 +9,12 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using Azure;
 using Azure.Core.Extensions;
+using Azure.Storage.Queues;
 
-namespace Azure.Storage.Queues
+namespace Microsoft.Extensions.Azure
 {
-    internal static partial class QueuesClientBuilderExtensionsInternal
+    /// <summary> Extension methods to add clients to <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
+    public static partial class QueueClientBuilderExtensions
     {
         /// <summary> Registers a <see cref="QueueClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
         /// <param name="builder"> The builder to register with. </param>
