@@ -35,7 +35,7 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
 
             // Your existing endpoints.
             app.MapGet("/", () => "My existing app");
-            app.MapGet("/healthy", () => Results.Ok());
+            app.MapGet("/readiness", () => Results.Ok());
 
             // Map the Responses protocol endpoints.
             app.MapResponsesServer();

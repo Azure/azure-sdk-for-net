@@ -343,6 +343,30 @@ must include `<ProjectReference>` entries for all packages used.
 | Test Project | Extra References Needed |
 |---|---|
 | Responses.Tests | Core (`AgentHost.CreateBuilder`) |
+
+### E2E tests for sample handlers (mandatory)
+
+Compiled snippet tests only verify that sample code **compiles** — they do not
+run the handler or send HTTP requests. Every sample handler **must** also have
+a matching end-to-end test in `<Package>/tests/SampleEndToEndTests.cs` that:
+
+1. Registers the actual handler class from the snippet file into an in-memory
+   test server (via `TestWebApplicationFactory` or `WebApplication.CreateBuilder()`
+   + `UseTestServer()`).
+2. Sends a real HTTP request to the handler endpoint.
+3. Asserts on response status, content, headers, or SSE event structure.
+
+| Package | E2E test file | Pattern |
+|---|---|---|
+| Responses | `tests/SampleEndToEndTests.cs` | `TestWebApplicationFactory` with `configureTestServices` to register the snippet handler |
+| Invocations | `tests/SampleEndToEndTests.cs` | `WebApplication.CreateBuilder()` + `UseTestServer()` + `AddScoped<InvocationHandler, T>` |
+| Core | `tests/SampleEndToEndTests.cs` | `AgentHost.CreateBuilder()` + `UseTestServer()` + `RegisterProtocol` |
+
+**When adding or modifying a sample:**
+- Add/update the snippet test (compilation guard) **and** the E2E test (behavioral guard).
+- Run `dotnet test --filter SampleEndToEndTests` on the relevant test project before committing.
+- If a sample handler uses DI (e.g., `IKnowledgeBase`), register the mock/test
+  implementation in the E2E test's service configuration.
 | Invocations.Tests | Core (`AgentHost.CreateBuilder`) |
 | Core.Tests | Responses (`ResponseHandler`, `ResponseEventStream`), Invocations |
 
