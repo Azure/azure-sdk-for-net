@@ -14,7 +14,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Purview.Samples
 {
-    public partial class Sample_PurviewKafkaConfigurationResource
+    public partial class Sample_KafkaConfigurationResource
     {
         [Test]
         [Ignore("Only validating compilation of examples")]

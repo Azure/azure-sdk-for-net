@@ -14,7 +14,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Purview.Samples
 {
-    public partial class Sample_PurviewAccountResource
+    public partial class Sample_AccountResource
     {
         [Test]
         [Ignore("Only validating compilation of examples")]

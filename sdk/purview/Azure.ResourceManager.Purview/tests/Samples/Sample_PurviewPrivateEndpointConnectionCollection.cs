@@ -14,14 +14,14 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Purview.Samples
 {
-    public partial class Sample_PurviewKafkaConfigurationCollection
+    public partial class Sample_PrivateEndpointConnectionCollection
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task CreateOrUpdate_KafkaConfigurationsCreateOrUpdate()
+        public async Task CreateOrUpdate_PrivateEndpointConnectionsCreateOrUpdate()
         {
-            // Generated from example definition: specification/purview/resource-manager/Microsoft.Purview/preview/2023-05-01-preview/examples/KafkaConfigurations_CreateOrUpdate.json
-            // this example is just showing the usage of "KafkaConfigurations_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/purview/resource-manager/Microsoft.Purview/preview/2023-05-01-preview/examples/PrivateEndpointConnections_CreateOrUpdate.json
+            // this example is just showing the usage of "PrivateEndpointConnections_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -31,46 +31,40 @@ namespace Azure.ResourceManager.Purview.Samples
             // this example assumes you already have this PurviewAccountResource created on azure
             // for more information of creating PurviewAccountResource, please refer to the document of PurviewAccountResource
             string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
-            string resourceGroupName = "rgpurview";
+            string resourceGroupName = "SampleResourceGroup";
             string accountName = "account1";
             ResourceIdentifier purviewAccountResourceId = PurviewAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
             PurviewAccountResource purviewAccount = client.GetPurviewAccountResource(purviewAccountResourceId);
 
-            // get the collection of this PurviewKafkaConfigurationResource
-            PurviewKafkaConfigurationCollection collection = purviewAccount.GetPurviewKafkaConfigurations();
+            // get the collection of this PurviewPrivateEndpointConnectionResource
+            PurviewPrivateEndpointConnectionCollection collection = purviewAccount.GetPurviewPrivateEndpointConnections();
 
             // invoke the operation
-            string kafkaConfigurationName = "kafkaConfigName";
-            PurviewKafkaConfigurationData data = new PurviewKafkaConfigurationData
+            string privateEndpointConnectionName = "privateEndpointConnection1";
+            PurviewPrivateEndpointConnectionData data = new PurviewPrivateEndpointConnectionData
             {
-                ConsumerGroup = "consumerGroup",
-                Credentials = new PurviewCredentials
+                ConnectionState = new PurviewPrivateLinkServiceConnectionState
                 {
-                    IdentityId = "/subscriptions/47e8596d-ee73-4eb2-b6b4-cc13c2b87ssd/resourceGroups/testRG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testId",
-                    CredentialsType = PurviewCredentialsType.UserAssigned,
+                    Description = "Approved by johndoe@company.com",
+                    Status = PurviewPrivateLinkServiceStatus.Approved,
                 },
-                EventHubPartitionId = "partitionId",
-                EventHubResourceId = new ResourceIdentifier("/subscriptions/225be6fe-ec1c-4d51-a368-f69348d2e6c5/resourceGroups/testRG/providers/Microsoft.EventHub/namespaces/eventHubNameSpaceName"),
-                EventHubType = PurviewKafkaEventHubType.Notification,
-                EventStreamingState = PurviewEventStreamingState.Enabled,
-                EventStreamingType = PurviewEventStreamingType.Azure,
             };
-            ArmOperation<PurviewKafkaConfigurationResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, kafkaConfigurationName, data);
-            PurviewKafkaConfigurationResource result = lro.Value;
+            ArmOperation<PurviewPrivateEndpointConnectionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, privateEndpointConnectionName, data);
+            PurviewPrivateEndpointConnectionResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            PurviewKafkaConfigurationData resourceData = result.Data;
+            PurviewPrivateEndpointConnectionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Get_KafkaConfigurationsGet()
+        public async Task Get_PrivateEndpointConnectionsGet()
         {
-            // Generated from example definition: specification/purview/resource-manager/Microsoft.Purview/preview/2023-05-01-preview/examples/KafkaConfigurations_Get.json
-            // this example is just showing the usage of "KafkaConfigurations_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/purview/resource-manager/Microsoft.Purview/preview/2023-05-01-preview/examples/PrivateEndpointConnections_Get.json
+            // this example is just showing the usage of "PrivateEndpointConnections_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -79,32 +73,32 @@ namespace Azure.ResourceManager.Purview.Samples
 
             // this example assumes you already have this PurviewAccountResource created on azure
             // for more information of creating PurviewAccountResource, please refer to the document of PurviewAccountResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
-            string resourceGroupName = "rgpurview";
+            string subscriptionId = "12345678-1234-1234-12345678abc";
+            string resourceGroupName = "SampleResourceGroup";
             string accountName = "account1";
             ResourceIdentifier purviewAccountResourceId = PurviewAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
             PurviewAccountResource purviewAccount = client.GetPurviewAccountResource(purviewAccountResourceId);
 
-            // get the collection of this PurviewKafkaConfigurationResource
-            PurviewKafkaConfigurationCollection collection = purviewAccount.GetPurviewKafkaConfigurations();
+            // get the collection of this PurviewPrivateEndpointConnectionResource
+            PurviewPrivateEndpointConnectionCollection collection = purviewAccount.GetPurviewPrivateEndpointConnections();
 
             // invoke the operation
-            string kafkaConfigurationName = "kafkaConfigName";
-            PurviewKafkaConfigurationResource result = await collection.GetAsync(kafkaConfigurationName);
+            string privateEndpointConnectionName = "privateEndpointConnection1";
+            PurviewPrivateEndpointConnectionResource result = await collection.GetAsync(privateEndpointConnectionName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            PurviewKafkaConfigurationData resourceData = result.Data;
+            PurviewPrivateEndpointConnectionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetAll_KafkaConfigurationsListByAccount()
+        public async Task GetAll_PrivateEndpointConnectionsListByAccount()
         {
-            // Generated from example definition: specification/purview/resource-manager/Microsoft.Purview/preview/2023-05-01-preview/examples/KafkaConfigurations_ListByAccount.json
-            // this example is just showing the usage of "KafkaConfigurations_ListByAccount" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/purview/resource-manager/Microsoft.Purview/preview/2023-05-01-preview/examples/PrivateEndpointConnections_ListByAccount.json
+            // this example is just showing the usage of "PrivateEndpointConnections_ListByAccount" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -113,22 +107,21 @@ namespace Azure.ResourceManager.Purview.Samples
 
             // this example assumes you already have this PurviewAccountResource created on azure
             // for more information of creating PurviewAccountResource, please refer to the document of PurviewAccountResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
-            string resourceGroupName = "rgpurview";
+            string subscriptionId = "12345678-1234-1234-12345678abc";
+            string resourceGroupName = "SampleResourceGroup";
             string accountName = "account1";
             ResourceIdentifier purviewAccountResourceId = PurviewAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
             PurviewAccountResource purviewAccount = client.GetPurviewAccountResource(purviewAccountResourceId);
 
-            // get the collection of this PurviewKafkaConfigurationResource
-            PurviewKafkaConfigurationCollection collection = purviewAccount.GetPurviewKafkaConfigurations();
+            // get the collection of this PurviewPrivateEndpointConnectionResource
+            PurviewPrivateEndpointConnectionCollection collection = purviewAccount.GetPurviewPrivateEndpointConnections();
 
             // invoke the operation and iterate over the result
-            string skipToken = "token";
-            await foreach (PurviewKafkaConfigurationResource item in collection.GetAllAsync(skipToken: skipToken))
+            await foreach (PurviewPrivateEndpointConnectionResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                PurviewKafkaConfigurationData resourceData = item.Data;
+                PurviewPrivateEndpointConnectionData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -138,10 +131,10 @@ namespace Azure.ResourceManager.Purview.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Exists_KafkaConfigurationsGet()
+        public async Task Exists_PrivateEndpointConnectionsGet()
         {
-            // Generated from example definition: specification/purview/resource-manager/Microsoft.Purview/preview/2023-05-01-preview/examples/KafkaConfigurations_Get.json
-            // this example is just showing the usage of "KafkaConfigurations_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/purview/resource-manager/Microsoft.Purview/preview/2023-05-01-preview/examples/PrivateEndpointConnections_Get.json
+            // this example is just showing the usage of "PrivateEndpointConnections_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -150,28 +143,28 @@ namespace Azure.ResourceManager.Purview.Samples
 
             // this example assumes you already have this PurviewAccountResource created on azure
             // for more information of creating PurviewAccountResource, please refer to the document of PurviewAccountResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
-            string resourceGroupName = "rgpurview";
+            string subscriptionId = "12345678-1234-1234-12345678abc";
+            string resourceGroupName = "SampleResourceGroup";
             string accountName = "account1";
             ResourceIdentifier purviewAccountResourceId = PurviewAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
             PurviewAccountResource purviewAccount = client.GetPurviewAccountResource(purviewAccountResourceId);
 
-            // get the collection of this PurviewKafkaConfigurationResource
-            PurviewKafkaConfigurationCollection collection = purviewAccount.GetPurviewKafkaConfigurations();
+            // get the collection of this PurviewPrivateEndpointConnectionResource
+            PurviewPrivateEndpointConnectionCollection collection = purviewAccount.GetPurviewPrivateEndpointConnections();
 
             // invoke the operation
-            string kafkaConfigurationName = "kafkaConfigName";
-            bool result = await collection.ExistsAsync(kafkaConfigurationName);
+            string privateEndpointConnectionName = "privateEndpointConnection1";
+            bool result = await collection.ExistsAsync(privateEndpointConnectionName);
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetIfExists_KafkaConfigurationsGet()
+        public async Task GetIfExists_PrivateEndpointConnectionsGet()
         {
-            // Generated from example definition: specification/purview/resource-manager/Microsoft.Purview/preview/2023-05-01-preview/examples/KafkaConfigurations_Get.json
-            // this example is just showing the usage of "KafkaConfigurations_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/purview/resource-manager/Microsoft.Purview/preview/2023-05-01-preview/examples/PrivateEndpointConnections_Get.json
+            // this example is just showing the usage of "PrivateEndpointConnections_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -180,19 +173,19 @@ namespace Azure.ResourceManager.Purview.Samples
 
             // this example assumes you already have this PurviewAccountResource created on azure
             // for more information of creating PurviewAccountResource, please refer to the document of PurviewAccountResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
-            string resourceGroupName = "rgpurview";
+            string subscriptionId = "12345678-1234-1234-12345678abc";
+            string resourceGroupName = "SampleResourceGroup";
             string accountName = "account1";
             ResourceIdentifier purviewAccountResourceId = PurviewAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
             PurviewAccountResource purviewAccount = client.GetPurviewAccountResource(purviewAccountResourceId);
 
-            // get the collection of this PurviewKafkaConfigurationResource
-            PurviewKafkaConfigurationCollection collection = purviewAccount.GetPurviewKafkaConfigurations();
+            // get the collection of this PurviewPrivateEndpointConnectionResource
+            PurviewPrivateEndpointConnectionCollection collection = purviewAccount.GetPurviewPrivateEndpointConnections();
 
             // invoke the operation
-            string kafkaConfigurationName = "kafkaConfigName";
-            NullableResponse<PurviewKafkaConfigurationResource> response = await collection.GetIfExistsAsync(kafkaConfigurationName);
-            PurviewKafkaConfigurationResource result = response.HasValue ? response.Value : null;
+            string privateEndpointConnectionName = "privateEndpointConnection1";
+            NullableResponse<PurviewPrivateEndpointConnectionResource> response = await collection.GetIfExistsAsync(privateEndpointConnectionName);
+            PurviewPrivateEndpointConnectionResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -202,7 +195,7 @@ namespace Azure.ResourceManager.Purview.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                PurviewKafkaConfigurationData resourceData = result.Data;
+                PurviewPrivateEndpointConnectionData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

@@ -13,7 +13,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Purview.Samples
 {
-    public partial class Sample_PurviewPrivateLinkResource
+    public partial class Sample_PrivateLinkResource
     {
         [Test]
         [Ignore("Only validating compilation of examples")]

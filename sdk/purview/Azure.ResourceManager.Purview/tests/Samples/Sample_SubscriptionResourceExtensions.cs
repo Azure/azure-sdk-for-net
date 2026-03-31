@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Purview.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetPurviewAccounts_AccountsListBySubscription()
+        public async Task GetAccounts_AccountsListBySubscription()
         {
             // Generated from example definition: specification/purview/resource-manager/Microsoft.Purview/preview/2023-05-01-preview/examples/Accounts_ListBySubscription.json
             // this example is just showing the usage of "Accounts_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Purview.Samples
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
-            // invoke the operation and iterate over the result
+            // invoke the operation
             AzureLocation location = new AzureLocation("West US 2");
             await foreach (PurviewUsage item in subscriptionResource.GetUsagesAsync(location))
             {

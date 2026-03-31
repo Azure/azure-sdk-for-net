@@ -14,7 +14,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Purview.Samples
 {
-    public partial class Sample_PurviewPrivateEndpointConnectionResource
+    public partial class Sample_PrivateEndpointConnectionResource
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
