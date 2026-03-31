@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
     // the previous GA SDK (v1.2.0, ApiCompatVersion = 1.2.0).
 
     /// <summary> The KubernetesFluxConfiguration data model. </summary>
-    [Obsolete("This type is obsolete and will be removed in a future version. The service spec has been split into separate TypeSpec projects.")]
+    [Obsolete("This type has been split into a new SDK, Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations, and is now obsolete in this library. It will be removed in a future release. Please refer toAzure.ResourceManager.KubernetesConfiguration.FluxConfigurations if you need this functionality.")]
     [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class KubernetesFluxConfigurationData : ResourceData
     {

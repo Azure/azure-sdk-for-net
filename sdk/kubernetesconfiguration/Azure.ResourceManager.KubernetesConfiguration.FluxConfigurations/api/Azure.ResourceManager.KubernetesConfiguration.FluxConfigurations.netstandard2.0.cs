@@ -1,0 +1,811 @@
+namespace Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations
+{
+    public partial class AzureResourceManagerKubernetesConfiguration_FluxConfigurationsContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerKubernetesConfiguration_FluxConfigurationsContext() { }
+        public static Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.AzureResourceManagerKubernetesConfiguration_FluxConfigurationsContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
+    public partial class FluxConfigurationCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.FluxConfigurationResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.FluxConfigurationResource>, System.Collections.IEnumerable
+    {
+        protected FluxConfigurationCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.FluxConfigurationResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string fluxConfigurationName, Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.FluxConfigurationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.FluxConfigurationResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string fluxConfigurationName, Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.FluxConfigurationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string fluxConfigurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string fluxConfigurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.FluxConfigurationResource> Get(string fluxConfigurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.FluxConfigurationResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.FluxConfigurationResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.FluxConfigurationResource>> GetAsync(string fluxConfigurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.FluxConfigurationResource> GetIfExists(string fluxConfigurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.FluxConfigurationResource>> GetIfExistsAsync(string fluxConfigurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.FluxConfigurationResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.FluxConfigurationResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.FluxConfigurationResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.FluxConfigurationResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class FluxConfigurationData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.FluxConfigurationData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.FluxConfigurationData>
+    {
+        public FluxConfigurationData() { }
+        public Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.AzureBlobDefinition AzureBlob { get { throw null; } set { } }
+        public Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.BucketDefinition Bucket { get { throw null; } set { } }
+        public Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.FluxComplianceState? ComplianceState { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, string> ConfigurationProtectedSettings { get { throw null; } }
+        public string ErrorMessage { get { throw null; } }
+        public Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.GitRepositoryDefinition GitRepository { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.KustomizationDefinition> Kustomizations { get { throw null; } }
+        public string Namespace { get { throw null; } set { } }
+        public Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.OCIRepositoryDefinition OciRepository { get { throw null; } set { } }
+        public Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public string ReconciliationWaitDuration { get { throw null; } set { } }
+        public string RepositoryPublicKey { get { throw null; } }
+        public Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ScopeType? Scope { get { throw null; } set { } }
+        public Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.SourceKindType? SourceKind { get { throw null; } set { } }
+        public string SourceSyncedCommitId { get { throw null; } }
+        public System.DateTimeOffset? SourceUpdatedOn { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ObjectStatusDefinition> Statuses { get { throw null; } }
+        public System.DateTimeOffset? StatusUpdatedOn { get { throw null; } }
+        public bool? Suspend { get { throw null; } set { } }
+        public bool? WaitForReconciliation { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.FluxConfigurationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.FluxConfigurationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.FluxConfigurationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.FluxConfigurationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.FluxConfigurationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.FluxConfigurationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.FluxConfigurationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class FluxConfigurationResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.FluxConfigurationData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.FluxConfigurationData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected FluxConfigurationResource() { }
+        public virtual Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.FluxConfigurationData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string fluxConfigurationName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, bool? forceDelete = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, bool? forceDelete = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.FluxConfigurationResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.FluxConfigurationResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.FluxConfigurationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.FluxConfigurationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.FluxConfigurationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.FluxConfigurationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.FluxConfigurationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.FluxConfigurationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.FluxConfigurationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.FluxConfigurationResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.FluxConfigurationPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.FluxConfigurationResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.FluxConfigurationPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public static partial class KubernetesConfigurationFluxConfigurationsExtensions
+    {
+        public static Azure.Response<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.FluxConfigurationResource> GetFluxConfiguration(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string clusterRp, string clusterResourceName, string clusterName, string fluxConfigurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.FluxConfigurationResource>> GetFluxConfigurationAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string clusterRp, string clusterResourceName, string clusterName, string fluxConfigurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.FluxConfigurationResource GetFluxConfigurationResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.FluxConfigurationCollection GetFluxConfigurations(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string clusterRp, string clusterResourceName, string clusterName) { throw null; }
+    }
+}
+namespace Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Mocking
+{
+    public partial class MockableKubernetesConfigurationFluxConfigurationsArmClient : Azure.ResourceManager.ArmResource
+    {
+        protected MockableKubernetesConfigurationFluxConfigurationsArmClient() { }
+        public virtual Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.FluxConfigurationResource GetFluxConfigurationResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class MockableKubernetesConfigurationFluxConfigurationsResourceGroupResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableKubernetesConfigurationFluxConfigurationsResourceGroupResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.FluxConfigurationResource> GetFluxConfiguration(string clusterRp, string clusterResourceName, string clusterName, string fluxConfigurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.FluxConfigurationResource>> GetFluxConfigurationAsync(string clusterRp, string clusterResourceName, string clusterName, string fluxConfigurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.FluxConfigurationCollection GetFluxConfigurations(string clusterRp, string clusterResourceName, string clusterName) { throw null; }
+    }
+}
+namespace Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models
+{
+    public static partial class ArmKubernetesConfigurationFluxConfigurationsModelFactory
+    {
+        public static Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.FluxConfigurationData FluxConfigurationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ScopeType? scope = default(Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ScopeType?), string @namespace = null, Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.SourceKindType? sourceKind = default(Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.SourceKindType?), bool? suspend = default(bool?), Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.GitRepositoryDefinition gitRepository = null, Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.BucketDefinition bucket = null, Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.AzureBlobDefinition azureBlob = null, Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.OCIRepositoryDefinition ociRepository = null, System.Collections.Generic.IDictionary<string, Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.KustomizationDefinition> kustomizations = null, System.Collections.Generic.IDictionary<string, string> configurationProtectedSettings = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ObjectStatusDefinition> statuses = null, string repositoryPublicKey = null, string sourceSyncedCommitId = null, System.DateTimeOffset? sourceUpdatedOn = default(System.DateTimeOffset?), System.DateTimeOffset? statusUpdatedOn = default(System.DateTimeOffset?), bool? waitForReconciliation = default(bool?), string reconciliationWaitDuration = null, Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.FluxComplianceState? complianceState = default(Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.FluxComplianceState?), Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ProvisioningState?), string errorMessage = null) { throw null; }
+        public static Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.HelmReleasePropertiesDefinition HelmReleasePropertiesDefinition(long? lastRevisionApplied = default(long?), Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ObjectReferenceDefinition helmChartRef = null, long? failureCount = default(long?), long? installFailureCount = default(long?), long? upgradeFailureCount = default(long?)) { throw null; }
+        public static Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.KustomizationDefinition KustomizationDefinition(string name = null, string path = null, System.Collections.Generic.IEnumerable<string> dependsOn = null, long? timeoutInSeconds = default(long?), long? syncIntervalInSeconds = default(long?), long? retryIntervalInSeconds = default(long?), bool? prune = default(bool?), bool? force = default(bool?), bool? wait = default(bool?), Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.PostBuildDefinition postBuild = null) { throw null; }
+        public static Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ObjectReferenceDefinition ObjectReferenceDefinition(string name = null, string @namespace = null) { throw null; }
+        public static Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ObjectStatusConditionDefinition ObjectStatusConditionDefinition(System.DateTimeOffset? lastTransitionOn = default(System.DateTimeOffset?), string message = null, string reason = null, string status = null, string type = null) { throw null; }
+        public static Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ObjectStatusDefinition ObjectStatusDefinition(string name = null, string @namespace = null, string kind = null, Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.FluxComplianceState? complianceState = default(Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.FluxComplianceState?), Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ObjectReferenceDefinition appliedBy = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ObjectStatusConditionDefinition> statusConditions = null, Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.HelmReleasePropertiesDefinition helmReleaseProperties = null) { throw null; }
+        public static Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.PostBuildDefinition PostBuildDefinition(System.Collections.Generic.IDictionary<string, string> substitute = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.SubstituteFromDefinition> substituteFrom = null) { throw null; }
+    }
+    public partial class AzureBlobDefinition : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.AzureBlobDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.AzureBlobDefinition>
+    {
+        public AzureBlobDefinition() { }
+        public string AccountKey { get { throw null; } set { } }
+        public string ContainerName { get { throw null; } set { } }
+        public string LocalAuthRef { get { throw null; } set { } }
+        public string ManagedIdentityClientId { get { throw null; } set { } }
+        public string SasToken { get { throw null; } set { } }
+        public Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ServicePrincipalDefinition ServicePrincipal { get { throw null; } set { } }
+        public long? SyncIntervalInSeconds { get { throw null; } set { } }
+        public long? TimeoutInSeconds { get { throw null; } set { } }
+        public string Uri { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.AzureBlobDefinition JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.AzureBlobDefinition PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.AzureBlobDefinition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.AzureBlobDefinition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.AzureBlobDefinition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.AzureBlobDefinition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.AzureBlobDefinition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.AzureBlobDefinition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.AzureBlobDefinition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class AzureBlobPatchDefinition : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.AzureBlobPatchDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.AzureBlobPatchDefinition>
+    {
+        public AzureBlobPatchDefinition() { }
+        public string AccountKey { get { throw null; } set { } }
+        public string ContainerName { get { throw null; } set { } }
+        public string LocalAuthRef { get { throw null; } set { } }
+        public string ManagedIdentityClientId { get { throw null; } set { } }
+        public string SasToken { get { throw null; } set { } }
+        public Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ServicePrincipalPatchDefinition ServicePrincipal { get { throw null; } set { } }
+        public long? SyncIntervalInSeconds { get { throw null; } set { } }
+        public long? TimeoutInSeconds { get { throw null; } set { } }
+        public string Uri { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.AzureBlobPatchDefinition JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.AzureBlobPatchDefinition PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.AzureBlobPatchDefinition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.AzureBlobPatchDefinition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.AzureBlobPatchDefinition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.AzureBlobPatchDefinition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.AzureBlobPatchDefinition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.AzureBlobPatchDefinition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.AzureBlobPatchDefinition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class BucketDefinition : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.BucketDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.BucketDefinition>
+    {
+        public BucketDefinition() { }
+        public string AccessKey { get { throw null; } set { } }
+        public string BucketName { get { throw null; } set { } }
+        public bool? Insecure { get { throw null; } set { } }
+        public string LocalAuthRef { get { throw null; } set { } }
+        public long? SyncIntervalInSeconds { get { throw null; } set { } }
+        public long? TimeoutInSeconds { get { throw null; } set { } }
+        public string Uri { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.BucketDefinition JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.BucketDefinition PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.BucketDefinition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.BucketDefinition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.BucketDefinition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.BucketDefinition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.BucketDefinition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.BucketDefinition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.BucketDefinition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class BucketPatchDefinition : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.BucketPatchDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.BucketPatchDefinition>
+    {
+        public BucketPatchDefinition() { }
+        public string AccessKey { get { throw null; } set { } }
+        public string BucketName { get { throw null; } set { } }
+        public bool? Insecure { get { throw null; } set { } }
+        public string LocalAuthRef { get { throw null; } set { } }
+        public long? SyncIntervalInSeconds { get { throw null; } set { } }
+        public long? TimeoutInSeconds { get { throw null; } set { } }
+        public string Uri { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.BucketPatchDefinition JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.BucketPatchDefinition PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.BucketPatchDefinition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.BucketPatchDefinition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.BucketPatchDefinition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.BucketPatchDefinition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.BucketPatchDefinition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.BucketPatchDefinition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.BucketPatchDefinition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct FluxComplianceState : System.IEquatable<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.FluxComplianceState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public FluxComplianceState(string value) { throw null; }
+        public static Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.FluxComplianceState Compliant { get { throw null; } }
+        public static Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.FluxComplianceState NonCompliant { get { throw null; } }
+        public static Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.FluxComplianceState Pending { get { throw null; } }
+        public static Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.FluxComplianceState Suspended { get { throw null; } }
+        public static Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.FluxComplianceState Unknown { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.FluxComplianceState other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.FluxComplianceState left, Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.FluxComplianceState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.FluxComplianceState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.FluxComplianceState? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.FluxComplianceState left, Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.FluxComplianceState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class FluxConfigurationPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.FluxConfigurationPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.FluxConfigurationPatch>
+    {
+        public FluxConfigurationPatch() { }
+        public Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.AzureBlobPatchDefinition AzureBlob { get { throw null; } set { } }
+        public Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.BucketPatchDefinition Bucket { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> ConfigurationProtectedSettings { get { throw null; } }
+        public Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.GitRepositoryPatchDefinition GitRepository { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.KustomizationPatchDefinition> Kustomizations { get { throw null; } }
+        public Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.OCIRepositoryPatchDefinition OciRepository { get { throw null; } set { } }
+        public Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.SourceKindType? SourceKind { get { throw null; } set { } }
+        public bool? Suspend { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.FluxConfigurationPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.FluxConfigurationPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.FluxConfigurationPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.FluxConfigurationPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.FluxConfigurationPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.FluxConfigurationPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.FluxConfigurationPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.FluxConfigurationPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.FluxConfigurationPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class GitRepositoryDefinition : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.GitRepositoryDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.GitRepositoryDefinition>
+    {
+        public GitRepositoryDefinition() { }
+        public string HttpsCACert { get { throw null; } set { } }
+        public string HttpsUser { get { throw null; } set { } }
+        public string LocalAuthRef { get { throw null; } set { } }
+        public Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ProviderType? Provider { get { throw null; } set { } }
+        public Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.RepositoryRefDefinition RepositoryRef { get { throw null; } set { } }
+        public string SshKnownHosts { get { throw null; } set { } }
+        public long? SyncIntervalInSeconds { get { throw null; } set { } }
+        public long? TimeoutInSeconds { get { throw null; } set { } }
+        public string Uri { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.GitRepositoryDefinition JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.GitRepositoryDefinition PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.GitRepositoryDefinition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.GitRepositoryDefinition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.GitRepositoryDefinition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.GitRepositoryDefinition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.GitRepositoryDefinition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.GitRepositoryDefinition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.GitRepositoryDefinition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class GitRepositoryPatchDefinition : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.GitRepositoryPatchDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.GitRepositoryPatchDefinition>
+    {
+        public GitRepositoryPatchDefinition() { }
+        public string HttpsCACert { get { throw null; } set { } }
+        public string HttpsUser { get { throw null; } set { } }
+        public string LocalAuthRef { get { throw null; } set { } }
+        public Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ProviderType? Provider { get { throw null; } set { } }
+        public Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.RepositoryRefDefinition RepositoryRef { get { throw null; } set { } }
+        public string SshKnownHosts { get { throw null; } set { } }
+        public long? SyncIntervalInSeconds { get { throw null; } set { } }
+        public long? TimeoutInSeconds { get { throw null; } set { } }
+        public string Uri { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.GitRepositoryPatchDefinition JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.GitRepositoryPatchDefinition PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.GitRepositoryPatchDefinition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.GitRepositoryPatchDefinition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.GitRepositoryPatchDefinition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.GitRepositoryPatchDefinition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.GitRepositoryPatchDefinition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.GitRepositoryPatchDefinition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.GitRepositoryPatchDefinition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class HelmReleasePropertiesDefinition : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.HelmReleasePropertiesDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.HelmReleasePropertiesDefinition>
+    {
+        internal HelmReleasePropertiesDefinition() { }
+        public long? FailureCount { get { throw null; } }
+        public Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ObjectReferenceDefinition HelmChartRef { get { throw null; } }
+        public long? InstallFailureCount { get { throw null; } }
+        public long? LastRevisionApplied { get { throw null; } }
+        public long? UpgradeFailureCount { get { throw null; } }
+        protected virtual Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.HelmReleasePropertiesDefinition JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.HelmReleasePropertiesDefinition PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.HelmReleasePropertiesDefinition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.HelmReleasePropertiesDefinition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.HelmReleasePropertiesDefinition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.HelmReleasePropertiesDefinition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.HelmReleasePropertiesDefinition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.HelmReleasePropertiesDefinition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.HelmReleasePropertiesDefinition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class KustomizationDefinition : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.KustomizationDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.KustomizationDefinition>
+    {
+        public KustomizationDefinition() { }
+        public System.Collections.Generic.IList<string> DependsOn { get { throw null; } set { } }
+        public bool? Force { get { throw null; } set { } }
+        public string Name { get { throw null; } }
+        public string Path { get { throw null; } set { } }
+        public Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.PostBuildDefinition PostBuild { get { throw null; } set { } }
+        public bool? Prune { get { throw null; } set { } }
+        public long? RetryIntervalInSeconds { get { throw null; } set { } }
+        public long? SyncIntervalInSeconds { get { throw null; } set { } }
+        public long? TimeoutInSeconds { get { throw null; } set { } }
+        public bool? Wait { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.KustomizationDefinition JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.KustomizationDefinition PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.KustomizationDefinition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.KustomizationDefinition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.KustomizationDefinition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.KustomizationDefinition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.KustomizationDefinition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.KustomizationDefinition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.KustomizationDefinition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class KustomizationPatchDefinition : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.KustomizationPatchDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.KustomizationPatchDefinition>
+    {
+        public KustomizationPatchDefinition() { }
+        public System.Collections.Generic.IList<string> DependsOn { get { throw null; } set { } }
+        public bool? Force { get { throw null; } set { } }
+        public string Path { get { throw null; } set { } }
+        public Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.PostBuildPatchDefinition PostBuild { get { throw null; } set { } }
+        public bool? Prune { get { throw null; } set { } }
+        public long? RetryIntervalInSeconds { get { throw null; } set { } }
+        public long? SyncIntervalInSeconds { get { throw null; } set { } }
+        public long? TimeoutInSeconds { get { throw null; } set { } }
+        public bool? Wait { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.KustomizationPatchDefinition JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.KustomizationPatchDefinition PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.KustomizationPatchDefinition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.KustomizationPatchDefinition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.KustomizationPatchDefinition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.KustomizationPatchDefinition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.KustomizationPatchDefinition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.KustomizationPatchDefinition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.KustomizationPatchDefinition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class LayerSelectorDefinition : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.LayerSelectorDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.LayerSelectorDefinition>
+    {
+        public LayerSelectorDefinition() { }
+        public string MediaType { get { throw null; } set { } }
+        public Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.OperationType? Operation { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.LayerSelectorDefinition JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.LayerSelectorDefinition PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.LayerSelectorDefinition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.LayerSelectorDefinition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.LayerSelectorDefinition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.LayerSelectorDefinition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.LayerSelectorDefinition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.LayerSelectorDefinition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.LayerSelectorDefinition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class LayerSelectorPatchDefinition : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.LayerSelectorPatchDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.LayerSelectorPatchDefinition>
+    {
+        public LayerSelectorPatchDefinition() { }
+        public string MediaType { get { throw null; } set { } }
+        public Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.OperationType? Operation { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.LayerSelectorPatchDefinition JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.LayerSelectorPatchDefinition PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.LayerSelectorPatchDefinition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.LayerSelectorPatchDefinition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.LayerSelectorPatchDefinition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.LayerSelectorPatchDefinition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.LayerSelectorPatchDefinition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.LayerSelectorPatchDefinition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.LayerSelectorPatchDefinition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class MatchOidcIdentityDefinition : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.MatchOidcIdentityDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.MatchOidcIdentityDefinition>
+    {
+        public MatchOidcIdentityDefinition() { }
+        public string Issuer { get { throw null; } set { } }
+        public string Subject { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.MatchOidcIdentityDefinition JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.MatchOidcIdentityDefinition PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.MatchOidcIdentityDefinition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.MatchOidcIdentityDefinition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.MatchOidcIdentityDefinition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.MatchOidcIdentityDefinition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.MatchOidcIdentityDefinition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.MatchOidcIdentityDefinition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.MatchOidcIdentityDefinition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class MatchOidcIdentityPatchDefinition : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.MatchOidcIdentityPatchDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.MatchOidcIdentityPatchDefinition>
+    {
+        public MatchOidcIdentityPatchDefinition() { }
+        public string Issuer { get { throw null; } set { } }
+        public string Subject { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.MatchOidcIdentityPatchDefinition JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.MatchOidcIdentityPatchDefinition PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.MatchOidcIdentityPatchDefinition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.MatchOidcIdentityPatchDefinition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.MatchOidcIdentityPatchDefinition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.MatchOidcIdentityPatchDefinition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.MatchOidcIdentityPatchDefinition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.MatchOidcIdentityPatchDefinition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.MatchOidcIdentityPatchDefinition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ObjectReferenceDefinition : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ObjectReferenceDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ObjectReferenceDefinition>
+    {
+        internal ObjectReferenceDefinition() { }
+        public string Name { get { throw null; } }
+        public string Namespace { get { throw null; } }
+        protected virtual Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ObjectReferenceDefinition JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ObjectReferenceDefinition PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ObjectReferenceDefinition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ObjectReferenceDefinition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ObjectReferenceDefinition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ObjectReferenceDefinition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ObjectReferenceDefinition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ObjectReferenceDefinition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ObjectReferenceDefinition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ObjectStatusConditionDefinition : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ObjectStatusConditionDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ObjectStatusConditionDefinition>
+    {
+        internal ObjectStatusConditionDefinition() { }
+        public System.DateTimeOffset? LastTransitionOn { get { throw null; } }
+        public string Message { get { throw null; } }
+        public string Reason { get { throw null; } }
+        public string Status { get { throw null; } }
+        public string Type { get { throw null; } }
+        protected virtual Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ObjectStatusConditionDefinition JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ObjectStatusConditionDefinition PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ObjectStatusConditionDefinition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ObjectStatusConditionDefinition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ObjectStatusConditionDefinition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ObjectStatusConditionDefinition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ObjectStatusConditionDefinition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ObjectStatusConditionDefinition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ObjectStatusConditionDefinition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ObjectStatusDefinition : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ObjectStatusDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ObjectStatusDefinition>
+    {
+        internal ObjectStatusDefinition() { }
+        public Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ObjectReferenceDefinition AppliedBy { get { throw null; } }
+        public Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.FluxComplianceState? ComplianceState { get { throw null; } }
+        public Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.HelmReleasePropertiesDefinition HelmReleaseProperties { get { throw null; } }
+        public string Kind { get { throw null; } }
+        public string Name { get { throw null; } }
+        public string Namespace { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ObjectStatusConditionDefinition> StatusConditions { get { throw null; } }
+        protected virtual Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ObjectStatusDefinition JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ObjectStatusDefinition PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ObjectStatusDefinition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ObjectStatusDefinition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ObjectStatusDefinition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ObjectStatusDefinition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ObjectStatusDefinition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ObjectStatusDefinition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ObjectStatusDefinition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class OCIRepositoryDefinition : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.OCIRepositoryDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.OCIRepositoryDefinition>
+    {
+        public OCIRepositoryDefinition() { }
+        public bool? Insecure { get { throw null; } set { } }
+        public Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.LayerSelectorDefinition LayerSelector { get { throw null; } set { } }
+        public string LocalAuthRef { get { throw null; } set { } }
+        public Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.OCIRepositoryRefDefinition RepositoryRef { get { throw null; } set { } }
+        public string ServiceAccountName { get { throw null; } set { } }
+        public long? SyncIntervalInSeconds { get { throw null; } set { } }
+        public long? TimeoutInSeconds { get { throw null; } set { } }
+        public Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.TlsConfigDefinition TlsConfig { get { throw null; } set { } }
+        public System.Uri Uri { get { throw null; } set { } }
+        public bool? UseWorkloadIdentity { get { throw null; } set { } }
+        public Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.VerifyDefinition Verify { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.OCIRepositoryDefinition JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.OCIRepositoryDefinition PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.OCIRepositoryDefinition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.OCIRepositoryDefinition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.OCIRepositoryDefinition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.OCIRepositoryDefinition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.OCIRepositoryDefinition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.OCIRepositoryDefinition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.OCIRepositoryDefinition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class OCIRepositoryPatchDefinition : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.OCIRepositoryPatchDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.OCIRepositoryPatchDefinition>
+    {
+        public OCIRepositoryPatchDefinition() { }
+        public bool? Insecure { get { throw null; } set { } }
+        public Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.LayerSelectorPatchDefinition LayerSelector { get { throw null; } set { } }
+        public string LocalAuthRef { get { throw null; } set { } }
+        public Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.OCIRepositoryRefPatchDefinition RepositoryRef { get { throw null; } set { } }
+        public string ServiceAccountName { get { throw null; } set { } }
+        public long? SyncIntervalInSeconds { get { throw null; } set { } }
+        public long? TimeoutInSeconds { get { throw null; } set { } }
+        public Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.TlsConfigPatchDefinition TlsConfig { get { throw null; } set { } }
+        public System.Uri Uri { get { throw null; } set { } }
+        public bool? UseWorkloadIdentity { get { throw null; } set { } }
+        public Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.VerifyPatchDefinition Verify { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.OCIRepositoryPatchDefinition JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.OCIRepositoryPatchDefinition PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.OCIRepositoryPatchDefinition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.OCIRepositoryPatchDefinition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.OCIRepositoryPatchDefinition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.OCIRepositoryPatchDefinition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.OCIRepositoryPatchDefinition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.OCIRepositoryPatchDefinition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.OCIRepositoryPatchDefinition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class OCIRepositoryRefDefinition : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.OCIRepositoryRefDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.OCIRepositoryRefDefinition>
+    {
+        public OCIRepositoryRefDefinition() { }
+        public string Digest { get { throw null; } set { } }
+        public string Semver { get { throw null; } set { } }
+        public string Tag { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.OCIRepositoryRefDefinition JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.OCIRepositoryRefDefinition PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.OCIRepositoryRefDefinition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.OCIRepositoryRefDefinition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.OCIRepositoryRefDefinition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.OCIRepositoryRefDefinition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.OCIRepositoryRefDefinition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.OCIRepositoryRefDefinition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.OCIRepositoryRefDefinition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class OCIRepositoryRefPatchDefinition : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.OCIRepositoryRefPatchDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.OCIRepositoryRefPatchDefinition>
+    {
+        public OCIRepositoryRefPatchDefinition() { }
+        public string Digest { get { throw null; } set { } }
+        public string Semver { get { throw null; } set { } }
+        public string Tag { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.OCIRepositoryRefPatchDefinition JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.OCIRepositoryRefPatchDefinition PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.OCIRepositoryRefPatchDefinition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.OCIRepositoryRefPatchDefinition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.OCIRepositoryRefPatchDefinition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.OCIRepositoryRefPatchDefinition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.OCIRepositoryRefPatchDefinition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.OCIRepositoryRefPatchDefinition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.OCIRepositoryRefPatchDefinition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct OperationType : System.IEquatable<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.OperationType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public OperationType(string value) { throw null; }
+        public static Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.OperationType Copy { get { throw null; } }
+        public static Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.OperationType Extract { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.OperationType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.OperationType left, Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.OperationType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.OperationType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.OperationType? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.OperationType left, Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.OperationType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class PostBuildDefinition : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.PostBuildDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.PostBuildDefinition>
+    {
+        public PostBuildDefinition() { }
+        public System.Collections.Generic.IDictionary<string, string> Substitute { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.SubstituteFromDefinition> SubstituteFrom { get { throw null; } }
+        protected virtual Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.PostBuildDefinition JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.PostBuildDefinition PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.PostBuildDefinition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.PostBuildDefinition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.PostBuildDefinition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.PostBuildDefinition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.PostBuildDefinition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.PostBuildDefinition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.PostBuildDefinition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class PostBuildPatchDefinition : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.PostBuildPatchDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.PostBuildPatchDefinition>
+    {
+        public PostBuildPatchDefinition() { }
+        public System.Collections.Generic.IDictionary<string, string> Substitute { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.SubstituteFromPatchDefinition> SubstituteFrom { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.PostBuildPatchDefinition JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.PostBuildPatchDefinition PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.PostBuildPatchDefinition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.PostBuildPatchDefinition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.PostBuildPatchDefinition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.PostBuildPatchDefinition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.PostBuildPatchDefinition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.PostBuildPatchDefinition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.PostBuildPatchDefinition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ProviderType : System.IEquatable<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ProviderType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ProviderType(string value) { throw null; }
+        public static Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ProviderType Azure { get { throw null; } }
+        public static Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ProviderType Generic { get { throw null; } }
+        public static Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ProviderType GitHub { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ProviderType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ProviderType left, Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ProviderType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ProviderType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ProviderType? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ProviderType left, Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ProviderType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ProvisioningState : System.IEquatable<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ProvisioningState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ProvisioningState Canceled { get { throw null; } }
+        public static Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ProvisioningState Creating { get { throw null; } }
+        public static Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ProvisioningState Deleting { get { throw null; } }
+        public static Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ProvisioningState Failed { get { throw null; } }
+        public static Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ProvisioningState Succeeded { get { throw null; } }
+        public static Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ProvisioningState Updating { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ProvisioningState other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ProvisioningState left, Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ProvisioningState? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ProvisioningState left, Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ProvisioningState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class RepositoryRefDefinition : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.RepositoryRefDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.RepositoryRefDefinition>
+    {
+        public RepositoryRefDefinition() { }
+        public string Branch { get { throw null; } set { } }
+        public string Commit { get { throw null; } set { } }
+        public string Semver { get { throw null; } set { } }
+        public string Tag { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.RepositoryRefDefinition JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.RepositoryRefDefinition PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.RepositoryRefDefinition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.RepositoryRefDefinition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.RepositoryRefDefinition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.RepositoryRefDefinition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.RepositoryRefDefinition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.RepositoryRefDefinition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.RepositoryRefDefinition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ScopeType : System.IEquatable<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ScopeType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ScopeType(string value) { throw null; }
+        public static Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ScopeType Cluster { get { throw null; } }
+        public static Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ScopeType Namespace { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ScopeType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ScopeType left, Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ScopeType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ScopeType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ScopeType? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ScopeType left, Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ScopeType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class ServicePrincipalDefinition : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ServicePrincipalDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ServicePrincipalDefinition>
+    {
+        public ServicePrincipalDefinition() { }
+        public string ClientCertificate { get { throw null; } set { } }
+        public string ClientCertificatePassword { get { throw null; } set { } }
+        public bool? ClientCertificateSendChain { get { throw null; } set { } }
+        public string ClientId { get { throw null; } set { } }
+        public string ClientSecret { get { throw null; } set { } }
+        public string TenantId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ServicePrincipalDefinition JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ServicePrincipalDefinition PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ServicePrincipalDefinition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ServicePrincipalDefinition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ServicePrincipalDefinition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ServicePrincipalDefinition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ServicePrincipalDefinition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ServicePrincipalDefinition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ServicePrincipalDefinition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ServicePrincipalPatchDefinition : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ServicePrincipalPatchDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ServicePrincipalPatchDefinition>
+    {
+        public ServicePrincipalPatchDefinition() { }
+        public string ClientCertificate { get { throw null; } set { } }
+        public string ClientCertificatePassword { get { throw null; } set { } }
+        public bool? ClientCertificateSendChain { get { throw null; } set { } }
+        public string ClientId { get { throw null; } set { } }
+        public string ClientSecret { get { throw null; } set { } }
+        public string TenantId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ServicePrincipalPatchDefinition JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ServicePrincipalPatchDefinition PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ServicePrincipalPatchDefinition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ServicePrincipalPatchDefinition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ServicePrincipalPatchDefinition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ServicePrincipalPatchDefinition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ServicePrincipalPatchDefinition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ServicePrincipalPatchDefinition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.ServicePrincipalPatchDefinition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct SourceKindType : System.IEquatable<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.SourceKindType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public SourceKindType(string value) { throw null; }
+        public static Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.SourceKindType AzureBlob { get { throw null; } }
+        public static Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.SourceKindType Bucket { get { throw null; } }
+        public static Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.SourceKindType GitRepository { get { throw null; } }
+        public static Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.SourceKindType OCIRepository { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.SourceKindType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.SourceKindType left, Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.SourceKindType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.SourceKindType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.SourceKindType? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.SourceKindType left, Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.SourceKindType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class SubstituteFromDefinition : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.SubstituteFromDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.SubstituteFromDefinition>
+    {
+        public SubstituteFromDefinition() { }
+        public string Kind { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
+        public bool? Optional { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.SubstituteFromDefinition JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.SubstituteFromDefinition PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.SubstituteFromDefinition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.SubstituteFromDefinition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.SubstituteFromDefinition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.SubstituteFromDefinition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.SubstituteFromDefinition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.SubstituteFromDefinition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.SubstituteFromDefinition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class SubstituteFromPatchDefinition : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.SubstituteFromPatchDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.SubstituteFromPatchDefinition>
+    {
+        public SubstituteFromPatchDefinition() { }
+        public string Kind { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
+        public bool? Optional { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.SubstituteFromPatchDefinition JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.SubstituteFromPatchDefinition PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.SubstituteFromPatchDefinition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.SubstituteFromPatchDefinition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.SubstituteFromPatchDefinition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.SubstituteFromPatchDefinition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.SubstituteFromPatchDefinition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.SubstituteFromPatchDefinition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.SubstituteFromPatchDefinition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class TlsConfigDefinition : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.TlsConfigDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.TlsConfigDefinition>
+    {
+        public TlsConfigDefinition() { }
+        public string CaCertificate { get { throw null; } set { } }
+        public string ClientCertificate { get { throw null; } set { } }
+        public string PrivateKey { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.TlsConfigDefinition JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.TlsConfigDefinition PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.TlsConfigDefinition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.TlsConfigDefinition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.TlsConfigDefinition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.TlsConfigDefinition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.TlsConfigDefinition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.TlsConfigDefinition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.TlsConfigDefinition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class TlsConfigPatchDefinition : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.TlsConfigPatchDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.TlsConfigPatchDefinition>
+    {
+        public TlsConfigPatchDefinition() { }
+        public string CaCertificate { get { throw null; } set { } }
+        public string ClientCertificate { get { throw null; } set { } }
+        public string PrivateKey { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.TlsConfigPatchDefinition JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.TlsConfigPatchDefinition PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.TlsConfigPatchDefinition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.TlsConfigPatchDefinition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.TlsConfigPatchDefinition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.TlsConfigPatchDefinition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.TlsConfigPatchDefinition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.TlsConfigPatchDefinition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.TlsConfigPatchDefinition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class VerifyDefinition : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.VerifyDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.VerifyDefinition>
+    {
+        public VerifyDefinition() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.MatchOidcIdentityDefinition> MatchOidcIdentity { get { throw null; } set { } }
+        public string Provider { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> VerificationConfig { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.VerifyDefinition JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.VerifyDefinition PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.VerifyDefinition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.VerifyDefinition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.VerifyDefinition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.VerifyDefinition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.VerifyDefinition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.VerifyDefinition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.VerifyDefinition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class VerifyPatchDefinition : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.VerifyPatchDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.VerifyPatchDefinition>
+    {
+        public VerifyPatchDefinition() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.MatchOidcIdentityPatchDefinition> MatchOidcIdentity { get { throw null; } set { } }
+        public string Provider { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> VerificationConfig { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.VerifyPatchDefinition JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.VerifyPatchDefinition PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.VerifyPatchDefinition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.VerifyPatchDefinition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.VerifyPatchDefinition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.VerifyPatchDefinition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.VerifyPatchDefinition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.VerifyPatchDefinition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KubernetesConfiguration._FluxConfigurations.Models.VerifyPatchDefinition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+}

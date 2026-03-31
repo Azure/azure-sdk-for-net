@@ -28,8 +28,6 @@ namespace Azure.ResourceManager.KubernetesConfiguration
     {
         private readonly ClientDiagnostics _extensionsClientDiagnostics;
         private readonly Extensions _extensionsRestClient;
-        private readonly ClientDiagnostics _operationStatusClientDiagnostics;
-        private readonly OperationStatus _operationStatusRestClient;
         /// <summary> The clusterRp. </summary>
         private readonly string _clusterRp;
         /// <summary> The clusterResourceName. </summary>
@@ -56,8 +54,6 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             _clusterName = clusterName;
             _extensionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KubernetesConfiguration", KubernetesClusterExtensionResource.ResourceType.Namespace, Diagnostics);
             _extensionsRestClient = new Extensions(_extensionsClientDiagnostics, Pipeline, Endpoint, kubernetesClusterExtensionApiVersion ?? "2025-03-01");
-            _operationStatusClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KubernetesConfiguration", KubernetesClusterExtensionResource.ResourceType.Namespace, Diagnostics);
-            _operationStatusRestClient = new OperationStatus(_operationStatusClientDiagnostics, Pipeline, Endpoint, kubernetesClusterExtensionApiVersion ?? "2025-03-01");
             ValidateResourceId(id);
         }
 

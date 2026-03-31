@@ -30,7 +30,6 @@ namespace Azure.ResourceManager.KubernetesConfiguration
     [ModelReaderWriterBuildable(typeof(KubernetesClusterExtensionScopeNamespace))]
     [ModelReaderWriterBuildable(typeof(KubernetesClusterExtensionStatus))]
     [ModelReaderWriterBuildable(typeof(KubernetesClusterManagementDetails))]
-    [ModelReaderWriterBuildable(typeof(KubernetesClusterOperationStatusResult))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]

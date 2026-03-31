@@ -9,5 +9,13 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.KubernetesConfiguration
       safeName: AzureResourceManagerKubernetesConfiguration
+    - name: Azure.ResourceManager.KubernetesConfiguration.Extensions
+      safeName: AzureResourceManagerKubernetesConfigurationExtensions
+    - name: Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
+      safeName: AzureResourceManagerKubernetesConfigurationExtensionTypes
+    - name: Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations
+      safeName: AzureResourceManagerKubernetesConfigurationFluxConfigurations
+    - name: Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes
+      safeName: AzureResourceManagerKubernetesConfigurationPrivateLinkScopes
     - name: Azure.Provisioning.KubernetesConfiguration
       safeName: AzureProvisioningKubernetesConfiguration

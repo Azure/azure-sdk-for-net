@@ -1,20 +1,23 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
+## 1.3.0 (Unreleased)
 
 ### Features Added
 
 - Migrated from Swagger/AutoRest to TypeSpec-based generation using the Azure Management Plane Generator.
-- Updated the Extensions API version from `2022-11-01` to `2024-11-01`.
-- Added `OperationStatusResult` model and `Get`/`GetAsync` methods on `KubernetesClusterExtensionResource` for querying operation status.
+- Updated the Extensions API version from `2022-11-01` to `2025-03-01`.
 
 ### Breaking Changes
 
 - FluxConfiguration and SourceControlConfiguration resource types have been marked as `[Obsolete]` and throw `NotSupportedException`. The service specification has been restructured into separate TypeSpec projects. These resource types will be available in separate packages in the future.
+- Excluded `OperationStatusResult` model and `OperationStatusGet` API from .NET SDK since they are built into the core library. Used `@@scope` decorator in TypeSpec to exclude these APIs.
 
 ### Bugs Fixed
 
 ### Other Changes
+
+- Upgraded dependent `Azure.Core` to 1.44.1.
+- Upgraded dependent `Azure.ResourceManager` to 1.13.0.
 
 ## 1.2.0 (2023-11-29)
 
