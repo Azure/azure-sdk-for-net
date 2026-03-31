@@ -15,7 +15,7 @@ namespace Azure.Storage.ChangeFeed.Common
     /// Top-level factory that orchestrates the construction of a <see cref="ChangeFeedBase{TEvent}"/>,
     /// handling cursor deserialization, time rounding, year/segment enumeration, and the full factory hierarchy.
     /// </summary>
-    internal class ChangeFeedFactoryBase<TEvent>
+    internal class ChangeFeedFactoryBase<TEvent> where TEvent : IChangeFeedEvent
     {
         private readonly SegmentFactoryBase<TEvent> _segmentFactory;
         private readonly BlobContainerClient _containerClient;

@@ -12,7 +12,7 @@ namespace Azure.Storage.ChangeFeed.Common
     /// Represents a single time-window segment of the change feed. A segment contains multiple shards
     /// that are read in round-robin order to distribute events evenly across pages.
     /// </summary>
-    internal class SegmentBase<TEvent>
+    internal class SegmentBase<TEvent> where TEvent : IChangeFeedEvent
     {
         /// <summary>
         /// The timestamp that this segment covers.
@@ -67,9 +67,16 @@ namespace Azure.Storage.ChangeFeed.Common
         /// </summary>
         /// <param name="async">Whether to use async APIs.</param>
         /// <param name="pageSize">Maximum number of events to return.</param>
+        /// <param name="startTime">Optional inclusive start time for event-level filtering.</param>
+        /// <param name="endTime">Optional exclusive end time for event-level filtering.</param>
         /// <param name="cancellationToken">Cancellation token.</param>
         /// <returns>A list of events read from the segment's shards.</returns>
-        public virtual async Task<List<TEvent>> GetPage(bool async, int? pageSize, CancellationToken cancellationToken = default)
+        public virtual async Task<List<TEvent>> GetPage(
+            bool async,
+            int? pageSize,
+            DateTimeOffset? startTime,
+            DateTimeOffset? endTime,
+            CancellationToken cancellationToken = default)
         {
             List<TEvent> changeFeedEventList = new List<TEvent>();
             if (!HasNext()) return new List<TEvent>(capacity: 0);
@@ -88,13 +95,26 @@ namespace Azure.Storage.ChangeFeed.Common
 
                 ShardBase<TEvent> currentShard = _shards[_shardIndex];
                 TEvent changeFeedEvent = await currentShard.Next(async, cancellationToken).ConfigureAwait(false);
-                changeFeedEventList.Add(changeFeedEvent);
 
                 if (!currentShard.HasNext()) _finishedShards.Add(_shardIndex);
 
-                i++;
                 _shardIndex++;
                 if (_shardIndex >= _shards.Count) _shardIndex = 0;
+
+                // Filter by event time — skip events outside the requested window.
+                if (startTime.HasValue && changeFeedEvent.EventTime < startTime.Value)
+                {
+                    if (_finishedShards.Count == _shards.Count) break;
+                    continue;
+                }
+                if (endTime.HasValue && changeFeedEvent.EventTime >= endTime.Value)
+                {
+                    if (_finishedShards.Count == _shards.Count) break;
+                    continue;
+                }
+
+                changeFeedEventList.Add(changeFeedEvent);
+                i++;
                 if (_finishedShards.Count == _shards.Count) break;
             }
             return changeFeedEventList;

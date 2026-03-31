@@ -13,7 +13,7 @@ namespace Azure.Storage.ChangeFeed.Common
     /// Reads change feed events from a single Avro chunk file, tracking block offset and event index
     /// for cursor support. Parameterized by event type so the same logic serves Blob and Files change feeds.
     /// </summary>
-    internal class ChunkBase<TEvent>
+    internal class ChunkBase<TEvent> where TEvent : IChangeFeedEvent
     {
         private readonly AvroReader _avroReader;
         private readonly Func<Dictionary<string, object>, TEvent> _eventParser;

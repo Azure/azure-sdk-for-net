@@ -11,7 +11,7 @@ namespace Azure.Storage.ChangeFeed.Common
     /// <see cref="ChangeFeedCursor"/> as the continuation token. This is the generic equivalent
     /// of <c>BlobChangeFeedEventPage</c> in the Blob Change Feed package.
     /// </summary>
-    internal class ChangeFeedEventPageBase<TEvent> : Page<TEvent>
+    internal class ChangeFeedEventPageBase<TEvent> : Page<TEvent> where TEvent : IChangeFeedEvent
     {
         /// <inheritdoc />
         public override IReadOnlyList<TEvent> Values { get; }

@@ -14,7 +14,7 @@ namespace Azure.Storage.ChangeFeed.Common
     /// Factory that creates <see cref="SegmentBase{TEvent}"/> instances by downloading and parsing
     /// the segment manifest JSON and building a shard for each chunkFilePath listed in it.
     /// </summary>
-    internal class SegmentFactoryBase<TEvent>
+    internal class SegmentFactoryBase<TEvent> where TEvent : IChangeFeedEvent
     {
         private readonly BlobContainerClient _containerClient;
         private readonly ShardFactoryBase<TEvent> _shardFactory;

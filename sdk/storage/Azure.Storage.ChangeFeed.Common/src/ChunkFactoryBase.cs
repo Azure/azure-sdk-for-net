@@ -13,7 +13,7 @@ namespace Azure.Storage.ChangeFeed.Common
     /// Factory that creates <see cref="ChunkBase{TEvent}"/> instances, handling stream setup and Avro reader
     /// initialization for both fresh reads and cursor-based resumption.
     /// </summary>
-    internal class ChunkFactoryBase<TEvent>
+    internal class ChunkFactoryBase<TEvent> where TEvent : IChangeFeedEvent
     {
         private readonly LazyLoadingBlobStreamFactory _lazyLoadingBlobStreamFactory;
         private readonly AvroReaderFactory _avroReaderFactory;

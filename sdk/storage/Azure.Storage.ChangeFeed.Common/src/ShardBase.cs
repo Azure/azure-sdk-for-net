@@ -15,7 +15,7 @@ namespace Azure.Storage.ChangeFeed.Common
     /// chunk (Avro) files that are read sequentially, automatically advancing to the next chunk when
     /// the current one is exhausted.
     /// </summary>
-    internal class ShardBase<TEvent>
+    internal class ShardBase<TEvent> where TEvent : IChangeFeedEvent
     {
         private readonly BlobContainerClient _containerClient;
         private readonly ChunkFactoryBase<TEvent> _chunkFactory;

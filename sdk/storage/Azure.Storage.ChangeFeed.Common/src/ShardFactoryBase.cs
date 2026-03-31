@@ -13,7 +13,7 @@ namespace Azure.Storage.ChangeFeed.Common
     /// Factory that creates <see cref="ShardBase{TEvent}"/> instances by enumerating chunk blobs
     /// and optionally fast-forwarding to a cursor position.
     /// </summary>
-    internal class ShardFactoryBase<TEvent>
+    internal class ShardFactoryBase<TEvent> where TEvent : IChangeFeedEvent
     {
         private readonly ChunkFactoryBase<TEvent> _chunkFactory;
         private readonly BlobContainerClient _containerClient;

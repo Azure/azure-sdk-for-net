@@ -8,8 +8,11 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
 using Azure.Storage.Files.Shares;
+using Azure.Storage.Files.Shares.Models;
 using NUnit.Framework;
+using static Azure.Storage.Constants;
 
 namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
 {
@@ -57,14 +60,15 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
             ShareChangeFeedClient client = GetChangeFeedClient("fileschangefeedshare");
             ShareClient shareClient = shareServiceClient.GetShareClient("fileschangefeedshare");
 
+            //await shareClient.CreateSnapshotAsync();
+
             //for (int i = 0; i < 2000; i++)
             //{
             //    ShareDirectoryClient directoryClient = shareClient.GetDirectoryClient(Guid.NewGuid().ToString());
             //    await directoryClient.CreateAsync();
-            //    await directoryClient.DeleteAsync();
             //}
 
-            await shareClient.CreateSnapshotAsync();
+            //await shareClient.CreateSnapshotAsync();
 
             // Act
             List<ShareChangeFeedEvent> events = new List<ShareChangeFeedEvent>();
@@ -103,9 +107,9 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
         public async Task GetChanges_WithTimeRange_FiltersEvents()
         {
             // Arrange
-            DateTimeOffset start = DateTimeOffset.UtcNow.AddHours(-24);
-            DateTimeOffset end = DateTimeOffset.UtcNow;
-            ShareChangeFeedClient client = GetChangeFeedClient();
+            DateTimeOffset start = new DateTimeOffset(2026, 3, 27, 17, 39, 39, new TimeSpan(0));
+            DateTimeOffset end = new DateTimeOffset(2026, 3, 27, 17, 40, 14, new TimeSpan(0));
+            ShareChangeFeedClient client = GetChangeFeedClient("fileschangefeedshare");
 
             // Act
             List<ShareChangeFeedEvent> events = new List<ShareChangeFeedEvent>();
@@ -128,8 +132,8 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
             // Assert - all events should be within the requested range
             foreach (ShareChangeFeedEvent e in events)
             {
-                Assert.GreaterOrEqual(e.EventTime, start.AddMinutes(-15), "Event time should be >= start (minus one window tolerance)");
-                Assert.LessOrEqual(e.EventTime, end.AddMinutes(15), "Event time should be <= end (plus one window tolerance)");
+                Assert.GreaterOrEqual(e.EventTime, start, "Event time should be >= start (inclusive)");
+                Assert.Less(e.EventTime, end, "Event time should be < end (exclusive)");
             }
         }
 
@@ -281,11 +285,20 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
         [Ignore("Requires a storage account with Files Change Feed enabled, pre-existing events, and two snapshots taken")]
         public async Task GetChangesBetweenSnapshots_FiltersEvents()
         {
+            ShareServiceClient shareServiceClient = GetShareServiceClient_SharedKey();
+            IList<ShareItem> shares = await shareServiceClient.GetSharesAsync(ShareTraits.None, ShareStates.Snapshots).ToListAsync();
+            List<ShareItem> snapshots = shares.Where(r => r.Name == "fileschangefeedshare").ToList();
+            BlobContainerClient containerClient = GetBlobServiceClient_SharedKey().GetBlobContainerClient("fileschangefeed-2cf7b86c-ff27-4b4f-a49c-a5fa8ca1f15a");
+            IList<BlobItem> changeFeedSnapshotsIList = await containerClient.GetBlobsAsync(new Blobs.Models.GetBlobsOptions { Prefix = "idx/snapshot/" }).ToListAsync();
+            List<BlobItem> changeFeedSnapshots = changeFeedSnapshotsIList.ToList();
+            // Arrange
+            ShareChangeFeedClient client = GetChangeFeedClient("fileschangefeedshare");
+            ShareClient shareClient = shareServiceClient.GetShareClient("fileschangefeedshare");
+
             // Arrange - these snapshot timestamps need to be set to real snapshot timestamps
             // from the test storage account.
-            string beginSnapshot = "2024-01-15T08:00:00.000Z";
-            string endSnapshot = "2024-01-15T09:00:00.000Z";
-            ShareChangeFeedClient client = GetChangeFeedClient();
+            string beginSnapshot = snapshots[3].Snapshot;
+            string endSnapshot = snapshots[10].Snapshot;
 
             // Act
             List<ShareChangeFeedEvent> events = new List<ShareChangeFeedEvent>();

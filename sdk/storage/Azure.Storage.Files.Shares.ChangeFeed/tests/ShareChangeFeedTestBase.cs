@@ -39,7 +39,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
         }
 
         /// <summary>
-        /// Creates instrumented <see cref="BlobClientOptions"/> configured with retry policy and recording support.
+        /// Creates instrumented <see cref="ShareClientOptions"/> configured with retry policy and recording support.
         /// </summary>
         public ShareClientOptions GetOptions()
         {
@@ -73,6 +73,17 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
                         TestConfigDefault.AccountName,
                         TestConfigDefault.AccountKey),
                     GetOptions()));
+
+        /// <summary>
+        /// Creates an instrumented <see cref="BlobServiceClient"/> using shared key authentication.
+        /// </summary>
+        public BlobServiceClient GetBlobServiceClient_SharedKey()
+            => InstrumentClient(
+                new BlobServiceClient(
+                    new Uri(TestConfigDefault.BlobServiceEndpoint),
+                    new StorageSharedKeyCredential(
+                        TestConfigDefault.AccountName,
+                        TestConfigDefault.AccountKey)));
 
         /// <summary>
         /// Returns a page of mock year-level prefix paths (e.g., "idx/segments/2024/") for test setup.

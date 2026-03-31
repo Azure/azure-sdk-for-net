@@ -36,7 +36,7 @@ namespace Azure.Storage.ChangeFeed.Common.Tests
                 dateTime: new DateTimeOffset(2024, 1, 15, 8, 0, 0, TimeSpan.Zero),
                 manifestPath: "idx/segments/2024/01/15/0800/meta.json");
 
-            List<TestEvent> events = await segment.GetPage(IsAsync, pageSize: 10);
+            List<TestEvent> events = await segment.GetPage(IsAsync, pageSize: 10, startTime: null, endTime: null);
 
             Assert.IsEmpty(events);
             Assert.IsFalse(segment.HasNext());
@@ -77,7 +77,7 @@ namespace Azure.Storage.ChangeFeed.Common.Tests
                 dateTime: new DateTimeOffset(2024, 1, 15, 8, 0, 0, TimeSpan.Zero),
                 manifestPath: "idx/segments/2024/01/15/0800/meta.json");
 
-            List<TestEvent> events = await segment.GetPage(IsAsync, pageSize: 10);
+            List<TestEvent> events = await segment.GetPage(IsAsync, pageSize: 10, startTime: null, endTime: null);
 
             // Should have round-robined: shard0 event, shard1 event
             Assert.AreEqual(2, events.Count);

@@ -14,7 +14,7 @@ namespace Azure.Storage.ChangeFeed.Common
     /// Core change feed reader that iterates through segments (time windows) in chronological order,
     /// producing pages of events. Supports cursor-based continuation and time-bounded queries.
     /// </summary>
-    internal class ChangeFeedBase<TEvent>
+    internal class ChangeFeedBase<TEvent> where TEvent : IChangeFeedEvent
     {
         private readonly BlobContainerClient _containerClient;
         private readonly SegmentFactoryBase<TEvent> _segmentFactory;
@@ -85,9 +85,9 @@ namespace Azure.Storage.ChangeFeed.Common
             // and continue filling the page until the requested size is reached or no segments remain.
             while (events.Count < pageSize && HasNext())
             {
-                List<TEvent> newEvents = await _currentSegment.GetPage(async, remainingEvents, cancellationToken).ConfigureAwait(false);
+                List<TEvent> newEvents = await _currentSegment.GetPage(async, remainingEvents, _startTime, _endTime, cancellationToken).ConfigureAwait(false);
                 events.AddRange(newEvents);
-                remainingEvents -= newEvents.Count;
+                remainingEvents = pageSize - events.Count;
                 await AdvanceSegmentIfNecessary(async, cancellationToken).ConfigureAwait(false);
             }
 

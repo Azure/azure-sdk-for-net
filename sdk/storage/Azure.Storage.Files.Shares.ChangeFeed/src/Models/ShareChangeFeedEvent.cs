@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using Azure.Storage.ChangeFeed.Common;
 
 namespace Azure.Storage.Files.Shares.ChangeFeed
 {
@@ -12,7 +13,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
     /// to a mutation (create, rename, delete, write, etc.) on a file or directory within
     /// a file share.
     /// </summary>
-    public class ShareChangeFeedEvent
+    public class ShareChangeFeedEvent : IChangeFeedEvent
     {
         /// <summary>
         /// The schema version of the change feed event record format.

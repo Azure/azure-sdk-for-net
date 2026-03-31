@@ -9,7 +9,7 @@ namespace Azure.Storage.ChangeFeed.Common
     /// <summary>
     /// Configuration settings for a change feed consumer, parameterized by the event type.
     /// </summary>
-    internal class ChangeFeedConfiguration<TEvent>
+    internal class ChangeFeedConfiguration<TEvent> where TEvent : IChangeFeedEvent
     {
         /// <summary>
         /// The container-level prefix that the service prepends to shard paths in the segment manifest.

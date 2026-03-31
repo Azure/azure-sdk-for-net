@@ -37,11 +37,12 @@ namespace Azure.Storage.ChangeFeed.Common.Tests
         /// A minimal test event type used to test the generic common classes
         /// without depending on any service-specific event model.
         /// </summary>
-        public class TestEvent
+        public class TestEvent : IChangeFeedEvent
         {
             public string Reason { get; set; }
             public string Id { get; set; }
             public long Cvnt { get; set; }
+            public DateTimeOffset EventTime { get; set; }
 
             public TestEvent(Dictionary<string, object> record)
             {
