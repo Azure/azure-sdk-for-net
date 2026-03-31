@@ -18,5 +18,10 @@ namespace Azure.ResourceManager.ContainerInstance
         protected ContainerGroupProfileResource()
         {
         }
+
+        /// <summary> Initializes a new instance for backward compatibility. </summary>
+        internal ContainerGroupProfileResource(bool _)
+        {
+        }
     }
 }

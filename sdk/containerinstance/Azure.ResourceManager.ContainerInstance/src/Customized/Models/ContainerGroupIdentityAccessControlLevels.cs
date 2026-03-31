@@ -5,9 +5,11 @@
 
 #pragma warning disable CS1591
 
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ClientModel.Primitives;
 using System.Text.Json;
+using Azure.ResourceManager.ContainerInstance;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {    /// <summary> Backward-compatible alias for IdentityAcls. </summary>
@@ -34,5 +36,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             get => base.DefaultAccess.HasValue ? new ContainerGroupIdentityAccessLevel(base.DefaultAccess.Value.ToString()) : default(ContainerGroupIdentityAccessLevel?);
             set => base.DefaultAccess = value.HasValue ? new IdentityAccessLevel(value.Value.ToString()) : default(IdentityAccessLevel?);
         }
+
+        // backward-compat shim: old property returned IList<ContainerGroupIdentityAccessControl>, new returns IList<IdentityAccessControl>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public new IList<ContainerGroupIdentityAccessControl> Acls
+            => base.Acls != null ? new UpCastList<ContainerGroupIdentityAccessControl, IdentityAccessControl>(base.Acls) : null;
     }
 }

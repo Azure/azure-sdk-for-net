@@ -18,6 +18,12 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     {
         internal ContainerAttachResult() { }
 
+        internal ContainerAttachResult(string webSocketUri, string password) : base(webSocketUri, password, null) { }
+
+        internal ContainerAttachResult(ContainerAttachResponse response) : base(response.WebSocketUri, response.Password, null)
+        {
+        }
+
         // backward-compat shim: old property was Uri type, new is string
         /// <summary> The URI for the output stream from the attach. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]

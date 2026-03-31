@@ -17,6 +17,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         IJsonModel<ContainerInstanceView>, IPersistableModel<ContainerInstanceView>
     {
         internal ContainerInstanceView() { }
+
+        internal ContainerInstanceView(int? restartCount, ContainerState currentState, ContainerState previousState, System.Collections.Generic.IReadOnlyList<Event> events)
+            : base(restartCount, currentState, previousState, events, null) { }
+
         ContainerInstanceView IJsonModel<ContainerInstanceView>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
             => throw new System.NotSupportedException("Backward compat type - use ContainerPropertiesInstanceView directly.");
         void IJsonModel<ContainerInstanceView>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)

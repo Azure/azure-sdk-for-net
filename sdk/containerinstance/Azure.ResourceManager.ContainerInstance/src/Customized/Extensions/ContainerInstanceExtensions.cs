@@ -563,6 +563,7 @@ namespace Azure.ResourceManager.ContainerInstance
         // Old: GetContainerGroupProfile(ResourceGroupResource, string, CancellationToken) → Response<ContainerGroupProfileResource>
         // New: GetCGProfile(ResourceGroupResource, string, CancellationToken) → Response<CGProfileResource>
         /// <summary> Gets a ContainerGroupProfile. </summary>
+        [ForwardsClientCalls]
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
         public static Response<ContainerGroupProfileResource> GetContainerGroupProfile(this ResourceGroupResource resourceGroupResource, string containerGroupProfileName, CancellationToken cancellationToken = default)
         {
@@ -571,6 +572,7 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary> Gets a ContainerGroupProfile. </summary>
+        [ForwardsClientCalls]
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
         public static async Task<Response<ContainerGroupProfileResource>> GetContainerGroupProfileAsync(this ResourceGroupResource resourceGroupResource, string containerGroupProfileName, CancellationToken cancellationToken = default)
         {

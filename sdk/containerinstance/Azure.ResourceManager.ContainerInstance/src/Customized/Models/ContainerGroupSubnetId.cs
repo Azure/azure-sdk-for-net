@@ -17,5 +17,8 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="id"> Resource ID of virtual network and subnet. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public ContainerGroupSubnetId(ResourceIdentifier id) : this(id?.ToString()) { }
+
+        // NOTE: Property type shim (Id→ResourceIdentifier) cannot be added here because
+        // ContainerGroupSubnetId is a generated partial class and Id already exists with string type.
     }
 }

@@ -17,6 +17,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         IJsonModel<ContainerEvent>, IPersistableModel<ContainerEvent>
     {
         internal ContainerEvent() { }
+
+        internal ContainerEvent(int? count, System.DateTimeOffset? firstTimestamp, System.DateTimeOffset? lastTimestamp, string name, string message, string type)
+            : base(count, firstTimestamp, lastTimestamp, name, message, type, null) { }
+
         ContainerEvent IJsonModel<ContainerEvent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
             => throw new System.NotSupportedException("Backward compat type - use Event directly.");
         void IJsonModel<ContainerEvent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)

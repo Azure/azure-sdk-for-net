@@ -5,9 +5,11 @@
 
 #pragma warning disable CS1591
 
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ClientModel.Primitives;
 using System.Text.Json;
+using Azure.ResourceManager.ContainerInstance;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {    /// <summary> Backward-compatible alias for Container. </summary>
@@ -51,5 +53,15 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             get => default;
             set => base.SecurityContext = value;
         }
+
+        // backward-compat shim: old property returned IList<ContainerEnvironmentVariable>, new returns IList<EnvironmentVariable>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public new IList<ContainerEnvironmentVariable> EnvironmentVariables
+            => base.EnvironmentVariables != null ? new UpCastList<ContainerEnvironmentVariable, EnvironmentVariable>(base.EnvironmentVariables) : null;
+
+        // backward-compat shim: old property returned IList<ContainerVolumeMount>, new returns IList<VolumeMount>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public new IList<ContainerVolumeMount> VolumeMounts
+            => base.VolumeMounts != null ? new UpCastList<ContainerVolumeMount, VolumeMount>(base.VolumeMounts) : null;
     }
 }

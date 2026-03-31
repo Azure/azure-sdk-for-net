@@ -29,6 +29,11 @@ namespace Azure.ResourceManager.ContainerInstance
         {
         }
 
+        /// <summary> Initializes a new instance for backward compatibility. </summary>
+        internal ContainerGroupProfileRevisionResource(bool _)
+        {
+        }
+
         #pragma warning disable CS0649
         private ContainerGroupProfileData _data;
         #pragma warning restore CS0649

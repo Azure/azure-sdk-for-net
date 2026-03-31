@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text.Json;
 using Azure.ResourceManager.ContainerInstance;
 
@@ -40,6 +41,14 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
         /// <summary> The properties of the container. </summary>
         public NGroupContainerGroupPropertyContainerProperties Properties { get; set; }
+
+        // backward-compat shim: old property returned IList<ContainerVolumeMount>, new is on Properties.VolumeMounts
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public IList<ContainerVolumeMount> VolumeMounts
+            => Properties?.VolumeMounts != null ? new UpCastList<ContainerVolumeMount, VolumeMount>(Properties.VolumeMounts) : null;
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public IList<ContainerVolumeMount> NGroupCGPropertyContainerVolumeMounts => VolumeMounts;
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

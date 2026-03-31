@@ -17,6 +17,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         IJsonModel<ContainerCapabilities>, IPersistableModel<ContainerCapabilities>
     {
         internal ContainerCapabilities() { }
+
+        internal ContainerCapabilities(string resourceType, string osType, string location, string ipAddressType, string gpu, CapabilitiesCapabilities capabilities)
+            : base(resourceType, osType, location, ipAddressType, gpu, capabilities, null) { }
+
         ContainerCapabilities IJsonModel<ContainerCapabilities>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
             => throw new System.NotSupportedException("Backward compat type - use Capabilities directly.");
         void IJsonModel<ContainerCapabilities>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)

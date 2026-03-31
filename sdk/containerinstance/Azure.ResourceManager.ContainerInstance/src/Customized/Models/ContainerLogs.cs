@@ -17,6 +17,12 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         IJsonModel<ContainerLogs>, IPersistableModel<ContainerLogs>
     {
         internal ContainerLogs() { }
+
+        internal ContainerLogs(string content) : base(content, null) { }
+
+        internal ContainerLogs(Logs logs) : base(logs.Content, null)
+        {
+        }
         ContainerLogs IJsonModel<ContainerLogs>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
             => throw new System.NotSupportedException("Backward compat type - use Logs directly.");
         void IJsonModel<ContainerLogs>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)

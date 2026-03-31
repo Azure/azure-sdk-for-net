@@ -17,6 +17,9 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         IJsonModel<ContainerInstanceUsageName>, IPersistableModel<ContainerInstanceUsageName>
     {
         internal ContainerInstanceUsageName() { }
+
+        internal ContainerInstanceUsageName(string value, string localizedValue) : base(value, localizedValue, null) { }
+
         ContainerInstanceUsageName IJsonModel<ContainerInstanceUsageName>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
             => throw new System.NotSupportedException("Backward compat type - use UsageName directly.");
         void IJsonModel<ContainerInstanceUsageName>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         internal NGroupContainerGroupPropertyVolume(string name, AzureFileVolume azureFile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
-            AzureFile = azureFile;
+            _azureFile = azureFile;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -44,7 +44,14 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public string Name { get; set; }
 
         /// <summary> The Azure File volume. </summary>
-        public AzureFileVolume AzureFile { get; set; }
+        private AzureFileVolume _azureFile;
+
+        /// <summary> The Azure File volume. </summary>
+        public ContainerInstanceAzureFileVolume AzureFile
+        {
+            get => _azureFile as ContainerInstanceAzureFileVolume;
+            set => _azureFile = value;
+        }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -106,10 +113,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Optional.IsDefined(AzureFile))
+            if (Optional.IsDefined(_azureFile))
             {
                 writer.WritePropertyName("azureFile"u8);
-                writer.WriteObjectValue(AzureFile, options);
+                writer.WriteObjectValue(_azureFile, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
