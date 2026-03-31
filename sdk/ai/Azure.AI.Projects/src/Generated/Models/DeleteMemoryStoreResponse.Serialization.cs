@@ -7,9 +7,9 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using OpenAI;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Memory
 {
     /// <summary> The DeleteMemoryStoreResponse. </summary>
     public partial class DeleteMemoryStoreResponse : IJsonModel<DeleteMemoryStoreResponse>

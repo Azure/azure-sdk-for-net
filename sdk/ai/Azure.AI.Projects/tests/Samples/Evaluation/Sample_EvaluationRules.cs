@@ -10,6 +10,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.Projects.Agents;
+using Azure.AI.Projects.Evaluation;
 using Azure.AI.Extensions.OpenAI;
 using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;

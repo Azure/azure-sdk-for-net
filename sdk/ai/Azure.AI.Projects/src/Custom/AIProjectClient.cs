@@ -10,6 +10,8 @@ using System.Collections.Generic;
 using System.Threading;
 using Azure.AI.Extensions.OpenAI;
 using Azure.AI.Projects.Agents;
+using Azure.AI.Projects.Evaluation;
+using Azure.AI.Projects.Memory;
 
 #pragma warning disable AZC0007
 

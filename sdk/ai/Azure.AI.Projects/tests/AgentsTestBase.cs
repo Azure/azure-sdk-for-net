@@ -9,6 +9,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 
 using Azure.AI.Projects.Agents;
+using Azure.AI.Projects.Memory;
 using Azure.AI.Extensions.OpenAI;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;

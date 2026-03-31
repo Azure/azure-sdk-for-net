@@ -9,14 +9,64 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class BackupStatusResult : IUtf8JsonSerializable, IJsonModel<BackupStatusResult>
+    /// <summary> BackupStatus response. </summary>
+    public partial class BackupStatusResult : IJsonModel<BackupStatusResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BackupStatusResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BackupStatusResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BackupStatusResult>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeBackupStatusResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BackupStatusResult)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BackupStatusResult>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(BackupStatusResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<BackupStatusResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BackupStatusResult IPersistableModel<BackupStatusResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<BackupStatusResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="BackupStatusResult"/> from. </param>
+        internal static BackupStatusResult FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeBackupStatusResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BackupStatusResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +78,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BackupStatusResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BackupStatusResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BackupStatusResult)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(ProtectionStatus))
             {
                 writer.WritePropertyName("protectionStatus"u8);
@@ -89,15 +138,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("acquireStorageAccountLock"u8);
                 writer.WriteStringValue(AcquireStorageAccountLock.Value.ToString());
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -106,22 +155,27 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
         }
 
-        BackupStatusResult IJsonModel<BackupStatusResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BackupStatusResult IJsonModel<BackupStatusResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BackupStatusResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BackupStatusResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BackupStatusResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BackupStatusResult)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeBackupStatusResult(document.RootElement, options);
         }
 
-        internal static BackupStatusResult DeserializeBackupStatusResult(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static BackupStatusResult DeserializeBackupStatusResult(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -137,91 +191,89 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             string registrationStatus = default;
             int? protectedItemsCount = default;
             AcquireStorageAccountLock? acquireStorageAccountLock = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("protectionStatus"u8))
+                if (prop.NameEquals("protectionStatus"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    protectionStatus = new BackupProtectionStatus(property.Value.GetString());
+                    protectionStatus = new BackupProtectionStatus(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("vaultId"u8))
+                if (prop.NameEquals("vaultId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    vaultId = new ResourceIdentifier(property.Value.GetString());
+                    vaultId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("fabricName"u8))
+                if (prop.NameEquals("fabricName"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    fabricName = new BackupFabricName(property.Value.GetString());
+                    fabricName = new BackupFabricName(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("containerName"u8))
+                if (prop.NameEquals("containerName"u8))
                 {
-                    containerName = property.Value.GetString();
+                    containerName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("protectedItemName"u8))
+                if (prop.NameEquals("protectedItemName"u8))
                 {
-                    protectedItemName = property.Value.GetString();
+                    protectedItemName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("errorCode"u8))
+                if (prop.NameEquals("errorCode"u8))
                 {
-                    errorCode = property.Value.GetString();
+                    errorCode = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("errorMessage"u8))
+                if (prop.NameEquals("errorMessage"u8))
                 {
-                    errorMessage = property.Value.GetString();
+                    errorMessage = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("policyName"u8))
+                if (prop.NameEquals("policyName"u8))
                 {
-                    policyName = property.Value.GetString();
+                    policyName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("registrationStatus"u8))
+                if (prop.NameEquals("registrationStatus"u8))
                 {
-                    registrationStatus = property.Value.GetString();
+                    registrationStatus = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("protectedItemsCount"u8))
+                if (prop.NameEquals("protectedItemsCount"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    protectedItemsCount = property.Value.GetInt32();
+                    protectedItemsCount = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("acquireStorageAccountLock"u8))
+                if (prop.NameEquals("acquireStorageAccountLock"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    acquireStorageAccountLock = new AcquireStorageAccountLock(property.Value.GetString());
+                    acquireStorageAccountLock = new AcquireStorageAccountLock(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new BackupStatusResult(
                 protectionStatus,
                 vaultId,
@@ -234,38 +286,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 registrationStatus,
                 protectedItemsCount,
                 acquireStorageAccountLock,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<BackupStatusResult>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<BackupStatusResult>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(BackupStatusResult)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        BackupStatusResult IPersistableModel<BackupStatusResult>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<BackupStatusResult>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeBackupStatusResult(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(BackupStatusResult)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<BackupStatusResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

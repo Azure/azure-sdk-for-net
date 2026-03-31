@@ -5,9 +5,8 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
-    /// <summary> Represents a set of parameters used to control the sampling behavior of a language model during text generation. </summary>
     internal partial class ModelSamplingParams
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
