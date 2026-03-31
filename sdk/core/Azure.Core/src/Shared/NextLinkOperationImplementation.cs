@@ -45,7 +45,7 @@ namespace Azure.Core
             Uri startRequestUri,
             Response response,
             OperationFinalStateVia finalStateVia,
-            bool skipApiVersionOverride = false,
+            bool skipApiVersionOverride = true,
             string? apiVersionOverrideValue = null)
         {
             string? apiVersionStr = null;
