@@ -21,6 +21,22 @@ namespace Azure.ResourceManager.NetworkCloud
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloudTrunkedNetworkData"/>. </summary>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="isolationDomainIds"> The list of resource IDs representing the Network Fabric isolation domains. It can be any combination of l2IsolationDomain and l3IsolationDomain resources. </param>
+        /// <param name="vlans"> The list of vlans that are selected from the isolation domains for trunking. </param>
+        /// <param name="extendedLocation"> The extended location of the resource. This property is required when creating the resource. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="isolationDomainIds"/>, <paramref name="vlans"/> or <paramref name="extendedLocation"/> is null. </exception>
+        public NetworkCloudTrunkedNetworkData(AzureLocation location, IEnumerable<ResourceIdentifier> isolationDomainIds, IEnumerable<long> vlans, ExtendedLocation extendedLocation) : base(location)
+        {
+            Argument.AssertNotNull(isolationDomainIds, nameof(isolationDomainIds));
+            Argument.AssertNotNull(vlans, nameof(vlans));
+            Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
+
+            Properties = new TrunkedNetworkProperties(isolationDomainIds, vlans);
+            ExtendedLocation = extendedLocation;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudTrunkedNetworkData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -44,6 +60,9 @@ namespace Azure.ResourceManager.NetworkCloud
 
         /// <summary> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </summary>
         public ETag? ETag { get; }
+
+        /// <summary> The extended location of the resource. This property is required when creating the resource. </summary>
+        public ExtendedLocation ExtendedLocation { get; set; }
 
         /// <summary> Field Deprecated. The field was previously optional, now it will have no defined behavior and will be ignored. The network plugin type for Hybrid AKS. </summary>
         public HybridAksPluginType? HybridAksPluginType

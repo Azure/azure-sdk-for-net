@@ -10,12 +10,9 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.ResourceManager.NetworkCloud.Models;
 
+// NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.NetworkCloud
 {
-    // Backward compat: The old Swagger/AutoRest API exposed Update/Delete methods without
-    // MatchConditions parameter. The new TypeSpec-generated code adds MatchConditions for
-    // ETag-based conditional requests. These overloads preserve the old API signatures
-    // to avoid breaking existing consumers.
     public partial class NetworkCloudBareMetalMachineKeySetResource
     {
         /// <summary>
@@ -165,21 +162,106 @@ namespace Azure.ResourceManager.NetworkCloud
         public virtual async Task<ArmOperation<NetworkCloudBareMetalMachineKeySetResource>> UpdateAsync(WaitUntil waitUntil, NetworkCloudBareMetalMachineKeySetPatch patch, CancellationToken cancellationToken)
             => await UpdateAsync(waitUntil, patch, null, cancellationToken).ConfigureAwait(false);
 
-        /// <summary> Backward compatible overload for API compatibility. </summary>
+        /// <summary>
+        /// Patch properties of bare metal machine key set for the provided cluster, or update the tags associated with it. Properties and tag updates can be done independently.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}/bareMetalMachineKeySets/{bareMetalMachineKeySetName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BareMetalMachineKeySets_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudBareMetalMachineKeySetResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="patch"> The request body. </param>
+        /// <param name="ifMatch"> The ETag of the transformation. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting concurrent changes. </param>
+        /// <param name="ifNoneMatch"> Set to '*' to allow a new record set to be created, but to prevent updating an existing resource. Other values will result in error from server as they are not supported. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<NetworkCloudBareMetalMachineKeySetResource> Update(WaitUntil waitUntil, NetworkCloudBareMetalMachineKeySetPatch patch, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
             => Update(waitUntil, patch, null, cancellationToken);
 
-        /// <summary> Backward compatible overload for API compatibility. </summary>
+        /// <summary>
+        /// Patch properties of bare metal machine key set for the provided cluster, or update the tags associated with it. Properties and tag updates can be done independently.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}/bareMetalMachineKeySets/{bareMetalMachineKeySetName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BareMetalMachineKeySets_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudBareMetalMachineKeySetResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="patch"> The request body. </param>
+        /// <param name="ifMatch"> The ETag of the transformation. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting concurrent changes. </param>
+        /// <param name="ifNoneMatch"> Set to '*' to allow a new record set to be created, but to prevent updating an existing resource. Other values will result in error from server as they are not supported. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<NetworkCloudBareMetalMachineKeySetResource>> UpdateAsync(WaitUntil waitUntil, NetworkCloudBareMetalMachineKeySetPatch patch, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
             => await UpdateAsync(waitUntil, patch, null, cancellationToken).ConfigureAwait(false);
-        /// <summary> Backward compatible overload for API compatibility. </summary>
+
+        /// <summary>
+        /// Delete the bare metal machine key set of the provided cluster.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}/bareMetalMachineKeySets/{bareMetalMachineKeySetName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BareMetalMachineKeySets_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudBareMetalMachineKeySetResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="ifMatch"> The ETag of the transformation. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting concurrent changes. </param>
+        /// <param name="ifNoneMatch"> Set to '*' to allow a new record set to be created, but to prevent updating an existing resource. Other values will result in error from server as they are not supported. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<NetworkCloudOperationStatusResult> Delete(WaitUntil waitUntil, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
             => Delete(waitUntil, null, cancellationToken);
 
-        /// <summary> Backward compatible overload for API compatibility. </summary>
+        /// <summary>
+        /// Delete the bare metal machine key set of the provided cluster.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}/bareMetalMachineKeySets/{bareMetalMachineKeySetName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BareMetalMachineKeySets_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudBareMetalMachineKeySetResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="ifMatch"> The ETag of the transformation. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting concurrent changes. </param>
+        /// <param name="ifNoneMatch"> Set to '*' to allow a new record set to be created, but to prevent updating an existing resource. Other values will result in error from server as they are not supported. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<NetworkCloudOperationStatusResult>> DeleteAsync(WaitUntil waitUntil, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
             => await DeleteAsync(waitUntil, null, cancellationToken).ConfigureAwait(false);

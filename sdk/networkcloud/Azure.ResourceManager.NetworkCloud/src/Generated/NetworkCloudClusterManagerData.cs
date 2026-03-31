@@ -159,6 +159,15 @@ namespace Azure.ResourceManager.NetworkCloud
             }
         }
 
+        /// <summary> The extended location (custom location) that represents the cluster manager's control plane location. This extended location is used when creating cluster and rack manifest resources. </summary>
+        public ExtendedLocation ManagerExtendedLocation
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ManagerExtendedLocation;
+            }
+        }
+
         /// <summary> The provisioning state of the cluster manager. </summary>
         public ClusterManagerProvisioningState? ProvisioningState
         {

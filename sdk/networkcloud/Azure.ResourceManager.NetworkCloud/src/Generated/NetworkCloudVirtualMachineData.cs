@@ -21,6 +21,34 @@ namespace Azure.ResourceManager.NetworkCloud
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloudVirtualMachineData"/>. </summary>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="adminUsername"> The name of the administrator to which the ssh public keys will be added into the authorized keys. </param>
+        /// <param name="cloudServicesNetworkAttachment"> The cloud service network that provides platform-level services for the virtual machine. </param>
+        /// <param name="cpuCores"> The number of CPU cores in the virtual machine. </param>
+        /// <param name="memorySizeInGB"> The memory size of the virtual machine. Allocations are measured in gibibytes. </param>
+        /// <param name="storageProfile"> The storage profile that specifies size and other parameters about the disks related to the virtual machine. </param>
+        /// <param name="vmImage"> The virtual machine image that is currently provisioned to the OS disk, using the full url and tag notation used to pull the image. </param>
+        /// <param name="extendedLocation"> The extended location of the resource. This property is required when creating the resource. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="adminUsername"/>, <paramref name="cloudServicesNetworkAttachment"/>, <paramref name="storageProfile"/>, <paramref name="vmImage"/> or <paramref name="extendedLocation"/> is null. </exception>
+        public NetworkCloudVirtualMachineData(AzureLocation location, string adminUsername, NetworkAttachment cloudServicesNetworkAttachment, long cpuCores, long memorySizeInGB, NetworkCloudStorageProfile storageProfile, string vmImage, ExtendedLocation extendedLocation) : base(location)
+        {
+            Argument.AssertNotNull(adminUsername, nameof(adminUsername));
+            Argument.AssertNotNull(cloudServicesNetworkAttachment, nameof(cloudServicesNetworkAttachment));
+            Argument.AssertNotNull(storageProfile, nameof(storageProfile));
+            Argument.AssertNotNull(vmImage, nameof(vmImage));
+            Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
+
+            Properties = new VirtualMachineProperties(
+                adminUsername,
+                cloudServicesNetworkAttachment,
+                cpuCores,
+                memorySizeInGB,
+                storageProfile,
+                vmImage);
+            ExtendedLocation = extendedLocation;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudVirtualMachineData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -46,6 +74,9 @@ namespace Azure.ResourceManager.NetworkCloud
 
         /// <summary> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </summary>
         public ETag? ETag { get; }
+
+        /// <summary> The extended location of the resource. This property is required when creating the resource. </summary>
+        public ExtendedLocation ExtendedLocation { get; set; }
 
         /// <summary> The managed service identities assigned to this resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
@@ -368,6 +399,23 @@ namespace Azure.ResourceManager.NetworkCloud
             get
             {
                 return Properties is null ? default : Properties.ClusterId;
+            }
+        }
+
+        /// <summary> The extended location to use for creation of a VM console resource. </summary>
+        public ExtendedLocation ConsoleExtendedLocation
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ConsoleExtendedLocation;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineProperties();
+                }
+                Properties.ConsoleExtendedLocation = value;
             }
         }
 

@@ -9,7 +9,6 @@ using System.ClientModel.Primitives;
 using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NetworkCloud.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
@@ -86,7 +85,7 @@ namespace Azure.ResourceManager.NetworkCloud
     [ModelReaderWriterBuildable(typeof(ControlPlaneNodePatchConfiguration))]
     [ModelReaderWriterBuildable(typeof(EgressEndpoint))]
     [ModelReaderWriterBuildable(typeof(EndpointDependency))]
-    [ModelReaderWriterBuildable(typeof(Resources.Models.ExtendedLocation))]
+    [ModelReaderWriterBuildable(typeof(ExtendedLocation))]
     [ModelReaderWriterBuildable(typeof(FeatureStatus))]
     [ModelReaderWriterBuildable(typeof(HardwareInventory))]
     [ModelReaderWriterBuildable(typeof(HardwareInventoryNetworkInterface))]

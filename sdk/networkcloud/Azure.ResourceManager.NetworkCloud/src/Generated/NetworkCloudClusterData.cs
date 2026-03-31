@@ -21,6 +21,25 @@ namespace Azure.ResourceManager.NetworkCloud
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloudClusterData"/>. </summary>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="aggregatorOrSingleRackDefinition"> The rack definition that is intended to reflect only a single rack in a single rack cluster, or an aggregator rack in a multi-rack cluster. </param>
+        /// <param name="clusterType"> The type of rack configuration for the cluster. </param>
+        /// <param name="clusterVersion"> The current runtime version of the cluster. </param>
+        /// <param name="networkFabricId"> The resource ID of the Network Fabric associated with the cluster. </param>
+        /// <param name="extendedLocation"> The extended location of the resource. This property is required when creating the resource. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="aggregatorOrSingleRackDefinition"/>, <paramref name="clusterVersion"/>, <paramref name="networkFabricId"/> or <paramref name="extendedLocation"/> is null. </exception>
+        public NetworkCloudClusterData(AzureLocation location, NetworkCloudRackDefinition aggregatorOrSingleRackDefinition, ClusterType clusterType, string clusterVersion, ResourceIdentifier networkFabricId, ExtendedLocation extendedLocation) : base(location)
+        {
+            Argument.AssertNotNull(aggregatorOrSingleRackDefinition, nameof(aggregatorOrSingleRackDefinition));
+            Argument.AssertNotNull(clusterVersion, nameof(clusterVersion));
+            Argument.AssertNotNull(networkFabricId, nameof(networkFabricId));
+            Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
+
+            Properties = new ClusterProperties(aggregatorOrSingleRackDefinition, clusterType, clusterVersion, networkFabricId);
+            ExtendedLocation = extendedLocation;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudClusterData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -48,6 +67,9 @@ namespace Azure.ResourceManager.NetworkCloud
 
         /// <summary> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </summary>
         public ETag? ETag { get; }
+
+        /// <summary> The extended location of the resource. This property is required when creating the resource. </summary>
+        public ExtendedLocation ExtendedLocation { get; set; }
 
         /// <summary> The managed service identities assigned to this resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
@@ -367,6 +389,15 @@ namespace Azure.ResourceManager.NetworkCloud
             }
         }
 
+        /// <summary> The extended location (custom location) that represents the cluster's control plane location. This extended location is used to route the requests of child objects of the cluster that are handled by the platform operator. </summary>
+        public ExtendedLocation ClusterExtendedLocation
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ClusterExtendedLocation;
+            }
+        }
+
         /// <summary> The latest connectivity status between cluster manager and the cluster. </summary>
         public ClusterManagerConnectionStatus? ClusterManagerConnectionStatus
         {
@@ -400,6 +431,15 @@ namespace Azure.ResourceManager.NetworkCloud
             get
             {
                 return Properties is null ? default : Properties.DetailedStatusMessage;
+            }
+        }
+
+        /// <summary> Field Deprecated. This field will not be populated in an upcoming version. The extended location (custom location) that represents the Hybrid AKS control plane location. This extended location is used when creating provisioned clusters (Hybrid AKS clusters). </summary>
+        public ExtendedLocation HybridAksExtendedLocation
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HybridAksExtendedLocation;
             }
         }
 

@@ -21,6 +21,21 @@ namespace Azure.ResourceManager.NetworkCloud
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloudL3NetworkData"/>. </summary>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="l3IsolationDomainId"> The resource ID of the Network Fabric l3IsolationDomain. </param>
+        /// <param name="vlan"> The VLAN from the l3IsolationDomain that is used for this network. </param>
+        /// <param name="extendedLocation"> The extended location of the resource. This property is required when creating the resource. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="l3IsolationDomainId"/> or <paramref name="extendedLocation"/> is null. </exception>
+        public NetworkCloudL3NetworkData(AzureLocation location, ResourceIdentifier l3IsolationDomainId, long vlan, ExtendedLocation extendedLocation) : base(location)
+        {
+            Argument.AssertNotNull(l3IsolationDomainId, nameof(l3IsolationDomainId));
+            Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
+
+            Properties = new L3NetworkProperties(l3IsolationDomainId, vlan);
+            ExtendedLocation = extendedLocation;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudL3NetworkData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -44,6 +59,9 @@ namespace Azure.ResourceManager.NetworkCloud
 
         /// <summary> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </summary>
         public ETag? ETag { get; }
+
+        /// <summary> The extended location of the resource. This property is required when creating the resource. </summary>
+        public ExtendedLocation ExtendedLocation { get; set; }
 
         /// <summary> Field Deprecated. The field was previously optional, now it will have no defined behavior and will be ignored. The indicator of whether or not to disable IPAM allocation on the network attachment definition injected into the Hybrid AKS Cluster. </summary>
         public HybridAksIpamEnabled? HybridAksIpamEnabled

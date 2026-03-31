@@ -8,11 +8,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.NetworkCloud;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -132,7 +130,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             if (options.Format != "W" && Optional.IsDefined(ManagerExtendedLocation))
             {
                 writer.WritePropertyName("managerExtendedLocation"u8);
-                ((IJsonModel<Resources.Models.ExtendedLocation>)ManagerExtendedLocation).Write(writer, options);
+                writer.WriteObjectValue(ManagerExtendedLocation, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -198,7 +196,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             string detailedStatusMessage = default;
             ResourceIdentifier fabricControllerId = default;
             ManagedResourceGroupConfiguration managedResourceGroupConfiguration = default;
-            Resources.Models.ExtendedLocation managerExtendedLocation = default;
+            ExtendedLocation managerExtendedLocation = default;
             ClusterManagerProvisioningState? provisioningState = default;
             ClusterManagerRelayConfiguration relayConfiguration = default;
             string vmSize = default;
@@ -283,7 +281,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     {
                         continue;
                     }
-                    managerExtendedLocation = ModelReaderWriter.Read<Resources.Models.ExtendedLocation>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkCloudContext.Default);
+                    managerExtendedLocation = ExtendedLocation.DeserializeExtendedLocation(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))

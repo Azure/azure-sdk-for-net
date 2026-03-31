@@ -21,6 +21,26 @@ namespace Azure.ResourceManager.NetworkCloud
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloudKubernetesClusterData"/>. </summary>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="controlPlaneNodeConfiguration"> The defining characteristics of the control plane for this Kubernetes Cluster. </param>
+        /// <param name="initialAgentPoolConfigurations"> The agent pools that are created with this Kubernetes cluster for running critical system services and workloads. This data in this field is only used during creation, and the field will be empty following the creation of the Kubernetes Cluster. After creation, the management of agent pools is done using the agentPools sub-resource. </param>
+        /// <param name="kubernetesVersion"> The Kubernetes version for this cluster. </param>
+        /// <param name="networkConfiguration"> The configuration of the Kubernetes cluster networking, including the attachment of networks that span the cluster. </param>
+        /// <param name="extendedLocation"> The extended location of the resource. This property is required when creating the resource. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="controlPlaneNodeConfiguration"/>, <paramref name="initialAgentPoolConfigurations"/>, <paramref name="kubernetesVersion"/>, <paramref name="networkConfiguration"/> or <paramref name="extendedLocation"/> is null. </exception>
+        public NetworkCloudKubernetesClusterData(AzureLocation location, ControlPlaneNodeConfiguration controlPlaneNodeConfiguration, IEnumerable<InitialAgentPoolConfiguration> initialAgentPoolConfigurations, string kubernetesVersion, KubernetesClusterNetworkConfiguration networkConfiguration, ExtendedLocation extendedLocation) : base(location)
+        {
+            Argument.AssertNotNull(controlPlaneNodeConfiguration, nameof(controlPlaneNodeConfiguration));
+            Argument.AssertNotNull(initialAgentPoolConfigurations, nameof(initialAgentPoolConfigurations));
+            Argument.AssertNotNull(kubernetesVersion, nameof(kubernetesVersion));
+            Argument.AssertNotNull(networkConfiguration, nameof(networkConfiguration));
+            Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
+
+            Properties = new KubernetesClusterProperties(controlPlaneNodeConfiguration, initialAgentPoolConfigurations, kubernetesVersion, networkConfiguration);
+            ExtendedLocation = extendedLocation;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudKubernetesClusterData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -44,6 +64,9 @@ namespace Azure.ResourceManager.NetworkCloud
 
         /// <summary> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </summary>
         public ETag? ETag { get; }
+
+        /// <summary> The extended location of the resource. This property is required when creating the resource. </summary>
+        public ExtendedLocation ExtendedLocation { get; set; }
 
         /// <summary> The administrative credentials that will be applied to the control plane and agent pool nodes that do not specify their own values. </summary>
         public AdministratorConfiguration AdministratorConfiguration
@@ -246,6 +269,19 @@ namespace Azure.ResourceManager.NetworkCloud
             get
             {
                 return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> The list of Azure Active Directory group object IDs that will have an administrative role on the Kubernetes cluster. </summary>
+        public IList<string> AadAdminGroupObjectIds
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new KubernetesClusterProperties();
+                }
+                return Properties.AadAdminGroupObjectIds;
             }
         }
     }
