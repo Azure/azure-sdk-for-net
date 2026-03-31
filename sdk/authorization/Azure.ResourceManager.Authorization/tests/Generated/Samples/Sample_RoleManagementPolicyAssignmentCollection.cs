@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Authorization.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_PutRoleManagementPolicyAssignment()
         {
-            // Generated from example definition: specification/authorization/resource-manager/Microsoft.Authorization/stable/2020-10-01/examples/PutRoleManagementPolicyAssignment.json
+            // Generated from example definition: specification/authorization/resource-manager/Microsoft.Authorization/Authorization/stable/2020-10-01/examples/PutRoleManagementPolicyAssignment.json
             // this example is just showing the usage of "RoleManagementPolicyAssignments_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Authorization.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetConfigurations()
         {
-            // Generated from example definition: specification/authorization/resource-manager/Microsoft.Authorization/stable/2020-10-01/examples/GetRoleManagementPolicyAssignmentByName.json
+            // Generated from example definition: specification/authorization/resource-manager/Microsoft.Authorization/Authorization/stable/2020-10-01/examples/GetRoleManagementPolicyAssignmentByName.json
             // this example is just showing the usage of "RoleManagementPolicyAssignments_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Authorization.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_GetRoleManagementPolicyAssignmentByScope()
         {
-            // Generated from example definition: specification/authorization/resource-manager/Microsoft.Authorization/stable/2020-10-01/examples/GetRoleManagementPolicyAssignmentByScope.json
+            // Generated from example definition: specification/authorization/resource-manager/Microsoft.Authorization/Authorization/stable/2020-10-01/examples/GetRoleManagementPolicyAssignmentByScope.json
             // this example is just showing the usage of "RoleManagementPolicyAssignments_ListForScope" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Authorization.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetConfigurations()
         {
-            // Generated from example definition: specification/authorization/resource-manager/Microsoft.Authorization/stable/2020-10-01/examples/GetRoleManagementPolicyAssignmentByName.json
+            // Generated from example definition: specification/authorization/resource-manager/Microsoft.Authorization/Authorization/stable/2020-10-01/examples/GetRoleManagementPolicyAssignmentByName.json
             // this example is just showing the usage of "RoleManagementPolicyAssignments_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Authorization.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetConfigurations()
         {
-            // Generated from example definition: specification/authorization/resource-manager/Microsoft.Authorization/stable/2020-10-01/examples/GetRoleManagementPolicyAssignmentByName.json
+            // Generated from example definition: specification/authorization/resource-manager/Microsoft.Authorization/Authorization/stable/2020-10-01/examples/GetRoleManagementPolicyAssignmentByName.json
             // this example is just showing the usage of "RoleManagementPolicyAssignments_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

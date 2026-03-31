@@ -96,6 +96,36 @@ namespace Azure.ResourceManager.Authorization
                 writer.WritePropertyName("isSystemProtected"u8);
                 writer.WriteBooleanValue(IsSystemProtected.Value);
             }
+            if (Optional.IsDefined(Condition))
+            {
+                writer.WritePropertyName("condition"u8);
+                writer.WriteStringValue(Condition);
+            }
+            if (Optional.IsDefined(ConditionVersion))
+            {
+                writer.WritePropertyName("conditionVersion"u8);
+                writer.WriteStringValue(ConditionVersion);
+            }
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            {
+                writer.WritePropertyName("createdOn"u8);
+                writer.WriteStringValue(CreatedOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(UpdatedOn))
+            {
+                writer.WritePropertyName("updatedOn"u8);
+                writer.WriteStringValue(UpdatedOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(CreatedBy))
+            {
+                writer.WritePropertyName("createdBy"u8);
+                writer.WriteStringValue(CreatedBy);
+            }
+            if (options.Format != "W" && Optional.IsDefined(UpdatedBy))
+            {
+                writer.WritePropertyName("updatedBy"u8);
+                writer.WriteStringValue(UpdatedBy);
+            }
             writer.WriteEndObject();
         }
 
@@ -131,6 +161,12 @@ namespace Azure.ResourceManager.Authorization
             IReadOnlyList<RoleManagementPrincipal> principals = default;
             IReadOnlyList<RoleManagementPrincipal> excludePrincipals = default;
             bool? isSystemProtected = default;
+            string condition = default;
+            string conditionVersion = default;
+            DateTimeOffset? createdOn = default;
+            DateTimeOffset? updatedOn = default;
+            string createdBy = default;
+            string updatedBy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -243,6 +279,44 @@ namespace Azure.ResourceManager.Authorization
                             isSystemProtected = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("condition"u8))
+                        {
+                            condition = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("conditionVersion"u8))
+                        {
+                            conditionVersion = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("createdOn"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            createdOn = property0.Value.GetDateTimeOffset("O");
+                            continue;
+                        }
+                        if (property0.NameEquals("updatedOn"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            updatedOn = property0.Value.GetDateTimeOffset("O");
+                            continue;
+                        }
+                        if (property0.NameEquals("createdBy"u8))
+                        {
+                            createdBy = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("updatedBy"u8))
+                        {
+                            updatedBy = property0.Value.GetString();
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -265,6 +339,12 @@ namespace Azure.ResourceManager.Authorization
                 principals ?? new ChangeTrackingList<RoleManagementPrincipal>(),
                 excludePrincipals ?? new ChangeTrackingList<RoleManagementPrincipal>(),
                 isSystemProtected,
+                condition,
+                conditionVersion,
+                createdOn,
+                updatedOn,
+                createdBy,
+                updatedBy,
                 serializedAdditionalRawData);
         }
 
@@ -501,6 +581,130 @@ namespace Azure.ResourceManager.Authorization
                     builder.Append("    isSystemProtected: ");
                     var boolValue = IsSystemProtected.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Condition), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    condition: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Condition))
+                {
+                    builder.Append("    condition: ");
+                    if (Condition.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Condition}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Condition}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConditionVersion), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    conditionVersion: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ConditionVersion))
+                {
+                    builder.Append("    conditionVersion: ");
+                    if (ConditionVersion.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ConditionVersion}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ConditionVersion}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CreatedOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    createdOn: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CreatedOn))
+                {
+                    builder.Append("    createdOn: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(CreatedOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UpdatedOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    updatedOn: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(UpdatedOn))
+                {
+                    builder.Append("    updatedOn: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(UpdatedOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CreatedBy), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    createdBy: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CreatedBy))
+                {
+                    builder.Append("    createdBy: ");
+                    if (CreatedBy.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{CreatedBy}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{CreatedBy}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UpdatedBy), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    updatedBy: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(UpdatedBy))
+                {
+                    builder.Append("    updatedBy: ");
+                    if (UpdatedBy.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{UpdatedBy}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{UpdatedBy}'");
+                    }
                 }
             }
 

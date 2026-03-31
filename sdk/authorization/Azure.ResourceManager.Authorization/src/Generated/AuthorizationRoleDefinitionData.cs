@@ -68,14 +68,22 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="roleType"> The role type. </param>
         /// <param name="permissions"> Role definition permissions. </param>
         /// <param name="assignableScopes"> Role definition assignable scopes. </param>
+        /// <param name="createdOn"> Time it was created. </param>
+        /// <param name="updatedOn"> Time it was updated. </param>
+        /// <param name="createdBy"> Id of the user who created the assignment. </param>
+        /// <param name="updatedBy"> Id of the user who updated the assignment. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AuthorizationRoleDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string roleName, string description, AuthorizationRoleType? roleType, IList<RoleDefinitionPermission> permissions, IList<string> assignableScopes, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal AuthorizationRoleDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string roleName, string description, AuthorizationRoleType? roleType, IList<RoleDefinitionPermission> permissions, IList<string> assignableScopes, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string createdBy, string updatedBy, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             RoleName = roleName;
             Description = description;
             RoleType = roleType;
             Permissions = permissions;
             AssignableScopes = assignableScopes;
+            CreatedOn = createdOn;
+            UpdatedOn = updatedOn;
+            CreatedBy = createdBy;
+            UpdatedBy = updatedBy;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -94,5 +102,17 @@ namespace Azure.ResourceManager.Authorization
         /// <summary> Role definition assignable scopes. </summary>
         [WirePath("properties.assignableScopes")]
         public IList<string> AssignableScopes { get; }
+        /// <summary> Time it was created. </summary>
+        [WirePath("properties.createdOn")]
+        public DateTimeOffset? CreatedOn { get; }
+        /// <summary> Time it was updated. </summary>
+        [WirePath("properties.updatedOn")]
+        public DateTimeOffset? UpdatedOn { get; }
+        /// <summary> Id of the user who created the assignment. </summary>
+        [WirePath("properties.createdBy")]
+        public string CreatedBy { get; }
+        /// <summary> Id of the user who updated the assignment. </summary>
+        [WirePath("properties.updatedBy")]
+        public string UpdatedBy { get; }
     }
 }
