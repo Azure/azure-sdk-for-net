@@ -1,0 +1,6 @@
+directory: specification/relationships/Relationships.Management
+commit: ab5c0abaf718ad3ad3328695dc8e1eb5b3bfd38c
+repo: Azure/azure-rest-api-specs
+additionalDirectories: 
+
+emitterPackageJsonPath: eng/legacy-emitter-package.json
