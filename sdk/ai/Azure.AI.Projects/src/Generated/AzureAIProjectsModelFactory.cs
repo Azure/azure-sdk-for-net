@@ -1052,18 +1052,11 @@ namespace Azure.AI.Projects
         /// <param name="evalId"> Identifier of the evaluation group. </param>
         /// <param name="evalRun"> The evaluation run payload. </param>
         /// <returns> A new <see cref="Evaluation.EvaluationScheduleTask"/> instance for mocking. </returns>
-        public static EvaluationScheduleTask EvaluationScheduleTask(IDictionary<string, string> configuration = default, string evalId = default, EvaluationScheduleTaskEvalRun evalRun = default)
+        public static EvaluationScheduleTask EvaluationScheduleTask(IDictionary<string, string> configuration = default, string evalId = default, BinaryData evalRun = default)
         {
             configuration ??= new ChangeTrackingDictionary<string, string>();
 
             return new EvaluationScheduleTask(ScheduleTaskType.Evaluation, configuration, additionalBinaryDataProperties: null, evalId, evalRun);
-        }
-
-        /// <summary> The EvaluationScheduleTaskEvalRun. </summary>
-        /// <returns> A new <see cref="Evaluation.EvaluationScheduleTaskEvalRun"/> instance for mocking. </returns>
-        public static EvaluationScheduleTaskEvalRun EvaluationScheduleTaskEvalRun()
-        {
-            return new EvaluationScheduleTaskEvalRun(additionalBinaryDataProperties: null);
         }
 
         /// <summary> Insight task for the schedule. </summary>

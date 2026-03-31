@@ -80,7 +80,14 @@ namespace Azure.AI.Projects.Evaluation
             writer.WritePropertyName("evalId"u8);
             writer.WriteStringValue(EvalId);
             writer.WritePropertyName("evalRun"u8);
-            writer.WriteObjectValue(EvalRun, options);
+#if NET6_0_OR_GREATER
+            writer.WriteRawValue(EvalRun);
+#else
+            using (JsonDocument document = JsonDocument.Parse(EvalRun))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -112,7 +119,7 @@ namespace Azure.AI.Projects.Evaluation
             IDictionary<string, string> configuration = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string evalId = default;
-            EvaluationScheduleTaskEvalRun evalRun = default;
+            BinaryData evalRun = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -148,7 +155,7 @@ namespace Azure.AI.Projects.Evaluation
                 }
                 if (prop.NameEquals("evalRun"u8))
                 {
-                    evalRun = EvaluationScheduleTaskEvalRun.DeserializeEvaluationScheduleTaskEvalRun(prop.Value, options);
+                    evalRun = BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
                 if (options.Format != "W")

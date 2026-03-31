@@ -31,6 +31,7 @@
 - `AIProjectClient.OpenAI` property was renamed to `AIProjectClient.ProjectOpenAIClient`.
 - `AIProjectClient.Agents` property was renamed to `AIProjectClient.AgentAdministrationClient`.
 - `RecurrenceTrigger.StartTime`, `RecurrenceTrigger.EndTime`, `OneTimeTrigger.TriggerAt`, `CronTrigger.StartTime`, `CronTrigger.EndTime` and `ScheduleRun.TriggerTime` properties type was changed from `string` to `DateTimeOffset`.
+- Remove the `EvaluationScheduleTaskEvalRun` class.
 
 ## 2.0.0-beta.2 (2026-03-12)
 
