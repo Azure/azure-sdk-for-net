@@ -37,36 +37,9 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             _operationId = GetOperationId(rehydrationToken);
         }
 
-        /// <summary></summary>
-        /// <param name="source"> The instance of <see cref="IOperationSource{T}"/>. </param>
-        /// <param name="clientDiagnostics"> The instance of <see cref="ClientDiagnostics"/>. </param>
-        /// <param name="pipeline"> The instance of <see cref="HttpPipeline"/>. </param>
-        /// <param name="request"> The operation request. </param>
-        /// <param name="response"> The operation response. </param>
-        /// <param name="finalStateVia"> The finalStateVia of the operation. </param>
-        /// <param name="skipApiVersionOverride"> If should skip Api version override. </param>
-        /// <param name="apiVersionOverrideValue"> The Api version override value. </param>
-        internal ContainerServiceFleetArmOperation(IOperationSource<T> source, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia, bool skipApiVersionOverride = true, string apiVersionOverrideValue = null)
-        {
-            IOperation nextLinkOperation = NextLinkOperationImplementation.Create(pipeline, request.Method, request.Uri.ToUri(), response, finalStateVia, skipApiVersionOverride, apiVersionOverrideValue);
-            if (nextLinkOperation is NextLinkOperationImplementation nextLinkOperationImplementation)
-            {
-                _nextLinkOperation = nextLinkOperationImplementation;
-                _operationId = _nextLinkOperation.OperationId;
-            }
-            else
-            {
-                _completeRehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(request.Method, request.Uri.ToUri(), response, finalStateVia);
-                _operationId = GetOperationId(_completeRehydrationToken);
-            }
-            _operation = new OperationInternal<T>(
-                NextLinkOperationImplementation.Create(source, nextLinkOperation),
-                clientDiagnostics,
-                response,
-                "ContainerServiceFleetArmOperation",
-                null,
-                new SequentialDelayStrategy());
-        }
+        // NOTE: The constructor with (IOperationSource<T>, ClientDiagnostics, HttpPipeline, Request, Response, OperationFinalStateVia, bool, string)
+        // has been moved to src/Customized/LongRunningOperation/ContainerServiceFleetArmOperationOfT.cs
+        // to set skipApiVersionOverride = true by default.
 
         /// <summary> Gets the Id. </summary>
         public override string Id => _operationId ?? NextLinkOperationImplementation.NotSet;
