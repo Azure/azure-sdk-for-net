@@ -353,6 +353,11 @@ public partial class Infrastructure : IJsonModel<Infrastructure>
             {
                 HydrateProperties(resource.ProvisionableProperties, objExpr);
             }
+            else
+            {
+                throw new FormatException(
+                    $"Expected resource body to be an ObjectExpression, but got {body.GetType().Name}.");
+            }
         }
 
         // Fix #2: Transfer existing flag

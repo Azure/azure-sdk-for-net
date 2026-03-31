@@ -142,28 +142,4 @@ internal static class SchemaOracle
     /// <summary>Valid primitive type names from types.tsp PrimitiveTypeName union.</summary>
     public static readonly Lazy<HashSet<string>> PrimitiveTypeNames = new(() =>
         LoadUnionKinds("types.tsp", "PrimitiveTypeName"));
-
-    /// <summary>
-    /// Forward-compat expression kinds produced by the compiler but not yet in the spec.
-    /// The spec uses different kind names (e.g. "binary-operation" vs "binary")
-    /// and some kinds are not yet in the spec at all.
-    /// </summary>
-    public static readonly HashSet<string> ForwardCompatExpressionKinds = new()
-    {
-        "binary", "unary", "conditional", "interpolated-string",
-        "nested-access", "decorator"
-    };
-
-    /// <summary>
-    /// All valid expression kinds: spec + forward-compat.
-    /// </summary>
-    public static HashSet<string> AllValidExpressionKinds
-    {
-        get
-        {
-            var combined = new HashSet<string>(ExpressionKinds.Value);
-            combined.UnionWith(ForwardCompatExpressionKinds);
-            return combined;
-        }
-    }
 }

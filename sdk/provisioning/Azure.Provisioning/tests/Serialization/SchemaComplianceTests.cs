@@ -269,7 +269,7 @@ public class SchemaComplianceTests
 
     #region Schema Validation Helpers
 
-    private static HashSet<string> ValidExpressionKinds => SchemaOracle.AllValidExpressionKinds;
+    private static HashSet<string> ValidExpressionKinds => new(SchemaOracle.ExpressionKinds.Value);
     private static HashSet<string> ValidTypeKinds => SchemaOracle.TypeKinds.Value;
     private static HashSet<string> ValidTargetScopes => SchemaOracle.TargetScopes.Value;
 

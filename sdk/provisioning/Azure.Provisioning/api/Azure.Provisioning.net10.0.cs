@@ -965,8 +965,6 @@ namespace Azure.Provisioning.Expressions
     {
         public ResourceStatement(string name, Azure.Provisioning.Expressions.BicepExpression type, Azure.Provisioning.Expressions.BicepExpression body) { }
         public Azure.Provisioning.Expressions.BicepExpression Body { get { throw null; } }
-        [System.ObsoleteAttribute("Condition is no longer handled in this way. Construct Body via a IfConditionExpression instead.")]
-        public Azure.Provisioning.Expressions.BicepExpression? Condition { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Provisioning.Expressions.DecoratorExpression> Decorators { get { throw null; } }
         public bool Existing { get { throw null; } set { } }
         public string Name { get { throw null; } }
