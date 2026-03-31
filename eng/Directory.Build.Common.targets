@@ -420,8 +420,15 @@
       Central baseline: override the local file convention used by Microsoft.DotNet.ApiCompat
       to ensure all baseline suppressions live in eng/ApiCompatBaselines/ where changes are
       visible and protected by CODEOWNERS. See https://github.com/Azure/azure-sdk-for-net/issues/55311
+
+      We use MSBuildProjectName (available during static eval) to check for a package-specific file.
+      If one exists, use it; otherwise fall back to the empty default so that the NuGet targets
+      never discover a local ApiCompatBaseline.txt file via their Exists() convention.
+      The Target-level override in _ResolveResolvedMatchingContract re-asserts with the correct
+      PackageId at build time as belt-and-suspenders.
     -->
-    <ApiCompatBaseline>$(MSBuildThisFileDirectory)ApiCompatBaselines\$(PackageId).txt</ApiCompatBaseline>
+    <ApiCompatBaseline Condition="Exists('$(MSBuildThisFileDirectory)ApiCompatBaselines\$(MSBuildProjectName).txt')">$(MSBuildThisFileDirectory)ApiCompatBaselines\$(MSBuildProjectName).txt</ApiCompatBaseline>
+    <ApiCompatBaseline Condition="!Exists('$(MSBuildThisFileDirectory)ApiCompatBaselines\$(MSBuildProjectName).txt')">$(MSBuildThisFileDirectory)ApiCompatBaselines\_default-empty.txt</ApiCompatBaseline>
   </PropertyGroup>
   <ItemGroup Condition="'$(ApiCompatVersion)' != ''">
     <PackageDownload Include="$(PackageId)" Version="[$(ApiCompatVersion)]" />
@@ -429,6 +436,16 @@
   </ItemGroup>
 
   <Target Name="_ResolveResolvedMatchingContract" BeforeTargets="ValidateApiCompatForSrc" Condition="'$(ApiCompatVersion)' != ''">
+    <PropertyGroup>
+      <!--
+        Re-assert central baseline at build time. The PropertyGroup-level setting above may be
+        overridden by Microsoft.DotNet.ApiCompat.targets (which evaluates after Directory.Build.targets)
+        when the central file doesn't exist. Setting it inside a Target guarantees it runs after all
+        static property evaluation, so local ApiCompatBaseline.txt files are never picked up.
+        If the central file doesn't exist, ApiCompat simply runs with no baseline (no suppressions).
+      -->
+      <ApiCompatBaseline>$(MSBuildThisFileDirectory)ApiCompatBaselines\$(PackageId).txt</ApiCompatBaseline>
+    </PropertyGroup>
     <ItemGroup>
       <_ReferencePathDirectories Include="@(ReferencePath -> '%(RootDir)%(Directory)')"  />
       <ResolvedMatchingContract Include="$(NuGetPackageRoot)\$(PackageId.ToLower())\$(ApiCompatVersion)\lib\$([MSBuild]::ValueOrDefault('$(ApiCompatBaselineTargetFramework)', '$(TargetFramework)'))\$(TargetFileName)">

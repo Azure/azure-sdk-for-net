@@ -1,0 +1,2 @@
+# Empty default baseline - ensures local ApiCompatBaseline.txt files are never used.
+# See https://github.com/Azure/azure-sdk-for-net/issues/55311
