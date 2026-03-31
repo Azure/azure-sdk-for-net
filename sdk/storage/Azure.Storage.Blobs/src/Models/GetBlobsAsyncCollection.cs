@@ -15,12 +15,12 @@ namespace Azure.Storage.Blobs.Models
     internal class GetBlobsAsyncCollection : StorageCollectionEnumerator<BlobItem>
     {
         private readonly BlobContainerClient _client;
+        private readonly bool _useApacheArrow;
         private readonly BlobTraits _traits;
         private readonly BlobStates _states;
         private readonly string _prefix;
         private readonly string _startFrom;
         private readonly string _endBefore;
-        private readonly bool _useApacheArrow;
 
         public GetBlobsAsyncCollection(
             BlobContainerClient client,
@@ -32,12 +32,12 @@ namespace Azure.Storage.Blobs.Models
             string endBefore)
         {
             _client = client;
+            _useApacheArrow = useApacheArrow;
             _traits = traits;
             _states = states;
             _prefix = prefix;
             _startFrom = startFrom;
             _endBefore = endBefore;
-            _useApacheArrow = useApacheArrow;
         }
 
         public override async ValueTask<Page<BlobItem>> GetNextPageAsync(

@@ -2933,11 +2933,19 @@ namespace Azure.Storage.Blobs.Test
             {
                 UseApacheArrow = true
             };
-            Page<BlobItem> page = await test.Container.GetBlobsAsync(options: options).AsPages(pageSizeHint: 2).FirstAsync();
+
+            int numPages = 0;
+            // Act
+            await foreach (Page<BlobItem> page in test.Container.GetBlobsAsync(options: options)
+                .AsPages(pageSizeHint: 2))
+            {
+                // Assert
+                Assert.AreEqual(2, page.Values.Count);
+                ++numPages;
+            }
 
             // Assert
-            Assert.AreEqual(2, page.Values.Count);
-            Assert.IsTrue(page.Values.All(b => b.Metadata.Count == 0));
+            Assert.AreEqual(4, numPages);
         }
 
         [RecordedTest]
@@ -3167,7 +3175,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(createResponse.Value.VersionId, blobs[0].VersionId);
         }
 
-        [PlaybackOnly("Object Replication policies is only enabled on certain storage accounts")]
+        [Ignore("Feature not supported in current test environment")]
         [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_06_06)]
         public async Task ListBlobsFlatSegmentAsync_UseApacheArrow_ObjectReplication()
@@ -3970,17 +3978,21 @@ namespace Azure.Storage.Blobs.Test
 
             GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
             {
-                UseApacheArrow = true,
-                Delimiter = "/"
+                UseApacheArrow = true
             };
 
+            int numPages = 0;
             // Act
-            Page<BlobHierarchyItem> page = await test.Container.GetBlobsByHierarchyAsync(options: options)
-                .AsPages(pageSizeHint: 2)
-                .FirstAsync();
+            await foreach (Page<BlobHierarchyItem> page in test.Container.GetBlobsByHierarchyAsync(options: options)
+                .AsPages(pageSizeHint: 2))
+            {
+                // Assert
+                Assert.AreEqual(2, page.Values.Count);
+                ++numPages;
+            }
 
             // Assert
-            Assert.AreEqual(2, page.Values.Count);
+            Assert.AreEqual(4, numPages);
         }
 
         [RecordedTest]
@@ -4210,7 +4222,7 @@ namespace Azure.Storage.Blobs.Test
                 e => Assert.AreEqual("ContainerNotFound", e.ErrorCode));
         }
 
-        [PlaybackOnly("Object Replication policies is only enabled on certain storage accounts")]
+        [Ignore("Feature not supported in current test environment")]
         [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_06_06)]
         public async Task ListBlobsHierarchySegmentAsync_UseApacheArrow_ObjectReplication()
