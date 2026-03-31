@@ -295,6 +295,7 @@ internal sealed class ResponseOrchestrator
                     ResponseMutations.ApplyOutputItemAutoStamps(evt, execution.ResponseId, request.AgentReference);
                     ResponseMutations.ReplaceResponse(execution, evt);
                     ResponseMutations.StampAgentReference(execution, request);
+                    ResponseMutations.StampAgentSessionId(execution, request);
                     evt.SnapshotEmbeddedResponse(execution.Response!);
                     await publisher.OnNextAsync(evt);
 
@@ -352,6 +353,9 @@ internal sealed class ResponseOrchestrator
 
             // Stamp AgentReference — the only SDK-managed property on Response
             ResponseMutations.StampAgentReference(execution, request);
+
+            // Stamp AgentSessionId — resolved during request processing (S-048)
+            ResponseMutations.StampAgentSessionId(execution, request);
 
             // Validate terminal event status consistency — handler must set the
             // correct Status on the Response before yielding a terminal event.

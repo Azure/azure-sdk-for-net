@@ -20,6 +20,8 @@
 - [Persistence Contract](#persistence-contract)
 - [Configuration Requirements](#configuration-requirements)
 - [Observability Requirements](#observability-requirements)
+- [Response ID Resolution](#response-id-resolution)
+- [Session ID Resolution](#session-id-resolution)
 - [Library Behavioural Rules Index](#library-behavioural-rules-index)
 
 ---
@@ -266,6 +268,30 @@ The library MUST instrument request processing for distributed tracing.
 
 ---
 
+## Response ID Resolution
+
+The library assigns each response a unique identifier. By default, the library generates the ID. External orchestrators MAY override the generated ID.
+
+- **S-047**: If the incoming `POST /responses` request includes an `x-agent-response-id` HTTP header with a non-empty value, the library MUST use that value as the response ID instead of generating one. This gives platform and middletier services full control over ID generation. If the header is absent or empty, the library MUST generate a response ID using its standard algorithm (partition key colocation from `previous_response_id` or `conversation` ID).
+
+---
+
+## Session ID Resolution
+
+The library resolves a session identifier for every response and auto-stamps it on the `Response` object.
+
+- **S-048**: The library MUST resolve `agent_session_id` using the following priority chain:
+
+  | Priority | Source | Description |
+  |----------|--------|-------------|
+  | 1 | `request.agent_session_id` | Payload field — client-supplied session affinity |
+  | 2 | `FOUNDRY_AGENT_SESSION_ID` environment variable | Platform-supplied session (via `FoundryEnvironment.SessionId`) |
+  | 3 | Generated UUID | Freshly generated `Guid` as a string |
+
+  The resolved session ID MUST be auto-stamped on every `Response` object emitted in `response.*` events, regardless of whether the handler sets it. This stamping occurs after every `response.*` event's full replacement (S-013), alongside `agent_reference` stamping (S-016). If the request payload already contains a non-empty `agent_session_id`, it takes precedence over the environment variable and generation fallbacks.
+
+---
+
 ## Library Behavioural Rules Index
 
 Quick-reference index of all S-rules:
@@ -318,3 +344,5 @@ Quick-reference index of all S-rules:
 | S-044 | Observability Requirements | Span per `POST /responses` with tags: `response.id`, `response.mode`, `response.model`, `response.status` |
 | S-045 | Observability Requirements | No spans for GET or cancel endpoints |
 | S-046 | Configuration Requirements | Configurable `AdditionalServerIdentity` appended to `x-platform-server` header |
+| S-047 | Response ID Resolution | Use `x-agent-response-id` header value as response ID if present; otherwise generate |
+| S-048 | Session ID Resolution | Resolve `agent_session_id`: request payload → `FOUNDRY_AGENT_SESSION_ID` env → generated UUID; auto-stamp on Response |

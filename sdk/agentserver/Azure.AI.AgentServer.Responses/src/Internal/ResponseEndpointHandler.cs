@@ -18,6 +18,12 @@ namespace Azure.AI.AgentServer.Responses.Internal;
 /// </summary>
 internal sealed class ResponseEndpointHandler
 {
+    /// <summary>
+    /// When set on the incoming request, the library uses this value as the response ID
+    /// instead of generating one. Gives platform/middletier services full control over ID generation.
+    /// </summary>
+    private const string AgentResponseIdHeader = "x-agent-response-id";
+
     private readonly ResponsesActivitySource _activitySource;
     private readonly ResponseOrchestrator _orchestrator;
     private readonly ResponseExecutionTracker _tracker;
@@ -112,12 +118,31 @@ internal sealed class ResponseEndpointHandler
             "Creating response: Streaming={IsStreaming} Background={IsBackground} Model={Model}",
             isStreaming, isBackground, request.Model);
 
-        // Generate response ID with partition key hint from request
-        // Priority: previous_response_id → conversation ID → fresh
-        var partitionKeyHint = request.PreviousResponseId
-            ?? request.GetConversationId()
-            ?? "";
-        var responseId = IdGenerator.NewResponseId(partitionKeyHint);
+        // S-047: Use x-agent-response-id header as the response ID if present,
+        // giving platform/middletier services full control over ID generation.
+        // Otherwise, generate one with partition key colocation.
+        string responseId;
+        if (httpContext.Request.Headers.TryGetValue(AgentResponseIdHeader, out var agentResponseIdValue)
+            && !string.IsNullOrEmpty(agentResponseIdValue.ToString()))
+        {
+            responseId = agentResponseIdValue.ToString();
+        }
+        else
+        {
+            var partitionKeyHint = request.PreviousResponseId
+                ?? request.GetConversationId()
+                ?? "";
+            responseId = IdGenerator.NewResponseId(partitionKeyHint);
+        }
+
+        // S-048: Resolve session ID — request payload → environment variable → generated UUID.
+        // Stamp on the request so the orchestrator can propagate it to the ResponseObject.
+        if (string.IsNullOrEmpty(request.AgentSessionId))
+        {
+            request.AgentSessionId = !string.IsNullOrEmpty(FoundryEnvironment.SessionId)
+                ? FoundryEnvironment.SessionId
+                : Guid.NewGuid().ToString();
+        }
 
         // Start distributed tracing span — delegates all tag/baggage logic
         // to ResponsesActivitySource.StartCreateResponseActivity (virtual, overridable).

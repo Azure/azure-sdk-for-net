@@ -209,6 +209,19 @@ internal static class ResponseMutations
     }
 
     /// <summary>
+    /// Stamps the resolved <c>AgentSessionId</c> on the response after a
+    /// <see cref="ReplaceResponse"/> call. The session ID is resolved during
+    /// request processing (S-048): request payload → environment variable → generated UUID.
+    /// </summary>
+    internal static void StampAgentSessionId(ResponseExecution execution, CreateResponse request)
+    {
+        if (!string.IsNullOrEmpty(request.AgentSessionId))
+        {
+            execution.Response!.AgentSessionId = request.AgentSessionId;
+        }
+    }
+
+    /// <summary>
     /// Sets an output item at the given index, padding the list with nulls if needed.
     /// </summary>
     internal static void SetOutputItemAtIndex(this IList<OutputItem> output, int index, OutputItem item)
