@@ -7,15 +7,364 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager.ApiCenter;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiCenter.Models
 {
-    /// <summary> Model factory for models. </summary>
+    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmApiCenterModelFactory
     {
+
+        /// <summary> The service entity. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <returns> A new <see cref="ApiCenter.ApiCenterServiceData"/> instance for mocking. </returns>
+        public static ApiCenterServiceData ApiCenterServiceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ApiCenterServiceProperties properties = default, ManagedServiceIdentity identity = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ApiCenterServiceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                location,
+                properties,
+                identity);
+        }
+
+        /// <summary> The properties of the service. </summary>
+        /// <param name="provisioningState"> Provisioning state of the service. </param>
+        /// <param name="isRestore"> Flag used to restore soft-deleted API Center service. If specified and set to 'true' all other properties will be ignored. </param>
+        /// <returns> A new <see cref="Models.ApiCenterServiceProperties"/> instance for mocking. </returns>
+        public static ApiCenterServiceProperties ApiCenterServiceProperties(ApiCenterProvisioningState? provisioningState = default, bool? isRestore = default)
+        {
+            return new ApiCenterServiceProperties(provisioningState, isRestore, additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="isRestore"> Flag used to restore soft-deleted API Center service. If specified and set to 'true' all other properties will be ignored. </param>
+        /// <returns> A new <see cref="Models.ApiCenterServicePatch"/> instance for mocking. </returns>
+        public static ApiCenterServicePatch ApiCenterServicePatch(ManagedServiceIdentity identity = default, IDictionary<string, string> tags = default, bool? isRestore = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ApiCenterServicePatch(identity, tags, isRestore is null ? default : new ServiceUpdateProperties(isRestore, null), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The metadata schema export result. </summary>
+        /// <param name="format"> The export format for the schema. </param>
+        /// <param name="value"> The result of the export operation. </param>
+        /// <returns> A new <see cref="Models.MetadataSchemaExportResult"/> instance for mocking. </returns>
+        public static MetadataSchemaExportResult MetadataSchemaExportResult(MetadataSchemaExportFormat? format = default, string value = default)
+        {
+            return new MetadataSchemaExportResult(format, value, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Soft-deleted service entity. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="ApiCenter.ApiCenterDeletedServiceData"/> instance for mocking. </returns>
+        public static ApiCenterDeletedServiceData ApiCenterDeletedServiceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ApiCenterDeletedServiceProperties properties = default)
+        {
+            return new ApiCenterDeletedServiceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties);
+        }
+
+        /// <summary> Deleted service properties. </summary>
+        /// <param name="scheduledPurgeOn"> UTC date and time when the service will be automatically purged. The date conforms to the following format: yyyy-MM-ddTHH:mm:ssZ as specified by the ISO 8601 standard. </param>
+        /// <param name="softDeletionOn"> UTC date and time when the service was soft-deleted. The date conforms to the following format: yyyy-MM-ddTHH:mm:ssZ as specified by the ISO 8601 standard. </param>
+        /// <returns> A new <see cref="Models.ApiCenterDeletedServiceProperties"/> instance for mocking. </returns>
+        public static ApiCenterDeletedServiceProperties ApiCenterDeletedServiceProperties(DateTimeOffset? scheduledPurgeOn = default, DateTimeOffset? softDeletionOn = default)
+        {
+            return new ApiCenterDeletedServiceProperties(scheduledPurgeOn, softDeletionOn, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Metadata schema entity. Used to define metadata for the entities in API catalog. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="ApiCenter.ApiCenterMetadataSchemaData"/> instance for mocking. </returns>
+        public static ApiCenterMetadataSchemaData ApiCenterMetadataSchemaData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ApiCenterMetadataSchemaProperties properties = default)
+        {
+            return new ApiCenterMetadataSchemaData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties);
+        }
+
+        /// <summary> Metadata schema properties. </summary>
+        /// <param name="schema"> The schema defining the type. </param>
+        /// <param name="assignedTo"> The assignees. </param>
+        /// <returns> A new <see cref="Models.ApiCenterMetadataSchemaProperties"/> instance for mocking. </returns>
+        public static ApiCenterMetadataSchemaProperties ApiCenterMetadataSchemaProperties(string schema = default, IEnumerable<ApiCenterMetadataAssignment> assignedTo = default)
+        {
+            assignedTo ??= new ChangeTrackingList<ApiCenterMetadataAssignment>();
+
+            return new ApiCenterMetadataSchemaProperties(schema, assignedTo.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Workspace entity. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="ApiCenter.ApiCenterWorkspaceData"/> instance for mocking. </returns>
+        public static ApiCenterWorkspaceData ApiCenterWorkspaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ApiCenterWorkspaceProperties properties = default)
+        {
+            return new ApiCenterWorkspaceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties);
+        }
+
+        /// <summary> API entity. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="ApiCenter.ApiCenterApiData"/> instance for mocking. </returns>
+        public static ApiCenterApiData ApiCenterApiData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ApiCenterApiProperties properties = default)
+        {
+            return new ApiCenterApiData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties);
+        }
+
+        /// <param name="title"> API title. </param>
+        /// <param name="kind"> Kind of API. For example, REST or GraphQL. </param>
+        /// <param name="description"> Description of the API. </param>
+        /// <param name="summary"> Short description of the API. </param>
+        /// <param name="lifecycleStage"> Current lifecycle stage of the API. </param>
+        /// <param name="termsOfServiceUri"> URL pointing to the terms of service. </param>
+        /// <param name="externalDocumentation"> The set of external documentation. </param>
+        /// <param name="contacts"> The set of contacts. </param>
+        /// <param name="license"> The license information for the API. </param>
+        /// <param name="customProperties"> The custom metadata defined for API catalog entities. </param>
+        /// <returns> A new <see cref="Models.ApiCenterApiProperties"/> instance for mocking. </returns>
+        public static ApiCenterApiProperties ApiCenterApiProperties(string title = default, ApiKind kind = default, string description = default, string summary = default, ApiLifecycleStage? lifecycleStage = default, Uri termsOfServiceUri = default, IEnumerable<ApiExternalDocumentation> externalDocumentation = default, IEnumerable<ApiContactInformation> contacts = default, ApiLicenseInformation license = default, BinaryData customProperties = default)
+        {
+            externalDocumentation ??= new ChangeTrackingList<ApiExternalDocumentation>();
+            contacts ??= new ChangeTrackingList<ApiContactInformation>();
+
+            return new ApiCenterApiProperties(
+                title,
+                kind,
+                description,
+                summary,
+                lifecycleStage,
+                termsOfServiceUri is null ? default : new TermsOfService(termsOfServiceUri, null),
+                externalDocumentation.ToList(),
+                contacts.ToList(),
+                license,
+                customProperties,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> API version entity. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="ApiCenter.ApiCenterApiVersionData"/> instance for mocking. </returns>
+        public static ApiCenterApiVersionData ApiCenterApiVersionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ApiCenterApiVersionProperties properties = default)
+        {
+            return new ApiCenterApiVersionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties);
+        }
+
+        /// <summary> API definition entity. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="ApiCenter.ApiCenterApiDefinitionData"/> instance for mocking. </returns>
+        public static ApiCenterApiDefinitionData ApiCenterApiDefinitionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ApiCenterApiDefinitionProperties properties = default)
+        {
+            return new ApiCenterApiDefinitionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties);
+        }
+
+        /// <summary> API definition properties entity. </summary>
+        /// <param name="title"> API definition title. </param>
+        /// <param name="description"> API definition description. </param>
+        /// <param name="specification"> API specification details. </param>
+        /// <returns> A new <see cref="Models.ApiCenterApiDefinitionProperties"/> instance for mocking. </returns>
+        public static ApiCenterApiDefinitionProperties ApiCenterApiDefinitionProperties(string title = default, string description = default, ApiSpecificationDetails specification = default)
+        {
+            return new ApiCenterApiDefinitionProperties(title, description, specification, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> API specification details. </summary>
+        /// <param name="name"> Specification name. </param>
+        /// <param name="version"> Specification version. </param>
+        /// <returns> A new <see cref="Models.ApiSpecificationDetails"/> instance for mocking. </returns>
+        public static ApiSpecificationDetails ApiSpecificationDetails(string name = default, string version = default)
+        {
+            return new ApiSpecificationDetails(name, version, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The API specification export result. </summary>
+        /// <param name="format"> The format of exported result. </param>
+        /// <param name="value"> The result of the export operation. </param>
+        /// <returns> A new <see cref="Models.ApiSpecExportResult"/> instance for mocking. </returns>
+        public static ApiSpecExportResult ApiSpecExportResult(ApiSpecExportResultFormat? format = default, string value = default)
+        {
+            return new ApiSpecExportResult(format, value, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> API source entity. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="ApiCenter.ApiSourceData"/> instance for mocking. </returns>
+        public static ApiSourceData ApiSourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ApiSourceProperties properties = default)
+        {
+            return new ApiSourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties);
+        }
+
+        /// <summary> API source properties. </summary>
+        /// <param name="importSpecification"> Indicates if the specification should be imported along with metadata. </param>
+        /// <param name="azureApiManagementSource"> API source configuration for Azure API Management. </param>
+        /// <param name="targetEnvironmentId"> The target environment resource ID. </param>
+        /// <param name="targetLifecycleStage"> The target lifecycle stage. </param>
+        /// <param name="linkState"> The state of the API source link. </param>
+        /// <returns> A new <see cref="Models.ApiSourceProperties"/> instance for mocking. </returns>
+        public static ApiSourceProperties ApiSourceProperties(ApiCenterImportSpecificationModel? importSpecification = default, ApiCenterApiManagementSource azureApiManagementSource = default, ResourceIdentifier targetEnvironmentId = default, ApiLifecycleStage? targetLifecycleStage = default, ApiCenterLinkState linkState = default)
+        {
+            return new ApiSourceProperties(
+                importSpecification,
+                azureApiManagementSource,
+                targetEnvironmentId,
+                targetLifecycleStage,
+                linkState,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The link state. </summary>
+        /// <param name="state"> The state of the link. </param>
+        /// <param name="message"> The state message. </param>
+        /// <param name="lastUpdatedOn"> The timestamp of the last update of the link state. </param>
+        /// <returns> A new <see cref="Models.ApiCenterLinkState"/> instance for mocking. </returns>
+        public static ApiCenterLinkState ApiCenterLinkState(ApiCenterApiSourceLinkState? state = default, string message = default, DateTimeOffset lastUpdatedOn = default)
+        {
+            return new ApiCenterLinkState(state, message, lastUpdatedOn, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> API deployment entity. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="ApiCenter.ApiCenterDeploymentData"/> instance for mocking. </returns>
+        public static ApiCenterDeploymentData ApiCenterDeploymentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ApiCenterDeploymentProperties properties = default)
+        {
+            return new ApiCenterDeploymentData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties);
+        }
+
+        /// <summary> Environment entity. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="ApiCenter.ApiCenterEnvironmentData"/> instance for mocking. </returns>
+        public static ApiCenterEnvironmentData ApiCenterEnvironmentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ApiCenterEnvironmentProperties properties = default)
+        {
+            return new ApiCenterEnvironmentData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties);
+        }
+
+        /// <summary> Server information of the environment. </summary>
+        /// <param name="environmentServerType"> Type of the server that represents the environment. </param>
+        /// <param name="managementPortalUri"> The location of the management portal. </param>
+        /// <returns> A new <see cref="Models.ApiCenterEnvironmentServer"/> instance for mocking. </returns>
+        public static ApiCenterEnvironmentServer ApiCenterEnvironmentServer(EnvironmentServerType? environmentServerType = default, IEnumerable<Uri> managementPortalUri = default)
+        {
+            managementPortalUri ??= new ChangeTrackingList<Uri>();
+
+            return new ApiCenterEnvironmentServer(environmentServerType, managementPortalUri.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Onboarding information. </summary>
+        /// <param name="instructions"> Onboarding guide. </param>
+        /// <param name="developerPortalUri"> The location of the development portal. </param>
+        /// <returns> A new <see cref="Models.EnvironmentOnboardingInformation"/> instance for mocking. </returns>
+        public static EnvironmentOnboardingInformation EnvironmentOnboardingInformation(string instructions = default, IEnumerable<Uri> developerPortalUri = default)
+        {
+            developerPortalUri ??= new ChangeTrackingList<Uri>();
+
+            return new EnvironmentOnboardingInformation(instructions, developerPortalUri.ToList(), additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="ApiCenter.ApiCenterServiceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -26,214 +375,21 @@ namespace Azure.ResourceManager.ApiCenter.Models
         /// <param name="apiCenterServiceProvisioningState"> The resource-specific properties for this resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="ApiCenter.ApiCenterServiceData"/> instance for mocking. </returns>
-        public static ApiCenterServiceData ApiCenterServiceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ApiCenterProvisioningState? apiCenterServiceProvisioningState = null, ManagedServiceIdentity identity = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ApiCenterServiceData ApiCenterServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ApiCenterProvisioningState? apiCenterServiceProvisioningState, ManagedServiceIdentity identity)
         {
-            tags ??= new Dictionary<string, string>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new ApiCenterServiceData(
                 id,
                 name,
                 resourceType,
                 systemData,
+                additionalBinaryDataProperties: null,
                 tags,
                 location,
-                apiCenterServiceProvisioningState != null ? new ApiCenterServiceProperties(apiCenterServiceProvisioningState, serializedAdditionalRawData: null) : null,
-                identity,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.MetadataSchemaExportResult"/>. </summary>
-        /// <param name="format"> The export format for the schema. </param>
-        /// <param name="value"> The result of the export operation. </param>
-        /// <returns> A new <see cref="Models.MetadataSchemaExportResult"/> instance for mocking. </returns>
-        public static MetadataSchemaExportResult MetadataSchemaExportResult(MetadataSchemaExportFormat? format = null, string value = null)
-        {
-            return new MetadataSchemaExportResult(format, value, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ApiCenter.ApiCenterMetadataSchemaData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="ApiCenter.ApiCenterMetadataSchemaData"/> instance for mocking. </returns>
-        public static ApiCenterMetadataSchemaData ApiCenterMetadataSchemaData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ApiCenterMetadataSchemaProperties properties = null)
-        {
-            return new ApiCenterMetadataSchemaData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ApiCenter.ApiCenterWorkspaceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="ApiCenter.ApiCenterWorkspaceData"/> instance for mocking. </returns>
-        public static ApiCenterWorkspaceData ApiCenterWorkspaceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ApiCenterWorkspaceProperties properties = null)
-        {
-            return new ApiCenterWorkspaceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ApiCenter.ApiCenterApiData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="ApiCenter.ApiCenterApiData"/> instance for mocking. </returns>
-        public static ApiCenterApiData ApiCenterApiData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ApiCenterApiProperties properties = null)
-        {
-            return new ApiCenterApiData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ApiCenterApiProperties"/>. </summary>
-        /// <param name="title"> API title. </param>
-        /// <param name="kind"> Kind of API. For example, REST or GraphQL. </param>
-        /// <param name="description"> Description of the API. </param>
-        /// <param name="summary"> Short description of the API. </param>
-        /// <param name="lifecycleStage"> Current lifecycle stage of the API. </param>
-        /// <param name="termsOfServiceUri"> Terms of service for the API. </param>
-        /// <param name="externalDocumentation"> The set of external documentation. </param>
-        /// <param name="contacts"> The set of contacts. </param>
-        /// <param name="license"> The license information for the API. </param>
-        /// <param name="customProperties"> The custom metadata defined for API catalog entities. </param>
-        /// <returns> A new <see cref="Models.ApiCenterApiProperties"/> instance for mocking. </returns>
-        public static ApiCenterApiProperties ApiCenterApiProperties(string title = null, ApiKind kind = default, string description = null, string summary = null, ApiLifecycleStage? lifecycleStage = null, Uri termsOfServiceUri = null, IEnumerable<ApiExternalDocumentation> externalDocumentation = null, IEnumerable<ApiContactInformation> contacts = null, ApiLicenseInformation license = null, BinaryData customProperties = null)
-        {
-            externalDocumentation ??= new List<ApiExternalDocumentation>();
-            contacts ??= new List<ApiContactInformation>();
-
-            return new ApiCenterApiProperties(
-                title,
-                kind,
-                description,
-                summary,
-                lifecycleStage,
-                termsOfServiceUri != null ? new TermsOfService(termsOfServiceUri, serializedAdditionalRawData: null) : null,
-                externalDocumentation?.ToList(),
-                contacts?.ToList(),
-                license,
-                customProperties,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ApiCenter.ApiCenterDeploymentData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="ApiCenter.ApiCenterDeploymentData"/> instance for mocking. </returns>
-        public static ApiCenterDeploymentData ApiCenterDeploymentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ApiCenterDeploymentProperties properties = null)
-        {
-            return new ApiCenterDeploymentData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ApiCenter.ApiCenterApiVersionData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="ApiCenter.ApiCenterApiVersionData"/> instance for mocking. </returns>
-        public static ApiCenterApiVersionData ApiCenterApiVersionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ApiCenterApiVersionProperties properties = null)
-        {
-            return new ApiCenterApiVersionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ApiCenter.ApiCenterApiDefinitionData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="ApiCenter.ApiCenterApiDefinitionData"/> instance for mocking. </returns>
-        public static ApiCenterApiDefinitionData ApiCenterApiDefinitionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ApiCenterApiDefinitionProperties properties = null)
-        {
-            return new ApiCenterApiDefinitionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ApiCenterApiDefinitionProperties"/>. </summary>
-        /// <param name="title"> API definition title. </param>
-        /// <param name="description"> API definition description. </param>
-        /// <param name="specification"> API specification details. </param>
-        /// <returns> A new <see cref="Models.ApiCenterApiDefinitionProperties"/> instance for mocking. </returns>
-        public static ApiCenterApiDefinitionProperties ApiCenterApiDefinitionProperties(string title = null, string description = null, ApiSpecificationDetails specification = null)
-        {
-            return new ApiCenterApiDefinitionProperties(title, description, specification, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ApiSpecificationDetails"/>. </summary>
-        /// <param name="name"> Specification name. </param>
-        /// <param name="version"> Specification version. </param>
-        /// <returns> A new <see cref="Models.ApiSpecificationDetails"/> instance for mocking. </returns>
-        public static ApiSpecificationDetails ApiSpecificationDetails(string name = null, string version = null)
-        {
-            return new ApiSpecificationDetails(name, version, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ApiSpecExportResult"/>. </summary>
-        /// <param name="format"> The format of exported result. </param>
-        /// <param name="value"> The result of the export operation. </param>
-        /// <returns> A new <see cref="Models.ApiSpecExportResult"/> instance for mocking. </returns>
-        public static ApiSpecExportResult ApiSpecExportResult(ApiSpecExportResultFormat? format = null, string value = null)
-        {
-            return new ApiSpecExportResult(format, value, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ApiCenter.ApiCenterEnvironmentData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="ApiCenter.ApiCenterEnvironmentData"/> instance for mocking. </returns>
-        public static ApiCenterEnvironmentData ApiCenterEnvironmentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ApiCenterEnvironmentProperties properties = null)
-        {
-            return new ApiCenterEnvironmentData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                serializedAdditionalRawData: null);
+                default,
+                identity);
         }
     }
 }

@@ -487,6 +487,7 @@ namespace Azure.Identity
         public System.Collections.Generic.IList<string> AdditionallyAllowedTenants { get { throw null; } }
         public string ClientId { get { throw null; } set { } }
         public bool DisableInstanceDiscovery { get { throw null; } set { } }
+        public bool IsAzureProxyEnabled { get { throw null; } set { } }
         public string TenantId { get { throw null; } set { } }
         public string TokenFilePath { get { throw null; } set { } }
     }

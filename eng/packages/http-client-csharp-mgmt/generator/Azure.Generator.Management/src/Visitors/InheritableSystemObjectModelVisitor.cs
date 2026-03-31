@@ -82,6 +82,14 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
         {
             UpdateSerialization(pendingModel);
         }
+
+        // Fix serialization override return types deferred from UpdateRegularModelInheritance.
+        // Must run in VisitType (not PreVisitModel) because accessing serialization Methods
+        // triggers lazy method building which can cause infinite recursion for discriminated models.
+        if (type is ModelProvider pendingReturnTypeFix && _pendingSerializationReturnTypeFix.Remove(pendingReturnTypeFix))
+        {
+            FixSerializationReturnTypes(pendingReturnTypeFix);
+        }
         return type;
     }
 
@@ -109,6 +117,7 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
     private HashSet<ModelProvider> _updated = new();
     private HashSet<ModelProvider> _regularUpdated = new();
     private HashSet<ModelProvider> _pendingSerialization = new();
+    private HashSet<ModelProvider> _pendingSerializationReturnTypeFix = new();
     private void Update(InheritableSystemObjectModelProvider baseSystemType, ModelProvider model, bool deferSerialization = false)
     {
         // Add cache to avoid duplicated update of PreVisitModel and VisitType
@@ -176,6 +185,11 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
         // additionalBinaryDataProperties). To fix, update the constructor parameter to reference
         // the same field the serialization code will find.
         FixRawDataFieldReference(model);
+
+        // Defer serialization return type fixes to VisitType to avoid triggering lazy
+        // serialization method building during PreVisitModel (which can cause infinite
+        // recursion for discriminated models).
+        _pendingSerializationReturnTypeFix.Add(model);
 
         _regularUpdated.Add(model);
     }
@@ -250,7 +264,23 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
         model.FullConstructor.Update(signature: updatedSignature);
     }
 
-    private static readonly HashSet<string> _methodNamesToUpdate = new(){ "JsonModelCreateCore", "PersistableModelCreateCore", "PersistableModelWriteCore" };
+    private const string JsonModelCreateCoreMethodName = "JsonModelCreateCore";
+    private const string PersistableModelCreateCoreMethodName = "PersistableModelCreateCore";
+    private const string PersistableModelWriteCoreMethodName = "PersistableModelWriteCore";
+
+    private static readonly HashSet<string> _methodNamesToUpdate = new()
+    {
+        JsonModelCreateCoreMethodName,
+        PersistableModelCreateCoreMethodName,
+        PersistableModelWriteCoreMethodName
+    };
+
+    private static readonly HashSet<string> _methodNamesToFixReturnType = new()
+    {
+        JsonModelCreateCoreMethodName,
+        PersistableModelCreateCoreMethodName
+    };
+
     private static void UpdateSerialization(ModelProvider model)
     {
         var serializationProvider = model.SerializationProviders;
@@ -266,6 +296,67 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
                 }
             }
         }
+    }
+
+    /// <summary>
+    /// Fixes the return type of serialization override methods (PersistableModelCreateCore,
+    /// JsonModelCreateCore) to use the system base type (e.g., ResourceData) instead of the
+    /// immediate parent type. Without this, the framework generates overrides with
+    /// model.Type.BaseType as the return type, which can produce a covariant return type
+    /// (e.g., returning CustomPatchBase instead of ResourceData). Covariant returns are not
+    /// supported on .NET Framework.
+    /// </summary>
+    private void FixSerializationReturnTypes(ModelProvider model)
+    {
+        var systemBaseType = FindSystemBaseType(model);
+        if (systemBaseType is null)
+        {
+            return;
+        }
+
+        foreach (var provider in model.SerializationProviders)
+        {
+            if (provider is MrwSerializationTypeDefinition serializationTypeDefinition)
+            {
+                foreach (var method in serializationTypeDefinition.Methods.Where(
+                    m => _methodNamesToFixReturnType.Contains(m.Signature.Name)
+                         && m.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Override)))
+                {
+                    var currentReturnType = method.Signature.ReturnType;
+                    if (currentReturnType is not null && !currentReturnType.Equals(systemBaseType))
+                    {
+                        method.Signature.Update(returnType: systemBaseType);
+                    }
+                }
+            }
+        }
+    }
+
+    private readonly Dictionary<ModelProvider, CSharpType?> _systemBaseTypeCache = new();
+
+    /// <summary>
+    /// Walks up the model hierarchy to find the system base type (e.g., ResourceData)
+    /// that the virtual serialization methods use as their return type.
+    /// </summary>
+    private CSharpType? FindSystemBaseType(ModelProvider model)
+    {
+        if (_systemBaseTypeCache.TryGetValue(model, out var cached))
+        {
+            return cached;
+        }
+
+        var current = model.BaseModelProvider;
+        while (current is not null)
+        {
+            if (current is InheritableSystemObjectModelProvider { IsSystemBase: true } systemModel)
+            {
+                _systemBaseTypeCache[model] = systemModel.Type;
+                return systemModel.Type;
+            }
+            current = current.BaseModelProvider;
+        }
+        _systemBaseTypeCache[model] = null;
+        return null;
     }
 
     private static void UpdateFullConstructor(ModelProvider model, FieldProvider rawDataField)
