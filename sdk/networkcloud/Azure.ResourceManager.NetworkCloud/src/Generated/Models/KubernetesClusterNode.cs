@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="KubernetesClusterNode"/>. </summary>
-        internal KubernetesClusterNode()
+        public KubernetesClusterNode()
         {
             Labels = new ChangeTrackingList<KubernetesLabel>();
             NetworkAttachments = new ChangeTrackingList<NetworkAttachment>();

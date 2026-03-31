@@ -19,25 +19,25 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Initializes a new instance of <see cref="ExtendedLocation"/>. </summary>
         /// <param name="name"> The resource ID of the extended location on which the resource will be created. </param>
-        /// <param name="type"> The extended location type, for example, CustomLocation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="type"/> is null. </exception>
-        public ExtendedLocation(string name, string @type)
+        /// <param name="extendedLocationType"> The extended location type, for example, CustomLocation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="extendedLocationType"/> is null. </exception>
+        public ExtendedLocation(string name, string extendedLocationType)
         {
             Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(@type, nameof(@type));
+            Argument.AssertNotNull(extendedLocationType, nameof(extendedLocationType));
 
             Name = name;
-            Type = @type;
+            ExtendedLocationType = extendedLocationType;
         }
 
         /// <summary> Initializes a new instance of <see cref="ExtendedLocation"/>. </summary>
         /// <param name="name"> The resource ID of the extended location on which the resource will be created. </param>
-        /// <param name="type"> The extended location type, for example, CustomLocation. </param>
+        /// <param name="extendedLocationType"> The extended location type, for example, CustomLocation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExtendedLocation(string name, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExtendedLocation(string name, string extendedLocationType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
-            Type = @type;
+            ExtendedLocationType = extendedLocationType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -45,6 +45,6 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public string Name { get; set; }
 
         /// <summary> The extended location type, for example, CustomLocation. </summary>
-        public string Type { get; set; }
+        public string ExtendedLocationType { get; set; }
     }
 }

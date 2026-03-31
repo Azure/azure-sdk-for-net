@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type);
+            writer.WriteStringValue(ExtendedLocationType);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 return null;
             }
             string name = default;
-            string @type = default;
+            string extendedLocationType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    extendedLocationType = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ExtendedLocation(name, @type, additionalBinaryDataProperties);
+            return new ExtendedLocation(name, extendedLocationType, additionalBinaryDataProperties);
         }
     }
 }
