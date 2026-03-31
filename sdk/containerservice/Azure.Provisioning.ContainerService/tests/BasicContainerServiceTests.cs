@@ -78,9 +78,8 @@ public class BasicContainerServiceTests
             param location string = resourceGroup().location
 
             resource aks 'Microsoft.ContainerService/managedClusters@2026-01-01' = {
-              name: take('aks-${uniqueString(resourceGroup().id)}', 63)
-              location: location
               properties: {
+                dnsPrefix: dnsPrefix
                 agentPoolProfiles: [
                   {
                     name: 'agentpool'
@@ -91,8 +90,8 @@ public class BasicContainerServiceTests
                     mode: 'System'
                   }
                 ]
-                dnsPrefix: dnsPrefix
                 linuxProfile: {
+                  adminUsername: linuxAdminUsername
                   ssh: {
                     publicKeys: [
                       {
@@ -100,12 +99,13 @@ public class BasicContainerServiceTests
                       }
                     ]
                   }
-                  adminUsername: linuxAdminUsername
                 }
               }
+              name: take('aks-${uniqueString(resourceGroup().id)}', 63)
               identity: {
                 type: 'SystemAssigned'
               }
+              location: location
             }
             """);
     }
