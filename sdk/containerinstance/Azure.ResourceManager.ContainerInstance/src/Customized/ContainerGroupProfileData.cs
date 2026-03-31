@@ -9,7 +9,7 @@ using System.ComponentModel;
 using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.ContainerInstance.Models;
-using Azure.ResourceManager.Models;
+using Container = Azure.ResourceManager.ContainerInstance.Models.Container;
 
 namespace Azure.ResourceManager.ContainerInstance
 {
@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ContainerInstance
     /// A class representing the ContainerGroupProfile data model.
     /// A container group profile.
     /// </summary>
-    public partial class ContainerGroupProfileData : TrackedResourceData
+    public partial class ContainerGroupProfileData
     {
         /// <summary> Initializes a new instance of <see cref="ContainerGroupProfileData"/>. </summary>
         /// <param name="location"> The location. </param>
@@ -25,18 +25,14 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="osType"> The operating system type required by the containers in the container group. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="containers"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public ContainerGroupProfileData(AzureLocation location, IEnumerable<ContainerInstanceContainer> containers, ContainerInstanceOperatingSystemType osType) : base(location)
+        public ContainerGroupProfileData(AzureLocation location, IEnumerable<Container> containers, OperatingSystemTypes osType)
         {
             Argument.AssertNotNull(containers, nameof(containers));
 
-            Containers = containers.ToList();
-            ImageRegistryCredentials = new ChangeTrackingList<ContainerGroupImageRegistryCredential>();
-            OSType = osType;
-            Volumes = new ChangeTrackingList<ContainerVolume>();
-            InitContainers = new ChangeTrackingList<InitContainerDefinitionContent>();
-            Extensions = new ChangeTrackingList<DeploymentExtensionSpec>();
+            Location = location;
+            Tags = new ChangeTrackingDictionary<string, string>();
             Zones = new ChangeTrackingList<string>();
-            RegisteredRevisions = new ChangeTrackingList<int>();
+            Properties = new ContainerGroupProfileProperties(containers, osType);
         }
     }
 }

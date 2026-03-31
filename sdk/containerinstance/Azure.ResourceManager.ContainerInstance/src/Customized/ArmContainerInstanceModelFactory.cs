@@ -49,9 +49,42 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="priority"> The priority of the container group. </param>
         /// <returns> A new <see cref="ContainerInstance.ContainerGroupData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ContainerGroupData ContainerGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IEnumerable<string> zones, ManagedServiceIdentity identity, string provisioningState, IEnumerable<ContainerInstanceContainer> containers, IEnumerable<ContainerGroupImageRegistryCredential> imageRegistryCredentials, ContainerGroupRestartPolicy? restartPolicy, ContainerGroupIPAddress ipAddress, ContainerInstanceOperatingSystemType osType, IEnumerable<ContainerVolume> volumes, ContainerGroupInstanceView instanceView, ContainerGroupLogAnalytics diagnosticsLogAnalytics, IEnumerable<ContainerGroupSubnetId> subnetIds, ContainerGroupDnsConfiguration dnsConfig, ContainerGroupSku? sku, ContainerGroupEncryptionProperties encryptionProperties, IEnumerable<InitContainerDefinitionContent> initContainers, IEnumerable<DeploymentExtensionSpec> extensions, string confidentialComputeCcePolicy, ContainerGroupPriority? priority)
+        public static ContainerGroupData ContainerGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IEnumerable<string> zones, ContainerGroupIdentity identity, string provisioningState, IEnumerable<Container> containers, IEnumerable<ImageRegistryCredential> imageRegistryCredentials, ContainerGroupRestartPolicy? restartPolicy, IpAddress ipAddress, OperatingSystemTypes osType, IEnumerable<Volume> volumes, ContainerGroupPropertiesPropertiesInstanceView instanceView, LogAnalytics diagnosticsLogAnalytics, IEnumerable<ContainerGroupSubnetId> subnetIds, DnsConfiguration dnsConfig, ContainerGroupSku? sku, EncryptionProperties encryptionProperties, IEnumerable<InitContainerDefinition> initContainers, IEnumerable<DeploymentExtensionSpec> extensions, string confidentialComputeCcePolicy, ContainerGroupPriority? priority)
         {
-            return new ContainerGroupData(id, name, resourceType, systemData, tags, location, identity, provisioningState, null, containers.ToList(), imageRegistryCredentials.ToList(), restartPolicy, ipAddress, default, volumes.ToList(), instanceView, null, subnetIds.ToList(), dnsConfig, sku, encryptionProperties, initContainers.ToList(), extensions.ToList(), null, priority, null, null, null, null, zones.ToList(), null);
+            return new ContainerGroupData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                null,
+                location,
+                tags,
+                zones?.ToList(),
+                identity,
+                new ContainerGroupPropertiesProperties(
+                    provisioningState,
+                    null,
+                    containers?.ToList(),
+                    imageRegistryCredentials?.ToList(),
+                    restartPolicy,
+                    ipAddress,
+                    osType,
+                    volumes?.ToList(),
+                    instanceView,
+                    new ContainerGroupDiagnostics(diagnosticsLogAnalytics, null),
+                    subnetIds?.ToList(),
+                    dnsConfig,
+                    sku,
+                    encryptionProperties,
+                    initContainers?.ToList(),
+                    extensions?.ToList(),
+                    new ConfidentialComputeProperties(confidentialComputeCcePolicy, null),
+                    priority,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null));
         }
     }
 }

@@ -7,72 +7,56 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Models;
+using Azure.ResourceManager.ContainerInstance;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
     /// <summary> The Resource model definition. </summary>
-    public partial class ContainerGroupPatch : TrackedResourceData
+    public partial class ContainerGroupPatch
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerGroupPatch"/>. </summary>
-        /// <param name="location"> The location. </param>
-        public ContainerGroupPatch(AzureLocation location) : base(location)
+        public ContainerGroupPatch()
         {
+            Tags = new ChangeTrackingDictionary<string, string>();
             Zones = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerGroupPatch"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <param name="id"> The resource id. </param>
+        /// <param name="name"> The resource name. </param>
+        /// <param name="type"> The resource type. </param>
+        /// <param name="location"> The resource location. </param>
+        /// <param name="tags"> The resource tags. </param>
         /// <param name="zones"> The zones for the container group. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerGroupPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IList<string> zones, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerGroupPatch(string id, string name, string @type, string location, IDictionary<string, string> tags, IList<string> zones, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            Id = id;
+            Name = name;
+            Type = @type;
+            Location = location;
+            Tags = tags;
             Zones = zones;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContainerGroupPatch"/> for deserialization. </summary>
-        internal ContainerGroupPatch()
-        {
-        }
+        /// <summary> The resource id. </summary>
+        public string Id { get; }
+
+        /// <summary> The resource name. </summary>
+        public string Name { get; }
+
+        /// <summary> The resource type. </summary>
+        public string Type { get; }
+
+        /// <summary> The resource location. </summary>
+        public string Location { get; set; }
+
+        /// <summary> The resource tags. </summary>
+        public IDictionary<string, string> Tags { get; }
 
         /// <summary> The zones for the container group. </summary>
         public IList<string> Zones { get; }

@@ -9,6 +9,7 @@ using System.ComponentModel;
 using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.ContainerInstance.Models;
+using Container = Azure.ResourceManager.ContainerInstance.Models.Container;
 
 namespace Azure.ResourceManager.ContainerInstance
 {
@@ -19,18 +20,14 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="containers"> The containers within the container group. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="containers"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public ContainerGroupData(AzureLocation location, IEnumerable<ContainerInstanceContainer> containers) : base(location)
+        public ContainerGroupData(AzureLocation location, IEnumerable<Container> containers)
         {
             Argument.AssertNotNull(containers, nameof(containers));
 
-            Containers = containers.ToList();
-            ImageRegistryCredentials = new ChangeTrackingList<ContainerGroupImageRegistryCredential>();
-            Volumes = new ChangeTrackingList<ContainerVolume>();
-            SubnetIds = new ChangeTrackingList<ContainerGroupSubnetId>();
-            InitContainers = new ChangeTrackingList<InitContainerDefinitionContent>();
-            Extensions = new ChangeTrackingList<DeploymentExtensionSpec>();
+            Location = location;
+            Tags = new ChangeTrackingDictionary<string, string>();
             Zones = new ChangeTrackingList<string>();
-            SecretReferences = new ChangeTrackingList<ContainerGroupSecretReference>();
+            Properties = new ContainerGroupPropertiesProperties(containers);
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerGroupData"/>. </summary>
@@ -39,30 +36,26 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="osType"> The operating system type required by the containers in the container group. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="containers"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public ContainerGroupData(AzureLocation location, IEnumerable<ContainerInstanceContainer> containers, ContainerInstanceOperatingSystemType osType) : base(location)
+        public ContainerGroupData(AzureLocation location, IEnumerable<Container> containers, OperatingSystemTypes osType)
         {
             Argument.AssertNotNull(containers, nameof(containers));
 
-            Containers = containers.ToList();
-            ImageRegistryCredentials = new ChangeTrackingList<ContainerGroupImageRegistryCredential>();
-            OSType = osType;
-            Volumes = new ChangeTrackingList<ContainerVolume>();
-            SubnetIds = new ChangeTrackingList<ContainerGroupSubnetId>();
-            InitContainers = new ChangeTrackingList<InitContainerDefinitionContent>();
-            Extensions = new ChangeTrackingList<DeploymentExtensionSpec>();
+            Location = location;
+            Tags = new ChangeTrackingDictionary<string, string>();
             Zones = new ChangeTrackingList<string>();
-            SecretReferences = new ChangeTrackingList<ContainerGroupSecretReference>();
+            Properties = new ContainerGroupPropertiesProperties(containers);
+            OsType = osType;
         }
 
         /// <summary> The operating system type required by the containers in the container group. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public ContainerInstanceOperatingSystemType OSType
+        public OperatingSystemTypes OSType
         {
-            get => ContainerGroupOSType.ToString();
-            set => ContainerGroupOSType = value.ToString();
+            get => OsType.ToString();
+            set => OsType = value.ToString();
         }
 
         /// <summary> The provisioning state of the container group. This only appears in the response. </summary>
-        public string ProvisioningState { get => ContainerGroupProvisioningState.ToString(); }
+        public string ProvisioningState { get => Properties?.ProvisioningState; }
     }
 }

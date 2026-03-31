@@ -7,6 +7,17 @@
     <Description>Microsoft Azure Resource Manager client SDK for Azure resource provider Microsoft.ContainerInstance.</Description>
     <PackageTags>azure;management;arm;resource manager;containerinstance</PackageTags>
     <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
-    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
+  <ItemGroup>
+    <!-- Exclude generated files with duplicate method definitions (generator bug: GetCGProfileResource duplicated) -->
+    <Compile Remove="Generated\Extensions\ContainerInstanceExtensions.cs" />
+    <Compile Remove="Generated\Extensions\MockableContainerInstanceArmClient.cs" />
+    <!-- Exclude generated files where member name matches enclosing type (CS0542 generator bug) -->
+    <Compile Remove="Generated\Models\Capabilities.cs" />
+    <Compile Remove="Generated\Models\Capabilities.Serialization.cs" />
+    <Compile Remove="Generated\Models\Port.cs" />
+    <Compile Remove="Generated\Models\Port.Serialization.cs" />
+    <!-- Exclude generated file with mismatched enumerator types (CS0266 generator bug) -->
+    <Compile Remove="Generated\ContainerGroupCollection.cs" />
+  </ItemGroup>
 </Project>

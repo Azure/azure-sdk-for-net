@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ContainerInstance;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
@@ -14,71 +15,112 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     public readonly partial struct ContainerGroupProvisioningState : IEquatable<ContainerGroupProvisioningState>
     {
         private readonly string _value;
+        /// <summary> NotSpecified. </summary>
+        private const string NotSpecifiedValue = "NotSpecified";
+        /// <summary> Accepted. </summary>
+        private const string AcceptedValue = "Accepted";
+        /// <summary> Pending. </summary>
+        private const string PendingValue = "Pending";
+        /// <summary> Updating. </summary>
+        private const string UpdatingValue = "Updating";
+        /// <summary> Creating. </summary>
+        private const string CreatingValue = "Creating";
+        /// <summary> Repairing. </summary>
+        private const string RepairingValue = "Repairing";
+        /// <summary> Unhealthy. </summary>
+        private const string UnhealthyValue = "Unhealthy";
+        /// <summary> Failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> Canceled. </summary>
+        private const string CanceledValue = "Canceled";
+        /// <summary> Succeeded. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> Deleting. </summary>
+        private const string DeletingValue = "Deleting";
+        /// <summary> NotAccessible. </summary>
+        private const string NotAccessibleValue = "NotAccessible";
+        /// <summary> PreProvisioned. </summary>
+        private const string PreProvisionedValue = "PreProvisioned";
 
         /// <summary> Initializes a new instance of <see cref="ContainerGroupProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ContainerGroupProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NotSpecifiedValue = "NotSpecified";
-        private const string AcceptedValue = "Accepted";
-        private const string PendingValue = "Pending";
-        private const string UpdatingValue = "Updating";
-        private const string CreatingValue = "Creating";
-        private const string RepairingValue = "Repairing";
-        private const string UnhealthyValue = "Unhealthy";
-        private const string FailedValue = "Failed";
-        private const string CanceledValue = "Canceled";
-        private const string SucceededValue = "Succeeded";
-        private const string DeletingValue = "Deleting";
-        private const string NotAccessibleValue = "NotAccessible";
-        private const string PreProvisionedValue = "PreProvisioned";
+            _value = value;
+        }
 
         /// <summary> NotSpecified. </summary>
         public static ContainerGroupProvisioningState NotSpecified { get; } = new ContainerGroupProvisioningState(NotSpecifiedValue);
+
         /// <summary> Accepted. </summary>
         public static ContainerGroupProvisioningState Accepted { get; } = new ContainerGroupProvisioningState(AcceptedValue);
+
         /// <summary> Pending. </summary>
         public static ContainerGroupProvisioningState Pending { get; } = new ContainerGroupProvisioningState(PendingValue);
+
         /// <summary> Updating. </summary>
         public static ContainerGroupProvisioningState Updating { get; } = new ContainerGroupProvisioningState(UpdatingValue);
+
         /// <summary> Creating. </summary>
         public static ContainerGroupProvisioningState Creating { get; } = new ContainerGroupProvisioningState(CreatingValue);
+
         /// <summary> Repairing. </summary>
         public static ContainerGroupProvisioningState Repairing { get; } = new ContainerGroupProvisioningState(RepairingValue);
+
         /// <summary> Unhealthy. </summary>
         public static ContainerGroupProvisioningState Unhealthy { get; } = new ContainerGroupProvisioningState(UnhealthyValue);
+
         /// <summary> Failed. </summary>
         public static ContainerGroupProvisioningState Failed { get; } = new ContainerGroupProvisioningState(FailedValue);
+
         /// <summary> Canceled. </summary>
         public static ContainerGroupProvisioningState Canceled { get; } = new ContainerGroupProvisioningState(CanceledValue);
+
         /// <summary> Succeeded. </summary>
         public static ContainerGroupProvisioningState Succeeded { get; } = new ContainerGroupProvisioningState(SucceededValue);
+
         /// <summary> Deleting. </summary>
         public static ContainerGroupProvisioningState Deleting { get; } = new ContainerGroupProvisioningState(DeletingValue);
+
         /// <summary> NotAccessible. </summary>
         public static ContainerGroupProvisioningState NotAccessible { get; } = new ContainerGroupProvisioningState(NotAccessibleValue);
+
         /// <summary> PreProvisioned. </summary>
         public static ContainerGroupProvisioningState PreProvisioned { get; } = new ContainerGroupProvisioningState(PreProvisionedValue);
+
         /// <summary> Determines if two <see cref="ContainerGroupProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ContainerGroupProvisioningState left, ContainerGroupProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ContainerGroupProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ContainerGroupProvisioningState left, ContainerGroupProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerGroupProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ContainerGroupProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ContainerGroupProvisioningState(string value) => new ContainerGroupProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ContainerGroupProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ContainerGroupProvisioningState?(string value) => value == null ? null : new ContainerGroupProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ContainerGroupProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ContainerGroupProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
