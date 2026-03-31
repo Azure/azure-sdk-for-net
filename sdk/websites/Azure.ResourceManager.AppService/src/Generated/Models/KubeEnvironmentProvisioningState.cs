@@ -7,61 +7,28 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Provisioning state of the Kubernetes Environment.
-    /// Serialized Name: KubeEnvironmentProvisioningState
-    /// </summary>
+    /// <summary> Provisioning state of the Kubernetes Environment. </summary>
     public enum KubeEnvironmentProvisioningState
     {
-        /// <summary>
-        /// Succeeded
-        /// Serialized Name: KubeEnvironmentProvisioningState.Succeeded
-        /// </summary>
+        /// <summary> Succeeded. </summary>
         Succeeded,
-        /// <summary>
-        /// Failed
-        /// Serialized Name: KubeEnvironmentProvisioningState.Failed
-        /// </summary>
+        /// <summary> Failed. </summary>
         Failed,
-        /// <summary>
-        /// Canceled
-        /// Serialized Name: KubeEnvironmentProvisioningState.Canceled
-        /// </summary>
+        /// <summary> Canceled. </summary>
         Canceled,
-        /// <summary>
-        /// Waiting
-        /// Serialized Name: KubeEnvironmentProvisioningState.Waiting
-        /// </summary>
+        /// <summary> Waiting. </summary>
         Waiting,
-        /// <summary>
-        /// InitializationInProgress
-        /// Serialized Name: KubeEnvironmentProvisioningState.InitializationInProgress
-        /// </summary>
+        /// <summary> InitializationInProgress. </summary>
         InitializationInProgress,
-        /// <summary>
-        /// InfrastructureSetupInProgress
-        /// Serialized Name: KubeEnvironmentProvisioningState.InfrastructureSetupInProgress
-        /// </summary>
+        /// <summary> InfrastructureSetupInProgress. </summary>
         InfrastructureSetupInProgress,
-        /// <summary>
-        /// InfrastructureSetupComplete
-        /// Serialized Name: KubeEnvironmentProvisioningState.InfrastructureSetupComplete
-        /// </summary>
+        /// <summary> InfrastructureSetupComplete. </summary>
         InfrastructureSetupComplete,
-        /// <summary>
-        /// ScheduledForDelete
-        /// Serialized Name: KubeEnvironmentProvisioningState.ScheduledForDelete
-        /// </summary>
+        /// <summary> ScheduledForDelete. </summary>
         ScheduledForDelete,
-        /// <summary>
-        /// UpgradeRequested
-        /// Serialized Name: KubeEnvironmentProvisioningState.UpgradeRequested
-        /// </summary>
+        /// <summary> UpgradeRequested. </summary>
         UpgradeRequested,
-        /// <summary>
-        /// UpgradeFailed
-        /// Serialized Name: KubeEnvironmentProvisioningState.UpgradeFailed
-        /// </summary>
+        /// <summary> UpgradeFailed. </summary>
         UpgradeFailed
     }
 }

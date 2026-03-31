@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The access control configuration policy.
-    /// Serialized Name: FlowAccessControlConfigurationPolicy
-    /// </summary>
+    /// <summary> The access control configuration policy. </summary>
     public partial class FlowAccessControlConfigurationPolicy
     {
         /// <summary>
@@ -55,14 +52,8 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="FlowAccessControlConfigurationPolicy"/>. </summary>
-        /// <param name="allowedCallerIPAddresses">
-        /// The allowed caller IP address ranges.
-        /// Serialized Name: FlowAccessControlConfigurationPolicy.allowedCallerIpAddresses
-        /// </param>
-        /// <param name="openAuthenticationPolicies">
-        /// The authentication policies for workflow.
-        /// Serialized Name: FlowAccessControlConfigurationPolicy.openAuthenticationPolicies
-        /// </param>
+        /// <param name="allowedCallerIPAddresses"> The allowed caller IP address ranges. </param>
+        /// <param name="openAuthenticationPolicies"> The authentication policies for workflow. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal FlowAccessControlConfigurationPolicy(IList<WebAppIPAddressRange> allowedCallerIPAddresses, OpenAuthenticationAccessPolicies openAuthenticationPolicies, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -71,21 +62,12 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The allowed caller IP address ranges.
-        /// Serialized Name: FlowAccessControlConfigurationPolicy.allowedCallerIpAddresses
-        /// </summary>
+        /// <summary> The allowed caller IP address ranges. </summary>
         [WirePath("allowedCallerIpAddresses")]
         public IList<WebAppIPAddressRange> AllowedCallerIPAddresses { get; }
-        /// <summary>
-        /// The authentication policies for workflow.
-        /// Serialized Name: FlowAccessControlConfigurationPolicy.openAuthenticationPolicies
-        /// </summary>
+        /// <summary> The authentication policies for workflow. </summary>
         internal OpenAuthenticationAccessPolicies OpenAuthenticationPolicies { get; set; }
-        /// <summary>
-        /// Open authentication policies.
-        /// Serialized Name: OpenAuthenticationAccessPolicies.policies
-        /// </summary>
+        /// <summary> Open authentication policies. </summary>
         [WirePath("openAuthenticationPolicies.policies")]
         public IDictionary<string, OpenAuthenticationAccessPolicy> OpenAuthenticationPolicyList
         {

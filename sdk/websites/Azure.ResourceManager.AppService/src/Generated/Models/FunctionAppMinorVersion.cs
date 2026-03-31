@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Function App stack minor version.
-    /// Serialized Name: FunctionAppMinorVersion
-    /// </summary>
+    /// <summary> Function App stack minor version. </summary>
     public partial class FunctionAppMinorVersion
     {
         /// <summary>
@@ -54,18 +51,9 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="FunctionAppMinorVersion"/>. </summary>
-        /// <param name="displayText">
-        /// Function App stack (display only).
-        /// Serialized Name: FunctionAppMinorVersion.displayText
-        /// </param>
-        /// <param name="value">
-        /// Function App stack name.
-        /// Serialized Name: FunctionAppMinorVersion.value
-        /// </param>
-        /// <param name="stackSettings">
-        /// Settings associated with the minor version.
-        /// Serialized Name: FunctionAppMinorVersion.stackSettings
-        /// </param>
+        /// <param name="displayText"> Function App stack (display only). </param>
+        /// <param name="value"> Function App stack name. </param>
+        /// <param name="stackSettings"> Settings associated with the minor version. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal FunctionAppMinorVersion(string displayText, string value, FunctionAppRuntimes stackSettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -75,22 +63,13 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Function App stack (display only).
-        /// Serialized Name: FunctionAppMinorVersion.displayText
-        /// </summary>
+        /// <summary> Function App stack (display only). </summary>
         [WirePath("displayText")]
         public string DisplayText { get; }
-        /// <summary>
-        /// Function App stack name.
-        /// Serialized Name: FunctionAppMinorVersion.value
-        /// </summary>
+        /// <summary> Function App stack name. </summary>
         [WirePath("value")]
         public string Value { get; }
-        /// <summary>
-        /// Settings associated with the minor version.
-        /// Serialized Name: FunctionAppMinorVersion.stackSettings
-        /// </summary>
+        /// <summary> Settings associated with the minor version. </summary>
         [WirePath("stackSettings")]
         public FunctionAppRuntimes StackSettings { get; }
     }

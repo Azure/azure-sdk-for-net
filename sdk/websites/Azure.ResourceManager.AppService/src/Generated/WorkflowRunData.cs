@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.AppService
     /// <summary>
     /// A class representing the WorkflowRun data model.
     /// The workflow run.
-    /// Serialized Name: WorkflowRun
     /// </summary>
     public partial class WorkflowRunData : ResourceData
     {
@@ -63,54 +62,18 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="waitEndOn">
-        /// Gets the wait end time.
-        /// Serialized Name: WorkflowRun.properties.waitEndTime
-        /// </param>
-        /// <param name="startOn">
-        /// Gets the start time.
-        /// Serialized Name: WorkflowRun.properties.startTime
-        /// </param>
-        /// <param name="endOn">
-        /// Gets the end time.
-        /// Serialized Name: WorkflowRun.properties.endTime
-        /// </param>
-        /// <param name="status">
-        /// Gets the status.
-        /// Serialized Name: WorkflowRun.properties.status
-        /// </param>
-        /// <param name="code">
-        /// Gets the code.
-        /// Serialized Name: WorkflowRun.properties.code
-        /// </param>
-        /// <param name="error">
-        /// Gets the error.
-        /// Serialized Name: WorkflowRun.properties.error
-        /// </param>
-        /// <param name="correlationId">
-        /// Gets the correlation id.
-        /// Serialized Name: WorkflowRun.properties.correlationId
-        /// </param>
-        /// <param name="correlation">
-        /// The run correlation.
-        /// Serialized Name: WorkflowRun.properties.correlation
-        /// </param>
-        /// <param name="workflow">
-        /// Gets the reference to workflow version.
-        /// Serialized Name: WorkflowRun.properties.workflow
-        /// </param>
-        /// <param name="trigger">
-        /// Gets the fired trigger.
-        /// Serialized Name: WorkflowRun.properties.trigger
-        /// </param>
-        /// <param name="outputs">
-        /// Gets the outputs.
-        /// Serialized Name: WorkflowRun.properties.outputs
-        /// </param>
-        /// <param name="response">
-        /// Gets the response of the flow run.
-        /// Serialized Name: WorkflowRun.properties.response
-        /// </param>
+        /// <param name="waitEndOn"> Gets the wait end time. </param>
+        /// <param name="startOn"> Gets the start time. </param>
+        /// <param name="endOn"> Gets the end time. </param>
+        /// <param name="status"> Gets the status. </param>
+        /// <param name="code"> Gets the code. </param>
+        /// <param name="error"> Gets the error. </param>
+        /// <param name="correlationId"> Gets the correlation id. </param>
+        /// <param name="correlation"> The run correlation. </param>
+        /// <param name="workflow"> Gets the reference to workflow version. </param>
+        /// <param name="trigger"> Gets the fired trigger. </param>
+        /// <param name="outputs"> Gets the outputs. </param>
+        /// <param name="response"> Gets the response of the flow run. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal WorkflowRunData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? waitEndOn, DateTimeOffset? startOn, DateTimeOffset? endOn, WorkflowStatus? status, string code, BinaryData error, string correlationId, Correlation correlation, WorkflowResourceReference workflow, WorkflowRunTrigger trigger, IReadOnlyDictionary<string, WorkflowOutputContent> outputs, WorkflowRunTrigger response, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -129,39 +92,23 @@ namespace Azure.ResourceManager.AppService
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Gets the wait end time.
-        /// Serialized Name: WorkflowRun.properties.waitEndTime
-        /// </summary>
+        /// <summary> Gets the wait end time. </summary>
         [WirePath("properties.waitEndTime")]
         public DateTimeOffset? WaitEndOn { get; }
-        /// <summary>
-        /// Gets the start time.
-        /// Serialized Name: WorkflowRun.properties.startTime
-        /// </summary>
+        /// <summary> Gets the start time. </summary>
         [WirePath("properties.startTime")]
         public DateTimeOffset? StartOn { get; }
-        /// <summary>
-        /// Gets the end time.
-        /// Serialized Name: WorkflowRun.properties.endTime
-        /// </summary>
+        /// <summary> Gets the end time. </summary>
         [WirePath("properties.endTime")]
         public DateTimeOffset? EndOn { get; }
-        /// <summary>
-        /// Gets the status.
-        /// Serialized Name: WorkflowRun.properties.status
-        /// </summary>
+        /// <summary> Gets the status. </summary>
         [WirePath("properties.status")]
         public WorkflowStatus? Status { get; }
-        /// <summary>
-        /// Gets the code.
-        /// Serialized Name: WorkflowRun.properties.code
-        /// </summary>
+        /// <summary> Gets the code. </summary>
         [WirePath("properties.code")]
         public string Code { get; }
         /// <summary>
         /// Gets the error.
-        /// Serialized Name: WorkflowRun.properties.error
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -192,49 +139,28 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         [WirePath("properties.error")]
         public BinaryData Error { get; }
-        /// <summary>
-        /// Gets the correlation id.
-        /// Serialized Name: WorkflowRun.properties.correlationId
-        /// </summary>
+        /// <summary> Gets the correlation id. </summary>
         [WirePath("properties.correlationId")]
         public string CorrelationId { get; }
-        /// <summary>
-        /// The run correlation.
-        /// Serialized Name: WorkflowRun.properties.correlation
-        /// </summary>
+        /// <summary> The run correlation. </summary>
         internal Correlation Correlation { get; }
-        /// <summary>
-        /// The client tracking id.
-        /// Serialized Name: Correlation.clientTrackingId
-        /// </summary>
+        /// <summary> The client tracking id. </summary>
         [WirePath("properties.correlation.clientTrackingId")]
         public string CorrelationClientTrackingId
         {
             get => Correlation?.ClientTrackingId;
         }
 
-        /// <summary>
-        /// Gets the reference to workflow version.
-        /// Serialized Name: WorkflowRun.properties.workflow
-        /// </summary>
+        /// <summary> Gets the reference to workflow version. </summary>
         [WirePath("properties.workflow")]
         public WorkflowResourceReference Workflow { get; }
-        /// <summary>
-        /// Gets the fired trigger.
-        /// Serialized Name: WorkflowRun.properties.trigger
-        /// </summary>
+        /// <summary> Gets the fired trigger. </summary>
         [WirePath("properties.trigger")]
         public WorkflowRunTrigger Trigger { get; }
-        /// <summary>
-        /// Gets the outputs.
-        /// Serialized Name: WorkflowRun.properties.outputs
-        /// </summary>
+        /// <summary> Gets the outputs. </summary>
         [WirePath("properties.outputs")]
         public IReadOnlyDictionary<string, WorkflowOutputContent> Outputs { get; }
-        /// <summary>
-        /// Gets the response of the flow run.
-        /// Serialized Name: WorkflowRun.properties.response
-        /// </summary>
+        /// <summary> Gets the response of the flow run. </summary>
         [WirePath("properties.response")]
         public WorkflowRunTrigger Response { get; }
     }

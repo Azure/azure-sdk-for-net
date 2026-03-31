@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The LogAnalyticsConfiguration.
-    /// Serialized Name: LogAnalyticsConfiguration
-    /// </summary>
+    /// <summary> The LogAnalyticsConfiguration. </summary>
     public partial class LogAnalyticsConfiguration
     {
         /// <summary>
@@ -54,8 +51,8 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="LogAnalyticsConfiguration"/>. </summary>
-        /// <param name="customerId"> Serialized Name: LogAnalyticsConfiguration.customerId. </param>
-        /// <param name="sharedKey"> Serialized Name: LogAnalyticsConfiguration.sharedKey. </param>
+        /// <param name="customerId"></param>
+        /// <param name="sharedKey"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal LogAnalyticsConfiguration(string customerId, string sharedKey, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -64,10 +61,10 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Serialized Name: LogAnalyticsConfiguration.customerId. </summary>
+        /// <summary> Gets or sets the customer id. </summary>
         [WirePath("customerId")]
         public string CustomerId { get; set; }
-        /// <summary> Serialized Name: LogAnalyticsConfiguration.sharedKey. </summary>
+        /// <summary> Gets or sets the shared key. </summary>
         [WirePath("sharedKey")]
         public string SharedKey { get; set; }
     }

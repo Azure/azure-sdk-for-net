@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Web App stack minor version.
-    /// Serialized Name: WebAppMinorVersion
-    /// </summary>
+    /// <summary> Web App stack minor version. </summary>
     public partial class WebAppMinorVersion
     {
         /// <summary>
@@ -54,18 +51,9 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="WebAppMinorVersion"/>. </summary>
-        /// <param name="displayText">
-        /// Web App stack minor version (display only).
-        /// Serialized Name: WebAppMinorVersion.displayText
-        /// </param>
-        /// <param name="value">
-        /// Web App stack major version name.
-        /// Serialized Name: WebAppMinorVersion.value
-        /// </param>
-        /// <param name="stackSettings">
-        /// Settings associated with the minor version.
-        /// Serialized Name: WebAppMinorVersion.stackSettings
-        /// </param>
+        /// <param name="displayText"> Web App stack minor version (display only). </param>
+        /// <param name="value"> Web App stack major version name. </param>
+        /// <param name="stackSettings"> Settings associated with the minor version. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal WebAppMinorVersion(string displayText, string value, WebAppRuntimes stackSettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -75,22 +63,13 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Web App stack minor version (display only).
-        /// Serialized Name: WebAppMinorVersion.displayText
-        /// </summary>
+        /// <summary> Web App stack minor version (display only). </summary>
         [WirePath("displayText")]
         public string DisplayText { get; }
-        /// <summary>
-        /// Web App stack major version name.
-        /// Serialized Name: WebAppMinorVersion.value
-        /// </summary>
+        /// <summary> Web App stack major version name. </summary>
         [WirePath("value")]
         public string Value { get; }
-        /// <summary>
-        /// Settings associated with the minor version.
-        /// Serialized Name: WebAppMinorVersion.stackSettings
-        /// </summary>
+        /// <summary> Settings associated with the minor version. </summary>
         [WirePath("stackSettings")]
         public WebAppRuntimes StackSettings { get; }
     }

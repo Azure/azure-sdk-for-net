@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.AppService
     /// <summary>
     /// A class representing the MSDeployStatus data model.
     /// MSDeploy ARM response
-    /// Serialized Name: MSDeployStatus
     /// </summary>
     public partial class MSDeployStatusData : ResourceData
     {
@@ -62,30 +61,12 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="deployer">
-        /// Username of deployer
-        /// Serialized Name: MSDeployStatus.properties.deployer
-        /// </param>
-        /// <param name="provisioningState">
-        /// Provisioning state
-        /// Serialized Name: MSDeployStatus.properties.provisioningState
-        /// </param>
-        /// <param name="startOn">
-        /// Start time of deploy operation
-        /// Serialized Name: MSDeployStatus.properties.startTime
-        /// </param>
-        /// <param name="endOn">
-        /// End time of deploy operation
-        /// Serialized Name: MSDeployStatus.properties.endTime
-        /// </param>
-        /// <param name="isComplete">
-        /// Whether the deployment operation has completed
-        /// Serialized Name: MSDeployStatus.properties.complete
-        /// </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </param>
+        /// <param name="deployer"> Username of deployer. </param>
+        /// <param name="provisioningState"> Provisioning state. </param>
+        /// <param name="startOn"> Start time of deploy operation. </param>
+        /// <param name="endOn"> End time of deploy operation. </param>
+        /// <param name="isComplete"> Whether the deployment operation has completed. </param>
+        /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal MSDeployStatusData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string deployer, MSDeployProvisioningState? provisioningState, DateTimeOffset? startOn, DateTimeOffset? endOn, bool? isComplete, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -98,40 +79,22 @@ namespace Azure.ResourceManager.AppService
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Username of deployer
-        /// Serialized Name: MSDeployStatus.properties.deployer
-        /// </summary>
+        /// <summary> Username of deployer. </summary>
         [WirePath("properties.deployer")]
         public string Deployer { get; }
-        /// <summary>
-        /// Provisioning state
-        /// Serialized Name: MSDeployStatus.properties.provisioningState
-        /// </summary>
+        /// <summary> Provisioning state. </summary>
         [WirePath("properties.provisioningState")]
         public MSDeployProvisioningState? ProvisioningState { get; }
-        /// <summary>
-        /// Start time of deploy operation
-        /// Serialized Name: MSDeployStatus.properties.startTime
-        /// </summary>
+        /// <summary> Start time of deploy operation. </summary>
         [WirePath("properties.startTime")]
         public DateTimeOffset? StartOn { get; }
-        /// <summary>
-        /// End time of deploy operation
-        /// Serialized Name: MSDeployStatus.properties.endTime
-        /// </summary>
+        /// <summary> End time of deploy operation. </summary>
         [WirePath("properties.endTime")]
         public DateTimeOffset? EndOn { get; }
-        /// <summary>
-        /// Whether the deployment operation has completed
-        /// Serialized Name: MSDeployStatus.properties.complete
-        /// </summary>
+        /// <summary> Whether the deployment operation has completed. </summary>
         [WirePath("properties.complete")]
         public bool? IsComplete { get; }
-        /// <summary>
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </summary>
+        /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
     }

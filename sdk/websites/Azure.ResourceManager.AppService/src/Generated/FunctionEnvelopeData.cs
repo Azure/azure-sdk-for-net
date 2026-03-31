@@ -15,7 +15,6 @@ namespace Azure.ResourceManager.AppService
     /// <summary>
     /// A class representing the FunctionEnvelope data model.
     /// Function information.
-    /// Serialized Name: FunctionEnvelope
     /// </summary>
     public partial class FunctionEnvelopeData : ResourceData
     {
@@ -62,62 +61,20 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="functionAppId">
-        /// Function App ID.
-        /// Serialized Name: FunctionEnvelope.properties.function_app_id
-        /// </param>
-        /// <param name="scriptRootPathHref">
-        /// Script root path URI.
-        /// Serialized Name: FunctionEnvelope.properties.script_root_path_href
-        /// </param>
-        /// <param name="scriptHref">
-        /// Script URI.
-        /// Serialized Name: FunctionEnvelope.properties.script_href
-        /// </param>
-        /// <param name="configHref">
-        /// Config URI.
-        /// Serialized Name: FunctionEnvelope.properties.config_href
-        /// </param>
-        /// <param name="testDataHref">
-        /// Test data URI.
-        /// Serialized Name: FunctionEnvelope.properties.test_data_href
-        /// </param>
-        /// <param name="secretsFileHref">
-        /// Secrets file URI.
-        /// Serialized Name: FunctionEnvelope.properties.secrets_file_href
-        /// </param>
-        /// <param name="href">
-        /// Function URI.
-        /// Serialized Name: FunctionEnvelope.properties.href
-        /// </param>
-        /// <param name="config">
-        /// Config information.
-        /// Serialized Name: FunctionEnvelope.properties.config
-        /// </param>
-        /// <param name="files">
-        /// File list.
-        /// Serialized Name: FunctionEnvelope.properties.files
-        /// </param>
-        /// <param name="testData">
-        /// Test data used when testing via the Azure Portal.
-        /// Serialized Name: FunctionEnvelope.properties.test_data
-        /// </param>
-        /// <param name="invokeUrlTemplate">
-        /// The invocation URL
-        /// Serialized Name: FunctionEnvelope.properties.invoke_url_template
-        /// </param>
-        /// <param name="language">
-        /// The function language
-        /// Serialized Name: FunctionEnvelope.properties.language
-        /// </param>
-        /// <param name="isDisabled">
-        /// Gets or sets a value indicating whether the function is disabled
-        /// Serialized Name: FunctionEnvelope.properties.isDisabled
-        /// </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </param>
+        /// <param name="functionAppId"> Function App ID. </param>
+        /// <param name="scriptRootPathHref"> Script root path URI. </param>
+        /// <param name="scriptHref"> Script URI. </param>
+        /// <param name="configHref"> Config URI. </param>
+        /// <param name="testDataHref"> Test data URI. </param>
+        /// <param name="secretsFileHref"> Secrets file URI. </param>
+        /// <param name="href"> Function URI. </param>
+        /// <param name="config"> Config information. </param>
+        /// <param name="files"> File list. </param>
+        /// <param name="testData"> Test data used when testing via the Azure Portal. </param>
+        /// <param name="invokeUrlTemplate"> The invocation URL. </param>
+        /// <param name="language"> The function language. </param>
+        /// <param name="isDisabled"> Gets or sets a value indicating whether the function is disabled. </param>
+        /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal FunctionEnvelopeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string functionAppId, string scriptRootPathHref, string scriptHref, string configHref, string testDataHref, string secretsFileHref, string href, BinaryData config, IDictionary<string, string> files, string testData, string invokeUrlTemplate, string language, bool? isDisabled, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -138,51 +95,29 @@ namespace Azure.ResourceManager.AppService
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Function App ID.
-        /// Serialized Name: FunctionEnvelope.properties.function_app_id
-        /// </summary>
+        /// <summary> Function App ID. </summary>
         [WirePath("properties.function_app_id")]
         public string FunctionAppId { get; set; }
-        /// <summary>
-        /// Script root path URI.
-        /// Serialized Name: FunctionEnvelope.properties.script_root_path_href
-        /// </summary>
+        /// <summary> Script root path URI. </summary>
         [WirePath("properties.script_root_path_href")]
         public string ScriptRootPathHref { get; set; }
-        /// <summary>
-        /// Script URI.
-        /// Serialized Name: FunctionEnvelope.properties.script_href
-        /// </summary>
+        /// <summary> Script URI. </summary>
         [WirePath("properties.script_href")]
         public string ScriptHref { get; set; }
-        /// <summary>
-        /// Config URI.
-        /// Serialized Name: FunctionEnvelope.properties.config_href
-        /// </summary>
+        /// <summary> Config URI. </summary>
         [WirePath("properties.config_href")]
         public string ConfigHref { get; set; }
-        /// <summary>
-        /// Test data URI.
-        /// Serialized Name: FunctionEnvelope.properties.test_data_href
-        /// </summary>
+        /// <summary> Test data URI. </summary>
         [WirePath("properties.test_data_href")]
         public string TestDataHref { get; set; }
-        /// <summary>
-        /// Secrets file URI.
-        /// Serialized Name: FunctionEnvelope.properties.secrets_file_href
-        /// </summary>
+        /// <summary> Secrets file URI. </summary>
         [WirePath("properties.secrets_file_href")]
         public string SecretsFileHref { get; set; }
-        /// <summary>
-        /// Function URI.
-        /// Serialized Name: FunctionEnvelope.properties.href
-        /// </summary>
+        /// <summary> Function URI. </summary>
         [WirePath("properties.href")]
         public string Href { get; set; }
         /// <summary>
         /// Config information.
-        /// Serialized Name: FunctionEnvelope.properties.config
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -213,40 +148,22 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         [WirePath("properties.config")]
         public BinaryData Config { get; set; }
-        /// <summary>
-        /// File list.
-        /// Serialized Name: FunctionEnvelope.properties.files
-        /// </summary>
+        /// <summary> File list. </summary>
         [WirePath("properties.files")]
         public IDictionary<string, string> Files { get; }
-        /// <summary>
-        /// Test data used when testing via the Azure Portal.
-        /// Serialized Name: FunctionEnvelope.properties.test_data
-        /// </summary>
+        /// <summary> Test data used when testing via the Azure Portal. </summary>
         [WirePath("properties.test_data")]
         public string TestData { get; set; }
-        /// <summary>
-        /// The invocation URL
-        /// Serialized Name: FunctionEnvelope.properties.invoke_url_template
-        /// </summary>
+        /// <summary> The invocation URL. </summary>
         [WirePath("properties.invoke_url_template")]
         public string InvokeUrlTemplate { get; set; }
-        /// <summary>
-        /// The function language
-        /// Serialized Name: FunctionEnvelope.properties.language
-        /// </summary>
+        /// <summary> The function language. </summary>
         [WirePath("properties.language")]
         public string Language { get; set; }
-        /// <summary>
-        /// Gets or sets a value indicating whether the function is disabled
-        /// Serialized Name: FunctionEnvelope.properties.isDisabled
-        /// </summary>
+        /// <summary> Gets or sets a value indicating whether the function is disabled. </summary>
         [WirePath("properties.isDisabled")]
         public bool? IsDisabled { get; set; }
-        /// <summary>
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </summary>
+        /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
     }

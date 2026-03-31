@@ -11,10 +11,7 @@ using System.Linq;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Collection of certificates.
-    /// Serialized Name: CertificateCollection
-    /// </summary>
+    /// <summary> Collection of certificates. </summary>
     internal partial class AppCertificateListResult
     {
         /// <summary>
@@ -50,10 +47,7 @@ namespace Azure.ResourceManager.AppService.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="AppCertificateListResult"/>. </summary>
-        /// <param name="value">
-        /// Collection of resources.
-        /// Serialized Name: CertificateCollection.value
-        /// </param>
+        /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal AppCertificateListResult(IEnumerable<AppCertificateData> value)
         {
@@ -63,14 +57,8 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AppCertificateListResult"/>. </summary>
-        /// <param name="value">
-        /// Collection of resources.
-        /// Serialized Name: CertificateCollection.value
-        /// </param>
-        /// <param name="nextLink">
-        /// Link to next page of resources.
-        /// Serialized Name: CertificateCollection.nextLink
-        /// </param>
+        /// <param name="value"> Collection of resources. </param>
+        /// <param name="nextLink"> Link to next page of resources. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AppCertificateListResult(IReadOnlyList<AppCertificateData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -84,15 +72,9 @@ namespace Azure.ResourceManager.AppService.Models
         {
         }
 
-        /// <summary>
-        /// Collection of resources.
-        /// Serialized Name: CertificateCollection.value
-        /// </summary>
+        /// <summary> Collection of resources. </summary>
         public IReadOnlyList<AppCertificateData> Value { get; }
-        /// <summary>
-        /// Link to next page of resources.
-        /// Serialized Name: CertificateCollection.nextLink
-        /// </summary>
+        /// <summary> Link to next page of resources. </summary>
         public string NextLink { get; }
     }
 }

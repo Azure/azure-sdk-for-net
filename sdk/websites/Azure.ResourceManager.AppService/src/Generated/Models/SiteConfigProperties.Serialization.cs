@@ -2842,7 +2842,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("ApiDefinitionUri", out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("ApiDefinitionUrl", out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  apiDefinition: ");

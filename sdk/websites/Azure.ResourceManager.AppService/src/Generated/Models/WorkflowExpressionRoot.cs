@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The expression root.
-    /// Serialized Name: ExpressionRoot
-    /// </summary>
+    /// <summary> The expression root. </summary>
     public partial class WorkflowExpressionRoot : WorkflowExpression
     {
         /// <summary> Initializes a new instance of <see cref="WorkflowExpressionRoot"/>. </summary>
@@ -22,36 +19,18 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkflowExpressionRoot"/>. </summary>
-        /// <param name="text">
-        /// The text.
-        /// Serialized Name: Expression.text
-        /// </param>
-        /// <param name="value">
-        /// Anything
-        /// Serialized Name: Expression.value
-        /// </param>
-        /// <param name="subexpressions">
-        /// The sub expressions.
-        /// Serialized Name: Expression.subexpressions
-        /// </param>
-        /// <param name="error">
-        /// The azure resource error info.
-        /// Serialized Name: Expression.error
-        /// </param>
+        /// <param name="text"> The text. </param>
+        /// <param name="value"> Anything. </param>
+        /// <param name="subexpressions"> The sub expressions. </param>
+        /// <param name="error"> The azure resource error info. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="path">
-        /// The path.
-        /// Serialized Name: ExpressionRoot.path
-        /// </param>
+        /// <param name="path"> The path. </param>
         internal WorkflowExpressionRoot(string text, BinaryData value, IReadOnlyList<WorkflowExpression> subexpressions, WorkflowExpressionResourceErrorInfo error, IDictionary<string, BinaryData> serializedAdditionalRawData, string path) : base(text, value, subexpressions, error, serializedAdditionalRawData)
         {
             Path = path;
         }
 
-        /// <summary>
-        /// The path.
-        /// Serialized Name: ExpressionRoot.path
-        /// </summary>
+        /// <summary> The path. </summary>
         [WirePath("path")]
         public string Path { get; }
     }

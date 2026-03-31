@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Trigger based on total requests.
-    /// Serialized Name: RequestsBasedTrigger
-    /// </summary>
+    /// <summary> Trigger based on total requests. </summary>
     public partial class RequestsBasedTrigger
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="RequestsBasedTrigger"/>. </summary>
-        /// <param name="count">
-        /// Request Count.
-        /// Serialized Name: RequestsBasedTrigger.count
-        /// </param>
-        /// <param name="timeInterval">
-        /// Time interval.
-        /// Serialized Name: RequestsBasedTrigger.timeInterval
-        /// </param>
+        /// <param name="count"> Request Count. </param>
+        /// <param name="timeInterval"> Time interval. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal RequestsBasedTrigger(int? count, string timeInterval, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,16 +61,10 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Request Count.
-        /// Serialized Name: RequestsBasedTrigger.count
-        /// </summary>
+        /// <summary> Request Count. </summary>
         [WirePath("count")]
         public int? Count { get; set; }
-        /// <summary>
-        /// Time interval.
-        /// Serialized Name: RequestsBasedTrigger.timeInterval
-        /// </summary>
+        /// <summary> Time interval. </summary>
         [WirePath("timeInterval")]
         public string TimeInterval { get; set; }
     }

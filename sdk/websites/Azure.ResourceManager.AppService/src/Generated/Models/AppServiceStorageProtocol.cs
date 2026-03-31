@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Mounting protocol to use for the storage account.
-    /// Serialized Name: AzureStorageProtocol
-    /// </summary>
+    /// <summary> Mounting protocol to use for the storage account. </summary>
     public readonly partial struct AppServiceStorageProtocol : IEquatable<AppServiceStorageProtocol>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.AppService.Models
         private const string HttpValue = "Http";
         private const string NfsValue = "Nfs";
 
-        /// <summary>
-        /// Smb
-        /// Serialized Name: AzureStorageProtocol.Smb
-        /// </summary>
+        /// <summary> Smb. </summary>
         public static AppServiceStorageProtocol Smb { get; } = new AppServiceStorageProtocol(SmbValue);
-        /// <summary>
-        /// Http
-        /// Serialized Name: AzureStorageProtocol.Http
-        /// </summary>
+        /// <summary> Http. </summary>
         public static AppServiceStorageProtocol Http { get; } = new AppServiceStorageProtocol(HttpValue);
-        /// <summary>
-        /// Nfs
-        /// Serialized Name: AzureStorageProtocol.Nfs
-        /// </summary>
+        /// <summary> Nfs. </summary>
         public static AppServiceStorageProtocol Nfs { get; } = new AppServiceStorageProtocol(NfsValue);
         /// <summary> Determines if two <see cref="AppServiceStorageProtocol"/> values are the same. </summary>
         public static bool operator ==(AppServiceStorageProtocol left, AppServiceStorageProtocol right) => left.Equals(right);

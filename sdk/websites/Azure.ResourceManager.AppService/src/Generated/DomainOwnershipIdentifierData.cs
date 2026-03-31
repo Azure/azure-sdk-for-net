@@ -15,7 +15,6 @@ namespace Azure.ResourceManager.AppService
     /// <summary>
     /// A class representing the DomainOwnershipIdentifier data model.
     /// Domain ownership Identifier.
-    /// Serialized Name: DomainOwnershipIdentifier
     /// </summary>
     public partial class DomainOwnershipIdentifierData : ResourceData
     {
@@ -61,14 +60,8 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="ownershipId">
-        /// Ownership Id.
-        /// Serialized Name: DomainOwnershipIdentifier.properties.ownershipId
-        /// </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </param>
+        /// <param name="ownershipId"> Ownership Id. </param>
+        /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DomainOwnershipIdentifierData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string ownershipId, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -77,16 +70,10 @@ namespace Azure.ResourceManager.AppService
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Ownership Id.
-        /// Serialized Name: DomainOwnershipIdentifier.properties.ownershipId
-        /// </summary>
+        /// <summary> Ownership Id. </summary>
         [WirePath("properties.ownershipId")]
         public string OwnershipId { get; set; }
-        /// <summary>
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </summary>
+        /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
     }

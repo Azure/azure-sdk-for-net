@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Default action for main access restriction if no rules are matched.
-    /// Serialized Name: DefaultAction
-    /// </summary>
+    /// <summary> Default action for main access restriction if no rules are matched. </summary>
     public readonly partial struct SiteDefaultAction : IEquatable<SiteDefaultAction>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.AppService.Models
         private const string AllowValue = "Allow";
         private const string DenyValue = "Deny";
 
-        /// <summary>
-        /// Allow
-        /// Serialized Name: DefaultAction.Allow
-        /// </summary>
+        /// <summary> Allow. </summary>
         public static SiteDefaultAction Allow { get; } = new SiteDefaultAction(AllowValue);
-        /// <summary>
-        /// Deny
-        /// Serialized Name: DefaultAction.Deny
-        /// </summary>
+        /// <summary> Deny. </summary>
         public static SiteDefaultAction Deny { get; } = new SiteDefaultAction(DenyValue);
         /// <summary> Determines if two <see cref="SiteDefaultAction"/> values are the same. </summary>
         public static bool operator ==(SiteDefaultAction left, SiteDefaultAction right) => left.Equals(right);

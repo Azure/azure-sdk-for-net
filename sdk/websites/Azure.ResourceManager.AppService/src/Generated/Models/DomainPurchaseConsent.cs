@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Domain purchase consent object, representing acceptance of applicable legal agreements.
-    /// Serialized Name: DomainPurchaseConsent
-    /// </summary>
+    /// <summary> Domain purchase consent object, representing acceptance of applicable legal agreements. </summary>
     public partial class DomainPurchaseConsent
     {
         /// <summary>
@@ -55,18 +52,9 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DomainPurchaseConsent"/>. </summary>
-        /// <param name="agreementKeys">
-        /// List of applicable legal agreement keys. This list can be retrieved using ListLegalAgreements API under &lt;code&gt;TopLevelDomain&lt;/code&gt; resource.
-        /// Serialized Name: DomainPurchaseConsent.agreementKeys
-        /// </param>
-        /// <param name="agreedBy">
-        /// Client IP address.
-        /// Serialized Name: DomainPurchaseConsent.agreedBy
-        /// </param>
-        /// <param name="agreedOn">
-        /// Timestamp when the agreements were accepted.
-        /// Serialized Name: DomainPurchaseConsent.agreedAt
-        /// </param>
+        /// <param name="agreementKeys"> List of applicable legal agreement keys. This list can be retrieved using ListLegalAgreements API under &lt;code&gt;TopLevelDomain&lt;/code&gt; resource. </param>
+        /// <param name="agreedBy"> Client IP address. </param>
+        /// <param name="agreedOn"> Timestamp when the agreements were accepted. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DomainPurchaseConsent(IList<string> agreementKeys, string agreedBy, DateTimeOffset? agreedOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -76,22 +64,13 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// List of applicable legal agreement keys. This list can be retrieved using ListLegalAgreements API under &lt;code&gt;TopLevelDomain&lt;/code&gt; resource.
-        /// Serialized Name: DomainPurchaseConsent.agreementKeys
-        /// </summary>
+        /// <summary> List of applicable legal agreement keys. This list can be retrieved using ListLegalAgreements API under &lt;code&gt;TopLevelDomain&lt;/code&gt; resource. </summary>
         [WirePath("agreementKeys")]
         public IList<string> AgreementKeys { get; }
-        /// <summary>
-        /// Client IP address.
-        /// Serialized Name: DomainPurchaseConsent.agreedBy
-        /// </summary>
+        /// <summary> Client IP address. </summary>
         [WirePath("agreedBy")]
         public string AgreedBy { get; set; }
-        /// <summary>
-        /// Timestamp when the agreements were accepted.
-        /// Serialized Name: DomainPurchaseConsent.agreedAt
-        /// </summary>
+        /// <summary> Timestamp when the agreements were accepted. </summary>
         [WirePath("agreedAt")]
         public DateTimeOffset? AgreedOn { get; set; }
     }

@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The list of workflow trigger histories.
-    /// Serialized Name: WorkflowTriggerHistoryListResult
-    /// </summary>
+    /// <summary> The list of workflow trigger histories. </summary>
     internal partial class WorkflowTriggerHistoryListResult
     {
         /// <summary>
@@ -55,14 +52,8 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkflowTriggerHistoryListResult"/>. </summary>
-        /// <param name="value">
-        /// A list of workflow trigger histories.
-        /// Serialized Name: WorkflowTriggerHistoryListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The URL to get the next set of results.
-        /// Serialized Name: WorkflowTriggerHistoryListResult.nextLink
-        /// </param>
+        /// <param name="value"> A list of workflow trigger histories. </param>
+        /// <param name="nextLink"> The URL to get the next set of results. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal WorkflowTriggerHistoryListResult(IReadOnlyList<WorkflowTriggerHistoryData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -71,15 +62,9 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// A list of workflow trigger histories.
-        /// Serialized Name: WorkflowTriggerHistoryListResult.value
-        /// </summary>
+        /// <summary> A list of workflow trigger histories. </summary>
         public IReadOnlyList<WorkflowTriggerHistoryData> Value { get; }
-        /// <summary>
-        /// The URL to get the next set of results.
-        /// Serialized Name: WorkflowTriggerHistoryListResult.nextLink
-        /// </summary>
+        /// <summary> The URL to get the next set of results. </summary>
         public string NextLink { get; }
     }
 }

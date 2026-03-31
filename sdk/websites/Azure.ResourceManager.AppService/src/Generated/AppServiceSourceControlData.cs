@@ -15,7 +15,6 @@ namespace Azure.ResourceManager.AppService
     /// <summary>
     /// A class representing the AppServiceSourceControl data model.
     /// The source control OAuth token.
-    /// Serialized Name: SourceControl
     /// </summary>
     public partial class AppServiceSourceControlData : ResourceData
     {
@@ -61,26 +60,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="token">
-        /// OAuth access token.
-        /// Serialized Name: SourceControl.properties.token
-        /// </param>
-        /// <param name="tokenSecret">
-        /// OAuth access token secret.
-        /// Serialized Name: SourceControl.properties.tokenSecret
-        /// </param>
-        /// <param name="refreshToken">
-        /// OAuth refresh token.
-        /// Serialized Name: SourceControl.properties.refreshToken
-        /// </param>
-        /// <param name="expireOn">
-        /// OAuth token expiration.
-        /// Serialized Name: SourceControl.properties.expirationTime
-        /// </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </param>
+        /// <param name="token"> OAuth access token. </param>
+        /// <param name="tokenSecret"> OAuth access token secret. </param>
+        /// <param name="refreshToken"> OAuth refresh token. </param>
+        /// <param name="expireOn"> OAuth token expiration. </param>
+        /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AppServiceSourceControlData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string token, string tokenSecret, string refreshToken, DateTimeOffset? expireOn, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -92,34 +76,19 @@ namespace Azure.ResourceManager.AppService
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// OAuth access token.
-        /// Serialized Name: SourceControl.properties.token
-        /// </summary>
+        /// <summary> OAuth access token. </summary>
         [WirePath("properties.token")]
         public string Token { get; set; }
-        /// <summary>
-        /// OAuth access token secret.
-        /// Serialized Name: SourceControl.properties.tokenSecret
-        /// </summary>
+        /// <summary> OAuth access token secret. </summary>
         [WirePath("properties.tokenSecret")]
         public string TokenSecret { get; set; }
-        /// <summary>
-        /// OAuth refresh token.
-        /// Serialized Name: SourceControl.properties.refreshToken
-        /// </summary>
+        /// <summary> OAuth refresh token. </summary>
         [WirePath("properties.refreshToken")]
         public string RefreshToken { get; set; }
-        /// <summary>
-        /// OAuth token expiration.
-        /// Serialized Name: SourceControl.properties.expirationTime
-        /// </summary>
+        /// <summary> OAuth token expiration. </summary>
         [WirePath("properties.expirationTime")]
         public DateTimeOffset? ExpireOn { get; set; }
-        /// <summary>
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </summary>
+        /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
     }

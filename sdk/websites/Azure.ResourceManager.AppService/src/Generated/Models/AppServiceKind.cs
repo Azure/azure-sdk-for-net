@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The workflow kind.
-    /// Serialized Name: Kind
-    /// </summary>
+    /// <summary> The workflow kind. </summary>
     public readonly partial struct AppServiceKind : IEquatable<AppServiceKind>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.AppService.Models
         private const string StatefulValue = "Stateful";
         private const string StatelessValue = "Stateless";
 
-        /// <summary>
-        /// Stateful
-        /// Serialized Name: Kind.Stateful
-        /// </summary>
+        /// <summary> Stateful. </summary>
         public static AppServiceKind Stateful { get; } = new AppServiceKind(StatefulValue);
-        /// <summary>
-        /// Stateless
-        /// Serialized Name: Kind.Stateless
-        /// </summary>
+        /// <summary> Stateless. </summary>
         public static AppServiceKind Stateless { get; } = new AppServiceKind(StatelessValue);
         /// <summary> Determines if two <see cref="AppServiceKind"/> values are the same. </summary>
         public static bool operator ==(AppServiceKind left, AppServiceKind right) => left.Equals(right);

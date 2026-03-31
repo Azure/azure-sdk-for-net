@@ -7,61 +7,28 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Current order status.
-    /// Serialized Name: CertificateOrderStatus
-    /// </summary>
+    /// <summary> Current order status. </summary>
     public enum CertificateOrderStatus
     {
-        /// <summary>
-        /// Pendingissuance
-        /// Serialized Name: CertificateOrderStatus.Pendingissuance
-        /// </summary>
+        /// <summary> Pendingissuance. </summary>
         Pendingissuance,
-        /// <summary>
-        /// Issued
-        /// Serialized Name: CertificateOrderStatus.Issued
-        /// </summary>
+        /// <summary> Issued. </summary>
         Issued,
-        /// <summary>
-        /// Revoked
-        /// Serialized Name: CertificateOrderStatus.Revoked
-        /// </summary>
+        /// <summary> Revoked. </summary>
         Revoked,
-        /// <summary>
-        /// Canceled
-        /// Serialized Name: CertificateOrderStatus.Canceled
-        /// </summary>
+        /// <summary> Canceled. </summary>
         Canceled,
-        /// <summary>
-        /// Denied
-        /// Serialized Name: CertificateOrderStatus.Denied
-        /// </summary>
+        /// <summary> Denied. </summary>
         Denied,
-        /// <summary>
-        /// Pendingrevocation
-        /// Serialized Name: CertificateOrderStatus.Pendingrevocation
-        /// </summary>
+        /// <summary> Pendingrevocation. </summary>
         Pendingrevocation,
-        /// <summary>
-        /// PendingRekey
-        /// Serialized Name: CertificateOrderStatus.PendingRekey
-        /// </summary>
+        /// <summary> PendingRekey. </summary>
         PendingRekey,
-        /// <summary>
-        /// Unused
-        /// Serialized Name: CertificateOrderStatus.Unused
-        /// </summary>
+        /// <summary> Unused. </summary>
         Unused,
-        /// <summary>
-        /// Expired
-        /// Serialized Name: CertificateOrderStatus.Expired
-        /// </summary>
+        /// <summary> Expired. </summary>
         Expired,
-        /// <summary>
-        /// NotSubmitted
-        /// Serialized Name: CertificateOrderStatus.NotSubmitted
-        /// </summary>
+        /// <summary> NotSubmitted. </summary>
         NotSubmitted
     }
 }

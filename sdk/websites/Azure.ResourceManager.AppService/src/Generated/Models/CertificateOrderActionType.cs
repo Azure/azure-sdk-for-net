@@ -7,81 +7,36 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Action type.
-    /// Serialized Name: CertificateOrderActionType
-    /// </summary>
+    /// <summary> Action type. </summary>
     public enum CertificateOrderActionType
     {
-        /// <summary>
-        /// Unknown
-        /// Serialized Name: CertificateOrderActionType.Unknown
-        /// </summary>
+        /// <summary> Unknown. </summary>
         Unknown,
-        /// <summary>
-        /// CertificateIssued
-        /// Serialized Name: CertificateOrderActionType.CertificateIssued
-        /// </summary>
+        /// <summary> CertificateIssued. </summary>
         CertificateIssued,
-        /// <summary>
-        /// CertificateOrderCanceled
-        /// Serialized Name: CertificateOrderActionType.CertificateOrderCanceled
-        /// </summary>
+        /// <summary> CertificateOrderCanceled. </summary>
         CertificateOrderCanceled,
-        /// <summary>
-        /// CertificateOrderCreated
-        /// Serialized Name: CertificateOrderActionType.CertificateOrderCreated
-        /// </summary>
+        /// <summary> CertificateOrderCreated. </summary>
         CertificateOrderCreated,
-        /// <summary>
-        /// CertificateRevoked
-        /// Serialized Name: CertificateOrderActionType.CertificateRevoked
-        /// </summary>
+        /// <summary> CertificateRevoked. </summary>
         CertificateRevoked,
-        /// <summary>
-        /// DomainValidationComplete
-        /// Serialized Name: CertificateOrderActionType.DomainValidationComplete
-        /// </summary>
+        /// <summary> DomainValidationComplete. </summary>
         DomainValidationComplete,
-        /// <summary>
-        /// FraudDetected
-        /// Serialized Name: CertificateOrderActionType.FraudDetected
-        /// </summary>
+        /// <summary> FraudDetected. </summary>
         FraudDetected,
-        /// <summary>
-        /// OrgNameChange
-        /// Serialized Name: CertificateOrderActionType.OrgNameChange
-        /// </summary>
+        /// <summary> OrgNameChange. </summary>
         OrgNameChange,
-        /// <summary>
-        /// OrgValidationComplete
-        /// Serialized Name: CertificateOrderActionType.OrgValidationComplete
-        /// </summary>
+        /// <summary> OrgValidationComplete. </summary>
         OrgValidationComplete,
-        /// <summary>
-        /// SanDrop
-        /// Serialized Name: CertificateOrderActionType.SanDrop
-        /// </summary>
+        /// <summary> SanDrop. </summary>
         SanDrop,
-        /// <summary>
-        /// FraudCleared
-        /// Serialized Name: CertificateOrderActionType.FraudCleared
-        /// </summary>
+        /// <summary> FraudCleared. </summary>
         FraudCleared,
-        /// <summary>
-        /// CertificateExpired
-        /// Serialized Name: CertificateOrderActionType.CertificateExpired
-        /// </summary>
+        /// <summary> CertificateExpired. </summary>
         CertificateExpired,
-        /// <summary>
-        /// CertificateExpirationWarning
-        /// Serialized Name: CertificateOrderActionType.CertificateExpirationWarning
-        /// </summary>
+        /// <summary> CertificateExpirationWarning. </summary>
         CertificateExpirationWarning,
-        /// <summary>
-        /// FraudDocumentationRequired
-        /// Serialized Name: CertificateOrderActionType.FraudDocumentationRequired
-        /// </summary>
+        /// <summary> FraudDocumentationRequired. </summary>
         FraudDocumentationRequired
     }
 }

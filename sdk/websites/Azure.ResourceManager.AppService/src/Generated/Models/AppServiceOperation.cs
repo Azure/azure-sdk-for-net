@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// An operation on a resource.
-    /// Serialized Name: Operation
-    /// </summary>
+    /// <summary> An operation on a resource. </summary>
     public partial class AppServiceOperation
     {
         /// <summary>
@@ -55,38 +52,14 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AppServiceOperation"/>. </summary>
-        /// <param name="id">
-        /// Operation ID.
-        /// Serialized Name: Operation.id
-        /// </param>
-        /// <param name="name">
-        /// Operation name.
-        /// Serialized Name: Operation.name
-        /// </param>
-        /// <param name="status">
-        /// The current status of the operation.
-        /// Serialized Name: Operation.status
-        /// </param>
-        /// <param name="errors">
-        /// Any errors associate with the operation.
-        /// Serialized Name: Operation.errors
-        /// </param>
-        /// <param name="createdOn">
-        /// Time when operation has started.
-        /// Serialized Name: Operation.createdTime
-        /// </param>
-        /// <param name="modifiedOn">
-        /// Time when operation has been updated.
-        /// Serialized Name: Operation.modifiedTime
-        /// </param>
-        /// <param name="expireOn">
-        /// Time when operation will expire.
-        /// Serialized Name: Operation.expirationTime
-        /// </param>
-        /// <param name="geoMasterOperationId">
-        /// Applicable only for stamp operation ids.
-        /// Serialized Name: Operation.geoMasterOperationId
-        /// </param>
+        /// <param name="id"> Operation ID. </param>
+        /// <param name="name"> Operation name. </param>
+        /// <param name="status"> The current status of the operation. </param>
+        /// <param name="errors"> Any errors associate with the operation. </param>
+        /// <param name="createdOn"> Time when operation has started. </param>
+        /// <param name="modifiedOn"> Time when operation has been updated. </param>
+        /// <param name="expireOn"> Time when operation will expire. </param>
+        /// <param name="geoMasterOperationId"> Applicable only for stamp operation ids. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AppServiceOperation(string id, string name, AppServiceOperationStatus? status, IReadOnlyList<ResponseError> errors, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, DateTimeOffset? expireOn, Guid? geoMasterOperationId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -101,46 +74,25 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Operation ID.
-        /// Serialized Name: Operation.id
-        /// </summary>
+        /// <summary> Operation ID. </summary>
         [WirePath("id")]
         public string Id { get; }
-        /// <summary>
-        /// Operation name.
-        /// Serialized Name: Operation.name
-        /// </summary>
+        /// <summary> Operation name. </summary>
         [WirePath("name")]
         public string Name { get; }
-        /// <summary>
-        /// The current status of the operation.
-        /// Serialized Name: Operation.status
-        /// </summary>
+        /// <summary> The current status of the operation. </summary>
         [WirePath("status")]
         public AppServiceOperationStatus? Status { get; }
-        /// <summary>
-        /// Time when operation has started.
-        /// Serialized Name: Operation.createdTime
-        /// </summary>
+        /// <summary> Time when operation has started. </summary>
         [WirePath("createdTime")]
         public DateTimeOffset? CreatedOn { get; }
-        /// <summary>
-        /// Time when operation has been updated.
-        /// Serialized Name: Operation.modifiedTime
-        /// </summary>
+        /// <summary> Time when operation has been updated. </summary>
         [WirePath("modifiedTime")]
         public DateTimeOffset? ModifiedOn { get; }
-        /// <summary>
-        /// Time when operation will expire.
-        /// Serialized Name: Operation.expirationTime
-        /// </summary>
+        /// <summary> Time when operation will expire. </summary>
         [WirePath("expirationTime")]
         public DateTimeOffset? ExpireOn { get; }
-        /// <summary>
-        /// Applicable only for stamp operation ids.
-        /// Serialized Name: Operation.geoMasterOperationId
-        /// </summary>
+        /// <summary> Applicable only for stamp operation ids. </summary>
         [WirePath("geoMasterOperationId")]
         public Guid? GeoMasterOperationId { get; }
     }

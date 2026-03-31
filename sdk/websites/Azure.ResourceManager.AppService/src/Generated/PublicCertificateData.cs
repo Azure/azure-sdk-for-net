@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.AppService
     /// <summary>
     /// A class representing the PublicCertificate data model.
     /// Public certificate object
-    /// Serialized Name: PublicCertificate
     /// </summary>
     public partial class PublicCertificateData : ResourceData
     {
@@ -62,22 +61,10 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="blob">
-        /// Public Certificate byte array
-        /// Serialized Name: PublicCertificate.properties.blob
-        /// </param>
-        /// <param name="publicCertificateLocation">
-        /// Public Certificate Location
-        /// Serialized Name: PublicCertificate.properties.publicCertificateLocation
-        /// </param>
-        /// <param name="thumbprintString">
-        /// Certificate Thumbprint
-        /// Serialized Name: PublicCertificate.properties.thumbprint
-        /// </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </param>
+        /// <param name="blob"> Public Certificate byte array. </param>
+        /// <param name="publicCertificateLocation"> Public Certificate Location. </param>
+        /// <param name="thumbprintString"> Certificate Thumbprint. </param>
+        /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PublicCertificateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, byte[] blob, PublicCertificateLocation? publicCertificateLocation, string thumbprintString, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -88,28 +75,16 @@ namespace Azure.ResourceManager.AppService
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Public Certificate byte array
-        /// Serialized Name: PublicCertificate.properties.blob
-        /// </summary>
+        /// <summary> Public Certificate byte array. </summary>
         [WirePath("properties.blob")]
         public byte[] Blob { get; set; }
-        /// <summary>
-        /// Public Certificate Location
-        /// Serialized Name: PublicCertificate.properties.publicCertificateLocation
-        /// </summary>
+        /// <summary> Public Certificate Location. </summary>
         [WirePath("properties.publicCertificateLocation")]
         public PublicCertificateLocation? PublicCertificateLocation { get; set; }
-        /// <summary>
-        /// Certificate Thumbprint
-        /// Serialized Name: PublicCertificate.properties.thumbprint
-        /// </summary>
+        /// <summary> Certificate Thumbprint. </summary>
         [WirePath("properties.thumbprint")]
         public string ThumbprintString { get; }
-        /// <summary>
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </summary>
+        /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
     }

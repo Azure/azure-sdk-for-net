@@ -12,10 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// A hostname and its assigned sites
-    /// Serialized Name: CustomHostnameSites
-    /// </summary>
+    /// <summary> A hostname and its assigned sites. </summary>
     public partial class CustomHostnameSites : ResourceData
     {
         /// <summary>
@@ -61,13 +58,10 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="customHostname"> Serialized Name: CustomHostnameSites.properties.customHostname. </param>
-        /// <param name="region"> Serialized Name: CustomHostnameSites.properties.region. </param>
-        /// <param name="siteResourceIds"> Serialized Name: CustomHostnameSites.properties.siteResourceIds. </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </param>
+        /// <param name="customHostname"></param>
+        /// <param name="region"></param>
+        /// <param name="siteResourceIds"></param>
+        /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CustomHostnameSites(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string customHostname, string region, IList<AppServiceIdentifierData> siteResourceIds, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -78,19 +72,16 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Serialized Name: CustomHostnameSites.properties.customHostname. </summary>
+        /// <summary> Gets or sets the custom hostname. </summary>
         [WirePath("properties.customHostname")]
         public string CustomHostname { get; set; }
-        /// <summary> Serialized Name: CustomHostnameSites.properties.region. </summary>
+        /// <summary> Gets or sets the region. </summary>
         [WirePath("properties.region")]
         public string Region { get; set; }
-        /// <summary> Serialized Name: CustomHostnameSites.properties.siteResourceIds. </summary>
+        /// <summary> Gets the site resource ids. </summary>
         [WirePath("properties.siteResourceIds")]
         public IList<AppServiceIdentifierData> SiteResourceIds { get; }
-        /// <summary>
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </summary>
+        /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
     }

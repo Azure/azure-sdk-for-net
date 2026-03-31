@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The ContainerMemoryStatistics.
-    /// Serialized Name: ContainerMemoryStatistics
-    /// </summary>
+    /// <summary> The ContainerMemoryStatistics. </summary>
     public partial class ContainerMemoryStatistics
     {
         /// <summary>
@@ -54,9 +51,9 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerMemoryStatistics"/>. </summary>
-        /// <param name="usage"> Serialized Name: ContainerMemoryStatistics.usage. </param>
-        /// <param name="maxUsage"> Serialized Name: ContainerMemoryStatistics.maxUsage. </param>
-        /// <param name="limit"> Serialized Name: ContainerMemoryStatistics.limit. </param>
+        /// <param name="usage"></param>
+        /// <param name="maxUsage"></param>
+        /// <param name="limit"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ContainerMemoryStatistics(long? usage, long? maxUsage, long? limit, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -66,13 +63,13 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Serialized Name: ContainerMemoryStatistics.usage. </summary>
+        /// <summary> Gets or sets the usage. </summary>
         [WirePath("usage")]
         public long? Usage { get; set; }
-        /// <summary> Serialized Name: ContainerMemoryStatistics.maxUsage. </summary>
+        /// <summary> Gets or sets the max usage. </summary>
         [WirePath("maxUsage")]
         public long? MaxUsage { get; set; }
-        /// <summary> Serialized Name: ContainerMemoryStatistics.limit. </summary>
+        /// <summary> Gets or sets the limit. </summary>
         [WirePath("limit")]
         public long? Limit { get; set; }
     }

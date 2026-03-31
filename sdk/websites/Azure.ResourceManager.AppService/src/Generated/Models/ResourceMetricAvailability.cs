@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Metrics availability and retention.
-    /// Serialized Name: ResourceMetricAvailability
-    /// </summary>
+    /// <summary> Metrics availability and retention. </summary>
     public partial class ResourceMetricAvailability
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourceMetricAvailability"/>. </summary>
-        /// <param name="timeGrain">
-        /// Time grain .
-        /// Serialized Name: ResourceMetricAvailability.timeGrain
-        /// </param>
-        /// <param name="retention">
-        /// Retention period for the current time grain.
-        /// Serialized Name: ResourceMetricAvailability.retention
-        /// </param>
+        /// <param name="timeGrain"> Time grain . </param>
+        /// <param name="retention"> Retention period for the current time grain. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ResourceMetricAvailability(string timeGrain, string retention, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,16 +61,10 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Time grain .
-        /// Serialized Name: ResourceMetricAvailability.timeGrain
-        /// </summary>
+        /// <summary> Time grain . </summary>
         [WirePath("timeGrain")]
         public string TimeGrain { get; }
-        /// <summary>
-        /// Retention period for the current time grain.
-        /// Serialized Name: ResourceMetricAvailability.retention
-        /// </summary>
+        /// <summary> Retention period for the current time grain. </summary>
         [WirePath("retention")]
         public string Retention { get; }
     }

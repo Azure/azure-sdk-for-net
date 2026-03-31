@@ -11,10 +11,7 @@ using System.Linq;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Collection of top-level domain legal agreements.
-    /// Serialized Name: TldLegalAgreementCollection
-    /// </summary>
+    /// <summary> Collection of top-level domain legal agreements. </summary>
     internal partial class TldLegalAgreementListResult
     {
         /// <summary>
@@ -50,10 +47,7 @@ namespace Azure.ResourceManager.AppService.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="TldLegalAgreementListResult"/>. </summary>
-        /// <param name="value">
-        /// Collection of resources.
-        /// Serialized Name: TldLegalAgreementCollection.value
-        /// </param>
+        /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal TldLegalAgreementListResult(IEnumerable<TldLegalAgreement> value)
         {
@@ -63,14 +57,8 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="TldLegalAgreementListResult"/>. </summary>
-        /// <param name="value">
-        /// Collection of resources.
-        /// Serialized Name: TldLegalAgreementCollection.value
-        /// </param>
-        /// <param name="nextLink">
-        /// Link to next page of resources.
-        /// Serialized Name: TldLegalAgreementCollection.nextLink
-        /// </param>
+        /// <param name="value"> Collection of resources. </param>
+        /// <param name="nextLink"> Link to next page of resources. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal TldLegalAgreementListResult(IReadOnlyList<TldLegalAgreement> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -84,15 +72,9 @@ namespace Azure.ResourceManager.AppService.Models
         {
         }
 
-        /// <summary>
-        /// Collection of resources.
-        /// Serialized Name: TldLegalAgreementCollection.value
-        /// </summary>
+        /// <summary> Collection of resources. </summary>
         public IReadOnlyList<TldLegalAgreement> Value { get; }
-        /// <summary>
-        /// Link to next page of resources.
-        /// Serialized Name: TldLegalAgreementCollection.nextLink
-        /// </summary>
+        /// <summary> Link to next page of resources. </summary>
         public string NextLink { get; }
     }
 }

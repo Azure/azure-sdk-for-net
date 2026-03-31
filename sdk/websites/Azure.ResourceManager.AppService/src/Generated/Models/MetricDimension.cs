@@ -13,7 +13,6 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary>
     /// Dimension of a resource metric. For e.g. instance specific HTTP requests for a web app,
     /// where instance name is dimension of the metric HTTP request
-    /// Serialized Name: Dimension
     /// </summary>
     public partial class MetricDimension
     {
@@ -55,10 +54,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MetricDimension"/>. </summary>
-        /// <param name="name"> Serialized Name: Dimension.name. </param>
-        /// <param name="displayName"> Serialized Name: Dimension.displayName. </param>
-        /// <param name="internalName"> Serialized Name: Dimension.internalName. </param>
-        /// <param name="isToBeExportedForShoebox"> Serialized Name: Dimension.toBeExportedForShoebox. </param>
+        /// <param name="name"></param>
+        /// <param name="displayName"></param>
+        /// <param name="internalName"></param>
+        /// <param name="isToBeExportedForShoebox"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal MetricDimension(string name, string displayName, string internalName, bool? isToBeExportedForShoebox, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -69,16 +68,16 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Serialized Name: Dimension.name. </summary>
+        /// <summary> Gets the name. </summary>
         [WirePath("name")]
         public string Name { get; }
-        /// <summary> Serialized Name: Dimension.displayName. </summary>
+        /// <summary> Gets the display name. </summary>
         [WirePath("displayName")]
         public string DisplayName { get; }
-        /// <summary> Serialized Name: Dimension.internalName. </summary>
+        /// <summary> Gets the internal name. </summary>
         [WirePath("internalName")]
         public string InternalName { get; }
-        /// <summary> Serialized Name: Dimension.toBeExportedForShoebox. </summary>
+        /// <summary> Gets the is to be exported for shoebox. </summary>
         [WirePath("toBeExportedForShoebox")]
         public bool? IsToBeExportedForShoebox { get; }
     }

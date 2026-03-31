@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The workflow filter.
-    /// Serialized Name: WorkflowArtifacts
-    /// </summary>
+    /// <summary> The workflow filter. </summary>
     public partial class WorkflowArtifacts
     {
         /// <summary>
@@ -56,18 +53,9 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkflowArtifacts"/>. </summary>
-        /// <param name="appSettings">
-        /// Application settings of the workflow.
-        /// Serialized Name: WorkflowArtifacts.appSettings
-        /// </param>
-        /// <param name="files">
-        /// Files of the app.
-        /// Serialized Name: WorkflowArtifacts.files
-        /// </param>
-        /// <param name="filesToDelete">
-        /// Files of the app to delete.
-        /// Serialized Name: WorkflowArtifacts.filesToDelete
-        /// </param>
+        /// <param name="appSettings"> Application settings of the workflow. </param>
+        /// <param name="files"> Files of the app. </param>
+        /// <param name="filesToDelete"> Files of the app to delete. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal WorkflowArtifacts(BinaryData appSettings, IDictionary<string, BinaryData> files, IList<string> filesToDelete, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -79,7 +67,6 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary>
         /// Application settings of the workflow.
-        /// Serialized Name: WorkflowArtifacts.appSettings
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -112,7 +99,6 @@ namespace Azure.ResourceManager.AppService.Models
         public BinaryData AppSettings { get; set; }
         /// <summary>
         /// Files of the app.
-        /// Serialized Name: WorkflowArtifacts.files
         /// <para>
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -143,10 +129,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// </summary>
         [WirePath("files")]
         public IDictionary<string, BinaryData> Files { get; }
-        /// <summary>
-        /// Files of the app to delete.
-        /// Serialized Name: WorkflowArtifacts.filesToDelete
-        /// </summary>
+        /// <summary> Files of the app to delete. </summary>
         [WirePath("filesToDelete")]
         public IList<string> FilesToDelete { get; }
     }

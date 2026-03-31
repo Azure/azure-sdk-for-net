@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Defines a unique Support Topic
-    /// Serialized Name: SupportTopic
-    /// </summary>
+    /// <summary> Defines a unique Support Topic. </summary>
     public partial class DetectorSupportTopic
     {
         /// <summary>
@@ -55,14 +52,8 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DetectorSupportTopic"/>. </summary>
-        /// <param name="id">
-        /// Support Topic Id
-        /// Serialized Name: SupportTopic.id
-        /// </param>
-        /// <param name="pesId">
-        /// Unique resource Id
-        /// Serialized Name: SupportTopic.pesId
-        /// </param>
+        /// <param name="id"> Support Topic Id. </param>
+        /// <param name="pesId"> Unique resource Id. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DetectorSupportTopic(string id, ResourceIdentifier pesId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -71,16 +62,10 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Support Topic Id
-        /// Serialized Name: SupportTopic.id
-        /// </summary>
+        /// <summary> Support Topic Id. </summary>
         [WirePath("id")]
         public string Id { get; }
-        /// <summary>
-        /// Unique resource Id
-        /// Serialized Name: SupportTopic.pesId
-        /// </summary>
+        /// <summary> Unique resource Id. </summary>
         [WirePath("pesId")]
         public ResourceIdentifier PesId { get; }
     }

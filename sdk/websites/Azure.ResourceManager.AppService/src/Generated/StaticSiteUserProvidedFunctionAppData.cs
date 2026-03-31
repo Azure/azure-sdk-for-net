@@ -15,7 +15,6 @@ namespace Azure.ResourceManager.AppService
     /// <summary>
     /// A class representing the StaticSiteUserProvidedFunctionApp data model.
     /// Static Site User Provided Function App ARM resource.
-    /// Serialized Name: StaticSiteUserProvidedFunctionAppARMResource
     /// </summary>
     public partial class StaticSiteUserProvidedFunctionAppData : ResourceData
     {
@@ -61,22 +60,10 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="functionAppResourceId">
-        /// The resource id of the function app registered with the static site
-        /// Serialized Name: StaticSiteUserProvidedFunctionAppARMResource.properties.functionAppResourceId
-        /// </param>
-        /// <param name="functionAppRegion">
-        /// The region of the function app registered with the static site
-        /// Serialized Name: StaticSiteUserProvidedFunctionAppARMResource.properties.functionAppRegion
-        /// </param>
-        /// <param name="createdOn">
-        /// The date and time on which the function app was registered with the static site.
-        /// Serialized Name: StaticSiteUserProvidedFunctionAppARMResource.properties.createdOn
-        /// </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </param>
+        /// <param name="functionAppResourceId"> The resource id of the function app registered with the static site. </param>
+        /// <param name="functionAppRegion"> The region of the function app registered with the static site. </param>
+        /// <param name="createdOn"> The date and time on which the function app was registered with the static site. </param>
+        /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal StaticSiteUserProvidedFunctionAppData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier functionAppResourceId, string functionAppRegion, DateTimeOffset? createdOn, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -87,28 +74,16 @@ namespace Azure.ResourceManager.AppService
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The resource id of the function app registered with the static site
-        /// Serialized Name: StaticSiteUserProvidedFunctionAppARMResource.properties.functionAppResourceId
-        /// </summary>
+        /// <summary> The resource id of the function app registered with the static site. </summary>
         [WirePath("properties.functionAppResourceId")]
         public ResourceIdentifier FunctionAppResourceId { get; set; }
-        /// <summary>
-        /// The region of the function app registered with the static site
-        /// Serialized Name: StaticSiteUserProvidedFunctionAppARMResource.properties.functionAppRegion
-        /// </summary>
+        /// <summary> The region of the function app registered with the static site. </summary>
         [WirePath("properties.functionAppRegion")]
         public string FunctionAppRegion { get; set; }
-        /// <summary>
-        /// The date and time on which the function app was registered with the static site.
-        /// Serialized Name: StaticSiteUserProvidedFunctionAppARMResource.properties.createdOn
-        /// </summary>
+        /// <summary> The date and time on which the function app was registered with the static site. </summary>
         [WirePath("properties.createdOn")]
         public DateTimeOffset? CreatedOn { get; }
-        /// <summary>
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </summary>
+        /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
     }

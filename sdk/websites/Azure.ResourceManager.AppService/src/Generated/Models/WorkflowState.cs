@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The workflow state.
-    /// Serialized Name: WorkflowState
-    /// </summary>
+    /// <summary> The workflow state. </summary>
     public readonly partial struct WorkflowState : IEquatable<WorkflowState>
     {
         private readonly string _value;
@@ -32,35 +29,17 @@ namespace Azure.ResourceManager.AppService.Models
         private const string DeletedValue = "Deleted";
         private const string SuspendedValue = "Suspended";
 
-        /// <summary>
-        /// NotSpecified
-        /// Serialized Name: WorkflowState.NotSpecified
-        /// </summary>
+        /// <summary> NotSpecified. </summary>
         public static WorkflowState NotSpecified { get; } = new WorkflowState(NotSpecifiedValue);
-        /// <summary>
-        /// Completed
-        /// Serialized Name: WorkflowState.Completed
-        /// </summary>
+        /// <summary> Completed. </summary>
         public static WorkflowState Completed { get; } = new WorkflowState(CompletedValue);
-        /// <summary>
-        /// Enabled
-        /// Serialized Name: WorkflowState.Enabled
-        /// </summary>
+        /// <summary> Enabled. </summary>
         public static WorkflowState Enabled { get; } = new WorkflowState(EnabledValue);
-        /// <summary>
-        /// Disabled
-        /// Serialized Name: WorkflowState.Disabled
-        /// </summary>
+        /// <summary> Disabled. </summary>
         public static WorkflowState Disabled { get; } = new WorkflowState(DisabledValue);
-        /// <summary>
-        /// Deleted
-        /// Serialized Name: WorkflowState.Deleted
-        /// </summary>
+        /// <summary> Deleted. </summary>
         public static WorkflowState Deleted { get; } = new WorkflowState(DeletedValue);
-        /// <summary>
-        /// Suspended
-        /// Serialized Name: WorkflowState.Suspended
-        /// </summary>
+        /// <summary> Suspended. </summary>
         public static WorkflowState Suspended { get; } = new WorkflowState(SuspendedValue);
         /// <summary> Determines if two <see cref="WorkflowState"/> values are the same. </summary>
         public static bool operator ==(WorkflowState left, WorkflowState right) => left.Equals(right);

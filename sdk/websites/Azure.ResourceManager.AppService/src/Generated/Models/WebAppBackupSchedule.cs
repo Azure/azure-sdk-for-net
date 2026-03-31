@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Description of a backup schedule. Describes how often should be the backup performed and what should be the retention policy.
-    /// Serialized Name: BackupSchedule
-    /// </summary>
+    /// <summary> Description of a backup schedule. Describes how often should be the backup performed and what should be the retention policy. </summary>
     public partial class WebAppBackupSchedule
     {
         /// <summary>
@@ -49,22 +46,10 @@ namespace Azure.ResourceManager.AppService.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="WebAppBackupSchedule"/>. </summary>
-        /// <param name="frequencyInterval">
-        /// How often the backup should be executed (e.g. for weekly backup, this should be set to 7 and FrequencyUnit should be set to Day)
-        /// Serialized Name: BackupSchedule.frequencyInterval
-        /// </param>
-        /// <param name="frequencyUnit">
-        /// The unit of time for how often the backup should be executed (e.g. for weekly backup, this should be set to Day and FrequencyInterval should be set to 7)
-        /// Serialized Name: BackupSchedule.frequencyUnit
-        /// </param>
-        /// <param name="shouldKeepAtLeastOneBackup">
-        /// True if the retention policy should always keep at least one backup in the storage account, regardless how old it is; false otherwise.
-        /// Serialized Name: BackupSchedule.keepAtLeastOneBackup
-        /// </param>
-        /// <param name="retentionPeriodInDays">
-        /// After how many days backups should be deleted.
-        /// Serialized Name: BackupSchedule.retentionPeriodInDays
-        /// </param>
+        /// <param name="frequencyInterval"> How often the backup should be executed (e.g. for weekly backup, this should be set to 7 and FrequencyUnit should be set to Day). </param>
+        /// <param name="frequencyUnit"> The unit of time for how often the backup should be executed (e.g. for weekly backup, this should be set to Day and FrequencyInterval should be set to 7). </param>
+        /// <param name="shouldKeepAtLeastOneBackup"> True if the retention policy should always keep at least one backup in the storage account, regardless how old it is; false otherwise. </param>
+        /// <param name="retentionPeriodInDays"> After how many days backups should be deleted. </param>
         public WebAppBackupSchedule(int frequencyInterval, BackupFrequencyUnit frequencyUnit, bool shouldKeepAtLeastOneBackup, int retentionPeriodInDays)
         {
             FrequencyInterval = frequencyInterval;
@@ -74,30 +59,12 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="WebAppBackupSchedule"/>. </summary>
-        /// <param name="frequencyInterval">
-        /// How often the backup should be executed (e.g. for weekly backup, this should be set to 7 and FrequencyUnit should be set to Day)
-        /// Serialized Name: BackupSchedule.frequencyInterval
-        /// </param>
-        /// <param name="frequencyUnit">
-        /// The unit of time for how often the backup should be executed (e.g. for weekly backup, this should be set to Day and FrequencyInterval should be set to 7)
-        /// Serialized Name: BackupSchedule.frequencyUnit
-        /// </param>
-        /// <param name="shouldKeepAtLeastOneBackup">
-        /// True if the retention policy should always keep at least one backup in the storage account, regardless how old it is; false otherwise.
-        /// Serialized Name: BackupSchedule.keepAtLeastOneBackup
-        /// </param>
-        /// <param name="retentionPeriodInDays">
-        /// After how many days backups should be deleted.
-        /// Serialized Name: BackupSchedule.retentionPeriodInDays
-        /// </param>
-        /// <param name="startOn">
-        /// When the schedule should start working.
-        /// Serialized Name: BackupSchedule.startTime
-        /// </param>
-        /// <param name="lastExecutedOn">
-        /// Last time when this schedule was triggered.
-        /// Serialized Name: BackupSchedule.lastExecutionTime
-        /// </param>
+        /// <param name="frequencyInterval"> How often the backup should be executed (e.g. for weekly backup, this should be set to 7 and FrequencyUnit should be set to Day). </param>
+        /// <param name="frequencyUnit"> The unit of time for how often the backup should be executed (e.g. for weekly backup, this should be set to Day and FrequencyInterval should be set to 7). </param>
+        /// <param name="shouldKeepAtLeastOneBackup"> True if the retention policy should always keep at least one backup in the storage account, regardless how old it is; false otherwise. </param>
+        /// <param name="retentionPeriodInDays"> After how many days backups should be deleted. </param>
+        /// <param name="startOn"> When the schedule should start working. </param>
+        /// <param name="lastExecutedOn"> Last time when this schedule was triggered. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal WebAppBackupSchedule(int frequencyInterval, BackupFrequencyUnit frequencyUnit, bool shouldKeepAtLeastOneBackup, int retentionPeriodInDays, DateTimeOffset? startOn, DateTimeOffset? lastExecutedOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -115,40 +82,22 @@ namespace Azure.ResourceManager.AppService.Models
         {
         }
 
-        /// <summary>
-        /// How often the backup should be executed (e.g. for weekly backup, this should be set to 7 and FrequencyUnit should be set to Day)
-        /// Serialized Name: BackupSchedule.frequencyInterval
-        /// </summary>
+        /// <summary> How often the backup should be executed (e.g. for weekly backup, this should be set to 7 and FrequencyUnit should be set to Day). </summary>
         [WirePath("frequencyInterval")]
         public int FrequencyInterval { get; set; }
-        /// <summary>
-        /// The unit of time for how often the backup should be executed (e.g. for weekly backup, this should be set to Day and FrequencyInterval should be set to 7)
-        /// Serialized Name: BackupSchedule.frequencyUnit
-        /// </summary>
+        /// <summary> The unit of time for how often the backup should be executed (e.g. for weekly backup, this should be set to Day and FrequencyInterval should be set to 7). </summary>
         [WirePath("frequencyUnit")]
         public BackupFrequencyUnit FrequencyUnit { get; set; }
-        /// <summary>
-        /// True if the retention policy should always keep at least one backup in the storage account, regardless how old it is; false otherwise.
-        /// Serialized Name: BackupSchedule.keepAtLeastOneBackup
-        /// </summary>
+        /// <summary> True if the retention policy should always keep at least one backup in the storage account, regardless how old it is; false otherwise. </summary>
         [WirePath("keepAtLeastOneBackup")]
         public bool ShouldKeepAtLeastOneBackup { get; set; }
-        /// <summary>
-        /// After how many days backups should be deleted.
-        /// Serialized Name: BackupSchedule.retentionPeriodInDays
-        /// </summary>
+        /// <summary> After how many days backups should be deleted. </summary>
         [WirePath("retentionPeriodInDays")]
         public int RetentionPeriodInDays { get; set; }
-        /// <summary>
-        /// When the schedule should start working.
-        /// Serialized Name: BackupSchedule.startTime
-        /// </summary>
+        /// <summary> When the schedule should start working. </summary>
         [WirePath("startTime")]
         public DateTimeOffset? StartOn { get; set; }
-        /// <summary>
-        /// Last time when this schedule was triggered.
-        /// Serialized Name: BackupSchedule.lastExecutionTime
-        /// </summary>
+        /// <summary> Last time when this schedule was triggered. </summary>
         [WirePath("lastExecutionTime")]
         public DateTimeOffset? LastExecutedOn { get; }
     }

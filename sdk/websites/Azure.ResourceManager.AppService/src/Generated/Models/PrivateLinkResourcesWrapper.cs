@@ -11,10 +11,7 @@ using System.Linq;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Wrapper for a collection of private link resources
-    /// Serialized Name: PrivateLinkResourcesWrapper
-    /// </summary>
+    /// <summary> Wrapper for a collection of private link resources. </summary>
     internal partial class PrivateLinkResourcesWrapper
     {
         /// <summary>
@@ -50,7 +47,7 @@ namespace Azure.ResourceManager.AppService.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="PrivateLinkResourcesWrapper"/>. </summary>
-        /// <param name="value"> Serialized Name: PrivateLinkResourcesWrapper.value. </param>
+        /// <param name="value"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal PrivateLinkResourcesWrapper(IEnumerable<AppServicePrivateLinkResourceData> value)
         {
@@ -60,7 +57,7 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PrivateLinkResourcesWrapper"/>. </summary>
-        /// <param name="value"> Serialized Name: PrivateLinkResourcesWrapper.value. </param>
+        /// <param name="value"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PrivateLinkResourcesWrapper(IReadOnlyList<AppServicePrivateLinkResourceData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -73,7 +70,7 @@ namespace Azure.ResourceManager.AppService.Models
         {
         }
 
-        /// <summary> Serialized Name: PrivateLinkResourcesWrapper.value. </summary>
+        /// <summary> Gets the value. </summary>
         [WirePath("value")]
         public IReadOnlyList<AppServicePrivateLinkResourceData> Value { get; }
     }

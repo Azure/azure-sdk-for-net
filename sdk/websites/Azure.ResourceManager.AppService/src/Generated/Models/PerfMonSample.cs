@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Performance monitor sample in a set.
-    /// Serialized Name: PerfMonSample
-    /// </summary>
+    /// <summary> Performance monitor sample in a set. </summary>
     public partial class PerfMonSample
     {
         /// <summary>
@@ -54,18 +51,9 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PerfMonSample"/>. </summary>
-        /// <param name="time">
-        /// Point in time for which counter was measured.
-        /// Serialized Name: PerfMonSample.time
-        /// </param>
-        /// <param name="instanceName">
-        /// Name of the server on which the measurement is made.
-        /// Serialized Name: PerfMonSample.instanceName
-        /// </param>
-        /// <param name="value">
-        /// Value of counter at a certain time.
-        /// Serialized Name: PerfMonSample.value
-        /// </param>
+        /// <param name="time"> Point in time for which counter was measured. </param>
+        /// <param name="instanceName"> Name of the server on which the measurement is made. </param>
+        /// <param name="value"> Value of counter at a certain time. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PerfMonSample(DateTimeOffset? time, string instanceName, double? value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -75,22 +63,13 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Point in time for which counter was measured.
-        /// Serialized Name: PerfMonSample.time
-        /// </summary>
+        /// <summary> Point in time for which counter was measured. </summary>
         [WirePath("time")]
         public DateTimeOffset? Time { get; }
-        /// <summary>
-        /// Name of the server on which the measurement is made.
-        /// Serialized Name: PerfMonSample.instanceName
-        /// </summary>
+        /// <summary> Name of the server on which the measurement is made. </summary>
         [WirePath("instanceName")]
         public string InstanceName { get; }
-        /// <summary>
-        /// Value of counter at a certain time.
-        /// Serialized Name: PerfMonSample.value
-        /// </summary>
+        /// <summary> Value of counter at a certain time. </summary>
         [WirePath("value")]
         public double? Value { get; }
     }

@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The recurrence schedule occurrence.
-    /// Serialized Name: RecurrenceScheduleOccurrence
-    /// </summary>
+    /// <summary> The recurrence schedule occurrence. </summary>
     public partial class RecurrenceScheduleOccurrence
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="RecurrenceScheduleOccurrence"/>. </summary>
-        /// <param name="day">
-        /// The day of the week.
-        /// Serialized Name: RecurrenceScheduleOccurrence.day
-        /// </param>
-        /// <param name="occurrence">
-        /// The occurrence.
-        /// Serialized Name: RecurrenceScheduleOccurrence.occurrence
-        /// </param>
+        /// <param name="day"> The day of the week. </param>
+        /// <param name="occurrence"> The occurrence. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal RecurrenceScheduleOccurrence(WebAppDayOfWeek? day, int? occurrence, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,16 +61,10 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The day of the week.
-        /// Serialized Name: RecurrenceScheduleOccurrence.day
-        /// </summary>
+        /// <summary> The day of the week. </summary>
         [WirePath("day")]
         public WebAppDayOfWeek? Day { get; }
-        /// <summary>
-        /// The occurrence.
-        /// Serialized Name: RecurrenceScheduleOccurrence.occurrence
-        /// </summary>
+        /// <summary> The occurrence. </summary>
         [WirePath("occurrence")]
         public int? Occurrence { get; }
     }

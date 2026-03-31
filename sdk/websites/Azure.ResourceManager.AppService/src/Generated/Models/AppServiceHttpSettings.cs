@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The configuration settings of the HTTP requests for authentication and authorization requests made against App Service Authentication/Authorization.
-    /// Serialized Name: HttpSettings
-    /// </summary>
+    /// <summary> The configuration settings of the HTTP requests for authentication and authorization requests made against App Service Authentication/Authorization. </summary>
     public partial class AppServiceHttpSettings
     {
         /// <summary>
@@ -54,18 +51,9 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AppServiceHttpSettings"/>. </summary>
-        /// <param name="isHttpsRequired">
-        /// &lt;code&gt;false&lt;/code&gt; if the authentication/authorization responses not having the HTTPS scheme are permissible; otherwise, &lt;code&gt;true&lt;/code&gt;.
-        /// Serialized Name: HttpSettings.requireHttps
-        /// </param>
-        /// <param name="routes">
-        /// The configuration settings of the paths HTTP requests.
-        /// Serialized Name: HttpSettings.routes
-        /// </param>
-        /// <param name="forwardProxy">
-        /// The configuration settings of a forward proxy used to make the requests.
-        /// Serialized Name: HttpSettings.forwardProxy
-        /// </param>
+        /// <param name="isHttpsRequired"> &lt;code&gt;false&lt;/code&gt; if the authentication/authorization responses not having the HTTPS scheme are permissible; otherwise, &lt;code&gt;true&lt;/code&gt;. </param>
+        /// <param name="routes"> The configuration settings of the paths HTTP requests. </param>
+        /// <param name="forwardProxy"> The configuration settings of a forward proxy used to make the requests. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AppServiceHttpSettings(bool? isHttpsRequired, AppServiceHttpSettingsRoutes routes, AppServiceForwardProxy forwardProxy, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -75,21 +63,12 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// &lt;code&gt;false&lt;/code&gt; if the authentication/authorization responses not having the HTTPS scheme are permissible; otherwise, &lt;code&gt;true&lt;/code&gt;.
-        /// Serialized Name: HttpSettings.requireHttps
-        /// </summary>
+        /// <summary> &lt;code&gt;false&lt;/code&gt; if the authentication/authorization responses not having the HTTPS scheme are permissible; otherwise, &lt;code&gt;true&lt;/code&gt;. </summary>
         [WirePath("requireHttps")]
         public bool? IsHttpsRequired { get; set; }
-        /// <summary>
-        /// The configuration settings of the paths HTTP requests.
-        /// Serialized Name: HttpSettings.routes
-        /// </summary>
+        /// <summary> The configuration settings of the paths HTTP requests. </summary>
         internal AppServiceHttpSettingsRoutes Routes { get; set; }
-        /// <summary>
-        /// The prefix that should precede all the authentication/authorization paths.
-        /// Serialized Name: HttpSettingsRoutes.apiPrefix
-        /// </summary>
+        /// <summary> The prefix that should precede all the authentication/authorization paths. </summary>
         [WirePath("routes.apiPrefix")]
         public string RoutesApiPrefix
         {
@@ -102,10 +81,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
         }
 
-        /// <summary>
-        /// The configuration settings of a forward proxy used to make the requests.
-        /// Serialized Name: HttpSettings.forwardProxy
-        /// </summary>
+        /// <summary> The configuration settings of a forward proxy used to make the requests. </summary>
         [WirePath("forwardProxy")]
         public AppServiceForwardProxy ForwardProxy { get; set; }
     }

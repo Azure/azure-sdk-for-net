@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Retention policy of a resource metric.
-    /// Serialized Name: MetricAvailability
-    /// </summary>
+    /// <summary> Retention policy of a resource metric. </summary>
     public partial class MetricAvailability
     {
         /// <summary>
@@ -54,8 +51,8 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MetricAvailability"/>. </summary>
-        /// <param name="timeGrain"> Serialized Name: MetricAvailability.timeGrain. </param>
-        /// <param name="blobDuration"> Serialized Name: MetricAvailability.blobDuration. </param>
+        /// <param name="timeGrain"></param>
+        /// <param name="blobDuration"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal MetricAvailability(string timeGrain, TimeSpan? blobDuration, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -64,10 +61,10 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Serialized Name: MetricAvailability.timeGrain. </summary>
+        /// <summary> Gets the time grain. </summary>
         [WirePath("timeGrain")]
         public string TimeGrain { get; }
-        /// <summary> Serialized Name: MetricAvailability.blobDuration. </summary>
+        /// <summary> Gets the blob duration. </summary>
         [WirePath("blobDuration")]
         public TimeSpan? BlobDuration { get; }
     }

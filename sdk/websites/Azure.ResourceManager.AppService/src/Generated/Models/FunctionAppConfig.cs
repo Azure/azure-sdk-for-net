@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Function app configuration.
-    /// Serialized Name: FunctionAppConfig
-    /// </summary>
+    /// <summary> Function app configuration. </summary>
     public partial class FunctionAppConfig
     {
         /// <summary>
@@ -54,18 +51,9 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="FunctionAppConfig"/>. </summary>
-        /// <param name="deployment">
-        /// Function app deployment configuration.
-        /// Serialized Name: FunctionAppConfig.deployment
-        /// </param>
-        /// <param name="runtime">
-        /// Function app runtime settings.
-        /// Serialized Name: FunctionAppConfig.runtime
-        /// </param>
-        /// <param name="scaleAndConcurrency">
-        /// Function app scale and concurrency settings.
-        /// Serialized Name: FunctionAppConfig.scaleAndConcurrency
-        /// </param>
+        /// <param name="deployment"> Function app deployment configuration. </param>
+        /// <param name="runtime"> Function app runtime settings. </param>
+        /// <param name="scaleAndConcurrency"> Function app scale and concurrency settings. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal FunctionAppConfig(FunctionsDeployment deployment, FunctionAppRuntime runtime, FunctionAppScaleAndConcurrency scaleAndConcurrency, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -75,15 +63,9 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Function app deployment configuration.
-        /// Serialized Name: FunctionAppConfig.deployment
-        /// </summary>
+        /// <summary> Function app deployment configuration. </summary>
         internal FunctionsDeployment Deployment { get; set; }
-        /// <summary>
-        /// Storage for deployed package used by the function app.
-        /// Serialized Name: FunctionsDeployment.storage
-        /// </summary>
+        /// <summary> Storage for deployed package used by the function app. </summary>
         [WirePath("deployment.storage")]
         public FunctionAppStorage DeploymentStorage
         {
@@ -96,16 +78,10 @@ namespace Azure.ResourceManager.AppService.Models
             }
         }
 
-        /// <summary>
-        /// Function app runtime settings.
-        /// Serialized Name: FunctionAppConfig.runtime
-        /// </summary>
+        /// <summary> Function app runtime settings. </summary>
         [WirePath("runtime")]
         public FunctionAppRuntime Runtime { get; set; }
-        /// <summary>
-        /// Function app scale and concurrency settings.
-        /// Serialized Name: FunctionAppConfig.scaleAndConcurrency
-        /// </summary>
+        /// <summary> Function app scale and concurrency settings. </summary>
         [WirePath("scaleAndConcurrency")]
         public FunctionAppScaleAndConcurrency ScaleAndConcurrency { get; set; }
     }

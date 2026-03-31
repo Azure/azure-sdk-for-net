@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Gets the workflow trigger callback URL query parameters.
-    /// Serialized Name: WorkflowTriggerListCallbackUrlQueries
-    /// </summary>
+    /// <summary> Gets the workflow trigger callback URL query parameters. </summary>
     public partial class WorkflowTriggerListCallbackUriQueries
     {
         /// <summary>
@@ -54,26 +51,11 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkflowTriggerListCallbackUriQueries"/>. </summary>
-        /// <param name="apiVersion">
-        /// The api version.
-        /// Serialized Name: WorkflowTriggerListCallbackUrlQueries.api-version
-        /// </param>
-        /// <param name="sasPermission">
-        /// The SAS permissions.
-        /// Serialized Name: WorkflowTriggerListCallbackUrlQueries.sp
-        /// </param>
-        /// <param name="sasVersion">
-        /// The SAS version.
-        /// Serialized Name: WorkflowTriggerListCallbackUrlQueries.sv
-        /// </param>
-        /// <param name="sasSignature">
-        /// The SAS signature.
-        /// Serialized Name: WorkflowTriggerListCallbackUrlQueries.sig
-        /// </param>
-        /// <param name="sasTimestamp">
-        /// The SAS timestamp.
-        /// Serialized Name: WorkflowTriggerListCallbackUrlQueries.se
-        /// </param>
+        /// <param name="apiVersion"> The api version. </param>
+        /// <param name="sasPermission"> The SAS permissions. </param>
+        /// <param name="sasVersion"> The SAS version. </param>
+        /// <param name="sasSignature"> The SAS signature. </param>
+        /// <param name="sasTimestamp"> The SAS timestamp. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal WorkflowTriggerListCallbackUriQueries(string apiVersion, string sasPermission, string sasVersion, string sasSignature, string sasTimestamp, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -85,34 +67,19 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The api version.
-        /// Serialized Name: WorkflowTriggerListCallbackUrlQueries.api-version
-        /// </summary>
+        /// <summary> The api version. </summary>
         [WirePath("api-version")]
         public string ApiVersion { get; }
-        /// <summary>
-        /// The SAS permissions.
-        /// Serialized Name: WorkflowTriggerListCallbackUrlQueries.sp
-        /// </summary>
+        /// <summary> The SAS permissions. </summary>
         [WirePath("sp")]
         public string SasPermission { get; }
-        /// <summary>
-        /// The SAS version.
-        /// Serialized Name: WorkflowTriggerListCallbackUrlQueries.sv
-        /// </summary>
+        /// <summary> The SAS version. </summary>
         [WirePath("sv")]
         public string SasVersion { get; }
-        /// <summary>
-        /// The SAS signature.
-        /// Serialized Name: WorkflowTriggerListCallbackUrlQueries.sig
-        /// </summary>
+        /// <summary> The SAS signature. </summary>
         [WirePath("sig")]
         public string SasSignature { get; }
-        /// <summary>
-        /// The SAS timestamp.
-        /// Serialized Name: WorkflowTriggerListCallbackUrlQueries.se
-        /// </summary>
+        /// <summary> The SAS timestamp. </summary>
         [WirePath("se")]
         public string SasTimestamp { get; }
     }

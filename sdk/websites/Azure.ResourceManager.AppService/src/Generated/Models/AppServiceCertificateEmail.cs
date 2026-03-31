@@ -12,10 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// SSL certificate email.
-    /// Serialized Name: CertificateEmail
-    /// </summary>
+    /// <summary> SSL certificate email. </summary>
     public partial class AppServiceCertificateEmail : ResourceData
     {
         /// <summary>
@@ -60,14 +57,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="emailId">
-        /// Email id.
-        /// Serialized Name: CertificateEmail.emailId
-        /// </param>
-        /// <param name="timeStamp">
-        /// Time stamp.
-        /// Serialized Name: CertificateEmail.timeStamp
-        /// </param>
+        /// <param name="emailId"> Email id. </param>
+        /// <param name="timeStamp"> Time stamp. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AppServiceCertificateEmail(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string emailId, DateTimeOffset? timeStamp, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -76,16 +67,10 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Email id.
-        /// Serialized Name: CertificateEmail.emailId
-        /// </summary>
+        /// <summary> Email id. </summary>
         [WirePath("emailId")]
         public string EmailId { get; set; }
-        /// <summary>
-        /// Time stamp.
-        /// Serialized Name: CertificateEmail.timeStamp
-        /// </summary>
+        /// <summary> Time stamp. </summary>
         [WirePath("timeStamp")]
         public DateTimeOffset? TimeStamp { get; set; }
     }

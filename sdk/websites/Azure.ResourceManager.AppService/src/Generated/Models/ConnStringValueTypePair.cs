@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Database connection string value to type pair.
-    /// Serialized Name: ConnStringValueTypePair
-    /// </summary>
+    /// <summary> Database connection string value to type pair. </summary>
     public partial class ConnStringValueTypePair
     {
         /// <summary>
@@ -49,14 +46,8 @@ namespace Azure.ResourceManager.AppService.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ConnStringValueTypePair"/>. </summary>
-        /// <param name="value">
-        /// Value of pair.
-        /// Serialized Name: ConnStringValueTypePair.value
-        /// </param>
-        /// <param name="connectionStringType">
-        /// Type of database.
-        /// Serialized Name: ConnStringValueTypePair.type
-        /// </param>
+        /// <param name="value"> Value of pair. </param>
+        /// <param name="connectionStringType"> Type of database. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ConnStringValueTypePair(string value, ConnectionStringType connectionStringType)
         {
@@ -67,14 +58,8 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ConnStringValueTypePair"/>. </summary>
-        /// <param name="value">
-        /// Value of pair.
-        /// Serialized Name: ConnStringValueTypePair.value
-        /// </param>
-        /// <param name="connectionStringType">
-        /// Type of database.
-        /// Serialized Name: ConnStringValueTypePair.type
-        /// </param>
+        /// <param name="value"> Value of pair. </param>
+        /// <param name="connectionStringType"> Type of database. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ConnStringValueTypePair(string value, ConnectionStringType connectionStringType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -88,16 +73,10 @@ namespace Azure.ResourceManager.AppService.Models
         {
         }
 
-        /// <summary>
-        /// Value of pair.
-        /// Serialized Name: ConnStringValueTypePair.value
-        /// </summary>
+        /// <summary> Value of pair. </summary>
         [WirePath("value")]
         public string Value { get; set; }
-        /// <summary>
-        /// Type of database.
-        /// Serialized Name: ConnStringValueTypePair.type
-        /// </summary>
+        /// <summary> Type of database. </summary>
         [WirePath("type")]
         public ConnectionStringType ConnectionStringType { get; set; }
     }

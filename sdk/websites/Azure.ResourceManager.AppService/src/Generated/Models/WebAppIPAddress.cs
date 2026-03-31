@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The ip address.
-    /// Serialized Name: IpAddress
-    /// </summary>
+    /// <summary> The ip address. </summary>
     public partial class WebAppIPAddress
     {
         /// <summary>
@@ -54,10 +51,7 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="WebAppIPAddress"/>. </summary>
-        /// <param name="address">
-        /// The address.
-        /// Serialized Name: IpAddress.address
-        /// </param>
+        /// <param name="address"> The address. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal WebAppIPAddress(string address, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,10 +59,7 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The address.
-        /// Serialized Name: IpAddress.address
-        /// </summary>
+        /// <summary> The address. </summary>
         [WirePath("address")]
         public string Address { get; set; }
     }

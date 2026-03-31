@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Details of a hostname derived from a domain.
-    /// Serialized Name: HostName
-    /// </summary>
+    /// <summary> Details of a hostname derived from a domain. </summary>
     public partial class AppServiceHostName
     {
         /// <summary>
@@ -55,30 +52,12 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AppServiceHostName"/>. </summary>
-        /// <param name="name">
-        /// Name of the hostname.
-        /// Serialized Name: HostName.name
-        /// </param>
-        /// <param name="siteNames">
-        /// List of apps the hostname is assigned to. This list will have more than one app only if the hostname is pointing to a Traffic Manager.
-        /// Serialized Name: HostName.siteNames
-        /// </param>
-        /// <param name="azureResourceName">
-        /// Name of the Azure resource the hostname is assigned to. If it is assigned to a Traffic Manager then it will be the Traffic Manager name otherwise it will be the app name.
-        /// Serialized Name: HostName.azureResourceName
-        /// </param>
-        /// <param name="azureResourceType">
-        /// Type of the Azure resource the hostname is assigned to.
-        /// Serialized Name: HostName.azureResourceType
-        /// </param>
-        /// <param name="customHostNameDnsRecordType">
-        /// Type of the DNS record.
-        /// Serialized Name: HostName.customHostNameDnsRecordType
-        /// </param>
-        /// <param name="hostNameType">
-        /// Type of the hostname.
-        /// Serialized Name: HostName.hostNameType
-        /// </param>
+        /// <param name="name"> Name of the hostname. </param>
+        /// <param name="siteNames"> List of apps the hostname is assigned to. This list will have more than one app only if the hostname is pointing to a Traffic Manager. </param>
+        /// <param name="azureResourceName"> Name of the Azure resource the hostname is assigned to. If it is assigned to a Traffic Manager then it will be the Traffic Manager name otherwise it will be the app name. </param>
+        /// <param name="azureResourceType"> Type of the Azure resource the hostname is assigned to. </param>
+        /// <param name="customHostNameDnsRecordType"> Type of the DNS record. </param>
+        /// <param name="hostNameType"> Type of the hostname. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AppServiceHostName(string name, IReadOnlyList<string> siteNames, string azureResourceName, AppServiceResourceType? azureResourceType, CustomHostNameDnsRecordType? customHostNameDnsRecordType, AppServiceHostNameType? hostNameType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -91,40 +70,22 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Name of the hostname.
-        /// Serialized Name: HostName.name
-        /// </summary>
+        /// <summary> Name of the hostname. </summary>
         [WirePath("name")]
         public string Name { get; }
-        /// <summary>
-        /// List of apps the hostname is assigned to. This list will have more than one app only if the hostname is pointing to a Traffic Manager.
-        /// Serialized Name: HostName.siteNames
-        /// </summary>
+        /// <summary> List of apps the hostname is assigned to. This list will have more than one app only if the hostname is pointing to a Traffic Manager. </summary>
         [WirePath("siteNames")]
         public IReadOnlyList<string> SiteNames { get; }
-        /// <summary>
-        /// Name of the Azure resource the hostname is assigned to. If it is assigned to a Traffic Manager then it will be the Traffic Manager name otherwise it will be the app name.
-        /// Serialized Name: HostName.azureResourceName
-        /// </summary>
+        /// <summary> Name of the Azure resource the hostname is assigned to. If it is assigned to a Traffic Manager then it will be the Traffic Manager name otherwise it will be the app name. </summary>
         [WirePath("azureResourceName")]
         public string AzureResourceName { get; }
-        /// <summary>
-        /// Type of the Azure resource the hostname is assigned to.
-        /// Serialized Name: HostName.azureResourceType
-        /// </summary>
+        /// <summary> Type of the Azure resource the hostname is assigned to. </summary>
         [WirePath("azureResourceType")]
         public AppServiceResourceType? AzureResourceType { get; }
-        /// <summary>
-        /// Type of the DNS record.
-        /// Serialized Name: HostName.customHostNameDnsRecordType
-        /// </summary>
+        /// <summary> Type of the DNS record. </summary>
         [WirePath("customHostNameDnsRecordType")]
         public CustomHostNameDnsRecordType? CustomHostNameDnsRecordType { get; }
-        /// <summary>
-        /// Type of the hostname.
-        /// Serialized Name: HostName.hostNameType
-        /// </summary>
+        /// <summary> Type of the hostname. </summary>
         [WirePath("hostNameType")]
         public AppServiceHostNameType? HostNameType { get; }
     }

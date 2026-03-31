@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The configuration settings of the Azure Active Directory allowed principals.
-    /// Serialized Name: AllowedPrincipals
-    /// </summary>
+    /// <summary> The configuration settings of the Azure Active Directory allowed principals. </summary>
     public partial class AppServiceAadAllowedPrincipals
     {
         /// <summary>
@@ -56,14 +53,8 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AppServiceAadAllowedPrincipals"/>. </summary>
-        /// <param name="groups">
-        /// The list of the allowed groups.
-        /// Serialized Name: AllowedPrincipals.groups
-        /// </param>
-        /// <param name="identities">
-        /// The list of the allowed identities.
-        /// Serialized Name: AllowedPrincipals.identities
-        /// </param>
+        /// <param name="groups"> The list of the allowed groups. </param>
+        /// <param name="identities"> The list of the allowed identities. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AppServiceAadAllowedPrincipals(IList<string> groups, IList<string> identities, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -72,16 +63,10 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The list of the allowed groups.
-        /// Serialized Name: AllowedPrincipals.groups
-        /// </summary>
+        /// <summary> The list of the allowed groups. </summary>
         [WirePath("groups")]
         public IList<string> Groups { get; }
-        /// <summary>
-        /// The list of the allowed identities.
-        /// Serialized Name: AllowedPrincipals.identities
-        /// </summary>
+        /// <summary> The list of the allowed identities. </summary>
         [WirePath("identities")]
         public IList<string> Identities { get; }
     }

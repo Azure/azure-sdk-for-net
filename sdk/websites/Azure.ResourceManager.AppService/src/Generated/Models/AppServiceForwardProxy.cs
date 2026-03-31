@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The configuration settings of a forward proxy used to make the requests.
-    /// Serialized Name: ForwardProxy
-    /// </summary>
+    /// <summary> The configuration settings of a forward proxy used to make the requests. </summary>
     public partial class AppServiceForwardProxy
     {
         /// <summary>
@@ -54,18 +51,9 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AppServiceForwardProxy"/>. </summary>
-        /// <param name="convention">
-        /// The convention used to determine the url of the request made.
-        /// Serialized Name: ForwardProxy.convention
-        /// </param>
-        /// <param name="customHostHeaderName">
-        /// The name of the header containing the host of the request.
-        /// Serialized Name: ForwardProxy.customHostHeaderName
-        /// </param>
-        /// <param name="customProtoHeaderName">
-        /// The name of the header containing the scheme of the request.
-        /// Serialized Name: ForwardProxy.customProtoHeaderName
-        /// </param>
+        /// <param name="convention"> The convention used to determine the url of the request made. </param>
+        /// <param name="customHostHeaderName"> The name of the header containing the host of the request. </param>
+        /// <param name="customProtoHeaderName"> The name of the header containing the scheme of the request. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AppServiceForwardProxy(ForwardProxyConvention? convention, string customHostHeaderName, string customProtoHeaderName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -75,22 +63,13 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The convention used to determine the url of the request made.
-        /// Serialized Name: ForwardProxy.convention
-        /// </summary>
+        /// <summary> The convention used to determine the url of the request made. </summary>
         [WirePath("convention")]
         public ForwardProxyConvention? Convention { get; set; }
-        /// <summary>
-        /// The name of the header containing the host of the request.
-        /// Serialized Name: ForwardProxy.customHostHeaderName
-        /// </summary>
+        /// <summary> The name of the header containing the host of the request. </summary>
         [WirePath("customHostHeaderName")]
         public string CustomHostHeaderName { get; set; }
-        /// <summary>
-        /// The name of the header containing the scheme of the request.
-        /// Serialized Name: ForwardProxy.customProtoHeaderName
-        /// </summary>
+        /// <summary> The name of the header containing the scheme of the request. </summary>
         [WirePath("customProtoHeaderName")]
         public string CustomProtoHeaderName { get; set; }
     }

@@ -40,10 +40,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(StorageType.Value.ToString());
             }
-            if (Optional.IsDefined(Value))
+            if (Optional.IsDefined(AzureStorageUrlValue))
             {
                 writer.WritePropertyName("value"u8);
-                writer.WriteStringValue(Value.AbsoluteUri);
+                writer.WriteStringValue(AzureStorageUrlValue);
             }
             if (Optional.IsDefined(Authentication))
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppService.Models
                 return null;
             }
             FunctionAppStorageType? type = default;
-            Uri value = default;
+            string value = default;
             FunctionAppStorageAuthentication authentication = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -105,11 +105,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (property.NameEquals("value"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    value = new Uri(property.Value.GetString());
+                    value = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("authentication"u8))
@@ -156,7 +152,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Value), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AzureStorageUrlValue), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  value: ");
@@ -164,10 +160,18 @@ namespace Azure.ResourceManager.AppService.Models
             }
             else
             {
-                if (Optional.IsDefined(Value))
+                if (Optional.IsDefined(AzureStorageUrlValue))
                 {
                     builder.Append("  value: ");
-                    builder.AppendLine($"'{Value.AbsoluteUri}'");
+                    if (AzureStorageUrlValue.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{AzureStorageUrlValue}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{AzureStorageUrlValue}'");
+                    }
                 }
             }
 

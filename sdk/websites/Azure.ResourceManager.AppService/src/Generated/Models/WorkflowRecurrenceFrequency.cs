@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The recurrence frequency.
-    /// Serialized Name: RecurrenceFrequency
-    /// </summary>
+    /// <summary> The recurrence frequency. </summary>
     public readonly partial struct WorkflowRecurrenceFrequency : IEquatable<WorkflowRecurrenceFrequency>
     {
         private readonly string _value;
@@ -34,45 +31,21 @@ namespace Azure.ResourceManager.AppService.Models
         private const string MonthValue = "Month";
         private const string YearValue = "Year";
 
-        /// <summary>
-        /// NotSpecified
-        /// Serialized Name: RecurrenceFrequency.NotSpecified
-        /// </summary>
+        /// <summary> NotSpecified. </summary>
         public static WorkflowRecurrenceFrequency NotSpecified { get; } = new WorkflowRecurrenceFrequency(NotSpecifiedValue);
-        /// <summary>
-        /// Second
-        /// Serialized Name: RecurrenceFrequency.Second
-        /// </summary>
+        /// <summary> Second. </summary>
         public static WorkflowRecurrenceFrequency Second { get; } = new WorkflowRecurrenceFrequency(SecondValue);
-        /// <summary>
-        /// Minute
-        /// Serialized Name: RecurrenceFrequency.Minute
-        /// </summary>
+        /// <summary> Minute. </summary>
         public static WorkflowRecurrenceFrequency Minute { get; } = new WorkflowRecurrenceFrequency(MinuteValue);
-        /// <summary>
-        /// Hour
-        /// Serialized Name: RecurrenceFrequency.Hour
-        /// </summary>
+        /// <summary> Hour. </summary>
         public static WorkflowRecurrenceFrequency Hour { get; } = new WorkflowRecurrenceFrequency(HourValue);
-        /// <summary>
-        /// Day
-        /// Serialized Name: RecurrenceFrequency.Day
-        /// </summary>
+        /// <summary> Day. </summary>
         public static WorkflowRecurrenceFrequency Day { get; } = new WorkflowRecurrenceFrequency(DayValue);
-        /// <summary>
-        /// Week
-        /// Serialized Name: RecurrenceFrequency.Week
-        /// </summary>
+        /// <summary> Week. </summary>
         public static WorkflowRecurrenceFrequency Week { get; } = new WorkflowRecurrenceFrequency(WeekValue);
-        /// <summary>
-        /// Month
-        /// Serialized Name: RecurrenceFrequency.Month
-        /// </summary>
+        /// <summary> Month. </summary>
         public static WorkflowRecurrenceFrequency Month { get; } = new WorkflowRecurrenceFrequency(MonthValue);
-        /// <summary>
-        /// Year
-        /// Serialized Name: RecurrenceFrequency.Year
-        /// </summary>
+        /// <summary> Year. </summary>
         public static WorkflowRecurrenceFrequency Year { get; } = new WorkflowRecurrenceFrequency(YearValue);
         /// <summary> Determines if two <see cref="WorkflowRecurrenceFrequency"/> values are the same. </summary>
         public static bool operator ==(WorkflowRecurrenceFrequency left, WorkflowRecurrenceFrequency right) => left.Equals(right);

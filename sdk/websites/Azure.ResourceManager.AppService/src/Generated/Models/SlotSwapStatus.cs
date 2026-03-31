@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The status of the last successful slot swap operation.
-    /// Serialized Name: SlotSwapStatus
-    /// </summary>
+    /// <summary> The status of the last successful slot swap operation. </summary>
     public partial class SlotSwapStatus
     {
         /// <summary>
@@ -54,18 +51,9 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SlotSwapStatus"/>. </summary>
-        /// <param name="timestampUtc">
-        /// The time the last successful slot swap completed.
-        /// Serialized Name: SlotSwapStatus.timestampUtc
-        /// </param>
-        /// <param name="sourceSlotName">
-        /// The source slot of the last swap operation.
-        /// Serialized Name: SlotSwapStatus.sourceSlotName
-        /// </param>
-        /// <param name="destinationSlotName">
-        /// The destination slot of the last swap operation.
-        /// Serialized Name: SlotSwapStatus.destinationSlotName
-        /// </param>
+        /// <param name="timestampUtc"> The time the last successful slot swap completed. </param>
+        /// <param name="sourceSlotName"> The source slot of the last swap operation. </param>
+        /// <param name="destinationSlotName"> The destination slot of the last swap operation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SlotSwapStatus(DateTimeOffset? timestampUtc, string sourceSlotName, string destinationSlotName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -75,22 +63,13 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The time the last successful slot swap completed.
-        /// Serialized Name: SlotSwapStatus.timestampUtc
-        /// </summary>
+        /// <summary> The time the last successful slot swap completed. </summary>
         [WirePath("timestampUtc")]
         public DateTimeOffset? TimestampUtc { get; }
-        /// <summary>
-        /// The source slot of the last swap operation.
-        /// Serialized Name: SlotSwapStatus.sourceSlotName
-        /// </summary>
+        /// <summary> The source slot of the last swap operation. </summary>
         [WirePath("sourceSlotName")]
         public string SourceSlotName { get; }
-        /// <summary>
-        /// The destination slot of the last swap operation.
-        /// Serialized Name: SlotSwapStatus.destinationSlotName
-        /// </summary>
+        /// <summary> The destination slot of the last swap operation. </summary>
         [WirePath("destinationSlotName")]
         public string DestinationSlotName { get; }
     }

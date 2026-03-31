@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The list of workflow request histories.
-    /// Serialized Name: RequestHistoryListResult
-    /// </summary>
+    /// <summary> The list of workflow request histories. </summary>
     internal partial class RequestHistoryListResult
     {
         /// <summary>
@@ -55,14 +52,8 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="RequestHistoryListResult"/>. </summary>
-        /// <param name="value">
-        /// A list of workflow request histories.
-        /// Serialized Name: RequestHistoryListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The URL to get the next set of results.
-        /// Serialized Name: RequestHistoryListResult.nextLink
-        /// </param>
+        /// <param name="value"> A list of workflow request histories. </param>
+        /// <param name="nextLink"> The URL to get the next set of results. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal RequestHistoryListResult(IReadOnlyList<WebAppRequestHistoryData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -71,15 +62,9 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// A list of workflow request histories.
-        /// Serialized Name: RequestHistoryListResult.value
-        /// </summary>
+        /// <summary> A list of workflow request histories. </summary>
         public IReadOnlyList<WebAppRequestHistoryData> Value { get; }
-        /// <summary>
-        /// The URL to get the next set of results.
-        /// Serialized Name: RequestHistoryListResult.nextLink
-        /// </summary>
+        /// <summary> The URL to get the next set of results. </summary>
         public string NextLink { get; }
     }
 }

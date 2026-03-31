@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Represents the workflow health.
-    /// Serialized Name: WorkflowHealth
-    /// </summary>
+    /// <summary> Represents the workflow health. </summary>
     public partial class WorkflowHealth
     {
         /// <summary>
@@ -49,24 +46,15 @@ namespace Azure.ResourceManager.AppService.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="WorkflowHealth"/>. </summary>
-        /// <param name="state">
-        /// Gets or sets the workflow health state.
-        /// Serialized Name: WorkflowHealth.state
-        /// </param>
+        /// <param name="state"> Gets or sets the workflow health state. </param>
         internal WorkflowHealth(WorkflowHealthState state)
         {
             State = state;
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkflowHealth"/>. </summary>
-        /// <param name="state">
-        /// Gets or sets the workflow health state.
-        /// Serialized Name: WorkflowHealth.state
-        /// </param>
-        /// <param name="error">
-        /// Gets or sets the workflow error.
-        /// Serialized Name: WorkflowHealth.error
-        /// </param>
+        /// <param name="state"> Gets or sets the workflow health state. </param>
+        /// <param name="error"> Gets or sets the workflow error. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal WorkflowHealth(WorkflowHealthState state, ResponseError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -80,10 +68,7 @@ namespace Azure.ResourceManager.AppService.Models
         {
         }
 
-        /// <summary>
-        /// Gets or sets the workflow health state.
-        /// Serialized Name: WorkflowHealth.state
-        /// </summary>
+        /// <summary> Gets or sets the workflow health state. </summary>
         [WirePath("state")]
         public WorkflowHealthState State { get; }
     }

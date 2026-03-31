@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// A collection of workflow run action repetitions.
-    /// Serialized Name: WorkflowRunActionRepetitionDefinitionCollection
-    /// </summary>
+    /// <summary> A collection of workflow run action repetitions. </summary>
     internal partial class WorkflowRunActionRepetitionDefinitionCollection
     {
         /// <summary>
@@ -55,11 +52,8 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkflowRunActionRepetitionDefinitionCollection"/>. </summary>
-        /// <param name="nextLink">
-        /// The link used to get the next page of recommendations.
-        /// Serialized Name: WorkflowRunActionRepetitionDefinitionCollection.nextLink
-        /// </param>
-        /// <param name="value"> Serialized Name: WorkflowRunActionRepetitionDefinitionCollection.value. </param>
+        /// <param name="nextLink"> The link used to get the next page of recommendations. </param>
+        /// <param name="value"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal WorkflowRunActionRepetitionDefinitionCollection(string nextLink, IReadOnlyList<WorkflowRunActionRepetitionDefinitionData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -68,12 +62,9 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The link used to get the next page of recommendations.
-        /// Serialized Name: WorkflowRunActionRepetitionDefinitionCollection.nextLink
-        /// </summary>
+        /// <summary> The link used to get the next page of recommendations. </summary>
         public string NextLink { get; }
-        /// <summary> Serialized Name: WorkflowRunActionRepetitionDefinitionCollection.value. </summary>
+        /// <summary> Gets the value. </summary>
         public IReadOnlyList<WorkflowRunActionRepetitionDefinitionData> Value { get; }
     }
 }

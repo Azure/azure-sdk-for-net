@@ -12,10 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Static Site Function Overview ARM resource.
-    /// Serialized Name: StaticSiteFunctionOverviewARMResource
-    /// </summary>
+    /// <summary> Static Site Function Overview ARM resource. </summary>
     public partial class StaticSiteFunctionOverview : ResourceData
     {
         /// <summary>
@@ -60,18 +57,9 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="functionName">
-        /// The name for the function
-        /// Serialized Name: StaticSiteFunctionOverviewARMResource.properties.functionName
-        /// </param>
-        /// <param name="triggerType">
-        /// The trigger type of the function
-        /// Serialized Name: StaticSiteFunctionOverviewARMResource.properties.triggerType
-        /// </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </param>
+        /// <param name="functionName"> The name for the function. </param>
+        /// <param name="triggerType"> The trigger type of the function. </param>
+        /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal StaticSiteFunctionOverview(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string functionName, FunctionTriggerType? triggerType, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -81,22 +69,13 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The name for the function
-        /// Serialized Name: StaticSiteFunctionOverviewARMResource.properties.functionName
-        /// </summary>
+        /// <summary> The name for the function. </summary>
         [WirePath("properties.functionName")]
         public string FunctionName { get; }
-        /// <summary>
-        /// The trigger type of the function
-        /// Serialized Name: StaticSiteFunctionOverviewARMResource.properties.triggerType
-        /// </summary>
+        /// <summary> The trigger type of the function. </summary>
         [WirePath("properties.triggerType")]
         public FunctionTriggerType? TriggerType { get; }
-        /// <summary>
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </summary>
+        /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
     }

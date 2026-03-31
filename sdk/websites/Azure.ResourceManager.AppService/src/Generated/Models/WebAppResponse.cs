@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// A response.
-    /// Serialized Name: Response
-    /// </summary>
+    /// <summary> A response. </summary>
     public partial class WebAppResponse
     {
         /// <summary>
@@ -54,18 +51,9 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="WebAppResponse"/>. </summary>
-        /// <param name="headers">
-        /// A list of all the headers attached to the response.
-        /// Serialized Name: Response.headers
-        /// </param>
-        /// <param name="statusCode">
-        /// The status code of the response.
-        /// Serialized Name: Response.statusCode
-        /// </param>
-        /// <param name="bodyLink">
-        /// Details on the location of the body content.
-        /// Serialized Name: Response.bodyLink
-        /// </param>
+        /// <param name="headers"> A list of all the headers attached to the response. </param>
+        /// <param name="statusCode"> The status code of the response. </param>
+        /// <param name="bodyLink"> Details on the location of the body content. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal WebAppResponse(BinaryData headers, int? statusCode, WebAppContentLink bodyLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -77,7 +65,6 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary>
         /// A list of all the headers attached to the response.
-        /// Serialized Name: Response.headers
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -108,16 +95,10 @@ namespace Azure.ResourceManager.AppService.Models
         /// </summary>
         [WirePath("headers")]
         public BinaryData Headers { get; set; }
-        /// <summary>
-        /// The status code of the response.
-        /// Serialized Name: Response.statusCode
-        /// </summary>
+        /// <summary> The status code of the response. </summary>
         [WirePath("statusCode")]
         public int? StatusCode { get; set; }
-        /// <summary>
-        /// Details on the location of the body content.
-        /// Serialized Name: Response.bodyLink
-        /// </summary>
+        /// <summary> Details on the location of the body content. </summary>
         [WirePath("bodyLink")]
         public WebAppContentLink BodyLink { get; set; }
     }

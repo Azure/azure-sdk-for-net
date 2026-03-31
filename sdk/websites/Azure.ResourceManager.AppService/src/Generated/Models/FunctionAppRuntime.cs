@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Function app runtime name and version.
-    /// Serialized Name: FunctionsRuntime
-    /// </summary>
+    /// <summary> Function app runtime name and version. </summary>
     public partial class FunctionAppRuntime
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="FunctionAppRuntime"/>. </summary>
-        /// <param name="name">
-        /// Function app runtime name. Available options: dotnet-isolated, node, java, powershell, python, custom
-        /// Serialized Name: FunctionsRuntime.name
-        /// </param>
-        /// <param name="version">
-        /// Function app runtime version. Example: 8 (for dotnet-isolated)
-        /// Serialized Name: FunctionsRuntime.version
-        /// </param>
+        /// <param name="name"> Function app runtime name. Available options: dotnet-isolated, node, java, powershell, python, custom. </param>
+        /// <param name="version"> Function app runtime version. Example: 8 (for dotnet-isolated). </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal FunctionAppRuntime(FunctionAppRuntimeName? name, string version, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,16 +61,10 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Function app runtime name. Available options: dotnet-isolated, node, java, powershell, python, custom
-        /// Serialized Name: FunctionsRuntime.name
-        /// </summary>
+        /// <summary> Function app runtime name. Available options: dotnet-isolated, node, java, powershell, python, custom. </summary>
         [WirePath("name")]
         public FunctionAppRuntimeName? Name { get; set; }
-        /// <summary>
-        /// Function app runtime version. Example: 8 (for dotnet-isolated)
-        /// Serialized Name: FunctionsRuntime.version
-        /// </summary>
+        /// <summary> Function app runtime version. Example: 8 (for dotnet-isolated). </summary>
         [WirePath("version")]
         public string Version { get; set; }
     }

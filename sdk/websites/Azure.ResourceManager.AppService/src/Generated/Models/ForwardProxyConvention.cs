@@ -7,26 +7,14 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The convention used to determine the url of the request made.
-    /// Serialized Name: ForwardProxyConvention
-    /// </summary>
+    /// <summary> The convention used to determine the url of the request made. </summary>
     public enum ForwardProxyConvention
     {
-        /// <summary>
-        /// NoProxy
-        /// Serialized Name: ForwardProxyConvention.NoProxy
-        /// </summary>
+        /// <summary> NoProxy. </summary>
         NoProxy,
-        /// <summary>
-        /// Standard
-        /// Serialized Name: ForwardProxyConvention.Standard
-        /// </summary>
+        /// <summary> Standard. </summary>
         Standard,
-        /// <summary>
-        /// Custom
-        /// Serialized Name: ForwardProxyConvention.Custom
-        /// </summary>
+        /// <summary> Custom. </summary>
         Custom
     }
 }

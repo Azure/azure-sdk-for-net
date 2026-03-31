@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Options for retrieving the list of top level domain legal agreements.
-    /// Serialized Name: TopLevelDomainAgreementOption
-    /// </summary>
+    /// <summary> Options for retrieving the list of top level domain legal agreements. </summary>
     public partial class TopLevelDomainAgreementOption
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="TopLevelDomainAgreementOption"/>. </summary>
-        /// <param name="includePrivacy">
-        /// If &lt;code&gt;true&lt;/code&gt;, then the list of agreements will include agreements for domain privacy as well; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: TopLevelDomainAgreementOption.includePrivacy
-        /// </param>
-        /// <param name="isForTransfer">
-        /// If &lt;code&gt;true&lt;/code&gt;, then the list of agreements will include agreements for domain transfer as well; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: TopLevelDomainAgreementOption.forTransfer
-        /// </param>
+        /// <param name="includePrivacy"> If &lt;code&gt;true&lt;/code&gt;, then the list of agreements will include agreements for domain privacy as well; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="isForTransfer"> If &lt;code&gt;true&lt;/code&gt;, then the list of agreements will include agreements for domain transfer as well; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal TopLevelDomainAgreementOption(bool? includePrivacy, bool? isForTransfer, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,16 +61,10 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// If &lt;code&gt;true&lt;/code&gt;, then the list of agreements will include agreements for domain privacy as well; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: TopLevelDomainAgreementOption.includePrivacy
-        /// </summary>
+        /// <summary> If &lt;code&gt;true&lt;/code&gt;, then the list of agreements will include agreements for domain privacy as well; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         [WirePath("includePrivacy")]
         public bool? IncludePrivacy { get; set; }
-        /// <summary>
-        /// If &lt;code&gt;true&lt;/code&gt;, then the list of agreements will include agreements for domain transfer as well; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: TopLevelDomainAgreementOption.forTransfer
-        /// </summary>
+        /// <summary> If &lt;code&gt;true&lt;/code&gt;, then the list of agreements will include agreements for domain transfer as well; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         [WirePath("forTransfer")]
         public bool? IsForTransfer { get; set; }
     }

@@ -12,10 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// ARM resource for a certificate order that is purchased through Azure.
-    /// Serialized Name: AppServiceCertificateOrderPatchResource
-    /// </summary>
+    /// <summary> ARM resource for a certificate order that is purchased through Azure. </summary>
     public partial class AppServiceCertificateOrderPatch : ResourceData
     {
         /// <summary>
@@ -62,90 +59,27 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="certificates">
-        /// State of the Key Vault secret.
-        /// Serialized Name: AppServiceCertificateOrderPatchResource.properties.certificates
-        /// </param>
-        /// <param name="distinguishedName">
-        /// Certificate distinguished name.
-        /// Serialized Name: AppServiceCertificateOrderPatchResource.properties.distinguishedName
-        /// </param>
-        /// <param name="domainVerificationToken">
-        /// Domain verification token.
-        /// Serialized Name: AppServiceCertificateOrderPatchResource.properties.domainVerificationToken
-        /// </param>
-        /// <param name="validityInYears">
-        /// Duration in years (must be 1).
-        /// Serialized Name: AppServiceCertificateOrderPatchResource.properties.validityInYears
-        /// </param>
-        /// <param name="keySize">
-        /// Certificate key size.
-        /// Serialized Name: AppServiceCertificateOrderPatchResource.properties.keySize
-        /// </param>
-        /// <param name="productType">
-        /// Certificate product type.
-        /// Serialized Name: AppServiceCertificateOrderPatchResource.properties.productType
-        /// </param>
-        /// <param name="isAutoRenew">
-        /// &lt;code&gt;true&lt;/code&gt; if the certificate should be automatically renewed when it expires; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: AppServiceCertificateOrderPatchResource.properties.autoRenew
-        /// </param>
-        /// <param name="provisioningState">
-        /// Status of certificate order.
-        /// Serialized Name: AppServiceCertificateOrderPatchResource.properties.provisioningState
-        /// </param>
-        /// <param name="status">
-        /// Current order status.
-        /// Serialized Name: AppServiceCertificateOrderPatchResource.properties.status
-        /// </param>
-        /// <param name="signedCertificate">
-        /// Signed certificate.
-        /// Serialized Name: AppServiceCertificateOrderPatchResource.properties.signedCertificate
-        /// </param>
-        /// <param name="csr">
-        /// Last CSR that was created for this order.
-        /// Serialized Name: AppServiceCertificateOrderPatchResource.properties.csr
-        /// </param>
-        /// <param name="intermediate">
-        /// Intermediate certificate.
-        /// Serialized Name: AppServiceCertificateOrderPatchResource.properties.intermediate
-        /// </param>
-        /// <param name="root">
-        /// Root certificate.
-        /// Serialized Name: AppServiceCertificateOrderPatchResource.properties.root
-        /// </param>
-        /// <param name="serialNumber">
-        /// Current serial number of the certificate.
-        /// Serialized Name: AppServiceCertificateOrderPatchResource.properties.serialNumber
-        /// </param>
-        /// <param name="lastCertificateIssuanceOn">
-        /// Certificate last issuance time.
-        /// Serialized Name: AppServiceCertificateOrderPatchResource.properties.lastCertificateIssuanceTime
-        /// </param>
-        /// <param name="expireOn">
-        /// Certificate expiration time.
-        /// Serialized Name: AppServiceCertificateOrderPatchResource.properties.expirationTime
-        /// </param>
-        /// <param name="isPrivateKeyExternal">
-        /// &lt;code&gt;true&lt;/code&gt; if private key is external; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: AppServiceCertificateOrderPatchResource.properties.isPrivateKeyExternal
-        /// </param>
-        /// <param name="appServiceCertificateNotRenewableReasons">
-        /// Reasons why App Service Certificate is not renewable at the current moment.
-        /// Serialized Name: AppServiceCertificateOrderPatchResource.properties.appServiceCertificateNotRenewableReasons
-        /// </param>
-        /// <param name="nextAutoRenewalTimeStamp">
-        /// Time stamp when the certificate would be auto renewed next
-        /// Serialized Name: AppServiceCertificateOrderPatchResource.properties.nextAutoRenewalTimeStamp
-        /// </param>
-        /// <param name="contact">
-        /// Contact info
-        /// Serialized Name: AppServiceCertificateOrderPatchResource.properties.contact
-        /// </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </param>
+        /// <param name="certificates"> State of the Key Vault secret. </param>
+        /// <param name="distinguishedName"> Certificate distinguished name. </param>
+        /// <param name="domainVerificationToken"> Domain verification token. </param>
+        /// <param name="validityInYears"> Duration in years (must be 1). </param>
+        /// <param name="keySize"> Certificate key size. </param>
+        /// <param name="productType"> Certificate product type. </param>
+        /// <param name="isAutoRenew"> &lt;code&gt;true&lt;/code&gt; if the certificate should be automatically renewed when it expires; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="provisioningState"> Status of certificate order. </param>
+        /// <param name="status"> Current order status. </param>
+        /// <param name="signedCertificate"> Signed certificate. </param>
+        /// <param name="csr"> Last CSR that was created for this order. </param>
+        /// <param name="intermediate"> Intermediate certificate. </param>
+        /// <param name="root"> Root certificate. </param>
+        /// <param name="serialNumber"> Current serial number of the certificate. </param>
+        /// <param name="lastCertificateIssuanceOn"> Certificate last issuance time. </param>
+        /// <param name="expireOn"> Certificate expiration time. </param>
+        /// <param name="isPrivateKeyExternal"> &lt;code&gt;true&lt;/code&gt; if private key is external; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="appServiceCertificateNotRenewableReasons"> Reasons why App Service Certificate is not renewable at the current moment. </param>
+        /// <param name="nextAutoRenewalTimeStamp"> Time stamp when the certificate would be auto renewed next. </param>
+        /// <param name="contact"> Contact info. </param>
+        /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AppServiceCertificateOrderPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, AppServiceCertificateProperties> certificates, string distinguishedName, string domainVerificationToken, int? validityInYears, int? keySize, CertificateProductType? productType, bool? isAutoRenew, ProvisioningState? provisioningState, CertificateOrderStatus? status, AppServiceCertificateDetails signedCertificate, string csr, AppServiceCertificateDetails intermediate, AppServiceCertificateDetails root, string serialNumber, DateTimeOffset? lastCertificateIssuanceOn, DateTimeOffset? expireOn, bool? isPrivateKeyExternal, IReadOnlyList<AppServiceCertificateNotRenewableReason> appServiceCertificateNotRenewableReasons, DateTimeOffset? nextAutoRenewalTimeStamp, CertificateOrderContact contact, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -173,130 +107,67 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// State of the Key Vault secret.
-        /// Serialized Name: AppServiceCertificateOrderPatchResource.properties.certificates
-        /// </summary>
+        /// <summary> State of the Key Vault secret. </summary>
         [WirePath("properties.certificates")]
         public IDictionary<string, AppServiceCertificateProperties> Certificates { get; }
-        /// <summary>
-        /// Certificate distinguished name.
-        /// Serialized Name: AppServiceCertificateOrderPatchResource.properties.distinguishedName
-        /// </summary>
+        /// <summary> Certificate distinguished name. </summary>
         [WirePath("properties.distinguishedName")]
         public string DistinguishedName { get; set; }
-        /// <summary>
-        /// Domain verification token.
-        /// Serialized Name: AppServiceCertificateOrderPatchResource.properties.domainVerificationToken
-        /// </summary>
+        /// <summary> Domain verification token. </summary>
         [WirePath("properties.domainVerificationToken")]
         public string DomainVerificationToken { get; }
-        /// <summary>
-        /// Duration in years (must be 1).
-        /// Serialized Name: AppServiceCertificateOrderPatchResource.properties.validityInYears
-        /// </summary>
+        /// <summary> Duration in years (must be 1). </summary>
         [WirePath("properties.validityInYears")]
         public int? ValidityInYears { get; set; }
-        /// <summary>
-        /// Certificate key size.
-        /// Serialized Name: AppServiceCertificateOrderPatchResource.properties.keySize
-        /// </summary>
+        /// <summary> Certificate key size. </summary>
         [WirePath("properties.keySize")]
         public int? KeySize { get; set; }
-        /// <summary>
-        /// Certificate product type.
-        /// Serialized Name: AppServiceCertificateOrderPatchResource.properties.productType
-        /// </summary>
+        /// <summary> Certificate product type. </summary>
         [WirePath("properties.productType")]
         public CertificateProductType? ProductType { get; set; }
-        /// <summary>
-        /// &lt;code&gt;true&lt;/code&gt; if the certificate should be automatically renewed when it expires; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: AppServiceCertificateOrderPatchResource.properties.autoRenew
-        /// </summary>
+        /// <summary> &lt;code&gt;true&lt;/code&gt; if the certificate should be automatically renewed when it expires; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         [WirePath("properties.autoRenew")]
         public bool? IsAutoRenew { get; set; }
-        /// <summary>
-        /// Status of certificate order.
-        /// Serialized Name: AppServiceCertificateOrderPatchResource.properties.provisioningState
-        /// </summary>
+        /// <summary> Status of certificate order. </summary>
         [WirePath("properties.provisioningState")]
         public ProvisioningState? ProvisioningState { get; }
-        /// <summary>
-        /// Current order status.
-        /// Serialized Name: AppServiceCertificateOrderPatchResource.properties.status
-        /// </summary>
+        /// <summary> Current order status. </summary>
         [WirePath("properties.status")]
         public CertificateOrderStatus? Status { get; }
-        /// <summary>
-        /// Signed certificate.
-        /// Serialized Name: AppServiceCertificateOrderPatchResource.properties.signedCertificate
-        /// </summary>
+        /// <summary> Signed certificate. </summary>
         [WirePath("properties.signedCertificate")]
         public AppServiceCertificateDetails SignedCertificate { get; }
-        /// <summary>
-        /// Last CSR that was created for this order.
-        /// Serialized Name: AppServiceCertificateOrderPatchResource.properties.csr
-        /// </summary>
+        /// <summary> Last CSR that was created for this order. </summary>
         [WirePath("properties.csr")]
         public string Csr { get; set; }
-        /// <summary>
-        /// Intermediate certificate.
-        /// Serialized Name: AppServiceCertificateOrderPatchResource.properties.intermediate
-        /// </summary>
+        /// <summary> Intermediate certificate. </summary>
         [WirePath("properties.intermediate")]
         public AppServiceCertificateDetails Intermediate { get; }
-        /// <summary>
-        /// Root certificate.
-        /// Serialized Name: AppServiceCertificateOrderPatchResource.properties.root
-        /// </summary>
+        /// <summary> Root certificate. </summary>
         [WirePath("properties.root")]
         public AppServiceCertificateDetails Root { get; }
-        /// <summary>
-        /// Current serial number of the certificate.
-        /// Serialized Name: AppServiceCertificateOrderPatchResource.properties.serialNumber
-        /// </summary>
+        /// <summary> Current serial number of the certificate. </summary>
         [WirePath("properties.serialNumber")]
         public string SerialNumber { get; }
-        /// <summary>
-        /// Certificate last issuance time.
-        /// Serialized Name: AppServiceCertificateOrderPatchResource.properties.lastCertificateIssuanceTime
-        /// </summary>
+        /// <summary> Certificate last issuance time. </summary>
         [WirePath("properties.lastCertificateIssuanceTime")]
         public DateTimeOffset? LastCertificateIssuanceOn { get; }
-        /// <summary>
-        /// Certificate expiration time.
-        /// Serialized Name: AppServiceCertificateOrderPatchResource.properties.expirationTime
-        /// </summary>
+        /// <summary> Certificate expiration time. </summary>
         [WirePath("properties.expirationTime")]
         public DateTimeOffset? ExpireOn { get; }
-        /// <summary>
-        /// &lt;code&gt;true&lt;/code&gt; if private key is external; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: AppServiceCertificateOrderPatchResource.properties.isPrivateKeyExternal
-        /// </summary>
+        /// <summary> &lt;code&gt;true&lt;/code&gt; if private key is external; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         [WirePath("properties.isPrivateKeyExternal")]
         public bool? IsPrivateKeyExternal { get; }
-        /// <summary>
-        /// Reasons why App Service Certificate is not renewable at the current moment.
-        /// Serialized Name: AppServiceCertificateOrderPatchResource.properties.appServiceCertificateNotRenewableReasons
-        /// </summary>
+        /// <summary> Reasons why App Service Certificate is not renewable at the current moment. </summary>
         [WirePath("properties.appServiceCertificateNotRenewableReasons")]
         public IReadOnlyList<AppServiceCertificateNotRenewableReason> AppServiceCertificateNotRenewableReasons { get; }
-        /// <summary>
-        /// Time stamp when the certificate would be auto renewed next
-        /// Serialized Name: AppServiceCertificateOrderPatchResource.properties.nextAutoRenewalTimeStamp
-        /// </summary>
+        /// <summary> Time stamp when the certificate would be auto renewed next. </summary>
         [WirePath("properties.nextAutoRenewalTimeStamp")]
         public DateTimeOffset? NextAutoRenewalTimeStamp { get; }
-        /// <summary>
-        /// Contact info
-        /// Serialized Name: AppServiceCertificateOrderPatchResource.properties.contact
-        /// </summary>
+        /// <summary> Contact info. </summary>
         [WirePath("properties.contact")]
         public CertificateOrderContact Contact { get; }
-        /// <summary>
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </summary>
+        /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
     }

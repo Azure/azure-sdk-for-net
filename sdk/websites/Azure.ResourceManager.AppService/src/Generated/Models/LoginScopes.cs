@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The configuration settings of the login flow, including the scopes that should be requested.
-    /// Serialized Name: LoginScopes
-    /// </summary>
+    /// <summary> The configuration settings of the login flow, including the scopes that should be requested. </summary>
     internal partial class LoginScopes
     {
         /// <summary>
@@ -55,10 +52,7 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="LoginScopes"/>. </summary>
-        /// <param name="scopes">
-        /// A list of the scopes that should be requested while authenticating.
-        /// Serialized Name: LoginScopes.scopes
-        /// </param>
+        /// <param name="scopes"> A list of the scopes that should be requested while authenticating. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal LoginScopes(IList<string> scopes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -66,10 +60,7 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// A list of the scopes that should be requested while authenticating.
-        /// Serialized Name: LoginScopes.scopes
-        /// </summary>
+        /// <summary> A list of the scopes that should be requested while authenticating. </summary>
         [WirePath("scopes")]
         public IList<string> Scopes { get; }
     }

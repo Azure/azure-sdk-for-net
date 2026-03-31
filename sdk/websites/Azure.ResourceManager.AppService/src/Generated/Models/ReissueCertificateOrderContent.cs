@@ -12,10 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Class representing certificate reissue request.
-    /// Serialized Name: ReissueCertificateOrderRequest
-    /// </summary>
+    /// <summary> Class representing certificate reissue request. </summary>
     public partial class ReissueCertificateOrderContent : ResourceData
     {
         /// <summary>
@@ -60,26 +57,11 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="keySize">
-        /// Certificate Key Size.
-        /// Serialized Name: ReissueCertificateOrderRequest.properties.keySize
-        /// </param>
-        /// <param name="delayExistingRevokeInHours">
-        /// Delay in hours to revoke existing certificate after the new certificate is issued.
-        /// Serialized Name: ReissueCertificateOrderRequest.properties.delayExistingRevokeInHours
-        /// </param>
-        /// <param name="csr">
-        /// Csr to be used for re-key operation.
-        /// Serialized Name: ReissueCertificateOrderRequest.properties.csr
-        /// </param>
-        /// <param name="isPrivateKeyExternal">
-        /// Should we change the ASC type (from managed private key to external private key and vice versa).
-        /// Serialized Name: ReissueCertificateOrderRequest.properties.isPrivateKeyExternal
-        /// </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </param>
+        /// <param name="keySize"> Certificate Key Size. </param>
+        /// <param name="delayExistingRevokeInHours"> Delay in hours to revoke existing certificate after the new certificate is issued. </param>
+        /// <param name="csr"> Csr to be used for re-key operation. </param>
+        /// <param name="isPrivateKeyExternal"> Should we change the ASC type (from managed private key to external private key and vice versa). </param>
+        /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ReissueCertificateOrderContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? keySize, int? delayExistingRevokeInHours, string csr, bool? isPrivateKeyExternal, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -91,34 +73,19 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Certificate Key Size.
-        /// Serialized Name: ReissueCertificateOrderRequest.properties.keySize
-        /// </summary>
+        /// <summary> Certificate Key Size. </summary>
         [WirePath("properties.keySize")]
         public int? KeySize { get; set; }
-        /// <summary>
-        /// Delay in hours to revoke existing certificate after the new certificate is issued.
-        /// Serialized Name: ReissueCertificateOrderRequest.properties.delayExistingRevokeInHours
-        /// </summary>
+        /// <summary> Delay in hours to revoke existing certificate after the new certificate is issued. </summary>
         [WirePath("properties.delayExistingRevokeInHours")]
         public int? DelayExistingRevokeInHours { get; set; }
-        /// <summary>
-        /// Csr to be used for re-key operation.
-        /// Serialized Name: ReissueCertificateOrderRequest.properties.csr
-        /// </summary>
+        /// <summary> Csr to be used for re-key operation. </summary>
         [WirePath("properties.csr")]
         public string Csr { get; set; }
-        /// <summary>
-        /// Should we change the ASC type (from managed private key to external private key and vice versa).
-        /// Serialized Name: ReissueCertificateOrderRequest.properties.isPrivateKeyExternal
-        /// </summary>
+        /// <summary> Should we change the ASC type (from managed private key to external private key and vice versa). </summary>
         [WirePath("properties.isPrivateKeyExternal")]
         public bool? IsPrivateKeyExternal { get; set; }
-        /// <summary>
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </summary>
+        /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
     }

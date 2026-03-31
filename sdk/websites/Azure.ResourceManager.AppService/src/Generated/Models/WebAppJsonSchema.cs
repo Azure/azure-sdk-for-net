@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The JSON schema.
-    /// Serialized Name: JsonSchema
-    /// </summary>
+    /// <summary> The JSON schema. </summary>
     public partial class WebAppJsonSchema
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="WebAppJsonSchema"/>. </summary>
-        /// <param name="title">
-        /// The JSON title.
-        /// Serialized Name: JsonSchema.title
-        /// </param>
-        /// <param name="content">
-        /// The JSON content.
-        /// Serialized Name: JsonSchema.content
-        /// </param>
+        /// <param name="title"> The JSON title. </param>
+        /// <param name="content"> The JSON content. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal WebAppJsonSchema(string title, string content, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,16 +61,10 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The JSON title.
-        /// Serialized Name: JsonSchema.title
-        /// </summary>
+        /// <summary> The JSON title. </summary>
         [WirePath("title")]
         public string Title { get; }
-        /// <summary>
-        /// The JSON content.
-        /// Serialized Name: JsonSchema.content
-        /// </summary>
+        /// <summary> The JSON content. </summary>
         [WirePath("content")]
         public string Content { get; }
     }

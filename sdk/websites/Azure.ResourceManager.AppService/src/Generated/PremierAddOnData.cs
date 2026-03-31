@@ -15,7 +15,6 @@ namespace Azure.ResourceManager.AppService
     /// <summary>
     /// A class representing the PremierAddOn data model.
     /// Premier add-on.
-    /// Serialized Name: PremierAddOn
     /// </summary>
     public partial class PremierAddOnData : TrackedResourceData
     {
@@ -64,30 +63,12 @@ namespace Azure.ResourceManager.AppService
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="sku">
-        /// Premier add on SKU.
-        /// Serialized Name: PremierAddOn.properties.sku
-        /// </param>
-        /// <param name="product">
-        /// Premier add on Product.
-        /// Serialized Name: PremierAddOn.properties.product
-        /// </param>
-        /// <param name="vendor">
-        /// Premier add on Vendor.
-        /// Serialized Name: PremierAddOn.properties.vendor
-        /// </param>
-        /// <param name="marketplacePublisher">
-        /// Premier add on Marketplace publisher.
-        /// Serialized Name: PremierAddOn.properties.marketplacePublisher
-        /// </param>
-        /// <param name="marketplaceOffer">
-        /// Premier add on Marketplace offer.
-        /// Serialized Name: PremierAddOn.properties.marketplaceOffer
-        /// </param>
-        /// <param name="kind">
-        /// Kind of resource. If the resource is an app, you can refer to https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference for details supported values for kind.
-        /// Serialized Name: Resource.kind
-        /// </param>
+        /// <param name="sku"> Premier add on SKU. </param>
+        /// <param name="product"> Premier add on Product. </param>
+        /// <param name="vendor"> Premier add on Vendor. </param>
+        /// <param name="marketplacePublisher"> Premier add on Marketplace publisher. </param>
+        /// <param name="marketplaceOffer"> Premier add on Marketplace offer. </param>
+        /// <param name="kind"> Kind of resource. If the resource is an app, you can refer to https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference for details supported values for kind. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PremierAddOnData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string sku, string product, string vendor, string marketplacePublisher, string marketplaceOffer, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
@@ -105,40 +86,22 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary>
-        /// Premier add on SKU.
-        /// Serialized Name: PremierAddOn.properties.sku
-        /// </summary>
+        /// <summary> Premier add on SKU. </summary>
         [WirePath("properties.sku")]
         public string Sku { get; set; }
-        /// <summary>
-        /// Premier add on Product.
-        /// Serialized Name: PremierAddOn.properties.product
-        /// </summary>
+        /// <summary> Premier add on Product. </summary>
         [WirePath("properties.product")]
         public string Product { get; set; }
-        /// <summary>
-        /// Premier add on Vendor.
-        /// Serialized Name: PremierAddOn.properties.vendor
-        /// </summary>
+        /// <summary> Premier add on Vendor. </summary>
         [WirePath("properties.vendor")]
         public string Vendor { get; set; }
-        /// <summary>
-        /// Premier add on Marketplace publisher.
-        /// Serialized Name: PremierAddOn.properties.marketplacePublisher
-        /// </summary>
+        /// <summary> Premier add on Marketplace publisher. </summary>
         [WirePath("properties.marketplacePublisher")]
         public string MarketplacePublisher { get; set; }
-        /// <summary>
-        /// Premier add on Marketplace offer.
-        /// Serialized Name: PremierAddOn.properties.marketplaceOffer
-        /// </summary>
+        /// <summary> Premier add on Marketplace offer. </summary>
         [WirePath("properties.marketplaceOffer")]
         public string MarketplaceOffer { get; set; }
-        /// <summary>
-        /// Kind of resource. If the resource is an app, you can refer to https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference for details supported values for kind.
-        /// Serialized Name: Resource.kind
-        /// </summary>
+        /// <summary> Kind of resource. If the resource is an app, you can refer to https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference for details supported values for kind. </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
     }

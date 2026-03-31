@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Publishing options for requested profile.
-    /// Serialized Name: CsmPublishingProfileOptions
-    /// </summary>
+    /// <summary> Publishing options for requested profile. </summary>
     public partial class CsmPublishingProfile
     {
         /// <summary>
@@ -59,12 +56,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// FileZilla3
         /// WebDeploy -- default
         /// Ftp
-        /// Serialized Name: CsmPublishingProfileOptions.format
         /// </param>
-        /// <param name="isIncludeDisasterRecoveryEndpoints">
-        /// Include the DisasterRecover endpoint if true
-        /// Serialized Name: CsmPublishingProfileOptions.includeDisasterRecoveryEndpoints
-        /// </param>
+        /// <param name="isIncludeDisasterRecoveryEndpoints"> Include the DisasterRecover endpoint if true. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CsmPublishingProfile(PublishingProfileFormat? format, bool? isIncludeDisasterRecoveryEndpoints, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -78,14 +71,10 @@ namespace Azure.ResourceManager.AppService.Models
         /// FileZilla3
         /// WebDeploy -- default
         /// Ftp
-        /// Serialized Name: CsmPublishingProfileOptions.format
         /// </summary>
         [WirePath("format")]
         public PublishingProfileFormat? Format { get; set; }
-        /// <summary>
-        /// Include the DisasterRecover endpoint if true
-        /// Serialized Name: CsmPublishingProfileOptions.includeDisasterRecoveryEndpoints
-        /// </summary>
+        /// <summary> Include the DisasterRecover endpoint if true. </summary>
         [WirePath("includeDisasterRecoveryEndpoints")]
         public bool? IsIncludeDisasterRecoveryEndpoints { get; set; }
     }

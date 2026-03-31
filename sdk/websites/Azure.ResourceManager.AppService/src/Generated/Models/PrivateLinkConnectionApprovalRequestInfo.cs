@@ -12,10 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Private Endpoint Connection Approval ARM resource.
-    /// Serialized Name: PrivateLinkConnectionApprovalRequestResource
-    /// </summary>
+    /// <summary> Private Endpoint Connection Approval ARM resource. </summary>
     public partial class PrivateLinkConnectionApprovalRequestInfo : ResourceData
     {
         /// <summary>
@@ -60,14 +57,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="privateLinkServiceConnectionState">
-        /// The state of a private link connection
-        /// Serialized Name: PrivateLinkConnectionApprovalRequestResource.properties.privateLinkServiceConnectionState
-        /// </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </param>
+        /// <param name="privateLinkServiceConnectionState"> The state of a private link connection. </param>
+        /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PrivateLinkConnectionApprovalRequestInfo(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PrivateLinkConnectionState privateLinkServiceConnectionState, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -76,16 +67,10 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The state of a private link connection
-        /// Serialized Name: PrivateLinkConnectionApprovalRequestResource.properties.privateLinkServiceConnectionState
-        /// </summary>
+        /// <summary> The state of a private link connection. </summary>
         [WirePath("properties.privateLinkServiceConnectionState")]
         public PrivateLinkConnectionState PrivateLinkServiceConnectionState { get; set; }
-        /// <summary>
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </summary>
+        /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
     }

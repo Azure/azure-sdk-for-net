@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Class representing Diagnostic Metric information
-    /// Serialized Name: DiagnosticMetricSet
-    /// </summary>
+    /// <summary> Class representing Diagnostic Metric information. </summary>
     public partial class DiagnosticMetricSet
     {
         /// <summary>
@@ -55,30 +52,12 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DiagnosticMetricSet"/>. </summary>
-        /// <param name="name">
-        /// Name of the metric
-        /// Serialized Name: DiagnosticMetricSet.name
-        /// </param>
-        /// <param name="unit">
-        /// Metric's unit
-        /// Serialized Name: DiagnosticMetricSet.unit
-        /// </param>
-        /// <param name="startOn">
-        /// Start time of the period
-        /// Serialized Name: DiagnosticMetricSet.startTime
-        /// </param>
-        /// <param name="endOn">
-        /// End time of the period
-        /// Serialized Name: DiagnosticMetricSet.endTime
-        /// </param>
-        /// <param name="timeGrain">
-        /// Presented time grain. Supported grains at the moment are PT1M, PT1H, P1D
-        /// Serialized Name: DiagnosticMetricSet.timeGrain
-        /// </param>
-        /// <param name="values">
-        /// Collection of metric values for the selected period based on the {Microsoft.Web.Hosting.Administration.DiagnosticMetricSet.TimeGrain}
-        /// Serialized Name: DiagnosticMetricSet.values
-        /// </param>
+        /// <param name="name"> Name of the metric. </param>
+        /// <param name="unit"> Metric's unit. </param>
+        /// <param name="startOn"> Start time of the period. </param>
+        /// <param name="endOn"> End time of the period. </param>
+        /// <param name="timeGrain"> Presented time grain. Supported grains at the moment are PT1M, PT1H, P1D. </param>
+        /// <param name="values"> Collection of metric values for the selected period based on the {Microsoft.Web.Hosting.Administration.DiagnosticMetricSet.TimeGrain}. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DiagnosticMetricSet(string name, string unit, DateTimeOffset? startOn, DateTimeOffset? endOn, string timeGrain, IList<DiagnosticMetricSample> values, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -91,40 +70,22 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Name of the metric
-        /// Serialized Name: DiagnosticMetricSet.name
-        /// </summary>
+        /// <summary> Name of the metric. </summary>
         [WirePath("name")]
         public string Name { get; set; }
-        /// <summary>
-        /// Metric's unit
-        /// Serialized Name: DiagnosticMetricSet.unit
-        /// </summary>
+        /// <summary> Metric's unit. </summary>
         [WirePath("unit")]
         public string Unit { get; set; }
-        /// <summary>
-        /// Start time of the period
-        /// Serialized Name: DiagnosticMetricSet.startTime
-        /// </summary>
+        /// <summary> Start time of the period. </summary>
         [WirePath("startTime")]
         public DateTimeOffset? StartOn { get; set; }
-        /// <summary>
-        /// End time of the period
-        /// Serialized Name: DiagnosticMetricSet.endTime
-        /// </summary>
+        /// <summary> End time of the period. </summary>
         [WirePath("endTime")]
         public DateTimeOffset? EndOn { get; set; }
-        /// <summary>
-        /// Presented time grain. Supported grains at the moment are PT1M, PT1H, P1D
-        /// Serialized Name: DiagnosticMetricSet.timeGrain
-        /// </summary>
+        /// <summary> Presented time grain. Supported grains at the moment are PT1M, PT1H, P1D. </summary>
         [WirePath("timeGrain")]
         public string TimeGrain { get; set; }
-        /// <summary>
-        /// Collection of metric values for the selected period based on the {Microsoft.Web.Hosting.Administration.DiagnosticMetricSet.TimeGrain}
-        /// Serialized Name: DiagnosticMetricSet.values
-        /// </summary>
+        /// <summary> Collection of metric values for the selected period based on the {Microsoft.Web.Hosting.Administration.DiagnosticMetricSet.TimeGrain}. </summary>
         [WirePath("values")]
         public IList<DiagnosticMetricSample> Values { get; }
     }

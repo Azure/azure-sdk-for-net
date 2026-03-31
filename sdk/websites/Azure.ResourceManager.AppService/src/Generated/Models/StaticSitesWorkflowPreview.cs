@@ -12,10 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Preview for the Static Site Workflow to be generated
-    /// Serialized Name: StaticSitesWorkflowPreview
-    /// </summary>
+    /// <summary> Preview for the Static Site Workflow to be generated. </summary>
     public partial class StaticSitesWorkflowPreview : ResourceData
     {
         /// <summary>
@@ -60,18 +57,9 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="path">
-        /// The path for the workflow file to be generated
-        /// Serialized Name: StaticSitesWorkflowPreview.properties.path
-        /// </param>
-        /// <param name="contents">
-        /// The contents for the workflow file to be generated
-        /// Serialized Name: StaticSitesWorkflowPreview.properties.contents
-        /// </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </param>
+        /// <param name="path"> The path for the workflow file to be generated. </param>
+        /// <param name="contents"> The contents for the workflow file to be generated. </param>
+        /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal StaticSitesWorkflowPreview(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string path, string contents, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -81,22 +69,13 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The path for the workflow file to be generated
-        /// Serialized Name: StaticSitesWorkflowPreview.properties.path
-        /// </summary>
+        /// <summary> The path for the workflow file to be generated. </summary>
         [WirePath("properties.path")]
         public string Path { get; }
-        /// <summary>
-        /// The contents for the workflow file to be generated
-        /// Serialized Name: StaticSitesWorkflowPreview.properties.contents
-        /// </summary>
+        /// <summary> The contents for the workflow file to be generated. </summary>
         [WirePath("properties.contents")]
         public string Contents { get; }
-        /// <summary>
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </summary>
+        /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
     }

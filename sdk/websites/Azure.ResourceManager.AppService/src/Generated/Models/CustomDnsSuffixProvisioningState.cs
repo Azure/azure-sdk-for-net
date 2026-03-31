@@ -7,31 +7,16 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The CustomDnsSuffixProvisioningState.
-    /// Serialized Name: CustomDnsSuffixProvisioningState
-    /// </summary>
+    /// <summary> The CustomDnsSuffixProvisioningState. </summary>
     public enum CustomDnsSuffixProvisioningState
     {
-        /// <summary>
-        /// Succeeded
-        /// Serialized Name: CustomDnsSuffixProvisioningState.Succeeded
-        /// </summary>
+        /// <summary> Succeeded. </summary>
         Succeeded,
-        /// <summary>
-        /// Failed
-        /// Serialized Name: CustomDnsSuffixProvisioningState.Failed
-        /// </summary>
+        /// <summary> Failed. </summary>
         Failed,
-        /// <summary>
-        /// Degraded
-        /// Serialized Name: CustomDnsSuffixProvisioningState.Degraded
-        /// </summary>
+        /// <summary> Degraded. </summary>
         Degraded,
-        /// <summary>
-        /// InProgress
-        /// Serialized Name: CustomDnsSuffixProvisioningState.InProgress
-        /// </summary>
+        /// <summary> InProgress. </summary>
         InProgress
     }
 }

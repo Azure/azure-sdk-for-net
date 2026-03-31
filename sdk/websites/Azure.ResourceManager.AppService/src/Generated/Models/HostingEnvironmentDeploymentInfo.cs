@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Information needed to create resources on an App Service Environment.
-    /// Serialized Name: HostingEnvironmentDeploymentInfo
-    /// </summary>
+    /// <summary> Information needed to create resources on an App Service Environment. </summary>
     public partial class HostingEnvironmentDeploymentInfo
     {
         /// <summary>
@@ -55,14 +52,8 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="HostingEnvironmentDeploymentInfo"/>. </summary>
-        /// <param name="name">
-        /// Name of the App Service Environment.
-        /// Serialized Name: HostingEnvironmentDeploymentInfo.name
-        /// </param>
-        /// <param name="location">
-        /// Location of the App Service Environment.
-        /// Serialized Name: HostingEnvironmentDeploymentInfo.location
-        /// </param>
+        /// <param name="name"> Name of the App Service Environment. </param>
+        /// <param name="location"> Location of the App Service Environment. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal HostingEnvironmentDeploymentInfo(string name, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -71,16 +62,10 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Name of the App Service Environment.
-        /// Serialized Name: HostingEnvironmentDeploymentInfo.name
-        /// </summary>
+        /// <summary> Name of the App Service Environment. </summary>
         [WirePath("name")]
         public string Name { get; }
-        /// <summary>
-        /// Location of the App Service Environment.
-        /// Serialized Name: HostingEnvironmentDeploymentInfo.location
-        /// </summary>
+        /// <summary> Location of the App Service Environment. </summary>
         [WirePath("location")]
         public AzureLocation? Location { get; }
     }

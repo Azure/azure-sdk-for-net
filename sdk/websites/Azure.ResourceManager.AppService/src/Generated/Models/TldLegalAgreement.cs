@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Legal agreement for a top level domain.
-    /// Serialized Name: TldLegalAgreement
-    /// </summary>
+    /// <summary> Legal agreement for a top level domain. </summary>
     public partial class TldLegalAgreement
     {
         /// <summary>
@@ -49,18 +46,9 @@ namespace Azure.ResourceManager.AppService.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="TldLegalAgreement"/>. </summary>
-        /// <param name="agreementKey">
-        /// Unique identifier for the agreement.
-        /// Serialized Name: TldLegalAgreement.agreementKey
-        /// </param>
-        /// <param name="title">
-        /// Agreement title.
-        /// Serialized Name: TldLegalAgreement.title
-        /// </param>
-        /// <param name="content">
-        /// Agreement details.
-        /// Serialized Name: TldLegalAgreement.content
-        /// </param>
+        /// <param name="agreementKey"> Unique identifier for the agreement. </param>
+        /// <param name="title"> Agreement title. </param>
+        /// <param name="content"> Agreement details. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="agreementKey"/>, <paramref name="title"/> or <paramref name="content"/> is null. </exception>
         internal TldLegalAgreement(string agreementKey, string title, string content)
         {
@@ -74,22 +62,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="TldLegalAgreement"/>. </summary>
-        /// <param name="agreementKey">
-        /// Unique identifier for the agreement.
-        /// Serialized Name: TldLegalAgreement.agreementKey
-        /// </param>
-        /// <param name="title">
-        /// Agreement title.
-        /// Serialized Name: TldLegalAgreement.title
-        /// </param>
-        /// <param name="content">
-        /// Agreement details.
-        /// Serialized Name: TldLegalAgreement.content
-        /// </param>
-        /// <param name="uri">
-        /// URL where a copy of the agreement details is hosted.
-        /// Serialized Name: TldLegalAgreement.url
-        /// </param>
+        /// <param name="agreementKey"> Unique identifier for the agreement. </param>
+        /// <param name="title"> Agreement title. </param>
+        /// <param name="content"> Agreement details. </param>
+        /// <param name="uri"> URL where a copy of the agreement details is hosted. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal TldLegalAgreement(string agreementKey, string title, string content, Uri uri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -105,28 +81,16 @@ namespace Azure.ResourceManager.AppService.Models
         {
         }
 
-        /// <summary>
-        /// Unique identifier for the agreement.
-        /// Serialized Name: TldLegalAgreement.agreementKey
-        /// </summary>
+        /// <summary> Unique identifier for the agreement. </summary>
         [WirePath("agreementKey")]
         public string AgreementKey { get; }
-        /// <summary>
-        /// Agreement title.
-        /// Serialized Name: TldLegalAgreement.title
-        /// </summary>
+        /// <summary> Agreement title. </summary>
         [WirePath("title")]
         public string Title { get; }
-        /// <summary>
-        /// Agreement details.
-        /// Serialized Name: TldLegalAgreement.content
-        /// </summary>
+        /// <summary> Agreement details. </summary>
         [WirePath("content")]
         public string Content { get; }
-        /// <summary>
-        /// URL where a copy of the agreement details is hosted.
-        /// Serialized Name: TldLegalAgreement.url
-        /// </summary>
+        /// <summary> URL where a copy of the agreement details is hosted. </summary>
         [WirePath("url")]
         public Uri Uri { get; }
     }

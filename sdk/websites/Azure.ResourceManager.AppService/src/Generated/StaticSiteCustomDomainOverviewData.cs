@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.AppService
     /// <summary>
     /// A class representing the StaticSiteCustomDomainOverview data model.
     /// Static Site Custom Domain Overview ARM resource.
-    /// Serialized Name: StaticSiteCustomDomainOverviewARMResource
     /// </summary>
     public partial class StaticSiteCustomDomainOverviewData : ResourceData
     {
@@ -62,27 +61,12 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="domainName">
-        /// The domain name for the static site custom domain.
-        /// Serialized Name: StaticSiteCustomDomainOverviewARMResource.properties.domainName
-        /// </param>
-        /// <param name="createdOn">
-        /// The date and time on which the custom domain was created for the static site.
-        /// Serialized Name: StaticSiteCustomDomainOverviewARMResource.properties.createdOn
-        /// </param>
-        /// <param name="status">
-        /// The status of the custom domain
-        /// Serialized Name: StaticSiteCustomDomainOverviewARMResource.properties.status
-        /// </param>
-        /// <param name="validationToken">
-        /// The TXT record validation token
-        /// Serialized Name: StaticSiteCustomDomainOverviewARMResource.properties.validationToken
-        /// </param>
-        /// <param name="errorMessage"> Serialized Name: StaticSiteCustomDomainOverviewARMResource.properties.errorMessage. </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </param>
+        /// <param name="domainName"> The domain name for the static site custom domain. </param>
+        /// <param name="createdOn"> The date and time on which the custom domain was created for the static site. </param>
+        /// <param name="status"> The status of the custom domain. </param>
+        /// <param name="validationToken"> The TXT record validation token. </param>
+        /// <param name="errorMessage"></param>
+        /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal StaticSiteCustomDomainOverviewData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string domainName, DateTimeOffset? createdOn, CustomDomainStatus? status, string validationToken, string errorMessage, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -95,37 +79,22 @@ namespace Azure.ResourceManager.AppService
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The domain name for the static site custom domain.
-        /// Serialized Name: StaticSiteCustomDomainOverviewARMResource.properties.domainName
-        /// </summary>
+        /// <summary> The domain name for the static site custom domain. </summary>
         [WirePath("properties.domainName")]
         public string DomainName { get; }
-        /// <summary>
-        /// The date and time on which the custom domain was created for the static site.
-        /// Serialized Name: StaticSiteCustomDomainOverviewARMResource.properties.createdOn
-        /// </summary>
+        /// <summary> The date and time on which the custom domain was created for the static site. </summary>
         [WirePath("properties.createdOn")]
         public DateTimeOffset? CreatedOn { get; }
-        /// <summary>
-        /// The status of the custom domain
-        /// Serialized Name: StaticSiteCustomDomainOverviewARMResource.properties.status
-        /// </summary>
+        /// <summary> The status of the custom domain. </summary>
         [WirePath("properties.status")]
         public CustomDomainStatus? Status { get; }
-        /// <summary>
-        /// The TXT record validation token
-        /// Serialized Name: StaticSiteCustomDomainOverviewARMResource.properties.validationToken
-        /// </summary>
+        /// <summary> The TXT record validation token. </summary>
         [WirePath("properties.validationToken")]
         public string ValidationToken { get; }
-        /// <summary> Serialized Name: StaticSiteCustomDomainOverviewARMResource.properties.errorMessage. </summary>
+        /// <summary> Gets the error message. </summary>
         [WirePath("properties.errorMessage")]
         public string ErrorMessage { get; }
-        /// <summary>
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </summary>
+        /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
     }

@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The content link.
-    /// Serialized Name: ContentLink
-    /// </summary>
+    /// <summary> The content link. </summary>
     public partial class WebAppContentLink
     {
         /// <summary>
@@ -54,26 +51,11 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="WebAppContentLink"/>. </summary>
-        /// <param name="uri">
-        /// The content link URI.
-        /// Serialized Name: ContentLink.uri
-        /// </param>
-        /// <param name="contentVersion">
-        /// The content version.
-        /// Serialized Name: ContentLink.contentVersion
-        /// </param>
-        /// <param name="contentSize">
-        /// The content size.
-        /// Serialized Name: ContentLink.contentSize
-        /// </param>
-        /// <param name="contentHash">
-        /// The content hash.
-        /// Serialized Name: ContentLink.contentHash
-        /// </param>
-        /// <param name="metadata">
-        /// The metadata.
-        /// Serialized Name: ContentLink.metadata
-        /// </param>
+        /// <param name="uri"> The content link URI. </param>
+        /// <param name="contentVersion"> The content version. </param>
+        /// <param name="contentSize"> The content size. </param>
+        /// <param name="contentHash"> The content hash. </param>
+        /// <param name="metadata"> The metadata. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal WebAppContentLink(Uri uri, string contentVersion, long? contentSize, WebAppContentHash contentHash, BinaryData metadata, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -85,33 +67,20 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The content link URI.
-        /// Serialized Name: ContentLink.uri
-        /// </summary>
+        /// <summary> The content link URI. </summary>
         [WirePath("uri")]
         public Uri Uri { get; set; }
-        /// <summary>
-        /// The content version.
-        /// Serialized Name: ContentLink.contentVersion
-        /// </summary>
+        /// <summary> The content version. </summary>
         [WirePath("contentVersion")]
         public string ContentVersion { get; }
-        /// <summary>
-        /// The content size.
-        /// Serialized Name: ContentLink.contentSize
-        /// </summary>
+        /// <summary> The content size. </summary>
         [WirePath("contentSize")]
         public long? ContentSize { get; }
-        /// <summary>
-        /// The content hash.
-        /// Serialized Name: ContentLink.contentHash
-        /// </summary>
+        /// <summary> The content hash. </summary>
         [WirePath("contentHash")]
         public WebAppContentHash ContentHash { get; }
         /// <summary>
         /// The metadata.
-        /// Serialized Name: ContentLink.metadata
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

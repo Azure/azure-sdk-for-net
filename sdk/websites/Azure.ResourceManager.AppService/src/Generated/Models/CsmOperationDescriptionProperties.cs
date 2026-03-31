@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Properties available for a Microsoft.Web resource provider operation.
-    /// Serialized Name: CsmOperationDescriptionProperties
-    /// </summary>
+    /// <summary> Properties available for a Microsoft.Web resource provider operation. </summary>
     internal partial class CsmOperationDescriptionProperties
     {
         /// <summary>
@@ -54,10 +51,7 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CsmOperationDescriptionProperties"/>. </summary>
-        /// <param name="serviceSpecification">
-        /// Resource metrics service provided by Microsoft.Insights resource provider.
-        /// Serialized Name: CsmOperationDescriptionProperties.serviceSpecification
-        /// </param>
+        /// <param name="serviceSpecification"> Resource metrics service provided by Microsoft.Insights resource provider. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CsmOperationDescriptionProperties(ServiceSpecification serviceSpecification, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,10 +59,7 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Resource metrics service provided by Microsoft.Insights resource provider.
-        /// Serialized Name: CsmOperationDescriptionProperties.serviceSpecification
-        /// </summary>
+        /// <summary> Resource metrics service provided by Microsoft.Insights resource provider. </summary>
         [WirePath("serviceSpecification")]
         public ServiceSpecification ServiceSpecification { get; }
     }

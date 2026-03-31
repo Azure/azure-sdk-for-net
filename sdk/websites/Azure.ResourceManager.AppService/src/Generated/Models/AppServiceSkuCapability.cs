@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Describes the capabilities/features allowed for a specific SKU.
-    /// Serialized Name: Capability
-    /// </summary>
+    /// <summary> Describes the capabilities/features allowed for a specific SKU. </summary>
     public partial class AppServiceSkuCapability
     {
         /// <summary>
@@ -54,18 +51,9 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AppServiceSkuCapability"/>. </summary>
-        /// <param name="name">
-        /// Name of the SKU capability.
-        /// Serialized Name: Capability.name
-        /// </param>
-        /// <param name="value">
-        /// Value of the SKU capability.
-        /// Serialized Name: Capability.value
-        /// </param>
-        /// <param name="reason">
-        /// Reason of the SKU capability.
-        /// Serialized Name: Capability.reason
-        /// </param>
+        /// <param name="name"> Name of the SKU capability. </param>
+        /// <param name="value"> Value of the SKU capability. </param>
+        /// <param name="reason"> Reason of the SKU capability. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AppServiceSkuCapability(string name, string value, string reason, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -75,22 +63,13 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Name of the SKU capability.
-        /// Serialized Name: Capability.name
-        /// </summary>
+        /// <summary> Name of the SKU capability. </summary>
         [WirePath("name")]
         public string Name { get; set; }
-        /// <summary>
-        /// Value of the SKU capability.
-        /// Serialized Name: Capability.value
-        /// </summary>
+        /// <summary> Value of the SKU capability. </summary>
         [WirePath("value")]
         public string Value { get; set; }
-        /// <summary>
-        /// Reason of the SKU capability.
-        /// Serialized Name: Capability.reason
-        /// </summary>
+        /// <summary> Reason of the SKU capability. </summary>
         [WirePath("reason")]
         public string Reason { get; set; }
     }

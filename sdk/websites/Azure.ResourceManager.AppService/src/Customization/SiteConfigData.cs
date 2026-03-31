@@ -1,0 +1,29 @@
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+#nullable disable
+
+using System;
+using System.ComponentModel;
+
+namespace Azure.ResourceManager.AppService
+{
+    public partial class SiteConfigData
+    {
+        /// <summary>
+        /// The URL of the API definition.
+        /// </summary>
+        [WirePath("properties.apiDefinition.url")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public Uri ApiDefinitionUri
+        {
+            get
+            {
+                if (ApiDefinitionUrl is null)
+                    return null;
+                return Uri.TryCreate(ApiDefinitionUrl, UriKind.Absolute, out var uri) ? uri : null;
+            }
+            set => ApiDefinitionUrl = value?.AbsoluteUri;
+        }
+    }
+}

@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Column definition
-    /// Serialized Name: DataTableResponseColumn
-    /// </summary>
+    /// <summary> Column definition. </summary>
     public partial class DataTableResponseColumn
     {
         /// <summary>
@@ -54,18 +51,9 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DataTableResponseColumn"/>. </summary>
-        /// <param name="columnName">
-        /// Name of the column
-        /// Serialized Name: DataTableResponseColumn.columnName
-        /// </param>
-        /// <param name="dataType">
-        /// Data type which looks like 'String' or 'Int32'.
-        /// Serialized Name: DataTableResponseColumn.dataType
-        /// </param>
-        /// <param name="columnType">
-        /// Column Type
-        /// Serialized Name: DataTableResponseColumn.columnType
-        /// </param>
+        /// <param name="columnName"> Name of the column. </param>
+        /// <param name="dataType"> Data type which looks like 'String' or 'Int32'. </param>
+        /// <param name="columnType"> Column Type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DataTableResponseColumn(string columnName, string dataType, string columnType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -75,22 +63,13 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Name of the column
-        /// Serialized Name: DataTableResponseColumn.columnName
-        /// </summary>
+        /// <summary> Name of the column. </summary>
         [WirePath("columnName")]
         public string ColumnName { get; set; }
-        /// <summary>
-        /// Data type which looks like 'String' or 'Int32'.
-        /// Serialized Name: DataTableResponseColumn.dataType
-        /// </summary>
+        /// <summary> Data type which looks like 'String' or 'Int32'. </summary>
         [WirePath("dataType")]
         public string DataType { get; set; }
-        /// <summary>
-        /// Column Type
-        /// Serialized Name: DataTableResponseColumn.columnType
-        /// </summary>
+        /// <summary> Column Type. </summary>
         [WirePath("columnType")]
         public string ColumnType { get; set; }
     }

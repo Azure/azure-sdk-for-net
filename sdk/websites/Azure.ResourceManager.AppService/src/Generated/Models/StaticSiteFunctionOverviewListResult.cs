@@ -11,10 +11,7 @@ using System.Linq;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Collection of static site functions.
-    /// Serialized Name: StaticSiteFunctionOverviewCollection
-    /// </summary>
+    /// <summary> Collection of static site functions. </summary>
     internal partial class StaticSiteFunctionOverviewListResult
     {
         /// <summary>
@@ -50,10 +47,7 @@ namespace Azure.ResourceManager.AppService.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="StaticSiteFunctionOverviewListResult"/>. </summary>
-        /// <param name="value">
-        /// Collection of resources.
-        /// Serialized Name: StaticSiteFunctionOverviewCollection.value
-        /// </param>
+        /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal StaticSiteFunctionOverviewListResult(IEnumerable<StaticSiteFunctionOverview> value)
         {
@@ -63,14 +57,8 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="StaticSiteFunctionOverviewListResult"/>. </summary>
-        /// <param name="value">
-        /// Collection of resources.
-        /// Serialized Name: StaticSiteFunctionOverviewCollection.value
-        /// </param>
-        /// <param name="nextLink">
-        /// Link to next page of resources.
-        /// Serialized Name: StaticSiteFunctionOverviewCollection.nextLink
-        /// </param>
+        /// <param name="value"> Collection of resources. </param>
+        /// <param name="nextLink"> Link to next page of resources. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal StaticSiteFunctionOverviewListResult(IReadOnlyList<StaticSiteFunctionOverview> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -84,15 +72,9 @@ namespace Azure.ResourceManager.AppService.Models
         {
         }
 
-        /// <summary>
-        /// Collection of resources.
-        /// Serialized Name: StaticSiteFunctionOverviewCollection.value
-        /// </summary>
+        /// <summary> Collection of resources. </summary>
         public IReadOnlyList<StaticSiteFunctionOverview> Value { get; }
-        /// <summary>
-        /// Link to next page of resources.
-        /// Serialized Name: StaticSiteFunctionOverviewCollection.nextLink
-        /// </summary>
+        /// <summary> Link to next page of resources. </summary>
         public string NextLink { get; }
     }
 }

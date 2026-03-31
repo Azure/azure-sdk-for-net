@@ -11,10 +11,7 @@ using System.Linq;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Collection of site containers
-    /// Serialized Name: SiteContainerCollection
-    /// </summary>
+    /// <summary> Collection of site containers. </summary>
     internal partial class SiteContainerCollection
     {
         /// <summary>
@@ -50,10 +47,7 @@ namespace Azure.ResourceManager.AppService.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="SiteContainerCollection"/>. </summary>
-        /// <param name="value">
-        /// Collection of resources.
-        /// Serialized Name: SiteContainerCollection.value
-        /// </param>
+        /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal SiteContainerCollection(IEnumerable<SiteContainerData> value)
         {
@@ -63,14 +57,8 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SiteContainerCollection"/>. </summary>
-        /// <param name="value">
-        /// Collection of resources.
-        /// Serialized Name: SiteContainerCollection.value
-        /// </param>
-        /// <param name="nextLink">
-        /// Link to next page of resources.
-        /// Serialized Name: SiteContainerCollection.nextLink
-        /// </param>
+        /// <param name="value"> Collection of resources. </param>
+        /// <param name="nextLink"> Link to next page of resources. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SiteContainerCollection(IReadOnlyList<SiteContainerData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -84,15 +72,9 @@ namespace Azure.ResourceManager.AppService.Models
         {
         }
 
-        /// <summary>
-        /// Collection of resources.
-        /// Serialized Name: SiteContainerCollection.value
-        /// </summary>
+        /// <summary> Collection of resources. </summary>
         public IReadOnlyList<SiteContainerData> Value { get; }
-        /// <summary>
-        /// Link to next page of resources.
-        /// Serialized Name: SiteContainerCollection.nextLink
-        /// </summary>
+        /// <summary> Link to next page of resources. </summary>
         public string NextLink { get; }
     }
 }

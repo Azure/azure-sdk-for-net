@@ -12,10 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// A class that describes a test that failed during NSG and UDR validation.
-    /// Serialized Name: VnetValidationTestFailure
-    /// </summary>
+    /// <summary> A class that describes a test that failed during NSG and UDR validation. </summary>
     public partial class VirtualNetworkValidationTestFailure : ResourceData
     {
         /// <summary>
@@ -60,18 +57,9 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="testName">
-        /// The name of the test that failed.
-        /// Serialized Name: VnetValidationTestFailure.properties.testName
-        /// </param>
-        /// <param name="details">
-        /// The details of what caused the failure, e.g. the blocking rule name, etc.
-        /// Serialized Name: VnetValidationTestFailure.properties.details
-        /// </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </param>
+        /// <param name="testName"> The name of the test that failed. </param>
+        /// <param name="details"> The details of what caused the failure, e.g. the blocking rule name, etc. </param>
+        /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal VirtualNetworkValidationTestFailure(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string testName, string details, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -81,22 +69,13 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The name of the test that failed.
-        /// Serialized Name: VnetValidationTestFailure.properties.testName
-        /// </summary>
+        /// <summary> The name of the test that failed. </summary>
         [WirePath("properties.testName")]
         public string TestName { get; set; }
-        /// <summary>
-        /// The details of what caused the failure, e.g. the blocking rule name, etc.
-        /// Serialized Name: VnetValidationTestFailure.properties.details
-        /// </summary>
+        /// <summary> The details of what caused the failure, e.g. the blocking rule name, etc. </summary>
         [WirePath("properties.details")]
         public string Details { get; set; }
-        /// <summary>
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </summary>
+        /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
     }

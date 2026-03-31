@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Definition of a single resource metric.
-    /// Serialized Name: MetricSpecification
-    /// </summary>
+    /// <summary> Definition of a single resource metric. </summary>
     public partial class MetricSpecification
     {
         /// <summary>
@@ -58,23 +55,23 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MetricSpecification"/>. </summary>
-        /// <param name="name"> Serialized Name: MetricSpecification.name. </param>
-        /// <param name="displayName"> Serialized Name: MetricSpecification.displayName. </param>
-        /// <param name="displayDescription"> Serialized Name: MetricSpecification.displayDescription. </param>
-        /// <param name="unit"> Serialized Name: MetricSpecification.unit. </param>
-        /// <param name="aggregationType"> Serialized Name: MetricSpecification.aggregationType. </param>
-        /// <param name="isInstanceLevelAggregationSupported"> Serialized Name: MetricSpecification.supportsInstanceLevelAggregation. </param>
-        /// <param name="isRegionalMdmAccountEnabled"> Serialized Name: MetricSpecification.enableRegionalMdmAccount. </param>
-        /// <param name="sourceMdmAccount"> Serialized Name: MetricSpecification.sourceMdmAccount. </param>
-        /// <param name="sourceMdmNamespace"> Serialized Name: MetricSpecification.sourceMdmNamespace. </param>
-        /// <param name="metricFilterPattern"> Serialized Name: MetricSpecification.metricFilterPattern. </param>
-        /// <param name="fillGapWithZero"> Serialized Name: MetricSpecification.fillGapWithZero. </param>
-        /// <param name="isInternal"> Serialized Name: MetricSpecification.isInternal. </param>
-        /// <param name="dimensions"> Serialized Name: MetricSpecification.dimensions. </param>
-        /// <param name="category"> Serialized Name: MetricSpecification.category. </param>
-        /// <param name="availabilities"> Serialized Name: MetricSpecification.availabilities. </param>
-        /// <param name="supportedTimeGrainTypes"> Serialized Name: MetricSpecification.supportedTimeGrainTypes. </param>
-        /// <param name="supportedAggregationTypes"> Serialized Name: MetricSpecification.supportedAggregationTypes. </param>
+        /// <param name="name"></param>
+        /// <param name="displayName"></param>
+        /// <param name="displayDescription"></param>
+        /// <param name="unit"></param>
+        /// <param name="aggregationType"></param>
+        /// <param name="isInstanceLevelAggregationSupported"></param>
+        /// <param name="isRegionalMdmAccountEnabled"></param>
+        /// <param name="sourceMdmAccount"></param>
+        /// <param name="sourceMdmNamespace"></param>
+        /// <param name="metricFilterPattern"></param>
+        /// <param name="fillGapWithZero"></param>
+        /// <param name="isInternal"></param>
+        /// <param name="dimensions"></param>
+        /// <param name="category"></param>
+        /// <param name="availabilities"></param>
+        /// <param name="supportedTimeGrainTypes"></param>
+        /// <param name="supportedAggregationTypes"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal MetricSpecification(string name, string displayName, string displayDescription, string unit, string aggregationType, bool? isInstanceLevelAggregationSupported, bool? isRegionalMdmAccountEnabled, string sourceMdmAccount, string sourceMdmNamespace, string metricFilterPattern, bool? fillGapWithZero, bool? isInternal, IReadOnlyList<MetricDimension> dimensions, string category, IReadOnlyList<MetricAvailability> availabilities, IReadOnlyList<string> supportedTimeGrainTypes, IReadOnlyList<string> supportedAggregationTypes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -98,55 +95,55 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Serialized Name: MetricSpecification.name. </summary>
+        /// <summary> Gets the name. </summary>
         [WirePath("name")]
         public string Name { get; }
-        /// <summary> Serialized Name: MetricSpecification.displayName. </summary>
+        /// <summary> Gets the display name. </summary>
         [WirePath("displayName")]
         public string DisplayName { get; }
-        /// <summary> Serialized Name: MetricSpecification.displayDescription. </summary>
+        /// <summary> Gets the display description. </summary>
         [WirePath("displayDescription")]
         public string DisplayDescription { get; }
-        /// <summary> Serialized Name: MetricSpecification.unit. </summary>
+        /// <summary> Gets the unit. </summary>
         [WirePath("unit")]
         public string Unit { get; }
-        /// <summary> Serialized Name: MetricSpecification.aggregationType. </summary>
+        /// <summary> Gets the aggregation type. </summary>
         [WirePath("aggregationType")]
         public string AggregationType { get; }
-        /// <summary> Serialized Name: MetricSpecification.supportsInstanceLevelAggregation. </summary>
+        /// <summary> Gets the is instance level aggregation supported. </summary>
         [WirePath("supportsInstanceLevelAggregation")]
         public bool? IsInstanceLevelAggregationSupported { get; }
-        /// <summary> Serialized Name: MetricSpecification.enableRegionalMdmAccount. </summary>
+        /// <summary> Gets the is regional mdm account enabled. </summary>
         [WirePath("enableRegionalMdmAccount")]
         public bool? IsRegionalMdmAccountEnabled { get; }
-        /// <summary> Serialized Name: MetricSpecification.sourceMdmAccount. </summary>
+        /// <summary> Gets the source mdm account. </summary>
         [WirePath("sourceMdmAccount")]
         public string SourceMdmAccount { get; }
-        /// <summary> Serialized Name: MetricSpecification.sourceMdmNamespace. </summary>
+        /// <summary> Gets the source mdm namespace. </summary>
         [WirePath("sourceMdmNamespace")]
         public string SourceMdmNamespace { get; }
-        /// <summary> Serialized Name: MetricSpecification.metricFilterPattern. </summary>
+        /// <summary> Gets the metric filter pattern. </summary>
         [WirePath("metricFilterPattern")]
         public string MetricFilterPattern { get; }
-        /// <summary> Serialized Name: MetricSpecification.fillGapWithZero. </summary>
+        /// <summary> Gets the fill gap with zero. </summary>
         [WirePath("fillGapWithZero")]
         public bool? FillGapWithZero { get; }
-        /// <summary> Serialized Name: MetricSpecification.isInternal. </summary>
+        /// <summary> Gets the is internal. </summary>
         [WirePath("isInternal")]
         public bool? IsInternal { get; }
-        /// <summary> Serialized Name: MetricSpecification.dimensions. </summary>
+        /// <summary> Gets the dimensions. </summary>
         [WirePath("dimensions")]
         public IReadOnlyList<MetricDimension> Dimensions { get; }
-        /// <summary> Serialized Name: MetricSpecification.category. </summary>
+        /// <summary> Gets the category. </summary>
         [WirePath("category")]
         public string Category { get; }
-        /// <summary> Serialized Name: MetricSpecification.availabilities. </summary>
+        /// <summary> Gets the availabilities. </summary>
         [WirePath("availabilities")]
         public IReadOnlyList<MetricAvailability> Availabilities { get; }
-        /// <summary> Serialized Name: MetricSpecification.supportedTimeGrainTypes. </summary>
+        /// <summary> Gets the supported time grain types. </summary>
         [WirePath("supportedTimeGrainTypes")]
         public IReadOnlyList<string> SupportedTimeGrainTypes { get; }
-        /// <summary> Serialized Name: MetricSpecification.supportedAggregationTypes. </summary>
+        /// <summary> Gets the supported aggregation types. </summary>
         [WirePath("supportedAggregationTypes")]
         public IReadOnlyList<string> SupportedAggregationTypes { get; }
     }

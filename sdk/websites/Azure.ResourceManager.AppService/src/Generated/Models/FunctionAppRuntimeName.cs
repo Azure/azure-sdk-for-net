@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Function app runtime name. Available options: dotnet-isolated, node, java, powershell, python, custom
-    /// Serialized Name: RuntimeName
-    /// </summary>
+    /// <summary> Function app runtime name. Available options: dotnet-isolated, node, java, powershell, python, custom. </summary>
     public readonly partial struct FunctionAppRuntimeName : IEquatable<FunctionAppRuntimeName>
     {
         private readonly string _value;
@@ -32,35 +29,17 @@ namespace Azure.ResourceManager.AppService.Models
         private const string PythonValue = "python";
         private const string CustomValue = "custom";
 
-        /// <summary>
-        /// dotnet-isolated
-        /// Serialized Name: RuntimeName.dotnet-isolated
-        /// </summary>
+        /// <summary> dotnet-isolated. </summary>
         public static FunctionAppRuntimeName DotnetIsolated { get; } = new FunctionAppRuntimeName(DotnetIsolatedValue);
-        /// <summary>
-        /// node
-        /// Serialized Name: RuntimeName.node
-        /// </summary>
+        /// <summary> node. </summary>
         public static FunctionAppRuntimeName Node { get; } = new FunctionAppRuntimeName(NodeValue);
-        /// <summary>
-        /// java
-        /// Serialized Name: RuntimeName.java
-        /// </summary>
+        /// <summary> java. </summary>
         public static FunctionAppRuntimeName Java { get; } = new FunctionAppRuntimeName(JavaValue);
-        /// <summary>
-        /// powershell
-        /// Serialized Name: RuntimeName.powershell
-        /// </summary>
+        /// <summary> powershell. </summary>
         public static FunctionAppRuntimeName Powershell { get; } = new FunctionAppRuntimeName(PowershellValue);
-        /// <summary>
-        /// python
-        /// Serialized Name: RuntimeName.python
-        /// </summary>
+        /// <summary> python. </summary>
         public static FunctionAppRuntimeName Python { get; } = new FunctionAppRuntimeName(PythonValue);
-        /// <summary>
-        /// custom
-        /// Serialized Name: RuntimeName.custom
-        /// </summary>
+        /// <summary> custom. </summary>
         public static FunctionAppRuntimeName Custom { get; } = new FunctionAppRuntimeName(CustomValue);
         /// <summary> Determines if two <see cref="FunctionAppRuntimeName"/> values are the same. </summary>
         public static bool operator ==(FunctionAppRuntimeName left, FunctionAppRuntimeName right) => left.Equals(right);

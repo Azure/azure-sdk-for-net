@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.AppService
     /// <summary>
     /// A class representing the ProcessInfo data model.
     /// Process Information.
-    /// Serialized Name: ProcessInfo
     /// </summary>
     public partial class ProcessInfoData : ResourceData
     {
@@ -67,154 +66,43 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="identifier">
-        /// ARM Identifier for deployment.
-        /// Serialized Name: ProcessInfo.properties.identifier
-        /// </param>
-        /// <param name="deploymentName">
-        /// Deployment name.
-        /// Serialized Name: ProcessInfo.properties.deployment_name
-        /// </param>
-        /// <param name="href">
-        /// HRef URI.
-        /// Serialized Name: ProcessInfo.properties.href
-        /// </param>
-        /// <param name="minidump">
-        /// Minidump URI.
-        /// Serialized Name: ProcessInfo.properties.minidump
-        /// </param>
-        /// <param name="isProfileRunning">
-        /// Is profile running?
-        /// Serialized Name: ProcessInfo.properties.is_profile_running
-        /// </param>
-        /// <param name="isIisProfileRunning">
-        /// Is the IIS Profile running?
-        /// Serialized Name: ProcessInfo.properties.is_iis_profile_running
-        /// </param>
-        /// <param name="iisProfileTimeoutInSeconds">
-        /// IIS Profile timeout (seconds).
-        /// Serialized Name: ProcessInfo.properties.iis_profile_timeout_in_seconds
-        /// </param>
-        /// <param name="parent">
-        /// Parent process.
-        /// Serialized Name: ProcessInfo.properties.parent
-        /// </param>
-        /// <param name="children">
-        /// Child process list.
-        /// Serialized Name: ProcessInfo.properties.children
-        /// </param>
-        /// <param name="processThreads">
-        /// Thread list.
-        /// Serialized Name: ProcessInfo.properties.threads
-        /// </param>
-        /// <param name="openFileHandles">
-        /// List of open files.
-        /// Serialized Name: ProcessInfo.properties.open_file_handles
-        /// </param>
-        /// <param name="modules">
-        /// List of modules.
-        /// Serialized Name: ProcessInfo.properties.modules
-        /// </param>
-        /// <param name="fileName">
-        /// File name of this process.
-        /// Serialized Name: ProcessInfo.properties.file_name
-        /// </param>
-        /// <param name="commandLine">
-        /// Command line.
-        /// Serialized Name: ProcessInfo.properties.command_line
-        /// </param>
-        /// <param name="userName">
-        /// User name.
-        /// Serialized Name: ProcessInfo.properties.user_name
-        /// </param>
-        /// <param name="handleCount">
-        /// Handle count.
-        /// Serialized Name: ProcessInfo.properties.handle_count
-        /// </param>
-        /// <param name="moduleCount">
-        /// Module count.
-        /// Serialized Name: ProcessInfo.properties.module_count
-        /// </param>
-        /// <param name="threadCount">
-        /// Thread count.
-        /// Serialized Name: ProcessInfo.properties.thread_count
-        /// </param>
-        /// <param name="startOn">
-        /// Start time.
-        /// Serialized Name: ProcessInfo.properties.start_time
-        /// </param>
-        /// <param name="totalCpuTime">
-        /// Total CPU time.
-        /// Serialized Name: ProcessInfo.properties.total_cpu_time
-        /// </param>
-        /// <param name="userCpuTime">
-        /// User CPU time.
-        /// Serialized Name: ProcessInfo.properties.user_cpu_time
-        /// </param>
-        /// <param name="privilegedCpuTime">
-        /// Privileged CPU time.
-        /// Serialized Name: ProcessInfo.properties.privileged_cpu_time
-        /// </param>
-        /// <param name="workingSet">
-        /// Working set.
-        /// Serialized Name: ProcessInfo.properties.working_set
-        /// </param>
-        /// <param name="peakWorkingSet">
-        /// Peak working set.
-        /// Serialized Name: ProcessInfo.properties.peak_working_set
-        /// </param>
-        /// <param name="privateMemory">
-        /// Private memory size.
-        /// Serialized Name: ProcessInfo.properties.private_memory
-        /// </param>
-        /// <param name="virtualMemory">
-        /// Virtual memory size.
-        /// Serialized Name: ProcessInfo.properties.virtual_memory
-        /// </param>
-        /// <param name="peakVirtualMemory">
-        /// Peak virtual memory usage.
-        /// Serialized Name: ProcessInfo.properties.peak_virtual_memory
-        /// </param>
-        /// <param name="pagedSystemMemory">
-        /// Paged system memory.
-        /// Serialized Name: ProcessInfo.properties.paged_system_memory
-        /// </param>
-        /// <param name="nonPagedSystemMemory">
-        /// Non-paged system memory.
-        /// Serialized Name: ProcessInfo.properties.non_paged_system_memory
-        /// </param>
-        /// <param name="pagedMemory">
-        /// Paged memory.
-        /// Serialized Name: ProcessInfo.properties.paged_memory
-        /// </param>
-        /// <param name="peakPagedMemory">
-        /// Peak paged memory.
-        /// Serialized Name: ProcessInfo.properties.peak_paged_memory
-        /// </param>
-        /// <param name="timeStamp">
-        /// Time stamp.
-        /// Serialized Name: ProcessInfo.properties.time_stamp
-        /// </param>
-        /// <param name="environmentVariables">
-        /// List of environment variables.
-        /// Serialized Name: ProcessInfo.properties.environment_variables
-        /// </param>
-        /// <param name="isScmSite">
-        /// Is this the SCM site?
-        /// Serialized Name: ProcessInfo.properties.is_scm_site
-        /// </param>
-        /// <param name="isWebjob">
-        /// Is this a Web Job?
-        /// Serialized Name: ProcessInfo.properties.is_webjob
-        /// </param>
-        /// <param name="description">
-        /// Description of process.
-        /// Serialized Name: ProcessInfo.properties.description
-        /// </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </param>
+        /// <param name="identifier"> ARM Identifier for deployment. </param>
+        /// <param name="deploymentName"> Deployment name. </param>
+        /// <param name="href"> HRef URI. </param>
+        /// <param name="minidump"> Minidump URI. </param>
+        /// <param name="isProfileRunning"> Is profile running?. </param>
+        /// <param name="isIisProfileRunning"> Is the IIS Profile running?. </param>
+        /// <param name="iisProfileTimeoutInSeconds"> IIS Profile timeout (seconds). </param>
+        /// <param name="parent"> Parent process. </param>
+        /// <param name="children"> Child process list. </param>
+        /// <param name="processThreads"> Thread list. </param>
+        /// <param name="openFileHandles"> List of open files. </param>
+        /// <param name="modules"> List of modules. </param>
+        /// <param name="fileName"> File name of this process. </param>
+        /// <param name="commandLine"> Command line. </param>
+        /// <param name="userName"> User name. </param>
+        /// <param name="handleCount"> Handle count. </param>
+        /// <param name="moduleCount"> Module count. </param>
+        /// <param name="threadCount"> Thread count. </param>
+        /// <param name="startOn"> Start time. </param>
+        /// <param name="totalCpuTime"> Total CPU time. </param>
+        /// <param name="userCpuTime"> User CPU time. </param>
+        /// <param name="privilegedCpuTime"> Privileged CPU time. </param>
+        /// <param name="workingSet"> Working set. </param>
+        /// <param name="peakWorkingSet"> Peak working set. </param>
+        /// <param name="privateMemory"> Private memory size. </param>
+        /// <param name="virtualMemory"> Virtual memory size. </param>
+        /// <param name="peakVirtualMemory"> Peak virtual memory usage. </param>
+        /// <param name="pagedSystemMemory"> Paged system memory. </param>
+        /// <param name="nonPagedSystemMemory"> Non-paged system memory. </param>
+        /// <param name="pagedMemory"> Paged memory. </param>
+        /// <param name="peakPagedMemory"> Peak paged memory. </param>
+        /// <param name="timeStamp"> Time stamp. </param>
+        /// <param name="environmentVariables"> List of environment variables. </param>
+        /// <param name="isScmSite"> Is this the SCM site?. </param>
+        /// <param name="isWebjob"> Is this a Web Job?. </param>
+        /// <param name="description"> Description of process. </param>
+        /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ProcessInfoData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? identifier, string deploymentName, string href, string minidump, bool? isProfileRunning, bool? isIisProfileRunning, double? iisProfileTimeoutInSeconds, string parent, IList<string> children, IList<WebAppProcessThreadProperties> processThreads, IList<string> openFileHandles, IList<ProcessModuleInfoData> modules, string fileName, string commandLine, string userName, int? handleCount, int? moduleCount, int? threadCount, DateTimeOffset? startOn, string totalCpuTime, string userCpuTime, string privilegedCpuTime, long? workingSet, long? peakWorkingSet, long? privateMemory, long? virtualMemory, long? peakVirtualMemory, long? pagedSystemMemory, long? nonPagedSystemMemory, long? pagedMemory, long? peakPagedMemory, DateTimeOffset? timeStamp, IDictionary<string, string> environmentVariables, bool? isScmSite, bool? isWebjob, string description, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -258,226 +146,115 @@ namespace Azure.ResourceManager.AppService
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// ARM Identifier for deployment.
-        /// Serialized Name: ProcessInfo.properties.identifier
-        /// </summary>
+        /// <summary> ARM Identifier for deployment. </summary>
         [WirePath("properties.identifier")]
         public int? Identifier { get; }
-        /// <summary>
-        /// Deployment name.
-        /// Serialized Name: ProcessInfo.properties.deployment_name
-        /// </summary>
+        /// <summary> Deployment name. </summary>
         [WirePath("properties.deployment_name")]
         public string DeploymentName { get; set; }
-        /// <summary>
-        /// HRef URI.
-        /// Serialized Name: ProcessInfo.properties.href
-        /// </summary>
+        /// <summary> HRef URI. </summary>
         [WirePath("properties.href")]
         public string Href { get; set; }
-        /// <summary>
-        /// Minidump URI.
-        /// Serialized Name: ProcessInfo.properties.minidump
-        /// </summary>
+        /// <summary> Minidump URI. </summary>
         [WirePath("properties.minidump")]
         public string Minidump { get; set; }
-        /// <summary>
-        /// Is profile running?
-        /// Serialized Name: ProcessInfo.properties.is_profile_running
-        /// </summary>
+        /// <summary> Is profile running?. </summary>
         [WirePath("properties.is_profile_running")]
         public bool? IsProfileRunning { get; set; }
-        /// <summary>
-        /// Is the IIS Profile running?
-        /// Serialized Name: ProcessInfo.properties.is_iis_profile_running
-        /// </summary>
+        /// <summary> Is the IIS Profile running?. </summary>
         [WirePath("properties.is_iis_profile_running")]
         public bool? IsIisProfileRunning { get; set; }
-        /// <summary>
-        /// IIS Profile timeout (seconds).
-        /// Serialized Name: ProcessInfo.properties.iis_profile_timeout_in_seconds
-        /// </summary>
+        /// <summary> IIS Profile timeout (seconds). </summary>
         [WirePath("properties.iis_profile_timeout_in_seconds")]
         public double? IisProfileTimeoutInSeconds { get; set; }
-        /// <summary>
-        /// Parent process.
-        /// Serialized Name: ProcessInfo.properties.parent
-        /// </summary>
+        /// <summary> Parent process. </summary>
         [WirePath("properties.parent")]
         public string Parent { get; set; }
-        /// <summary>
-        /// Child process list.
-        /// Serialized Name: ProcessInfo.properties.children
-        /// </summary>
+        /// <summary> Child process list. </summary>
         [WirePath("properties.children")]
         public IList<string> Children { get; }
-        /// <summary>
-        /// Thread list.
-        /// Serialized Name: ProcessInfo.properties.threads
-        /// </summary>
+        /// <summary> Thread list. </summary>
         [WirePath("properties.threads")]
         public IList<WebAppProcessThreadProperties> ProcessThreads { get; }
-        /// <summary>
-        /// List of open files.
-        /// Serialized Name: ProcessInfo.properties.open_file_handles
-        /// </summary>
+        /// <summary> List of open files. </summary>
         [WirePath("properties.open_file_handles")]
         public IList<string> OpenFileHandles { get; }
-        /// <summary>
-        /// List of modules.
-        /// Serialized Name: ProcessInfo.properties.modules
-        /// </summary>
+        /// <summary> List of modules. </summary>
         [WirePath("properties.modules")]
         public IList<ProcessModuleInfoData> Modules { get; }
-        /// <summary>
-        /// File name of this process.
-        /// Serialized Name: ProcessInfo.properties.file_name
-        /// </summary>
+        /// <summary> File name of this process. </summary>
         [WirePath("properties.file_name")]
         public string FileName { get; set; }
-        /// <summary>
-        /// Command line.
-        /// Serialized Name: ProcessInfo.properties.command_line
-        /// </summary>
+        /// <summary> Command line. </summary>
         [WirePath("properties.command_line")]
         public string CommandLine { get; set; }
-        /// <summary>
-        /// User name.
-        /// Serialized Name: ProcessInfo.properties.user_name
-        /// </summary>
+        /// <summary> User name. </summary>
         [WirePath("properties.user_name")]
         public string UserName { get; set; }
-        /// <summary>
-        /// Handle count.
-        /// Serialized Name: ProcessInfo.properties.handle_count
-        /// </summary>
+        /// <summary> Handle count. </summary>
         [WirePath("properties.handle_count")]
         public int? HandleCount { get; set; }
-        /// <summary>
-        /// Module count.
-        /// Serialized Name: ProcessInfo.properties.module_count
-        /// </summary>
+        /// <summary> Module count. </summary>
         [WirePath("properties.module_count")]
         public int? ModuleCount { get; set; }
-        /// <summary>
-        /// Thread count.
-        /// Serialized Name: ProcessInfo.properties.thread_count
-        /// </summary>
+        /// <summary> Thread count. </summary>
         [WirePath("properties.thread_count")]
         public int? ThreadCount { get; set; }
-        /// <summary>
-        /// Start time.
-        /// Serialized Name: ProcessInfo.properties.start_time
-        /// </summary>
+        /// <summary> Start time. </summary>
         [WirePath("properties.start_time")]
         public DateTimeOffset? StartOn { get; set; }
-        /// <summary>
-        /// Total CPU time.
-        /// Serialized Name: ProcessInfo.properties.total_cpu_time
-        /// </summary>
+        /// <summary> Total CPU time. </summary>
         [WirePath("properties.total_cpu_time")]
         public string TotalCpuTime { get; set; }
-        /// <summary>
-        /// User CPU time.
-        /// Serialized Name: ProcessInfo.properties.user_cpu_time
-        /// </summary>
+        /// <summary> User CPU time. </summary>
         [WirePath("properties.user_cpu_time")]
         public string UserCpuTime { get; set; }
-        /// <summary>
-        /// Privileged CPU time.
-        /// Serialized Name: ProcessInfo.properties.privileged_cpu_time
-        /// </summary>
+        /// <summary> Privileged CPU time. </summary>
         [WirePath("properties.privileged_cpu_time")]
         public string PrivilegedCpuTime { get; set; }
-        /// <summary>
-        /// Working set.
-        /// Serialized Name: ProcessInfo.properties.working_set
-        /// </summary>
+        /// <summary> Working set. </summary>
         [WirePath("properties.working_set")]
         public long? WorkingSet { get; set; }
-        /// <summary>
-        /// Peak working set.
-        /// Serialized Name: ProcessInfo.properties.peak_working_set
-        /// </summary>
+        /// <summary> Peak working set. </summary>
         [WirePath("properties.peak_working_set")]
         public long? PeakWorkingSet { get; set; }
-        /// <summary>
-        /// Private memory size.
-        /// Serialized Name: ProcessInfo.properties.private_memory
-        /// </summary>
+        /// <summary> Private memory size. </summary>
         [WirePath("properties.private_memory")]
         public long? PrivateMemory { get; set; }
-        /// <summary>
-        /// Virtual memory size.
-        /// Serialized Name: ProcessInfo.properties.virtual_memory
-        /// </summary>
+        /// <summary> Virtual memory size. </summary>
         [WirePath("properties.virtual_memory")]
         public long? VirtualMemory { get; set; }
-        /// <summary>
-        /// Peak virtual memory usage.
-        /// Serialized Name: ProcessInfo.properties.peak_virtual_memory
-        /// </summary>
+        /// <summary> Peak virtual memory usage. </summary>
         [WirePath("properties.peak_virtual_memory")]
         public long? PeakVirtualMemory { get; set; }
-        /// <summary>
-        /// Paged system memory.
-        /// Serialized Name: ProcessInfo.properties.paged_system_memory
-        /// </summary>
+        /// <summary> Paged system memory. </summary>
         [WirePath("properties.paged_system_memory")]
         public long? PagedSystemMemory { get; set; }
-        /// <summary>
-        /// Non-paged system memory.
-        /// Serialized Name: ProcessInfo.properties.non_paged_system_memory
-        /// </summary>
+        /// <summary> Non-paged system memory. </summary>
         [WirePath("properties.non_paged_system_memory")]
         public long? NonPagedSystemMemory { get; set; }
-        /// <summary>
-        /// Paged memory.
-        /// Serialized Name: ProcessInfo.properties.paged_memory
-        /// </summary>
+        /// <summary> Paged memory. </summary>
         [WirePath("properties.paged_memory")]
         public long? PagedMemory { get; set; }
-        /// <summary>
-        /// Peak paged memory.
-        /// Serialized Name: ProcessInfo.properties.peak_paged_memory
-        /// </summary>
+        /// <summary> Peak paged memory. </summary>
         [WirePath("properties.peak_paged_memory")]
         public long? PeakPagedMemory { get; set; }
-        /// <summary>
-        /// Time stamp.
-        /// Serialized Name: ProcessInfo.properties.time_stamp
-        /// </summary>
+        /// <summary> Time stamp. </summary>
         [WirePath("properties.time_stamp")]
         public DateTimeOffset? TimeStamp { get; set; }
-        /// <summary>
-        /// List of environment variables.
-        /// Serialized Name: ProcessInfo.properties.environment_variables
-        /// </summary>
+        /// <summary> List of environment variables. </summary>
         [WirePath("properties.environment_variables")]
         public IDictionary<string, string> EnvironmentVariables { get; }
-        /// <summary>
-        /// Is this the SCM site?
-        /// Serialized Name: ProcessInfo.properties.is_scm_site
-        /// </summary>
+        /// <summary> Is this the SCM site?. </summary>
         [WirePath("properties.is_scm_site")]
         public bool? IsScmSite { get; set; }
-        /// <summary>
-        /// Is this a Web Job?
-        /// Serialized Name: ProcessInfo.properties.is_webjob
-        /// </summary>
+        /// <summary> Is this a Web Job?. </summary>
         [WirePath("properties.is_webjob")]
         public bool? IsWebjob { get; set; }
-        /// <summary>
-        /// Description of process.
-        /// Serialized Name: ProcessInfo.properties.description
-        /// </summary>
+        /// <summary> Description of process. </summary>
         [WirePath("properties.description")]
         public string Description { get; set; }
-        /// <summary>
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </summary>
+        /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
     }

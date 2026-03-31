@@ -13,7 +13,6 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary>
     /// List of available locations (regions or App Service Environments) for
     /// deployment of App Service resources.
-    /// Serialized Name: DeploymentLocations
     /// </summary>
     public partial class AppServiceDeploymentLocations
     {
@@ -58,18 +57,9 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AppServiceDeploymentLocations"/>. </summary>
-        /// <param name="locations">
-        /// Available regions.
-        /// Serialized Name: DeploymentLocations.locations
-        /// </param>
-        /// <param name="hostingEnvironments">
-        /// Available App Service Environments with full descriptions of the environments.
-        /// Serialized Name: DeploymentLocations.hostingEnvironments
-        /// </param>
-        /// <param name="hostingEnvironmentDeploymentInfos">
-        /// Available App Service Environments with basic information.
-        /// Serialized Name: DeploymentLocations.hostingEnvironmentDeploymentInfos
-        /// </param>
+        /// <param name="locations"> Available regions. </param>
+        /// <param name="hostingEnvironments"> Available App Service Environments with full descriptions of the environments. </param>
+        /// <param name="hostingEnvironmentDeploymentInfos"> Available App Service Environments with basic information. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AppServiceDeploymentLocations(IReadOnlyList<AppServiceGeoRegion> locations, IReadOnlyList<AppServiceEnvironmentProperties> hostingEnvironments, IReadOnlyList<HostingEnvironmentDeploymentInfo> hostingEnvironmentDeploymentInfos, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -79,22 +69,13 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Available regions.
-        /// Serialized Name: DeploymentLocations.locations
-        /// </summary>
+        /// <summary> Available regions. </summary>
         [WirePath("locations")]
         public IReadOnlyList<AppServiceGeoRegion> Locations { get; }
-        /// <summary>
-        /// Available App Service Environments with full descriptions of the environments.
-        /// Serialized Name: DeploymentLocations.hostingEnvironments
-        /// </summary>
+        /// <summary> Available App Service Environments with full descriptions of the environments. </summary>
         [WirePath("hostingEnvironments")]
         public IReadOnlyList<AppServiceEnvironmentProperties> HostingEnvironments { get; }
-        /// <summary>
-        /// Available App Service Environments with basic information.
-        /// Serialized Name: DeploymentLocations.hostingEnvironmentDeploymentInfos
-        /// </summary>
+        /// <summary> Available App Service Environments with basic information. </summary>
         [WirePath("hostingEnvironmentDeploymentInfos")]
         public IReadOnlyList<HostingEnvironmentDeploymentInfo> HostingEnvironmentDeploymentInfos { get; }
     }

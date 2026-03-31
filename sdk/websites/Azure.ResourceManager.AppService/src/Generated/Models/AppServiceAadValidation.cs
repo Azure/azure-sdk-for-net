@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The configuration settings of the Azure Active Directory token validation flow.
-    /// Serialized Name: AzureActiveDirectoryValidation
-    /// </summary>
+    /// <summary> The configuration settings of the Azure Active Directory token validation flow. </summary>
     public partial class AppServiceAadValidation
     {
         /// <summary>
@@ -55,18 +52,9 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AppServiceAadValidation"/>. </summary>
-        /// <param name="jwtClaimChecks">
-        /// The configuration settings of the checks that should be made while validating the JWT Claims.
-        /// Serialized Name: AzureActiveDirectoryValidation.jwtClaimChecks
-        /// </param>
-        /// <param name="allowedAudiences">
-        /// The list of audiences that can make successful authentication/authorization requests.
-        /// Serialized Name: AzureActiveDirectoryValidation.allowedAudiences
-        /// </param>
-        /// <param name="defaultAuthorizationPolicy">
-        /// The configuration settings of the default authorization policy.
-        /// Serialized Name: AzureActiveDirectoryValidation.defaultAuthorizationPolicy
-        /// </param>
+        /// <param name="jwtClaimChecks"> The configuration settings of the checks that should be made while validating the JWT Claims. </param>
+        /// <param name="allowedAudiences"> The list of audiences that can make successful authentication/authorization requests. </param>
+        /// <param name="defaultAuthorizationPolicy"> The configuration settings of the default authorization policy. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AppServiceAadValidation(JwtClaimChecks jwtClaimChecks, IList<string> allowedAudiences, DefaultAuthorizationPolicy defaultAuthorizationPolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -76,22 +64,13 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The configuration settings of the checks that should be made while validating the JWT Claims.
-        /// Serialized Name: AzureActiveDirectoryValidation.jwtClaimChecks
-        /// </summary>
+        /// <summary> The configuration settings of the checks that should be made while validating the JWT Claims. </summary>
         [WirePath("jwtClaimChecks")]
         public JwtClaimChecks JwtClaimChecks { get; set; }
-        /// <summary>
-        /// The list of audiences that can make successful authentication/authorization requests.
-        /// Serialized Name: AzureActiveDirectoryValidation.allowedAudiences
-        /// </summary>
+        /// <summary> The list of audiences that can make successful authentication/authorization requests. </summary>
         [WirePath("allowedAudiences")]
         public IList<string> AllowedAudiences { get; }
-        /// <summary>
-        /// The configuration settings of the default authorization policy.
-        /// Serialized Name: AzureActiveDirectoryValidation.defaultAuthorizationPolicy
-        /// </summary>
+        /// <summary> The configuration settings of the default authorization policy. </summary>
         [WirePath("defaultAuthorizationPolicy")]
         public DefaultAuthorizationPolicy DefaultAuthorizationPolicy { get; set; }
     }

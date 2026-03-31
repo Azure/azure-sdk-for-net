@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The parameter type.
-    /// Serialized Name: ParameterType
-    /// </summary>
+    /// <summary> The parameter type. </summary>
     public readonly partial struct WebAppParameterType : IEquatable<WebAppParameterType>
     {
         private readonly string _value;
@@ -35,50 +32,23 @@ namespace Azure.ResourceManager.AppService.Models
         private const string ObjectValue = "Object";
         private const string SecureObjectValue = "SecureObject";
 
-        /// <summary>
-        /// NotSpecified
-        /// Serialized Name: ParameterType.NotSpecified
-        /// </summary>
+        /// <summary> NotSpecified. </summary>
         public static WebAppParameterType NotSpecified { get; } = new WebAppParameterType(NotSpecifiedValue);
-        /// <summary>
-        /// String
-        /// Serialized Name: ParameterType.String
-        /// </summary>
+        /// <summary> String. </summary>
         public static WebAppParameterType String { get; } = new WebAppParameterType(StringValue);
-        /// <summary>
-        /// SecureString
-        /// Serialized Name: ParameterType.SecureString
-        /// </summary>
+        /// <summary> SecureString. </summary>
         public static WebAppParameterType SecureString { get; } = new WebAppParameterType(SecureStringValue);
-        /// <summary>
-        /// Int
-        /// Serialized Name: ParameterType.Int
-        /// </summary>
+        /// <summary> Int. </summary>
         public static WebAppParameterType Int { get; } = new WebAppParameterType(IntValue);
-        /// <summary>
-        /// Float
-        /// Serialized Name: ParameterType.Float
-        /// </summary>
+        /// <summary> Float. </summary>
         public static WebAppParameterType Float { get; } = new WebAppParameterType(FloatValue);
-        /// <summary>
-        /// Bool
-        /// Serialized Name: ParameterType.Bool
-        /// </summary>
+        /// <summary> Bool. </summary>
         public static WebAppParameterType Bool { get; } = new WebAppParameterType(BoolValue);
-        /// <summary>
-        /// Array
-        /// Serialized Name: ParameterType.Array
-        /// </summary>
+        /// <summary> Array. </summary>
         public static WebAppParameterType Array { get; } = new WebAppParameterType(ArrayValue);
-        /// <summary>
-        /// Object
-        /// Serialized Name: ParameterType.Object
-        /// </summary>
+        /// <summary> Object. </summary>
         public static WebAppParameterType Object { get; } = new WebAppParameterType(ObjectValue);
-        /// <summary>
-        /// SecureObject
-        /// Serialized Name: ParameterType.SecureObject
-        /// </summary>
+        /// <summary> SecureObject. </summary>
         public static WebAppParameterType SecureObject { get; } = new WebAppParameterType(SecureObjectValue);
         /// <summary> Determines if two <see cref="WebAppParameterType"/> values are the same. </summary>
         public static bool operator ==(WebAppParameterType left, WebAppParameterType right) => left.Equals(right);
