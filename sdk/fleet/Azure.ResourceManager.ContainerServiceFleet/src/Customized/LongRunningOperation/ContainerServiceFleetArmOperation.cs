@@ -13,7 +13,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ContainerServiceFleet
 {
-    internal partial class ContainerServiceFleetArmOperation : ArmOperation
+    internal partial class ContainerServiceFleetArmOperation
     {
         /// <summary></summary>
         /// <param name="clientDiagnostics"> The instance of <see cref="ClientDiagnostics"/>. </param>

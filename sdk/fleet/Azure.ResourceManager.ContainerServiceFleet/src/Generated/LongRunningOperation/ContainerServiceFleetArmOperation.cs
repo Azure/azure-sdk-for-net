@@ -37,9 +37,35 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             _operationId = GetOperationId(rehydrationToken);
         }
 
-        // NOTE: The constructor with (ClientDiagnostics, HttpPipeline, Request, Response, OperationFinalStateVia, bool, string)
-        // has been moved to src/Customized/LongRunningOperation/ContainerServiceFleetArmOperation.cs
-        // to set skipApiVersionOverride = true by default.
+        /// <summary></summary>
+        /// <param name="clientDiagnostics"> The instance of <see cref="ClientDiagnostics"/>. </param>
+        /// <param name="pipeline"> The instance of <see cref="HttpPipeline"/>. </param>
+        /// <param name="request"> The operation request. </param>
+        /// <param name="response"> The operation response. </param>
+        /// <param name="finalStateVia"> The finalStateVia of the operation. </param>
+        /// <param name="skipApiVersionOverride"> If should skip Api version override. </param>
+        /// <param name="apiVersionOverrideValue"> The Api version override value. </param>
+        internal ContainerServiceFleetArmOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia, bool skipApiVersionOverride = false, string apiVersionOverrideValue = null)
+        {
+            IOperation nextLinkOperation = NextLinkOperationImplementation.Create(pipeline, request.Method, request.Uri.ToUri(), response, finalStateVia, skipApiVersionOverride, apiVersionOverrideValue);
+            if (nextLinkOperation is NextLinkOperationImplementation nextLinkOperationImplementation)
+            {
+                _nextLinkOperation = nextLinkOperationImplementation;
+                _operationId = _nextLinkOperation.OperationId;
+            }
+            else
+            {
+                _completeRehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(request.Method, request.Uri.ToUri(), response, finalStateVia);
+                _operationId = GetOperationId(_completeRehydrationToken);
+            }
+            _operation = new OperationInternal(
+                nextLinkOperation,
+                clientDiagnostics,
+                response,
+                "ContainerServiceFleetArmOperation",
+                null,
+                new SequentialDelayStrategy());
+        }
 
         /// <summary> Gets the Id. </summary>
         public override string Id => _operationId ?? NextLinkOperationImplementation.NotSet;
