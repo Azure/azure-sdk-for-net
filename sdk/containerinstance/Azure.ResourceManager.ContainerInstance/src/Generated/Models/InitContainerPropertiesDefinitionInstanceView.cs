@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <summary> Initializes a new instance of <see cref="InitContainerPropertiesDefinitionInstanceView"/>. </summary>
         internal InitContainerPropertiesDefinitionInstanceView()
         {
-            Events = new ChangeTrackingList<Event>();
+            _events = new ChangeTrackingList<Event>();
         }
 
         /// <summary> Initializes a new instance of <see cref="InitContainerPropertiesDefinitionInstanceView"/>. </summary>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             RestartCount = restartCount;
             CurrentState = currentState;
             PreviousState = previousState;
-            Events = events;
+            _events = events;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -48,6 +48,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public ContainerState PreviousState { get; }
 
         /// <summary> The events of the init container. </summary>
-        public IReadOnlyList<Event> Events { get; }
+        private readonly IReadOnlyList<Event> _events;
     }
 }

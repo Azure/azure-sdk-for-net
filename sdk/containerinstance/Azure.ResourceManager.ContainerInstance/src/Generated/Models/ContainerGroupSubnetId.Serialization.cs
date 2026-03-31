@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 throw new FormatException($"The model {nameof(ContainerGroupSubnetId)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("id"u8);
-            writer.WriteStringValue(Id);
+            writer.WriteStringValue(_id);
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);

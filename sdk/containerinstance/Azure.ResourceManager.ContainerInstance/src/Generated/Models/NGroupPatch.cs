@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         {
             SystemData = systemData;
             Properties = properties;
-            Identity = identity;
+            _identity = identity;
             Tags = tags;
             Zones = zones;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         internal NGroupProperties Properties { get; set; }
 
         /// <summary> The identity of the NGroup, if configured. </summary>
-        public NGroupIdentity Identity { get; set; }
+        private NGroupIdentity _identity;
 
         /// <summary> The resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
@@ -57,22 +57,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <summary> The zones for the NGroup. </summary>
         public IList<string> Zones { get; }
 
-        /// <summary> The elastic profile. </summary>
-        public ElasticProfile ElasticProfile
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ElasticProfile;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new NGroupProperties();
-                }
-                Properties.ElasticProfile = value;
-            }
-        }
+        // ElasticProfile: defined in Customized partial with backward-compat type
 
         /// <summary> The Container Group Profiles that could be used in the NGroups resource. </summary>
         public IList<ContainerGroupProfileStub> ContainerGroupProfiles
@@ -96,22 +81,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
         }
 
-        /// <summary> Used by the customer to specify the way to update the Container Groups in NGroup. </summary>
-        public UpdateProfile UpdateProfile
-        {
-            get
-            {
-                return Properties is null ? default : Properties.UpdateProfile;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new NGroupProperties();
-                }
-                Properties.UpdateProfile = value;
-            }
-        }
+        // UpdateProfile: defined in Customized partial with backward-compat type
 
         /// <summary> The number of fault domains to be used to spread CGs in the NGroups resource. This can only be specified during NGroup creation and is immutable after that. </summary>
         public int? PlacementFaultDomainCount

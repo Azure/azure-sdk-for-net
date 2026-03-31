@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 writer.WritePropertyName("previousState"u8);
                 writer.WriteObjectValue(PreviousState, options);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Events))
+            if (options.Format != "W" && Optional.IsCollectionDefined(_events))
             {
                 writer.WritePropertyName("events"u8);
                 writer.WriteStartArray();
-                foreach (Event item in Events)
+                foreach (Event item in _events)
                 {
                     writer.WriteObjectValue(item, options);
                 }

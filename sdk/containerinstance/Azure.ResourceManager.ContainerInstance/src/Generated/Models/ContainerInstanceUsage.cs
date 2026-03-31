@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             Unit = unit;
             CurrentValue = currentValue;
             Limit = limit;
-            Name = name;
+            _name = name;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -51,6 +51,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public int? Limit { get; }
 
         /// <summary> The name object of the resource. </summary>
-        public UsageName Name { get; }
+        private readonly UsageName _name;
     }
 }

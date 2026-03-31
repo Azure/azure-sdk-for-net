@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         {
             Resource = resource;
             Revision = revision;
-            NetworkProfile = networkProfile;
+            _networkProfile = networkProfile;
             StorageProfile = storageProfile;
             ContainerGroupProperties = containerGroupProperties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public int? Revision { get; set; }
 
         /// <summary> A network profile for network settings of a ContainerGroupProfile. </summary>
-        public NetworkProfile NetworkProfile { get; set; }
+        private NetworkProfile _networkProfile;
 
         /// <summary> Storage profile for storage related settings of a container group profile. </summary>
         internal StorageProfile StorageProfile { get; set; }
@@ -53,34 +53,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <summary> Container Group properties which can be set while creating or updating the NGroups. </summary>
         public NGroupContainerGroupProperties ContainerGroupProperties { get; set; }
 
-        /// <summary> The ARM resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/... </summary>
-        public string ResourceId
-        {
-            get
-            {
-                return Resource is null ? default : Resource.Id;
-            }
-            set
-            {
-                if (Resource is null)
-                {
-                    Resource = new ApiEntityReference();
-                }
-                Resource.Id = value;
-            }
-        }
-
-        /// <summary> Gets the FileShares. </summary>
-        public IList<FileShare> StorageFileShares
-        {
-            get
-            {
-                if (StorageProfile is null)
-                {
-                    StorageProfile = new StorageProfile();
-                }
-                return StorageProfile.FileShares;
-            }
-        }
+        // ResourceId, StorageFileShares: defined in Customized partial with backward-compat types
     }
 }

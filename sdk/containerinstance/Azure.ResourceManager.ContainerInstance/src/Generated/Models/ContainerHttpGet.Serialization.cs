@@ -86,10 +86,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
             writer.WritePropertyName("port"u8);
             writer.WriteNumberValue(Port);
-            if (Optional.IsDefined(Scheme))
+            if (Optional.IsDefined(_scheme))
             {
                 writer.WritePropertyName("scheme"u8);
-                writer.WriteStringValue(Scheme.Value.ToString());
+                writer.WriteStringValue(_scheme.Value.ToString());
             }
             if (Optional.IsCollectionDefined(HttpHeaders))
             {

@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 writer.WritePropertyName("revision"u8);
                 writer.WriteNumberValue(Revision.Value);
             }
-            if (Optional.IsDefined(NetworkProfile))
+            if (Optional.IsDefined(_networkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
-                writer.WriteObjectValue(NetworkProfile, options);
+                writer.WriteObjectValue(_networkProfile, options);
             }
             if (Optional.IsDefined(StorageProfile))
             {
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    networkProfile = NetworkProfile.DeserializeNetworkProfile(prop.Value, options);
+                    networkProfile = Models.NetworkProfile.DeserializeNetworkProfile(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("storageProfile"u8))

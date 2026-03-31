@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         {
             Argument.AssertNotNull(id, nameof(id));
 
-            Id = id;
+            _id = id;
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerGroupSubnetId"/>. </summary>
@@ -33,13 +33,13 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal ContainerGroupSubnetId(string id, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Id = id;
+            _id = id;
             Name = name;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Resource ID of virtual network and subnet. </summary>
-        public string Id { get; set; }
+        private string _id;
 
         /// <summary> Friendly name for the subnet. </summary>
         public string Name { get; set; }

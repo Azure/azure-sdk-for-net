@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         {
             Path = path;
             Port = port;
-            Scheme = scheme;
+            _scheme = scheme;
             HttpHeaders = httpHeaders;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public int Port { get; set; }
 
         /// <summary> The scheme. </summary>
-        public Scheme? Scheme { get; set; }
+        private Scheme? _scheme;
 
         /// <summary> The HTTP headers. </summary>
         public IList<Models.ContainerHttpHeader> HttpHeaders { get; }

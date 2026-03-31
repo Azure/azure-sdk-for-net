@@ -18,7 +18,12 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public ContainerGroupSubnetId(ResourceIdentifier id) : this(id?.ToString()) { }
 
-        // NOTE: Property type shim (Id→ResourceIdentifier) cannot be added here because
-        // ContainerGroupSubnetId is a generated partial class and Id already exists with string type.
+        // backward-compat shim: old property was ResourceIdentifier, new is string
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public ResourceIdentifier Id
+        {
+            get => _id != null ? new ResourceIdentifier(_id) : null;
+            set => _id = value?.ToString();
+        }
     }
 }

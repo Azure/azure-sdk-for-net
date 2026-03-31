@@ -97,10 +97,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
             }
-            if (Optional.IsDefined(Identity))
+            if (Optional.IsDefined(_identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity, options);
+                writer.WriteObjectValue(_identity, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {

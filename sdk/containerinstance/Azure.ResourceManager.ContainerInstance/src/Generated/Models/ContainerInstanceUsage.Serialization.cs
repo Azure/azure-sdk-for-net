@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 writer.WritePropertyName("limit"u8);
                 writer.WriteNumberValue(Limit.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Optional.IsDefined(_name))
             {
                 writer.WritePropertyName("name"u8);
-                writer.WriteObjectValue(Name, options);
+                writer.WriteObjectValue(_name, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
