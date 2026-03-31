@@ -6,8 +6,8 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Diagnostics.HealthChecks;
 using NUnit.Framework;
+using OpenTelemetry.Trace;
 
 namespace Azure.AI.AgentServer.Core.Tests.Snippets
 {
@@ -106,7 +106,6 @@ namespace Azure.AI.AgentServer.Core.Tests.Snippets
             #endregion
         }
 
-        // Supporting type for the escape hatch snippet.
-        public class MyService { }
+        private class MyService { }
     }
 }

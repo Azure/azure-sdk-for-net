@@ -149,6 +149,7 @@ known_content_issues:
   # and have no 'Authenticate the Client' section since there is no client to authenticate.
   - ['sdk/agentserver/Azure.AI.AgentServer.Core/README.md','https://github.com/Azure/azure-sdk-tools/issues/404']
   - ['sdk/agentserver/Azure.AI.AgentServer.Responses/README.md','https://github.com/Azure/azure-sdk-tools/issues/404']
+  - ['sdk/agentserver/Azure.AI.AgentServer.Invocations/README.md','https://github.com/Azure/azure-sdk-tools/issues/404']
 
   - ['sdk/tools/Azure.SdkAnalyzers/README.md','Not a package - internal tooling']
   - ['eng/centralpackagemanagement/README.md','Not a package - internal tooling']

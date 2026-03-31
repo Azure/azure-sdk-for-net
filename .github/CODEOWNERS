@@ -39,8 +39,8 @@
 # Automation
 ################
 
-# Git Hub integration and bot rules
-/.github/                                                          @jsquire @ronniegeraghty
+# GitHub integration and bot rules
+/.github/                                                          @jsquire @ronniegeraghty @ArthurMa1978
 
 # PRLabel: %EngSys
 /sdk/template/                                                     @hallipr @weshaggard @benbp @jsquire

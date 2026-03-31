@@ -12,6 +12,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Synapse.Tests
 {
+    [Ignore("Test recordings need re-recording with current Storage SDK. See https://github.com/Azure/azure-sdk-for-net/issues/57594")]
     public class FirewallRuleOperationTests : SynapseManagementTestBase
     {
         public FirewallRuleOperationTests(bool async) : base(async)

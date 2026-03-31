@@ -21,3 +21,5 @@ extends:
         safeName: AzureAIAgentServerCore
       - name: Azure.AI.AgentServer.Responses
         safeName: AzureAIAgentServerResponses
+      - name: Azure.AI.AgentServer.Invocations
+        safeName: AzureAIAgentServerInvocations

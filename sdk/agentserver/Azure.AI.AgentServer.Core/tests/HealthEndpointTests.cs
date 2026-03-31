@@ -26,7 +26,7 @@ public class HealthEndpointTests
         await app.StartAsync();
 
         var client = app.GetTestClient();
-        var response = await client.GetAsync("/healthy");
+        var response = await client.GetAsync("/readiness");
 
         Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 

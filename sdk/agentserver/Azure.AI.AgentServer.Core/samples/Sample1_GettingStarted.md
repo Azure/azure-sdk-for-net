@@ -28,7 +28,7 @@ app.Run();
 This starts a server on port 8088 (or the `PORT` environment variable) with:
 - Kestrel HTTP/1.1 listening
 - OpenTelemetry traces and metrics
-- A `/healthy` health endpoint
+- A `/readiness` health endpoint
 - The `x-platform-server` identity header on all responses
 - Your custom `/hello` endpoint
 
@@ -36,7 +36,7 @@ This starts a server on port 8088 (or the `PORT` environment variable) with:
 
 ```bash
 # Health probe
-curl http://localhost:8088/healthy
+curl http://localhost:8088/readiness
 
 # Custom endpoint
 curl http://localhost:8088/hello
@@ -47,7 +47,7 @@ curl http://localhost:8088/hello
 | Feature | Default behavior |
 |---------|-----------------|
 | **Port** | `PORT` env var, or 8088 |
-| **Health** | `/healthy` endpoint |
+| **Health** | `/readiness` endpoint |
 | **Telemetry** | OpenTelemetry traces + metrics via Azure Monitor |
 | **User-Agent** | `x-platform-server` header on every response |
 | **Shutdown** | 30-second graceful shutdown |

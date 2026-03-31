@@ -92,7 +92,7 @@ app.Run();
 | Method | Purpose |
 |--------|---------|
 | `ConfigureTracing(...)` | Add custom OpenTelemetry trace sources |
-| `ConfigureHealth(...)` | Add custom health checks alongside `/healthy` |
+| `ConfigureHealth(...)` | Add custom health checks alongside `/readiness` |
 | `ConfigureShutdown(...)` | Override the 30-second graceful shutdown timeout |
 | `Configure(...)` | Set `AgentHostOptions` (shutdown timeout, identity) |
 | `WebApplicationBuilder` | Escape hatch for CORS, auth, middleware |

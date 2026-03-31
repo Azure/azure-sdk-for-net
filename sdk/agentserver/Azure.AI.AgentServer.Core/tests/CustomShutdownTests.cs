@@ -6,6 +6,7 @@ using Azure.AI.AgentServer.Invocations;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
 
 namespace Azure.AI.AgentServer.Core.Tests;
@@ -26,10 +27,12 @@ public class CustomShutdownTests
         var app = builder.Build();
         await app.App.StartAsync();
 
+        // Verify the configured timeout was applied to HostOptions
+        var hostOptions = app.App.Services.GetRequiredService<Microsoft.Extensions.Options.IOptions<Microsoft.Extensions.Hosting.HostOptions>>().Value;
+        Assert.That(hostOptions.ShutdownTimeout, Is.EqualTo(customTimeout));
+
         var cts = new CancellationTokenSource(TimeSpan.FromSeconds(5));
         await app.App.StopAsync(cts.Token);
-
-        Assert.Pass("Shutdown completed with custom timeout.");
     }
 
     private sealed class TestInvocationHandler : InvocationHandler
