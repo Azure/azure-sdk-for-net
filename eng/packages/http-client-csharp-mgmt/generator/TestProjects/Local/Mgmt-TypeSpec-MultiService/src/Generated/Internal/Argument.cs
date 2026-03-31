@@ -8,11 +8,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-<<<<<<<< HEAD:sdk/agentserver/Azure.AI.AgentServer.Responses/src/Generated/Internal/Argument.cs
-namespace Azure.AI.AgentServer.Responses
-========
 namespace Azure.Generator.MgmtTypeSpec.MultiService.Tests
->>>>>>>> origin/main:eng/packages/http-client-csharp-mgmt/generator/TestProjects/Local/Mgmt-TypeSpec-MultiService/src/Generated/Internal/Argument.cs
 {
     internal static partial class Argument
     {

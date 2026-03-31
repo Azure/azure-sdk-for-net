@@ -9,11 +9,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-<<<<<<<< HEAD:sdk/agentserver/Azure.AI.AgentServer.Responses/src/Generated/Internal/ChangeTrackingList.cs
-namespace Azure.AI.AgentServer.Responses
-========
 namespace Azure.ResourceManager.AppNetwork
->>>>>>>> origin/main:sdk/appnetwork/Azure.ResourceManager.AppNetwork/src/Generated/Internal/ChangeTrackingList.cs
 {
     internal partial class ChangeTrackingList<T> : IList<T>, IReadOnlyList<T>
     {

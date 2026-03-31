@@ -8,11 +8,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-<<<<<<<< HEAD:sdk/agentserver/Azure.AI.AgentServer.Responses/src/Generated/Internal/ChangeTrackingDictionary.cs
-namespace Azure.AI.AgentServer.Responses
-========
 namespace Azure.ResourceManager.AppNetwork
->>>>>>>> origin/main:sdk/appnetwork/Azure.ResourceManager.AppNetwork/src/Generated/Internal/ChangeTrackingDictionary.cs
 {
     internal partial class ChangeTrackingDictionary<TKey, TValue> : IDictionary<TKey, TValue>, IReadOnlyDictionary<TKey, TValue>
         where TKey : notnull

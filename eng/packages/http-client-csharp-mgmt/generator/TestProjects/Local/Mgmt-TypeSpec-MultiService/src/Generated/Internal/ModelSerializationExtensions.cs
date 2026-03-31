@@ -12,11 +12,7 @@ using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Text.Json;
 
-<<<<<<<< HEAD:sdk/agentserver/Azure.AI.AgentServer.Responses/src/Generated/Internal/ModelSerializationExtensions.cs
-namespace Azure.AI.AgentServer.Responses
-========
 namespace Azure.Generator.MgmtTypeSpec.MultiService.Tests
->>>>>>>> origin/main:eng/packages/http-client-csharp-mgmt/generator/TestProjects/Local/Mgmt-TypeSpec-MultiService/src/Generated/Internal/ModelSerializationExtensions.cs
 {
     internal static partial class ModelSerializationExtensions
     {
