@@ -55,7 +55,10 @@ namespace Azure.ResourceManager.Hci
             uri.AppendPath(arcSettingName, true);
             uri.AppendPath("/extensions/", false);
             uri.AppendPath(extensionName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -78,7 +81,10 @@ namespace Azure.ResourceManager.Hci
             uri.AppendPath(arcSettingName, true);
             uri.AppendPath("/extensions/", false);
             uri.AppendPath(extensionName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -103,7 +109,10 @@ namespace Azure.ResourceManager.Hci
             uri.AppendPath(arcSettingName, true);
             uri.AppendPath("/extensions/", false);
             uri.AppendPath(extensionName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -128,7 +137,10 @@ namespace Azure.ResourceManager.Hci
             uri.AppendPath(arcSettingName, true);
             uri.AppendPath("/extensions/", false);
             uri.AppendPath(extensionName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -149,7 +161,10 @@ namespace Azure.ResourceManager.Hci
             uri.AppendPath("/arcSettings/", false);
             uri.AppendPath(arcSettingName, true);
             uri.AppendPath("/extensions", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -169,7 +184,10 @@ namespace Azure.ResourceManager.Hci
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -193,7 +211,10 @@ namespace Azure.ResourceManager.Hci
             uri.AppendPath("/extensions/", false);
             uri.AppendPath(extensionName, true);
             uri.AppendPath("/upgrade", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

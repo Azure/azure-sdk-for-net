@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Hci
     public partial class ArcSettingData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryData;
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ArcSettingData"/>. </summary>
         public ArcSettingData()
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="properties"> ArcSetting properties. </param>
         internal ArcSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ArcSettingProperties properties) : base(id, name, resourceType, systemData)
         {
-            _additionalBinaryData = additionalBinaryDataProperties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
         }
 
@@ -164,8 +164,6 @@ namespace Azure.ResourceManager.Hci
                 return Properties.PerNodeDetails;
             }
         }
-
-        // ConnectivityProperties property moved to Custom/ArcSettingData.cs for backward compat (BinaryData type)
 
         /// <summary> Properties for each of the default extensions category. </summary>
         [WirePath("properties.defaultExtensions")]

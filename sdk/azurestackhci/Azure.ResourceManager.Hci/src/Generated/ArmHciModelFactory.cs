@@ -145,43 +145,6 @@ namespace Azure.ResourceManager.Hci.Models
                 additionalBinaryDataProperties: null);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="provisioningState"> Provisioning state of the ArcSetting proxy resource. </param>
-        /// <param name="arcInstanceResourceGroup"> The resource group that hosts the Arc agents, ie. Hybrid Compute Machine resources. </param>
-        /// <param name="arcApplicationClientId"> App id of arc AAD identity. </param>
-        /// <param name="arcApplicationTenantId"> Tenant id of arc AAD identity. </param>
-        /// <param name="arcServicePrincipalObjectId"> Object id of arc AAD service principal. </param>
-        /// <param name="arcApplicationObjectId"> Object id of arc AAD identity. </param>
-        /// <param name="aggregateState"> Aggregate state of Arc agent across the nodes in this HCI cluster. </param>
-        /// <param name="perNodeDetails"> State of Arc agent in each of the nodes. </param>
-        /// <param name="connectivityProperties"> contains connectivity related configuration for ARC resources. </param>
-        /// <param name="defaultExtensions"> Properties for each of the default extensions category. </param>
-        /// <returns> A new <see cref="Hci.ArcSettingData"/> instance for mocking. </returns>
-        public static ArcSettingData ArcSettingData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HciProvisioningState? provisioningState = default, string arcInstanceResourceGroup = default, Guid? arcApplicationClientId = default, Guid? arcApplicationTenantId = default, Guid? arcServicePrincipalObjectId = default, Guid? arcApplicationObjectId = default, ArcSettingAggregateState? aggregateState = default, IEnumerable<PerNodeArcState> perNodeDetails = default, ArcConnectivityProperties connectivityProperties = default, IEnumerable<ArcDefaultExtensionDetails> defaultExtensions = default)
-        {
-            return new ArcSettingData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                provisioningState is null && arcInstanceResourceGroup is null && arcApplicationClientId is null && arcApplicationTenantId is null && arcServicePrincipalObjectId is null && arcApplicationObjectId is null && aggregateState is null && perNodeDetails is null && connectivityProperties is null && defaultExtensions is null ? default : new ArcSettingProperties(
-                    provisioningState,
-                    arcInstanceResourceGroup,
-                    arcApplicationClientId,
-                    arcApplicationTenantId,
-                    arcServicePrincipalObjectId,
-                    arcApplicationObjectId,
-                    aggregateState,
-                    (perNodeDetails ?? new ChangeTrackingList<PerNodeArcState>()).ToList(),
-                    connectivityProperties,
-                    (defaultExtensions ?? new ChangeTrackingList<ArcDefaultExtensionDetails>()).ToList(),
-                    null));
-        }
-
         /// <summary> Status of Arc agent for a particular node in HCI Cluster. </summary>
         /// <param name="name"> Name of the Node in HCI Cluster. </param>
         /// <param name="arcInstance"> Fully qualified resource ID for the Arc agent of this node. </param>
@@ -193,17 +156,6 @@ namespace Azure.ResourceManager.Hci.Models
             return new PerNodeArcState(name, arcInstance, arcNodeServicePrincipalObjectId, state, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Connectivity related configuration required by arc server. </summary>
-        /// <param name="enabled"> True indicates ARC connectivity is enabled. </param>
-        /// <param name="serviceConfigurations"> Service configurations associated with the connectivity resource. They are only processed by the server if 'enabled' property is set to 'true'. </param>
-        /// <returns> A new <see cref="Models.ArcConnectivityProperties"/> instance for mocking. </returns>
-        public static ArcConnectivityProperties ArcConnectivityProperties(bool? enabled = default, IEnumerable<ServiceConfiguration> serviceConfigurations = default)
-        {
-            serviceConfigurations ??= new ChangeTrackingList<ServiceConfiguration>();
-
-            return new ArcConnectivityProperties(enabled, serviceConfigurations.ToList(), additionalBinaryDataProperties: null);
-        }
-
         /// <summary> Properties for a particular default extension category. </summary>
         /// <param name="category"> Default extension category. </param>
         /// <param name="consentOn"> Consent time for extension category. </param>
@@ -211,16 +163,6 @@ namespace Azure.ResourceManager.Hci.Models
         public static ArcDefaultExtensionDetails ArcDefaultExtensionDetails(string category = default, DateTimeOffset? consentOn = default)
         {
             return new ArcDefaultExtensionDetails(category, consentOn, additionalBinaryDataProperties: null);
-        }
-
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="connectivityProperties"> contains connectivity related configuration for ARC resources. </param>
-        /// <returns> A new <see cref="Models.ArcSettingPatch"/> instance for mocking. </returns>
-        public static ArcSettingPatch ArcSettingPatch(IDictionary<string, string> tags = default, ArcConnectivityProperties connectivityProperties = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new ArcSettingPatch(tags, connectivityProperties is null ? default : new ArcSettingsPatchProperties(connectivityProperties, null), additionalBinaryDataProperties: null);
         }
 
         /// <summary> The ArcPasswordCredential. </summary>
@@ -414,13 +356,13 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Remote Support Node Settings of the cluster. </summary>
-        /// <param name="arcResourceId"> Arc ResourceId of the Node. </param>
-        /// <param name="state"> Remote Support Access Connection State on the Node. </param>
-        /// <param name="createdOn"> Remote Support Enablement Request Created TimeStamp on the Node. </param>
-        /// <param name="updatedOn"> Remote Support Enablement Request Updated TimeStamp on the Node. </param>
-        /// <param name="connectionStatus"> Remote Support Access Connection Status on the Node. </param>
-        /// <param name="connectionErrorMessage"> Remote Support Access Connection Error Message on the Node. </param>
-        /// <param name="transcriptLocation"> Remote Support Transcript location on the node. </param>
+        /// <param name="arcResourceId"></param>
+        /// <param name="state"></param>
+        /// <param name="createdOn"></param>
+        /// <param name="updatedOn"></param>
+        /// <param name="connectionStatus"></param>
+        /// <param name="connectionErrorMessage"></param>
+        /// <param name="transcriptLocation"></param>
         /// <returns> A new <see cref="Models.RemoteSupportNodeSettings"/> instance for mocking. </returns>
         public static RemoteSupportNodeSettings RemoteSupportNodeSettings(string arcResourceId = default, string state = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, string connectionStatus = default, string connectionErrorMessage = default, string transcriptLocation = default)
         {
@@ -1570,17 +1512,6 @@ namespace Azure.ResourceManager.Hci.Models
                     (perNodeExtensionDetails ?? new ChangeTrackingList<PerNodeExtensionState>()).ToList(),
                     managedBy,
                     null));
-        }
-
-        /// <summary> Describes the Extension Instance View. </summary>
-        /// <param name="name"> The extension name. </param>
-        /// <param name="type"> Specifies the type of the extension; an example is "MicrosoftMonitoringAgent". </param>
-        /// <param name="typeHandlerVersion"> Specifies the version of the script handler. </param>
-        /// <param name="status"> Instance view status. </param>
-        /// <returns> A new <see cref="Models.HciExtensionInstanceView"/> instance for mocking. </returns>
-        public static HciExtensionInstanceView HciExtensionInstanceView(string name = default, string @type = default, string typeHandlerVersion = default, ArcExtensionInstanceViewStatus status = default)
-        {
-            return new HciExtensionInstanceView(name, @type, typeHandlerVersion, status, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Instance view status. </summary>
@@ -3098,15 +3029,7 @@ namespace Azure.ResourceManager.Hci.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ArcSettingData ArcSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, HciProvisioningState? provisioningState, string arcInstanceResourceGroup, Guid? arcApplicationClientId, Guid? arcApplicationTenantId, Guid? arcServicePrincipalObjectId, Guid? arcApplicationObjectId, ArcSettingAggregateState? aggregateState, IEnumerable<PerNodeArcState> perNodeDetails, BinaryData connectivityProperties)
         {
-            perNodeDetails ??= new ChangeTrackingList<PerNodeArcState>();
-
-            return new ArcSettingData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                default);
+            return ArcSettingData(id, name, resourceType, systemData, provisioningState: default, arcInstanceResourceGroup, arcApplicationClientId, arcApplicationTenantId, arcServicePrincipalObjectId, arcApplicationObjectId, aggregateState: default, perNodeDetails: default, connectivityProperties, defaultExtensions: default);
         }
 
         /// <summary> Initializes a new instance of PerNodeArcState. </summary>

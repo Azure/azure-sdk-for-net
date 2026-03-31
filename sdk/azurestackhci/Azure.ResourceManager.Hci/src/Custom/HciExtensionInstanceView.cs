@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Hci.Models
 {
     [Obsolete("This class is now deprecated. Please use the new class `ArcExtensionInstanceView` moving forward.")]
     [CodeGenSuppress("Status")]
-    [CodeGenSuppress("HciExtensionInstanceView", typeof(string), typeof(string), typeof(string), typeof(ArcExtensionInstanceViewStatus), typeof(IDictionary<string, BinaryData>))]
+    [CodeGenSuppress("HciExtensionInstanceView", typeof(string), typeof(string), typeof(string), typeof(ExtensionInstanceViewStatus), typeof(IDictionary<string, BinaryData>))]
     public partial class HciExtensionInstanceView
     {
         /// <summary> Specifies the type of the extension. </summary>
@@ -37,6 +37,10 @@ namespace Azure.ResourceManager.Hci.Models
         [Obsolete("This property is obsolete. Use Status with type ArcExtensionInstanceViewStatus instead.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         [WirePath("status")]
-        public ExtensionInstanceViewStatus Status => _statusCompat;
+        public ExtensionInstanceViewStatus Status
+        {
+            get => _statusCompat;
+            internal set => _statusCompat = value;
+        }
     }
 }

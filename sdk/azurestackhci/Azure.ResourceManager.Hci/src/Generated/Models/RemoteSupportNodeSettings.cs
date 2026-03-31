@@ -22,10 +22,6 @@ namespace Azure.ResourceManager.Hci.Models
         {
         }
 
-        // Constructor moved to Custom/RemoteSupportNodeSettings.cs for backward compat (ResourceIdentifier ArcResourceId)
-
-        // ArcResourceId property moved to Custom/RemoteSupportNodeSettings.cs for backward compat (ResourceIdentifier type)
-
         /// <summary> Remote Support Access Connection State on the Node. </summary>
         [WirePath("state")]
         public string State { get; }

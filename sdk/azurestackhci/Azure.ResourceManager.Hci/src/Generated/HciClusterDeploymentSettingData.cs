@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Hci
     public partial class HciClusterDeploymentSettingData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryData;
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HciClusterDeploymentSettingData"/>. </summary>
         public HciClusterDeploymentSettingData()
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         internal HciClusterDeploymentSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, DeploymentSettingsProperties properties) : base(id, name, resourceType, systemData)
         {
-            _additionalBinaryData = additionalBinaryDataProperties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
         }
 
@@ -50,10 +50,6 @@ namespace Azure.ResourceManager.Hci
                 return Properties is null ? default : Properties.ProvisioningState;
             }
         }
-
-        // ArcNodeResourceIds property moved to Custom/HciClusterDeploymentSettingData.cs for backward compat (IList<ResourceIdentifier> type)
-
-        // DeploymentMode property moved to Custom/HciClusterDeploymentSettingData.cs for backward compat (nullable type)
 
         /// <summary> The intended operation for a cluster. </summary>
         [WirePath("properties.operationType")]

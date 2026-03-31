@@ -53,7 +53,10 @@ namespace Azure.ResourceManager.Hci
             uri.AppendPath(clusterName, true);
             uri.AppendPath("/arcSettings/", false);
             uri.AppendPath(arcSettingName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -74,7 +77,10 @@ namespace Azure.ResourceManager.Hci
             uri.AppendPath(clusterName, true);
             uri.AppendPath("/arcSettings/", false);
             uri.AppendPath(arcSettingName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -97,7 +103,10 @@ namespace Azure.ResourceManager.Hci
             uri.AppendPath(clusterName, true);
             uri.AppendPath("/arcSettings/", false);
             uri.AppendPath(arcSettingName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -120,7 +129,10 @@ namespace Azure.ResourceManager.Hci
             uri.AppendPath(clusterName, true);
             uri.AppendPath("/arcSettings/", false);
             uri.AppendPath(arcSettingName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -139,7 +151,10 @@ namespace Azure.ResourceManager.Hci
             uri.AppendPath("/providers/Microsoft.AzureStackHCI/clusters/", false);
             uri.AppendPath(clusterName, true);
             uri.AppendPath("/arcSettings", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -159,7 +174,10 @@ namespace Azure.ResourceManager.Hci
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -181,7 +199,10 @@ namespace Azure.ResourceManager.Hci
             uri.AppendPath("/arcSettings/", false);
             uri.AppendPath(arcSettingName, true);
             uri.AppendPath("/generatePassword", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -203,7 +224,10 @@ namespace Azure.ResourceManager.Hci
             uri.AppendPath("/arcSettings/", false);
             uri.AppendPath(arcSettingName, true);
             uri.AppendPath("/createArcIdentity", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -225,7 +249,10 @@ namespace Azure.ResourceManager.Hci
             uri.AppendPath("/arcSettings/", false);
             uri.AppendPath(arcSettingName, true);
             uri.AppendPath("/reconcile", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -249,7 +276,10 @@ namespace Azure.ResourceManager.Hci
             uri.AppendPath("/arcSettings/", false);
             uri.AppendPath(arcSettingName, true);
             uri.AppendPath("/consentAndInstallDefaultExtensions", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -271,7 +301,10 @@ namespace Azure.ResourceManager.Hci
             uri.AppendPath("/arcSettings/", false);
             uri.AppendPath(arcSettingName, true);
             uri.AppendPath("/initializeDisableProcess", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

@@ -14,7 +14,7 @@ using Azure.ResourceManager.Hci;
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> Connectivity related configuration required by arc server. </summary>
-    public partial class ArcConnectivityProperties : IJsonModel<ArcConnectivityProperties>
+    internal partial class ArcConnectivityProperties : IJsonModel<ArcConnectivityProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Hci
     public partial class ArcExtensionData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryData;
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ArcExtensionData"/>. </summary>
         public ArcExtensionData()
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="properties"> Describes Machine Extension Properties. </param>
         internal ArcExtensionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ExtensionProperties properties) : base(id, name, resourceType, systemData)
         {
-            _additionalBinaryData = additionalBinaryDataProperties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
         }
 

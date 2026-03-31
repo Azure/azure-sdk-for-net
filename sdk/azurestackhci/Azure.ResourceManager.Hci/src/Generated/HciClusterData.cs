@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Hci
     public partial class HciClusterData : TrackedResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryData;
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HciClusterData"/>. </summary>
         /// <param name="location"> The geo-location where the resource lives. </param>
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="kind"> This property identifies the purpose of the Cluster deployment. For example, a valid value is AzureLocal. </param>
         internal HciClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, ClusterProperties properties, ManagedServiceIdentity identity, string kind) : base(id, name, resourceType, systemData, tags, location)
         {
-            _additionalBinaryData = additionalBinaryDataProperties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
             Identity = identity;
             Kind = kind;

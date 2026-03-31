@@ -12,7 +12,7 @@ using Azure.ResourceManager.Hci;
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> Specifies the name of the service associated with the update or operation. This helps identify which system component or tool is involved. </summary>
-    public readonly partial struct ServiceName : IEquatable<ServiceName>
+    internal readonly partial struct ServiceName : IEquatable<ServiceName>
     {
         private readonly string _value;
         /// <summary> Windows Admin Center (WAC) is the service associated with this operation. </summary>

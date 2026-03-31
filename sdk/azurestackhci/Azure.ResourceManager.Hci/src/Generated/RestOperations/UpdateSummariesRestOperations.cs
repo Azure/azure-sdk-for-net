@@ -52,7 +52,10 @@ namespace Azure.ResourceManager.Hci
             uri.AppendPath("/providers/Microsoft.AzureStackHCI/clusters/", false);
             uri.AppendPath(clusterName, true);
             uri.AppendPath("/updateSummaries/default", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -72,7 +75,10 @@ namespace Azure.ResourceManager.Hci
             uri.AppendPath("/providers/Microsoft.AzureStackHCI/clusters/", false);
             uri.AppendPath(clusterName, true);
             uri.AppendPath("/updateSummaries/default", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -94,7 +100,10 @@ namespace Azure.ResourceManager.Hci
             uri.AppendPath("/providers/Microsoft.AzureStackHCI/clusters/", false);
             uri.AppendPath(clusterName, true);
             uri.AppendPath("/updateSummaries/default", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -113,7 +122,10 @@ namespace Azure.ResourceManager.Hci
             uri.AppendPath("/providers/Microsoft.AzureStackHCI/clusters/", false);
             uri.AppendPath(clusterName, true);
             uri.AppendPath("/updateSummaries", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -133,7 +145,10 @@ namespace Azure.ResourceManager.Hci
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

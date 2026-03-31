@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
@@ -65,8 +66,6 @@ namespace Azure.ResourceManager.Hci.Models
             writer.WriteEndObject();
         }
 
-        // JsonModelWriteCore moved to Custom/RemoteSupportNodeSettings.cs for backward compat
-
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         RemoteSupportNodeSettings IJsonModel<RemoteSupportNodeSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
@@ -92,7 +91,7 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            string arcResourceId = default;
+            ResourceIdentifier arcResourceId = default;
             string state = default;
             DateTimeOffset? createdOn = default;
             DateTimeOffset? updatedOn = default;
@@ -104,7 +103,11 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 if (prop.NameEquals("arcResourceId"u8))
                 {
-                    arcResourceId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    arcResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("state"u8))

@@ -14,11 +14,11 @@ using Microsoft.TypeSpec.Generator.Customizations;
 namespace Azure.ResourceManager.Hci.Models
 {
     [CodeGenSuppress("ArcResourceId")]
-    [CodeGenSuppress("RemoteSupportNodeSettings", typeof(string), typeof(string), typeof(DateTimeOffset?), typeof(DateTimeOffset?), typeof(string), typeof(string), typeof(string), typeof(IDictionary<string, BinaryData>))]
+    [CodeGenSuppress("RemoteSupportNodeSettings", typeof(ResourceIdentifier), typeof(string), typeof(DateTimeOffset?), typeof(DateTimeOffset?), typeof(string), typeof(string), typeof(string), typeof(IDictionary<string, BinaryData>))]
     [CodeGenSuppress("JsonModelWriteCore", typeof(Utf8JsonWriter), typeof(ModelReaderWriterOptions))]
     public partial class RemoteSupportNodeSettings
     {
-        private readonly string _arcResourceIdString;
+        private string _arcResourceIdString;
 
         /// <summary> Initializes a new instance of <see cref="RemoteSupportNodeSettings"/>. </summary>
         internal RemoteSupportNodeSettings(string arcResourceId, string state, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string connectionStatus, string connectionErrorMessage, string transcriptLocation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
@@ -37,7 +37,11 @@ namespace Azure.ResourceManager.Hci.Models
         [Obsolete("This property returns ResourceIdentifier. The underlying value is a string.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         [WirePath("arcResourceId")]
-        public ResourceIdentifier ArcResourceId => string.IsNullOrEmpty(_arcResourceIdString) ? null : new ResourceIdentifier(_arcResourceIdString);
+        public ResourceIdentifier ArcResourceId
+        {
+            get => string.IsNullOrEmpty(_arcResourceIdString) ? null : new ResourceIdentifier(_arcResourceIdString);
+            internal set => _arcResourceIdString = value?.ToString();
+        }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

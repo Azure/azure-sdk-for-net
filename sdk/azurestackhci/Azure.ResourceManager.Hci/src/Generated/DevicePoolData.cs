@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Hci
     public partial class DevicePoolData : TrackedResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryData;
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DevicePoolData"/>. </summary>
         /// <param name="location"> The geo-location where the resource lives. </param>
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         internal DevicePoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, DevicePoolProperties properties, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
         {
-            _additionalBinaryData = additionalBinaryDataProperties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
             Identity = identity;
         }

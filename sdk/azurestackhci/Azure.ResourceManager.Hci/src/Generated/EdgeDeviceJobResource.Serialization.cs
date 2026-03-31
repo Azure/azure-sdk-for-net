@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Hci
 
         /// <param name="reader"> The reader for deserializing the model. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        EdgeDeviceJobData IJsonModel<EdgeDeviceJobData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ModelReaderWriter.Read<EdgeDeviceJobData>(BinaryData.FromString(JsonDocument.ParseValue(ref reader).RootElement.GetRawText()), options, AzureResourceManagerHciContext.Default);
+        EdgeDeviceJobData IJsonModel<EdgeDeviceJobData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<EdgeDeviceJobData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<EdgeDeviceJobData>(Data, options, AzureResourceManagerHciContext.Default);
@@ -30,6 +30,6 @@ namespace Azure.ResourceManager.Hci
         EdgeDeviceJobData IPersistableModel<EdgeDeviceJobData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<EdgeDeviceJobData>(data, options, AzureResourceManagerHciContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<EdgeDeviceJobData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<EdgeDeviceJobData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

@@ -22,8 +22,6 @@ namespace Azure.ResourceManager.Hci.Models
         {
         }
 
-        // Constructor with status moved to Custom/HciExtensionInstanceView.cs for backward compat (ExtensionInstanceViewStatus type)
-
         /// <summary> The extension name. </summary>
         [WirePath("name")]
         public string Name { get; }
@@ -35,7 +33,5 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Specifies the version of the script handler. </summary>
         [WirePath("typeHandlerVersion")]
         public string TypeHandlerVersion { get; }
-
-        // Status property moved to Custom/HciExtensionInstanceView.cs for backward compat (ExtensionInstanceViewStatus type)
     }
 }

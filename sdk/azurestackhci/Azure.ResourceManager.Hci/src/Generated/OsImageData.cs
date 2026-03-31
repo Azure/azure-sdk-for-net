@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Hci
     public partial class OsImageData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryData;
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="OsImageData"/>. </summary>
         internal OsImageData()
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         internal OsImageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, OsImageProperties properties) : base(id, name, resourceType, systemData)
         {
-            _additionalBinaryData = additionalBinaryDataProperties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
         }
 

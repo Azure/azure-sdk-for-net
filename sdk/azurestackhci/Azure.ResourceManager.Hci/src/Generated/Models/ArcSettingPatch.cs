@@ -41,7 +41,5 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> ArcSettings properties. </summary>
         [WirePath("properties")]
         internal ArcSettingsPatchProperties Properties { get; set; }
-
-        // ConnectivityProperties property moved to Custom/ArcSettingPatch.cs for backward compat (BinaryData type)
     }
 }

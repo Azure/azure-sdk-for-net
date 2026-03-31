@@ -67,9 +67,7 @@ namespace Azure.ResourceManager.Hci
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(edgeMachineJobData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(edgeMachineJobData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="EdgeMachineJobData"/> from. </param>

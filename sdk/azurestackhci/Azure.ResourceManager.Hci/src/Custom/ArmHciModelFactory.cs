@@ -6,12 +6,19 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Hci.Models
 {
     // Backward-compat: preserves [Obsolete] from previous API version on backward-compat overloads
+    // TODO: remove these when https://github.com/Azure/azure-sdk-for-net/issues/57525 is resolved
+    [CodeGenSuppress("ArcSettingData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(HciProvisioningState?), typeof(string), typeof(Guid?), typeof(Guid?), typeof(Guid?), typeof(Guid?), typeof(ArcSettingAggregateState?), typeof(IEnumerable<PerNodeArcState>), typeof(ArcConnectivityProperties), typeof(IEnumerable<ArcDefaultExtensionDetails>))]
+    [CodeGenSuppress("ArcSettingPatch", typeof(IDictionary<string, string>), typeof(ArcConnectivityProperties))]
+
     [CodeGenSuppress("HciExtensionInstanceView", typeof(string), typeof(string), typeof(string), typeof(ExtensionInstanceViewStatus))]
+    // TODO: Remove below suppression when https://github.com/Azure/azure-sdk-for-net/issues/57613 is fixed (generator emits `global::.ArcExtensionInstanceViewStatus`)
+    [CodeGenSuppress("HciExtensionInstanceView", typeof(string), typeof(string), typeof(string), typeof(ArcExtensionInstanceViewStatus))]
     [CodeGenSuppress("PerNodeExtensionState", typeof(string), typeof(string), typeof(string), typeof(NodeExtensionState?), typeof(HciExtensionInstanceView))]
     public static partial class ArmHciModelFactory
     {
@@ -24,9 +31,7 @@ namespace Azure.ResourceManager.Hci.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This method is now deprecated. Please use the new method `ArcExtensionInstanceView` moving forward.")]
         public static HciExtensionInstanceView HciExtensionInstanceView(string name, string extensionInstanceViewType, string typeHandlerVersion, ExtensionInstanceViewStatus status)
-        {
-            return new HciExtensionInstanceView(name, default, typeHandlerVersion, status, additionalBinaryDataProperties: null);
-        }
+         => throw new NotSupportedException("This method is now deprecated. Please use the new method `ArcExtensionInstanceView` moving forward.");
 
         /// <summary> Initializes a new instance of <see cref="Models.PerNodeExtensionState"/>. </summary>
         /// <param name="name"> Name of the node in HCI Cluster. </param>
@@ -37,39 +42,25 @@ namespace Azure.ResourceManager.Hci.Models
         /// <returns> A new <see cref="Models.PerNodeExtensionState"/> instance for mocking. </returns>
         [Obsolete("This method is now deprecated. Please use the new method `ArcExtensionInstanceView` moving forward.")]
         public static PerNodeExtensionState PerNodeExtensionState(string name = default, string extension = default, string typeHandlerVersion = default, NodeExtensionState? state = default, HciExtensionInstanceView instanceView = default)
-        {
-            return new PerNodeExtensionState(
-                name,
-                extension,
-                typeHandlerVersion,
-                state,
-                instanceView,
-                additionalBinaryDataProperties: null);
-        }
+         => throw new NotSupportedException("This method is now deprecated. Please use the new method `ArcExtensionInstanceView` moving forward.");
 
         /// <summary> Initializes a new instance of <see cref="Models.ArcExtensionInstanceView"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This method is now deprecated. Please use the new overload moving forward.")]
         public static ArcExtensionInstanceView ArcExtensionInstanceView(string name, string arcExtensionInstanceViewType, string typeHandlerVersion, ArcExtensionInstanceViewStatus status)
-        {
-            return new ArcExtensionInstanceView(name, arcExtensionInstanceViewType, typeHandlerVersion, status, additionalBinaryDataProperties: null);
-        }
+         => throw new NotSupportedException("This method is now deprecated. Please use the new overload moving forward.");
 
         /// <summary> Initializes a new instance of <see cref="Models.ExtensionInstanceViewStatus"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This method is now deprecated. Please use the new method `ArcExtensionInstanceViewStatus` moving forward.")]
         public static ExtensionInstanceViewStatus ExtensionInstanceViewStatus(string code = default, HciStatusLevelType? level = default, string displayStatus = default, string message = default, DateTimeOffset? time = default)
-        {
-            return new ExtensionInstanceViewStatus(code, level, displayStatus, message, time, additionalBinaryDataProperties: null);
-        }
+         => throw new NotSupportedException("This method is now deprecated. Please use the new method `ArcExtensionInstanceViewStatus` moving forward.");
 
         /// <summary> Initializes a new instance of <see cref="Models.RemoteSupportNodeSettings"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This method is now deprecated. Please use the new overload moving forward.")]
         public static RemoteSupportNodeSettings RemoteSupportNodeSettings(ResourceIdentifier arcResourceId, string state = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, string connectionStatus = default, string connectionErrorMessage = default, string transcriptLocation = default)
-        {
-            return new RemoteSupportNodeSettings(arcResourceId?.ToString(), state, createdOn, updatedOn, connectionStatus, connectionErrorMessage, transcriptLocation, additionalBinaryDataProperties: null);
-        }
+         => throw new NotSupportedException("This method is now deprecated. Please use the new overload moving forward.");
 
         /// <summary> Initializes a new instance of <see cref="Hci.OfferData"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -83,9 +74,7 @@ namespace Azure.ResourceManager.Hci.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This method is now deprecated. Please use the new method `HciClusterPublisherData` moving forward.")]
         public static PublisherData PublisherData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string provisioningState = default)
-        {
-            return new PublisherData(id, name, resourceType, systemData, additionalBinaryDataProperties: null, provisioningState);
-        }
+         => throw new NotSupportedException("This method is now deprecated. Please use the new method `HciClusterPublisherData` moving forward.");
 
         /// <summary> Initializes a new instance of <see cref="Hci.ArcSettingData"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -105,11 +94,7 @@ namespace Azure.ResourceManager.Hci.Models
             IEnumerable<PerNodeArcState> perNodeDetails,
             BinaryData connectivityProperties,
             IEnumerable<ArcDefaultExtensionDetails> defaultExtensions = default)
-        {
-            // The old signature took BinaryData for connectivityProperties; new takes ArcConnectivityProperties.
-            // Call the new signature with explicit null cast to avoid ambiguity.
-            return ArcSettingData(id, name, resourceType, systemData, provisioningState, arcInstanceResourceGroup, arcApplicationClientId, arcApplicationTenantId, arcServicePrincipalObjectId, arcApplicationObjectId, aggregateState, perNodeDetails, (ArcConnectivityProperties)null, defaultExtensions);
-        }
+         => throw new NotSupportedException("This method is now deprecated. Please use the new overload with ArcConnectivityProperties moving forward.");
 
         /// <summary> Initializes a new instance of <see cref="Hci.HciClusterDeploymentSettingData"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -125,16 +110,7 @@ namespace Azure.ResourceManager.Hci.Models
             HciClusterOperationType? operationType,
             HciClusterDeploymentConfiguration deploymentConfiguration,
             EceReportedProperties reportedProperties)
-        {
-            // Convert IEnumerable<ResourceIdentifier> to IEnumerable<string>
-            var stringIds = arcNodeResourceIds == null ? null : new List<string>();
-            if (arcNodeResourceIds != null)
-            {
-                foreach (var id2 in arcNodeResourceIds)
-                    stringIds.Add(id2?.ToString());
-            }
-            return HciClusterDeploymentSettingData(id, name, resourceType, systemData, provisioningState, stringIds, deploymentMode, operationType, deploymentConfiguration, reportedProperties);
-        }
+         => throw new NotSupportedException("This method is now deprecated. Please use the new overload with IEnumerable<string> arcNodeResourceIds moving forward.");
 
         /// <summary> Initializes a new instance of <see cref="Hci.UpdateData"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -166,17 +142,7 @@ namespace Azure.ResourceManager.Hci.Models
             string additionalProperties,
             float? progressPercentage,
             string notifyMessage)
-        {
-            // Convert IEnumerable<UpdatePrerequisite> to IEnumerable<HciClusterUpdatePrerequisite> (UpdatePrerequisite inherits from HciClusterUpdatePrerequisite)
-            var hciPrereqs = prerequisites == null ? null : new List<HciClusterUpdatePrerequisite>();
-            if (prerequisites != null)
-            {
-                foreach (var p in prerequisites)
-                    hciPrereqs.Add(p);
-            }
-            return new UpdateData(
-                HciClusterUpdateData(id, name, resourceType, systemData, location, provisioningState, installedOn, description, default, state, hciPrereqs, componentVersions, rebootRequired, healthState, healthCheckResult, healthCheckOn, packagePath, packageSizeInMb, displayName, version, publisher, releaseLink, availabilityType, packageType, additionalProperties, progressPercentage, notifyMessage));
-        }
+         => throw new NotSupportedException("This method is now deprecated. Please use the new method `HciClusterUpdateData` moving forward.");
 
         /// <summary> Initializes a new instance of <see cref="Hci.UpdateRunData"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -200,10 +166,7 @@ namespace Azure.ResourceManager.Hci.Models
             DateTimeOffset? endOn,
             DateTimeOffset? lastCompletedOn,
             IEnumerable<HciUpdateStep> steps)
-        {
-            return new UpdateRunData(
-                HciClusterUpdateRunData(id, name, resourceType, systemData, location, provisioningState, timeStarted, lastUpdatedOn, duration, state, namePropertiesProgressName, description, errorMessage, status, startOn, endOn, lastCompletedOn, default, steps));
-        }
+         => throw new NotSupportedException("This method is now deprecated. Please use the new method `HciClusterUpdateRunData` moving forward.");
 
         /// <summary> Initializes a new instance of <see cref="Hci.UpdateSummaryData"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -225,11 +188,6 @@ namespace Azure.ResourceManager.Hci.Models
             IEnumerable<HciPrecheckResult> healthCheckResult,
             DateTimeOffset? healthCheckOn,
             UpdateSummariesPropertiesState? state)
-        {
-            // Convert UpdateSummariesPropertiesState to HciClusterUpdateState
-            HciClusterUpdateState? hciState = state.HasValue ? (HciClusterUpdateState?)state.Value : null;
-            return new UpdateSummaryData(
-                HciClusterUpdateSummaryData(id, name, resourceType, systemData, location, provisioningState, oemFamily, currentOemVersion, default, packageVersions, currentVersion, default, lastUpdatedOn, lastCheckedOn, healthState, healthCheckResult, healthCheckOn, hciState));
-        }
+         => throw new NotSupportedException("This method is now deprecated. Please use the new method `HciClusterUpdateSummaryData` moving forward.");
     }
 }

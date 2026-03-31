@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Hci
     public partial class HciClusterUpdateRunData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryData;
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HciClusterUpdateRunData"/>. </summary>
         public HciClusterUpdateRunData()
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="location"> The geo-location where the resource lives. </param>
         internal HciClusterUpdateRunData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, UpdateRunProperties properties, string updateRunName, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
-            _additionalBinaryData = additionalBinaryDataProperties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
             UpdateRunName = updateRunName;
             Location = location;

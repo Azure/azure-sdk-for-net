@@ -69,9 +69,7 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(hciEdgeDeviceValidateContent, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(hciEdgeDeviceValidateContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>

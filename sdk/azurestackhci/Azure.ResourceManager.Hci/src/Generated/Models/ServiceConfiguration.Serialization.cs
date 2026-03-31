@@ -14,7 +14,7 @@ using Azure.ResourceManager.Hci;
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> Service configuration details. </summary>
-    public partial class ServiceConfiguration : IJsonModel<ServiceConfiguration>
+    internal partial class ServiceConfiguration : IJsonModel<ServiceConfiguration>
     {
         /// <summary> Initializes a new instance of <see cref="ServiceConfiguration"/> for deserialization. </summary>
         internal ServiceConfiguration()
