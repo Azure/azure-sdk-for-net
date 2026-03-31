@@ -75,7 +75,7 @@ With your endpoint and API key, you can instantiate a `ConversationAnalysisAutho
 Uri endpoint = new Uri("{endpoint}");
 AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
 ConversationAnalysisAuthoringClientOptions options = new ConversationAnalysisAuthoringClientOptions(ConversationAnalysisAuthoringClientOptions.ServiceVersion.V2025_11_15_Preview);
-ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential, options);
+AuthoringClient client = new AuthoringClient(endpoint, credential, options);
 ```
 
 #### Create a client using Azure Active Directory authentication
@@ -100,7 +100,7 @@ Then you can create an instance of `DefaultAzureCredential` and pass it to a new
 ```C# Snippet:AnalyzeConversationAuthoring_CreateWithDefaultAzureCredential
 Uri endpoint = new Uri("{endpoint}");
 DefaultAzureCredential credential = new DefaultAzureCredential();
-ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
+AuthoringClient client = new AuthoringClient(endpoint, credential);
 ```
 
 Note that regional endpoints do not support AAD authentication. Instead, create a [custom domain][custom_domain] name for your resource to use AAD authentication.
@@ -119,7 +119,7 @@ For example,
 Uri endpoint = new Uri("{endpoint}");
 AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
 ConversationAnalysisAuthoringClientOptions options = new ConversationAnalysisAuthoringClientOptions(ConversationAnalysisAuthoringClientOptions.ServiceVersion.V2025_11_15_Preview);
-ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential, options);
+AuthoringClient client = new AuthoringClient(endpoint, credential, options);
 ```
 
 When selecting an API version, it's important to verify that there are no breaking changes compared to the latest API version. If there are significant differences, API calls may fail due to incompatibility.
@@ -189,7 +189,6 @@ For example, if you attempt to create a project with an invalid configuration, a
 try
 {
     string invalidProjectName = "InvalidProject";
-    ConversationAuthoringProject projectClient = client.GetProject(invalidProjectName);
     ConversationAuthoringCreateProjectDetails projectData = new ConversationAuthoringCreateProjectDetails(
       projectKind: "Conversation",
       projectName: invalidProjectName,
@@ -199,7 +198,7 @@ try
         Description = "This is a test for invalid configuration."
     };
     using RequestContent content = RequestContent.Create(projectData);
-    Response response = projectClient.CreateProject(content);
+    Response response = client.CreateProject(invalidProjectName, content);
 }
 catch (RequestFailedException ex)
 {
