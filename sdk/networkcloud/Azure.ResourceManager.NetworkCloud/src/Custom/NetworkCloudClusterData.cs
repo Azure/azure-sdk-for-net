@@ -3,44 +3,48 @@
 
 #nullable disable
 
+using System;
 using System.ComponentModel;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NetworkCloud.Models;
-using Microsoft.TypeSpec.Generator.Customizations;
 
+// NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.NetworkCloud
 {
-    // Backward compat: The old Swagger/AutoRest API used a constructor with the local
-    // ExtendedLocation type and exposed RuntimeProtectionEnforcementLevel as a flat property.
-    // The new TypeSpec-generated code uses the ARM common ExtendedLocation type and nests
-    // RuntimeProtectionEnforcementLevel under RuntimeProtectionConfiguration. This file
-    // suppresses the generated constructor and preserves the old flat API surface.
-    [CodeGenSuppress("NetworkCloudClusterData", typeof(AzureLocation), typeof(NetworkCloudRackDefinition), typeof(ClusterType), typeof(string), typeof(ResourceIdentifier), typeof(ExtendedLocation))]
     public partial class NetworkCloudClusterData
     {
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudClusterData"/>. </summary>
+        /// <param name="location"> The location. </param>
+        /// <param name="extendedLocation"> The extended location of the cluster manager associated with the cluster. </param>
+        /// <param name="aggregatorOrSingleRackDefinition"> The rack definition that is intended to reflect only a single rack in a single rack cluster, or an aggregator rack in a multi-rack cluster. </param>
+        /// <param name="clusterType"> The type of rack configuration for the cluster. </param>
+        /// <param name="clusterVersion"> The current runtime version of the cluster. </param>
+        /// <param name="networkFabricId"> The resource ID of the Network Fabric associated with the cluster. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="extendedLocation"/>, <paramref name="aggregatorOrSingleRackDefinition"/>, <paramref name="clusterVersion"/> or <paramref name="networkFabricId"/> is null. </exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public NetworkCloudClusterData(AzureLocation location, ExtendedLocation extendedLocation, NetworkCloudRackDefinition aggregatorOrSingleRackDefinition, ClusterType clusterType, string clusterVersion, ResourceIdentifier networkFabricId) : base(location)
+        {
+            Argument.AssertNotNull(aggregatorOrSingleRackDefinition, nameof(aggregatorOrSingleRackDefinition));
+            Argument.AssertNotNull(clusterVersion, nameof(clusterVersion));
+            Argument.AssertNotNull(networkFabricId, nameof(networkFabricId));
+            Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
+
+            Properties = new ClusterProperties(aggregatorOrSingleRackDefinition, clusterType, clusterVersion, networkFabricId);
+            ExtendedLocation = extendedLocation;
+        }
+
         /// <summary> The mode of operation for runtime protection. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public RuntimeProtectionEnforcementLevel? RuntimeProtectionEnforcementLevel
         {
-            get => RuntimeProtectionConfiguration?.EnforcementLevel;
+            get => RuntimeProtectionConfiguration is null ? default : RuntimeProtectionConfiguration.EnforcementLevel;
             set
             {
-                if (RuntimeProtectionConfiguration == null)
+                if (RuntimeProtectionConfiguration is null)
                     RuntimeProtectionConfiguration = new RuntimeProtectionConfiguration();
                 RuntimeProtectionConfiguration.EnforcementLevel = value;
             }
-        }
-
-        /// <summary> Initializes a new instance of <see cref="NetworkCloudClusterData"/>. </summary>
-        public NetworkCloudClusterData(AzureLocation location, ExtendedLocation extendedLocation, NetworkCloudRackDefinition aggregatorOrSingleRackDefinition, ClusterType clusterType, string clusterVersion, ResourceIdentifier networkFabricId)
-            : base(location)
-        {
-            Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
-            Argument.AssertNotNull(aggregatorOrSingleRackDefinition, nameof(aggregatorOrSingleRackDefinition));
-            Argument.AssertNotNull(clusterVersion, nameof(clusterVersion));
-            Argument.AssertNotNull(networkFabricId, nameof(networkFabricId));
-            Properties = new ClusterProperties(aggregatorOrSingleRackDefinition, clusterType, clusterVersion, networkFabricId);
-            ExtendedLocation = extendedLocation;
         }
 
         /// <summary> The extended location of the cluster associated with the resource. </summary>

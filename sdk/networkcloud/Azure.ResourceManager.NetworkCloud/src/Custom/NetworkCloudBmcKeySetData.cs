@@ -5,26 +5,31 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NetworkCloud.Models;
-using Microsoft.TypeSpec.Generator.Customizations;
 
+// NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.NetworkCloud
 {
-    // Backward compat: The old Swagger/AutoRest API used a constructor with the local
-    // ExtendedLocation type. The new TypeSpec-generated code uses the ARM common
-    // ExtendedLocation type. This file suppresses the generated constructor and provides
-    // one accepting the local ExtendedLocation type to avoid breaking existing consumers.
-    [CodeGenSuppress("NetworkCloudBmcKeySetData", typeof(AzureLocation), typeof(string), typeof(DateTimeOffset), typeof(BmcKeySetPrivilegeLevel), typeof(IEnumerable<KeySetUser>), typeof(ExtendedLocation))]
     public partial class NetworkCloudBmcKeySetData
     {
         /// <summary> Initializes a new instance of <see cref="NetworkCloudBmcKeySetData"/>. </summary>
-        public NetworkCloudBmcKeySetData(AzureLocation location, ExtendedLocation extendedLocation, string azureGroupId, DateTimeOffset expireOn, BmcKeySetPrivilegeLevel privilegeLevel, IEnumerable<KeySetUser> userList)
-            : base(location)
+        /// <param name="location"> The location. </param>
+        /// <param name="extendedLocation"> The extended location of the cluster associated with the resource. </param>
+        /// <param name="azureGroupId"> The object ID of Azure Active Directory group that all users in the list must be in for access to be granted. Users that are not in the group will not have access. </param>
+        /// <param name="expireOn"> The date and time after which the users in this key set will be removed from the baseboard management controllers. </param>
+        /// <param name="privilegeLevel"> The access level allowed for the users in this key set. </param>
+        /// <param name="userList"> The unique list of permitted users. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="extendedLocation"/>, <paramref name="azureGroupId"/> or <paramref name="userList"/> is null. </exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public NetworkCloudBmcKeySetData(AzureLocation location, ExtendedLocation extendedLocation, string azureGroupId, DateTimeOffset expireOn, BmcKeySetPrivilegeLevel privilegeLevel, IEnumerable<KeySetUser> userList) : base(location)
         {
-            Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
             Argument.AssertNotNull(azureGroupId, nameof(azureGroupId));
             Argument.AssertNotNull(userList, nameof(userList));
+            Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
+
             Properties = new BmcKeySetProperties(azureGroupId, expireOn, privilegeLevel, userList);
             ExtendedLocation = extendedLocation;
         }

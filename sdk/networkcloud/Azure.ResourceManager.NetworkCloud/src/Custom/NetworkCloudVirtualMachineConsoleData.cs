@@ -5,15 +5,10 @@
 
 using Azure.Core;
 using Azure.ResourceManager.NetworkCloud.Models;
-using Microsoft.TypeSpec.Generator.Customizations;
 
+// NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.NetworkCloud
 {
-    // Backward compat: The old Swagger/AutoRest API used a constructor with the local
-    // ExtendedLocation type and NetworkCloudSshPublicKey parameter. The new TypeSpec-generated
-    // code uses the ARM common ExtendedLocation type and flattens SshPublicKey to a string.
-    // This file suppresses the generated constructor and preserves the old API signatures.
-    [CodeGenSuppress("NetworkCloudVirtualMachineConsoleData", typeof(AzureLocation), typeof(ConsoleEnabled), typeof(string), typeof(ExtendedLocation))]
     public partial class NetworkCloudVirtualMachineConsoleData
     {
         /// <summary> Initializes a new instance of <see cref="NetworkCloudVirtualMachineConsoleData"/>. </summary>

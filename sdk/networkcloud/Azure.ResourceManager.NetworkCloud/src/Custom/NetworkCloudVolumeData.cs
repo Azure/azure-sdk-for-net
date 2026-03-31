@@ -5,14 +5,10 @@
 
 using Azure.Core;
 using Azure.ResourceManager.NetworkCloud.Models;
-using Microsoft.TypeSpec.Generator.Customizations;
 
+// NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.NetworkCloud
 {
-    // Customization: Suppresses the generated constructor (which uses ARM common ExtendedLocation)
-    // and provides a custom constructor accepting the local ExtendedLocation type.
-    // Also exposes a local ExtendedLocation property for backward compatibility.
-    [CodeGenSuppress("NetworkCloudVolumeData", typeof(AzureLocation), typeof(long), typeof(ExtendedLocation))]
     public partial class NetworkCloudVolumeData
     {
         /// <summary> Initializes a new instance of <see cref="NetworkCloudVolumeData"/>. </summary>

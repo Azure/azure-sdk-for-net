@@ -10,6 +10,7 @@ using System.ComponentModel;
 using System.Text.Json;
 using Azure.Core;
 
+// NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
     // Backward-compat shim for ExtendedLocation.

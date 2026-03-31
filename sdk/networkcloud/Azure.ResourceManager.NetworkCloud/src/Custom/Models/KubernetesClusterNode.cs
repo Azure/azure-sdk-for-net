@@ -3,13 +3,14 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using Azure.Core;
 
+// NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    // Backward compat: The old Swagger/AutoRest API exposed BareMetalMachineId as a string
-    // property. The new TypeSpec-generated code uses ResourceIdentifier (BareMetalMachineArmId).
-    // This property preserves the old string-typed accessor to avoid breaking existing consumers.
     public partial class KubernetesClusterNode
     {
         /// <summary> The resource ID of the bare metal machine that hosts this node. </summary>

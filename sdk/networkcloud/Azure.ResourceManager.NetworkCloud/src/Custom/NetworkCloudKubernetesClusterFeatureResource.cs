@@ -10,14 +10,9 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.ResourceManager.NetworkCloud.Models;
 
+// NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.NetworkCloud
 {
-    /// <summary>
-    /// A Class representing a NetworkCloudKubernetesClusterFeature along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NetworkCloudKubernetesClusterFeatureResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetNetworkCloudKubernetesClusterFeatureResource method.
-    /// Otherwise you can get one from its parent resource <see cref="NetworkCloudKubernetesClusterResource"/> using the GetNetworkCloudKubernetesClusterFeature method.
-    /// </summary>
     public partial class NetworkCloudKubernetesClusterFeatureResource : ArmResource
     {
         /// <summary>

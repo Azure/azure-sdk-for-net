@@ -22,6 +22,47 @@ namespace Azure.ResourceManager.NetworkCloud
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloudBareMetalMachineData"/>. </summary>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="bmcConnectionString"> The connection string for the baseboard management controller including IP address and protocol. </param>
+        /// <param name="bmcCredentials"> The credentials of the baseboard management controller on this bare metal machine. </param>
+        /// <param name="bmcMacAddress"> The MAC address of the BMC device. </param>
+        /// <param name="bootMacAddress"> The MAC address of a NIC connected to the PXE network. </param>
+        /// <param name="machineDetails"> The custom details provided by the customer. </param>
+        /// <param name="machineName"> The OS-level hostname assigned to this machine. </param>
+        /// <param name="machineSkuId"> The unique internal identifier of the bare metal machine SKU. </param>
+        /// <param name="rackId"> The resource ID of the rack where this bare metal machine resides. </param>
+        /// <param name="rackSlot"> The rack slot in which this bare metal machine is located, ordered from the bottom up i.e. the lowest slot is 1. </param>
+        /// <param name="serialNumber"> The serial number of the bare metal machine. </param>
+        /// <param name="extendedLocation"> The extended location of the resource. This property is required when creating the resource. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="bmcConnectionString"/>, <paramref name="bmcCredentials"/>, <paramref name="bmcMacAddress"/>, <paramref name="bootMacAddress"/>, <paramref name="machineDetails"/>, <paramref name="machineName"/>, <paramref name="machineSkuId"/>, <paramref name="rackId"/>, <paramref name="serialNumber"/> or <paramref name="extendedLocation"/> is null. </exception>
+        public NetworkCloudBareMetalMachineData(AzureLocation location, string bmcConnectionString, AdministrativeCredentials bmcCredentials, string bmcMacAddress, string bootMacAddress, string machineDetails, string machineName, string machineSkuId, ResourceIdentifier rackId, long rackSlot, string serialNumber, ExtendedLocation extendedLocation) : base(location)
+        {
+            Argument.AssertNotNull(bmcConnectionString, nameof(bmcConnectionString));
+            Argument.AssertNotNull(bmcCredentials, nameof(bmcCredentials));
+            Argument.AssertNotNull(bmcMacAddress, nameof(bmcMacAddress));
+            Argument.AssertNotNull(bootMacAddress, nameof(bootMacAddress));
+            Argument.AssertNotNull(machineDetails, nameof(machineDetails));
+            Argument.AssertNotNull(machineName, nameof(machineName));
+            Argument.AssertNotNull(machineSkuId, nameof(machineSkuId));
+            Argument.AssertNotNull(rackId, nameof(rackId));
+            Argument.AssertNotNull(serialNumber, nameof(serialNumber));
+            Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
+
+            Properties = new BareMetalMachineProperties(
+                bmcConnectionString,
+                bmcCredentials,
+                bmcMacAddress,
+                bootMacAddress,
+                machineDetails,
+                machineName,
+                machineSkuId,
+                rackId,
+                rackSlot,
+                serialNumber);
+            ExtendedLocation = extendedLocation;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudBareMetalMachineData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>

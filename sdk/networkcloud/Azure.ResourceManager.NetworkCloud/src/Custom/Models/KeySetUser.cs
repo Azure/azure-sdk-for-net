@@ -5,10 +5,9 @@
 
 using System;
 
+// NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    // Customization: Provides a constructor overload accepting NetworkCloudSshPublicKey
-    // and directly assigns it to the internal SshPublicKey property.
     public partial class KeySetUser
     {
         /// <summary> Initializes a new instance of <see cref="KeySetUser"/>. </summary>

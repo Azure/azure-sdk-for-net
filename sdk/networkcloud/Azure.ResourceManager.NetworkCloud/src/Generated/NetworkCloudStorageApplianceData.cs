@@ -22,6 +22,27 @@ namespace Azure.ResourceManager.NetworkCloud
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloudStorageApplianceData"/>. </summary>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="rackId"> The resource ID of the rack where this storage appliance resides. </param>
+        /// <param name="storageApplianceSkuId"> The SKU for the storage appliance. </param>
+        /// <param name="rackSlot"> The slot the storage appliance is in the rack based on the BOM configuration. </param>
+        /// <param name="serialNumber"> The serial number for the storage appliance. </param>
+        /// <param name="administratorCredentials"> The credentials of the administrative interface on this storage appliance. </param>
+        /// <param name="extendedLocation"> The extended location of the resource. This property is required when creating the resource. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="rackId"/>, <paramref name="storageApplianceSkuId"/>, <paramref name="serialNumber"/>, <paramref name="administratorCredentials"/> or <paramref name="extendedLocation"/> is null. </exception>
+        public NetworkCloudStorageApplianceData(AzureLocation location, ResourceIdentifier rackId, string storageApplianceSkuId, long rackSlot, string serialNumber, AdministrativeCredentials administratorCredentials, ExtendedLocation extendedLocation) : base(location)
+        {
+            Argument.AssertNotNull(rackId, nameof(rackId));
+            Argument.AssertNotNull(storageApplianceSkuId, nameof(storageApplianceSkuId));
+            Argument.AssertNotNull(serialNumber, nameof(serialNumber));
+            Argument.AssertNotNull(administratorCredentials, nameof(administratorCredentials));
+            Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
+
+            Properties = new StorageApplianceProperties(rackId, storageApplianceSkuId, rackSlot, serialNumber, administratorCredentials);
+            ExtendedLocation = extendedLocation;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudStorageApplianceData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>

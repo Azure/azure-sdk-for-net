@@ -5,15 +5,10 @@
 
 using Azure.Core;
 using Azure.ResourceManager.NetworkCloud.Models;
-using Microsoft.TypeSpec.Generator.Customizations;
 
+// NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.NetworkCloud
 {
-    // Backward compat: The old Swagger/AutoRest API used a constructor with the local
-    // ExtendedLocation type. The new TypeSpec-generated code uses the ARM common
-    // ExtendedLocation type. This file suppresses the generated constructor and provides
-    // one accepting the local ExtendedLocation type to avoid breaking existing consumers.
-    [CodeGenSuppress("NetworkCloudL2NetworkData", typeof(AzureLocation), typeof(ResourceIdentifier), typeof(ExtendedLocation))]
     public partial class NetworkCloudL2NetworkData
     {
         /// <summary> Initializes a new instance of <see cref="NetworkCloudL2NetworkData"/>. </summary>

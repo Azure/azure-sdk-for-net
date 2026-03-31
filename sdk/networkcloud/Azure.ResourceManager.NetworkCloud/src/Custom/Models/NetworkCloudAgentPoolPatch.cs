@@ -7,11 +7,9 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 
+// NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    // Backward compat: The old Swagger/AutoRest API exposed UpgradeMaxSurge as a flat string
-    // property. The new TypeSpec-generated code nests it under UpgradeSettings.MaxSurge. This
-    // property preserves the old flat access pattern to avoid breaking existing consumers.
     public partial class NetworkCloudAgentPoolPatch
     {
         /// <summary> The maximum number or percentage of nodes that are surged during upgrade. This can either be set to an integer (e.g. '5') or a percentage (e.g. '50%'). If a percentage is specified, it is the percentage of the total agent pool size at the time of the upgrade. For percentages, fractional nodes are rounded up. If not specified, the default is 1. </summary>

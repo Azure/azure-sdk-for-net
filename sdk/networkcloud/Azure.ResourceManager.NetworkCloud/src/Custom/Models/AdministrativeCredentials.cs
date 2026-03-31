@@ -6,11 +6,9 @@
 using System;
 using System.ComponentModel;
 
+// NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    // Backward compat: The old Swagger/AutoRest API constructor accepted only username.
-    // The new TypeSpec-generated constructor requires both password and username parameters.
-    // This overload preserves the old single-parameter constructor signature.
     public partial class AdministrativeCredentials
     {
         /// <summary> Initializes a new instance of <see cref="AdministrativeCredentials"/>. </summary>

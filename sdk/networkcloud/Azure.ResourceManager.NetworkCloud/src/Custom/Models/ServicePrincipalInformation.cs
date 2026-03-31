@@ -6,11 +6,9 @@
 using System;
 using System.ComponentModel;
 
+// NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    // Backward compat: The old Swagger/AutoRest API constructor accepted applicationId,
-    // principalId, and tenantId. The new TypeSpec-generated constructor requires additional
-    // parameters. This overload preserves the old constructor signature.
     public partial class ServicePrincipalInformation
     {
         /// <summary> Initializes a new instance of <see cref="ServicePrincipalInformation"/>. </summary>

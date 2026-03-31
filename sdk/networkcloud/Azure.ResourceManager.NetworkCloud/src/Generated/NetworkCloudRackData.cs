@@ -21,6 +21,26 @@ namespace Azure.ResourceManager.NetworkCloud
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloudRackData"/>. </summary>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="availabilityZone"> The value that will be used for machines in this rack to represent the availability zones that can be referenced by Hybrid AKS Clusters for node arrangement. </param>
+        /// <param name="rackLocation"> The free-form description of the rack location. (e.g. "DTN Datacenter, Floor 3, Isle 9, Rack 2B"). </param>
+        /// <param name="rackSerialNumber"> The unique identifier for the rack within Network Cloud cluster. An alternate unique alphanumeric value other than a serial number may be provided if desired. </param>
+        /// <param name="rackSkuId"> The SKU for the rack. </param>
+        /// <param name="extendedLocation"> The extended location of the resource. This property is required when creating the resource. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="availabilityZone"/>, <paramref name="rackLocation"/>, <paramref name="rackSerialNumber"/>, <paramref name="rackSkuId"/> or <paramref name="extendedLocation"/> is null. </exception>
+        public NetworkCloudRackData(AzureLocation location, string availabilityZone, string rackLocation, string rackSerialNumber, ResourceIdentifier rackSkuId, ExtendedLocation extendedLocation) : base(location)
+        {
+            Argument.AssertNotNull(availabilityZone, nameof(availabilityZone));
+            Argument.AssertNotNull(rackLocation, nameof(rackLocation));
+            Argument.AssertNotNull(rackSerialNumber, nameof(rackSerialNumber));
+            Argument.AssertNotNull(rackSkuId, nameof(rackSkuId));
+            Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
+
+            Properties = new RackProperties(availabilityZone, rackLocation, rackSerialNumber, rackSkuId);
+            ExtendedLocation = extendedLocation;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudRackData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>

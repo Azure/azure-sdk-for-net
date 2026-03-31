@@ -21,6 +21,24 @@ namespace Azure.ResourceManager.NetworkCloud
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloudBmcKeySetData"/>. </summary>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="azureGroupId"> The object ID of Azure Active Directory group that all users in the list must be in for access to be granted. Users that are not in the group will not have access. </param>
+        /// <param name="expireOn"> The date and time after which the users in this key set will be removed from the baseboard management controllers. </param>
+        /// <param name="privilegeLevel"> The access level allowed for the users in this key set. </param>
+        /// <param name="userList"> The unique list of permitted users. </param>
+        /// <param name="extendedLocation"> The extended location of the resource. This property is required when creating the resource. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="azureGroupId"/>, <paramref name="userList"/> or <paramref name="extendedLocation"/> is null. </exception>
+        public NetworkCloudBmcKeySetData(AzureLocation location, string azureGroupId, DateTimeOffset expireOn, BmcKeySetPrivilegeLevel privilegeLevel, IEnumerable<KeySetUser> userList, ExtendedLocation extendedLocation) : base(location)
+        {
+            Argument.AssertNotNull(azureGroupId, nameof(azureGroupId));
+            Argument.AssertNotNull(userList, nameof(userList));
+            Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
+
+            Properties = new BmcKeySetProperties(azureGroupId, expireOn, privilegeLevel, userList);
+            ExtendedLocation = extendedLocation;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudBmcKeySetData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>

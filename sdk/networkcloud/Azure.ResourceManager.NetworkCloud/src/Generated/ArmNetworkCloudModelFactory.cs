@@ -2646,64 +2646,6 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             return NetworkCloudStorageApplianceData(id, name, resourceType, systemData, tags, location, rackId, storageApplianceSkuId, rackSlot, serialNumber, administratorCredentials, caCertificate: default, capacity, capacityUsed, clusterId, detailedStatus, detailedStatusMessage, expansionShelves: default, managementIPv4Address, manufacturer, model, remoteVendorManagementFeature, remoteVendorManagementStatus, secretRotationStatus, version, provisioningState, etag, extendedLocation);
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetworkCloud.NetworkCloudVirtualMachineData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="etag"> Resource ETag. </param>
-        /// <param name="extendedLocation"> The extended location of the cluster associated with the resource. </param>
-        /// <param name="adminUsername"> The name of the administrator to which the ssh public keys will be added into the authorized keys. </param>
-        /// <param name="availabilityZone"> The cluster availability zone containing this virtual machine. </param>
-        /// <param name="bareMetalMachineId"> The resource ID of the bare metal machine that hosts the virtual machine. </param>
-        /// <param name="bootMethod"> Selects the boot method for the virtual machine. </param>
-        /// <param name="cloudServicesNetworkAttachment"> The cloud service network that provides platform-level services for the virtual machine. </param>
-        /// <param name="clusterId"> The resource ID of the cluster the virtual machine is created for. </param>
-        /// <param name="consoleExtendedLocation"> The extended location to use for creation of a VM console resource. </param>
-        /// <param name="cpuCores"> The number of CPU cores in the virtual machine. </param>
-        /// <param name="detailedStatus"> The more detailed status of the virtual machine. </param>
-        /// <param name="detailedStatusMessage"> The descriptive message about the current detailed status. </param>
-        /// <param name="isolateEmulatorThread"> Field Deprecated, the value will be ignored if provided. The indicator of whether one of the specified CPU cores is isolated to run the emulator thread for this virtual machine. </param>
-        /// <param name="memorySizeInGB"> The memory size of the virtual machine. Allocations are measured in gibibytes. </param>
-        /// <param name="networkAttachments"> The list of network attachments to the virtual machine. </param>
-        /// <param name="networkData"> The Base64 encoded cloud-init network data. </param>
-        /// <param name="placementHints"> The scheduling hints for the virtual machine. </param>
-        /// <param name="powerState"> The power state of the virtual machine. </param>
-        /// <param name="provisioningState"> The provisioning state of the virtual machine. </param>
-        /// <param name="sshPublicKeys"> The list of ssh public keys. Each key will be added to the virtual machine using the cloud-init ssh_authorized_keys mechanism for the adminUsername. </param>
-        /// <param name="storageProfile"> The storage profile that specifies size and other parameters about the disks related to the virtual machine. </param>
-        /// <param name="userData"> The Base64 encoded cloud-init user data. </param>
-        /// <param name="virtioInterface"> Field Deprecated, use virtualizationModel instead. The type of the virtio interface. </param>
-        /// <param name="vmDeviceModel"> The type of the device model to use. </param>
-        /// <param name="vmImage"> The virtual machine image that is currently provisioned to the OS disk, using the full url and tag notation used to pull the image. </param>
-        /// <param name="vmImageRepositoryCredentials"> The credentials used to login to the image repository that has access to the specified image. </param>
-        /// <param name="volumes"> The resource IDs of volumes that are attached to the virtual machine. </param>
-        /// <returns> A new <see cref="NetworkCloud.NetworkCloudVirtualMachineData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetworkCloudVirtualMachineData NetworkCloudVirtualMachineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ExtendedLocation extendedLocation, string adminUsername, string availabilityZone, ResourceIdentifier bareMetalMachineId, VirtualMachineBootMethod? bootMethod, NetworkAttachment cloudServicesNetworkAttachment, ResourceIdentifier clusterId, ExtendedLocation consoleExtendedLocation, long cpuCores, VirtualMachineDetailedStatus? detailedStatus, string detailedStatusMessage, VirtualMachineIsolateEmulatorThread? isolateEmulatorThread, long memorySizeInGB, IEnumerable<NetworkAttachment> networkAttachments, string networkData, IEnumerable<VirtualMachinePlacementHint> placementHints, VirtualMachinePowerState? powerState, VirtualMachineProvisioningState? provisioningState, IEnumerable<NetworkCloudSshPublicKey> sshPublicKeys, NetworkCloudStorageProfile storageProfile, string userData, VirtualMachineVirtioInterfaceType? virtioInterface, VirtualMachineDeviceModelType? vmDeviceModel, string vmImage, ImageRepositoryCredentials vmImageRepositoryCredentials, IEnumerable<ResourceIdentifier> volumes)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-            networkAttachments ??= new ChangeTrackingList<NetworkAttachment>();
-            placementHints ??= new ChangeTrackingList<VirtualMachinePlacementHint>();
-            sshPublicKeys ??= new ChangeTrackingList<NetworkCloudSshPublicKey>();
-            volumes ??= new ChangeTrackingList<ResourceIdentifier>();
-
-            return new NetworkCloudVirtualMachineData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                tags,
-                location,
-                default,
-                default,
-                extendedLocation,
-                default);
-        }
-
         /// <summary> Initializes a new instance of <see cref="NetworkCloud.NetworkCloudBareMetalMachineData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -2936,45 +2878,6 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static NetworkCloudStorageApplianceData NetworkCloudStorageApplianceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, AdministrativeCredentials administratorCredentials, long? capacity, long? capacityUsed, ResourceIdentifier clusterId, StorageApplianceDetailedStatus? detailedStatus, string detailedStatusMessage, IPAddress managementIPv4Address, string manufacturer, string model, StorageApplianceProvisioningState? provisioningState, ResourceIdentifier rackId, long rackSlot, RemoteVendorManagementFeature? remoteVendorManagementFeature, RemoteVendorManagementStatus? remoteVendorManagementStatus, IEnumerable<SecretRotationStatus> secretRotationStatus, string serialNumber, string storageApplianceSkuId, string version)
         {
             return NetworkCloudStorageApplianceData(id, name, resourceType, systemData, tags, location, rackId, storageApplianceSkuId, rackSlot, serialNumber, administratorCredentials, caCertificate: default, capacity, capacityUsed, clusterId, detailedStatus, detailedStatusMessage, expansionShelves: default, managementIPv4Address, manufacturer, model, remoteVendorManagementFeature, remoteVendorManagementStatus, secretRotationStatus, version, provisioningState, etag: default, extendedLocation);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="NetworkCloud.NetworkCloudVirtualMachineData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="extendedLocation"> The extended location of the cluster associated with the resource. </param>
-        /// <param name="adminUsername"> The name of the administrator to which the ssh public keys will be added into the authorized keys. </param>
-        /// <param name="availabilityZone"> The cluster availability zone containing this virtual machine. </param>
-        /// <param name="bareMetalMachineId"> The resource ID of the bare metal machine that hosts the virtual machine. </param>
-        /// <param name="bootMethod"> Selects the boot method for the virtual machine. </param>
-        /// <param name="cloudServicesNetworkAttachment"> The cloud service network that provides platform-level services for the virtual machine. </param>
-        /// <param name="clusterId"> The resource ID of the cluster the virtual machine is created for. </param>
-        /// <param name="cpuCores"> The number of CPU cores in the virtual machine. </param>
-        /// <param name="detailedStatus"> The more detailed status of the virtual machine. </param>
-        /// <param name="detailedStatusMessage"> The descriptive message about the current detailed status. </param>
-        /// <param name="isolateEmulatorThread"> Field Deprecated, the value will be ignored if provided. The indicator of whether one of the specified CPU cores is isolated to run the emulator thread for this virtual machine. </param>
-        /// <param name="memorySizeInGB"> The memory size of the virtual machine. Allocations are measured in gibibytes. </param>
-        /// <param name="networkAttachments"> The list of network attachments to the virtual machine. </param>
-        /// <param name="networkData"> The Base64 encoded cloud-init network data. </param>
-        /// <param name="placementHints"> The scheduling hints for the virtual machine. </param>
-        /// <param name="powerState"> The power state of the virtual machine. </param>
-        /// <param name="provisioningState"> The provisioning state of the virtual machine. </param>
-        /// <param name="sshPublicKeys"> The list of ssh public keys. Each key will be added to the virtual machine using the cloud-init ssh_authorized_keys mechanism for the adminUsername. </param>
-        /// <param name="storageProfile"> The storage profile that specifies size and other parameters about the disks related to the virtual machine. </param>
-        /// <param name="userData"> The Base64 encoded cloud-init user data. </param>
-        /// <param name="virtioInterface"> Field Deprecated, use virtualizationModel instead. The type of the virtio interface. </param>
-        /// <param name="vmDeviceModel"> The type of the device model to use. </param>
-        /// <param name="vmImage"> The virtual machine image that is currently provisioned to the OS disk, using the full url and tag notation used to pull the image. </param>
-        /// <param name="vmImageRepositoryCredentials"> The credentials used to login to the image repository that has access to the specified image. </param>
-        /// <param name="volumes"> The resource IDs of volumes that are attached to the virtual machine. </param>
-        /// <returns> A new <see cref="NetworkCloud.NetworkCloudVirtualMachineData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetworkCloudVirtualMachineData NetworkCloudVirtualMachineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, string adminUsername, string availabilityZone, ResourceIdentifier bareMetalMachineId, VirtualMachineBootMethod? bootMethod, NetworkAttachment cloudServicesNetworkAttachment, ResourceIdentifier clusterId, long cpuCores, VirtualMachineDetailedStatus? detailedStatus, string detailedStatusMessage, VirtualMachineIsolateEmulatorThread? isolateEmulatorThread, long memorySizeInGB, IEnumerable<NetworkAttachment> networkAttachments, string networkData, IEnumerable<VirtualMachinePlacementHint> placementHints, VirtualMachinePowerState? powerState, VirtualMachineProvisioningState? provisioningState, IEnumerable<NetworkCloudSshPublicKey> sshPublicKeys, NetworkCloudStorageProfile storageProfile, string userData, VirtualMachineVirtioInterfaceType? virtioInterface, VirtualMachineDeviceModelType? vmDeviceModel, string vmImage, ImageRepositoryCredentials vmImageRepositoryCredentials, IEnumerable<ResourceIdentifier> volumes)
-        {
-            return NetworkCloudVirtualMachineData(id, name, resourceType, systemData, tags, location, adminUsername, bootMethod, cloudServicesNetworkAttachment, cpuCores, isolateEmulatorThread, memorySizeInGB, networkAttachments, networkData, networkDataContent: default, placementHints, sshPublicKeys, storageProfile, userData, userDataContent: default, virtioInterface, vmDeviceModel, vmImage, vmImageRepositoryCredentials, availabilityZone, bareMetalMachineId, clusterId, consoleExtendedLocation: default, detailedStatus, detailedStatusMessage, powerState, volumes, provisioningState, etag: default, extendedLocation, identity: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloud.NetworkCloudBareMetalMachineData"/>. </summary>

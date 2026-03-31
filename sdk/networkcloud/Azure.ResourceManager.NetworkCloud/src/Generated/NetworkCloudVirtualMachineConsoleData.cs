@@ -21,6 +21,21 @@ namespace Azure.ResourceManager.NetworkCloud
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloudVirtualMachineConsoleData"/>. </summary>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="enabled"> The indicator of whether the console access is enabled. </param>
+        /// <param name="keyData"> The SSH public key data. </param>
+        /// <param name="extendedLocation"> The extended location of the resource. This property is required when creating the resource. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="keyData"/> or <paramref name="extendedLocation"/> is null. </exception>
+        public NetworkCloudVirtualMachineConsoleData(AzureLocation location, ConsoleEnabled enabled, string keyData, ExtendedLocation extendedLocation) : base(location)
+        {
+            Argument.AssertNotNull(keyData, nameof(keyData));
+            Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
+
+            Properties = new ConsoleProperties(enabled, keyData);
+            ExtendedLocation = extendedLocation;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudVirtualMachineConsoleData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>

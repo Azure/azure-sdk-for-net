@@ -6,17 +6,10 @@
 using System.ComponentModel;
 using Azure.Core;
 using Azure.ResourceManager.NetworkCloud.Models;
-using CodeGenSuppressAttribute = Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppressAttribute;
 
+// NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.NetworkCloud
 {
-    // Backward compat: The old Swagger/AutoRest API used a constructor with the local
-    // ExtendedLocation type and returned ConsoleExtendedLocation as the local model type.
-    // The new TypeSpec-generated code uses the ARM common ExtendedLocation type for both.
-    // This file suppresses the generated constructor and ConsoleExtendedLocation property,
-    // preserving the old API surface to avoid breaking existing consumers.
-    [CodeGenSuppress("ConsoleExtendedLocation")]
-    [CodeGenSuppress("NetworkCloudVirtualMachineData", typeof(AzureLocation), typeof(string), typeof(NetworkAttachment), typeof(long), typeof(long), typeof(NetworkCloudStorageProfile), typeof(string), typeof(ExtendedLocation))]
     public partial class NetworkCloudVirtualMachineData
     {
         /// <summary> Initializes a new instance of <see cref="NetworkCloudVirtualMachineData"/>. </summary>

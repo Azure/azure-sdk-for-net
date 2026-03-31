@@ -4,13 +4,10 @@
 #nullable disable
 
 using System.ComponentModel;
-using Microsoft.TypeSpec.Generator.Customizations;
 
+// NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.NetworkCloud
 {
-    // CodeGenSuppress for ManagerExtendedLocation: old API returned NetworkCloud.Models.ExtendedLocation;
-    // regenerated code returns Resources.Models.ExtendedLocation. This preserves the old return type.
-    [CodeGenSuppress("ManagerExtendedLocation")]
     public partial class NetworkCloudClusterManagerData
     {
         /// <summary> The extended location (custom location) that represents the cluster manager's control plane location. </summary>
