@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
         [Test]
         [RecordedTest]
-        //[Ignore("Pending recording")]
+        [Ignore("Pending recording")]
         public async Task GetActivityRuns()
         {
             string subscriptionId = "xxx";
