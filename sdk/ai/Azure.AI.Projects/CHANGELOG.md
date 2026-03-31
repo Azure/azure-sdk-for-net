@@ -1,8 +1,6 @@
 # Release History
 
-## 2.0.0-beta.3 (Unreleased)
-
-### Features Added
+## 2.0.0 (2026-03-31)
 
 ### Breaking Changes
 - `Insights` were renamed to `ProjectInsights`.
@@ -33,10 +31,6 @@
 - `AIProjectClient.OpenAI` property was renamed to `AIProjectClient.ProjectOpenAIClient`.
 - `AIProjectClient.Agents` property was renamed to `AIProjectClient.AgentAdministrationClient`.
 - `RecurrenceTrigger.StartTime`, `RecurrenceTrigger.EndTime`, `OneTimeTrigger.TriggerAt`, `CronTrigger.StartTime`, `CronTrigger.EndTime` and `ScheduleRun.TriggerTime` properties type was changed from `string` to `DateTimeOffset`.
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 2.0.0-beta.2 (2026-03-12)
 
