@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Purview
     {
         private readonly ClientDiagnostics _accountsClientDiagnostics;
         private readonly Accounts _accountsRestClient;
-        private readonly ClientDiagnostics _featuresClientDiagnostics;
-        private readonly Features _featuresRestClient;
         private readonly ClientDiagnostics _ingestionPrivateEndpointConnectionsClientDiagnostics;
         private readonly IngestionPrivateEndpointConnections _ingestionPrivateEndpointConnectionsRestClient;
+        private readonly ClientDiagnostics _featuresClientDiagnostics;
+        private readonly Features _featuresRestClient;
         private readonly PurviewAccountData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Purview/accounts";
@@ -58,10 +58,10 @@ namespace Azure.ResourceManager.Purview
             TryGetApiVersion(ResourceType, out string purviewAccountApiVersion);
             _accountsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Purview", ResourceType.Namespace, Diagnostics);
             _accountsRestClient = new Accounts(_accountsClientDiagnostics, Pipeline, Endpoint, purviewAccountApiVersion ?? "2024-04-01-preview");
-            _featuresClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Purview", ResourceType.Namespace, Diagnostics);
-            _featuresRestClient = new Features(_featuresClientDiagnostics, Pipeline, Endpoint, purviewAccountApiVersion ?? "2024-04-01-preview");
             _ingestionPrivateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Purview", ResourceType.Namespace, Diagnostics);
             _ingestionPrivateEndpointConnectionsRestClient = new IngestionPrivateEndpointConnections(_ingestionPrivateEndpointConnectionsClientDiagnostics, Pipeline, Endpoint, purviewAccountApiVersion ?? "2024-04-01-preview");
+            _featuresClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Purview", ResourceType.Namespace, Diagnostics);
+            _featuresRestClient = new Features(_featuresClientDiagnostics, Pipeline, Endpoint, purviewAccountApiVersion ?? "2024-04-01-preview");
             ValidateResourceId(id);
         }
 
@@ -414,6 +414,70 @@ namespace Azure.ResourceManager.Purview
         }
 
         /// <summary>
+        /// Lists all ingestion private endpoint connections
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Purview/accounts/{accountName}/ingestionPrivateEndpointConnections. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Accounts_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PurviewAccountResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="PurviewPrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PurviewPrivateEndpointConnectionResource> GetIngestionPrivateEndpointConnectionsAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<PurviewPrivateEndpointConnectionData, PurviewPrivateEndpointConnectionResource>(new IngestionPrivateEndpointConnectionsGetIngestionPrivateEndpointConnectionsAsyncCollectionResultOfT(_ingestionPrivateEndpointConnectionsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new PurviewPrivateEndpointConnectionResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists all ingestion private endpoint connections
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Purview/accounts/{accountName}/ingestionPrivateEndpointConnections. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Accounts_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PurviewAccountResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="PurviewPrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PurviewPrivateEndpointConnectionResource> GetIngestionPrivateEndpointConnections(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<PurviewPrivateEndpointConnectionData, PurviewPrivateEndpointConnectionResource>(new IngestionPrivateEndpointConnectionsGetIngestionPrivateEndpointConnectionsCollectionResultOfT(_ingestionPrivateEndpointConnectionsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new PurviewPrivateEndpointConnectionResource(Client, data));
+        }
+
+        /// <summary>
         /// Gets details from a list of feature names.
         /// <list type="bullet">
         /// <item>
@@ -609,70 +673,6 @@ namespace Azure.ResourceManager.Purview
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary>
-        /// Lists all ingestion private endpoint connections
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Purview/accounts/{accountName}/ingestionPrivateEndpointConnections. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Accounts_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-04-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="PurviewAccountResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PurviewPrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PurviewPrivateEndpointConnectionResource> GetIngestionPrivateEndpointConnectionsAsync(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<PurviewPrivateEndpointConnectionData, PurviewPrivateEndpointConnectionResource>(new IngestionPrivateEndpointConnectionsGetIngestionPrivateEndpointConnectionsAsyncCollectionResultOfT(_ingestionPrivateEndpointConnectionsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new PurviewPrivateEndpointConnectionResource(Client, data));
-        }
-
-        /// <summary>
-        /// Lists all ingestion private endpoint connections
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Purview/accounts/{accountName}/ingestionPrivateEndpointConnections. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Accounts_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-04-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="PurviewAccountResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PurviewPrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PurviewPrivateEndpointConnectionResource> GetIngestionPrivateEndpointConnections(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<PurviewPrivateEndpointConnectionData, PurviewPrivateEndpointConnectionResource>(new IngestionPrivateEndpointConnectionsGetIngestionPrivateEndpointConnectionsCollectionResultOfT(_ingestionPrivateEndpointConnectionsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new PurviewPrivateEndpointConnectionResource(Client, data));
         }
 
         /// <summary>

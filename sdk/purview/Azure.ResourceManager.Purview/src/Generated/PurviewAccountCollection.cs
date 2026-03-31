@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Purview
     {
         private readonly ClientDiagnostics _accountsClientDiagnostics;
         private readonly Accounts _accountsRestClient;
-        private readonly ClientDiagnostics _featuresClientDiagnostics;
-        private readonly Features _featuresRestClient;
         private readonly ClientDiagnostics _ingestionPrivateEndpointConnectionsClientDiagnostics;
         private readonly IngestionPrivateEndpointConnections _ingestionPrivateEndpointConnectionsRestClient;
+        private readonly ClientDiagnostics _featuresClientDiagnostics;
+        private readonly Features _featuresRestClient;
 
         /// <summary> Initializes a new instance of PurviewAccountCollection for mocking. </summary>
         protected PurviewAccountCollection()
@@ -46,10 +46,10 @@ namespace Azure.ResourceManager.Purview
             TryGetApiVersion(PurviewAccountResource.ResourceType, out string purviewAccountApiVersion);
             _accountsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Purview", PurviewAccountResource.ResourceType.Namespace, Diagnostics);
             _accountsRestClient = new Accounts(_accountsClientDiagnostics, Pipeline, Endpoint, purviewAccountApiVersion ?? "2024-04-01-preview");
-            _featuresClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Purview", PurviewAccountResource.ResourceType.Namespace, Diagnostics);
-            _featuresRestClient = new Features(_featuresClientDiagnostics, Pipeline, Endpoint, purviewAccountApiVersion ?? "2024-04-01-preview");
             _ingestionPrivateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Purview", PurviewAccountResource.ResourceType.Namespace, Diagnostics);
             _ingestionPrivateEndpointConnectionsRestClient = new IngestionPrivateEndpointConnections(_ingestionPrivateEndpointConnectionsClientDiagnostics, Pipeline, Endpoint, purviewAccountApiVersion ?? "2024-04-01-preview");
+            _featuresClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Purview", PurviewAccountResource.ResourceType.Namespace, Diagnostics);
+            _featuresRestClient = new Features(_featuresClientDiagnostics, Pipeline, Endpoint, purviewAccountApiVersion ?? "2024-04-01-preview");
             ValidateResourceId(id);
         }
 
