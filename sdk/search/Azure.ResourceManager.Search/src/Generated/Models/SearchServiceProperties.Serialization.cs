@@ -155,6 +155,11 @@ namespace Azure.ResourceManager.Search.Models
                 writer.WritePropertyName("semanticSearch"u8);
                 writer.WriteStringValue(SemanticSearch.Value.ToString());
             }
+            if (Optional.IsDefined(KnowledgeRetrieval))
+            {
+                writer.WritePropertyName("knowledgeRetrieval"u8);
+                writer.WriteStringValue(KnowledgeRetrieval.Value.ToString());
+            }
             if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
@@ -247,6 +252,7 @@ namespace Azure.ResourceManager.Search.Models
             bool? isLocalAuthDisabled = default;
             SearchAadAuthDataPlaneAuthOptions authOptions = default;
             SearchSemanticSearch? semanticSearch = default;
+            SearchKnowledgeRetrieval? knowledgeRetrieval = default;
             IReadOnlyList<SearchPrivateEndpointConnectionData> privateEndpointConnections = default;
             IReadOnlyList<SharedSearchServicePrivateLinkResourceData> sharedPrivateLinkResources = default;
             ETag? eTag = default;
@@ -393,6 +399,16 @@ namespace Azure.ResourceManager.Search.Models
                     semanticSearch = new SearchSemanticSearch(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("knowledgeRetrieval"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        knowledgeRetrieval = null;
+                        continue;
+                    }
+                    knowledgeRetrieval = new SearchKnowledgeRetrieval(prop.Value.GetString());
+                    continue;
+                }
                 if (prop.NameEquals("privateEndpointConnections"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -469,6 +485,7 @@ namespace Azure.ResourceManager.Search.Models
                 isLocalAuthDisabled,
                 authOptions,
                 semanticSearch,
+                knowledgeRetrieval,
                 privateEndpointConnections ?? new ChangeTrackingList<SearchPrivateEndpointConnectionData>(),
                 sharedPrivateLinkResources ?? new ChangeTrackingList<SharedSearchServicePrivateLinkResourceData>(),
                 eTag,

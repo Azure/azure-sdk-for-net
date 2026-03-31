@@ -11,7 +11,7 @@ using Azure.ResourceManager.Search;
 
 namespace Azure.ResourceManager.Search.Models
 {
-    /// <summary> The name of the SKU supported by Azure AI Search. </summary>
+    /// <summary> The SKU name information, including its identifier and localized display name. </summary>
     public partial class QuotaUsageResultName
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

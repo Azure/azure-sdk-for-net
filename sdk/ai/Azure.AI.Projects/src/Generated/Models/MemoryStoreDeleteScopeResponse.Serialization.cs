@@ -7,9 +7,9 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using OpenAI;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Memory
 {
     /// <summary> Response for deleting memories from a scope. </summary>
     public partial class MemoryStoreDeleteScopeResponse : IJsonModel<MemoryStoreDeleteScopeResponse>

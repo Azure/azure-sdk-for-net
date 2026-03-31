@@ -1,0 +1,21 @@
+# TypeSpec generated output — ignore everything except hand-written customisations
+Azure.AI.AgentServer.Responses.Contracts/src/TypeSpec/tsp-output/**
+# Allow the Custom/ folder through (hand-written partial classes)
+!Azure.AI.AgentServer.Responses.Contracts/src/TypeSpec/tsp-output/src/
+!Azure.AI.AgentServer.Responses.Contracts/src/TypeSpec/tsp-output/src/Custom/
+!Azure.AI.AgentServer.Responses.Contracts/src/TypeSpec/tsp-output/src/Custom/**
+
+# Python bytecode
+__pycache__/
+*.pyc
+
+# npm lockfiles are committed to ensure reproducible installs
+
+# Copilot + Spec Kit — local-only files (never committed)
+# Bootstrap with: ./scripts/Bootstrap-Copilot.ps1
+.specify/
+.speckit/
+.github/
+specs/
+
+.specs/
