@@ -13,8 +13,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    /// <summary> Unknown variant of DataBoxEdgeTrigger. </summary>
-    public partial class UnknownDataBoxEdgeTrigger : DataBoxEdgeTriggerData
+    internal partial class UnknownDataBoxEdgeTrigger : DataBoxEdgeTriggerData
     {
         /// <summary> Initializes a new instance of <see cref="UnknownDataBoxEdgeTrigger"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>

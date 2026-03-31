@@ -7,14 +7,16 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.DataBoxEdge;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    /// <summary> Unknown variant of DataBoxEdgeRoleAddon. </summary>
-    public partial class UnknownDataBoxEdgeRoleAddon : DataBoxEdgeRoleAddonData, IJsonModel<DataBoxEdgeRoleAddonData>
+    internal partial class UnknownDataBoxEdgeRoleAddon : DataBoxEdgeRoleAddonData, IJsonModel<DataBoxEdgeRoleAddonData>
     {
         /// <summary> Initializes a new instance of <see cref="UnknownDataBoxEdgeRoleAddon"/> for deserialization. </summary>
         internal UnknownDataBoxEdgeRoleAddon()
@@ -97,6 +99,73 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDataBoxEdgeRoleAddonData(document.RootElement, options);
+        }
+
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static UnknownDataBoxEdgeRoleAddon DeserializeUnknownDataBoxEdgeRoleAddon(JsonElement element, ModelReaderWriterOptions options)
+        {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType resourceType = default;
+            SystemData systemData = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            AddonType kind = default;
+            foreach (var prop in element.EnumerateObject())
+            {
+                if (prop.NameEquals("id"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = new ResourceIdentifier(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("name"u8))
+                {
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("type"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceType = new ResourceType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("systemData"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataBoxEdgeContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("kind"u8))
+                {
+                    kind = new AddonType(prop.Value.GetString());
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                }
+            }
+            return new UnknownDataBoxEdgeRoleAddon(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties,
+                kind);
         }
     }
 }

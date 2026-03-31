@@ -13,8 +13,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    /// <summary> Unknown variant of DataBoxEdgeRole. </summary>
-    public partial class UnknownDataBoxEdgeRole : DataBoxEdgeRoleData
+    internal partial class UnknownDataBoxEdgeRole : DataBoxEdgeRoleData
     {
         /// <summary> Initializes a new instance of <see cref="UnknownDataBoxEdgeRole"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>

@@ -491,43 +491,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="startOn"> The start time of the schedule in UTC. </param>
-        /// <param name="stopOn"> The stop time of the schedule in UTC. </param>
-        /// <param name="rateInMbps"> The bandwidth rate in Mbps. </param>
-        /// <param name="days"> The days of the week when this schedule is applicable. </param>
-        /// <returns> A new <see cref="DataBoxEdge.BandwidthScheduleData"/> instance for mocking. </returns>
-        public static BandwidthScheduleData BandwidthScheduleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, TimeSpan? startOn = default, TimeSpan? stopOn = default, int? rateInMbps = default, IEnumerable<DataBoxEdgeDayOfWeek> days = default)
-        {
-            return new BandwidthScheduleData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                startOn is null && stopOn is null && rateInMbps is null && days is null ? default : new BandwidthScheduleProperties(startOn.Value, stopOn.Value, rateInMbps.Value, (days ?? new ChangeTrackingList<DataBoxEdgeDayOfWeek>()).ToList(), null));
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="userConsent"> Proactive diagnostic collection consent flag. </param>
-        /// <returns> A new <see cref="DataBoxEdge.DiagnosticProactiveLogCollectionSettingData"/> instance for mocking. </returns>
-        public static DiagnosticProactiveLogCollectionSettingData DiagnosticProactiveLogCollectionSettingData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ProactiveDiagnosticsConsent? userConsent = default)
-        {
-            return new DiagnosticProactiveLogCollectionSettingData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                userConsent is null ? default : new ProactiveLogCollectionSettingsProperties(userConsent.Value, null));
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="remoteSupportSettingsList"> Remote support settings list according to the RemoteApplicationType. </param>
         /// <returns> A new <see cref="DataBoxEdge.DiagnosticRemoteSupportSettingData"/> instance for mocking. </returns>
         public static DiagnosticRemoteSupportSettingData DiagnosticRemoteSupportSettingData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<EdgeRemoteSupportSettings> remoteSupportSettingsList = default)
@@ -854,40 +817,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="subscriptionId"> Arc resource subscription Id. </param>
-        /// <param name="resourceGroupName"> Arc resource group name. </param>
-        /// <param name="resourceName"> Arc resource Name. </param>
-        /// <param name="resourceLocation"> Arc resource location. </param>
-        /// <param name="version"> Arc resource version. </param>
-        /// <param name="hostPlatform"> Host OS supported by the Arc addon. </param>
-        /// <param name="hostPlatformType"> Platform where the runtime is hosted. </param>
-        /// <param name="provisioningState"> Addon Provisioning State. </param>
-        /// <returns> A new <see cref="Models.EdgeArcAddon"/> instance for mocking. </returns>
-        public static EdgeArcAddon EdgeArcAddon(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string subscriptionId = default, string resourceGroupName = default, string resourceName = default, AzureLocation? resourceLocation = default, string version = default, DataBoxEdgeOSPlatformType? hostPlatform = default, HostPlatformType? hostPlatformType = default, DataBoxEdgeRoleAddonProvisioningState? provisioningState = default)
-        {
-            return new EdgeArcAddon(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                AddonType.ArcForKubernetes,
-                subscriptionId is null && resourceGroupName is null && resourceName is null && resourceLocation is null && version is null && hostPlatform is null && hostPlatformType is null && provisioningState is null ? default : new ArcAddonProperties(
-                    subscriptionId,
-                    resourceGroupName,
-                    resourceName,
-                    resourceLocation.Value,
-                    version,
-                    hostPlatform,
-                    hostPlatformType,
-                    provisioningState,
-                    null));
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="iotDeviceDetails"> IoT device metadata to which appliance needs to be connected. </param>
         /// <param name="iotEdgeDeviceDetails"> IoT edge device to which the IoT Addon needs to be configured. </param>
         /// <param name="version"> Version of IoT running on the appliance. </param>
@@ -914,125 +843,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     null));
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="description"> Description for the share. </param>
-        /// <param name="shareStatus"> Current status of the share. </param>
-        /// <param name="monitoringStatus"> Current monitoring status of the share. </param>
-        /// <param name="azureContainerInfo"> Azure container mapping for the share. </param>
-        /// <param name="accessProtocol"> Access protocol to be used by the share. </param>
-        /// <param name="userAccessRights"> Mapping of users and corresponding access rights on the share (required for SMB protocol). </param>
-        /// <param name="clientAccessRights"> List of IP addresses and corresponding access rights on the share(required for NFS protocol). </param>
-        /// <param name="refreshDetails"> Details of the refresh job on this share. </param>
-        /// <param name="shareMappings"> Share mount point to the role. </param>
-        /// <param name="dataPolicy"> Data policy of the share. </param>
-        /// <returns> A new <see cref="DataBoxEdge.DataBoxEdgeShareData"/> instance for mocking. </returns>
-        public static DataBoxEdgeShareData DataBoxEdgeShareData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string description = default, ShareStatus? shareStatus = default, DataBoxEdgeShareMonitoringStatus? monitoringStatus = default, DataBoxEdgeStorageContainerInfo azureContainerInfo = default, ShareAccessProtocol? accessProtocol = default, IEnumerable<UserAccessRight> userAccessRights = default, IEnumerable<ClientAccessRight> clientAccessRights = default, DataBoxEdgeRefreshDetails refreshDetails = default, IEnumerable<DataBoxEdgeMountPointMap> shareMappings = default, DataBoxEdgeDataPolicy? dataPolicy = default)
-        {
-            return new DataBoxEdgeShareData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                description is null && shareStatus is null && monitoringStatus is null && azureContainerInfo is null && accessProtocol is null && userAccessRights is null && clientAccessRights is null && refreshDetails is null && shareMappings is null && dataPolicy is null ? default : new ShareProperties(
-                    description,
-                    shareStatus.Value,
-                    monitoringStatus.Value,
-                    azureContainerInfo,
-                    accessProtocol.Value,
-                    (userAccessRights ?? new ChangeTrackingList<UserAccessRight>()).ToList(),
-                    (clientAccessRights ?? new ChangeTrackingList<ClientAccessRight>()).ToList(),
-                    refreshDetails,
-                    (shareMappings ?? new ChangeTrackingList<DataBoxEdgeMountPointMap>()).ToList(),
-                    dataPolicy,
-                    null));
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="alias"> Alias for the storage account. </param>
-        /// <param name="userName"> Username for the storage account. </param>
-        /// <param name="accountKey"> Encrypted storage key. </param>
-        /// <param name="connectionString"> Connection string for the storage account. Use this string if username and account key are not specified. </param>
-        /// <param name="sslStatus"> Signifies whether SSL needs to be enabled or not. </param>
-        /// <param name="blobDomainName"> Blob end point for private clouds. </param>
-        /// <param name="accountType"> Type of storage accessed on the storage account. </param>
-        /// <param name="storageAccountId"> Id of the storage account. </param>
-        /// <returns> A new <see cref="DataBoxEdge.DataBoxEdgeStorageAccountCredentialData"/> instance for mocking. </returns>
-        public static DataBoxEdgeStorageAccountCredentialData DataBoxEdgeStorageAccountCredentialData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string @alias = default, string userName = default, AsymmetricEncryptedSecret accountKey = default, string connectionString = default, DataBoxEdgeStorageAccountSslStatus? sslStatus = default, string blobDomainName = default, DataBoxEdgeStorageAccountType? accountType = default, ResourceIdentifier storageAccountId = default)
-        {
-            return new DataBoxEdgeStorageAccountCredentialData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                @alias is null && userName is null && accountKey is null && connectionString is null && sslStatus is null && blobDomainName is null && accountType is null && storageAccountId is null ? default : new StorageAccountCredentialProperties(
-                    @alias,
-                    userName,
-                    accountKey,
-                    connectionString,
-                    sslStatus.Value,
-                    blobDomainName,
-                    accountType.Value,
-                    storageAccountId,
-                    null));
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="description"> Description for the storage Account. </param>
-        /// <param name="storageAccountStatus"> Current status of the storage account. </param>
-        /// <param name="dataPolicy"> Data policy of the storage Account. </param>
-        /// <param name="storageAccountCredentialId"> Storage Account Credential Id. </param>
-        /// <param name="blobEndpoint"> BlobEndpoint of Storage Account. </param>
-        /// <param name="containerCount"> The Container Count. Present only for Storage Accounts with DataPolicy set to Cloud. </param>
-        /// <returns> A new <see cref="DataBoxEdge.DataBoxEdgeStorageAccountData"/> instance for mocking. </returns>
-        public static DataBoxEdgeStorageAccountData DataBoxEdgeStorageAccountData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string description = default, DataBoxEdgeStorageAccountStatus? storageAccountStatus = default, DataBoxEdgeDataPolicy? dataPolicy = default, ResourceIdentifier storageAccountCredentialId = default, string blobEndpoint = default, int? containerCount = default)
-        {
-            return new DataBoxEdgeStorageAccountData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                description is null && storageAccountStatus is null && dataPolicy is null && storageAccountCredentialId is null && blobEndpoint is null && containerCount is null ? default : new StorageAccountProperties(
-                    description,
-                    storageAccountStatus,
-                    dataPolicy.Value,
-                    storageAccountCredentialId,
-                    blobEndpoint,
-                    containerCount,
-                    null));
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="containerStatus"> Current status of the container. </param>
-        /// <param name="dataFormat"> DataFormat for Container. </param>
-        /// <param name="refreshDetails"> Details of the refresh job on this container. </param>
-        /// <param name="createdOn"> The UTC time when container got created. </param>
-        /// <returns> A new <see cref="DataBoxEdge.DataBoxEdgeStorageContainerData"/> instance for mocking. </returns>
-        public static DataBoxEdgeStorageContainerData DataBoxEdgeStorageContainerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DataBoxEdgeStorageContainerStatus? containerStatus = default, DataBoxEdgeStorageContainerDataFormat? dataFormat = default, DataBoxEdgeRefreshDetails refreshDetails = default, DateTimeOffset? createdOn = default)
-        {
-            return new DataBoxEdgeStorageContainerData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                containerStatus is null && dataFormat is null && refreshDetails is null && createdOn is null ? default : new ContainerProperties(containerStatus, dataFormat.Value, refreshDetails, createdOn, null));
-        }
-
         /// <summary> Trigger details. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -1049,25 +859,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 systemData,
                 additionalBinaryDataProperties: null,
                 new TriggerEventType(kind));
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="encryptedPassword"> The password details. </param>
-        /// <param name="shareAccessRights"> List of shares that the user has rights on. This field should not be specified during user creation. </param>
-        /// <param name="userType"> Type of the user. </param>
-        /// <returns> A new <see cref="DataBoxEdge.DataBoxEdgeUserData"/> instance for mocking. </returns>
-        public static DataBoxEdgeUserData DataBoxEdgeUserData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AsymmetricEncryptedSecret encryptedPassword = default, IEnumerable<ShareAccessRight> shareAccessRights = default, DataBoxEdgeUserType? userType = default)
-        {
-            return new DataBoxEdgeUserData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                encryptedPassword is null && shareAccessRights is null && userType is null ? default : new UserProperties(encryptedPassword, (shareAccessRights ?? new ChangeTrackingList<ShareAccessRight>()).ToList(), userType.Value, null));
         }
 
         /// <summary> Specifies the mapping between this particular user and the type of access he has on shares on this device. </summary>
