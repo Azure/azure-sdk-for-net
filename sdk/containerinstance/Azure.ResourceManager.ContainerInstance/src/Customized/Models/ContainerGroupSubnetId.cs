@@ -17,13 +17,5 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="id"> Resource ID of virtual network and subnet. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public ContainerGroupSubnetId(ResourceIdentifier id) : this(id?.ToString()) { }
-
-        // backward-compat shim: old property was ResourceIdentifier, new is string
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public ResourceIdentifier Id
-        {
-            get => _id != null ? new ResourceIdentifier(_id) : null;
-            set => _id = value?.ToString();
-        }
     }
 }

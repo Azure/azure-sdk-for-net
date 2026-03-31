@@ -90,6 +90,11 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     null));
         }
 
+        /// <summary> Backward-compat factory for ContainerGroupData using old wrapper types. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ContainerGroupData ContainerGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IEnumerable<string> zones, ManagedServiceIdentity identity, string provisioningState, IEnumerable<ContainerInstanceContainer> containers, IEnumerable<ContainerGroupImageRegistryCredential> imageRegistryCredentials, ContainerGroupRestartPolicy? restartPolicy, ContainerGroupIPAddress ipAddress, ContainerInstanceOperatingSystemType osType, IEnumerable<ContainerVolume> volumes, ContainerGroupInstanceView instanceView, ContainerGroupLogAnalytics diagnosticsLogAnalytics, IEnumerable<ContainerGroupSubnetId> subnetIds, ContainerGroupDnsConfiguration dnsConfig, ContainerGroupSku? sku, ContainerGroupEncryptionProperties encryptionProperties, IEnumerable<InitContainerDefinitionContent> initContainers, IEnumerable<DeploymentExtensionSpec> extensions, string confidentialComputeCcePolicy, ContainerGroupPriority? priority)
+            => ContainerGroupData(id, name, resourceType, systemData, tags, location, zones, (ContainerGroupIdentity)null, provisioningState, containers?.Cast<Container>(), imageRegistryCredentials?.Cast<ImageRegistryCredential>(), restartPolicy, (IpAddress)ipAddress, (OperatingSystemTypes)osType, volumes?.Cast<Volume>(), (ContainerGroupPropertiesPropertiesInstanceView)instanceView, (LogAnalytics)diagnosticsLogAnalytics, subnetIds, (DnsConfiguration)dnsConfig, sku, (EncryptionProperties)encryptionProperties, initContainers?.Cast<InitContainerDefinition>(), extensions, confidentialComputeCcePolicy, priority);
+
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ContainerAttachResult ContainerAttachResult(Uri webSocketUri = null, string password = null)
             => new ContainerAttachResult();

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public ContainerGroupImageRegistryCredential(string server) : base(server) { }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [System.Obsolete("This constructor is obsolete. Use ContainerGroupImageRegistryCredential(string) instead.")]
+        [System.Obsolete("This method is obsolete and will be removed in a future release.", false)]
         public ContainerGroupImageRegistryCredential(string server, string username)
             : base(server) { Username = username; }
 
