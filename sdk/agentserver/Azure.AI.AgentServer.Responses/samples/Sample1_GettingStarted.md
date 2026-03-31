@@ -1,6 +1,6 @@
-# Sample 1: Getting Started — Q&A Assistant
+# Sample 1: Getting Started — Echo Handler
 
-This sample shows the minimal implementation of `ResponseHandler` — a Q&A assistant that answers user questions by streaming a text response.
+This sample shows the simplest implementation of `ResponseHandler` — an echo handler that returns the user's input back as a text response.
 
 ## Prerequisites
 
@@ -10,38 +10,20 @@ dotnet add package Azure.AI.AgentServer.Responses --prerelease
 
 ## Implement the handler
 
-```C# Snippet:Responses_Sample1_QnAHandler
-public class QnAHandler : ResponseHandler
+```C# Snippet:Responses_Sample1_EchoHandler
+public class EchoHandler : ResponseHandler
 {
-    public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
+    public override IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
         CreateResponse request,
         ResponseContext context,
-        [EnumeratorCancellation] CancellationToken cancellationToken)
+        CancellationToken cancellationToken)
     {
-        await Task.CompletedTask;
-        var stream = new ResponseEventStream(context, request);
-
-        yield return stream.EmitCreated();
-        yield return stream.EmitInProgress();
-
-        var message = stream.AddOutputItemMessage();
-        yield return message.EmitAdded();
-
-        var text = message.AddTextContent();
-        yield return text.EmitAdded();
-
-        // In a real agent, call your model or knowledge base here.
-        var question = request.GetInputText();
-        var answer = $"You asked: \"{question}\". " +
-                     "This is where your agent logic produces an answer.";
-
-        yield return text.EmitDelta(answer);
-        yield return text.EmitDone(answer);
-
-        yield return message.EmitContentDone(text);
-        yield return message.EmitDone();
-
-        yield return stream.EmitCompleted();
+        return new TextResponse(context, request,
+            createText: ct =>
+            {
+                var input = request.GetInputText();
+                return Task.FromResult($"Echo: {input}");
+            });
     }
 }
 ```
@@ -49,7 +31,7 @@ public class QnAHandler : ResponseHandler
 ## Start the server
 
 ```C# Snippet:Responses_Sample1_StartServer
-ResponsesServer.Run<QnAHandler>();
+ResponsesServer.Run<EchoHandler>();
 ```
 
 ## Test the endpoint
@@ -57,6 +39,6 @@ ResponsesServer.Run<QnAHandler>();
 ```bash
 curl -X POST http://localhost:8088/responses \
   -H "Content-Type: application/json" \
-  -d '{"model": "qna", "input": "What is Azure AI Foundry?"}' \
+  -d '{"model": "echo", "input": "Hello, world!"}' \
   --no-buffer
 ```

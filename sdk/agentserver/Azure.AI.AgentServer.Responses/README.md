@@ -47,16 +47,41 @@ app.Run();
 
 ### ResponseHandler
 
-The core abstraction you implement. The library calls `CreateAsync` for each incoming request and delivers the returned `IAsyncEnumerable<ResponseStreamEvent>` to clients via SSE:
+The core abstraction you implement. The library calls `CreateAsync` for each incoming request and delivers the returned `IAsyncEnumerable<ResponseStreamEvent>` to clients via SSE.
+
+**`TextResponse` — recommended for text-only responses:**
 
 ```C# Snippet:Responses_ReadMe_EchoHandler
 public class EchoHandler : ResponseHandler
+{
+    public override IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
+        CreateResponse request,
+        ResponseContext context,
+        CancellationToken cancellationToken)
+    {
+        return new TextResponse(context, request,
+            createText: ct =>
+            {
+                var input = request.GetInputText();
+                return Task.FromResult($"Echo: {input}");
+            });
+    }
+}
+```
+
+**`ResponseEventStream` — full control over every SSE event:**
+
+Use `ResponseEventStream` when you need multiple output types (reasoning, function calls), fine-grained delta control, or custom Response properties.
+
+```C# Snippet:Responses_ReadMe_EchoHandler_FullControl
+public class EchoHandlerFullControl : ResponseHandler
 {
     public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
         CreateResponse request,
         ResponseContext context,
         [EnumeratorCancellation] CancellationToken cancellationToken)
     {
+        await Task.CompletedTask;
         var stream = new ResponseEventStream(context, request);
         yield return stream.EmitCreated();
         yield return stream.EmitInProgress();

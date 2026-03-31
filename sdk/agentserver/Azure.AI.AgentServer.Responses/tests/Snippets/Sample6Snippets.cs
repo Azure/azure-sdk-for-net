@@ -2,127 +2,89 @@
 // Licensed under the MIT License.
 
 using System.Runtime.CompilerServices;
-using Azure.AI.AgentServer.Core;
 using Azure.AI.AgentServer.Responses;
 using Azure.AI.AgentServer.Responses.Models;
-using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
 
 namespace Azure.AI.AgentServer.Responses.Tests.Snippets
 {
     /// <summary>
-    /// Code snippets backing Sample6_Tier2HostingBuilder.md. Compiled to prevent rot.
+    /// Code snippets backing Sample6_MultiOutput.md. Compiled to prevent rot.
     /// </summary>
     [TestFixture]
     [Explicit("Snippets are compiled to prevent rot but require a running server to execute.")]
     public class Sample6Snippets
     {
         [Test]
-        public void BuilderGeneric()
+        public void StartServer()
         {
-            #region Snippet:Responses_Sample6_BuilderGeneric
+            #region Snippet:Responses_Sample6_StartServer
 
-            var builder = AgentHost.CreateBuilder();
-
-            // Register services that the handler depends on.
-            builder.Services.AddSingleton<IKnowledgeBase, WikiKnowledgeBase>();
-
-            // Register the Responses protocol with a concrete handler type.
-            builder.AddResponses<KnowledgeHandler>();
-
-            var app = builder.Build();
-            app.Run();
+            ResponsesServer.Run<MathSolverHandler>();
 
             #endregion
         }
 
         [Test]
-        public void BuilderWithFactory()
+        public void Implement_MathSolverHandler()
         {
-            #region Snippet:Responses_Sample6_BuilderWithFactory
-
-            var builder = AgentHost.CreateBuilder();
-
-            // Register services on the builder.
-            builder.Services.AddSingleton<IKnowledgeBase, WikiKnowledgeBase>();
-
-            // Use a factory delegate for handler construction.
-            builder.AddResponses(factory: sp =>
-            {
-                var kb = sp.GetRequiredService<IKnowledgeBase>();
-                return new KnowledgeHandler(kb);
-            });
-
-            // Configuration and tracing work the same way.
-            builder.ConfigureTracing(tracing =>
-            {
-                tracing.AddSource("MyAgent.BusinessLogic");
-            });
-
-            builder.ConfigureShutdown(TimeSpan.FromSeconds(15));
-
-            var app = builder.Build();
-            app.Run();
-
-            #endregion
-        }
-
-        [Test]
-        public void Implement_KnowledgeHandler()
-        {
-            var handler = new KnowledgeHandler(new WikiKnowledgeBase());
+            var handler = new MathSolverHandler();
             Assert.That(handler, Is.Not.Null);
         }
 
-        #region Snippet:Responses_Sample6_KnowledgeHandler
+        #region Snippet:Responses_Sample6_MathSolverHandler
 
-        public class KnowledgeHandler : ResponseHandler
+        public class MathSolverHandler : ResponseHandler
         {
-            private readonly IKnowledgeBase _kb;
-
-            public KnowledgeHandler(IKnowledgeBase kb) => _kb = kb;
-
             public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
                 CreateResponse request,
                 ResponseContext context,
                 [EnumeratorCancellation] CancellationToken cancellationToken)
             {
+                await Task.CompletedTask;
                 var stream = new ResponseEventStream(context, request);
+                var question = request.GetInputText();
 
                 yield return stream.EmitCreated();
                 yield return stream.EmitInProgress();
 
+                // Output item 0: Reasoning — show the thought process.
+                var reasoning = stream.AddOutputItemReasoningItem();
+                yield return reasoning.EmitAdded();
+
+                var summary = reasoning.AddSummaryPart();
+                yield return summary.EmitAdded();
+
+                // In a real agent, this would be the model's chain-of-thought.
+                var thought = $"The user asked: \"{question}\". " +
+                              "I need to identify the mathematical operation, " +
+                              "compute the result, and explain the steps.";
+                yield return summary.EmitTextDelta(thought);
+                yield return summary.EmitTextDone(thought);
+                yield return summary.EmitDone();
+                reasoning.EmitSummaryPartDone(summary);
+
+                yield return reasoning.EmitDone();
+
+                // Output item 1: Message — the final answer.
                 var message = stream.AddOutputItemMessage();
                 yield return message.EmitAdded();
 
                 var text = message.AddTextContent();
                 yield return text.EmitAdded();
 
-                var question = request.GetInputText();
-                var answer = await _kb.SearchAsync(question, cancellationToken);
-
+                var answer = "The answer is 42. Here's how: " +
+                             "6 × 7 = 42. The multiplication of 6 and 7 gives 42.";
                 yield return text.EmitDelta(answer);
                 yield return text.EmitDone(answer);
 
                 yield return message.EmitContentDone(text);
                 yield return message.EmitDone();
+
                 yield return stream.EmitCompleted();
             }
         }
 
         #endregion
-
-        // Supporting types for the sample.
-
-        public interface IKnowledgeBase
-        {
-            Task<string> SearchAsync(string query, CancellationToken cancellationToken);
-        }
-
-        public class WikiKnowledgeBase : IKnowledgeBase
-        {
-            public Task<string> SearchAsync(string query, CancellationToken cancellationToken) =>
-                Task.FromResult($"Here is what I found about \"{query}\": [mock knowledge base result]");
-        }
     }
 }

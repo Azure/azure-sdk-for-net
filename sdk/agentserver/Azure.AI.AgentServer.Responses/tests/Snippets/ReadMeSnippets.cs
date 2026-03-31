@@ -58,11 +58,39 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
 
         public class EchoHandler : ResponseHandler
         {
+            public override IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
+                CreateResponse request,
+                ResponseContext context,
+                CancellationToken cancellationToken)
+            {
+                return new TextResponse(context, request,
+                    createText: ct =>
+                    {
+                        var input = request.GetInputText();
+                        return Task.FromResult($"Echo: {input}");
+                    });
+            }
+        }
+
+        #endregion
+
+        [Test]
+        public void Implement_EchoHandlerFullControl()
+        {
+            var handler = new EchoHandlerFullControl();
+            Assert.That(handler, Is.Not.Null);
+        }
+
+        #region Snippet:Responses_ReadMe_EchoHandler_FullControl
+
+        public class EchoHandlerFullControl : ResponseHandler
+        {
             public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
                 CreateResponse request,
                 ResponseContext context,
                 [EnumeratorCancellation] CancellationToken cancellationToken)
             {
+                await Task.CompletedTask;
                 var stream = new ResponseEventStream(context, request);
                 yield return stream.EmitCreated();
                 yield return stream.EmitInProgress();

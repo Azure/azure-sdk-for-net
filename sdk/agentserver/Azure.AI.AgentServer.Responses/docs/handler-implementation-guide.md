@@ -8,13 +8,15 @@
 
 - [Overview](#overview)
 - [Getting Started](#getting-started)
-- [Core Concepts](#core-concepts)
-  - [ResponseHandler](#responsehandler)
-  - [ResponseEventStream](#responseeventstream)
-  - [ResponseContext](#responsecontext)
-  - [Sequence Numbers](#sequence-numbers)
-  - [Snapshot Semantics](#snapshot-semantics)
+- [TextResponse](#textresponse)
+- [Server Registration](#server-registration)
+- [ResponseHandler](#responsehandler)
+- [ResponseEventStream](#responseeventstream)
+  - [Setting Custom Metadata](#setting-custom-metadata)
   - [Builder Pattern](#builder-pattern)
+- [ResponseContext](#responsecontext)
+- [Sequence Numbers](#sequence-numbers)
+- [Snapshot Semantics](#snapshot-semantics)
 - [Emitting Output](#emitting-output)
   - [Text Messages](#text-messages)
   - [Function Calls (Tool Use)](#function-calls-tool-use)
@@ -25,10 +27,10 @@
 - [Cancellation](#cancellation)
 - [Error Handling](#error-handling)
   - [Validation Pipeline](#validation-pipeline)
-- [Signalling Incomplete](#signalling-incomplete)
-- [Terminal Event Requirement](#terminal-event-requirement)
-- [Token Usage Reporting](#token-usage-reporting)
-- [Server Registration](#server-registration)
+- [Response Lifecycle](#response-lifecycle)
+  - [Terminal Event Requirement](#terminal-event-requirement)
+  - [Signalling Incomplete](#signalling-incomplete)
+  - [Token Usage Reporting](#token-usage-reporting)
 - [RawBody Access](#rawbody-access)
 - [Configuration](#configuration)
   - [Distributed Tracing](#distributed-tracing)
@@ -51,18 +53,253 @@ You do **not** need to think about:
 
 The library manages all of this. Your handler just yields events.
 
+For most handlers, `TextResponse` eliminates even the event plumbing — you provide text (or a stream of tokens) and the library does the rest. For full control over every SSE event, use `ResponseEventStream`.
+
 ---
 
 ## Getting Started
 
 ### Minimal Handler
 
+The simplest handler uses `TextResponse` — a convenience class that handles the full SSE event lifecycle for text-only responses:
+
 ```csharp
 using Azure.AI.AgentServer.Responses;
 
 public class EchoHandler : ResponseHandler
 {
-    public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
+    public override IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
+        CreateResponse request,
+        ResponseContext context,
+        CancellationToken cancellationToken)
+    {
+        return new TextResponse(context, request,
+            createText: ct =>
+            {
+                var input = request.GetInputText();
+                return Task.FromResult($"Echo: {input}");
+            });
+    }
+}
+```
+
+### Running the Server
+
+```csharp
+ResponsesServer.Run<EchoHandler>(args);
+```
+
+That's it. One line starts a Kestrel host with OpenTelemetry, health checks, identity headers, and all Responses protocol endpoints (`POST /responses`, `GET /responses/{id}`, `POST /responses/{id}/cancel`, and more).
+
+**Next steps**: See [TextResponse](#textresponse) for streaming text and more patterns. For full SSE control (function calls, reasoning items, multiple outputs), see [ResponseEventStream](#responseeventstream). For hosting options beyond the one-liner, see [Server Registration](#server-registration).
+
+---
+
+## TextResponse
+
+A standalone convenience class for the most common case — returning a single text message. `TextResponse` implements `IAsyncEnumerable<ResponseStreamEvent>` and handles the full event lifecycle internally (created → in_progress → message → content → deltas → completed).
+
+### Complete Text
+
+When you have the full text available at once:
+
+```csharp
+public override IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
+    CreateResponse request, ResponseContext context, CancellationToken cancellationToken)
+{
+    return new TextResponse(context, request,
+        createText: async ct =>
+        {
+            var answer = await _model.GenerateAsync(request.GetInputText(), ct);
+            return answer;
+        });
+}
+```
+
+### Streaming Text
+
+When an LLM produces tokens incrementally:
+
+```csharp
+public override IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
+    CreateResponse request, ResponseContext context, CancellationToken cancellationToken)
+{
+    return new TextResponse(context, request,
+        createTextStream: GenerateTokensAsync);
+}
+
+private static async IAsyncEnumerable<string> GenerateTokensAsync(
+    [EnumeratorCancellation] CancellationToken ct)
+{
+    // Replace with actual LLM call
+    var tokens = new[] { "Hello", ", ", "world", "!" };
+    foreach (var token in tokens)
+    {
+        await Task.Delay(50, ct);
+        yield return token;
+    }
+}
+```
+
+### Setting Response Properties
+
+Use the optional `configure` callback to set properties like `Temperature` or `MaxOutputTokens` before the `response.created` event:
+
+```csharp
+return new TextResponse(context, request,
+    configure: response =>
+    {
+        response.Temperature = 0.7;
+        response.MaxOutputTokens = 1024;
+    },
+    createText: ct => Task.FromResult("Hello!"));
+```
+
+### When to Use TextResponse vs ResponseEventStream
+
+| Use `TextResponse` when... | Use `ResponseEventStream` when... |
+|---|---|
+| Your handler returns a single text message | You need multiple output types (reasoning + message, function calls) |
+| You want minimal boilerplate | You need fine-grained delta control |
+| The focus of your handler is business logic, not event plumbing | You need to emit function calls, reasoning items, or tool calls |
+
+---
+
+## Server Registration
+
+### Tier 1: One-Line Startup (Recommended)
+
+The simplest way to start a Responses server is with the `Azure.AI.AgentServer.Core` package:
+
+```csharp
+using Azure.AI.AgentServer.Responses;
+
+ResponsesServer.Run<MyHandler>(args);
+```
+
+This creates a Kestrel host with OpenTelemetry, health checks, identity headers, and the Responses protocol endpoints — all in one line.
+
+### Tier 2: Builder Pattern
+
+For more control over the host configuration:
+
+```csharp
+using Azure.AI.AgentServer.Responses;
+
+var builder = AgentHost.CreateBuilder(args);
+builder.AddResponses<MyHandler>();
+var app = builder.Build();
+app.Run();
+```
+
+### Tier 3: Manual Setup (Without Core)
+
+If you don't use the Core package, register services and map endpoints directly:
+
+#### Basic Setup
+
+```csharp
+builder.Services.AddResponsesServer();
+builder.Services.AddSingleton<ResponseHandler, MyHandler>();
+```
+
+#### With Options
+
+```csharp
+builder.Services.AddResponsesServer(options =>
+{
+    options.DefaultFetchHistoryCount = 50; // Limit history resolution (default: 100)
+});
+
+// Configure in-memory provider TTLs separately
+builder.Services.Configure<InMemoryProviderOptions>(opts =>
+{
+    opts.EventStreamTtl = TimeSpan.FromMinutes(5);   // How long SSE replay is available (default: 10 min)
+});
+```
+
+### Route Mapping
+
+```csharp
+app.MapResponsesServer();
+```
+
+This maps five endpoints:
+- `POST /responses` — Create a response
+- `GET /responses/{responseId}` — Retrieve a response (JSON or SSE replay)
+- `POST /responses/{responseId}/cancel` — Cancel a response
+- `DELETE /responses/{responseId}` — Delete a response
+- `GET /responses/{responseId}/input_items` — List input items (paginated)
+
+**Startup validation**: `MapResponsesServer()` throws `InvalidOperationException` if no `ResponseHandler` is registered. This fail-fast behaviour ensures misconfigured servers are caught at startup, not at the first request.
+
+### Custom Response Provider
+
+The server delegates state persistence, event streaming, and cancellation to three pluggable provider abstract classes. The default in-memory implementation works for single-instance deployments.
+
+#### Provider Abstract Class Split
+
+The provider contract is split into **three focused abstract classes**, each with a single responsibility:
+
+| Abstract class | Responsibility | Methods |
+|---|---|---|
+| `ResponsesProvider` | State persistence (CRUD for responses, input items, history) | `CreateResponseAsync`, `GetResponseAsync`, `UpdateResponseAsync`, `DeleteResponseAsync`, `GetInputItemsAsync`, `GetItemsAsync`, `GetHistoryItemIdsAsync` |
+| `ResponsesCancellationSignalProvider` | Cancellation signal coordination | `CancelResponseAsync`, `GetResponseCancellationTokenAsync` |
+| `ResponsesStreamProvider` | SSE event streaming (publish/subscribe) | `CreateEventPublisherAsync`, `SubscribeToEventsAsync` |
+
+The default in-memory provider extends `ResponsesProvider` and provides companion adapters for cancellation and streaming. You can override **any subset** — the library falls back to the in-memory implementation for unregistered types.
+
+```csharp
+// Override only state persistence (e.g., use a database)
+services.AddSingleton<ResponsesProvider, MyDatabaseProvider>();
+
+// Override only cancellation (e.g., use Redis pub/sub)
+services.AddSingleton<ResponsesCancellationSignalProvider, MyRedisSignalProvider>();
+
+// Override state with companion adapters for cancellation and streaming
+services.AddSingleton<ResponsesProvider, MyProvider>();
+services.AddSingleton<ResponsesCancellationSignalProvider>(sp =>
+    sp.GetRequiredService<MyProvider>().AsCancellationProvider());
+services.AddSingleton<ResponsesStreamProvider>(sp =>
+    sp.GetRequiredService<MyProvider>().AsStreamProvider());
+```
+
+When deployed to Azure AI Foundry, durable persistence is enabled by default — no custom provider registration is needed. Custom pluggable persistence is not yet supported but is coming soon.
+
+---
+
+## ResponseHandler
+
+```csharp
+public abstract class ResponseHandler
+{
+    public abstract IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
+        CreateResponse request,
+        ResponseContext context,
+        CancellationToken cancellationToken);
+}
+```
+
+| Parameter | Purpose |
+|---|---|
+| `request` | The deserialized `CreateResponse` body from the client (model, input, tools, instructions, etc.) |
+| `context` | Provides the response ID and ID generation helpers |
+| `cancellationToken` | Triggered on cancellation (explicit `/cancel` call or client disconnection for non-background) |
+
+Your handler is an `IAsyncEnumerable` — you `yield return` events one at a time. The library consumes them, assigns sequence numbers, manages the response lifecycle, and delivers them to the client.
+
+---
+
+## ResponseEventStream
+
+For full control over every SSE event — multiple output types, custom Response properties, streaming deltas — use `ResponseEventStream`. This is the lower-level counterpart to `TextResponse`:
+
+```csharp
+using Azure.AI.AgentServer.Responses;
+
+public class EchoHandler : ResponseHandler
+{
+    public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
         CreateResponse request,
         ResponseContext context,
         [EnumeratorCancellation] CancellationToken cancellationToken)
@@ -93,47 +330,7 @@ public class EchoHandler : ResponseHandler
 }
 ```
 
-### Minimal Program.cs
-
-```csharp
-var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddResponsesServer();
-builder.Services.AddSingleton<ResponseHandler, EchoHandler>();
-
-var app = builder.Build();
-app.MapResponsesServer();
-app.Run();
-```
-
-That's it. The library registers all middleware, routes (`POST /responses`, `GET /responses/{id}`, `POST /responses/{id}/cancel`), and protocol plumbing.
-
----
-
-## Core Concepts
-
-### ResponseHandler
-
-```csharp
-public abstract class ResponseHandler
-{
-    IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-        CreateResponse request,
-        ResponseContext context,
-        CancellationToken cancellationToken);
-}
-```
-
-| Parameter | Purpose |
-|---|---|
-| `request` | The deserialized `CreateResponse` body from the client (model, input, tools, instructions, etc.) |
-| `context` | Provides the response ID and ID generation helpers |
-| `cancellationToken` | Triggered on cancellation (explicit `/cancel` call or client disconnection for non-background) |
-
-Your handler is an `IAsyncEnumerable` — you `yield return` events one at a time. The library consumes them, assigns sequence numbers, manages the response lifecycle, and delivers them to the client.
-
-### ResponseEventStream
-
-The main helper for producing correctly-structured events. Create one at the start of your handler:
+Create a `ResponseEventStream` at the start of your handler:
 
 ```csharp
 var stream = new ResponseEventStream(context, request);
@@ -147,7 +344,7 @@ It provides:
 | **Lifecycle** | `EmitCreated()`, `EmitInProgress()`, `EmitQueued()`, `EmitCompleted()`, `EmitFailed()`, `EmitIncomplete()` |
 | **Output factories** | `AddOutputItemMessage()`, `AddOutputItemFunctionCall()`, `AddOutputItemReasoningItem()`, `AddOutputItemCodeInterpreterCall()`, `AddOutputItemFileSearchCall()`, `AddOutputItemWebSearchCall()`, `AddOutputItemImageGenCall()`, `AddOutputItemMcpCall()`, `AddOutputItemCustomToolCall()`, and more |
 
-#### Setting Custom Metadata
+### Setting Custom Metadata
 
 Use the `Response` property to set custom metadata or instructions before emitting the created event:
 
@@ -178,7 +375,7 @@ Handlers do not need to set these — they are populated automatically in the `R
 
 **Important**: Do not add output items directly to `stream.Response.Output`. Use the output builder factories instead — the library tracks output items through `output_item.added` events and will detect direct manipulation as a handler error.
 
-**Every handler must**:
+**Every `ResponseEventStream` handler must**:
 1. Call `stream.EmitCreated()` first — this creates the `response.created` SSE event. **This is mandatory and must be the first event yielded.** No response is persisted before this event.
 2. Call `stream.EmitInProgress()` — this creates the `response.in_progress` SSE event.
 3. Emit output items using the builder factories.
@@ -199,24 +396,42 @@ Handlers do not need to set these — they are populated automatically in the `R
 
 All violations are logged with handler type name and request ID for diagnostics.
 
-### ResponseContext
+> **Note**: `TextResponse` handles all lifecycle events internally — the contract above applies only when you use `ResponseEventStream` directly.
+
+### Builder Pattern
+
+Output is constructed through a **builder hierarchy** that enforces correct event ordering:
+
+```
+ResponseEventStream
+  └── OutputItemBuilder (message, function call, reasoning, etc.)
+        └── Content builders (text, refusal, summary, etc.)
+```
+
+Each builder tracks its lifecycle state (`NotStarted` → `Added` → `Done`) and will throw if you emit events out of order. This prevents protocol violations at development time rather than runtime.
+
+**Key rule**: Every builder that you start (`EmitAdded`) must be finished (`EmitDone`). Unfinished builders result in malformed responses.
+
+---
+
+## ResponseContext
 
 ```csharp
 public class ResponseContext
 {
-    string ResponseId { get; }
-    bool IsShutdownRequested { get; set; }
-    BinaryData? RawBody { get; }
-    Task<IReadOnlyList<OutputItem>> GetInputItemsAsync(CancellationToken cancellationToken = default);
-    Task<IReadOnlyList<OutputItem>> GetHistoryAsync(CancellationToken cancellationToken = default);
-    IReadOnlyDictionary<string, string> ClientHeaders { get; }
-    IReadOnlyDictionary<string, StringValues> QueryParameters { get; }
+    public string ResponseId { get; }
+    public bool IsShutdownRequested { get; set; }
+    public virtual BinaryData? RawBody { get; }
+    public virtual Task<IReadOnlyList<OutputItem>> GetInputItemsAsync(CancellationToken cancellationToken = default);
+    public virtual Task<IReadOnlyList<OutputItem>> GetHistoryAsync(CancellationToken cancellationToken = default);
+    public virtual IReadOnlyDictionary<string, string> ClientHeaders { get; }
+    public virtual IReadOnlyDictionary<string, StringValues> QueryParameters { get; }
 }
 ```
 
 Provides the library-generated response ID, shutdown signalling, access to resolved input and history items, forwarded client headers, and query parameters from the original request.
 
-#### Input Items — `GetInputItemsAsync()`
+### Input Items — `GetInputItemsAsync()`
 
 Returns the caller's input items fully resolved and converted to `OutputItem` types:
 
@@ -235,7 +450,7 @@ public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
 - **Input order is preserved** — items are returned in the same order as in the request.
 - **Lazy singleton** — the result is computed once on first call and cached. Subsequent calls return the same instance. Thread-safe.
 
-#### Conversation History — `GetHistoryAsync()`
+### Conversation History — `GetHistoryAsync()`
 
 Returns resolved output items from previous responses in the conversation chain:
 
@@ -250,7 +465,7 @@ var history = await context.GetHistoryAsync(ct);
 - **Configurable limit** — controlled by `ResponsesServerOptions.DefaultFetchHistoryCount` (default: 100).
 - **Lazy singleton** — computed once and cached, like `GetInputItemsAsync`.
 
-#### Client Headers — `ClientHeaders`
+### Client Headers — `ClientHeaders`
 
 Returns `x-client-*` prefixed headers forwarded from the original HTTP request. These headers enable end-to-end tracing context and client metadata to flow through the server:
 
@@ -274,7 +489,7 @@ public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
 - **Read-only**: The dictionary is immutable — values cannot be modified by the handler.
 - **Empty if no matching headers**: Returns an empty dictionary when the request contains no `x-client-*` headers.
 
-#### Query Parameters — `QueryParameters`
+### Query Parameters — `QueryParameters`
 
 Returns all query parameters from the original HTTP request:
 
@@ -297,7 +512,7 @@ public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
 - **Multi-valued**: Values are `StringValues`, supporting multiple values for the same key.
 - **Read-only**: The dictionary is immutable.
 
-#### ID Generation Extensions
+### ID Generation Extensions
 
 Extension methods on `ResponseContext` generate correctly-prefixed IDs for child items:
 
@@ -316,37 +531,29 @@ Extension methods on `ResponseContext` generate correctly-prefixed IDs for child
 
 You typically don't need to call these directly — the builders handle ID generation internally. They're available if you need IDs before creating a builder.
 
-### Sequence Numbers
+---
+
+## Sequence Numbers
 
 The server auto-assigns 0-based sequence numbers to every SSE event. Never set them manually — they are injected automatically by the library during event serialization.
 
 Clients use sequence numbers for stream resumption via the `starting_after` query parameter on SSE replay. See [Sequence Numbers (B9)](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/api-behaviour-contract.md#behavioural-rules-index) for the wire format.
 
-### Snapshot Semantics
+---
+
+## Snapshot Semantics
 
 Each SSE event captures a point-in-time snapshot of the `Response`. It is safe to mutate response state between yields — each event reflects the state at emission time, not the current state.
 
 See [Snapshot Semantics (B23)](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/api-behaviour-contract.md#behavioural-rules-index) for the protocol-level behaviour and [Response Replacement Semantics (B37)](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/api-behaviour-contract.md#response-replacement-semantics-rule-b37) for how response state is tracked.
-
-### Builder Pattern
-
-Output is constructed through a **builder hierarchy** that enforces correct event ordering:
-
-```
-ResponseEventStream
-  └── OutputItemBuilder (message, function call, reasoning, etc.)
-        └── Content builders (text, refusal, summary, etc.)
-```
-
-Each builder tracks its lifecycle state (`NotStarted` → `Added` → `Done`) and will throw if you emit events out of order. This prevents protocol violations at development time rather than runtime.
-
-**Key rule**: Every builder that you start (`EmitAdded`) must be finished (`EmitDone`). Unfinished builders result in malformed responses.
 
 ---
 
 ## Emitting Output
 
 ### Text Messages
+
+> **Tip**: For simple text-only responses, consider using [`TextResponse`](#textresponse) instead — it handles all the event lifecycle below in a single line. Use `ResponseEventStream` when you need fine-grained delta control or multiple content parts.
 
 The most common output — a message with text content:
 
@@ -556,53 +763,46 @@ This complements the request-level helpers (`GetInputExpanded`, `GetInputText`, 
 
 ---
 
-## RawBody Access
-
-The `ResponseContext` exposes the full raw JSON request body via `context.RawBody`:
-
-```csharp
-public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-    CreateResponse request, ResponseContext context,
-    [EnumeratorCancellation] CancellationToken cancellationToken)
-{
-    // Access the raw JSON request body
-    BinaryData? rawBody = context.RawBody;
-
-    // Parse and read custom extension fields not in the typed model
-    if (rawBody is not null)
-    {
-        using var doc = JsonDocument.Parse(rawBody);
-        if (doc.RootElement.TryGetProperty("x-custom-field", out var customField))
-        {
-            var customValue = customField.GetString();
-            // Use custom value in handler logic
-        }
-    }
-
-    // ... emit events ...
-}
-```
-
-| Property | Type | Description |
-|---|---|---|
-| `context.RawBody` | `BinaryData?` | The full raw JSON request body, including any custom extension fields not present in the typed `CreateResponse` model |
-
-**Notes**:
-- Returns `null` in test contexts where no HTTP request is available (e.g., unit tests using `ResponseContext`).
-- Useful for forward-compatible extension fields, vendor-specific annotations, or custom metadata that the typed model does not capture.
-- Use `JsonDocument.Parse(context.RawBody)` or `context.RawBody.ToObjectFromJson<T>()` to inspect the JSON content.
-
----
-
 ## Cancellation
 
 The `CancellationToken` is triggered when:
 - A client calls `POST /responses/{id}/cancel` (background mode only)
 - A client disconnects the HTTP connection (non-background mode)
 
-**Use `[EnumeratorCancellation]` on the cancellation token parameter** — this is required for `IAsyncEnumerable` to propagate cancellation correctly.
+### TextResponse Handlers
 
-### Checking Cancellation
+`TextResponse` handlers use `return new TextResponse(...)` and pass cancellation through the delegate's `ct` parameter. No `[EnumeratorCancellation]` is needed:
+
+```csharp
+public override IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
+    CreateResponse request, ResponseContext context, CancellationToken cancellationToken)
+{
+    return new TextResponse(context, request,
+        createText: async ct =>
+        {
+            // Pass ct to async operations — it triggers on cancel/disconnect
+            var result = await _httpClient.GetStringAsync(url, ct);
+            return result;
+        });
+}
+```
+
+For streaming, check cancellation between chunks:
+
+```csharp
+return new TextResponse(context, request,
+    createTextStream: async ct =>
+    {
+        await foreach (var token in _model.StreamAsync(prompt, ct))
+        {
+            yield return token;
+        }
+    });
+```
+
+### ResponseEventStream Handlers
+
+**Use `[EnumeratorCancellation]` on the cancellation token parameter** — this is required for `IAsyncEnumerable` to propagate cancellation correctly with `yield return`.
 
 ```csharp
 public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
@@ -632,7 +832,7 @@ public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
 }
 ```
 
-### What the library Does on Cancellation
+### What the Library Does on Cancellation
 
 Let `OperationCanceledException` propagate — the server handles the winddown automatically. The 10-second grace period, output clearing, and terminal event emission are all automatic. You don't need to emit any terminal event on cancellation.
 
@@ -758,26 +958,9 @@ See [Validation (B29, B30)](https://github.com/Azure/azure-sdk-for-net/blob/main
 
 ---
 
-## Signalling Incomplete
+## Response Lifecycle
 
-If your handler cannot fully complete the request (e.g., output was truncated), signal incomplete:
-
-```csharp
-yield return stream.EmitCreated();
-yield return stream.EmitInProgress();
-
-var message = stream.AddOutputItemMessage();
-// ... partial output ...
-yield return message.EmitDone();
-
-yield return stream.EmitIncomplete(ResponseIncompleteDetailsReason.MaxOutputTokens);
-```
-
-The `incomplete` status is **handler-driven** — the library does not automatically detect truncation. Your handler decides when to signal it.
-
----
-
-## Terminal Event Requirement
+### Terminal Event Requirement
 
 Your handler **must** do one of two things before the `IAsyncEnumerable` completes:
 
@@ -809,9 +992,26 @@ throw new BadRequestException("Unsupported model", "model");
 
 See [Terminal Event Guarantee (B32)](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/api-behaviour-contract.md#behavioural-rules-index) for the API-level guarantee.
 
----
+> **Note**: This section applies to `ResponseEventStream` handlers. `TextResponse` handles terminal events automatically.
 
-## Token Usage Reporting
+### Signalling Incomplete
+
+If your handler cannot fully complete the request (e.g., output was truncated), signal incomplete:
+
+```csharp
+yield return stream.EmitCreated();
+yield return stream.EmitInProgress();
+
+var message = stream.AddOutputItemMessage();
+// ... partial output ...
+yield return message.EmitDone();
+
+yield return stream.EmitIncomplete(ResponseIncompleteDetailsReason.MaxOutputTokens);
+```
+
+The `incomplete` status is **handler-driven** — the library does not automatically detect truncation. Your handler decides when to signal it.
+
+### Token Usage Reporting
 
 All three terminal methods accept an optional `ResponseUsage?` parameter for reporting token consumption. If no usage is provided, the `usage` field is omitted from the response.
 
@@ -842,107 +1042,41 @@ See [Token Usage (B33)](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk
 
 ---
 
-## Server Registration
+## RawBody Access
 
-### Tier 1: One-Line Startup (Recommended)
-
-The simplest way to start a Responses server is with the `Azure.AI.AgentServer.Core` package:
+The `ResponseContext` exposes the full raw JSON request body via `context.RawBody`:
 
 ```csharp
-using Azure.AI.AgentServer.Responses;
-
-ResponsesServer.Run<MyHandler>(args);
-```
-
-This creates a Kestrel host with OpenTelemetry, health checks, identity headers, and the Responses protocol endpoints — all in one line.
-
-### Tier 2: Builder Pattern
-
-For more control over the host configuration:
-
-```csharp
-using Azure.AI.AgentServer.Responses;
-
-var builder = AgentHost.CreateBuilder(args);
-builder.AddResponses<MyHandler>();
-var app = builder.Build();
-app.Run();
-```
-
-### Manual Setup (Without Core)
-
-If you don't use the Core package, register services and map endpoints directly:
-
-### Basic Setup
-
-```csharp
-builder.Services.AddResponsesServer();
-builder.Services.AddSingleton<ResponseHandler, MyHandler>();
-```
-
-### With Options
-
-```csharp
-builder.Services.AddResponsesServer(options =>
+public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
+    CreateResponse request, ResponseContext context,
+    [EnumeratorCancellation] CancellationToken cancellationToken)
 {
-    options.DefaultFetchHistoryCount = 50; // Limit history resolution (default: 100)
-});
+    // Access the raw JSON request body
+    BinaryData? rawBody = context.RawBody;
 
-// Configure in-memory provider TTLs separately
-builder.Services.Configure<InMemoryProviderOptions>(opts =>
-{
-    opts.EventStreamTtl = TimeSpan.FromMinutes(5);   // How long SSE replay is available (default: 10 min)
-});
+    // Parse and read custom extension fields not in the typed model
+    if (rawBody is not null)
+    {
+        using var doc = JsonDocument.Parse(rawBody);
+        if (doc.RootElement.TryGetProperty("x-custom-field", out var customField))
+        {
+            var customValue = customField.GetString();
+            // Use custom value in handler logic
+        }
+    }
+
+    // ... emit events ...
+}
 ```
 
-### Route Mapping
-
-```csharp
-app.MapResponsesServer();              // Routes at /responses
-app.MapResponsesServer("/v1");         // Routes at /v1/responses
-```
-
-This maps five endpoints:
-- `POST {prefix}/responses` — Create a response
-- `GET {prefix}/responses/{responseId}` — Retrieve a response (JSON or SSE replay)
-- `POST {prefix}/responses/{responseId}/cancel` — Cancel a response
-- `DELETE {prefix}/responses/{responseId}` — Delete a response
-- `GET {prefix}/responses/{responseId}/input_items` — List input items (paginated)
-
-**Startup validation**: `MapResponsesServer()` throws `InvalidOperationException` if no `ResponseHandler` is registered. This fail-fast behaviour ensures misconfigured servers are caught at startup, not at the first request.
-
-### Custom Response Provider
-
-The server delegates state persistence, event streaming, and cancellation to three pluggable provider abstract classes. The default in-memory implementation works for single-instance deployments.
-
-#### Provider Abstract Class Split
-
-The provider contract is split into **three focused abstract classes**, each with a single responsibility:
-
-| Abstract class | Responsibility | Methods |
+| Property | Type | Description |
 |---|---|---|
-| `ResponsesProvider` | State persistence (CRUD for responses, input items, history) | `CreateResponseAsync`, `GetResponseAsync`, `UpdateResponseAsync`, `DeleteResponseAsync`, `GetInputItemsAsync`, `GetItemsAsync`, `GetHistoryItemIdsAsync` |
-| `ResponsesCancellationSignalProvider` | Cancellation signal coordination | `CancelResponseAsync`, `GetResponseCancellationTokenAsync` |
-| `ResponsesStreamProvider` | SSE event streaming (publish/subscribe) | `CreateEventPublisherAsync`, `SubscribeToEventsAsync` |
+| `context.RawBody` | `BinaryData?` | The full raw JSON request body, including any custom extension fields not present in the typed `CreateResponse` model |
 
-The default in-memory provider extends `ResponsesProvider` and provides companion adapters for cancellation and streaming. You can override **any subset** — the library falls back to the in-memory implementation for unregistered types.
-
-```csharp
-// Override only state persistence (e.g., use a database)
-services.AddSingleton<ResponsesProvider, MyDatabaseProvider>();
-
-// Override only cancellation (e.g., use Redis pub/sub)
-services.AddSingleton<ResponsesCancellationSignalProvider, MyRedisSignalProvider>();
-
-// Override state with companion adapters for cancellation and streaming
-services.AddSingleton<ResponsesProvider, MyProvider>();
-services.AddSingleton<ResponsesCancellationSignalProvider>(sp =>
-    sp.GetRequiredService<MyProvider>().AsCancellationProvider());
-services.AddSingleton<ResponsesStreamProvider>(sp =>
-    sp.GetRequiredService<MyProvider>().AsStreamProvider());
-```
-
-For multi-instance or durable scenarios, see [Library Behavioural Specification — Persistence Contract](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/library-behaviour-spec.md#persistence-contract) for the abstract provider contract, and [.NET Design — Provider Contract](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/design/provider-contract.md) for implementation details.
+**Notes**:
+- Returns `null` in test contexts where no HTTP request is available (e.g., unit tests using `ResponseContext`).
+- Useful for forward-compatible extension fields, vendor-specific annotations, or custom metadata that the typed model does not capture.
+- Use `JsonDocument.Parse(context.RawBody)` or `context.RawBody.ToObjectFromJson<T>()` to inspect the JSON content.
 
 ---
 
@@ -1172,7 +1306,7 @@ See [SSE Keep-Alive (B28)](https://github.com/Azure/azure-sdk-for-net/blob/main/
 
 ### 1. Always Emit Created First, Terminal Last
 
-Every handler must yield `stream.EmitCreated()` followed by `stream.EmitInProgress()` as its first two events, and exactly one terminal event (`EmitCompleted`, `EmitFailed`, or `EmitIncomplete`) as its last. The library validates this ordering.
+Every `ResponseEventStream` handler must yield `stream.EmitCreated()` followed by `stream.EmitInProgress()` as its first two events, and exactly one terminal event (`EmitCompleted`, `EmitFailed`, or `EmitIncomplete`) as its last. The library validates this ordering. `TextResponse` handles this automatically.
 
 ### 2. Use Small, Frequent Deltas
 
@@ -1212,7 +1346,7 @@ Every builder follows `EmitAdded()` → work → `EmitDone()`. If you forget `Em
 
 ### 6. Use `await Task.CompletedTask` for Sync Handlers
 
-If your handler does no async work, the compiler requires at least one `await`. Use `await Task.CompletedTask` at the top:
+If your `ResponseEventStream` handler does no async work, the compiler requires at least one `await`. Use `await Task.CompletedTask` at the top:
 
 ```csharp
 public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(...)
@@ -1221,6 +1355,8 @@ public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(...)
     // ... synchronous work with yield return ...
 }
 ```
+
+> **Tip**: `TextResponse` handlers that use `return new TextResponse(...)` don't need `await Task.CompletedTask` or `[EnumeratorCancellation]` — they use `return` instead of `yield return`.
 
 ### 7. Register as Singleton for Stateless, Scoped for Stateful
 
@@ -1242,6 +1378,8 @@ Never branch on `request.Stream` or `request.Background` in your handler. The li
 
 ### Forgetting `[EnumeratorCancellation]`
 
+When using `ResponseEventStream` with `yield return`, you must annotate the cancellation token:
+
 ```csharp
 // ❌ Cancellation won't propagate correctly
 public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
@@ -1253,6 +1391,8 @@ public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
     CreateResponse request, ResponseContext context,
     [EnumeratorCancellation] CancellationToken cancellationToken)
 ```
+
+> **Note**: `TextResponse` handlers use `return new TextResponse(...)` and don't need `[EnumeratorCancellation]` since they don't use `yield return`.
 
 ### Emitting Events After a Terminal Event
 

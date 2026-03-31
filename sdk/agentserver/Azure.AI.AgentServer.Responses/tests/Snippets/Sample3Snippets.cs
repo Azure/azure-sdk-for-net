@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System.Runtime.CompilerServices;
-using Azure.AI.AgentServer.Core;
 using Azure.AI.AgentServer.Responses;
 using Azure.AI.AgentServer.Responses.Models;
 using NUnit.Framework;
@@ -10,88 +9,69 @@ using NUnit.Framework;
 namespace Azure.AI.AgentServer.Responses.Tests.Snippets
 {
     /// <summary>
-    /// Code snippets backing Sample3_ConversationHistory.md. Compiled to prevent rot.
+    /// Code snippets backing Sample3_FullControlResponseStream.md. Compiled to prevent rot.
     /// </summary>
     [TestFixture]
     [Explicit("Snippets are compiled to prevent rot but require a running server to execute.")]
     public class Sample3Snippets
     {
         [Test]
-        public void BuilderWithOptions()
+        public void StartServer()
         {
-            #region Snippet:Responses_Sample3_BuilderConfig
+            #region Snippet:Responses_Sample3_StartServer
 
-            var builder = AgentHost.CreateBuilder();
-            builder.AddResponses<StudyTutorHandler>(options =>
-            {
-                options.DefaultFetchHistoryCount = 20;
-            });
-            var app = builder.Build();
-            app.Run();
+            ResponsesServer.Run<GreetingHandler>();
 
             #endregion
         }
 
         [Test]
-        public void Implement_StudyTutorHandler()
+        public void Implement_GreetingHandler()
         {
-            var handler = new StudyTutorHandler();
+            var handler = new GreetingHandler();
             Assert.That(handler, Is.Not.Null);
         }
 
-        #region Snippet:Responses_Sample3_StudyTutorHandler
+        #region Snippet:Responses_Sample3_GreetingHandler
 
-        public class StudyTutorHandler : ResponseHandler
+        public class GreetingHandler : ResponseHandler
         {
             public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
                 CreateResponse request,
                 ResponseContext context,
                 [EnumeratorCancellation] CancellationToken cancellationToken)
             {
+                await Task.CompletedTask;
                 var stream = new ResponseEventStream(context, request);
 
-                yield return stream.EmitCreated();
-                yield return stream.EmitInProgress();
+                // ── Configure Response properties BEFORE EmitCreated() ──
+                // Any property set here will appear in the response.created event
+                // and every subsequent event that carries the Response snapshot.
+                stream.Response.Temperature = 0.7;
+                stream.Response.MaxOutputTokens = 1024;
 
-                // Resolve conversation history from previous responses.
-                // Returns empty list if no previous_response_id is set.
-                var history = await context.GetHistoryAsync(cancellationToken);
+                // Emit the opening lifecycle events.
+                yield return stream.EmitCreated();   // response.created
+                yield return stream.EmitInProgress(); // response.in_progress
 
-                var currentInput = request.GetInputText();
-                var turnNumber = history.OfType<OutputItemMessage>().Count() + 1;
-
-                // In a real agent, pass the history + current question to a model.
-                string reply;
-                if (history.Count == 0)
-                {
-                    reply = $"Welcome! I'm your study tutor. You asked: \"{currentInput}\". " +
-                            "Let me help you understand that topic.";
-                }
-                else
-                {
-                    var lastMessage = history.OfType<OutputItemMessage>().LastOrDefault();
-                    var lastText = lastMessage?.Content
-                        .OfType<MessageContentOutputTextContent>()
-                        .FirstOrDefault()?.Text ?? "(none)";
-
-                    reply = $"[Turn {turnNumber}] Building on our previous discussion " +
-                            $"(last answer: \"{lastText[..Math.Min(50, lastText.Length)]}...\"), " +
-                            $"you asked: \"{currentInput}\".";
-                }
-
+                // Add a message output item.
                 var message = stream.AddOutputItemMessage();
-                yield return message.EmitAdded();
+                yield return message.EmitAdded();    // response.output_item.added
 
+                // Add text content to the message.
                 var text = message.AddTextContent();
-                yield return text.EmitAdded();
+                yield return text.EmitAdded();       // response.content_part.added
 
-                yield return text.EmitDelta(reply);
-                yield return text.EmitDone(reply);
+                // Emit the text body — delta first, then the final "done" with full text.
+                var input = request.GetInputText();
+                var reply = $"Hello! You said: \"{input}\"";
+                yield return text.EmitDelta(reply);  // response.output_text.delta
+                yield return text.EmitDone(reply);   // response.output_text.done
 
-                yield return message.EmitContentDone(text);
-                yield return message.EmitDone();
-
-                yield return stream.EmitCompleted();
+                // Close the content, message, and response.
+                yield return message.EmitContentDone(text);  // response.content_part.done
+                yield return message.EmitDone();              // response.output_item.done
+                yield return stream.EmitCompleted();          // response.completed
             }
         }
 

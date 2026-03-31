@@ -718,6 +718,12 @@ namespace Azure.AI.AgentServer.Responses
         public virtual Azure.AI.AgentServer.Responses.Models.ResponseTextDeltaEvent EmitDelta(string text) { throw null; }
         public virtual Azure.AI.AgentServer.Responses.Models.ResponseTextDoneEvent EmitDone(string finalText) { throw null; }
     }
+    public partial class TextResponse : System.Collections.Generic.IAsyncEnumerable<Azure.AI.AgentServer.Responses.Models.ResponseStreamEvent>
+    {
+        public TextResponse(Azure.AI.AgentServer.Responses.ResponseContext context, Azure.AI.AgentServer.Responses.Models.CreateResponse request, System.Func<System.Threading.CancellationToken, System.Collections.Generic.IAsyncEnumerable<string>> createTextStream, System.Action<Azure.AI.AgentServer.Responses.Models.ResponseObject>? configure = null) { }
+        public TextResponse(Azure.AI.AgentServer.Responses.ResponseContext context, Azure.AI.AgentServer.Responses.Models.CreateResponse request, System.Func<System.Threading.CancellationToken, System.Threading.Tasks.Task<string>> createText, System.Action<Azure.AI.AgentServer.Responses.Models.ResponseObject>? configure = null) { }
+        public System.Collections.Generic.IAsyncEnumerator<Azure.AI.AgentServer.Responses.Models.ResponseStreamEvent> GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
     public sealed partial class ValidationError
     {
         public ValidationError(string path, string message) { }

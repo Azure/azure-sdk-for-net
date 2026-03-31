@@ -1,4 +1,4 @@
-# Sample 7: Tier 3 — Self-Hosted in an Existing ASP.NET App
+# Sample 9: Tier 3 — Self-Hosted in an Existing ASP.NET App
 
 This sample demonstrates the **Tier 3** developer experience for the Responses protocol: you own the HTTP host and use `AddResponsesServer()` + `MapResponsesServer()` to add Responses API endpoints alongside your own routes. This is useful when you have an existing ASP.NET Core application and want to add agent endpoints without adopting the Core framework.
 
@@ -10,7 +10,7 @@ dotnet add package Azure.AI.AgentServer.Responses --prerelease
 
 ## Add the Responses protocol to your existing app
 
-```C# Snippet:Responses_Sample7_SelfHost
+```C# Snippet:Responses_Sample9_SelfHost
 var builder = WebApplication.CreateBuilder();
 
 // Your existing services.
@@ -34,38 +34,24 @@ app.Run();
 
 ## Implement the handler
 
-```C# Snippet:Responses_Sample7_KnowledgeHandler
+```C# Snippet:Responses_Sample9_KnowledgeHandler
 public class KnowledgeHandler : ResponseHandler
 {
     private readonly IKnowledgeBase _kb;
 
     public KnowledgeHandler(IKnowledgeBase kb) => _kb = kb;
 
-    public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
+    public override IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
         CreateResponse request,
         ResponseContext context,
-        [EnumeratorCancellation] CancellationToken cancellationToken)
+        CancellationToken cancellationToken)
     {
-        var stream = new ResponseEventStream(context, request);
-
-        yield return stream.EmitCreated();
-        yield return stream.EmitInProgress();
-
-        var message = stream.AddOutputItemMessage();
-        yield return message.EmitAdded();
-
-        var text = message.AddTextContent();
-        yield return text.EmitAdded();
-
-        var question = request.GetInputText();
-        var answer = await _kb.SearchAsync(question, cancellationToken);
-
-        yield return text.EmitDelta(answer);
-        yield return text.EmitDone(answer);
-
-        yield return message.EmitContentDone(text);
-        yield return message.EmitDone();
-        yield return stream.EmitCompleted();
+        return new TextResponse(context, request,
+            createText: async ct =>
+            {
+                var question = request.GetInputText();
+                return await _kb.SearchAsync(question, ct);
+            });
     }
 }
 ```
@@ -92,5 +78,5 @@ Use `WebApplication.CreateBuilder()` + `AddResponsesServer()` + `MapResponsesSer
 - Need **full control** over middleware, DI, port binding, and health probes
 - Want to use the Responses SDK without the opinionated Core framework
 
-For the simplest single-protocol experience, see [Tier 1 — Customize the One-Liner](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/samples/Sample5_Tier1HostingCustomize.md).
-For composition with the Core builder, see [Tier 2 — Builder](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/samples/Sample6_Tier2HostingBuilder.md).
+For the simplest single-protocol experience, see [Tier 1 — Customize the One-Liner](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/samples/Sample7_Tier1HostingCustomize.md).
+For composition with the Core builder, see [Tier 2 — Builder](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/samples/Sample8_Tier2HostingBuilder.md).

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Runtime.CompilerServices;
+using System.Text.Json;
 using Azure.AI.AgentServer.Responses;
 using Azure.AI.AgentServer.Responses.Models;
 using NUnit.Framework;
@@ -9,7 +10,7 @@ using NUnit.Framework;
 namespace Azure.AI.AgentServer.Responses.Tests.Snippets
 {
     /// <summary>
-    /// Code snippets backing Sample4_MultiOutput.md. Compiled to prevent rot.
+    /// Code snippets backing Sample4_FunctionCalling.md. Compiled to prevent rot.
     /// </summary>
     [TestFixture]
     [Explicit("Snippets are compiled to prevent rot but require a running server to execute.")]
@@ -20,21 +21,21 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
         {
             #region Snippet:Responses_Sample4_StartServer
 
-            ResponsesServer.Run<MathSolverHandler>();
+            ResponsesServer.Run<WeatherHandler>();
 
             #endregion
         }
 
         [Test]
-        public void Implement_MathSolverHandler()
+        public void Implement_WeatherHandler()
         {
-            var handler = new MathSolverHandler();
+            var handler = new WeatherHandler();
             Assert.That(handler, Is.Not.Null);
         }
 
-        #region Snippet:Responses_Sample4_MathSolverHandler
+        #region Snippet:Responses_Sample4_WeatherHandler
 
-        public class MathSolverHandler : ResponseHandler
+        public class WeatherHandler : ResponseHandler
         {
             public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
                 CreateResponse request,
@@ -43,45 +44,55 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
             {
                 await Task.CompletedTask;
                 var stream = new ResponseEventStream(context, request);
-                var question = request.GetInputText();
 
-                yield return stream.EmitCreated();
-                yield return stream.EmitInProgress();
+                // Check if the input contains a function call output (turn 2)
+                var inputItems = request.GetInputExpanded();
+                var toolOutput = inputItems.OfType<FunctionCallOutputItemParam>().FirstOrDefault();
 
-                // Output item 0: Reasoning — show the thought process.
-                var reasoning = stream.AddOutputItemReasoningItem();
-                yield return reasoning.EmitAdded();
+                if (toolOutput is not null)
+                {
+                    // Turn 2: function output received — return the weather as a text message
+                    var weatherJson = toolOutput.Output is not null
+                        ? JsonSerializer.Deserialize<string>(toolOutput.Output) ?? "{}"
+                        : "{}";
 
-                var summary = reasoning.AddSummaryPart();
-                yield return summary.EmitAdded();
+                    yield return stream.EmitCreated();
+                    yield return stream.EmitInProgress();
 
-                // In a real agent, this would be the model's chain-of-thought.
-                var thought = $"The user asked: \"{question}\". " +
-                              "I need to identify the mathematical operation, " +
-                              "compute the result, and explain the steps.";
-                yield return summary.EmitTextDelta(thought);
-                yield return summary.EmitTextDone(thought);
-                yield return summary.EmitDone();
-                reasoning.EmitSummaryPartDone(summary);
+                    var message = stream.AddOutputItemMessage();
+                    yield return message.EmitAdded();
 
-                yield return reasoning.EmitDone();
+                    var text = message.AddTextContent();
+                    yield return text.EmitAdded();
 
-                // Output item 1: Message — the final answer.
-                var message = stream.AddOutputItemMessage();
-                yield return message.EmitAdded();
+                    var reply = $"The weather is: {weatherJson}";
+                    yield return text.EmitDelta(reply);
+                    yield return text.EmitDone(reply);
 
-                var text = message.AddTextContent();
-                yield return text.EmitAdded();
+                    yield return message.EmitContentDone(text);
+                    yield return message.EmitDone();
 
-                var answer = "The answer is 42. Here's how: " +
-                             "6 × 7 = 42. The multiplication of 6 and 7 gives 42.";
-                yield return text.EmitDelta(answer);
-                yield return text.EmitDone(answer);
+                    yield return stream.EmitCompleted();
+                }
+                else
+                {
+                    // Turn 1: emit a function call for "get_weather"
+                    yield return stream.EmitCreated();
+                    yield return stream.EmitInProgress();
 
-                yield return message.EmitContentDone(text);
-                yield return message.EmitDone();
+                    var funcCall = stream.AddOutputItemFunctionCall(
+                        "get_weather", "call_weather_1");
+                    yield return funcCall.EmitAdded();
 
-                yield return stream.EmitCompleted();
+                    var arguments = JsonSerializer.Serialize(
+                        new { location = "Seattle", unit = "fahrenheit" });
+                    yield return funcCall.EmitArgumentsDelta(arguments);
+                    yield return funcCall.EmitArgumentsDone(arguments);
+
+                    yield return funcCall.EmitDone();
+
+                    yield return stream.EmitCompleted();
+                }
             }
         }
 

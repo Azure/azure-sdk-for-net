@@ -1,47 +1,100 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Runtime.CompilerServices;
 using Azure.AI.AgentServer.Responses;
 using Azure.AI.AgentServer.Responses.Models;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
 
 namespace Azure.AI.AgentServer.Responses.Tests.Snippets
 {
     /// <summary>
-    /// Code snippets backing Sample7_Tier3SelfHosting.md. Compiled to prevent rot.
+    /// Code snippets backing Sample7_Tier1HostingCustomize.md. Compiled to prevent rot.
     /// </summary>
     [TestFixture]
     [Explicit("Snippets are compiled to prevent rot but require a running server to execute.")]
     public class Sample7Snippets
     {
         [Test]
-        public void SelfHost()
+        public void CustomServices()
         {
-            #region Snippet:Responses_Sample7_SelfHost
+            #region Snippet:Responses_Sample7_CustomServices
 
-            var builder = WebApplication.CreateBuilder();
+            ResponsesServer.Run<KnowledgeHandler>(configure: builder =>
+            {
+                builder.Services.AddSingleton<IKnowledgeBase, WikiKnowledgeBase>();
+            });
 
-            // Your existing services.
-            builder.Services.AddSingleton<IKnowledgeBase, WikiKnowledgeBase>();
+            #endregion
+        }
 
-            // Register the Responses SDK services and your handler.
-            builder.Services.AddResponsesServer();
-            builder.Services.AddScoped<ResponseHandler, KnowledgeHandler>();
+        [Test]
+        public void FactoryDelegate()
+        {
+            #region Snippet:Responses_Sample7_FactoryDelegate
 
-            var app = builder.Build();
+            ResponsesServer.Run(
+                factory: sp =>
+                {
+                    var kb = sp.GetRequiredService<IKnowledgeBase>();
+                    return new KnowledgeHandler(kb);
+                },
+                configure: builder =>
+                {
+                    builder.Services.AddSingleton<IKnowledgeBase, WikiKnowledgeBase>();
+                });
 
-            // Your existing endpoints.
-            app.MapGet("/", () => "My existing app");
-            app.MapGet("/healthy", () => Results.Ok());
+            #endregion
+        }
 
-            // Map the Responses protocol endpoints.
-            app.MapResponsesServer();
+        [Test]
+        public void ConfigAndTracing()
+        {
+            #region Snippet:Responses_Sample7_ConfigAndTracing
 
-            app.Run();
+            ResponsesServer.Run<KnowledgeHandler>(configure: builder =>
+            {
+                // Register custom services.
+                builder.Services.AddSingleton<IKnowledgeBase, WikiKnowledgeBase>();
+
+                // Read typed configuration from appsettings.json or environment variables.
+                builder.Services.Configure<KnowledgeBaseOptions>(
+                    builder.Configuration.GetSection("KnowledgeBase"));
+
+                // Add a custom OpenTelemetry tracing source.
+                builder.ConfigureTracing(tracing =>
+                {
+                    tracing.AddSource("MyAgent.BusinessLogic");
+                });
+
+                // Set a custom shutdown timeout (default is 30s).
+                builder.ConfigureShutdown(TimeSpan.FromSeconds(10));
+            });
+
+            #endregion
+        }
+
+        [Test]
+        public void WebAppAccess()
+        {
+            #region Snippet:Responses_Sample7_WebAppAccess
+
+            ResponsesServer.Run<KnowledgeHandler>(configure: builder =>
+            {
+                builder.Services.AddSingleton<IKnowledgeBase, WikiKnowledgeBase>();
+
+                // Add CORS support at the ASP.NET Core level.
+                builder.WebApplicationBuilder.Services.AddCors(cors =>
+                {
+                    cors.AddDefaultPolicy(policy =>
+                    {
+                        policy.AllowAnyOrigin()
+                              .AllowAnyMethod()
+                              .AllowAnyHeader();
+                    });
+                });
+            });
 
             #endregion
         }
@@ -61,31 +114,17 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
 
             public KnowledgeHandler(IKnowledgeBase kb) => _kb = kb;
 
-            public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
+            public override IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
                 CreateResponse request,
                 ResponseContext context,
-                [EnumeratorCancellation] CancellationToken cancellationToken)
+                CancellationToken cancellationToken)
             {
-                var stream = new ResponseEventStream(context, request);
-
-                yield return stream.EmitCreated();
-                yield return stream.EmitInProgress();
-
-                var message = stream.AddOutputItemMessage();
-                yield return message.EmitAdded();
-
-                var text = message.AddTextContent();
-                yield return text.EmitAdded();
-
-                var question = request.GetInputText();
-                var answer = await _kb.SearchAsync(question, cancellationToken);
-
-                yield return text.EmitDelta(answer);
-                yield return text.EmitDone(answer);
-
-                yield return message.EmitContentDone(text);
-                yield return message.EmitDone();
-                yield return stream.EmitCompleted();
+                return new TextResponse(context, request,
+                    createText: async ct =>
+                    {
+                        var question = request.GetInputText();
+                        return await _kb.SearchAsync(question, ct);
+                    });
             }
         }
 
@@ -102,6 +141,12 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
         {
             public Task<string> SearchAsync(string query, CancellationToken cancellationToken) =>
                 Task.FromResult($"Here is what I found about \"{query}\": [mock knowledge base result]");
+        }
+
+        public class KnowledgeBaseOptions
+        {
+            public string? IndexName { get; set; }
+            public int MaxResults { get; set; } = 5;
         }
     }
 }

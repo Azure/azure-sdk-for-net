@@ -30,26 +30,17 @@ Where `EchoHandler` implements the Responses protocol:
 ```C# Snippet:Responses_ReadMe_EchoHandler
 public class EchoHandler : ResponseHandler
 {
-    public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
+    public override IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
         CreateResponse request,
         ResponseContext context,
-        [EnumeratorCancellation] CancellationToken cancellationToken)
+        CancellationToken cancellationToken)
     {
-        var stream = new ResponseEventStream(context, request);
-        yield return stream.EmitCreated();
-        yield return stream.EmitInProgress();
-
-        var message = stream.AddOutputItemMessage();
-        yield return message.EmitAdded();
-
-        var text = message.AddTextContent();
-        yield return text.EmitAdded();
-        yield return text.EmitDelta("Hello, world!");
-        yield return text.EmitDone("Hello, world!");
-
-        yield return message.EmitContentDone(text);
-        yield return message.EmitDone();
-        yield return stream.EmitCompleted();
+        return new TextResponse(context, request,
+            createText: ct =>
+            {
+                var input = request.GetInputText();
+                return Task.FromResult($"Echo: {input}");
+            });
     }
 }
 ```

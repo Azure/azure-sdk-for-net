@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Runtime.CompilerServices;
 using Azure.AI.AgentServer.Responses;
 using Azure.AI.AgentServer.Responses.Models;
 using NUnit.Framework;
@@ -20,51 +19,33 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
         {
             #region Snippet:Responses_Sample1_StartServer
 
-            ResponsesServer.Run<QnAHandler>();
+            ResponsesServer.Run<EchoHandler>();
 
             #endregion
         }
 
         [Test]
-        public void Implement_QnAHandler()
+        public void Implement_EchoHandler()
         {
-            var handler = new QnAHandler();
+            var handler = new EchoHandler();
             Assert.That(handler, Is.Not.Null);
         }
 
-        #region Snippet:Responses_Sample1_QnAHandler
+        #region Snippet:Responses_Sample1_EchoHandler
 
-        public class QnAHandler : ResponseHandler
+        public class EchoHandler : ResponseHandler
         {
-            public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
+            public override IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
                 CreateResponse request,
                 ResponseContext context,
-                [EnumeratorCancellation] CancellationToken cancellationToken)
+                CancellationToken cancellationToken)
             {
-                await Task.CompletedTask;
-                var stream = new ResponseEventStream(context, request);
-
-                yield return stream.EmitCreated();
-                yield return stream.EmitInProgress();
-
-                var message = stream.AddOutputItemMessage();
-                yield return message.EmitAdded();
-
-                var text = message.AddTextContent();
-                yield return text.EmitAdded();
-
-                // In a real agent, call your model or knowledge base here.
-                var question = request.GetInputText();
-                var answer = $"You asked: \"{question}\". " +
-                             "This is where your agent logic produces an answer.";
-
-                yield return text.EmitDelta(answer);
-                yield return text.EmitDone(answer);
-
-                yield return message.EmitContentDone(text);
-                yield return message.EmitDone();
-
-                yield return stream.EmitCompleted();
+                return new TextResponse(context, request,
+                    createText: ct =>
+                    {
+                        var input = request.GetInputText();
+                        return Task.FromResult($"Echo: {input}");
+                    });
             }
         }
 

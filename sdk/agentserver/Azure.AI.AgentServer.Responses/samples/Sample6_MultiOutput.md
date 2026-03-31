@@ -1,4 +1,4 @@
-# Sample 4: Multi-Output — Math Problem Solver with Reasoning
+# Sample 6: Multi-Output — Math Problem Solver with Reasoning
 
 This sample builds a math problem solver that shows its work. The agent emits a **reasoning** item (the thought process) followed by a **message** item (the final answer). This demonstrates streaming multiple output types in a single response.
 
@@ -10,7 +10,7 @@ dotnet add package Azure.AI.AgentServer.Responses --prerelease
 
 ## Implement the handler
 
-```C# Snippet:Responses_Sample4_MathSolverHandler
+```C# Snippet:Responses_Sample6_MathSolverHandler
 public class MathSolverHandler : ResponseHandler
 {
     public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
@@ -65,7 +65,7 @@ public class MathSolverHandler : ResponseHandler
 
 ## Start the server
 
-```C# Snippet:Responses_Sample4_StartServer
+```C# Snippet:Responses_Sample6_StartServer
 ResponsesServer.Run<MathSolverHandler>();
 ```
 

@@ -1,4 +1,4 @@
-# Sample 2: Function Calling — Two-Turn Weather Handler
+# Sample 4: Function Calling — Two-Turn Weather Handler
 
 This sample shows the two-turn function calling pattern where the server emits a function call on the first turn, receives the function output on the second turn, and returns a final text message.
 
@@ -10,7 +10,7 @@ dotnet add package Azure.AI.AgentServer.Responses --prerelease
 
 ## Implement the handler
 
-```C# Snippet:Responses_Sample2_WeatherHandler
+```C# Snippet:Responses_Sample4_WeatherHandler
 public class WeatherHandler : ResponseHandler
 {
     public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
@@ -75,7 +75,7 @@ public class WeatherHandler : ResponseHandler
 
 ## Start the server
 
-```C# Snippet:Responses_Sample2_StartServer
+```C# Snippet:Responses_Sample4_StartServer
 ResponsesServer.Run<WeatherHandler>();
 ```
 

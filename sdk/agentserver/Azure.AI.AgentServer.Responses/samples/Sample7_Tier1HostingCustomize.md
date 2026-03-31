@@ -1,4 +1,4 @@
-# Sample 5: Tier 1 — Customize the One-Liner
+# Sample 7: Tier 1 — Customize the One-Liner
 
 This sample shows the **customization surface** of `ResponsesServer.Run<THandler>()`. The one-line entry point accepts an optional `configure` callback that gives you access to the underlying `AgentHostBuilder`, so you can register services, read configuration, and add custom tracing — all while keeping the Tier 1 zero-config experience.
 
@@ -12,7 +12,7 @@ dotnet add package Azure.AI.AgentServer.Responses --prerelease
 
 Inject your own services into the handler via the `configure` callback:
 
-```C# Snippet:Responses_Sample5_CustomServices
+```C# Snippet:Responses_Sample7_CustomServices
 ResponsesServer.Run<KnowledgeHandler>(configure: builder =>
 {
     builder.Services.AddSingleton<IKnowledgeBase, WikiKnowledgeBase>();
@@ -21,39 +21,24 @@ ResponsesServer.Run<KnowledgeHandler>(configure: builder =>
 
 The handler receives services through constructor injection:
 
-```C# Snippet:Responses_Sample5_KnowledgeHandler
+```C# Snippet:Responses_Sample7_KnowledgeHandler
 public class KnowledgeHandler : ResponseHandler
 {
     private readonly IKnowledgeBase _kb;
 
     public KnowledgeHandler(IKnowledgeBase kb) => _kb = kb;
 
-    public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
+    public override IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
         CreateResponse request,
         ResponseContext context,
-        [EnumeratorCancellation] CancellationToken cancellationToken)
+        CancellationToken cancellationToken)
     {
-        var stream = new ResponseEventStream(context, request);
-
-        yield return stream.EmitCreated();
-        yield return stream.EmitInProgress();
-
-        var message = stream.AddOutputItemMessage();
-        yield return message.EmitAdded();
-
-        var text = message.AddTextContent();
-        yield return text.EmitAdded();
-
-        // Use the injected service to produce the answer.
-        var question = request.GetInputText();
-        var answer = await _kb.SearchAsync(question, cancellationToken);
-
-        yield return text.EmitDelta(answer);
-        yield return text.EmitDone(answer);
-
-        yield return message.EmitContentDone(text);
-        yield return message.EmitDone();
-        yield return stream.EmitCompleted();
+        return new TextResponse(context, request,
+            createText: async ct =>
+            {
+                var question = request.GetInputText();
+                return await _kb.SearchAsync(question, ct);
+            });
     }
 }
 ```
@@ -64,7 +49,7 @@ When your handler needs constructor parameters that cannot be resolved through D
 use the `Func<IServiceProvider, ResponseHandler>` overload for full control over
 handler construction:
 
-```C# Snippet:Responses_Sample5_FactoryDelegate
+```C# Snippet:Responses_Sample7_FactoryDelegate
 ResponsesServer.Run(
     factory: sp =>
     {
@@ -81,7 +66,7 @@ ResponsesServer.Run(
 
 Use the builder to read configuration, set a shutdown timeout, and add a custom tracing source:
 
-```C# Snippet:Responses_Sample5_ConfigAndTracing
+```C# Snippet:Responses_Sample7_ConfigAndTracing
 ResponsesServer.Run<KnowledgeHandler>(configure: builder =>
 {
     // Register custom services.
@@ -107,7 +92,7 @@ ResponsesServer.Run<KnowledgeHandler>(configure: builder =>
 For advanced scenarios, use `builder.WebApplicationBuilder` to configure middleware,
 authentication, or CORS at the ASP.NET Core level:
 
-```C# Snippet:Responses_Sample5_WebAppAccess
+```C# Snippet:Responses_Sample7_WebAppAccess
 ResponsesServer.Run<KnowledgeHandler>(configure: builder =>
 {
     builder.Services.AddSingleton<IKnowledgeBase, WikiKnowledgeBase>();
@@ -146,4 +131,4 @@ Use `ResponsesServer.Run(factory: ...)` when you need:
 - **Full control** over handler construction with non-DI parameters
 - **Runtime decisions** about which handler implementation to create
 
-For more control, see [Tier 2 — Builder](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/samples/Sample6_Tier2HostingBuilder.md) and [Tier 3 — Self-Hosted](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/samples/Sample7_Tier3SelfHosting.md).
+For more control, see [Tier 2 — Builder](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/samples/Sample8_Tier2HostingBuilder.md) and [Tier 3 — Self-Hosted](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/samples/Sample9_Tier3SelfHosting.md).
