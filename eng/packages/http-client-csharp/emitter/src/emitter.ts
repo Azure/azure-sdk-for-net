@@ -23,7 +23,7 @@ export async function $onEmit(context: EmitContext<AzureEmitterOptions>) {
 }
 
 /**
- * Emits Azure-flavored code model with optional customization callback.
+ * Emits Azure code model with optional customization callback.
  *
  * This function applies Azure-specific defaults (generator name, license, decorators, etc.),
  * generates the metadata.json file, and delegates to the base emitter's `emitCodeModel`.
