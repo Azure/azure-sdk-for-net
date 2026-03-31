@@ -34,7 +34,6 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
     /// <summary> The complex type of the extended location. </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    [Obsolete("This type is obsolete and will be removed in a future release. Please use Azure.ResourceManager.Resources.Models.ExtendedLocation instead.", false)]
     public partial class ExtendedLocation : IUtf8JsonSerializable, IJsonModel<ExtendedLocation>
     {
         /// <summary>

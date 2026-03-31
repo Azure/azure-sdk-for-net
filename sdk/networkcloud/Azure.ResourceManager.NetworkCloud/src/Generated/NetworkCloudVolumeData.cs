@@ -80,11 +80,11 @@ namespace Azure.ResourceManager.NetworkCloud
         }
 
         /// <summary> The allocated size of the volume in Mebibytes. </summary>
-        public long? AllocatedSizeInMiB
+        public long? AllocatedInSizeMiB
         {
             get
             {
-                return Properties is null ? default : Properties.AllocatedSizeInMiB;
+                return Properties is null ? default : Properties.AllocatedInSizeMiB;
             }
         }
 
