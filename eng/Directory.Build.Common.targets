@@ -16,6 +16,8 @@
   <Target Name="ValidateRunApiCompat" BeforeTargets="Build" Condition="'$(ValidateRunApiCompat)' == 'true'">
     <Error Condition="'$(RunApiCompat)' == 'false' and '$(IncludeBuildOutput)' != 'false'"
            Text="Api Compat cannot be disabled."/>
+    <Error Condition="'$(RunApiCompatForSrc)' == 'false' and '$(ApiCompatVersion)' != '' and '$(IncludeBuildOutput)' != 'false'"
+           Text="RunApiCompatForSrc cannot be disabled when ApiCompatVersion is set. See https://github.com/Azure/azure-sdk-for-net/issues/55311"/>
   </Target>
 
   <PropertyGroup>
