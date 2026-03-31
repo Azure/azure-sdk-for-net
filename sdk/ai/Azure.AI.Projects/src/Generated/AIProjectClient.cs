@@ -6,6 +6,8 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Threading;
+using Azure.AI.Projects.Evaluation;
+using Azure.AI.Projects.Memory;
 
 namespace Azure.AI.Projects
 {

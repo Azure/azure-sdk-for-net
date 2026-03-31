@@ -4,8 +4,9 @@
 
 using System.ClientModel;
 using System.ClientModel.Primitives;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Memory
 {
     /// <summary></summary>
     public partial class AIProjectMemoryStoresOperations

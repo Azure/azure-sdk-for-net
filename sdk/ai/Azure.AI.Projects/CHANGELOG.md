@@ -16,6 +16,7 @@
 - `Evaluators` client was renamed to `ProjectEvaluators`.
 - `DetailEnum` was renamed to `InternalImageDetailLevel` and made internal.
 - `InputImageContentParamAutoParam` was renamed to `InternalInputImageContentParamAutoParam` and made internal.
+- `Azure.AI.Projects` evaluations and memory operations were moved to `Azure.AI.Projects.Evaluation` and `Azure.AI.Projects.Memory` namespaces respectively.
 
 ### Bugs Fixed
 

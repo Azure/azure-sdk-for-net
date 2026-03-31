@@ -6,6 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using Azure.AI.Projects.Evaluation;
+using Azure.AI.Projects.Memory;
 using Azure.Core;
 
 namespace Azure.AI.Projects
@@ -431,7 +433,7 @@ namespace Azure.AI.Projects
         /// <param name="properties"> Red team's properties. Unlike tags, properties are add-only. Once added, a property cannot be removed. </param>
         /// <param name="status"> Status of the red-team. It is set by service and is read-only. </param>
         /// <param name="target"> Target configuration for the red-team run. </param>
-        /// <returns> A new <see cref="Projects.RedTeam"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Evaluation.RedTeam"/> instance for mocking. </returns>
         public static RedTeam RedTeam(string name = default, string displayName = default, int? numTurns = default, IEnumerable<AttackStrategy> attackStrategies = default, bool? simulationOnly = default, IEnumerable<RiskCategory> riskCategories = default, string applicationScenario = default, IDictionary<string, string> tags = default, IDictionary<string, string> properties = default, string status = default, TargetConfig target = default)
         {
             attackStrategies ??= new ChangeTrackingList<AttackStrategy>();
@@ -456,10 +458,10 @@ namespace Azure.AI.Projects
 
         /// <summary>
         /// Abstract class for target configuration.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.AzureOpenAIModelConfiguration"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Evaluation.AzureOpenAIModelConfiguration"/>.
         /// </summary>
         /// <param name="type"> Type of the model configuration. </param>
-        /// <returns> A new <see cref="Projects.TargetConfig"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Evaluation.TargetConfig"/> instance for mocking. </returns>
         public static TargetConfig TargetConfig(string @type = default)
         {
             return new UnknownTargetConfig(@type, additionalBinaryDataProperties: null);
@@ -467,7 +469,7 @@ namespace Azure.AI.Projects
 
         /// <summary> Azure OpenAI model configuration. The API version would be selected by the service for querying the model. </summary>
         /// <param name="modelDeploymentName"> Deployment name for AOAI model. Example: gpt-4o if in AIServices or connection based `connection_name/deployment_name` (e.g. `my-aoai-connection/gpt-4o`). </param>
-        /// <returns> A new <see cref="Projects.AzureOpenAIModelConfiguration"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Evaluation.AzureOpenAIModelConfiguration"/> instance for mocking. </returns>
         public static AzureOpenAIModelConfiguration AzureOpenAIModelConfiguration(string modelDeploymentName = default)
         {
             return new AzureOpenAIModelConfiguration("AzureOpenAIModel", additionalBinaryDataProperties: null, modelDeploymentName);
@@ -482,7 +484,7 @@ namespace Azure.AI.Projects
         /// <param name="eventType"> Event type that the evaluation rule applies to. </param>
         /// <param name="enabled"> Indicates whether the evaluation rule is enabled. Default is true. </param>
         /// <param name="systemData"> System metadata for the evaluation rule. </param>
-        /// <returns> A new <see cref="Projects.EvaluationRule"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Evaluation.EvaluationRule"/> instance for mocking. </returns>
         public static EvaluationRule EvaluationRule(string id = default, string displayName = default, string description = default, EvaluationRuleAction action = default, EvaluationRuleFilter filter = default, EvaluationRuleEventType eventType = default, bool enabled = default, IReadOnlyDictionary<string, string> systemData = default)
         {
             systemData ??= new ChangeTrackingDictionary<string, string>();
@@ -501,10 +503,10 @@ namespace Azure.AI.Projects
 
         /// <summary>
         /// Evaluation action model.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.ContinuousEvaluationRuleAction"/> and <see cref="Projects.HumanEvaluationPreviewRuleAction"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Evaluation.ContinuousEvaluationRuleAction"/> and <see cref="Evaluation.HumanEvaluationPreviewRuleAction"/>.
         /// </summary>
         /// <param name="type"> Type of the evaluation action. </param>
-        /// <returns> A new <see cref="Projects.EvaluationRuleAction"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Evaluation.EvaluationRuleAction"/> instance for mocking. </returns>
         public static EvaluationRuleAction EvaluationRuleAction(string @type = default)
         {
             return new UnknownEvaluationRuleAction(new EvaluationRuleActionType(@type), additionalBinaryDataProperties: null);
@@ -513,7 +515,7 @@ namespace Azure.AI.Projects
         /// <summary> Evaluation rule action for continuous evaluation. </summary>
         /// <param name="evalId"> Eval Id to add continuous evaluation runs to. </param>
         /// <param name="maxHourlyRuns"> Maximum number of evaluation runs allowed per hour. </param>
-        /// <returns> A new <see cref="Projects.ContinuousEvaluationRuleAction"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Evaluation.ContinuousEvaluationRuleAction"/> instance for mocking. </returns>
         public static ContinuousEvaluationRuleAction ContinuousEvaluationRuleAction(string evalId = default, int? maxHourlyRuns = default)
         {
             return new ContinuousEvaluationRuleAction(EvaluationRuleActionType.ContinuousEvaluation, additionalBinaryDataProperties: null, evalId, maxHourlyRuns);
@@ -521,7 +523,7 @@ namespace Azure.AI.Projects
 
         /// <summary> Evaluation rule action for human evaluation. </summary>
         /// <param name="templateId"> Human evaluation template Id. </param>
-        /// <returns> A new <see cref="Projects.HumanEvaluationPreviewRuleAction"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Evaluation.HumanEvaluationPreviewRuleAction"/> instance for mocking. </returns>
         public static HumanEvaluationPreviewRuleAction HumanEvaluationPreviewRuleAction(string templateId = default)
         {
             return new HumanEvaluationPreviewRuleAction(EvaluationRuleActionType.HumanEvaluationPreview, additionalBinaryDataProperties: null, templateId);
@@ -529,7 +531,7 @@ namespace Azure.AI.Projects
 
         /// <summary> Evaluation filter model. </summary>
         /// <param name="agentName"> Filter by agent name. </param>
-        /// <returns> A new <see cref="Projects.EvaluationRuleFilter"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Evaluation.EvaluationRuleFilter"/> instance for mocking. </returns>
         public static EvaluationRuleFilter EvaluationRuleFilter(string agentName = default)
         {
             return new EvaluationRuleFilter(agentName, additionalBinaryDataProperties: null);
@@ -544,7 +546,7 @@ namespace Azure.AI.Projects
         /// <param name="taxonomyInput"> Input configuration for the evaluation taxonomy. </param>
         /// <param name="taxonomyCategories"> List of taxonomy categories. </param>
         /// <param name="properties"> Additional properties for the evaluation taxonomy. </param>
-        /// <returns> A new <see cref="Projects.EvaluationTaxonomy"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Evaluation.EvaluationTaxonomy"/> instance for mocking. </returns>
         public static EvaluationTaxonomy EvaluationTaxonomy(string id = default, string name = default, string version = default, string description = default, IDictionary<string, string> tags = default, EvaluationTaxonomyInput taxonomyInput = default, IEnumerable<TaxonomyCategory> taxonomyCategories = default, IDictionary<string, string> properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
@@ -564,33 +566,11 @@ namespace Azure.AI.Projects
         }
 
         /// <summary>
-        /// Input configuration for the evaluation taxonomy.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.AgentTaxonomyInput"/>.
-        /// </summary>
-        /// <param name="type"> Input type of the evaluation taxonomy. </param>
-        /// <returns> A new <see cref="Projects.EvaluationTaxonomyInput"/> instance for mocking. </returns>
-        public static EvaluationTaxonomyInput EvaluationTaxonomyInput(string @type = default)
-        {
-            return new UnknownEvaluationTaxonomyInput(new EvaluationTaxonomyInputType(@type), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Input configuration for the evaluation taxonomy when the input type is agent. </summary>
-        /// <param name="target"> Target configuration for the agent. </param>
-        /// <param name="riskCategories"> List of risk categories to evaluate against. </param>
-        /// <returns> A new <see cref="Projects.AgentTaxonomyInput"/> instance for mocking. </returns>
-        public static AgentTaxonomyInput AgentTaxonomyInput(EvaluationTarget target = default, IEnumerable<RiskCategory> riskCategories = default)
-        {
-            riskCategories ??= new ChangeTrackingList<RiskCategory>();
-
-            return new AgentTaxonomyInput(EvaluationTaxonomyInputType.Agent, additionalBinaryDataProperties: null, target, riskCategories.ToList());
-        }
-
-        /// <summary>
         /// Base class for targets with discriminator support.
         /// Please note this is the abstract base class. The derived classes available for instantiation are: 
         /// </summary>
         /// <param name="type"> The type of target. </param>
-        /// <returns> A new <see cref="Projects.EvaluationTarget"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Evaluation.EvaluationTarget"/> instance for mocking. </returns>
         public static EvaluationTarget EvaluationTarget(string @type = default)
         {
             return new UnknownEvaluationTarget(@type, additionalBinaryDataProperties: null);
@@ -603,7 +583,7 @@ namespace Azure.AI.Projects
         /// <param name="riskCategory"> Risk category associated with this taxonomy category. </param>
         /// <param name="subCategories"> List of taxonomy sub categories. </param>
         /// <param name="properties"> Additional properties for the taxonomy category. </param>
-        /// <returns> A new <see cref="Projects.TaxonomyCategory"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Evaluation.TaxonomyCategory"/> instance for mocking. </returns>
         public static TaxonomyCategory TaxonomyCategory(string id = default, string name = default, string description = default, RiskCategory riskCategory = default, IEnumerable<TaxonomySubCategory> subCategories = default, IDictionary<string, string> properties = default)
         {
             subCategories ??= new ChangeTrackingList<TaxonomySubCategory>();
@@ -625,7 +605,7 @@ namespace Azure.AI.Projects
         /// <param name="description"> Description of the taxonomy sub-category. </param>
         /// <param name="enabled"> List of taxonomy items under this sub-category. </param>
         /// <param name="properties"> Additional properties for the taxonomy sub-category. </param>
-        /// <returns> A new <see cref="Projects.TaxonomySubCategory"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Evaluation.TaxonomySubCategory"/> instance for mocking. </returns>
         public static TaxonomySubCategory TaxonomySubCategory(string id = default, string name = default, string description = default, bool enabled = default, IDictionary<string, string> properties = default)
         {
             properties ??= new ChangeTrackingDictionary<string, string>();
@@ -653,7 +633,7 @@ namespace Azure.AI.Projects
         /// <param name="version"> The version of the resource. </param>
         /// <param name="description"> The asset description text. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
-        /// <returns> A new <see cref="Projects.EvaluatorVersion"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Evaluation.EvaluatorVersion"/> instance for mocking. </returns>
         public static EvaluatorVersion EvaluatorVersion(string displayName = default, IDictionary<string, string> metadata = default, EvaluatorType evaluatorType = default, IEnumerable<EvaluatorCategory> categories = default, EvaluatorDefinition definition = default, string createdBy = default, string createdAt = default, string modifiedAt = default, string id = default, string name = default, string version = default, string description = default, IDictionary<string, string> tags = default)
         {
             metadata ??= new ChangeTrackingDictionary<string, string>();
@@ -679,13 +659,13 @@ namespace Azure.AI.Projects
 
         /// <summary>
         /// Base evaluator configuration with discriminator
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.CodeBasedEvaluatorDefinition"/> and <see cref="Projects.PromptBasedEvaluatorDefinition"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Evaluation.CodeBasedEvaluatorDefinition"/> and <see cref="Evaluation.PromptBasedEvaluatorDefinition"/>.
         /// </summary>
         /// <param name="type"> The type of evaluator definition. </param>
         /// <param name="initParameters"> The JSON schema (Draft 2020-12) for the evaluator's input parameters. This includes parameters like type, properties, required. </param>
         /// <param name="dataSchema"> The JSON schema (Draft 2020-12) for the evaluator's input data. This includes parameters like type, properties, required. </param>
         /// <param name="metrics"> List of output metrics produced by this evaluator. </param>
-        /// <returns> A new <see cref="Projects.EvaluatorDefinition"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Evaluation.EvaluatorDefinition"/> instance for mocking. </returns>
         public static EvaluatorDefinition EvaluatorDefinition(string @type = default, BinaryData initParameters = default, BinaryData dataSchema = default, IDictionary<string, EvaluatorMetric> metrics = default)
         {
             metrics ??= new ChangeTrackingDictionary<string, EvaluatorMetric>();
@@ -699,7 +679,7 @@ namespace Azure.AI.Projects
         /// <param name="minValue"> Minimum value for the metric. </param>
         /// <param name="maxValue"> Maximum value for the metric. If not specified, it is assumed to be unbounded. </param>
         /// <param name="isPrimary"> Indicates if this metric is primary when there are multiple metrics. </param>
-        /// <returns> A new <see cref="Projects.EvaluatorMetric"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Evaluation.EvaluatorMetric"/> instance for mocking. </returns>
         public static EvaluatorMetric EvaluatorMetric(EvaluatorMetricType? @type = default, EvaluatorMetricDirection? desirableDirection = default, float? minValue = default, float? maxValue = default, bool? isPrimary = default)
         {
             return new EvaluatorMetric(
@@ -716,7 +696,7 @@ namespace Azure.AI.Projects
         /// <param name="dataSchema"> The JSON schema (Draft 2020-12) for the evaluator's input data. This includes parameters like type, properties, required. </param>
         /// <param name="metrics"> List of output metrics produced by this evaluator. </param>
         /// <param name="codeText"> Inline code text for the evaluator. </param>
-        /// <returns> A new <see cref="Projects.CodeBasedEvaluatorDefinition"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Evaluation.CodeBasedEvaluatorDefinition"/> instance for mocking. </returns>
         public static CodeBasedEvaluatorDefinition CodeBasedEvaluatorDefinition(BinaryData initParameters = default, BinaryData dataSchema = default, IDictionary<string, EvaluatorMetric> metrics = default, string codeText = default)
         {
             metrics ??= new ChangeTrackingDictionary<string, EvaluatorMetric>();
@@ -735,7 +715,7 @@ namespace Azure.AI.Projects
         /// <param name="dataSchema"> The JSON schema (Draft 2020-12) for the evaluator's input data. This includes parameters like type, properties, required. </param>
         /// <param name="metrics"> List of output metrics produced by this evaluator. </param>
         /// <param name="promptText"> The prompt text used for evaluation. </param>
-        /// <returns> A new <see cref="Projects.PromptBasedEvaluatorDefinition"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Evaluation.PromptBasedEvaluatorDefinition"/> instance for mocking. </returns>
         public static PromptBasedEvaluatorDefinition PromptBasedEvaluatorDefinition(BinaryData initParameters = default, BinaryData dataSchema = default, IDictionary<string, EvaluatorMetric> metrics = default, string promptText = default)
         {
             metrics ??= new ChangeTrackingDictionary<string, EvaluatorMetric>();
@@ -756,10 +736,10 @@ namespace Azure.AI.Projects
         /// <param name="displayName"> User friendly display name for the insight. </param>
         /// <param name="request"> Request for the insights analysis. </param>
         /// <param name="result"> The result of the insights report. </param>
-        /// <returns> A new <see cref="Projects.ProjectInsight"/> instance for mocking. </returns>
-        public static ProjectInsight ProjectInsight(string id = default, InsightsMetadata metadata = default, OperationStatus state = default, string displayName = default, InsightRequest request = default, InsightResult result = default)
+        /// <returns> A new <see cref="Evaluation.ProjectsInsight"/> instance for mocking. </returns>
+        public static ProjectsInsight ProjectsInsight(string id = default, InsightsMetadata metadata = default, OperationStatus state = default, string displayName = default, InsightRequest request = default, InsightResult result = default)
         {
-            return new ProjectInsight(
+            return new ProjectsInsight(
                 id,
                 metadata,
                 state,
@@ -772,7 +752,7 @@ namespace Azure.AI.Projects
         /// <summary> Metadata about the insights. </summary>
         /// <param name="createdAt"> The timestamp when the insights were created. </param>
         /// <param name="completedAt"> The timestamp when the insights were completed. </param>
-        /// <returns> A new <see cref="Projects.InsightsMetadata"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Evaluation.InsightsMetadata"/> instance for mocking. </returns>
         public static InsightsMetadata InsightsMetadata(DateTimeOffset createdAt = default, DateTimeOffset? completedAt = default)
         {
             return new InsightsMetadata(createdAt, completedAt, additionalBinaryDataProperties: null);
@@ -780,10 +760,10 @@ namespace Azure.AI.Projects
 
         /// <summary>
         /// The request of the insights report.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.EvaluationRunClusterInsightRequest"/>, <see cref="Projects.AgentClusterInsightRequest"/>, and <see cref="Projects.EvaluationComparisonInsightRequest"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Evaluation.EvaluationRunClusterInsightRequest"/>, <see cref="Evaluation.AgentClusterInsightRequest"/>, and <see cref="Evaluation.EvaluationComparisonInsightRequest"/>.
         /// </summary>
         /// <param name="type"> The type of request. </param>
-        /// <returns> A new <see cref="Projects.InsightRequest"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Evaluation.InsightRequest"/> instance for mocking. </returns>
         public static InsightRequest InsightRequest(string @type = default)
         {
             return new UnknownInsightRequest(new InsightType(@type), additionalBinaryDataProperties: null);
@@ -793,7 +773,7 @@ namespace Azure.AI.Projects
         /// <param name="evalId"> Evaluation Id for the insights. </param>
         /// <param name="runIds"> List of evaluation run IDs for the insights. </param>
         /// <param name="modelConfiguration"> Configuration of the model used in the insight generation. </param>
-        /// <returns> A new <see cref="Projects.EvaluationRunClusterInsightRequest"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Evaluation.EvaluationRunClusterInsightRequest"/> instance for mocking. </returns>
         public static EvaluationRunClusterInsightRequest EvaluationRunClusterInsightRequest(string evalId = default, IEnumerable<string> runIds = default, InsightModelConfiguration modelConfiguration = default)
         {
             runIds ??= new ChangeTrackingList<string>();
@@ -803,7 +783,7 @@ namespace Azure.AI.Projects
 
         /// <summary> Configuration of the model used in the insight generation. </summary>
         /// <param name="modelDeploymentName"> The model deployment to be evaluated. Accepts either the deployment name alone or with the connection name as '{connectionName}/&lt;modelDeploymentName&gt;'. </param>
-        /// <returns> A new <see cref="Projects.InsightModelConfiguration"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Evaluation.InsightModelConfiguration"/> instance for mocking. </returns>
         public static InsightModelConfiguration InsightModelConfiguration(string modelDeploymentName = default)
         {
             return new InsightModelConfiguration(modelDeploymentName, additionalBinaryDataProperties: null);
@@ -812,7 +792,7 @@ namespace Azure.AI.Projects
         /// <summary> Insights on set of Agent Evaluation Results. </summary>
         /// <param name="agentName"> Identifier for the agent. </param>
         /// <param name="modelConfiguration"> Configuration of the model used in the insight generation. </param>
-        /// <returns> A new <see cref="Projects.AgentClusterInsightRequest"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Evaluation.AgentClusterInsightRequest"/> instance for mocking. </returns>
         public static AgentClusterInsightRequest AgentClusterInsightRequest(string agentName = default, InsightModelConfiguration modelConfiguration = default)
         {
             return new AgentClusterInsightRequest(InsightType.AgentClusterInsight, additionalBinaryDataProperties: null, agentName, modelConfiguration);
@@ -822,7 +802,7 @@ namespace Azure.AI.Projects
         /// <param name="evalId"> Identifier for the evaluation. </param>
         /// <param name="baselineRunId"> The baseline run ID for comparison. </param>
         /// <param name="treatmentRunIds"> List of treatment run IDs for comparison. </param>
-        /// <returns> A new <see cref="Projects.EvaluationComparisonInsightRequest"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Evaluation.EvaluationComparisonInsightRequest"/> instance for mocking. </returns>
         public static EvaluationComparisonInsightRequest EvaluationComparisonInsightRequest(string evalId = default, string baselineRunId = default, IEnumerable<string> treatmentRunIds = default)
         {
             treatmentRunIds ??= new ChangeTrackingList<string>();
@@ -832,10 +812,10 @@ namespace Azure.AI.Projects
 
         /// <summary>
         /// The result of the insights.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.EvaluationComparisonInsightResult"/>, <see cref="Projects.EvaluationRunClusterInsightResult"/>, and <see cref="Projects.AgentClusterInsightResult"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Evaluation.EvaluationComparisonInsightResult"/>, <see cref="Evaluation.EvaluationRunClusterInsightResult"/>, and <see cref="Evaluation.AgentClusterInsightResult"/>.
         /// </summary>
         /// <param name="type"> The type of insights result. </param>
-        /// <returns> A new <see cref="Projects.InsightResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Evaluation.InsightResult"/> instance for mocking. </returns>
         public static InsightResult InsightResult(string @type = default)
         {
             return new UnknownInsightResult(new InsightType(@type), additionalBinaryDataProperties: null);
@@ -844,7 +824,7 @@ namespace Azure.AI.Projects
         /// <summary> Insights from the evaluation comparison. </summary>
         /// <param name="comparisons"> Comparison results for each treatment run against the baseline. </param>
         /// <param name="method"> The statistical method used for comparison. </param>
-        /// <returns> A new <see cref="Projects.EvaluationComparisonInsightResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Evaluation.EvaluationComparisonInsightResult"/> instance for mocking. </returns>
         public static EvaluationComparisonInsightResult EvaluationComparisonInsightResult(IEnumerable<EvalRunResultComparison> comparisons = default, string @method = default)
         {
             comparisons ??= new ChangeTrackingList<EvalRunResultComparison>();
@@ -858,7 +838,7 @@ namespace Azure.AI.Projects
         /// <param name="evaluator"> Name of the evaluator for this testing criteria. </param>
         /// <param name="baselineRunSummary"> Summary statistics of the baseline run. </param>
         /// <param name="compareItems"> List of comparison results for each treatment run. </param>
-        /// <returns> A new <see cref="Projects.EvalRunResultComparison"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Evaluation.EvalRunResultComparison"/> instance for mocking. </returns>
         public static EvalRunResultComparison EvalRunResultComparison(string testingCriteria = default, string metric = default, string evaluator = default, EvalRunResultSummary baselineRunSummary = default, IEnumerable<EvalRunResultCompareItem> compareItems = default)
         {
             compareItems ??= new ChangeTrackingList<EvalRunResultCompareItem>();
@@ -877,7 +857,7 @@ namespace Azure.AI.Projects
         /// <param name="sampleCount"> Number of samples in the evaluation run. </param>
         /// <param name="average"> Average value of the metric in the evaluation run. </param>
         /// <param name="standardDeviation"> Standard deviation of the metric in the evaluation run. </param>
-        /// <returns> A new <see cref="Projects.EvalRunResultSummary"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Evaluation.EvalRunResultSummary"/> instance for mocking. </returns>
         public static EvalRunResultSummary EvalRunResultSummary(string runId = default, int sampleCount = default, float average = default, float standardDeviation = default)
         {
             return new EvalRunResultSummary(runId, sampleCount, average, standardDeviation, additionalBinaryDataProperties: null);
@@ -889,7 +869,7 @@ namespace Azure.AI.Projects
         /// <param name="deltaEstimate"> Estimated difference between treatment and baseline. </param>
         /// <param name="pValue"> P-value for the treatment effect. </param>
         /// <param name="treatmentEffect"> Type of treatment effect. </param>
-        /// <returns> A new <see cref="Projects.EvalRunResultCompareItem"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Evaluation.EvalRunResultCompareItem"/> instance for mocking. </returns>
         public static EvalRunResultCompareItem EvalRunResultCompareItem(string treatmentRunId = default, EvalRunResultSummary treatmentRunSummary = default, float deltaEstimate = default, float pValue = default, TreatmentEffectType treatmentEffect = default)
         {
             return new EvalRunResultCompareItem(
@@ -903,7 +883,7 @@ namespace Azure.AI.Projects
 
         /// <summary> Insights from the evaluation run cluster analysis. </summary>
         /// <param name="clusterInsight"></param>
-        /// <returns> A new <see cref="Projects.EvaluationRunClusterInsightResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Evaluation.EvaluationRunClusterInsightResult"/> instance for mocking. </returns>
         public static EvaluationRunClusterInsightResult EvaluationRunClusterInsightResult(ClusterInsightResult clusterInsight = default)
         {
             return new EvaluationRunClusterInsightResult(InsightType.EvaluationRunClusterInsight, additionalBinaryDataProperties: null, clusterInsight);
@@ -928,7 +908,7 @@ namespace Azure.AI.Projects
         ///   Coordinates are intended only for client-side visualization and do not
         ///   modify the canonical insights results.
         /// </param>
-        /// <returns> A new <see cref="Projects.ClusterInsightResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Evaluation.ClusterInsightResult"/> instance for mocking. </returns>
         public static ClusterInsightResult ClusterInsightResult(InsightSummary summary = default, IEnumerable<InsightCluster> clusters = default, IDictionary<string, ChartCoordinate> coordinates = default)
         {
             clusters ??= new ChangeTrackingList<InsightCluster>();
@@ -943,7 +923,7 @@ namespace Azure.AI.Projects
         /// <param name="uniqueClusterCount"> Total number of unique clusters. </param>
         /// <param name="method"> Method used for clustering. </param>
         /// <param name="usage"> Token usage while performing clustering analysis. </param>
-        /// <returns> A new <see cref="Projects.InsightSummary"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Evaluation.InsightSummary"/> instance for mocking. </returns>
         public static InsightSummary InsightSummary(int sampleCount = default, int uniqueSubclusterCount = default, int uniqueClusterCount = default, string @method = default, ClusterTokenUsage usage = default)
         {
             return new InsightSummary(
@@ -959,7 +939,7 @@ namespace Azure.AI.Projects
         /// <param name="inputTokenUsage"> input token usage. </param>
         /// <param name="outputTokenUsage"> output token usage. </param>
         /// <param name="totalTokenUsage"> total token usage. </param>
-        /// <returns> A new <see cref="Projects.ClusterTokenUsage"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Evaluation.ClusterTokenUsage"/> instance for mocking. </returns>
         public static ClusterTokenUsage ClusterTokenUsage(int inputTokenUsage = default, int outputTokenUsage = default, int totalTokenUsage = default)
         {
             return new ClusterTokenUsage(inputTokenUsage, outputTokenUsage, totalTokenUsage, additionalBinaryDataProperties: null);
@@ -974,7 +954,7 @@ namespace Azure.AI.Projects
         /// <param name="weight"> The weight of the analysis cluster. This indicate number of samples in the cluster. </param>
         /// <param name="subClusters"> List of subclusters within this cluster. Empty if no subclusters exist. </param>
         /// <param name="samples"> List of samples that belong to this cluster. Empty if samples are part of subclusters. </param>
-        /// <returns> A new <see cref="Projects.InsightCluster"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Evaluation.InsightCluster"/> instance for mocking. </returns>
         public static InsightCluster InsightCluster(string id = default, string label = default, string suggestion = default, string suggestionTitle = default, string description = default, int weight = default, IEnumerable<InsightCluster> subClusters = default, IEnumerable<InsightSample> samples = default)
         {
             subClusters ??= new ChangeTrackingList<InsightCluster>();
@@ -992,49 +972,12 @@ namespace Azure.AI.Projects
                 additionalBinaryDataProperties: null);
         }
 
-        /// <summary>
-        /// A sample from the analysis.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.EvaluationResultSample"/>.
-        /// </summary>
-        /// <param name="id"> The unique identifier for the analysis sample. </param>
-        /// <param name="type"> Sample type. </param>
-        /// <param name="features"> Features to help with additional filtering of data in UX. </param>
-        /// <param name="correlationInfo"> Info about the correlation for the analysis sample. </param>
-        /// <returns> A new <see cref="Projects.InsightSample"/> instance for mocking. </returns>
-        public static InsightSample InsightSample(string id = default, string @type = default, IDictionary<string, BinaryData> features = default, IDictionary<string, BinaryData> correlationInfo = default)
-        {
-            features ??= new ChangeTrackingDictionary<string, BinaryData>();
-            correlationInfo ??= new ChangeTrackingDictionary<string, BinaryData>();
-
-            return new UnknownInsightSample(id, new SampleType(@type), features, correlationInfo, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> A sample from the evaluation result. </summary>
-        /// <param name="id"> The unique identifier for the analysis sample. </param>
-        /// <param name="features"> Features to help with additional filtering of data in UX. </param>
-        /// <param name="correlationInfo"> Info about the correlation for the analysis sample. </param>
-        /// <param name="evaluationResult"> Evaluation result for the analysis sample. </param>
-        /// <returns> A new <see cref="Projects.EvaluationResultSample"/> instance for mocking. </returns>
-        public static EvaluationResultSample EvaluationResultSample(string id = default, IDictionary<string, BinaryData> features = default, IDictionary<string, BinaryData> correlationInfo = default, EvalResult evaluationResult = default)
-        {
-            features ??= new ChangeTrackingDictionary<string, BinaryData>();
-            correlationInfo ??= new ChangeTrackingDictionary<string, BinaryData>();
-
-            return new EvaluationResultSample(
-                id,
-                SampleType.EvaluationResultSample,
-                features,
-                correlationInfo,
-                additionalBinaryDataProperties: null,
-                evaluationResult);
-        }
-
         /// <summary> Result of the evaluation. </summary>
         /// <param name="name"> name of the check. </param>
         /// <param name="type"> type of the check. </param>
         /// <param name="score"> score. </param>
         /// <param name="passed"> indicates if the check passed or failed. </param>
-        /// <returns> A new <see cref="Projects.EvalResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Evaluation.EvalResult"/> instance for mocking. </returns>
         public static EvalResult EvalResult(string name = default, string @type = default, float score = default, bool passed = default)
         {
             return new EvalResult(name, @type, score, passed, additionalBinaryDataProperties: null);
@@ -1044,7 +987,7 @@ namespace Azure.AI.Projects
         /// <param name="x"> X-axis coordinate. </param>
         /// <param name="y"> Y-axis coordinate. </param>
         /// <param name="size"> Size of the chart element. </param>
-        /// <returns> A new <see cref="Projects.ChartCoordinate"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Evaluation.ChartCoordinate"/> instance for mocking. </returns>
         public static ChartCoordinate ChartCoordinate(int x = default, int y = default, int size = default)
         {
             return new ChartCoordinate(x, y, size, additionalBinaryDataProperties: null);
@@ -1052,7 +995,7 @@ namespace Azure.AI.Projects
 
         /// <summary> Insights from the agent cluster analysis. </summary>
         /// <param name="clusterInsight"></param>
-        /// <returns> A new <see cref="Projects.AgentClusterInsightResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Evaluation.AgentClusterInsightResult"/> instance for mocking. </returns>
         public static AgentClusterInsightResult AgentClusterInsightResult(ClusterInsightResult clusterInsight = default)
         {
             return new AgentClusterInsightResult(InsightType.AgentClusterInsight, additionalBinaryDataProperties: null, clusterInsight);
@@ -1069,7 +1012,7 @@ namespace Azure.AI.Projects
         /// <param name="tags"> Schedule's tags. Unlike properties, tags are fully mutable. </param>
         /// <param name="properties"> Schedule's properties. Unlike tags, properties are add-only. Once added, a property cannot be removed. </param>
         /// <param name="systemData"> System metadata for the resource. </param>
-        /// <returns> A new <see cref="Projects.ProjectsSchedule"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Evaluation.ProjectsSchedule"/> instance for mocking. </returns>
         public static ProjectsSchedule ProjectsSchedule(string id = default, string displayName = default, string description = default, bool enabled = default, ScheduleProvisioningStatus? provisioningStatus = default, ScheduleTrigger trigger = default, ProjectsScheduleTask task = default, IDictionary<string, string> tags = default, IDictionary<string, string> properties = default, IReadOnlyDictionary<string, string> systemData = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
@@ -1091,112 +1034,8 @@ namespace Azure.AI.Projects
         }
 
         /// <summary>
-        /// Base model for Trigger of the schedule.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.CronTrigger"/>, <see cref="Projects.RecurrenceTrigger"/>, and <see cref="Projects.OneTimeTrigger"/>.
-        /// </summary>
-        /// <param name="type"> Type of the trigger. </param>
-        /// <returns> A new <see cref="Projects.ScheduleTrigger"/> instance for mocking. </returns>
-        public static ScheduleTrigger ScheduleTrigger(string @type = default)
-        {
-            return new UnknownTrigger(new TriggerType(@type), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Cron based trigger. </summary>
-        /// <param name="expression"> Cron expression that defines the schedule frequency. </param>
-        /// <param name="timeZone"> Time zone for the cron schedule. </param>
-        /// <param name="startTime"> Start time for the cron schedule in ISO 8601 format. </param>
-        /// <param name="endTime"> End time for the cron schedule in ISO 8601 format. </param>
-        /// <returns> A new <see cref="Projects.CronTrigger"/> instance for mocking. </returns>
-        public static CronTrigger CronTrigger(string expression = default, string timeZone = default, string startTime = default, string endTime = default)
-        {
-            return new CronTrigger(
-                TriggerType.Cron,
-                additionalBinaryDataProperties: null,
-                expression,
-                timeZone,
-                startTime,
-                endTime);
-        }
-
-        /// <summary> Recurrence based trigger. </summary>
-        /// <param name="startTime"> Start time for the recurrence schedule in ISO 8601 format. </param>
-        /// <param name="endTime"> End time for the recurrence schedule in ISO 8601 format. </param>
-        /// <param name="timeZone"> Time zone for the recurrence schedule. </param>
-        /// <param name="interval"> Interval for the recurrence schedule. </param>
-        /// <param name="schedule"> Recurrence schedule for the recurrence trigger. </param>
-        /// <returns> A new <see cref="Projects.RecurrenceTrigger"/> instance for mocking. </returns>
-        public static RecurrenceTrigger RecurrenceTrigger(string startTime = default, string endTime = default, string timeZone = default, int interval = default, RecurrenceSchedule schedule = default)
-        {
-            return new RecurrenceTrigger(
-                TriggerType.Recurrence,
-                additionalBinaryDataProperties: null,
-                startTime,
-                endTime,
-                timeZone,
-                interval,
-                schedule);
-        }
-
-        /// <summary>
-        /// Recurrence schedule model.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.HourlyRecurrenceSchedule"/>, <see cref="Projects.DailyRecurrenceSchedule"/>, <see cref="Projects.WeeklyRecurrenceSchedule"/>, and <see cref="Projects.MonthlyRecurrenceSchedule"/>.
-        /// </summary>
-        /// <param name="type"> Recurrence type for the recurrence schedule. </param>
-        /// <returns> A new <see cref="Projects.RecurrenceSchedule"/> instance for mocking. </returns>
-        public static RecurrenceSchedule RecurrenceSchedule(string @type = default)
-        {
-            return new UnknownRecurrenceSchedule(new RecurrenceType(@type), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Hourly recurrence schedule. </summary>
-        /// <returns> A new <see cref="Projects.HourlyRecurrenceSchedule"/> instance for mocking. </returns>
-        public static HourlyRecurrenceSchedule HourlyRecurrenceSchedule()
-        {
-            return new HourlyRecurrenceSchedule(RecurrenceType.Hourly, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Daily recurrence schedule. </summary>
-        /// <param name="hours"> Hours for the recurrence schedule. </param>
-        /// <returns> A new <see cref="Projects.DailyRecurrenceSchedule"/> instance for mocking. </returns>
-        public static DailyRecurrenceSchedule DailyRecurrenceSchedule(IEnumerable<int> hours = default)
-        {
-            hours ??= new ChangeTrackingList<int>();
-
-            return new DailyRecurrenceSchedule(RecurrenceType.Daily, additionalBinaryDataProperties: null, hours.ToList());
-        }
-
-        /// <summary> Weekly recurrence schedule. </summary>
-        /// <param name="daysOfWeek"> Days of the week for the recurrence schedule. </param>
-        /// <returns> A new <see cref="Projects.WeeklyRecurrenceSchedule"/> instance for mocking. </returns>
-        public static WeeklyRecurrenceSchedule WeeklyRecurrenceSchedule(IEnumerable<DayOfWeek> daysOfWeek = default)
-        {
-            daysOfWeek ??= new ChangeTrackingList<DayOfWeek>();
-
-            return new WeeklyRecurrenceSchedule(RecurrenceType.Weekly, additionalBinaryDataProperties: null, daysOfWeek.ToList());
-        }
-
-        /// <summary> Monthly recurrence schedule. </summary>
-        /// <param name="daysOfMonth"> Days of the month for the recurrence schedule. </param>
-        /// <returns> A new <see cref="Projects.MonthlyRecurrenceSchedule"/> instance for mocking. </returns>
-        public static MonthlyRecurrenceSchedule MonthlyRecurrenceSchedule(IEnumerable<int> daysOfMonth = default)
-        {
-            daysOfMonth ??= new ChangeTrackingList<int>();
-
-            return new MonthlyRecurrenceSchedule(RecurrenceType.Monthly, additionalBinaryDataProperties: null, daysOfMonth.ToList());
-        }
-
-        /// <summary> One-time trigger. </summary>
-        /// <param name="triggerAt"> Date and time for the one-time trigger in ISO 8601 format. </param>
-        /// <param name="timeZone"> Time zone for the one-time trigger. </param>
-        /// <returns> A new <see cref="Projects.OneTimeTrigger"/> instance for mocking. </returns>
-        public static OneTimeTrigger OneTimeTrigger(string triggerAt = default, string timeZone = default)
-        {
-            return new OneTimeTrigger(TriggerType.OneTime, additionalBinaryDataProperties: null, triggerAt, timeZone);
-        }
-
-        /// <summary>
         /// Schedule task model.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.EvaluationScheduleTask"/> and <see cref="Projects.InsightScheduleTask"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Evaluation.EvaluationScheduleTask"/> and <see cref="Evaluation.InsightScheduleTask"/>.
         /// </summary>
         /// <param name="type"> Type of the task. </param>
         /// <param name="configuration"> Configuration for the task. </param>
@@ -1212,7 +1051,7 @@ namespace Azure.AI.Projects
         /// <param name="configuration"> Configuration for the task. </param>
         /// <param name="evalId"> Identifier of the evaluation group. </param>
         /// <param name="evalRun"> The evaluation run payload. </param>
-        /// <returns> A new <see cref="Projects.EvaluationScheduleTask"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Evaluation.EvaluationScheduleTask"/> instance for mocking. </returns>
         public static EvaluationScheduleTask EvaluationScheduleTask(IDictionary<string, string> configuration = default, string evalId = default, EvaluationScheduleTaskEvalRun evalRun = default)
         {
             configuration ??= new ChangeTrackingDictionary<string, string>();
@@ -1221,7 +1060,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> The EvaluationScheduleTaskEvalRun. </summary>
-        /// <returns> A new <see cref="Projects.EvaluationScheduleTaskEvalRun"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Evaluation.EvaluationScheduleTaskEvalRun"/> instance for mocking. </returns>
         public static EvaluationScheduleTaskEvalRun EvaluationScheduleTaskEvalRun()
         {
             return new EvaluationScheduleTaskEvalRun(additionalBinaryDataProperties: null);
@@ -1230,8 +1069,8 @@ namespace Azure.AI.Projects
         /// <summary> Insight task for the schedule. </summary>
         /// <param name="configuration"> Configuration for the task. </param>
         /// <param name="insight"> The insight payload. </param>
-        /// <returns> A new <see cref="Projects.InsightScheduleTask"/> instance for mocking. </returns>
-        public static InsightScheduleTask InsightScheduleTask(IDictionary<string, string> configuration = default, ProjectInsight insight = default)
+        /// <returns> A new <see cref="Evaluation.InsightScheduleTask"/> instance for mocking. </returns>
+        public static InsightScheduleTask InsightScheduleTask(IDictionary<string, string> configuration = default, ProjectsInsight insight = default)
         {
             configuration ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1245,7 +1084,7 @@ namespace Azure.AI.Projects
         /// <param name="triggerTime"> Trigger time of the schedule run. </param>
         /// <param name="error"> Error information for the schedule run. </param>
         /// <param name="properties"> Properties of the schedule run. </param>
-        /// <returns> A new <see cref="Projects.ScheduleRun"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Evaluation.ScheduleRun"/> instance for mocking. </returns>
         public static ScheduleRun ScheduleRun(string runId = default, string scheduleId = default, bool success = default, string triggerTime = default, string error = default, IReadOnlyDictionary<string, string> properties = default)
         {
             properties ??= new ChangeTrackingDictionary<string, string>();
@@ -1260,32 +1099,11 @@ namespace Azure.AI.Projects
                 additionalBinaryDataProperties: null);
         }
 
-        /// <summary>
-        /// Base definition for memory store configurations.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.MemoryStoreDefaultDefinition"/>.
-        /// </summary>
-        /// <param name="kind"> The kind of the memory store. </param>
-        /// <returns> A new <see cref="Projects.MemoryStoreDefinition"/> instance for mocking. </returns>
-        public static MemoryStoreDefinition MemoryStoreDefinition(string kind = default)
-        {
-            return new UnknownMemoryStoreDefinition(new MemoryStoreKind(kind), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Default memory store implementation. </summary>
-        /// <param name="chatModel"> The name or identifier of the chat completion model deployment used for memory processing. </param>
-        /// <param name="embeddingModel"> The name or identifier of the embedding model deployment used for memory processing. </param>
-        /// <param name="options"> Default memory store options. </param>
-        /// <returns> A new <see cref="Projects.MemoryStoreDefaultDefinition"/> instance for mocking. </returns>
-        public static MemoryStoreDefaultDefinition MemoryStoreDefaultDefinition(string chatModel = default, string embeddingModel = default, MemoryStoreDefaultOptions options = default)
-        {
-            return new MemoryStoreDefaultDefinition(MemoryStoreKind.Default, additionalBinaryDataProperties: null, chatModel, embeddingModel, options);
-        }
-
         /// <summary> Default memory store configurations. </summary>
         /// <param name="userProfileEnabled"> Whether to enable user profile extraction and storage. Default is true. </param>
         /// <param name="userProfileDetails"> Specific categories or types of user profile information to extract and store. </param>
         /// <param name="chatSummaryEnabled"> Whether to enable chat summary extraction and storage. Default is true. </param>
-        /// <returns> A new <see cref="Projects.MemoryStoreDefaultOptions"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Memory.MemoryStoreDefaultOptions"/> instance for mocking. </returns>
         public static MemoryStoreDefaultOptions MemoryStoreDefaultOptions(bool userProfileEnabled = default, string userProfileDetails = default, bool chatSummaryEnabled = default)
         {
             return new MemoryStoreDefaultOptions(userProfileEnabled, userProfileDetails, chatSummaryEnabled, additionalBinaryDataProperties: null);
@@ -1299,7 +1117,7 @@ namespace Azure.AI.Projects
         /// <param name="description"> A human-readable description of the memory store. </param>
         /// <param name="metadata"> Arbitrary key-value metadata to associate with the memory store. </param>
         /// <param name="definition"> The definition of the memory store. </param>
-        /// <returns> A new <see cref="Projects.MemoryStore"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Memory.MemoryStore"/> instance for mocking. </returns>
         public static MemoryStore MemoryStore(string id = default, DateTimeOffset createdAt = default, DateTimeOffset updatedAt = default, string name = default, string description = default, IDictionary<string, string> metadata = default, MemoryStoreDefinition definition = default)
         {
             metadata ??= new ChangeTrackingDictionary<string, string>();
@@ -1319,7 +1137,7 @@ namespace Azure.AI.Projects
         /// <summary> The DeleteMemoryStoreResponse. </summary>
         /// <param name="name"> The name of the memory store. </param>
         /// <param name="deleted"> Whether the memory store was successfully deleted. </param>
-        /// <returns> A new <see cref="Projects.DeleteMemoryStoreResponse"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Memory.DeleteMemoryStoreResponse"/> instance for mocking. </returns>
         public static DeleteMemoryStoreResponse DeleteMemoryStoreResponse(string name = default, bool deleted = default)
         {
             return new DeleteMemoryStoreResponse("memory_store.deleted", name, deleted, additionalBinaryDataProperties: null);
@@ -1352,7 +1170,7 @@ namespace Azure.AI.Projects
 
         /// <summary> Memory search options. </summary>
         /// <param name="maxMemories"> Maximum number of memory items to return. </param>
-        /// <returns> A new <see cref="Projects.MemorySearchResultOptions"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Memory.MemorySearchResultOptions"/> instance for mocking. </returns>
         public static MemorySearchResultOptions MemorySearchResultOptions(int? maxMemories = default)
         {
             return new MemorySearchResultOptions(maxMemories, additionalBinaryDataProperties: null);
@@ -1362,7 +1180,7 @@ namespace Azure.AI.Projects
         /// <param name="searchId"> The unique ID of this search request. Use this value as previous_search_id in subsequent requests to perform incremental searches. </param>
         /// <param name="memories"> Related memory items found during the search operation. </param>
         /// <param name="usage"> Usage statistics associated with the memory search operation. </param>
-        /// <returns> A new <see cref="Projects.MemoryStoreSearchResponse"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Memory.MemoryStoreSearchResponse"/> instance for mocking. </returns>
         public static MemoryStoreSearchResponse MemoryStoreSearchResponse(string searchId = default, IEnumerable<MemorySearchItem> memories = default, MemoryStoreOperationUsage usage = default)
         {
             memories ??= new ChangeTrackingList<MemorySearchItem>();
@@ -1372,65 +1190,10 @@ namespace Azure.AI.Projects
 
         /// <summary> A retrieved memory item from memory search. </summary>
         /// <param name="memoryItem"> Retrieved memory item. </param>
-        /// <returns> A new <see cref="Projects.MemorySearchItem"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Memory.MemorySearchItem"/> instance for mocking. </returns>
         public static MemorySearchItem MemorySearchItem(MemoryItem memoryItem = default)
         {
             return new MemorySearchItem(memoryItem, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary>
-        /// A single memory item stored in the memory store, containing content and metadata.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.UserProfileMemoryItem"/> and <see cref="Projects.ChatSummaryMemoryItem"/>.
-        /// </summary>
-        /// <param name="memoryId"> The unique ID of the memory item. </param>
-        /// <param name="updatedAt"> The last update time of the memory item. </param>
-        /// <param name="scope"> The namespace that logically groups and isolates memories, such as a user ID. </param>
-        /// <param name="content"> The content of the memory. </param>
-        /// <param name="kind"> The kind of the memory item. </param>
-        /// <returns> A new <see cref="Projects.MemoryItem"/> instance for mocking. </returns>
-        public static MemoryItem MemoryItem(string memoryId = default, DateTimeOffset updatedAt = default, string scope = default, string content = default, string kind = default)
-        {
-            return new UnknownMemoryItem(
-                memoryId,
-                updatedAt,
-                scope,
-                content,
-                new MemoryItemKind(kind),
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> A memory item specifically containing user profile information extracted from conversations, such as preferences, interests, and personal details. </summary>
-        /// <param name="memoryId"> The unique ID of the memory item. </param>
-        /// <param name="updatedAt"> The last update time of the memory item. </param>
-        /// <param name="scope"> The namespace that logically groups and isolates memories, such as a user ID. </param>
-        /// <param name="content"> The content of the memory. </param>
-        /// <returns> A new <see cref="Projects.UserProfileMemoryItem"/> instance for mocking. </returns>
-        public static UserProfileMemoryItem UserProfileMemoryItem(string memoryId = default, DateTimeOffset updatedAt = default, string scope = default, string content = default)
-        {
-            return new UserProfileMemoryItem(
-                memoryId,
-                updatedAt,
-                scope,
-                content,
-                MemoryItemKind.UserProfile,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> A memory item containing a summary extracted from conversations. </summary>
-        /// <param name="memoryId"> The unique ID of the memory item. </param>
-        /// <param name="updatedAt"> The last update time of the memory item. </param>
-        /// <param name="scope"> The namespace that logically groups and isolates memories, such as a user ID. </param>
-        /// <param name="content"> The content of the memory. </param>
-        /// <returns> A new <see cref="Projects.ChatSummaryMemoryItem"/> instance for mocking. </returns>
-        public static ChatSummaryMemoryItem ChatSummaryMemoryItem(string memoryId = default, DateTimeOffset updatedAt = default, string scope = default, string content = default)
-        {
-            return new ChatSummaryMemoryItem(
-                memoryId,
-                updatedAt,
-                scope,
-                content,
-                MemoryItemKind.ChatSummary,
-                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Usage statistics of a memory store operation. </summary>
@@ -1440,7 +1203,7 @@ namespace Azure.AI.Projects
         /// <param name="outputTokens"> The number of output tokens. </param>
         /// <param name="outputTokensDetails"> A detailed breakdown of the output tokens. </param>
         /// <param name="totalTokens"> The total number of tokens used. </param>
-        /// <returns> A new <see cref="Projects.MemoryStoreOperationUsage"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Memory.MemoryStoreOperationUsage"/> instance for mocking. </returns>
         public static MemoryStoreOperationUsage MemoryStoreOperationUsage(int embeddingTokens = default, long inputTokens = default, ResponseUsageInputTokensDetails inputTokensDetails = default, long outputTokens = default, ResponseUsageOutputTokensDetails outputTokensDetails = default, long totalTokens = default)
         {
             return new MemoryStoreOperationUsage(
@@ -1472,7 +1235,7 @@ namespace Azure.AI.Projects
         /// <summary> Memory update result. </summary>
         /// <param name="memoryOperations"> A list of individual memory operations that were performed during the update. </param>
         /// <param name="usage"> Usage statistics associated with the memory update operation. </param>
-        /// <returns> A new <see cref="Projects.MemoryUpdateResultDetails"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Memory.MemoryUpdateResultDetails"/> instance for mocking. </returns>
         public static MemoryUpdateResultDetails MemoryUpdateResultDetails(IEnumerable<MemoryOperation> memoryOperations = default, MemoryStoreOperationUsage usage = default)
         {
             memoryOperations ??= new ChangeTrackingList<MemoryOperation>();
@@ -1483,7 +1246,7 @@ namespace Azure.AI.Projects
         /// <summary> Represents a single memory operation (create, update, or delete) performed on a memory item. </summary>
         /// <param name="kind"> The type of memory operation being performed. </param>
         /// <param name="memoryItem"> The memory item to create, update, or delete. </param>
-        /// <returns> A new <see cref="Projects.MemoryOperation"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Memory.MemoryOperation"/> instance for mocking. </returns>
         public static MemoryOperation MemoryOperation(MemoryOperationKind kind = default, MemoryItem memoryItem = default)
         {
             return new MemoryOperation(kind, memoryItem, additionalBinaryDataProperties: null);
@@ -1493,7 +1256,7 @@ namespace Azure.AI.Projects
         /// <param name="name"> The name of the memory store. </param>
         /// <param name="scope"> The scope from which memories were deleted. </param>
         /// <param name="deleted"> Whether the deletion operation was successful. </param>
-        /// <returns> A new <see cref="Projects.MemoryStoreDeleteScopeResponse"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Memory.MemoryStoreDeleteScopeResponse"/> instance for mocking. </returns>
         public static MemoryStoreDeleteScopeResponse MemoryStoreDeleteScopeResponse(string name = default, string scope = default, bool deleted = default)
         {
             return new MemoryStoreDeleteScopeResponse("memory_store.scope.deleted", name, scope, deleted, additionalBinaryDataProperties: null);
