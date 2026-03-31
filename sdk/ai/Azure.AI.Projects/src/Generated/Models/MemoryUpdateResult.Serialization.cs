@@ -7,8 +7,9 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Memory
 {
     /// <summary> Provides the status of a memory store update operation. </summary>
     public partial class MemoryUpdateResult : IJsonModel<MemoryUpdateResult>

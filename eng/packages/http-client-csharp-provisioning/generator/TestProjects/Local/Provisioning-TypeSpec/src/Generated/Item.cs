@@ -17,11 +17,11 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
     /// <summary> An item in a configuration store. </summary>
     public partial class Item : ProvisionableResource
     {
-        private ItemProperties _properties;
-        private BicepValue<string> _name;
-        private BicepDictionary<string> _tags;
         private BicepValue<ResourceIdentifier> _id;
+        private BicepValue<string> _name;
         private SystemData _systemData;
+        private ItemProperties _properties;
+        private BicepDictionary<string> _tags;
         private ResourceReference<ConfigurationStore> _parent;
 
         /// <summary> Creates a new Item. </summary>
@@ -31,18 +31,13 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
         {
         }
 
-        /// <summary> Gets or sets the Properties. </summary>
-        internal ItemProperties Properties
+        /// <summary> Gets the Id. </summary>
+        public BicepValue<ResourceIdentifier> Id
         {
             get
             {
                 Initialize();
-                return _properties;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _properties, value);
+                return _id;
             }
         }
 
@@ -61,6 +56,31 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
             }
         }
 
+        /// <summary> Gets the SystemData. </summary>
+        public SystemData SystemData
+        {
+            get
+            {
+                Initialize();
+                return _systemData;
+            }
+        }
+
+        /// <summary> Gets or sets the Properties. </summary>
+        internal ItemProperties Properties
+        {
+            get
+            {
+                Initialize();
+                return _properties;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _properties, value);
+            }
+        }
+
         /// <summary> Gets or sets the Tags. </summary>
         public BicepDictionary<string> Tags
         {
@@ -73,26 +93,6 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
             {
                 Initialize();
                 _tags.Assign(value);
-            }
-        }
-
-        /// <summary> Gets the Id. </summary>
-        public BicepValue<ResourceIdentifier> Id
-        {
-            get
-            {
-                Initialize();
-                return _id;
-            }
-        }
-
-        /// <summary> Gets the SystemData. </summary>
-        public SystemData SystemData
-        {
-            get
-            {
-                Initialize();
-                return _systemData;
             }
         }
 
@@ -166,11 +166,11 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _properties = DefineModelProperty<ItemProperties>(nameof(Properties), new string[] { "properties" });
-            _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
-            _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
+            _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
+            _properties = DefineModelProperty<ItemProperties>(nameof(Properties), new string[] { "properties" });
+            _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
             _parent = DefineResource<ConfigurationStore>("Parent", new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }

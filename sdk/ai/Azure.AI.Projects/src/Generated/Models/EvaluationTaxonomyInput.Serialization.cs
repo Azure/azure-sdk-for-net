@@ -5,8 +5,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary>
     /// Input configuration for the evaluation taxonomy.

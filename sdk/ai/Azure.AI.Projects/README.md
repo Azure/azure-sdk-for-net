@@ -24,7 +24,6 @@ The client library uses version `v1` of the AI Foundry [data plane REST APIs](ht
 - [Key concepts](#key-concepts)
   - [Create and authenticate the client](#create-and-authenticate-the-client)
 - [Examples](#examples)
-  - [Performing Classic Agent operations](#performing-classic-agent-operations)
   - [Performing Agent operations](#performing-agent-operations)
   - [Get an authenticated AzureOpenAI client](#get-an-authenticated-azureopenai-client)
   - [Get an authenticated ChatCompletionsClient](#get-an-authenticated-chatcompletionsclient)
@@ -49,6 +48,7 @@ The client library uses version `v1` of the AI Foundry [data plane REST APIs](ht
     - [Azure Monitor Tracing](#tracing-to-azure-monitor)
     - [Console Tracing](#tracing-to-console)
     - [Enabling content recording](#enabling-content-recording)
+- [Performing Classic Agent operations](#performing-classic-agent-operations)
 - [Troubleshooting](#troubleshooting)
 - [Next steps](#next-steps)
 - [Contributing](#contributing)
@@ -91,81 +91,6 @@ AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new Defau
 Once the `AIProjectClient` is created, you can use properties such as `.Datasets` and `.Indexes` on this client to perform relevant operations.
 
 ## Examples
-
-### Performing Classic Agent operations
-
-The `GetPersistentAgentsClient` method on the `AIProjectsClient` gives you access to an authenticated `PersistentAgentsClient` from the `Azure.AI.Agents.Persistent` package. Below we show how to create an Agent and delete it. To see what you can do with the agent you created, see the [many samples](https://aka.ms/azsdk/Azure.AI.Agents.Persistent/net/samples) associated with the `Azure.AI.Agents.Persistent` package.
-
-The code below assumes `ModelDeploymentName` (a string) is defined. It's the deployment name of an AI model in your Foundry Project, as shown in the "Models + endpoints" tab, under the "Name" column.
-```C# Snippet:AI_Projects_ExtensionsAgentsBasicsSync
-var endpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
-var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
-AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
-PersistentAgentsClient agentsClient = projectClient.GetPersistentAgentsClient();
-
-// Step 1: Create an agent
-PersistentAgent agent = agentsClient.Administration.CreateAgent(
-    model: modelDeploymentName,
-    name: "Math Tutor",
-    instructions: "You are a personal math tutor. Write and run code to answer math questions."
-);
-
-// Step 2: Create a thread
-PersistentAgentThread thread = agentsClient.Threads.CreateThread();
-
-// Step 3: Add a message to a thread
-PersistentThreadMessage message = agentsClient.Messages.CreateMessage(
-    thread.Id,
-    MessageRole.User,
-    "I need to solve the equation `3x + 11 = 14`. Can you help me?");
-
-// Intermission: message is now correlated with thread
-// Intermission: listing messages will retrieve the message just added
-
-List<PersistentThreadMessage> messagesList = [.. agentsClient.Messages.GetMessages(thread.Id)];
-Assert.That(message.Id, Is.EqualTo(messagesList[0].Id));
-
-// Step 4: Run the agent
-ThreadRun run = agentsClient.Runs.CreateRun(
-    thread.Id,
-    agent.Id,
-    additionalInstructions: "Please address the user as Jane Doe. The user has a premium account.");
-do
-{
-    Thread.Sleep(TimeSpan.FromMilliseconds(500));
-    run = agentsClient.Runs.GetRun(thread.Id, run.Id);
-}
-while (run.Status == RunStatus.Queued
-    || run.Status == RunStatus.InProgress);
-Assert.That(
-    RunStatus.Completed,
-    Is.EqualTo(run.Status),
-    run.LastError?.Message);
-
-Pageable<PersistentThreadMessage> messages
-    = agentsClient.Messages.GetMessages(
-        threadId: thread.Id, order: ListSortOrder.Ascending);
-
-foreach (PersistentThreadMessage threadMessage in messages)
-{
-    Console.Write($"{threadMessage.CreatedAt:yyyy-MM-dd HH:mm:ss} - {threadMessage.Role,10}: ");
-    foreach (MessageContent contentItem in threadMessage.ContentItems)
-    {
-        if (contentItem is MessageTextContent textItem)
-        {
-            Console.Write(textItem.Text);
-        }
-        else if (contentItem is MessageImageFileContent imageFileItem)
-        {
-            Console.Write($"<image from ID: {imageFileItem.FileId}");
-        }
-        Console.WriteLine();
-    }
-}
-
-agentsClient.Threads.DeleteThread(threadId: thread.Id);
-agentsClient.Administration.DeleteAgent(agentId: agent.Id);
-```
 
 ### Performing Agent operations
 
@@ -633,7 +558,7 @@ MemoryStoreSearchResponse resp = projectClient.MemoryStores.SearchMemories(
     options: opts
 );
 Console.WriteLine("==The output from memory tool.==");
-foreach (Azure.AI.Projects.MemorySearchItem item in resp.Memories)
+foreach (MemorySearchItem item in resp.Memories)
 {
     Console.WriteLine(item.MemoryItem.Content);
 }
@@ -1239,6 +1164,85 @@ EvaluationRule continuousEvalRule = await projectClient.EvaluationRules.CreateOr
 );
 Console.WriteLine($"Continuous Evaluation Rule created (id: {continuousEvalRule.Id}, name: {continuousEvalRule.DisplayName})");
 ```
+
+### Performing Classic Agent operations
+
+The `Azure.AI.Agents.Persistent` package provides the legacy way to create and use Agents (Classic Agents).
+Please consider upgrading the codebase to use Agents as described  in "[Performing Agent operations](#performing-agent-operations)" section. 
+
+The `GetPersistentAgentsClient` method on the `AIProjectClient` gives you access to an authenticated `PersistentAgentsClient` from the `Azure.AI.Agents.Persistent` package. Below we show how to create an Agent and delete it. To see what you can do with the agent you created, see the [many samples](https://aka.ms/azsdk/Azure.AI.Agents.Persistent/net/samples) associated with the `Azure.AI.Agents.Persistent` package.
+
+The code below assumes `ModelDeploymentName` (a string) is defined. It's the deployment name of an AI model in your Foundry Project, as shown in the "Models + endpoints" tab, under the "Name" column.
+```C# Snippet:AI_Projects_ExtensionsAgentsBasicsSync
+var endpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
+AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
+PersistentAgentsClient agentsClient = projectClient.GetPersistentAgentsClient();
+
+// Step 1: Create an agent
+PersistentAgent agent = agentsClient.Administration.CreateAgent(
+    model: modelDeploymentName,
+    name: "Math Tutor",
+    instructions: "You are a personal math tutor. Write and run code to answer math questions."
+);
+
+// Step 2: Create a thread
+PersistentAgentThread thread = agentsClient.Threads.CreateThread();
+
+// Step 3: Add a message to a thread
+PersistentThreadMessage message = agentsClient.Messages.CreateMessage(
+    thread.Id,
+    MessageRole.User,
+    "I need to solve the equation `3x + 11 = 14`. Can you help me?");
+
+// Intermission: message is now correlated with thread
+// Intermission: listing messages will retrieve the message just added
+
+List<PersistentThreadMessage> messagesList = [.. agentsClient.Messages.GetMessages(thread.Id)];
+Assert.That(message.Id, Is.EqualTo(messagesList[0].Id));
+
+// Step 4: Run the agent
+ThreadRun run = agentsClient.Runs.CreateRun(
+    thread.Id,
+    agent.Id,
+    additionalInstructions: "Please address the user as Jane Doe. The user has a premium account.");
+do
+{
+    Thread.Sleep(TimeSpan.FromMilliseconds(500));
+    run = agentsClient.Runs.GetRun(thread.Id, run.Id);
+}
+while (run.Status == RunStatus.Queued
+    || run.Status == RunStatus.InProgress);
+Assert.That(
+    RunStatus.Completed,
+    Is.EqualTo(run.Status),
+    run.LastError?.Message);
+
+Pageable<PersistentThreadMessage> messages
+    = agentsClient.Messages.GetMessages(
+        threadId: thread.Id, order: ListSortOrder.Ascending);
+
+foreach (PersistentThreadMessage threadMessage in messages)
+{
+    Console.Write($"{threadMessage.CreatedAt:yyyy-MM-dd HH:mm:ss} - {threadMessage.Role,10}: ");
+    foreach (MessageContent contentItem in threadMessage.ContentItems)
+    {
+        if (contentItem is MessageTextContent textItem)
+        {
+            Console.Write(textItem.Text);
+        }
+        else if (contentItem is MessageImageFileContent imageFileItem)
+        {
+            Console.Write($"<image from ID: {imageFileItem.FileId}");
+        }
+        Console.WriteLine();
+    }
+}
+
+agentsClient.Threads.DeleteThread(threadId: thread.Id);
+agentsClient.Administration.DeleteAgent(agentId: agent.Id);
+```
+
 ## Tracing
 
 **Note:** Tracing functionality is in preliminary preview and is subject to change. Spans, attributes, and events may be modified in future versions.

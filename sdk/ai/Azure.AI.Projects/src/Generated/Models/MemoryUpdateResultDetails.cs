@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Memory
 {
     /// <summary> Memory update result. </summary>
     public partial class MemoryUpdateResultDetails

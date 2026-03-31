@@ -13,46 +13,14 @@ using Azure.ResourceManager.NotificationHubs.Models;
 
 namespace Azure.ResourceManager.NotificationHubs
 {
-    /// <summary>
-    /// A class representing the NotificationHubNamespace data model.
-    /// Notification Hubs Namespace Resource.
-    /// </summary>
+    /// <summary> Notification Hubs Namespace Resource. </summary>
     public partial class NotificationHubNamespaceData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NotificationHubNamespaceData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="sku"> The Sku description for a namespace. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
         public NotificationHubNamespaceData(AzureLocation location, NotificationHubSku sku) : base(location)
@@ -60,128 +28,221 @@ namespace Azure.ResourceManager.NotificationHubs
             Argument.AssertNotNull(sku, nameof(sku));
 
             Sku = sku;
-            PrivateEndpointConnections = new ChangeTrackingList<NotificationHubPrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NotificationHubNamespaceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Represents namespace properties. </param>
         /// <param name="sku"> The Sku description for a namespace. </param>
-        /// <param name="namespaceName">
-        /// Name of the Notification Hubs namespace. This is immutable property, set automatically
-        /// by the service when the namespace is created.
-        /// </param>
-        /// <param name="operationProvisioningState"> Defines values for OperationProvisioningState. </param>
-        /// <param name="namespaceStatus"> Namespace status. </param>
-        /// <param name="isEnabled"> Gets or sets whether or not the namespace is currently enabled. </param>
-        /// <param name="isCritical"> Gets or sets whether or not the namespace is set as Critical. </param>
-        /// <param name="subscriptionId"> Namespace subscription id. </param>
-        /// <param name="region">
-        /// Region. The value is always set to the same value as Namespace.Location, so we are deprecating
-        /// this property.
-        /// </param>
-        /// <param name="metricId"> Azure Insights Metrics id. </param>
-        /// <param name="createdOn"> Time when the namespace was created. </param>
-        /// <param name="updatedOn"> Time when the namespace was updated. </param>
-        /// <param name="hubNamespaceType"> Defines values for NamespaceType. </param>
-        /// <param name="replicationRegion"> Allowed replication region. </param>
-        /// <param name="zoneRedundancy"> Namespace SKU name. </param>
-        /// <param name="networkAcls"> A collection of network authorization rules. </param>
-        /// <param name="pnsCredentials"> Collection of Notification Hub or Notification Hub Namespace PNS credentials. </param>
-        /// <param name="serviceBusEndpoint">
-        /// Gets or sets endpoint you can use to perform NotificationHub
-        /// operations.
-        /// </param>
-        /// <param name="privateEndpointConnections"> Private Endpoint Connections for namespace. </param>
-        /// <param name="scaleUnit"> Gets or sets scaleUnit where the namespace gets created. </param>
-        /// <param name="dataCenter"> Deprecated. </param>
-        /// <param name="publicNetworkAccess"> Type of public network access. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NotificationHubNamespaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NotificationHubSku sku, string namespaceName, OperationProvisioningState? operationProvisioningState, NotificationHubNamespaceStatus? namespaceStatus, bool? isEnabled, bool? isCritical, string subscriptionId, string region, string metricId, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, NotificationHubNamespaceTypeExt? hubNamespaceType, AllowedReplicationRegion? replicationRegion, ZoneRedundancyPreference? zoneRedundancy, NotificationHubNetworkAcls networkAcls, PnsCredentials pnsCredentials, Uri serviceBusEndpoint, IReadOnlyList<NotificationHubPrivateEndpointConnectionData> privateEndpointConnections, string scaleUnit, string dataCenter, NotificationHubPublicNetworkAccess? publicNetworkAccess, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal NotificationHubNamespaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, NotificationHubNamespaceProperties properties, NotificationHubSku sku) : base(id, name, resourceType, systemData, tags, location)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
             Sku = sku;
-            NamespaceName = namespaceName;
-            OperationProvisioningState = operationProvisioningState;
-            NamespaceStatus = namespaceStatus;
-            IsEnabled = isEnabled;
-            IsCritical = isCritical;
-            SubscriptionId = subscriptionId;
-            Region = region;
-            MetricId = metricId;
-            CreatedOn = createdOn;
-            UpdatedOn = updatedOn;
-            HubNamespaceType = hubNamespaceType;
-            ReplicationRegion = replicationRegion;
-            ZoneRedundancy = zoneRedundancy;
-            NetworkAcls = networkAcls;
-            PnsCredentials = pnsCredentials;
-            ServiceBusEndpoint = serviceBusEndpoint;
-            PrivateEndpointConnections = privateEndpointConnections;
-            ScaleUnit = scaleUnit;
-            DataCenter = dataCenter;
-            PublicNetworkAccess = publicNetworkAccess;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="NotificationHubNamespaceData"/> for deserialization. </summary>
-        internal NotificationHubNamespaceData()
-        {
-        }
+        /// <summary> Represents namespace properties. </summary>
+        internal NotificationHubNamespaceProperties Properties { get; set; }
 
         /// <summary> The Sku description for a namespace. </summary>
         public NotificationHubSku Sku { get; set; }
-        /// <summary>
-        /// Name of the Notification Hubs namespace. This is immutable property, set automatically
-        /// by the service when the namespace is created.
-        /// </summary>
-        public string NamespaceName { get; set; }
+
         /// <summary> Defines values for OperationProvisioningState. </summary>
-        public OperationProvisioningState? OperationProvisioningState { get; set; }
+        public OperationProvisioningState? OperationProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OperationProvisioningState;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NotificationHubNamespaceProperties();
+                }
+                Properties.OperationProvisioningState = value.Value;
+            }
+        }
+
         /// <summary> Namespace status. </summary>
-        public NotificationHubNamespaceStatus? NamespaceStatus { get; set; }
-        /// <summary> Gets or sets whether or not the namespace is currently enabled. </summary>
-        public bool? IsEnabled { get; set; }
-        /// <summary> Gets or sets whether or not the namespace is set as Critical. </summary>
-        public bool? IsCritical { get; set; }
-        /// <summary> Namespace subscription id. </summary>
-        public string SubscriptionId { get; set; }
-        /// <summary>
-        /// Region. The value is always set to the same value as Namespace.Location, so we are deprecating
-        /// this property.
-        /// </summary>
-        public string Region { get; set; }
+        public NotificationHubNamespaceStatus? NamespaceStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NamespaceStatus;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NotificationHubNamespaceProperties();
+                }
+                Properties.NamespaceStatus = value.Value;
+            }
+        }
+
         /// <summary> Azure Insights Metrics id. </summary>
-        public string MetricId { get; }
-        /// <summary> Time when the namespace was created. </summary>
-        public DateTimeOffset? CreatedOn { get; set; }
-        /// <summary> Time when the namespace was updated. </summary>
-        public DateTimeOffset? UpdatedOn { get; set; }
+        public string MetricId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MetricId;
+            }
+        }
+
         /// <summary> Defines values for NamespaceType. </summary>
-        public NotificationHubNamespaceTypeExt? HubNamespaceType { get; set; }
+        public NotificationHubNamespaceTypeExt? HubNamespaceType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HubNamespaceType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NotificationHubNamespaceProperties();
+                }
+                Properties.HubNamespaceType = value.Value;
+            }
+        }
+
         /// <summary> Allowed replication region. </summary>
-        public AllowedReplicationRegion? ReplicationRegion { get; set; }
+        public AllowedReplicationRegion? ReplicationRegion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ReplicationRegion;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NotificationHubNamespaceProperties();
+                }
+                Properties.ReplicationRegion = value.Value;
+            }
+        }
+
         /// <summary> Namespace SKU name. </summary>
-        public ZoneRedundancyPreference? ZoneRedundancy { get; set; }
+        public ZoneRedundancyPreference? ZoneRedundancy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ZoneRedundancy;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NotificationHubNamespaceProperties();
+                }
+                Properties.ZoneRedundancy = value.Value;
+            }
+        }
+
         /// <summary> A collection of network authorization rules. </summary>
-        public NotificationHubNetworkAcls NetworkAcls { get; set; }
+        public NotificationHubNetworkAcls NetworkAcls
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NetworkAcls;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NotificationHubNamespaceProperties();
+                }
+                Properties.NetworkAcls = value;
+            }
+        }
+
         /// <summary> Collection of Notification Hub or Notification Hub Namespace PNS credentials. </summary>
-        public PnsCredentials PnsCredentials { get; set; }
-        /// <summary>
-        /// Gets or sets endpoint you can use to perform NotificationHub
-        /// operations.
-        /// </summary>
-        public Uri ServiceBusEndpoint { get; set; }
+        public PnsCredentials PnsCredentials
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PnsCredentials;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NotificationHubNamespaceProperties();
+                }
+                Properties.PnsCredentials = value;
+            }
+        }
+
         /// <summary> Private Endpoint Connections for namespace. </summary>
-        public IReadOnlyList<NotificationHubPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
+        public IReadOnlyList<NotificationHubPrivateEndpointConnectionData> PrivateEndpointConnections
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new NotificationHubNamespaceProperties();
+                }
+                return Properties.PrivateEndpointConnections;
+            }
+        }
+
         /// <summary> Gets or sets scaleUnit where the namespace gets created. </summary>
-        public string ScaleUnit { get; set; }
+        public string ScaleUnit
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ScaleUnit;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NotificationHubNamespaceProperties();
+                }
+                Properties.ScaleUnit = value;
+            }
+        }
+
         /// <summary> Deprecated. </summary>
-        public string DataCenter { get; set; }
+        public string DataCenter
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DataCenter;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NotificationHubNamespaceProperties();
+                }
+                Properties.DataCenter = value;
+            }
+        }
+
         /// <summary> Type of public network access. </summary>
-        public NotificationHubPublicNetworkAccess? PublicNetworkAccess { get; set; }
+        public NotificationHubPublicNetworkAccess? PublicNetworkAccess
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PublicNetworkAccess;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NotificationHubNamespaceProperties();
+                }
+                Properties.PublicNetworkAccess = value.Value;
+            }
+        }
     }
 }

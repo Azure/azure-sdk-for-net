@@ -78,6 +78,7 @@ public class BasicBatchTests
             }
 
             resource pool 'Microsoft.Batch/batchAccounts/pools@2025-06-01' = {
+              name: take('pool-${uniqueString(resourceGroup().id)}', 64)
               properties: {
                 displayName: 'MyPool'
                 vmSize: 'Standard_D2s_v3'
@@ -88,16 +89,15 @@ public class BasicBatchTests
                   }
                 }
               }
-              name: take('pool-${uniqueString(resourceGroup().id)}', 64)
               parent: account
             }
 
             resource app 'Microsoft.Batch/batchAccounts/applications@2025-06-01' = {
+              name: take('app-${uniqueString(resourceGroup().id)}', 64)
               properties: {
                 displayName: 'MyApp'
                 allowUpdates: true
               }
-              name: take('app-${uniqueString(resourceGroup().id)}', 64)
               parent: account
             }
 

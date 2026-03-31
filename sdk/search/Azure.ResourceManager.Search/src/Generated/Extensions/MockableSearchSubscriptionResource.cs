@@ -42,18 +42,18 @@ namespace Azure.ResourceManager.Search.Mocking
 
         private ClientDiagnostics ServicesClientDiagnostics => _servicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Search.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Services ServicesRestClient => _servicesRestClient ??= new Services(ServicesClientDiagnostics, Pipeline, Endpoint, "2025-05-01");
+        private Services ServicesRestClient => _servicesRestClient ??= new Services(ServicesClientDiagnostics, Pipeline, Endpoint, "2026-03-01-preview");
 
         private ClientDiagnostics SearchClientClientDiagnostics => _searchClientClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Search.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SearchClient SearchClientRestClient => _searchClientRestClient ??= new SearchClient(SearchClientClientDiagnostics, Pipeline, Endpoint, "2025-05-01");
+        private SearchClient SearchClientRestClient => _searchClientRestClient ??= new SearchClient(SearchClientClientDiagnostics, Pipeline, Endpoint, "2026-03-01-preview");
 
         private ClientDiagnostics UsagesClientDiagnostics => _usagesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Search.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Usages UsagesRestClient => _usagesRestClient ??= new Usages(UsagesClientDiagnostics, Pipeline, Endpoint, "2025-05-01");
+        private Usages UsagesRestClient => _usagesRestClient ??= new Usages(UsagesClientDiagnostics, Pipeline, Endpoint, "2026-03-01-preview");
 
         /// <summary>
-        /// Gets a list of all Search services in the given subscription.
+        /// Gets a list of all search services in the given subscription.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Search.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Search.Mocking
         }
 
         /// <summary>
-        /// Gets a list of all Search services in the given subscription.
+        /// Gets a list of all search services in the given subscription.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Search.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Search.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Search.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Search.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.Search.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -323,11 +323,11 @@ namespace Azure.ResourceManager.Search.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The location name. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="searchManagementRequestOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="QuotaUsageResult"/> that may take multiple service requests to iterate over. </returns>
@@ -353,11 +353,11 @@ namespace Azure.ResourceManager.Search.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The location name. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="searchManagementRequestOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="QuotaUsageResult"/> that may take multiple service requests to iterate over. </returns>
