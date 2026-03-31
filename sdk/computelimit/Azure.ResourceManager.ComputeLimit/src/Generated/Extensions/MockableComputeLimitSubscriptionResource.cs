@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ComputeLimit.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-15. </description>
+        /// <description> 2026-03-20. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ComputeLimit.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-15. </description>
+        /// <description> 2026-03-20. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.ComputeLimit.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-15. </description>
+        /// <description> 2026-03-20. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.ComputeLimit.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-15. </description>
+        /// <description> 2026-03-20. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -165,6 +165,74 @@ namespace Azure.ResourceManager.ComputeLimit.Mocking
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             return GetComputeLimitSharedLimits(location).Get(name, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of Features in the <see cref="SubscriptionResource"/>. </summary>
+        /// <param name="location"> The location for the resource. </param>
+        /// <returns> An object representing collection of Features and their operations over a FeatureResource. </returns>
+        public virtual FeatureCollection GetFeatures(AzureLocation location)
+        {
+            return GetCachedClient(client => new FeatureCollection(client, Id, location));
+        }
+
+        /// <summary>
+        /// Gets the properties of a compute limit feature.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ComputeLimit/locations/{location}/features/{featureName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Features_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-20. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location for the resource. </param>
+        /// <param name="featureName"> The name of the Feature. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="featureName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="featureName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<FeatureResource>> GetFeatureAsync(AzureLocation location, string featureName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(featureName, nameof(featureName));
+
+            return await GetFeatures(location).GetAsync(featureName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the properties of a compute limit feature.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ComputeLimit/locations/{location}/features/{featureName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Features_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-20. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location for the resource. </param>
+        /// <param name="featureName"> The name of the Feature. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="featureName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="featureName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<FeatureResource> GetFeature(AzureLocation location, string featureName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(featureName, nameof(featureName));
+
+            return GetFeatures(location).Get(featureName, cancellationToken);
         }
     }
 }

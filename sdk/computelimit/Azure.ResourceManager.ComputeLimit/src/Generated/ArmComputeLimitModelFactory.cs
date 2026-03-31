@@ -73,5 +73,32 @@ namespace Azure.ResourceManager.ComputeLimit.Models
         {
             return new ComputeLimitLimitName(value, localizedValue, additionalBinaryDataProperties: null);
         }
+
+        /// <summary> Compute limit feature. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="ComputeLimit.FeatureData"/> instance for mocking. </returns>
+        public static FeatureData FeatureData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, FeatureProperties properties = default)
+        {
+            return new FeatureData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties);
+        }
+
+        /// <summary> Properties of the compute limit feature. </summary>
+        /// <param name="state"> The current state of the feature (for example, Enabled, Disabled). </param>
+        /// <param name="provisioningState"> The provisioning state of the resource. </param>
+        /// <returns> A new <see cref="Models.FeatureProperties"/> instance for mocking. </returns>
+        public static FeatureProperties FeatureProperties(FeatureState? state = default, ComputeLimitResourceProvisioningState? provisioningState = default)
+        {
+            return new FeatureProperties(state, provisioningState, additionalBinaryDataProperties: null);
+        }
     }
 }
