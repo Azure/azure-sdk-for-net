@@ -2,10 +2,8 @@
 // Licensed under the MIT License.
 using System;
 using System.ClientModel.Primitives;
-using System.Globalization;
 using System.Threading.Tasks;
 using Azure.AI.Extensions.OpenAI;
-using Azure.AI.Projects;
 using Azure.AI.Projects.Agents;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;

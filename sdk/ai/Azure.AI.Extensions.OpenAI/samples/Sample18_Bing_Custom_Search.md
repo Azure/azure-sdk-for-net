@@ -106,7 +106,7 @@ Console.WriteLine($"{response.GetOutputText()}{GetFormattedAnnotation(response)}
 
 Synchronous sample:
 ```C# Snippet:Sample_Cleanup_CustomBingSearch_Sync
-projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
 ```
 
 Asynchronous sample:

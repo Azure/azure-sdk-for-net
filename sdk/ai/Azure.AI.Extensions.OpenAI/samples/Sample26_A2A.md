@@ -136,7 +136,7 @@ Console.WriteLine(response.GetOutputText());
 
 Synchronous sample:
 ```C# Snippet:Sample_Cleanup_AgentToAgent_Sync
-projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
 ```
 
 Asynchronous sample:

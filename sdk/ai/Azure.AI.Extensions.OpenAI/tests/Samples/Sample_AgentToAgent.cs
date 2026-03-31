@@ -137,7 +137,7 @@ public class Sample_AgentToAgent : ProjectsOpenAITestBase
         Console.WriteLine(response.GetOutputText());
 
         #region Snippet:Sample_Cleanup_AgentToAgent_Sync
-        projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+        projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         #endregion
     }
 

@@ -31,7 +31,7 @@
 - `MemoryStoreDefaultOptions.UserProfileEnabled` property was renamed to `MemoryStoreDefaultOptions.IsUserProfileEnabled`.
 - `MemoryStoreDeleteScopeResponse.Deleted` property was renamed to `MemoryStoreDeleteScopeResponse.IsDeleted`.
 - `AIProjectClient.OpenAI` property was renamed to `AIProjectClient.ProjectOpenAIClient`.
-- `AIProjectClient.Agents` property was renamed to `AIProjectClient.AgentAdministrationClient`
+- `AIProjectClient.Agents` property was renamed to `AIProjectClient.AgentAdministrationClient`.
 - `RecurrenceTrigger.StartTime`, `RecurrenceTrigger.EndTime`, `OneTimeTrigger.TriggerAt`, `CronTrigger.StartTime`, `CronTrigger.EndTime` and `ScheduleRun.TriggerTime` properties type was changed from `string` to `DateTimeOffset`.
 
 ### Bugs Fixed

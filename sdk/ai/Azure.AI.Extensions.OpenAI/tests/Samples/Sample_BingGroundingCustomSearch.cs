@@ -106,7 +106,7 @@ public class Sample_CustomBingSearch : ProjectsOpenAITestBase
         Console.WriteLine($"{response.GetOutputText()}{GetFormattedAnnotation(response)}");
 
         #region Snippet:Sample_Cleanup_CustomBingSearch_Sync
-        projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+        projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         #endregion
     }
 
