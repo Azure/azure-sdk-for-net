@@ -3,16 +3,7 @@
 
 #nullable enable
 
-using System;
 using System.Drawing;
-using System.Linq;
-using System.Threading.Tasks;
-using Azure;
-using Azure.AI.ContentUnderstanding;
-using Azure.AI.ContentUnderstanding.Tests;
-using Azure.Core;
-using Azure.Core.TestFramework;
-using NUnit.Framework;
 
 namespace Azure.AI.ContentUnderstanding.Samples
 {
@@ -25,6 +16,9 @@ namespace Azure.AI.ContentUnderstanding.Samples
         ///
         /// For document/image content, sources are <see cref="DocumentSource"/> instances
         /// with page number, polygon coordinates, and a computed bounding box.
+        ///
+        /// For audio/video content, sources are <see cref="AudioVisualSource"/> instances
+        /// with a timestamp and an optional bounding box.
         /// </summary>
         [RecordedTest]
         public async Task ContentSourceAsync()
@@ -163,5 +157,15 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Assert.IsNull(pageOnly.BoundingBox, "Page-only source should have null BoundingBox");
             #endregion
         }
+
+        // TODO: AudioVisualContentSourceAsync — demonstrate real AudioVisualSource grounding
+        // from audio/video analysis. The CU service does not currently return AudioVisualSource
+        // grounding (field.Sources) for AI-generated audio fields. Once the service supports
+        // timestamp-level source grounding for audio/video content, implement a sample here that:
+        //   1. Analyzes an audio/video file with a custom analyzer (EstimateFieldSourceAndConfidence = true)
+        //   2. Iterates over fields and casts Sources to AudioVisualSource
+        //   3. Shows AudioVisualSource.Time (timestamp) and AudioVisualSource.BoundingBox (optional)
+        //   4. Demonstrates ContentSource.Parse() with AV(...) format strings
+        // See AudioVisualSource and ContentSource.Parse() for the SDK-side API.
     }
 }
