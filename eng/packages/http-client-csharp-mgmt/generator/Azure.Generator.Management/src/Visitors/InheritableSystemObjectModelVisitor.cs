@@ -305,6 +305,12 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
     /// model.Type.BaseType as the return type, which can produce a covariant return type
     /// (e.g., returning CustomPatchBase instead of ResourceData). Covariant returns are not
     /// supported on .NET Framework.
+    ///
+    /// Also fixes the explicit interface Create methods (IJsonModel&lt;T&gt;.Create and
+    /// IPersistableModel&lt;T&gt;.Create) that call the core methods. When the core method
+    /// return type is widened to ResourceData, these interface methods need a cast from
+    /// ResourceData to the model type (e.g., (UnknownDataBoxEdgeRole)JsonModelCreateCore(...))
+    /// to satisfy the interface contract.
     /// </summary>
     private void FixSerializationReturnTypes(ModelProvider model)
     {
@@ -318,6 +324,7 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
         {
             if (provider is MrwSerializationTypeDefinition serializationTypeDefinition)
             {
+                bool coreReturnTypeChanged = false;
                 foreach (var method in serializationTypeDefinition.Methods.Where(
                     m => _methodNamesToFixReturnType.Contains(m.Signature.Name)
                          && m.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Override)))
@@ -326,8 +333,36 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
                     if (currentReturnType is not null && !currentReturnType.Equals(systemBaseType))
                     {
                         method.Signature.Update(returnType: systemBaseType);
+                        coreReturnTypeChanged = true;
                     }
                 }
+
+                // When we changed the core method return types, the explicit interface Create
+                // methods that call them may now have a type mismatch (e.g., ResourceData cannot
+                // implicitly convert to DataBoxEdgeRoleData). Add a cast to fix this.
+                if (coreReturnTypeChanged)
+                {
+                    FixExplicitInterfaceCreateMethods(serializationTypeDefinition, model.Type);
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// Adds casts to explicit interface Create method bodies when the core method return type
+    /// has been widened to ResourceData. The explicit interface methods
+    /// (IJsonModel&lt;T&gt;.Create, IPersistableModel&lt;T&gt;.Create) call JsonModelCreateCore
+    /// or PersistableModelCreateCore and expect the model type, but those core methods now
+    /// return ResourceData. We add a cast: (ModelType)CoreMethod(...).
+    /// </summary>
+    private static void FixExplicitInterfaceCreateMethods(MrwSerializationTypeDefinition serializationTypeDefinition, CSharpType modelType)
+    {
+        foreach (var method in serializationTypeDefinition.Methods.Where(
+            m => m.Signature.Name == "Create" && m.Signature.ExplicitInterface is not null))
+        {
+            if (method.BodyExpression is not null)
+            {
+                method.Update(bodyExpression: method.BodyExpression.CastTo(modelType));
             }
         }
     }
