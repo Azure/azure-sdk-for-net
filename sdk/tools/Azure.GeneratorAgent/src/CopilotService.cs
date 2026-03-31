@@ -49,6 +49,7 @@ public sealed class CopilotService : IAsyncDisposable
         string projectPath,
         ILogger<CopilotService> logger,
         AppSettings settings,
+        string localSpecsPath,
         CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(logger);
@@ -57,6 +58,11 @@ public sealed class CopilotService : IAsyncDisposable
         if (string.IsNullOrWhiteSpace(projectPath))
         {
             throw new ArgumentException("Project path is required for Copilot initialization", nameof(projectPath));
+        }
+
+        if (string.IsNullOrWhiteSpace(localSpecsPath))
+        {
+            throw new ArgumentException("Local specs path is required for Copilot initialization", nameof(localSpecsPath));
         }
 
         CopilotClient? client = null;
@@ -84,6 +90,16 @@ public sealed class CopilotService : IAsyncDisposable
             var normalizedRepoRoot = FindRepoRoot(normalizedProjectPath);
             logger.LogDebug("Repository root resolved to: {RepoRoot}", normalizedRepoRoot);
 
+            var normalizedLocalSpecsPath = Path.GetFullPath(localSpecsPath);
+            if (!normalizedLocalSpecsPath.EndsWith(Path.DirectorySeparatorChar))
+            {
+                normalizedLocalSpecsPath += Path.DirectorySeparatorChar;
+            }
+            logger.LogDebug("Local specs path resolved to: {LocalSpecsPath}", normalizedLocalSpecsPath);
+
+            var normalizedLocalSpecsRepoRoot = FindRepoRoot(normalizedLocalSpecsPath);
+            logger.LogDebug("Local specs repository root resolved to: {LocalSpecsRepoRoot}", normalizedLocalSpecsRepoRoot);
+
             var accessDeniedCts = new CancellationTokenSource();
 
             session = await client.CreateSessionAsync(new SessionConfig
@@ -103,7 +119,7 @@ public sealed class CopilotService : IAsyncDisposable
                     {
                         try
                         {
-                            var denial = ValidateToolAccess(input.ToolName, input.ToolArgs?.ToString(), projectPath, normalizedProjectPath, normalizedRepoRoot);
+                            var denial = ValidateToolAccess(input.ToolName, input.ToolArgs?.ToString(), projectPath, normalizedProjectPath, normalizedRepoRoot, normalizedLocalSpecsPath, normalizedLocalSpecsRepoRoot);
                             if (denial is not null)
                             {
                                 logger.LogWarning("Tool access denied for {ToolName}: {Reason}", input.ToolName, denial);
@@ -189,7 +205,9 @@ public sealed class CopilotService : IAsyncDisposable
         string? toolArgs,
         string projectPath,
         string normalizedProjectPath,
-        string normalizedRepoRoot)
+        string normalizedRepoRoot,
+        string normalizedLocalSpecsPath,
+        string normalizedLocalSpecsRepoRoot)
     {
         var normalizedToolName = toolName?.ToLowerInvariant();
         var resolvedPath = ResolveToolPath(normalizedToolName!, toolArgs, projectPath);
@@ -206,9 +224,12 @@ public sealed class CopilotService : IAsyncDisposable
                     ? resolvedPath
                     : resolvedPath + Path.DirectorySeparatorChar;
 
-                if (!editPathWithSeparator.StartsWith(normalizedProjectPath, StringComparison.Ordinal))
+                var insideProject = editPathWithSeparator.StartsWith(normalizedProjectPath, StringComparison.Ordinal);
+                var insideLocalSpecs = editPathWithSeparator.StartsWith(normalizedLocalSpecsPath, StringComparison.Ordinal);
+
+                if (!insideProject && !insideLocalSpecs)
                 {
-                    return $"{toolName} attempted to access '{resolvedPath}' which is outside the project directory '{normalizedProjectPath}'.";
+                    return $"{toolName} attempted to access '{resolvedPath}' which is outside the allowed directories '{normalizedProjectPath}' or '{normalizedLocalSpecsPath}'.";
                 }
                 break;
 
@@ -219,10 +240,13 @@ public sealed class CopilotService : IAsyncDisposable
                         ? resolvedPath
                         : resolvedPath + Path.DirectorySeparatorChar;
 
-                    if (!pathWithSeparator.StartsWith(normalizedRepoRoot, StringComparison.Ordinal)
-                        && !resolvedPath.StartsWith(Path.GetTempPath(), StringComparison.OrdinalIgnoreCase))
+                    var insideRepo = pathWithSeparator.StartsWith(normalizedRepoRoot, StringComparison.Ordinal);
+                    var insideTemp = resolvedPath.StartsWith(Path.GetTempPath(), StringComparison.OrdinalIgnoreCase);
+                    var insideSpecs = pathWithSeparator.StartsWith(normalizedLocalSpecsRepoRoot, StringComparison.Ordinal);
+
+                    if (!insideRepo && !insideTemp && !insideSpecs)
                     {
-                        return $"{toolName} attempted to access '{resolvedPath}' which is outside the repository directory '{normalizedRepoRoot}' and system temp directory.";
+                        return $"{toolName} attempted to access '{resolvedPath}' which is outside the repository directory '{normalizedRepoRoot}', system temp directory, and local specs directory.";
                     }
                 }
                 break;
@@ -314,6 +338,27 @@ public sealed class CopilotService : IAsyncDisposable
         await SendPromptAndGetResponseAsync(prompt, cancellationToken).ConfigureAwait(false);
 
         _logger.LogInformation("Build-fix cycle completed");
+    }
+
+    /// <summary>
+    /// Handles the local specs commit iteration workflow: iterates through commits trying code generation,
+    /// falling back to modifying tspconfig.yaml if all commits fail.
+    /// </summary>
+    public async Task HandleLocalSpecsCommitIterationAsync(
+        string sdkProjectPath,
+        string tspLocationPath,
+        string specsRelativeDirectory,
+        string localSpecsPath,
+        CancellationToken cancellationToken = default)
+    {
+        ObjectDisposedException.ThrowIf(_isDisposed, this);
+
+        _logger.LogInformation("Starting local specs commit iteration for: {LocalSpecsPath}", localSpecsPath);
+
+        var prompt = CopilotPrompts.LocalSpecsCommitIterationPrompt(sdkProjectPath, tspLocationPath, specsRelativeDirectory, localSpecsPath);
+        await SendPromptAndGetResponseAsync(prompt, cancellationToken).ConfigureAwait(false);
+
+        _logger.LogInformation("Local specs commit iteration completed");
     }
 
     private async Task<string?> SendPromptAndGetResponseAsync(string prompt, CancellationToken cancellationToken)

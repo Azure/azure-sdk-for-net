@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Search;
 
 namespace Azure.ResourceManager.Search.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.Search.Models
     public readonly partial struct SearchServiceSharedPrivateLinkResourceStatus : IEquatable<SearchServiceSharedPrivateLinkResourceStatus>
     {
         private readonly string _value;
+        /// <summary> The shared private link resource has been created and is pending approval. </summary>
+        private const string PendingValue = "Pending";
+        /// <summary> The shared private link resource is approved and is ready for use. </summary>
+        private const string ApprovedValue = "Approved";
+        /// <summary> The shared private link resource has been rejected and cannot be used. </summary>
+        private const string RejectedValue = "Rejected";
+        /// <summary> The shared private link resource has been removed from the service. </summary>
+        private const string DisconnectedValue = "Disconnected";
 
         /// <summary> Initializes a new instance of <see cref="SearchServiceSharedPrivateLinkResourceStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SearchServiceSharedPrivateLinkResourceStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string PendingValue = "Pending";
-        private const string ApprovedValue = "Approved";
-        private const string RejectedValue = "Rejected";
-        private const string DisconnectedValue = "Disconnected";
+            _value = value;
+        }
 
         /// <summary> The shared private link resource has been created and is pending approval. </summary>
         public static SearchServiceSharedPrivateLinkResourceStatus Pending { get; } = new SearchServiceSharedPrivateLinkResourceStatus(PendingValue);
+
         /// <summary> The shared private link resource is approved and is ready for use. </summary>
         public static SearchServiceSharedPrivateLinkResourceStatus Approved { get; } = new SearchServiceSharedPrivateLinkResourceStatus(ApprovedValue);
+
         /// <summary> The shared private link resource has been rejected and cannot be used. </summary>
         public static SearchServiceSharedPrivateLinkResourceStatus Rejected { get; } = new SearchServiceSharedPrivateLinkResourceStatus(RejectedValue);
+
         /// <summary> The shared private link resource has been removed from the service. </summary>
         public static SearchServiceSharedPrivateLinkResourceStatus Disconnected { get; } = new SearchServiceSharedPrivateLinkResourceStatus(DisconnectedValue);
+
         /// <summary> Determines if two <see cref="SearchServiceSharedPrivateLinkResourceStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SearchServiceSharedPrivateLinkResourceStatus left, SearchServiceSharedPrivateLinkResourceStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SearchServiceSharedPrivateLinkResourceStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SearchServiceSharedPrivateLinkResourceStatus left, SearchServiceSharedPrivateLinkResourceStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SearchServiceSharedPrivateLinkResourceStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SearchServiceSharedPrivateLinkResourceStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SearchServiceSharedPrivateLinkResourceStatus(string value) => new SearchServiceSharedPrivateLinkResourceStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SearchServiceSharedPrivateLinkResourceStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SearchServiceSharedPrivateLinkResourceStatus?(string value) => value == null ? null : new SearchServiceSharedPrivateLinkResourceStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SearchServiceSharedPrivateLinkResourceStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SearchServiceSharedPrivateLinkResourceStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

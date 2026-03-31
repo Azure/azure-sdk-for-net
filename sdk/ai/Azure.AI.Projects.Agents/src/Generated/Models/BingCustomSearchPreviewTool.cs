@@ -9,12 +9,12 @@ using OpenAI;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The input definition information for a Bing custom search tool as used to configure an agent. </summary>
-    public partial class BingCustomSearchPreviewTool : AgentTool
+    public partial class BingCustomSearchPreviewTool : ProjectsAgentTool
     {
         /// <summary> Initializes a new instance of <see cref="BingCustomSearchPreviewTool"/>. </summary>
         /// <param name="bingCustomSearchPreview"> The bing custom search tool parameters. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="bingCustomSearchPreview"/> is null. </exception>
-        public BingCustomSearchPreviewTool(BingCustomSearchToolParameters bingCustomSearchPreview) : base(ToolType.BingCustomSearchPreview)
+        public BingCustomSearchPreviewTool(BingCustomSearchToolOptions bingCustomSearchPreview) : base(ToolType.BingCustomSearchPreview)
         {
             Argument.AssertNotNull(bingCustomSearchPreview, nameof(bingCustomSearchPreview));
 
@@ -25,12 +25,12 @@ namespace Azure.AI.Projects.Agents
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="bingCustomSearchPreview"> The bing custom search tool parameters. </param>
-        internal BingCustomSearchPreviewTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, BingCustomSearchToolParameters bingCustomSearchPreview) : base(@type, additionalBinaryDataProperties)
+        internal BingCustomSearchPreviewTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, BingCustomSearchToolOptions bingCustomSearchPreview) : base(@type, additionalBinaryDataProperties)
         {
             BingCustomSearchPreview = bingCustomSearchPreview;
         }
 
         /// <summary> The bing custom search tool parameters. </summary>
-        public BingCustomSearchToolParameters BingCustomSearchPreview { get; set; }
+        public BingCustomSearchToolOptions BingCustomSearchPreview { get; set; }
     }
 }

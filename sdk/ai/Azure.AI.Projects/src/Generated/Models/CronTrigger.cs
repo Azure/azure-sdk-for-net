@@ -4,11 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Cron based trigger. </summary>
-    public partial class CronTrigger : Trigger
+    public partial class CronTrigger : ScheduleTrigger
     {
         /// <summary> Initializes a new instance of <see cref="CronTrigger"/>. </summary>
         /// <param name="expression"> Cron expression that defines the schedule frequency. </param>

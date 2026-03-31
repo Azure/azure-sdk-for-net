@@ -31,8 +31,6 @@ namespace Azure.AI.Language.Text
 
             var authorizationScope = $"{(string.IsNullOrEmpty(options.Audience?.ToString()) ? TextAudience.AzurePublicCloud : options.Audience)}/.default";
 
-            _tokenCredential = credential;
-
             ClientDiagnostics = new ClientDiagnostics(options, true);
             Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(credential, authorizationScope) }, Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
             _endpoint = endpoint;

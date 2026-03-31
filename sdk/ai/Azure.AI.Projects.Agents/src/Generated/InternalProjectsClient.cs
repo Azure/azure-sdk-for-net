@@ -13,10 +13,8 @@ namespace Azure.AI.Projects.Agents
     internal partial class InternalProjectsClient
     {
         private readonly Uri _endpoint;
-        /// <summary> A credential provider used to authenticate to the service. </summary>
-        private readonly AuthenticationTokenProvider _tokenProvider;
         /// <summary> The OAuth2 flows supported by the service. </summary>
-        private readonly Dictionary<string, object>[] _flows = new Dictionary<string, object>[] 
+        private static readonly Dictionary<string, object>[] _flows = new Dictionary<string, object>[] 
         {
             new Dictionary<string, object>
             {
@@ -25,7 +23,7 @@ namespace Azure.AI.Projects.Agents
             }
         };
         private readonly string _apiVersion;
-        private AgentsClient _cachedAgentsClient;
+        private AgentAdministrationClient _cachedAgentAdministrationClient;
 
         /// <summary> Initializes a new instance of InternalProjectsClient for mocking. </summary>
         protected InternalProjectsClient()
@@ -35,31 +33,47 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Initializes a new instance of InternalProjectsClient. </summary>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="tokenProvider"> A credential provider used to authenticate to the service. </param>
-        public InternalProjectsClient(Uri endpoint, AuthenticationTokenProvider tokenProvider) : this(endpoint, tokenProvider, new InternalProjectsClientOptions())
+        public InternalProjectsClient(Uri endpoint, AuthenticationTokenProvider tokenProvider) : this(endpoint, tokenProvider, new AgentAdministrationClientOptions())
         {
+        }
+
+        /// <summary> Initializes a new instance of InternalProjectsClient. </summary>
+        /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        internal InternalProjectsClient(AuthenticationPolicy authenticationPolicy, Uri endpoint, AgentAdministrationClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+
+            options ??= new AgentAdministrationClientOptions();
+
+            _endpoint = endpoint;
+            if (authenticationPolicy != null)
+            {
+                Pipeline = ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] { new UserAgentPolicy(typeof(InternalProjectsClient).Assembly), authenticationPolicy }, Array.Empty<PipelinePolicy>());
+            }
+            else
+            {
+                Pipeline = ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] { new UserAgentPolicy(typeof(InternalProjectsClient).Assembly) }, Array.Empty<PipelinePolicy>());
+            }
+            _apiVersion = options.Version;
         }
 
         /// <summary> Initializes a new instance of InternalProjectsClient. </summary>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="tokenProvider"> A credential provider used to authenticate to the service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        public InternalProjectsClient(Uri endpoint, AuthenticationTokenProvider tokenProvider, InternalProjectsClientOptions options)
+        public InternalProjectsClient(Uri endpoint, AuthenticationTokenProvider tokenProvider, AgentAdministrationClientOptions options) : this(new BearerTokenPolicy(tokenProvider, _flows), endpoint, options)
         {
-            options ??= new InternalProjectsClientOptions();
-
-            _endpoint = endpoint;
-            _tokenProvider = tokenProvider;
-            Pipeline = ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] { new UserAgentPolicy(typeof(InternalProjectsClient).Assembly), new BearerTokenPolicy(_tokenProvider, _flows) }, Array.Empty<PipelinePolicy>());
-            _apiVersion = options.Version;
         }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public ClientPipeline Pipeline { get; }
 
-        /// <summary> Initializes a new instance of AgentsClient. </summary>
-        public virtual AgentsClient GetAgentsClient()
+        /// <summary> Initializes a new instance of AgentAdministrationClient. </summary>
+        public virtual AgentAdministrationClient GetAgentAdministrationClient()
         {
-            return Volatile.Read(ref _cachedAgentsClient) ?? Interlocked.CompareExchange(ref _cachedAgentsClient, new AgentsClient(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentsClient;
+            return Volatile.Read(ref _cachedAgentAdministrationClient) ?? Interlocked.CompareExchange(ref _cachedAgentAdministrationClient, new AgentAdministrationClient(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentAdministrationClient;
         }
     }
 }

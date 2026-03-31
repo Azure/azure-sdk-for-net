@@ -67,9 +67,7 @@ namespace Azure.ResourceManager.Quota
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(groupQuotasEnforcementStatusData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(groupQuotasEnforcementStatusData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="GroupQuotasEnforcementStatusData"/> from. </param>

@@ -154,23 +154,18 @@ namespace Azure.Identity.Tests
         protected virtual Type GetExpectedExceptionType(bool isChained)
             => isChained ? typeof(CredentialUnavailableException) : typeof(AuthenticationFailedException);
 
-        protected virtual bool IsChainedCredentialSupported => true;
-
-        private void SkipIfChainedNotSupported()
-        {
-            if (!IsChainedCredentialSupported)
-            {
-                Assert.Ignore("ConfigurableCredential does not support chained credential scenarios yet. See https://github.com/Azure/azure-sdk-for-net/issues/56233");
-            }
-        }
-
         #endregion
+
+        [SetUp]
+        public void Setup()
+        {
+            ApplicationBase.ResetStateForTest();
+        }
 
         [NonParallelizable]
         [Test]
         public async Task VerifyImdsRequestWithClientIdMock()
         {
-            SkipIfChainedNotSupported();
             using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null } });
 
             var initialResponse = CreateErrorMockResponse(400, "mock error");
@@ -197,7 +192,6 @@ namespace Azure.Identity.Tests
         [Test]
         public async Task VerifyImdsSendsProbeOnlyOnFirstRequest()
         {
-            SkipIfChainedNotSupported();
             using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null } });
 
             int probeCount = 0;
@@ -496,7 +490,6 @@ namespace Azure.Identity.Tests
         [Test]
         public void VerifyImdsRequestFailureWithInvalidJsonPopulatesExceptionMessage()
         {
-            SkipIfChainedNotSupported();
             using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null } });
 
             var expectedMessage = "Response was not in a valid json format.";
@@ -514,7 +507,6 @@ namespace Azure.Identity.Tests
         [TestCase(null)]
         public void VerifyImdsRequestFailureWithValidJsonIdentityNotFoundErrorThrowsCUE(string content)
         {
-            SkipIfChainedNotSupported();
             using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null } });
 
             var response = CreateResponse(400, content);
@@ -531,7 +523,6 @@ namespace Azure.Identity.Tests
         [TestCase(false)]
         public void VerifyImdsProbeRequestSuccessWithIdentityNotFoundErrorThrowsCUE(bool isChained)
         {
-            if (isChained) SkipIfChainedNotSupported();
             using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null } });
 
             var mockTransport = new MockTransport(req =>
@@ -606,7 +597,9 @@ namespace Azure.Identity.Tests
             using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", "https://mock.podid.endpoint/" } });
 
             var response = CreateSuccessResponse(ExpectedToken);
-            var mockTransport = new MockTransport(response);
+            var mockTransport = new MockTransport(req => {
+                return response;
+            });
             var credential = CreateCredentialForImdsWithResourceId(mockTransport, new ResourceIdentifier(_expectedResourceId));
 
             AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default);
@@ -615,7 +608,7 @@ namespace Azure.Identity.Tests
 
             MockRequest request = mockTransport.SingleRequest;
 
-            Assert.IsTrue(request.Uri.ToString().StartsWith("https://mock.podid.endpoint" + ImdsManagedIdentityProbeSource.imddsTokenPath));
+            Assert.IsTrue(request.Uri.ToString().StartsWith("https://mock.podid.endpoint" + ImdsManagedIdentityProbeSource.imddsTokenPath), $"Unexpected Uri: {request.Uri}");
 
             string query = request.Uri.Query;
 
@@ -811,9 +804,8 @@ namespace Azure.Identity.Tests
 
         [NonParallelizable]
         [Test]
-        public async Task VerifyMsiUnavailableOnIMDSAggregateExcpetion()
+        public virtual async Task VerifyMsiUnavailableOnIMDSAggregateExcpetion()
         {
-            SkipIfChainedNotSupported();
             using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null } });
             var mockTransport = new MockTransport(req =>
             {
@@ -831,9 +823,8 @@ namespace Azure.Identity.Tests
 
         [NonParallelizable]
         [Test]
-        public async Task VerifyMsiUnavailableOnIMDSRequestFailedExcpetion()
+        public virtual async Task VerifyMsiUnavailableOnIMDSRequestFailedExcpetion()
         {
-            SkipIfChainedNotSupported();
             using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null } });
 
             var mockTransport = new MockTransport(req =>
@@ -872,7 +863,6 @@ namespace Azure.Identity.Tests
         [Test]
         public async Task VerifyMsiUnavailableOnIMDSGatewayErrorResponse([Values(502, 504)] int statusCode)
         {
-            SkipIfChainedNotSupported();
             using var server = new TestServer(context =>
             {
                 context.Response.StatusCode = statusCode;
@@ -975,7 +965,7 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        public async Task RetriesOnRetriableStatusCode([Values(404, 410, 500)] int status)
+        public virtual async Task RetriesOnRetriableStatusCode([Values(404, 410, 500)] int status)
         {
             int tryCount = 0;
             using var environment = new TestEnvVar(

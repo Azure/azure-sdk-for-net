@@ -28,8 +28,8 @@ public partial class Sample17_FineTuning_DPO : SamplesBase
         string trainingFilePath = Path.Combine(FineTuningHelpers.GetSamplesDataDirectory(), "dpo_training_set.jsonl");
         string validationFilePath = Path.Combine(FineTuningHelpers.GetSamplesDataDirectory(), "dpo_validation_set.jsonl");
 #endif
-        var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-        var modelDeploymentName = Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+        var endpoint = Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+        var modelDeploymentName = Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
         AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
         ProjectOpenAIClient oaiClient = projectClient.OpenAI;
         OpenAIFileClient fileClient = oaiClient.GetOpenAIFileClient();
@@ -92,8 +92,8 @@ public partial class Sample17_FineTuning_DPO : SamplesBase
         string trainingFilePath = Path.Combine(FineTuningHelpers.GetSamplesDataDirectory(), "dpo_training_set.jsonl");
         string validationFilePath = Path.Combine(FineTuningHelpers.GetSamplesDataDirectory(), "dpo_validation_set.jsonl");
 #endif
-        var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-        var modelDeploymentName = Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+        var endpoint = Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+        var modelDeploymentName = Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
         AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
         ProjectOpenAIClient oaiClient = projectClient.OpenAI;
         OpenAIFileClient fileClient = oaiClient.GetOpenAIFileClient();

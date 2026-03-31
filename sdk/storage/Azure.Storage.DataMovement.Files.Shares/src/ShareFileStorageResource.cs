@@ -162,7 +162,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             }
 
             await ShareFileClient.UploadRangeFromUriAsync(
-                sourceUri: sourceResource.Uri,
+                sourceUri: options?.SourceUri,
                 range: range,
                 sourceRange: range,
                 options: _options?.ToShareFileUploadRangeFromUriOptions(options?.SourceAuthentication),
@@ -219,7 +219,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             if (completeLength > 0)
             {
                 await ShareFileClient.UploadRangeFromUriAsync(
-                    sourceUri: sourceResource.Uri,
+                    sourceUri: options?.SourceUri,
                     range: new HttpRange(0, completeLength),
                     sourceRange: new HttpRange(0, completeLength),
                     options: _options?.ToShareFileUploadRangeFromUriOptions(options?.SourceAuthentication),
@@ -236,6 +236,11 @@ namespace Azure.Storage.DataMovement.Files.Shares
         protected override async Task<HttpAuthorization> GetCopyAuthorizationHeaderAsync(CancellationToken cancellationToken = default)
         {
             return await ShareFileClientInternals.GetCopyAuthorizationTokenAsync(ShareFileClient, cancellationToken).ConfigureAwait(false);
+        }
+
+        protected override Uri GetSasWithUri()
+        {
+            return ShareFileClientInternals.GetSasUri(ShareFileClient);
         }
 
         protected override async Task<StorageResourceItemProperties> GetPropertiesAsync(CancellationToken cancellationToken = default)

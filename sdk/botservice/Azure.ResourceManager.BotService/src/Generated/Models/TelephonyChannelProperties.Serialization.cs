@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.BotService;
 
 namespace Azure.ResourceManager.BotService.Models
 {
-    public partial class TelephonyChannelProperties : IUtf8JsonSerializable, IJsonModel<TelephonyChannelProperties>
+    /// <summary> The parameters to provide for the Direct Line channel. </summary>
+    public partial class TelephonyChannelProperties : IJsonModel<TelephonyChannelProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TelephonyChannelProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual TelephonyChannelProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TelephonyChannelProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeTelephonyChannelProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(TelephonyChannelProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TelephonyChannelProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerBotServiceContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(TelephonyChannelProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<TelephonyChannelProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        TelephonyChannelProperties IPersistableModel<TelephonyChannelProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<TelephonyChannelProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<TelephonyChannelProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,17 +69,16 @@ namespace Azure.ResourceManager.BotService.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TelephonyChannelProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TelephonyChannelProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(TelephonyChannelProperties)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsCollectionDefined(PhoneNumbers))
             {
                 writer.WritePropertyName("phoneNumbers"u8);
                 writer.WriteStartArray();
-                foreach (var item in PhoneNumbers)
+                foreach (TelephonyPhoneNumbers item in PhoneNumbers)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -48,7 +88,7 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 writer.WritePropertyName("apiConfigurations"u8);
                 writer.WriteStartArray();
-                foreach (var item in ApiConfigurations)
+                foreach (TelephonyChannelResourceApiConfiguration item in ApiConfigurations)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -56,66 +96,38 @@ namespace Azure.ResourceManager.BotService.Models
             }
             if (Optional.IsDefined(CognitiveServiceSubscriptionKey))
             {
-                if (CognitiveServiceSubscriptionKey != null)
-                {
-                    writer.WritePropertyName("cognitiveServiceSubscriptionKey"u8);
-                    writer.WriteStringValue(CognitiveServiceSubscriptionKey);
-                }
-                else
-                {
-                    writer.WriteNull("cognitiveServiceSubscriptionKey");
-                }
+                writer.WritePropertyName("cognitiveServiceSubscriptionKey"u8);
+                writer.WriteStringValue(CognitiveServiceSubscriptionKey);
             }
             if (Optional.IsDefined(CognitiveServiceRegion))
             {
-                if (CognitiveServiceRegion != null)
-                {
-                    writer.WritePropertyName("cognitiveServiceRegion"u8);
-                    writer.WriteStringValue(CognitiveServiceRegion);
-                }
-                else
-                {
-                    writer.WriteNull("cognitiveServiceRegion");
-                }
+                writer.WritePropertyName("cognitiveServiceRegion"u8);
+                writer.WriteStringValue(CognitiveServiceRegion);
             }
             if (Optional.IsDefined(DefaultLocale))
             {
-                if (DefaultLocale != null)
-                {
-                    writer.WritePropertyName("defaultLocale"u8);
-                    writer.WriteStringValue(DefaultLocale);
-                }
-                else
-                {
-                    writer.WriteNull("defaultLocale");
-                }
+                writer.WritePropertyName("defaultLocale"u8);
+                writer.WriteStringValue(DefaultLocale);
             }
             if (Optional.IsDefined(PremiumSku))
             {
-                if (PremiumSku != null)
-                {
-                    writer.WritePropertyName("premiumSKU"u8);
-                    writer.WriteStringValue(PremiumSku);
-                }
-                else
-                {
-                    writer.WriteNull("premiumSKU");
-                }
+                writer.WritePropertyName("premiumSKU"u8);
+                writer.WriteStringValue(PremiumSku);
             }
             if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("isEnabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -124,22 +136,27 @@ namespace Azure.ResourceManager.BotService.Models
             }
         }
 
-        TelephonyChannelProperties IJsonModel<TelephonyChannelProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        TelephonyChannelProperties IJsonModel<TelephonyChannelProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual TelephonyChannelProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TelephonyChannelProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TelephonyChannelProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(TelephonyChannelProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeTelephonyChannelProperties(document.RootElement, options);
         }
 
-        internal static TelephonyChannelProperties DeserializeTelephonyChannelProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static TelephonyChannelProperties DeserializeTelephonyChannelProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -151,93 +168,91 @@ namespace Azure.ResourceManager.BotService.Models
             string defaultLocale = default;
             string premiumSku = default;
             bool? isEnabled = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("phoneNumbers"u8))
+                if (prop.NameEquals("phoneNumbers"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<TelephonyPhoneNumbers> array = new List<TelephonyPhoneNumbers>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(TelephonyPhoneNumbers.DeserializeTelephonyPhoneNumbers(item, options));
                     }
                     phoneNumbers = array;
                     continue;
                 }
-                if (property.NameEquals("apiConfigurations"u8))
+                if (prop.NameEquals("apiConfigurations"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<TelephonyChannelResourceApiConfiguration> array = new List<TelephonyChannelResourceApiConfiguration>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(TelephonyChannelResourceApiConfiguration.DeserializeTelephonyChannelResourceApiConfiguration(item, options));
                     }
                     apiConfigurations = array;
                     continue;
                 }
-                if (property.NameEquals("cognitiveServiceSubscriptionKey"u8))
+                if (prop.NameEquals("cognitiveServiceSubscriptionKey"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         cognitiveServiceSubscriptionKey = null;
                         continue;
                     }
-                    cognitiveServiceSubscriptionKey = property.Value.GetString();
+                    cognitiveServiceSubscriptionKey = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("cognitiveServiceRegion"u8))
+                if (prop.NameEquals("cognitiveServiceRegion"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         cognitiveServiceRegion = null;
                         continue;
                     }
-                    cognitiveServiceRegion = property.Value.GetString();
+                    cognitiveServiceRegion = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("defaultLocale"u8))
+                if (prop.NameEquals("defaultLocale"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         defaultLocale = null;
                         continue;
                     }
-                    defaultLocale = property.Value.GetString();
+                    defaultLocale = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("premiumSKU"u8))
+                if (prop.NameEquals("premiumSKU"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         premiumSku = null;
                         continue;
                     }
-                    premiumSku = property.Value.GetString();
+                    premiumSku = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isEnabled"u8))
+                if (prop.NameEquals("isEnabled"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isEnabled = property.Value.GetBoolean();
+                    isEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new TelephonyChannelProperties(
                 phoneNumbers ?? new ChangeTrackingList<TelephonyPhoneNumbers>(),
                 apiConfigurations ?? new ChangeTrackingList<TelephonyChannelResourceApiConfiguration>(),
@@ -246,38 +261,7 @@ namespace Azure.ResourceManager.BotService.Models
                 defaultLocale,
                 premiumSku,
                 isEnabled,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<TelephonyChannelProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<TelephonyChannelProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerBotServiceContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(TelephonyChannelProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        TelephonyChannelProperties IPersistableModel<TelephonyChannelProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<TelephonyChannelProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeTelephonyChannelProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(TelephonyChannelProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<TelephonyChannelProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -9,6 +9,7 @@ using NUnit.Framework;
 using OpenAI.Responses;
 using Azure.AI.Projects;
 using Azure.AI.Projects.Agents;
+using Azure.AI.Projects.Memory;
 
 namespace Azure.AI.Extensions.OpenAI.Tests.Samples;
 
@@ -21,23 +22,25 @@ public class Sample_MemorySearchTool : ProjectsOpenAITestBase
         IgnoreSampleMayBe();
         #region Snippet:Sample_MemoryTool
 #if SNIPPET
-        var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-        var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
-        var embeddingDeploymentName = System.Environment.GetEnvironmentVariable("EMBEDDING_MODEL_DEPLOYMENT_NAME");
+        var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+        var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
+        var memoryStoreChatModelName = System.Environment.GetEnvironmentVariable("MEMORY_STORE_CHAT_MODEL_DEPLOYMENT_NAME");
+        var embeddingDeploymentName = System.Environment.GetEnvironmentVariable("MEMORY_STORE_EMBEDDING_MODEL_DEPLOYMENT_NAME");
 #else
-        var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
-        var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
-        var embeddingDeploymentName = TestEnvironment.EMBEDDINGMODELDEPLOYMENTNAME;
+        var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
+        var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
+        var memoryStoreChatModelName = TestEnvironment.MEMORY_STORE_CHAT_MODEL_DEPLOYMENT_NAME;
+        var embeddingDeploymentName = TestEnvironment.MEMORY_STORE_EMBEDDING_MODEL_DEPLOYMENT_NAME;
 #endif
         AIProjectClient projectClient = new(new Uri(projectEndpoint), new DefaultAzureCredential());
         #endregion
 
         #region Snippet:Sample_CreateAgent_MemoryTool_Async
-        PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+        DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a prompt agent."
         };
-        AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+        ProjectsAgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
             agentName: "myAgent",
             options: new(agentDefinition));
         #endregion
@@ -66,7 +69,7 @@ public class Sample_MemorySearchTool : ProjectsOpenAITestBase
         #endregion
         #region Snippet:CreateMemoryStore_MemoryTool_Async
         MemoryStoreDefaultDefinition memoryStoreDefinition = new(
-            chatModel: modelDeploymentName,
+            chatModel: memoryStoreChatModelName,
             embeddingModel: embeddingDeploymentName
         );
         memoryStoreDefinition.Options = new(userProfileEnabled: true, chatSummaryEnabled: true);
@@ -91,7 +94,7 @@ public class Sample_MemorySearchTool : ProjectsOpenAITestBase
             options: searchOptions
         );
         Console.WriteLine("==The output from memory tool.==");
-        foreach (Azure.AI.Projects.MemorySearchItem item in resp.Memories)
+        foreach (MemorySearchItem item in resp.Memories)
         {
             Console.WriteLine(item.MemoryItem.Content);
         }
@@ -103,7 +106,7 @@ public class Sample_MemorySearchTool : ProjectsOpenAITestBase
             Instructions = "You are a prompt agent capable to access memorized conversation.",
         };
         agentDefinition.Tools.Add(new MemorySearchPreviewTool(memoryStoreName: memoryStore.Name, scope: scope));
-        AgentVersion agentVersionWithMemory = await projectClient.Agents.CreateAgentVersionAsync(
+        ProjectsAgentVersion agentVersionWithMemory = await projectClient.Agents.CreateAgentVersionAsync(
             agentName: "agentWithMemory",
             options: new(agentDefinition));
         #endregion
@@ -129,21 +132,23 @@ public class Sample_MemorySearchTool : ProjectsOpenAITestBase
     {
         IgnoreSampleMayBe();
 #if SNIPPET
-        var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-        var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
-        var embeddingDeploymentName = System.Environment.GetEnvironmentVariable("EMBEDDING_MODEL_DEPLOYMENT_NAME");
+        var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+        var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
+        var memoryStoreChatModelName = System.Environment.GetEnvironmentVariable("MEMORY_STORE_CHAT_MODEL_DEPLOYMENT_NAME");
+        var embeddingDeploymentName = System.Environment.GetEnvironmentVariable("MEMORY_STORE_EMBEDDING_MODEL_DEPLOYMENT_NAME");
 #else
-        var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
-        var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
-        var embeddingDeploymentName = TestEnvironment.EMBEDDINGMODELDEPLOYMENTNAME;
+        var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
+        var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
+        var memoryStoreChatModelName = TestEnvironment.MEMORY_STORE_CHAT_MODEL_DEPLOYMENT_NAME;
+        var embeddingDeploymentName = TestEnvironment.MEMORY_STORE_EMBEDDING_MODEL_DEPLOYMENT_NAME;
 #endif
         AIProjectClient projectClient = new(new Uri(projectEndpoint), new DefaultAzureCredential());
         #region Snippet:Sample_CreateAgent_MemoryTool_Sync
-        PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+        DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a prompt agent."
         };
-        AgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
+        ProjectsAgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
             agentName: "myAgent",
             options: new(agentDefinition));
         #endregion
@@ -175,7 +180,7 @@ public class Sample_MemorySearchTool : ProjectsOpenAITestBase
         #endregion
         #region Snippet:CreateMemoryStore_MemoryTool_Sync
         MemoryStoreDefaultDefinition memoryStoreDefinition = new(
-            chatModel: modelDeploymentName,
+            chatModel: memoryStoreChatModelName,
             embeddingModel: embeddingDeploymentName
         );
         memoryStoreDefinition.Options = new(userProfileEnabled: true, chatSummaryEnabled: true);
@@ -200,7 +205,7 @@ public class Sample_MemorySearchTool : ProjectsOpenAITestBase
             options: searchOptions
         );
         Console.WriteLine("==The output from memory search tool.==");
-        foreach (Azure.AI.Projects.MemorySearchItem item in resp.Memories)
+        foreach (MemorySearchItem item in resp.Memories)
         {
             Console.WriteLine(item.MemoryItem.Content);
         }
@@ -212,7 +217,7 @@ public class Sample_MemorySearchTool : ProjectsOpenAITestBase
             Instructions = "You are a prompt agent capable to access memorized conversation.",
         };
         agentDefinition.Tools.Add(new MemorySearchPreviewTool(memoryStoreName: memoryStore.Name, scope: scope));
-        AgentVersion agentVersionWithMemory = projectClient.Agents.CreateAgentVersion(
+        ProjectsAgentVersion agentVersionWithMemory = projectClient.Agents.CreateAgentVersion(
             agentName: "agentWithMemory",
             options: new(agentDefinition));
         #endregion

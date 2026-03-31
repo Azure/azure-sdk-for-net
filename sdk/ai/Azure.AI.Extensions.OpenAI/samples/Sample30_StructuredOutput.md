@@ -5,11 +5,11 @@ In this example we will demonstrate creation of an Agent for generation output i
 1. First, we need to create project client and read the environment variables, which will be used in the next steps.
 
 ```C# Snippet:Sample_CreateClient_StructuredOutput
-string RAW_PROJECT_ENDPOINT = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT")
-    ?? throw new InvalidOperationException("Missing environment variable 'PROJECT_ENDPOINT'");
-string MODEL_DEPLOYMENT = Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT")
-    ?? throw new InvalidOperationException("Missing environment variable 'MODEL_DEPLOYMENT_NAME'");
-AIProjectClient projectClient = new(new Uri(RAW_PROJECT_ENDPOINT), new DefaultAzureCredential());
+string RAW_FOUNDRY_PROJECT_ENDPOINT = Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT")
+    ?? throw new InvalidOperationException("Missing environment variable 'FOUNDRY_PROJECT_ENDPOINT'");
+string MODEL_DEPLOYMENT = Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME")
+    ?? throw new InvalidOperationException("Missing environment variable 'FOUNDRY_MODEL_NAME'");
+AIProjectClient projectClient = new(new Uri(RAW_FOUNDRY_PROJECT_ENDPOINT), new DefaultAzureCredential());
 ```
 
 2. Define the schema of Agents expected output.
@@ -41,7 +41,7 @@ private static readonly BinaryData s_calendarSchema = BinaryData.FromObjectAsJso
 );
 ```
 
-3. Use the client to create the versioned agent object; provide schema information through `TextOptions` property of `PromptAgentDefinition`.
+3. Use the client to create the versioned agent object; provide schema information through `TextOptions` property of `DeclarativeAgentDefinition`.
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateAgent_StructuredOutput_Sync
@@ -52,13 +52,13 @@ var textOptions = new ResponseTextOptions()
         jsonSchema: s_calendarSchema
     )
 };
-PromptAgentDefinition agentDefinition = new(model: MODEL_DEPLOYMENT)
+DeclarativeAgentDefinition agentDefinition = new(model: MODEL_DEPLOYMENT)
 {
     Instructions = "You are a helpful assistant that extracts calendar event information from the input user messages," +
                    "and returns it in the desired structured output format.",
     TextOptions = textOptions
 };
-AgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
+ProjectsAgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
     agentName: "myAgent",
     options: new(agentDefinition)
 );
@@ -73,13 +73,13 @@ var textOptions = new ResponseTextOptions()
         jsonSchema: s_calendarSchema
     )
 };
-PromptAgentDefinition agentDefinition = new(model: MODEL_DEPLOYMENT)
+DeclarativeAgentDefinition agentDefinition = new(model: MODEL_DEPLOYMENT)
 {
     Instructions = "You are a helpful assistant that extracts calendar event information from the input user messages," +
                    "and returns it in the desired structured output format.",
     TextOptions = textOptions
 };
-AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+ProjectsAgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
     agentName: "myAgent",
     options: new(agentDefinition)
 );
@@ -93,7 +93,7 @@ ProjectConversationCreationOptions options = new()
 {
     Items = { ResponseItem.CreateUserMessageItem("Alice and Bob are going to a science fair this Friday, November 7, 2025.") }
 };
-ProjectConversation conversation = projectClient.OpenAI.Conversations.CreateProjectConversation(options);
+ProjectConversation conversation = projectClient.OpenAI.GetProjectConversationsClient().CreateProjectConversation(options);
 ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(new(name: agentVersion.Name, version: agentVersion.Version), defaultConversationId: conversation.Id);
 ResponseResult response = responseClient.CreateResponse(options: new());
 Console.WriteLine(response.GetOutputText());
@@ -105,7 +105,7 @@ ProjectConversationCreationOptions options = new()
 {
     Items = { ResponseItem.CreateUserMessageItem("Alice and Bob are going to a science fair this Friday, November 7, 2025.") }
 };
-ProjectConversation conversation = await projectClient.OpenAI.Conversations.CreateProjectConversationAsync(options);
+ProjectConversation conversation = await projectClient.OpenAI.GetProjectConversationsClient().CreateProjectConversationAsync(options);
 ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(new(name: agentVersion.Name, version: agentVersion.Version), defaultConversationId: conversation.Id);
 ResponseResult response = await responseClient.CreateResponseAsync(options: new());
 Console.WriteLine(response.GetOutputText());
@@ -115,12 +115,12 @@ Console.WriteLine(response.GetOutputText());
 
 Synchronous sample:
 ```C# Snippet:Sample_CleanUp_StructuredOutput_Sync
-projectClient.OpenAI.Conversations.DeleteConversation(conversation.Id);
+projectClient.OpenAI.GetProjectConversationsClient().DeleteConversation(conversation.Id);
 projectClient.Agents.DeleteAgent(agentName: "myAgent");
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_CleanUp_StructuredOutput_Async
-await projectClient.OpenAI.Conversations.DeleteConversationAsync(conversation.Id);
+await projectClient.OpenAI.GetProjectConversationsClient().DeleteConversationAsync(conversation.Id);
 await projectClient.Agents.DeleteAgentAsync(agentName: "myAgent");
 ```

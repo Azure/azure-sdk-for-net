@@ -3,11 +3,19 @@
 
 #nullable disable
 
+// Backward-compat: Adds constructor overload preserving prior GA required-parameter shape
+// and restores DomainGuid property as non-nullable Guid (generated is Guid?).
+
 using System;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Text.Json;
+using Azure.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Storage.Models
 {
+    [CodeGenSerialization(nameof(ActiveDirectoryDomainGuid), DeserializationValueHook = nameof(DeserializeNullableGuid))]
     public partial class StorageActiveDirectoryProperties
     {
         /// <summary> Initializes a new instance of <see cref="StorageActiveDirectoryProperties"/>. </summary>
@@ -32,6 +40,20 @@ namespace Azure.ResourceManager.Storage.Models
         {
             get => ActiveDirectoryDomainGuid ?? Guid.Empty;
             set => ActiveDirectoryDomainGuid = value == Guid.Empty ? null : value;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static void DeserializeNullableGuid(JsonProperty property, ref Guid? domainGuid)
+        {
+            var str = property.Value.GetString();
+            if (string.IsNullOrWhiteSpace(str) || !Guid.TryParse(str, out var parsed))
+            {
+                domainGuid = null;
+            }
+            else
+            {
+                domainGuid = parsed;
+            }
         }
     }
 }

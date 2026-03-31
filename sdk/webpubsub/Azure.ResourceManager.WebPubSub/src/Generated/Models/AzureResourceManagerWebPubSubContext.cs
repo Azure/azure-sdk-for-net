@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.WebPubSub.Models;
 
@@ -13,9 +14,13 @@ namespace Azure.ResourceManager.WebPubSub
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(BillingInfoSku))]
+    [ModelReaderWriterBuildable(typeof(CustomCertificateList))]
+    [ModelReaderWriterBuildable(typeof(CustomCertificateProperties))]
+    [ModelReaderWriterBuildable(typeof(CustomDomainList))]
+    [ModelReaderWriterBuildable(typeof(CustomDomainProperties))]
     [ModelReaderWriterBuildable(typeof(LiveTraceCategory))]
     [ModelReaderWriterBuildable(typeof(LiveTraceConfiguration))]
     [ModelReaderWriterBuildable(typeof(ManagedIdentitySettings))]
@@ -23,27 +28,50 @@ namespace Azure.ResourceManager.WebPubSub
     [ModelReaderWriterBuildable(typeof(PrivateEndpoint))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpointAcl))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionList))]
+    [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionProperties))]
     [ModelReaderWriterBuildable(typeof(PrivateLinkResourceList))]
     [ModelReaderWriterBuildable(typeof(PublicNetworkAcls))]
+    [ModelReaderWriterBuildable(typeof(ReplicaList))]
+    [ModelReaderWriterBuildable(typeof(ReplicaProperties))]
     [ModelReaderWriterBuildable(typeof(ResourceLogCategory))]
     [ModelReaderWriterBuildable(typeof(ResourceLogConfiguration))]
+    [ModelReaderWriterBuildable(typeof(ResourceReference))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(ShareablePrivateLinkProperties))]
     [ModelReaderWriterBuildable(typeof(ShareablePrivateLinkType))]
     [ModelReaderWriterBuildable(typeof(SharedPrivateLinkResourceList))]
+    [ModelReaderWriterBuildable(typeof(SharedPrivateLinkResourceProperties))]
     [ModelReaderWriterBuildable(typeof(SignalRServiceUsage))]
     [ModelReaderWriterBuildable(typeof(SignalRServiceUsageList))]
     [ModelReaderWriterBuildable(typeof(SignalRServiceUsageName))]
     [ModelReaderWriterBuildable(typeof(SkuList))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(UnknownWebPubSubClientConnectionCountRule))]
+    [ModelReaderWriterBuildable(typeof(UnknownWebPubSubClientTrafficControlRule))]
+    [ModelReaderWriterBuildable(typeof(UnknownWebPubSubEventListenerEndpoint))]
+    [ModelReaderWriterBuildable(typeof(UnknownWebPubSubEventListenerFilter))]
     [ModelReaderWriterBuildable(typeof(UpstreamAuthSettings))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
+    [ModelReaderWriterBuildable(typeof(WebPubSubApplicationFirewallSettings))]
+    [ModelReaderWriterBuildable(typeof(WebPubSubClientConnectionCountRule))]
+    [ModelReaderWriterBuildable(typeof(WebPubSubClientTrafficControlRule))]
+    [ModelReaderWriterBuildable(typeof(WebPubSubCustomCertificateData))]
+    [ModelReaderWriterBuildable(typeof(WebPubSubCustomCertificateResource))]
+    [ModelReaderWriterBuildable(typeof(WebPubSubCustomDomainData))]
+    [ModelReaderWriterBuildable(typeof(WebPubSubCustomDomainResource))]
     [ModelReaderWriterBuildable(typeof(WebPubSubData))]
     [ModelReaderWriterBuildable(typeof(WebPubSubEventHandler))]
+    [ModelReaderWriterBuildable(typeof(WebPubSubEventHubEndpoint))]
+    [ModelReaderWriterBuildable(typeof(WebPubSubEventListener))]
+    [ModelReaderWriterBuildable(typeof(WebPubSubEventListenerEndpoint))]
+    [ModelReaderWriterBuildable(typeof(WebPubSubEventListenerFilter))]
+    [ModelReaderWriterBuildable(typeof(WebPubSubEventNameFilter))]
+    [ModelReaderWriterBuildable(typeof(WebPubSubGroupPresenceEventFilters))]
     [ModelReaderWriterBuildable(typeof(WebPubSubHubData))]
     [ModelReaderWriterBuildable(typeof(WebPubSubHubList))]
     [ModelReaderWriterBuildable(typeof(WebPubSubHubProperties))]
     [ModelReaderWriterBuildable(typeof(WebPubSubHubResource))]
+    [ModelReaderWriterBuildable(typeof(WebPubSubIPRule))]
     [ModelReaderWriterBuildable(typeof(WebPubSubKeys))]
     [ModelReaderWriterBuildable(typeof(WebPubSubNameAvailability))]
     [ModelReaderWriterBuildable(typeof(WebPubSubNameAvailabilityContent))]
@@ -51,15 +79,27 @@ namespace Azure.ResourceManager.WebPubSub
     [ModelReaderWriterBuildable(typeof(WebPubSubPrivateEndpointConnectionData))]
     [ModelReaderWriterBuildable(typeof(WebPubSubPrivateEndpointConnectionResource))]
     [ModelReaderWriterBuildable(typeof(WebPubSubPrivateLink))]
+    [ModelReaderWriterBuildable(typeof(WebPubSubPrivateLinkResourceProperties))]
     [ModelReaderWriterBuildable(typeof(WebPubSubPrivateLinkServiceConnectionState))]
+    [ModelReaderWriterBuildable(typeof(WebPubSubProperties))]
     [ModelReaderWriterBuildable(typeof(WebPubSubRegenerateKeyContent))]
+    [ModelReaderWriterBuildable(typeof(WebPubSubReplicaData))]
+    [ModelReaderWriterBuildable(typeof(WebPubSubReplicaResource))]
+    [ModelReaderWriterBuildable(typeof(WebPubSubReplicaSharedPrivateLinkResource))]
     [ModelReaderWriterBuildable(typeof(WebPubSubResource))]
     [ModelReaderWriterBuildable(typeof(WebPubSubResourceList))]
     [ModelReaderWriterBuildable(typeof(WebPubSubSharedPrivateLinkData))]
     [ModelReaderWriterBuildable(typeof(WebPubSubSharedPrivateLinkResource))]
     [ModelReaderWriterBuildable(typeof(WebPubSubSku))]
     [ModelReaderWriterBuildable(typeof(WebPubSubSkuCapacity))]
+    [ModelReaderWriterBuildable(typeof(WebPubSubSocketIOSettings))]
+    [ModelReaderWriterBuildable(typeof(WebPubSubThrottleByJwtCustomClaimRule))]
+    [ModelReaderWriterBuildable(typeof(WebPubSubThrottleByJwtSignatureRule))]
+    [ModelReaderWriterBuildable(typeof(WebPubSubThrottleByUserIdRule))]
     [ModelReaderWriterBuildable(typeof(WebPubSubTlsSettings))]
+    [ModelReaderWriterBuildable(typeof(WebPubSubTrafficThrottleByJwtCustomClaimRule))]
+    [ModelReaderWriterBuildable(typeof(WebPubSubTrafficThrottleByJwtSignatureRule))]
+    [ModelReaderWriterBuildable(typeof(WebPubSubTrafficThrottleByUserIdRule))]
     public partial class AzureResourceManagerWebPubSubContext : ModelReaderWriterContext
     {
     }

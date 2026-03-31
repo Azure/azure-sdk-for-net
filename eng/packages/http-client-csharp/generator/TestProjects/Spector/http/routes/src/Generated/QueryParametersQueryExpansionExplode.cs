@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -16,6 +17,8 @@ namespace Routes._QueryParameters.QueryExpansion.Explode
     public partial class QueryParametersQueryExpansionExplode
     {
         protected QueryParametersQueryExpansionExplode() => throw null;
+
+        internal QueryParametersQueryExpansionExplode(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

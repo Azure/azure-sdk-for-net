@@ -84,6 +84,16 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 writer.WritePropertyName("dataEndpointEnabled"u8);
                 writer.WriteBooleanValue(IsDataEndpointEnabled.Value);
             }
+            if (Optional.IsDefined(RegionalEndpoints))
+            {
+                writer.WritePropertyName("regionalEndpoints"u8);
+                writer.WriteStringValue(RegionalEndpoints.Value.ToString());
+            }
+            if (Optional.IsDefined(EndpointProtocol))
+            {
+                writer.WritePropertyName("endpointProtocol"u8);
+                writer.WriteStringValue(EndpointProtocol.Value.ToString());
+            }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
@@ -103,6 +113,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 writer.WritePropertyName("anonymousPullEnabled"u8);
                 writer.WriteBooleanValue(IsAnonymousPullEnabled.Value);
+            }
+            if (Optional.IsDefined(MetadataSearch))
+            {
+                writer.WritePropertyName("metadataSearch"u8);
+                writer.WriteStringValue(MetadataSearch.Value.ToString());
             }
             if (Optional.IsDefined(RoleAssignmentMode))
             {
@@ -155,10 +170,13 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             ContainerRegistryPolicies policies = default;
             ContainerRegistryEncryption encryption = default;
             bool? dataEndpointEnabled = default;
+            RegionalEndpoint? regionalEndpoints = default;
+            ContainerRegistryEndpointProtocol? endpointProtocol = default;
             ContainerRegistryPublicNetworkAccess? publicNetworkAccess = default;
             ContainerRegistryNetworkRuleBypassOption? networkRuleBypassOptions = default;
             bool? networkRuleBypassAllowedForTasks = default;
             bool? anonymousPullEnabled = default;
+            ContainerRegistryMetadataSearch? metadataSearch = default;
             ContainerRegistryRoleAssignmentMode? roleAssignmentMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -250,6 +268,24 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                             dataEndpointEnabled = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("regionalEndpoints"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            regionalEndpoints = new RegionalEndpoint(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("endpointProtocol"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            endpointProtocol = new ContainerRegistryEndpointProtocol(property0.Value.GetString());
+                            continue;
+                        }
                         if (property0.NameEquals("publicNetworkAccess"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -286,6 +322,15 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                             anonymousPullEnabled = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("metadataSearch"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            metadataSearch = new ContainerRegistryMetadataSearch(property0.Value.GetString());
+                            continue;
+                        }
                         if (property0.NameEquals("roleAssignmentMode"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -313,10 +358,13 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 policies,
                 encryption,
                 dataEndpointEnabled,
+                regionalEndpoints,
+                endpointProtocol,
                 publicNetworkAccess,
                 networkRuleBypassOptions,
                 networkRuleBypassAllowedForTasks,
                 anonymousPullEnabled,
+                metadataSearch,
                 roleAssignmentMode,
                 serializedAdditionalRawData);
         }

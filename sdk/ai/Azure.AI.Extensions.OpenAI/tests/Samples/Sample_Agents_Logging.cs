@@ -86,14 +86,31 @@ public class LoggingPolicy : PipelinePolicy
     public override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
     {
         ProcessMessage(message); // for request
-        ProcessNext(message, pipeline, currentIndex);
+        System.Diagnostics.Stopwatch stopwatch = System.Diagnostics.Stopwatch.StartNew();
+        try
+        {
+            ProcessNext(message, pipeline, currentIndex);
+        }
+        finally
+        {
+            Console.WriteLine($"Response time {stopwatch.Elapsed.TotalMilliseconds} ms");
+        }
         ProcessMessage(message); // for response
     }
 
     public override async ValueTask ProcessAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
     {
         ProcessMessage(message); // for request
-        await ProcessNextAsync(message, pipeline, currentIndex);
+        DateTime start = DateTime.Now;
+        System.Diagnostics.Stopwatch stopwatch = System.Diagnostics.Stopwatch.StartNew();
+        try
+        {
+            await ProcessNextAsync(message, pipeline, currentIndex);
+        }
+        finally
+        {
+            Console.WriteLine($"Response time {stopwatch.Elapsed.TotalMilliseconds} ms");
+        }
         ProcessMessage(message); // for response
     }
 }
@@ -108,24 +125,24 @@ public class SampleAgentsLogging : ProjectsOpenAITestBase
         IgnoreSampleMayBe();
         #region Snippet:Sample_CreateClient_AgentsLogging
 #if SNIPPET
-        string RAW_PROJECT_ENDPOINT = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT")
-            ?? throw new InvalidOperationException("Missing environment variable 'PROJECT_ENDPOINT'");
-        string MODEL_DEPLOYMENT = Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME")
-            ?? throw new InvalidOperationException("Missing environment variable 'MODEL_DEPLOYMENT_NAME'");
+        string RAW_FOUNDRY_PROJECT_ENDPOINT = Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT")
+            ?? throw new InvalidOperationException("Missing environment variable 'FOUNDRY_PROJECT_ENDPOINT'");
+        string MODEL_DEPLOYMENT = Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME")
+            ?? throw new InvalidOperationException("Missing environment variable 'FOUNDRY_MODEL_NAME'");
 #else
-        string RAW_PROJECT_ENDPOINT = TestEnvironment.PROJECT_ENDPOINT;
-        string MODEL_DEPLOYMENT = TestEnvironment.MODELDEPLOYMENTNAME;
+        string RAW_FOUNDRY_PROJECT_ENDPOINT = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
+        string MODEL_DEPLOYMENT = TestEnvironment.FOUNDRY_MODEL_NAME;
 #endif
         AIProjectClientOptions options = new();
         options.AddPolicy(new LoggingPolicy(), PipelinePosition.PerCall);
-        AIProjectClient projectClient = new(new Uri(RAW_PROJECT_ENDPOINT), new AzureCliCredential(), options: options);
+        AIProjectClient projectClient = new(new Uri(RAW_FOUNDRY_PROJECT_ENDPOINT), new AzureCliCredential(), options: options);
         #endregion
         #region Snippet:Sample_CreateAgent_AgentsLogging_Async
-        PromptAgentDefinition agentDefinition = new(model: MODEL_DEPLOYMENT)
+        DeclarativeAgentDefinition agentDefinition = new(model: MODEL_DEPLOYMENT)
         {
             Instructions = "You are a physics teacher with a sense of humor.",
         };
-        AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+        ProjectsAgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
             agentName: "myAgent",
             options: new(agentDefinition)
         );
@@ -151,23 +168,23 @@ public class SampleAgentsLogging : ProjectsOpenAITestBase
     {
         IgnoreSampleMayBe();
 #if SNIPPET
-        string RAW_PROJECT_ENDPOINT = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT")
-            ?? throw new InvalidOperationException("Missing environment variable 'PROJECT_ENDPOINT'");
-        string MODEL_DEPLOYMENT = Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME")
-            ?? throw new InvalidOperationException("Missing environment variable 'MODEL_DEPLOYMENT_NAME'");
+        string RAW_FOUNDRY_PROJECT_ENDPOINT = Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT")
+            ?? throw new InvalidOperationException("Missing environment variable 'FOUNDRY_PROJECT_ENDPOINT'");
+        string MODEL_DEPLOYMENT = Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME")
+            ?? throw new InvalidOperationException("Missing environment variable 'FOUNDRY_MODEL_NAME'");
 #else
-        string RAW_PROJECT_ENDPOINT = TestEnvironment.PROJECT_ENDPOINT;
-        string MODEL_DEPLOYMENT = TestEnvironment.MODELDEPLOYMENTNAME;
+        string RAW_FOUNDRY_PROJECT_ENDPOINT = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
+        string MODEL_DEPLOYMENT = TestEnvironment.FOUNDRY_MODEL_NAME;
 #endif
         AIProjectClientOptions options = new();
         options.AddPolicy(new LoggingPolicy(), PipelinePosition.PerCall);
-        AIProjectClient projectClient = new(new Uri(RAW_PROJECT_ENDPOINT), new AzureCliCredential(), options: options);
+        AIProjectClient projectClient = new(new Uri(RAW_FOUNDRY_PROJECT_ENDPOINT), new AzureCliCredential(), options: options);
         #region Snippet:Sample_CreateAgent_AgentsLogging_Sync
-        PromptAgentDefinition agentDefinition = new(model: MODEL_DEPLOYMENT)
+        DeclarativeAgentDefinition agentDefinition = new(model: MODEL_DEPLOYMENT)
         {
             Instructions = "You are a physics teacher with a sense of humor.",
         };
-        AgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
+        ProjectsAgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
             agentName: "myAgent",
             options: new(agentDefinition)
         );

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -18,13 +19,41 @@ namespace Azure.Developer.LoadTesting
     public partial class LoadTestAdministrationClient
     {
         private readonly Uri _endpoint;
-        /// <summary> A credential used to authenticate to the service. </summary>
-        private readonly TokenCredential _tokenCredential;
         private static readonly string[] AuthorizationScopes = new string[] { "https://cnt-prod.loadtesting.azure.com/.default" };
         private readonly string _apiVersion;
 
         /// <summary> Initializes a new instance of LoadTestAdministrationClient for mocking. </summary>
         protected LoadTestAdministrationClient()
+        {
+        }
+
+        /// <summary> Initializes a new instance of LoadTestAdministrationClient. </summary>
+        /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        internal LoadTestAdministrationClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, LoadTestingClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+
+            options ??= new LoadTestingClientOptions();
+
+            _endpoint = endpoint;
+            if (authenticationPolicy != null)
+            {
+                Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
+            }
+            else
+            {
+                Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
+            }
+            _apiVersion = options.Version;
+            ClientDiagnostics = new ClientDiagnostics(options, true);
+        }
+
+        /// <summary> Initializes a new instance of LoadTestAdministrationClient from a <see cref="LoadTestAdministrationClientSettings"/>. </summary>
+        /// <param name="settings"> The settings for LoadTestAdministrationClient. </param>
+        [Experimental("SCME0002")]
+        public LoadTestAdministrationClient(LoadTestAdministrationClientSettings settings) : this(null, settings?.Endpoint, settings?.Options)
         {
         }
 
@@ -2028,7 +2057,7 @@ namespace Azure.Developer.LoadTesting
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
             Argument.AssertNotNullOrEmpty(newTestId, nameof(newTestId));
 
-            CloneTestRequest1 spreadModel = new CloneTestRequest1(newTestId, displayName, description, default);
+            CloneTestRequest spreadModel = new CloneTestRequest(newTestId, displayName, description, default);
             Operation<BinaryData> result = CloneTest(waitUntil, testId, spreadModel, cancellationToken.ToRequestContext());
             return ProtocolOperationHelpers.Convert(result, response => (LoadTest)response, ClientDiagnostics, "LoadTestAdministrationClient.CloneTest");
         }
@@ -2047,9 +2076,87 @@ namespace Azure.Developer.LoadTesting
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
             Argument.AssertNotNullOrEmpty(newTestId, nameof(newTestId));
 
-            CloneTestRequest1 spreadModel = new CloneTestRequest1(newTestId, displayName, description, default);
+            CloneTestRequest spreadModel = new CloneTestRequest(newTestId, displayName, description, default);
             Operation<BinaryData> result = await CloneTestAsync(waitUntil, testId, spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return ProtocolOperationHelpers.Convert(result, response => (LoadTest)response, ClientDiagnostics, "LoadTestAdministrationClient.CloneTestAsync");
+        }
+
+        /// <summary> Generate AI Recommendations to author a load test plan using the uploaded browser recording file. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="testId"> Unique test identifier for the load test, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="testId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Operation<BinaryData> GenerateTestPlanRecommendations(WaitUntil waitUntil, string testId, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GenerateTestPlanRecommendations");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(testId, nameof(testId));
+
+                using HttpMessage message = CreateGenerateTestPlanRecommendationsRequest(testId, context);
+                return ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "LoadTestAdministrationClient.GenerateTestPlanRecommendations", OperationFinalStateVia.OperationLocation, context, waitUntil);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Generate AI Recommendations to author a load test plan using the uploaded browser recording file. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="testId"> Unique test identifier for the load test, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="testId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Operation<BinaryData>> GenerateTestPlanRecommendationsAsync(WaitUntil waitUntil, string testId, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GenerateTestPlanRecommendations");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(testId, nameof(testId));
+
+                using HttpMessage message = CreateGenerateTestPlanRecommendationsRequest(testId, context);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "LoadTestAdministrationClient.GenerateTestPlanRecommendationsAsync", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Generate AI Recommendations to author a load test plan using the uploaded browser recording file. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="testId"> Unique test identifier for the load test, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="testId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Operation<LoadTest> GenerateTestPlanRecommendations(WaitUntil waitUntil, string testId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(testId, nameof(testId));
+
+            Operation<BinaryData> result = GenerateTestPlanRecommendations(waitUntil, testId, cancellationToken.ToRequestContext());
+            return ProtocolOperationHelpers.Convert(result, response => (LoadTest)response, ClientDiagnostics, "LoadTestAdministrationClient.GenerateTestPlanRecommendations");
+        }
+
+        /// <summary> Generate AI Recommendations to author a load test plan using the uploaded browser recording file. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="testId"> Unique test identifier for the load test, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="testId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Operation<LoadTest>> GenerateTestPlanRecommendationsAsync(WaitUntil waitUntil, string testId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(testId, nameof(testId));
+
+            Operation<BinaryData> result = await GenerateTestPlanRecommendationsAsync(waitUntil, testId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return ProtocolOperationHelpers.Convert(result, response => (LoadTest)response, ClientDiagnostics, "LoadTestAdministrationClient.GenerateTestPlanRecommendationsAsync");
         }
 
         /// <summary>

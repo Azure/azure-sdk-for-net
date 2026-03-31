@@ -5,11 +5,17 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
+using Microsoft.Extensions.Configuration;
 
 namespace Server.Versions.NotVersioned
 {
     public partial class NotVersionedClientOptions : ClientOptions
     {
+        public NotVersionedClientOptions() => throw null;
+
+        [Experimental("SCME0002")]
+        internal NotVersionedClientOptions(IConfigurationSection section) : base(section, null) => throw null;
     }
 }

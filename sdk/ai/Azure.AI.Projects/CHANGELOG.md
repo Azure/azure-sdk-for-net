@@ -1,14 +1,33 @@
 # Release History
 
-## 2.0.0-beta.2 (Unreleased)
+## 2.0.0-beta.3 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
+- `Insights` were renamed to `ProjectInsights`.
+- `Insight` was renamed to `ProjectsInsight`.
+- `Schedules` were renamed to `ProjectSchedules`.
+- `Schedule` was renamed to `ProjectsSchedule`.
+- `Target` was renamed to `EvaluationTarget`.
+- `Trigger` was renamed to `ScheduleTrigger`.
+- `AzureAIAgentTarget` and `AzureAIModelTarget` became internal.
+- `ScheduleTask` was renamed to `ProjectsScheduleTask`.
+- `Evaluators` client was renamed to `ProjectEvaluators`.
+- `DetailEnum` was renamed to `InternalImageDetailLevel` and made internal.
+- `InputImageContentParamAutoParam` was renamed to `InternalInputImageContentParamAutoParam` and made internal.
+- `Azure.AI.Projects` evaluations and memory operations were moved to `Azure.AI.Projects.Evaluation` and `Azure.AI.Projects.Memory` namespaces respectively.
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 2.0.0-beta.2 (2026-03-12)
+
+### Breaking Changes
+* The `Azure.AI.Projects.OpenAI` package was renamed to `Azure.AI.Extensions.OpenAI`
+* The Agents administration was moved to the `Azure.AI.Projects.Agents` package.
+* OpenAI dependency was upgraded to 2.9.1.
 
 ## 2.0.0-beta.1 (2026-02-24)
 

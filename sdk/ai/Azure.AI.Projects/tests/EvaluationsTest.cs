@@ -12,6 +12,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.AI.Projects.Agents;
+using Azure.AI.Projects.Evaluation;
 using Azure.AI.Extensions.OpenAI;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
@@ -44,11 +45,11 @@ public class EvaluationsTest : ProjectsClientTestBase
         AIProjectClient projectClient = GetTestProjectClient();
         EvaluationClient evaluationClient = projectClient.OpenAI.GetEvaluationClient();
 
-        PromptAgentDefinition agentDefinition = new(model: TestEnvironment.MODELDEPLOYMENTNAME)
+        DeclarativeAgentDefinition agentDefinition = new(model: TestEnvironment.FOUNDRY_MODEL_NAME)
         {
             Instructions = "You are a prompt agent."
         };
-        AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+        ProjectsAgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
             agentName: AGENT_NAME,
             options: new(agentDefinition));
 
@@ -254,7 +255,7 @@ public class EvaluationsTest : ProjectsClientTestBase
             name: EVALUATOR_NAME,
             evaluatorVersion: eval
         );
-        object initialization_parameters_ = type == CustomEvaluatorType.PromptBased ? new { deployment_name = TestEnvironment.MODELDEPLOYMENTNAME, threshold = 3 } : new { deployment_name = TestEnvironment.MODELDEPLOYMENTNAME, pass_threshold = 0.3 };
+        object initialization_parameters_ = type == CustomEvaluatorType.PromptBased ? new { deployment_name = TestEnvironment.FOUNDRY_MODEL_NAME, threshold = 3 } : new { deployment_name = TestEnvironment.FOUNDRY_MODEL_NAME, pass_threshold = 0.3 };
         object[] testingCriteria = [
             new {
                 type = "azure_ai_evaluator",
@@ -371,11 +372,11 @@ public class EvaluationsTest : ProjectsClientTestBase
         AIProjectClient projectClient = GetTestProjectClient();
         EvaluationClient evaluationClient = projectClient.OpenAI.GetEvaluationClient();
 
-        PromptAgentDefinition agentDefinition = new(model: TestEnvironment.MODELDEPLOYMENTNAME)
+        DeclarativeAgentDefinition agentDefinition = new(model: TestEnvironment.FOUNDRY_MODEL_NAME)
         {
             Instructions = "You are a prompt agent."
         };
-        AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+        ProjectsAgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
             agentName: AGENT_NAME,
             options: new(agentDefinition));
         object[] testingCriteria = [
@@ -795,10 +796,10 @@ public class EvaluationsTest : ProjectsClientTestBase
     {
         if (Mode == RecordedTestMode.Playback)
             return;
-        Uri connectionString = new(TestEnvironment.PROJECT_ENDPOINT);
+        Uri connectionString = new(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT);
         AIProjectClient projectClient = new(connectionString, TestEnvironment.Credential);
         // Remove Agents.
-        foreach (AgentVersion ag in projectClient.Agents.GetAgentVersions(agentName: AGENT_NAME))
+        foreach (ProjectsAgentVersion ag in projectClient.Agents.GetAgentVersions(agentName: AGENT_NAME))
         {
             await projectClient.Agents.DeleteAgentVersionAsync(agentName: ag.Name, agentVersion: ag.Version);
         }

@@ -64,9 +64,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(connectedClusterPatch, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(connectedClusterPatch, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>

@@ -11,8 +11,8 @@ private static string GetFile([CallerFilePath] string pth = "")
 
 1. First, we need to create agent client and read the environment variables, which will be used in the next steps.
 ```C# Snippet:Sample_CreateProjectClient_OpenAPI
-var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
 AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 ```
 
@@ -21,7 +21,7 @@ AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenPro
 Synchronous sample:
 ```C# Snippet:Sample_CreateAgent_OpenAPI_Sync
 string filePath = GetFile();
-OpenAPIFunctionDefinition toolDefinition = new(
+OpenApiFunctionDefinition toolDefinition = new(
     name: "get_weather",
     specificationBytes: BinaryData.FromBytes(File.ReadAllBytes(filePath)),
     authentication: new OpenAPIAnonymousAuthenticationDetails()
@@ -29,12 +29,12 @@ OpenAPIFunctionDefinition toolDefinition = new(
 toolDefinition.Description = "Retrieve weather information for a location.";
 OpenAPITool openapiTool = new(toolDefinition);
 
-PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a helpful assistant.",
     Tools = { openapiTool }
 };
-AgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
+ProjectsAgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
     agentName: "myAgent",
     options: new(agentDefinition));
 ```
@@ -42,7 +42,7 @@ AgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
 Asynchronous sample:
 ```C# Snippet:Sample_CreateAgent_OpenAPI_Async
 string filePath = GetFile();
-OpenAPIFunctionDefinition toolDefinition = new(
+OpenApiFunctionDefinition toolDefinition = new(
     name: "get_weather",
     specificationBytes: BinaryData.FromBytes(File.ReadAllBytes(filePath)),
     authentication: new OpenAPIAnonymousAuthenticationDetails()
@@ -50,12 +50,12 @@ OpenAPIFunctionDefinition toolDefinition = new(
 toolDefinition.Description = "Retrieve weather information for a location.";
 OpenAPITool openapiTool = new(toolDefinition);
 
-PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a helpful assistant.",
     Tools = {openapiTool}
 };
-AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+ProjectsAgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
     agentName: "myAgent",
     options: new(agentDefinition));
 ```

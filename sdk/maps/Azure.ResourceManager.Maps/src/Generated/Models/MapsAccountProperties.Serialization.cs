@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Maps;
 
 namespace Azure.ResourceManager.Maps.Models
 {
-    public partial class MapsAccountProperties : IUtf8JsonSerializable, IJsonModel<MapsAccountProperties>
+    /// <summary> Additional Maps account properties. </summary>
+    public partial class MapsAccountProperties : IJsonModel<MapsAccountProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MapsAccountProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual MapsAccountProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MapsAccountProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeMapsAccountProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MapsAccountProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MapsAccountProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMapsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(MapsAccountProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<MapsAccountProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MapsAccountProperties IPersistableModel<MapsAccountProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<MapsAccountProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MapsAccountProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +69,11 @@ namespace Azure.ResourceManager.Maps.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MapsAccountProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MapsAccountProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MapsAccountProperties)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsDefined(UniqueId))
             {
                 writer.WritePropertyName("uniqueId"u8);
@@ -53,7 +93,7 @@ namespace Azure.ResourceManager.Maps.Models
             {
                 writer.WritePropertyName("linkedResources"u8);
                 writer.WriteStartArray();
-                foreach (var item in LinkedResources)
+                foreach (MapsLinkedResource item in LinkedResources)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -69,15 +109,40 @@ namespace Azure.ResourceManager.Maps.Models
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption, options);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (Optional.IsCollectionDefined(Locations))
             {
-                foreach (var item in _serializedAdditionalRawData)
+                writer.WritePropertyName("locations"u8);
+                writer.WriteStartArray();
+                foreach (MapsLocationItem item in Locations)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
+            {
+                writer.WritePropertyName("privateEndpointConnections"u8);
+                writer.WriteStartArray();
+                foreach (MapsPrivateEndpointConnectionData item in PrivateEndpointConnections)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(PublicNetworkAccess))
+            {
+                writer.WritePropertyName("publicNetworkAccess"u8);
+                writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
+            }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -86,22 +151,27 @@ namespace Azure.ResourceManager.Maps.Models
             }
         }
 
-        MapsAccountProperties IJsonModel<MapsAccountProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MapsAccountProperties IJsonModel<MapsAccountProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual MapsAccountProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MapsAccountProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MapsAccountProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MapsAccountProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeMapsAccountProperties(document.RootElement, options);
         }
 
-        internal static MapsAccountProperties DeserializeMapsAccountProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static MapsAccountProperties DeserializeMapsAccountProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -110,73 +180,111 @@ namespace Azure.ResourceManager.Maps.Models
             bool? disableLocalAuth = default;
             string provisioningState = default;
             IList<MapsLinkedResource> linkedResources = default;
-            CorsRules cors = default;
+            MapsCorsRules cors = default;
             MapsEncryption encryption = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IList<MapsLocationItem> locations = default;
+            IReadOnlyList<MapsPrivateEndpointConnectionData> privateEndpointConnections = default;
+            MapsPublicNetworkAccess? publicNetworkAccess = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("uniqueId"u8))
+                if (prop.NameEquals("uniqueId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    uniqueId = property.Value.GetGuid();
+                    uniqueId = new Guid(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("disableLocalAuth"u8))
+                if (prop.NameEquals("disableLocalAuth"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    disableLocalAuth = property.Value.GetBoolean();
+                    disableLocalAuth = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("provisioningState"u8))
+                if (prop.NameEquals("provisioningState"u8))
                 {
-                    provisioningState = property.Value.GetString();
+                    provisioningState = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("linkedResources"u8))
+                if (prop.NameEquals("linkedResources"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<MapsLinkedResource> array = new List<MapsLinkedResource>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(MapsLinkedResource.DeserializeMapsLinkedResource(item, options));
                     }
                     linkedResources = array;
                     continue;
                 }
-                if (property.NameEquals("cors"u8))
+                if (prop.NameEquals("cors"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    cors = CorsRules.DeserializeCorsRules(property.Value, options);
+                    cors = MapsCorsRules.DeserializeMapsCorsRules(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("encryption"u8))
+                if (prop.NameEquals("encryption"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    encryption = MapsEncryption.DeserializeMapsEncryption(property.Value, options);
+                    encryption = MapsEncryption.DeserializeMapsEncryption(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("locations"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<MapsLocationItem> array = new List<MapsLocationItem>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(MapsLocationItem.DeserializeMapsLocationItem(item, options));
+                    }
+                    locations = array;
+                    continue;
+                }
+                if (prop.NameEquals("privateEndpointConnections"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<MapsPrivateEndpointConnectionData> array = new List<MapsPrivateEndpointConnectionData>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(MapsPrivateEndpointConnectionData.DeserializeMapsPrivateEndpointConnectionData(item, options));
+                    }
+                    privateEndpointConnections = array;
+                    continue;
+                }
+                if (prop.NameEquals("publicNetworkAccess"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    publicNetworkAccess = new MapsPublicNetworkAccess(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new MapsAccountProperties(
                 uniqueId,
                 disableLocalAuth,
@@ -184,38 +292,10 @@ namespace Azure.ResourceManager.Maps.Models
                 linkedResources ?? new ChangeTrackingList<MapsLinkedResource>(),
                 cors,
                 encryption,
-                serializedAdditionalRawData);
+                locations ?? new ChangeTrackingList<MapsLocationItem>(),
+                privateEndpointConnections ?? new ChangeTrackingList<MapsPrivateEndpointConnectionData>(),
+                publicNetworkAccess,
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<MapsAccountProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<MapsAccountProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMapsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(MapsAccountProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        MapsAccountProperties IPersistableModel<MapsAccountProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<MapsAccountProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeMapsAccountProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(MapsAccountProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<MapsAccountProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

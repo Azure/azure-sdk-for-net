@@ -6,11 +6,11 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
-    /// <summary> Represents a set of parameters used to control the sampling behavior of a language model during text generation. </summary>
-    public partial class ModelSamplingParams : IJsonModel<ModelSamplingParams>
+    internal partial class ModelSamplingParams : IJsonModel<ModelSamplingParams>
     {
         /// <summary> Initializes a new instance of <see cref="ModelSamplingParams"/> for deserialization. </summary>
         internal ModelSamplingParams()

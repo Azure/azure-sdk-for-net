@@ -4,7 +4,11 @@
 
 ### Features Added
 
+- Aligned resource types to Microsoft.DeviceRegistry API version `2026-03-01-preview`.
+
 ### Breaking Changes
+
+- `PolicyData` no longer extends `TrackedResourceData`; it now extends `ResourceData`. The `Location` property is now of type `string` instead of `AzureLocation`.
 
 ### Bugs Fixed
 

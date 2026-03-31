@@ -3,10 +3,14 @@
 
 import {
   isVariableSegment,
+  isPrefix,
   findLongestPrefixMatch,
-  getResourceTypeSegment,
-  getLastPathSegment
+  countProviderSegments
 } from "./utils.js";
+import {
+  DecoratedType,
+  getClientOptions
+} from "@azure-tools/typespec-client-generator-core";
 
 const ResourceGroupScopePrefix =
   "/subscriptions/{subscriptionId}/resourceGroups";
@@ -45,6 +49,28 @@ export enum ResourceScope {
   Extension = "Extension"
 }
 
+/**
+ * Constraints on the resource name from TypeSpec @pattern, @minLength, @maxLength decorators.
+ */
+export interface NameConstraints {
+  /** The regex pattern constraint for the resource name, from @pattern decorator */
+  pattern?: string;
+  /** The minimum length constraint for the resource name, from @minLength decorator */
+  minLength?: number;
+  /** The maximum length constraint for the resource name, from @maxLength decorator */
+  maxLength?: number;
+}
+
+/**
+ * Represents a single RBAC role definition for a resource.
+ */
+export interface RbacRole {
+  /** The role name (e.g., "KeyVaultContributor") */
+  name: string;
+  /** The role GUID (e.g., "f25e0fa2-a7c8-4377-a976-54943a77a395") */
+  value: string;
+}
+
 export interface ResourceMetadata {
   resourceIdPattern: string;
   resourceType: string;
@@ -54,6 +80,12 @@ export interface ResourceMetadata {
   parentResourceModelId?: string;
   singletonResourceName?: string;
   resourceName: string;
+  /** The name constraints for the resource, from TypeSpec decorators */
+  nameConstraints: NameConstraints;
+  /** The API versions that this resource is available in */
+  apiVersions: string[];
+  /** The RBAC roles defined for this resource via @@clientOption */
+  rbacRoles: RbacRole[];
 }
 
 export function convertResourceMetadataToArguments(
@@ -68,6 +100,25 @@ export function convertResourceMetadataToArguments(
     singletonResourceName: metadata.singletonResourceName,
     resourceName: metadata.resourceName
   };
+}
+
+const rbacRolesKey = "resource-rbac-roles";
+
+/**
+ * Extracts RBAC roles from a model's @@clientOption decorator with key "resource-rbac-roles".
+ * Uses TCGC's getClientOptions API which handles scope filtering.
+ * The value is expected to be a record of role name to role GUID.
+ */
+export function extractRbacRoles(model: DecoratedType | undefined): RbacRole[] {
+  if (!model) return [];
+  const value = getClientOptions(model, rbacRolesKey);
+  if (!value || typeof value !== "object") return [];
+  return Object.entries(value as Record<string, string>).map(
+    ([name, guid]) => ({
+      name,
+      value: guid
+    })
+  );
 }
 
 export interface NonResourceMethod {
@@ -122,6 +173,27 @@ export enum ResourceOperationKind {
   Read = "Read",
   List = "List",
   Update = "Update"
+}
+
+/**
+ * Resolves the API versions for a resource from its methods.
+ * Uses the Create method's versions if available, otherwise falls back to the Read method's versions.
+ * @param methods - The resource's methods
+ * @param methodApiVersionsMap - A map from methodId to its API versions
+ * @returns The API versions for the resource
+ */
+export function resolveResourceApiVersions(
+  methods: ResourceMethod[],
+  methodApiVersionsMap: Map<string, string[]>
+): string[] {
+  const createMethod = methods.find(
+    (m) => m.kind === ResourceOperationKind.Create
+  );
+  const readMethod = methods.find((m) => m.kind === ResourceOperationKind.Read);
+  const primaryMethod = createMethod ?? readMethod;
+  return primaryMethod
+    ? methodApiVersionsMap.get(primaryMethod.methodId) ?? []
+    : [];
 }
 
 /**
@@ -215,7 +287,10 @@ export function convertArmProviderSchemaToArguments(
       resourceScope: r.metadata.resourceScope,
       parentResourceId: r.metadata.parentResourceId,
       singletonResourceName: r.metadata.singletonResourceName,
-      resourceName: r.metadata.resourceName
+      resourceName: r.metadata.resourceName,
+      nameConstraints: r.metadata.nameConstraints,
+      apiVersions: r.metadata.apiVersions,
+      rbacRoles: r.metadata.rbacRoles
     })),
     nonResourceMethods: schema.nonResourceMethods.map((m) => ({
       methodId: m.methodId,
@@ -252,7 +327,8 @@ export interface ParentResourceLookupContext {
 export function postProcessArmResources(
   resources: ArmResourceSchema[],
   nonResourceMethods: NonResourceMethod[],
-  parentLookup: ParentResourceLookupContext
+  parentLookup: ParentResourceLookupContext,
+  methodResponseModelIdMap?: Map<string, string>
 ): ArmResourceSchema[] {
   // Step 1: Separate valid resources (with resourceIdPattern) from incomplete ones (without)
   const validResources = resources.filter(
@@ -331,6 +407,13 @@ export function postProcessArmResources(
       }
     }
   }
+
+  // Step 3.5: Relocate cross-resource list actions
+  // When a spec models a list-children operation as an Action on a parent resource
+  // (e.g., blobContainersList as ArmResourceActionSync on BlobService that lists BlobContainers),
+  // detect that the Action's operationPath matches a child resource's collection path
+  // and reclassify it as a List on the child resource.
+  relocateCrossResourceListActions(validResources, methodResponseModelIdMap);
 
   // Step 4: Populate resourceScope for all resource methods
   // For each method, find the longest matching resource path that is a prefix of the method's operation path
@@ -452,10 +535,12 @@ export function postProcessArmResources(
  * 2. Resource model ID matching: if prefix matching fails but the method has a resourceModelId,
  *    it is matched to a valid resource with the same model ID and assigned as a List operation.
  *    This handles extension resources where list paths have different parent structures.
- * 3. Type segment matching: if both prefix and model ID matching fail, the method's last path
- *    segment is compared against each resource's type segment (second-to-last segment of the
- *    resource ID pattern). This handles "missing operations" from resolveArmResources that
- *    lack resourceModelId but share a type segment with a known resource.
+ * 3. Resource type matching: if both prefix and model ID matching fail, the resource type
+ *    is extracted from the operation path using calculateResourceTypeFromPath (which includes
+ *    the provider namespace) and compared against each resource's metadata.resourceType.
+ *    The provider hierarchy depth must also match to prevent cross-scope false matches.
+ *    This handles operations from resolveArmResources that lack resourceModelId but share
+ *    a resource type with a known resource.
  *
  * @param resources - The list of valid resources
  * @param nonResourceMethods - The array of non-resource methods (will be mutated: matched methods are removed)
@@ -501,22 +586,28 @@ export function assignNonResourceMethodsToResources(
         methodsToRemove.add(method.methodId);
       }
     } else {
-      // Both prefix and model ID matching failed — try matching by type segment.
+      // Both prefix and model ID matching failed — try matching by resource type.
       // Extension resource list paths may have fewer parent segments than the resource
-      // ID pattern (e.g., {providerName}/{resourceType}/{resourceName} vs
-      // {providerName}/{resourceParentType}/{resourceParentName}/{resourceType}/{resourceName}),
-      // causing a structural length mismatch that prefix matching cannot resolve.
-      // As a final fallback, compare the operation path's last segment against the
-      // resource's type segment (second-to-last segment of the resource ID pattern).
-      const lastSegment = getLastPathSegment(method.operationPath);
-      if (lastSegment) {
+      // ID pattern, causing a structural length mismatch that prefix matching cannot resolve.
+      // As a final fallback, compare the resource type (extracted via calculateResourceTypeFromPath,
+      // which includes the provider namespace) against each resource's metadata.resourceType.
+      // The provider hierarchy depth must also match to prevent cross-scope false matches
+      // (e.g., RG-scoped list matching a VM-scoped extension resource).
+      if (method.operationPath.includes("/providers/")) {
+        const operationType = calculateResourceTypeFromPath(
+          method.operationPath
+        );
+        const operationProviderDepth = countProviderSegments(
+          method.operationPath
+        );
         const match = resources.find((r) => {
-          const typeSegment = getResourceTypeSegment(
-            r.metadata.resourceIdPattern
-          );
-          return (
-            typeSegment?.toLowerCase() === lastSegment.toLowerCase()
-          );
+          if (
+            countProviderSegments(r.metadata.resourceIdPattern) !==
+            operationProviderDepth
+          ) {
+            return false;
+          }
+          return r.metadata.resourceType === operationType;
         });
         if (match) {
           match.metadata.methods.push({
@@ -581,4 +672,96 @@ function canBeListResourceScope(
   }
   // here it means every segment in resourceInstancePath matches the corresponding segment in listPath
   return true;
+}
+
+/**
+ * Detects List methods that are assigned to the wrong resource and relocates
+ * them to the correct child resource.
+ *
+ * This handles the pattern where a TypeSpec spec models a list-children operation
+ * as an ArmResourceActionSync on a parent resource (e.g., blobContainersList on
+ * BlobService). The operation is already classified as List by parseResourceOperation
+ * (because TCGC detects it as pageable), but is assigned to the parent resource
+ * because @armResourceAction points to the parent model.
+ *
+ * The detection checks two conditions:
+ * 1. The operation is pageable (already ensured by kind=List from parseResourceOperation)
+ * 2. The operationPath matches a child resource's collection path (resourceIdPattern
+ *    minus the last /{parameter} segment)
+ *
+ * Example:
+ *   - Container resourceIdPattern: .../blobServices/default/containers/{containerName}
+ *   - Container collection path:   .../blobServices/default/containers
+ *   - List operationPath:          .../blobServices/default/containers  ← match!
+ *   - Result: List is moved from BlobService to Container
+ */
+function relocateCrossResourceListActions(
+  validResources: ArmResourceSchema[],
+  methodResponseModelIdMap?: Map<string, string>
+): void {
+  // Find List methods that are assigned to the wrong resource and should be
+  // relocated to a child resource. This handles the case where a pageable
+  // operation uses @armResourceAction on a parent resource (e.g., BlobService)
+  // but actually lists child resources (e.g., BlobContainers). The operation
+  // is already classified as List (because it's pageable) but is on the wrong
+  // resource because @armResourceAction points to the parent model.
+  const relocations: Array<{
+    sourceResource: ArmResourceSchema;
+    targetResource: ArmResourceSchema;
+    method: ResourceMethod;
+  }> = [];
+
+  for (const resource of validResources) {
+    for (const method of resource.metadata.methods) {
+      if (method.kind !== ResourceOperationKind.List) continue;
+
+      // Find the child resource whose resourceIdPattern is exactly this
+      // operation's path plus one variable segment (the resource name).
+      // This means the operation is at the child resource's collection path.
+      for (const candidate of validResources) {
+        if (candidate === resource) continue;
+        if (!isPrefix(method.operationPath, candidate.metadata.resourceIdPattern))
+          continue;
+        // Ensure the difference is exactly one segment (the resource name)
+        const opSegments = method.operationPath
+          .split("/")
+          .filter((s) => s.length > 0);
+        const resSegments = candidate.metadata.resourceIdPattern
+          .split("/")
+          .filter((s) => s.length > 0);
+        if (resSegments.length !== opSegments.length + 1) continue;
+        // The additional segment must be a variable segment (e.g. `{resourceName}`)
+        const lastSegment = resSegments[resSegments.length - 1];
+        if (!isVariableSegment(lastSegment)) continue;
+
+        // Verify the response item type matches the target resource's model.
+        // This prevents relocating pageable actions that return metadata models
+        // (not the resource type) to the wrong collection.
+        if (methodResponseModelIdMap) {
+          const responseModelId = methodResponseModelIdMap.get(method.methodId);
+          if (responseModelId && responseModelId !== candidate.resourceModelId)
+            continue;
+        }
+
+        relocations.push({
+          sourceResource: resource,
+          targetResource: candidate,
+          method: method
+        });
+        break;
+      }
+    }
+  }
+
+  // Apply relocations: move methods from source to target
+  for (const { sourceResource, targetResource, method } of relocations) {
+    // Remove from source
+    const sourceIndex = sourceResource.metadata.methods.indexOf(method);
+    if (sourceIndex >= 0) {
+      sourceResource.metadata.methods.splice(sourceIndex, 1);
+    }
+
+    // Add to target (already classified as List)
+    targetResource.metadata.methods.push(method);
+  }
 }

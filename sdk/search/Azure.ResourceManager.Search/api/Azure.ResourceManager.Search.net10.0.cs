@@ -10,6 +10,8 @@ namespace Azure.ResourceManager.Search
     {
         public static Azure.Response<Azure.ResourceManager.Search.Models.SearchServiceNameAvailabilityResult> CheckSearchServiceNameAvailability(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.Search.Models.SearchServiceNameAvailabilityContent content, Azure.ResourceManager.Search.Models.SearchManagementRequestOptions searchManagementRequestOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Search.Models.SearchServiceNameAvailabilityResult>> CheckSearchServiceNameAvailabilityAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.Search.Models.SearchServiceNameAvailabilityContent content, Azure.ResourceManager.Search.Models.SearchManagementRequestOptions searchManagementRequestOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.Search.Models.SearchOfferingsByRegion> GetOfferings(this Azure.ResourceManager.Resources.TenantResource tenantResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.Search.Models.SearchOfferingsByRegion> GetOfferingsAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Search.SearchPrivateEndpointConnectionResource GetSearchPrivateEndpointConnectionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Search.SearchServiceResource> GetSearchService(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string searchServiceName, Azure.ResourceManager.Search.Models.SearchManagementRequestOptions searchManagementRequestOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Search.SearchServiceResource>> GetSearchServiceAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string searchServiceName, Azure.ResourceManager.Search.Models.SearchManagementRequestOptions searchManagementRequestOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -45,7 +47,10 @@ namespace Azure.ResourceManager.Search
     {
         public SearchPrivateEndpointConnectionData() { }
         public Azure.ResourceManager.Search.Models.SearchServicePrivateEndpointConnectionProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Search.SearchPrivateEndpointConnectionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.SearchPrivateEndpointConnectionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.SearchPrivateEndpointConnectionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Search.SearchPrivateEndpointConnectionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.SearchPrivateEndpointConnectionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -102,6 +107,7 @@ namespace Azure.ResourceManager.Search
         public System.Collections.Generic.IList<Azure.ResourceManager.Search.Models.SearchServiceIPRule> IPRules { get { throw null; } }
         public bool? IsLocalAuthDisabled { get { throw null; } set { } }
         public Azure.ResourceManager.Search.Models.SearchServiceUpgradeAvailable? IsUpgradeAvailable { get { throw null; } set { } }
+        public Azure.ResourceManager.Search.Models.SearchKnowledgeRetrieval? KnowledgeRetrieval { get { throw null; } set { } }
         public Azure.ResourceManager.Search.Models.SearchServiceNetworkRuleSet NetworkRuleSet { get { throw null; } set { } }
         public int? PartitionCount { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Search.SearchPrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
@@ -116,7 +122,10 @@ namespace Azure.ResourceManager.Search
         public Azure.ResourceManager.Search.Models.SearchSkuName? SkuName { get { throw null; } set { } }
         public Azure.ResourceManager.Search.Models.SearchServiceStatus? Status { get { throw null; } }
         public string StatusDetails { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Search.SearchServiceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.SearchServiceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.SearchServiceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Search.SearchServiceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.SearchServiceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -142,7 +151,10 @@ namespace Azure.ResourceManager.Search
     {
         public SearchServiceNetworkSecurityPerimeterConfigurationData() { }
         public Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterConfigurationProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Search.SearchServiceNetworkSecurityPerimeterConfigurationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.SearchServiceNetworkSecurityPerimeterConfigurationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.SearchServiceNetworkSecurityPerimeterConfigurationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Search.SearchServiceNetworkSecurityPerimeterConfigurationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.SearchServiceNetworkSecurityPerimeterConfigurationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -254,7 +266,10 @@ namespace Azure.ResourceManager.Search
     {
         public SharedSearchServicePrivateLinkResourceData() { }
         public Azure.ResourceManager.Search.Models.SharedSearchServicePrivateLinkResourceProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Search.SharedSearchServicePrivateLinkResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.SharedSearchServicePrivateLinkResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.SharedSearchServicePrivateLinkResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Search.SharedSearchServicePrivateLinkResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.SharedSearchServicePrivateLinkResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -291,6 +306,12 @@ namespace Azure.ResourceManager.Search.Mocking
         public virtual Azure.Response<Azure.ResourceManager.Search.Models.QuotaUsageResult> UsageBySubscriptionSku(Azure.Core.AzureLocation location, string skuName, Azure.ResourceManager.Search.Models.SearchManagementRequestOptions searchManagementRequestOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Search.Models.QuotaUsageResult>> UsageBySubscriptionSkuAsync(Azure.Core.AzureLocation location, string skuName, Azure.ResourceManager.Search.Models.SearchManagementRequestOptions searchManagementRequestOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class MockableSearchTenantResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableSearchTenantResource() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.Search.Models.SearchOfferingsByRegion> GetOfferings(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Search.Models.SearchOfferingsByRegion> GetOfferingsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
 }
 namespace Azure.ResourceManager.Search.Models
 {
@@ -298,24 +319,35 @@ namespace Azure.ResourceManager.Search.Models
     {
         public static Azure.ResourceManager.Search.Models.QuotaUsageResult QuotaUsageResult(Azure.Core.ResourceIdentifier id = null, string unit = null, int? currentValue = default(int?), int? limit = default(int?), Azure.ResourceManager.Search.Models.QuotaUsageResultName name = null) { throw null; }
         public static Azure.ResourceManager.Search.Models.QuotaUsageResultName QuotaUsageResultName(string value = null, string localizedValue = null) { throw null; }
-        public static Azure.ResourceManager.Search.Models.SearchEncryptionWithCmk SearchEncryptionWithCmk(Azure.ResourceManager.Search.Models.SearchEncryptionWithCmkEnforcement? enforcement = default(Azure.ResourceManager.Search.Models.SearchEncryptionWithCmkEnforcement?), Azure.ResourceManager.Search.Models.SearchEncryptionComplianceStatus? encryptionComplianceStatus = default(Azure.ResourceManager.Search.Models.SearchEncryptionComplianceStatus?)) { throw null; }
+        public static Azure.ResourceManager.Search.Models.SearchEncryptionWithCmk SearchEncryptionWithCmk(Azure.ResourceManager.Search.Models.SearchEncryptionWithCmkEnforcement? enforcement, Azure.ResourceManager.Search.Models.SearchEncryptionComplianceStatus? encryptionComplianceStatus) { throw null; }
+        public static Azure.ResourceManager.Search.Models.SearchEncryptionWithCmk SearchEncryptionWithCmk(Azure.ResourceManager.Search.Models.SearchEncryptionWithCmkEnforcement? enforcement = default(Azure.ResourceManager.Search.Models.SearchEncryptionWithCmkEnforcement?), Azure.ResourceManager.Search.Models.SearchEncryptionComplianceStatus? encryptionComplianceStatus = default(Azure.ResourceManager.Search.Models.SearchEncryptionComplianceStatus?), Azure.ResourceManager.Search.Models.SearchResourceEncryptionKey serviceLevelEncryptionKey = null) { throw null; }
+        public static Azure.ResourceManager.Search.Models.SearchFeatureOffering SearchFeatureOffering(string name = null) { throw null; }
+        public static Azure.ResourceManager.Search.Models.SearchNetworkSecurityProfile SearchNetworkSecurityProfile(string name = null, int? accessRulesVersion = default(int?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterAccessRule> accessRules = null, int? diagnosticSettingsVersion = default(int?), System.Collections.Generic.IEnumerable<string> enabledLogCategories = null) { throw null; }
+        public static Azure.ResourceManager.Search.Models.SearchOfferingsByRegion SearchOfferingsByRegion(string regionName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Search.Models.SearchFeatureOffering> features = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Search.Models.SearchSkuOffering> skus = null) { throw null; }
         public static Azure.ResourceManager.Search.SearchPrivateEndpointConnectionData SearchPrivateEndpointConnectionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Search.Models.SearchServicePrivateEndpointConnectionProperties properties = null) { throw null; }
         public static Azure.ResourceManager.Search.Models.SearchPrivateLinkResource SearchPrivateLinkResource(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Search.Models.SearchPrivateLinkResourceProperties properties = null) { throw null; }
         public static Azure.ResourceManager.Search.Models.SearchPrivateLinkResourceProperties SearchPrivateLinkResourceProperties(string groupId = null, System.Collections.Generic.IEnumerable<string> requiredMembers = null, System.Collections.Generic.IEnumerable<string> requiredZoneNames = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Search.Models.ShareableSearchServicePrivateLinkResourceType> shareablePrivateLinkResourceTypes = null) { throw null; }
         public static Azure.ResourceManager.Search.Models.SearchServiceAdminKeyResult SearchServiceAdminKeyResult(string primaryKey = null, string secondaryKey = null) { throw null; }
-        public static Azure.ResourceManager.Search.SearchServiceData SearchServiceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Search.Models.SearchServiceSkuName? searchSkuName = default(Azure.ResourceManager.Search.Models.SearchServiceSkuName?), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, int? replicaCount = default(int?), int? partitionCount = default(int?), System.Uri endpoint = null, Azure.ResourceManager.Search.Models.SearchServiceHostingMode? hostingMode = default(Azure.ResourceManager.Search.Models.SearchServiceHostingMode?), Azure.ResourceManager.Search.Models.SearchServiceComputeType? computeType = default(Azure.ResourceManager.Search.Models.SearchServiceComputeType?), Azure.ResourceManager.Search.Models.SearchServicePublicInternetAccess? publicInternetAccess = default(Azure.ResourceManager.Search.Models.SearchServicePublicInternetAccess?), Azure.ResourceManager.Search.Models.SearchServiceStatus? status = default(Azure.ResourceManager.Search.Models.SearchServiceStatus?), string statusDetails = null, Azure.ResourceManager.Search.Models.SearchServiceProvisioningState? provisioningState = default(Azure.ResourceManager.Search.Models.SearchServiceProvisioningState?), Azure.ResourceManager.Search.Models.SearchServiceNetworkRuleSet networkRuleSet = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Search.Models.SearchDataExfiltrationProtection> dataExfiltrationProtections = null, Azure.ResourceManager.Search.Models.SearchEncryptionWithCmk encryptionWithCmk = null, bool? isLocalAuthDisabled = default(bool?), Azure.ResourceManager.Search.Models.SearchAadAuthDataPlaneAuthOptions authOptions = null, Azure.ResourceManager.Search.Models.SearchSemanticSearch? semanticSearch = default(Azure.ResourceManager.Search.Models.SearchSemanticSearch?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Search.SearchPrivateEndpointConnectionData> privateEndpointConnections = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Search.SharedSearchServicePrivateLinkResourceData> sharedPrivateLinkResources = null, Azure.ETag? eTag = default(Azure.ETag?), Azure.ResourceManager.Search.Models.SearchServiceUpgradeAvailable? isUpgradeAvailable = default(Azure.ResourceManager.Search.Models.SearchServiceUpgradeAvailable?), System.DateTimeOffset? serviceUpgradedOn = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.ResourceManager.Search.SearchServiceData SearchServiceData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.Search.Models.SearchServiceSkuName? searchSkuName, Azure.ResourceManager.Models.ManagedServiceIdentity identity, int? replicaCount, int? partitionCount, System.Uri endpoint, Azure.ResourceManager.Search.Models.SearchServiceHostingMode? hostingMode, Azure.ResourceManager.Search.Models.SearchServiceComputeType? computeType, Azure.ResourceManager.Search.Models.SearchServicePublicInternetAccess? publicInternetAccess, Azure.ResourceManager.Search.Models.SearchServiceStatus? status, string statusDetails, Azure.ResourceManager.Search.Models.SearchServiceProvisioningState? provisioningState, Azure.ResourceManager.Search.Models.SearchServiceNetworkRuleSet networkRuleSet, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Search.Models.SearchDataExfiltrationProtection> dataExfiltrationProtections, Azure.ResourceManager.Search.Models.SearchEncryptionWithCmk encryptionWithCmk, bool? isLocalAuthDisabled, Azure.ResourceManager.Search.Models.SearchAadAuthDataPlaneAuthOptions authOptions, Azure.ResourceManager.Search.Models.SearchSemanticSearch? semanticSearch, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Search.SearchPrivateEndpointConnectionData> privateEndpointConnections, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Search.SharedSearchServicePrivateLinkResourceData> sharedPrivateLinkResources, Azure.ETag? eTag, Azure.ResourceManager.Search.Models.SearchServiceUpgradeAvailable? isUpgradeAvailable, System.DateTimeOffset? serviceUpgradedOn) { throw null; }
         public static Azure.ResourceManager.Search.SearchServiceData SearchServiceData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.Search.Models.SearchSkuName? skuName, Azure.ResourceManager.Models.ManagedServiceIdentity identity, int? replicaCount, int? partitionCount, Azure.ResourceManager.Search.Models.SearchServiceHostingMode? hostingMode, Azure.ResourceManager.Search.Models.SearchServicePublicNetworkAccess? publicNetworkAccess, Azure.ResourceManager.Search.Models.SearchServiceStatus? status, string statusDetails, Azure.ResourceManager.Search.Models.SearchServiceProvisioningState? provisioningState, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Search.Models.SearchServiceIPRule> ipRules, Azure.ResourceManager.Search.Models.SearchEncryptionWithCmk encryptionWithCmk, bool? isLocalAuthDisabled, Azure.ResourceManager.Search.Models.SearchAadAuthDataPlaneAuthOptions authOptions, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Search.SearchPrivateEndpointConnectionData> privateEndpointConnections, Azure.ResourceManager.Search.Models.SearchSemanticSearch? semanticSearch, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Search.SharedSearchServicePrivateLinkResourceData> sharedPrivateLinkResources) { throw null; }
         public static Azure.ResourceManager.Search.SearchServiceData SearchServiceData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.Search.Models.SearchSkuName? skuName, Azure.ResourceManager.Models.ManagedServiceIdentity identity, int? replicaCount, int? partitionCount, System.Uri endpoint, Azure.ResourceManager.Search.Models.SearchServiceHostingMode? hostingMode, Azure.ResourceManager.Search.Models.SearchServiceComputeType? computeType, Azure.ResourceManager.Search.Models.SearchServicePublicNetworkAccess? publicNetworkAccess, Azure.ResourceManager.Search.Models.SearchServiceStatus? status, string statusDetails, Azure.ResourceManager.Search.Models.SearchServiceProvisioningState? provisioningState, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Search.Models.SearchServiceIPRule> ipRules, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Search.Models.SearchDataExfiltrationProtection> dataExfiltrationProtections, Azure.ResourceManager.Search.Models.SearchEncryptionWithCmk encryptionWithCmk, bool? isLocalAuthDisabled, Azure.ResourceManager.Search.Models.SearchAadAuthDataPlaneAuthOptions authOptions, Azure.ResourceManager.Search.Models.SearchSemanticSearch? semanticSearch, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Search.SearchPrivateEndpointConnectionData> privateEndpointConnections, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Search.SharedSearchServicePrivateLinkResourceData> sharedPrivateLinkResources, bool? upgradeAvailable, System.DateTimeOffset? serviceUpgradeOn) { throw null; }
-        public static Azure.ResourceManager.Search.Models.SearchServiceNameAvailabilityContent SearchServiceNameAvailabilityContent(string name = null, Azure.ResourceManager.Search.Models.SearchServiceResourceType resourceType = default(Azure.ResourceManager.Search.Models.SearchServiceResourceType)) { throw null; }
+        public static Azure.ResourceManager.Search.SearchServiceData SearchServiceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), int? replicaCount = default(int?), int? partitionCount = default(int?), System.Uri endpoint = null, Azure.ResourceManager.Search.Models.SearchServiceHostingMode? hostingMode = default(Azure.ResourceManager.Search.Models.SearchServiceHostingMode?), Azure.ResourceManager.Search.Models.SearchServiceComputeType? computeType = default(Azure.ResourceManager.Search.Models.SearchServiceComputeType?), Azure.ResourceManager.Search.Models.SearchServicePublicInternetAccess? publicInternetAccess = default(Azure.ResourceManager.Search.Models.SearchServicePublicInternetAccess?), Azure.ResourceManager.Search.Models.SearchServiceStatus? status = default(Azure.ResourceManager.Search.Models.SearchServiceStatus?), string statusDetails = null, Azure.ResourceManager.Search.Models.SearchServiceProvisioningState? provisioningState = default(Azure.ResourceManager.Search.Models.SearchServiceProvisioningState?), Azure.ResourceManager.Search.Models.SearchServiceNetworkRuleSet networkRuleSet = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Search.Models.SearchDataExfiltrationProtection> dataExfiltrationProtections = null, Azure.ResourceManager.Search.Models.SearchEncryptionWithCmk encryptionWithCmk = null, bool? isLocalAuthDisabled = default(bool?), Azure.ResourceManager.Search.Models.SearchAadAuthDataPlaneAuthOptions authOptions = null, Azure.ResourceManager.Search.Models.SearchSemanticSearch? semanticSearch = default(Azure.ResourceManager.Search.Models.SearchSemanticSearch?), Azure.ResourceManager.Search.Models.SearchKnowledgeRetrieval? knowledgeRetrieval = default(Azure.ResourceManager.Search.Models.SearchKnowledgeRetrieval?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Search.SearchPrivateEndpointConnectionData> privateEndpointConnections = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Search.SharedSearchServicePrivateLinkResourceData> sharedPrivateLinkResources = null, Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.Search.Models.SearchServiceUpgradeAvailable? isUpgradeAvailable = default(Azure.ResourceManager.Search.Models.SearchServiceUpgradeAvailable?), System.DateTimeOffset? serviceUpgradedOn = default(System.DateTimeOffset?), Azure.ResourceManager.Search.Models.SearchServiceSkuName? searchSkuName = default(Azure.ResourceManager.Search.Models.SearchServiceSkuName?), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
+        public static Azure.ResourceManager.Search.Models.SearchServiceNameAvailabilityContent SearchServiceNameAvailabilityContent(string name = null) { throw null; }
+        public static Azure.ResourceManager.Search.Models.SearchServiceNameAvailabilityContent SearchServiceNameAvailabilityContent(string name, Azure.ResourceManager.Search.Models.SearchServiceResourceType resourceType) { throw null; }
         public static Azure.ResourceManager.Search.Models.SearchServiceNameAvailabilityResult SearchServiceNameAvailabilityResult(bool? isNameAvailable = default(bool?), Azure.ResourceManager.Search.Models.SearchServiceNameUnavailableReason? reason = default(Azure.ResourceManager.Search.Models.SearchServiceNameUnavailableReason?), string message = null) { throw null; }
+        public static Azure.ResourceManager.Search.Models.SearchServiceNetworkRuleSet SearchServiceNetworkRuleSet(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Search.Models.SearchServiceIPRule> ipRules = null, Azure.ResourceManager.Search.Models.SearchBypass? bypass = default(Azure.ResourceManager.Search.Models.SearchBypass?)) { throw null; }
+        public static Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterAccessRuleProperties SearchServiceNetworkSecurityPerimeterAccessRuleProperties(Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterAccessRuleDirection? direction = default(Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterAccessRuleDirection?), System.Collections.Generic.IEnumerable<string> addressPrefixes = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> subscriptions = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeter> networkSecurityPerimeters = null, System.Collections.Generic.IEnumerable<string> fullyQualifiedDomainNames = null, System.Collections.Generic.IEnumerable<string> emailAddresses = null, System.Collections.Generic.IEnumerable<string> phoneNumbers = null) { throw null; }
         public static Azure.ResourceManager.Search.SearchServiceNetworkSecurityPerimeterConfigurationData SearchServiceNetworkSecurityPerimeterConfigurationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterConfigurationProperties properties = null) { throw null; }
         public static Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterConfigurationProperties SearchServiceNetworkSecurityPerimeterConfigurationProperties(Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterConfigurationProvisioningState? provisioningState = default(Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterConfigurationProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterProvisioningIssue> provisioningIssues = null, Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeter networkSecurityPerimeter = null, Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterResourceAssociation resourceAssociation = null, Azure.ResourceManager.Search.Models.SearchNetworkSecurityProfile profile = null) { throw null; }
         public static Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterProvisioningIssue SearchServiceNetworkSecurityPerimeterProvisioningIssue(string name = null, Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterProvisioningIssueProperties properties = null) { throw null; }
         public static Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterProvisioningIssueProperties SearchServiceNetworkSecurityPerimeterProvisioningIssueProperties(Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterProvisioningIssueType? issueType = default(Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterProvisioningIssueType?), Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterProvisioningIssueSeverity? severity = default(Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterProvisioningIssueSeverity?), string description = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> suggestedResourceIds = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterAccessRule> suggestedAccessRules = null) { throw null; }
-        public static Azure.ResourceManager.Search.Models.SearchServicePatch SearchServicePatch(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Search.Models.SearchServiceSkuName? searchSkuName = default(Azure.ResourceManager.Search.Models.SearchServiceSkuName?), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, int? replicaCount = default(int?), int? partitionCount = default(int?), System.Uri endpoint = null, Azure.ResourceManager.Search.Models.SearchServiceHostingMode? hostingMode = default(Azure.ResourceManager.Search.Models.SearchServiceHostingMode?), Azure.ResourceManager.Search.Models.SearchServiceComputeType? computeType = default(Azure.ResourceManager.Search.Models.SearchServiceComputeType?), Azure.ResourceManager.Search.Models.SearchServicePublicInternetAccess? publicInternetAccess = default(Azure.ResourceManager.Search.Models.SearchServicePublicInternetAccess?), Azure.ResourceManager.Search.Models.SearchServiceStatus? status = default(Azure.ResourceManager.Search.Models.SearchServiceStatus?), string statusDetails = null, Azure.ResourceManager.Search.Models.SearchServiceProvisioningState? provisioningState = default(Azure.ResourceManager.Search.Models.SearchServiceProvisioningState?), Azure.ResourceManager.Search.Models.SearchServiceNetworkRuleSet networkRuleSet = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Search.Models.SearchDataExfiltrationProtection> dataExfiltrationProtections = null, Azure.ResourceManager.Search.Models.SearchEncryptionWithCmk encryptionWithCmk = null, bool? isLocalAuthDisabled = default(bool?), Azure.ResourceManager.Search.Models.SearchAadAuthDataPlaneAuthOptions authOptions = null, Azure.ResourceManager.Search.Models.SearchSemanticSearch? semanticSearch = default(Azure.ResourceManager.Search.Models.SearchSemanticSearch?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Search.SearchPrivateEndpointConnectionData> privateEndpointConnections = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Search.SharedSearchServicePrivateLinkResourceData> sharedPrivateLinkResources = null, Azure.ETag? eTag = default(Azure.ETag?), Azure.ResourceManager.Search.Models.SearchServiceUpgradeAvailable? isUpgradeAvailable = default(Azure.ResourceManager.Search.Models.SearchServiceUpgradeAvailable?), System.DateTimeOffset? serviceUpgradedOn = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.ResourceManager.Search.Models.SearchServicePatch SearchServicePatch(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), int? replicaCount = default(int?), int? partitionCount = default(int?), System.Uri endpoint = null, Azure.ResourceManager.Search.Models.SearchServiceHostingMode? hostingMode = default(Azure.ResourceManager.Search.Models.SearchServiceHostingMode?), Azure.ResourceManager.Search.Models.SearchServiceComputeType? computeType = default(Azure.ResourceManager.Search.Models.SearchServiceComputeType?), Azure.ResourceManager.Search.Models.SearchServicePublicInternetAccess? publicInternetAccess = default(Azure.ResourceManager.Search.Models.SearchServicePublicInternetAccess?), Azure.ResourceManager.Search.Models.SearchServiceStatus? status = default(Azure.ResourceManager.Search.Models.SearchServiceStatus?), string statusDetails = null, Azure.ResourceManager.Search.Models.SearchServiceProvisioningState? provisioningState = default(Azure.ResourceManager.Search.Models.SearchServiceProvisioningState?), Azure.ResourceManager.Search.Models.SearchServiceNetworkRuleSet networkRuleSet = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Search.Models.SearchDataExfiltrationProtection> dataExfiltrationProtections = null, Azure.ResourceManager.Search.Models.SearchEncryptionWithCmk encryptionWithCmk = null, bool? isLocalAuthDisabled = default(bool?), Azure.ResourceManager.Search.Models.SearchAadAuthDataPlaneAuthOptions authOptions = null, Azure.ResourceManager.Search.Models.SearchSemanticSearch? semanticSearch = default(Azure.ResourceManager.Search.Models.SearchSemanticSearch?), Azure.ResourceManager.Search.Models.SearchKnowledgeRetrieval? knowledgeRetrieval = default(Azure.ResourceManager.Search.Models.SearchKnowledgeRetrieval?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Search.SearchPrivateEndpointConnectionData> privateEndpointConnections = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Search.SharedSearchServicePrivateLinkResourceData> sharedPrivateLinkResources = null, Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.Search.Models.SearchServiceUpgradeAvailable? isUpgradeAvailable = default(Azure.ResourceManager.Search.Models.SearchServiceUpgradeAvailable?), System.DateTimeOffset? serviceUpgradedOn = default(System.DateTimeOffset?), Azure.ResourceManager.Search.Models.SearchServiceSkuName? searchSkuName = default(Azure.ResourceManager.Search.Models.SearchServiceSkuName?), System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
+        public static Azure.ResourceManager.Search.Models.SearchServicePatch SearchServicePatch(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.Search.Models.SearchServiceSkuName? searchSkuName, Azure.ResourceManager.Models.ManagedServiceIdentity identity, int? replicaCount, int? partitionCount, System.Uri endpoint, Azure.ResourceManager.Search.Models.SearchServiceHostingMode? hostingMode, Azure.ResourceManager.Search.Models.SearchServiceComputeType? computeType, Azure.ResourceManager.Search.Models.SearchServicePublicInternetAccess? publicInternetAccess, Azure.ResourceManager.Search.Models.SearchServiceStatus? status, string statusDetails, Azure.ResourceManager.Search.Models.SearchServiceProvisioningState? provisioningState, Azure.ResourceManager.Search.Models.SearchServiceNetworkRuleSet networkRuleSet, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Search.Models.SearchDataExfiltrationProtection> dataExfiltrationProtections, Azure.ResourceManager.Search.Models.SearchEncryptionWithCmk encryptionWithCmk, bool? isLocalAuthDisabled, Azure.ResourceManager.Search.Models.SearchAadAuthDataPlaneAuthOptions authOptions, Azure.ResourceManager.Search.Models.SearchSemanticSearch? semanticSearch, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Search.SearchPrivateEndpointConnectionData> privateEndpointConnections, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Search.SharedSearchServicePrivateLinkResourceData> sharedPrivateLinkResources, Azure.ETag? eTag, Azure.ResourceManager.Search.Models.SearchServiceUpgradeAvailable? isUpgradeAvailable, System.DateTimeOffset? serviceUpgradedOn) { throw null; }
         public static Azure.ResourceManager.Search.Models.SearchServicePatch SearchServicePatch(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.Search.Models.SearchSkuName? skuName, Azure.ResourceManager.Models.ManagedServiceIdentity identity, int? replicaCount, int? partitionCount, Azure.ResourceManager.Search.Models.SearchServiceHostingMode? hostingMode, Azure.ResourceManager.Search.Models.SearchServicePublicNetworkAccess? publicNetworkAccess, Azure.ResourceManager.Search.Models.SearchServiceStatus? status, string statusDetails, Azure.ResourceManager.Search.Models.SearchServiceProvisioningState? provisioningState, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Search.Models.SearchServiceIPRule> ipRules, Azure.ResourceManager.Search.Models.SearchEncryptionWithCmk encryptionWithCmk, bool? isLocalAuthDisabled, Azure.ResourceManager.Search.Models.SearchAadAuthDataPlaneAuthOptions authOptions, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Search.SearchPrivateEndpointConnectionData> privateEndpointConnections, Azure.ResourceManager.Search.Models.SearchSemanticSearch? semanticSearch, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Search.SharedSearchServicePrivateLinkResourceData> sharedPrivateLinkResources) { throw null; }
         public static Azure.ResourceManager.Search.Models.SearchServicePatch SearchServicePatch(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.Search.Models.SearchSkuName? skuName, Azure.ResourceManager.Models.ManagedServiceIdentity identity, int? replicaCount, int? partitionCount, System.Uri endpoint, Azure.ResourceManager.Search.Models.SearchServiceHostingMode? hostingMode, Azure.ResourceManager.Search.Models.SearchServiceComputeType? computeType, Azure.ResourceManager.Search.Models.SearchServicePublicNetworkAccess? publicNetworkAccess, Azure.ResourceManager.Search.Models.SearchServiceStatus? status, string statusDetails, Azure.ResourceManager.Search.Models.SearchServiceProvisioningState? provisioningState, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Search.Models.SearchServiceIPRule> ipRules, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Search.Models.SearchDataExfiltrationProtection> dataExfiltrationProtections, Azure.ResourceManager.Search.Models.SearchEncryptionWithCmk encryptionWithCmk, bool? isLocalAuthDisabled, Azure.ResourceManager.Search.Models.SearchAadAuthDataPlaneAuthOptions authOptions, Azure.ResourceManager.Search.Models.SearchSemanticSearch? semanticSearch, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Search.SearchPrivateEndpointConnectionData> privateEndpointConnections, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Search.SharedSearchServicePrivateLinkResourceData> sharedPrivateLinkResources, bool? upgradeAvailable, System.DateTimeOffset? serviceUpgradeOn) { throw null; }
         public static Azure.ResourceManager.Search.Models.SearchServiceQueryKey SearchServiceQueryKey(string name = null, string key = null) { throw null; }
+        public static Azure.ResourceManager.Search.Models.SearchSkuLimits SearchSkuLimits(int? indexes = default(int?), int? indexers = default(int?), float? partitionStorageInGigabytes = default(float?), float? partitionVectorStorageInGigabytes = default(float?), int? searchUnits = default(int?), int? replicas = default(int?), int? partitions = default(int?)) { throw null; }
+        public static Azure.ResourceManager.Search.Models.SearchSkuOffering SearchSkuOffering(Azure.ResourceManager.Search.Models.SearchServiceSkuName? searchSkuName = default(Azure.ResourceManager.Search.Models.SearchServiceSkuName?), Azure.ResourceManager.Search.Models.SearchSkuLimits limits = null) { throw null; }
         public static Azure.ResourceManager.Search.Models.ShareableSearchServicePrivateLinkResourceProperties ShareableSearchServicePrivateLinkResourceProperties(string shareablePrivateLinkResourcePropertiesType = null, string groupId = null, string description = null) { throw null; }
         public static Azure.ResourceManager.Search.Models.ShareableSearchServicePrivateLinkResourceType ShareableSearchServicePrivateLinkResourceType(string name = null, Azure.ResourceManager.Search.Models.ShareableSearchServicePrivateLinkResourceProperties properties = null) { throw null; }
         public static Azure.ResourceManager.Search.SharedSearchServicePrivateLinkResourceData SharedSearchServicePrivateLinkResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Search.Models.SharedSearchServicePrivateLinkResourceProperties properties = null) { throw null; }
@@ -328,7 +360,10 @@ namespace Azure.ResourceManager.Search.Models
         public int? Limit { get { throw null; } }
         public Azure.ResourceManager.Search.Models.QuotaUsageResultName Name { get { throw null; } }
         public string Unit { get { throw null; } }
+        protected virtual Azure.ResourceManager.Search.Models.QuotaUsageResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Search.Models.QuotaUsageResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Search.Models.QuotaUsageResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.QuotaUsageResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.QuotaUsageResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Search.Models.QuotaUsageResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.Models.QuotaUsageResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -340,19 +375,40 @@ namespace Azure.ResourceManager.Search.Models
         internal QuotaUsageResultName() { }
         public string LocalizedValue { get { throw null; } }
         public string Value { get { throw null; } }
+        protected virtual Azure.ResourceManager.Search.Models.QuotaUsageResultName JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Search.Models.QuotaUsageResultName PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Search.Models.QuotaUsageResultName System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.QuotaUsageResultName>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.QuotaUsageResultName>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Search.Models.QuotaUsageResultName System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.Models.QuotaUsageResultName>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.Models.QuotaUsageResultName>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.Models.QuotaUsageResultName>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class SearchAadApplicationCredentials : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.SearchAadApplicationCredentials>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.Models.SearchAadApplicationCredentials>
+    {
+        public SearchAadApplicationCredentials() { }
+        public string ApplicationId { get { throw null; } set { } }
+        public string ApplicationSecret { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Search.Models.SearchAadApplicationCredentials JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Search.Models.SearchAadApplicationCredentials PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Search.Models.SearchAadApplicationCredentials System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.SearchAadApplicationCredentials>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.SearchAadApplicationCredentials>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Search.Models.SearchAadApplicationCredentials System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.Models.SearchAadApplicationCredentials>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.Models.SearchAadApplicationCredentials>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.Models.SearchAadApplicationCredentials>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class SearchAadAuthDataPlaneAuthOptions : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.SearchAadAuthDataPlaneAuthOptions>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.Models.SearchAadAuthDataPlaneAuthOptions>
     {
         public SearchAadAuthDataPlaneAuthOptions() { }
         public Azure.ResourceManager.Search.Models.SearchAadAuthFailureMode? AadAuthFailureMode { get { throw null; } set { } }
         public System.BinaryData ApiKeyOnly { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Search.Models.SearchAadAuthDataPlaneAuthOptions JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Search.Models.SearchAadAuthDataPlaneAuthOptions PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Search.Models.SearchAadAuthDataPlaneAuthOptions System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.SearchAadAuthDataPlaneAuthOptions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.SearchAadAuthDataPlaneAuthOptions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Search.Models.SearchAadAuthDataPlaneAuthOptions System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.Models.SearchAadAuthDataPlaneAuthOptions>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -370,6 +426,7 @@ namespace Azure.ResourceManager.Search.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public SearchBypass(string value) { throw null; }
+        public static Azure.ResourceManager.Search.Models.SearchBypass AzurePortal { get { throw null; } }
         public static Azure.ResourceManager.Search.Models.SearchBypass AzureServices { get { throw null; } }
         public static Azure.ResourceManager.Search.Models.SearchBypass None { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Search.Models.SearchBypass other) { throw null; }
@@ -377,6 +434,7 @@ namespace Azure.ResourceManager.Search.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Search.Models.SearchBypass left, Azure.ResourceManager.Search.Models.SearchBypass right) { throw null; }
         public static implicit operator Azure.ResourceManager.Search.Models.SearchBypass (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Search.Models.SearchBypass? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Search.Models.SearchBypass left, Azure.ResourceManager.Search.Models.SearchBypass right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -392,8 +450,50 @@ namespace Azure.ResourceManager.Search.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Search.Models.SearchDataExfiltrationProtection left, Azure.ResourceManager.Search.Models.SearchDataExfiltrationProtection right) { throw null; }
         public static implicit operator Azure.ResourceManager.Search.Models.SearchDataExfiltrationProtection (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Search.Models.SearchDataExfiltrationProtection? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Search.Models.SearchDataExfiltrationProtection left, Azure.ResourceManager.Search.Models.SearchDataExfiltrationProtection right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public abstract partial class SearchDataIdentity : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.SearchDataIdentity>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.Models.SearchDataIdentity>
+    {
+        internal SearchDataIdentity() { }
+        protected virtual Azure.ResourceManager.Search.Models.SearchDataIdentity JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Search.Models.SearchDataIdentity PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Search.Models.SearchDataIdentity System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.SearchDataIdentity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.SearchDataIdentity>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Search.Models.SearchDataIdentity System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.Models.SearchDataIdentity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.Models.SearchDataIdentity>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.Models.SearchDataIdentity>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class SearchDataNoneIdentity : Azure.ResourceManager.Search.Models.SearchDataIdentity, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.SearchDataNoneIdentity>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.Models.SearchDataNoneIdentity>
+    {
+        public SearchDataNoneIdentity() { }
+        protected override Azure.ResourceManager.Search.Models.SearchDataIdentity JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.Search.Models.SearchDataIdentity PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Search.Models.SearchDataNoneIdentity System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.SearchDataNoneIdentity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.SearchDataNoneIdentity>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Search.Models.SearchDataNoneIdentity System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.Models.SearchDataNoneIdentity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.Models.SearchDataNoneIdentity>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.Models.SearchDataNoneIdentity>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class SearchDataUserAssignedIdentity : Azure.ResourceManager.Search.Models.SearchDataIdentity, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.SearchDataUserAssignedIdentity>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.Models.SearchDataUserAssignedIdentity>
+    {
+        public SearchDataUserAssignedIdentity(Azure.Core.ResourceIdentifier userAssignedIdentity) { }
+        public string FederatedIdentityClientId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier UserAssignedIdentity { get { throw null; } set { } }
+        protected override Azure.ResourceManager.Search.Models.SearchDataIdentity JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.Search.Models.SearchDataIdentity PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Search.Models.SearchDataUserAssignedIdentity System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.SearchDataUserAssignedIdentity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.SearchDataUserAssignedIdentity>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Search.Models.SearchDataUserAssignedIdentity System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.Models.SearchDataUserAssignedIdentity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.Models.SearchDataUserAssignedIdentity>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.Models.SearchDataUserAssignedIdentity>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public enum SearchEncryptionComplianceStatus
     {
@@ -405,7 +505,11 @@ namespace Azure.ResourceManager.Search.Models
         public SearchEncryptionWithCmk() { }
         public Azure.ResourceManager.Search.Models.SearchEncryptionComplianceStatus? EncryptionComplianceStatus { get { throw null; } }
         public Azure.ResourceManager.Search.Models.SearchEncryptionWithCmkEnforcement? Enforcement { get { throw null; } set { } }
+        public Azure.ResourceManager.Search.Models.SearchResourceEncryptionKey ServiceLevelEncryptionKey { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Search.Models.SearchEncryptionWithCmk JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Search.Models.SearchEncryptionWithCmk PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Search.Models.SearchEncryptionWithCmk System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.SearchEncryptionWithCmk>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.SearchEncryptionWithCmk>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Search.Models.SearchEncryptionWithCmk System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.Models.SearchEncryptionWithCmk>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -418,10 +522,50 @@ namespace Azure.ResourceManager.Search.Models
         Disabled = 1,
         Enabled = 2,
     }
-    public partial class SearchManagementRequestOptions
+    public partial class SearchFeatureOffering : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.SearchFeatureOffering>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.Models.SearchFeatureOffering>
+    {
+        internal SearchFeatureOffering() { }
+        public string Name { get { throw null; } }
+        protected virtual Azure.ResourceManager.Search.Models.SearchFeatureOffering JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Search.Models.SearchFeatureOffering PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Search.Models.SearchFeatureOffering System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.SearchFeatureOffering>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.SearchFeatureOffering>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Search.Models.SearchFeatureOffering System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.Models.SearchFeatureOffering>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.Models.SearchFeatureOffering>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.Models.SearchFeatureOffering>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct SearchKnowledgeRetrieval : System.IEquatable<Azure.ResourceManager.Search.Models.SearchKnowledgeRetrieval>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public SearchKnowledgeRetrieval(string value) { throw null; }
+        public static Azure.ResourceManager.Search.Models.SearchKnowledgeRetrieval Free { get { throw null; } }
+        public static Azure.ResourceManager.Search.Models.SearchKnowledgeRetrieval Standard { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Search.Models.SearchKnowledgeRetrieval other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Search.Models.SearchKnowledgeRetrieval left, Azure.ResourceManager.Search.Models.SearchKnowledgeRetrieval right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Search.Models.SearchKnowledgeRetrieval (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Search.Models.SearchKnowledgeRetrieval? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Search.Models.SearchKnowledgeRetrieval left, Azure.ResourceManager.Search.Models.SearchKnowledgeRetrieval right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class SearchManagementRequestOptions : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.SearchManagementRequestOptions>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.Models.SearchManagementRequestOptions>
     {
         public SearchManagementRequestOptions() { }
         public System.Guid? ClientRequestId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Search.Models.SearchManagementRequestOptions JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Search.Models.SearchManagementRequestOptions PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Search.Models.SearchManagementRequestOptions System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.SearchManagementRequestOptions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.SearchManagementRequestOptions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Search.Models.SearchManagementRequestOptions System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.Models.SearchManagementRequestOptions>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.Models.SearchManagementRequestOptions>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.Models.SearchManagementRequestOptions>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SearchNetworkSecurityProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.SearchNetworkSecurityProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.Models.SearchNetworkSecurityProfile>
     {
@@ -431,18 +575,40 @@ namespace Azure.ResourceManager.Search.Models
         public int? DiagnosticSettingsVersion { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> EnabledLogCategories { get { throw null; } }
         public string Name { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Search.Models.SearchNetworkSecurityProfile JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Search.Models.SearchNetworkSecurityProfile PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Search.Models.SearchNetworkSecurityProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.SearchNetworkSecurityProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.SearchNetworkSecurityProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Search.Models.SearchNetworkSecurityProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.Models.SearchNetworkSecurityProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.Models.SearchNetworkSecurityProfile>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.Models.SearchNetworkSecurityProfile>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class SearchOfferingsByRegion : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.SearchOfferingsByRegion>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.Models.SearchOfferingsByRegion>
+    {
+        internal SearchOfferingsByRegion() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Search.Models.SearchFeatureOffering> Features { get { throw null; } }
+        public string RegionName { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Search.Models.SearchSkuOffering> Skus { get { throw null; } }
+        protected virtual Azure.ResourceManager.Search.Models.SearchOfferingsByRegion JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Search.Models.SearchOfferingsByRegion PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Search.Models.SearchOfferingsByRegion System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.SearchOfferingsByRegion>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.SearchOfferingsByRegion>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Search.Models.SearchOfferingsByRegion System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.Models.SearchOfferingsByRegion>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.Models.SearchOfferingsByRegion>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.Models.SearchOfferingsByRegion>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class SearchPrivateLinkResource : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.SearchPrivateLinkResource>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.Models.SearchPrivateLinkResource>
     {
         public SearchPrivateLinkResource() { }
         public Azure.ResourceManager.Search.Models.SearchPrivateLinkResourceProperties Properties { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Search.Models.SearchPrivateLinkResource System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.SearchPrivateLinkResource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.SearchPrivateLinkResource>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Search.Models.SearchPrivateLinkResource System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.Models.SearchPrivateLinkResource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -456,7 +622,10 @@ namespace Azure.ResourceManager.Search.Models
         public System.Collections.Generic.IReadOnlyList<string> RequiredMembers { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> RequiredZoneNames { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Search.Models.ShareableSearchServicePrivateLinkResourceType> ShareablePrivateLinkResourceTypes { get { throw null; } }
+        protected virtual Azure.ResourceManager.Search.Models.SearchPrivateLinkResourceProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Search.Models.SearchPrivateLinkResourceProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Search.Models.SearchPrivateLinkResourceProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.SearchPrivateLinkResourceProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.SearchPrivateLinkResourceProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Search.Models.SearchPrivateLinkResourceProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.Models.SearchPrivateLinkResourceProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -480,8 +649,27 @@ namespace Azure.ResourceManager.Search.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Search.Models.SearchPrivateLinkServiceConnectionProvisioningState left, Azure.ResourceManager.Search.Models.SearchPrivateLinkServiceConnectionProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Search.Models.SearchPrivateLinkServiceConnectionProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Search.Models.SearchPrivateLinkServiceConnectionProvisioningState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Search.Models.SearchPrivateLinkServiceConnectionProvisioningState left, Azure.ResourceManager.Search.Models.SearchPrivateLinkServiceConnectionProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class SearchResourceEncryptionKey : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.SearchResourceEncryptionKey>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.Models.SearchResourceEncryptionKey>
+    {
+        public SearchResourceEncryptionKey() { }
+        public Azure.ResourceManager.Search.Models.SearchAadApplicationCredentials AccessCredentials { get { throw null; } set { } }
+        public Azure.ResourceManager.Search.Models.SearchDataIdentity Identity { get { throw null; } set { } }
+        public string KeyName { get { throw null; } set { } }
+        public string KeyVersion { get { throw null; } set { } }
+        public System.Uri VaultUri { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Search.Models.SearchResourceEncryptionKey JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Search.Models.SearchResourceEncryptionKey PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Search.Models.SearchResourceEncryptionKey System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.SearchResourceEncryptionKey>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.SearchResourceEncryptionKey>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Search.Models.SearchResourceEncryptionKey System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.Models.SearchResourceEncryptionKey>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.Models.SearchResourceEncryptionKey>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.Models.SearchResourceEncryptionKey>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SearchSemanticSearch : System.IEquatable<Azure.ResourceManager.Search.Models.SearchSemanticSearch>
@@ -497,6 +685,7 @@ namespace Azure.ResourceManager.Search.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Search.Models.SearchSemanticSearch left, Azure.ResourceManager.Search.Models.SearchSemanticSearch right) { throw null; }
         public static implicit operator Azure.ResourceManager.Search.Models.SearchSemanticSearch (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Search.Models.SearchSemanticSearch? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Search.Models.SearchSemanticSearch left, Azure.ResourceManager.Search.Models.SearchSemanticSearch right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -510,7 +699,10 @@ namespace Azure.ResourceManager.Search.Models
         internal SearchServiceAdminKeyResult() { }
         public string PrimaryKey { get { throw null; } }
         public string SecondaryKey { get { throw null; } }
+        protected virtual Azure.ResourceManager.Search.Models.SearchServiceAdminKeyResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Search.Models.SearchServiceAdminKeyResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Search.Models.SearchServiceAdminKeyResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.SearchServiceAdminKeyResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.SearchServiceAdminKeyResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Search.Models.SearchServiceAdminKeyResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.Models.SearchServiceAdminKeyResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -530,6 +722,7 @@ namespace Azure.ResourceManager.Search.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Search.Models.SearchServiceComputeType left, Azure.ResourceManager.Search.Models.SearchServiceComputeType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Search.Models.SearchServiceComputeType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Search.Models.SearchServiceComputeType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Search.Models.SearchServiceComputeType left, Azure.ResourceManager.Search.Models.SearchServiceComputeType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -542,7 +735,10 @@ namespace Azure.ResourceManager.Search.Models
     {
         public SearchServiceIPRule() { }
         public string Value { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Search.Models.SearchServiceIPRule JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Search.Models.SearchServiceIPRule PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Search.Models.SearchServiceIPRule System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.SearchServiceIPRule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.SearchServiceIPRule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Search.Models.SearchServiceIPRule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.Models.SearchServiceIPRule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -554,7 +750,10 @@ namespace Azure.ResourceManager.Search.Models
         public SearchServiceNameAvailabilityContent(string name) { }
         public string Name { get { throw null; } }
         public Azure.ResourceManager.Search.Models.SearchServiceResourceType ResourceType { get { throw null; } }
+        protected virtual Azure.ResourceManager.Search.Models.SearchServiceNameAvailabilityContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Search.Models.SearchServiceNameAvailabilityContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Search.Models.SearchServiceNameAvailabilityContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.SearchServiceNameAvailabilityContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.SearchServiceNameAvailabilityContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Search.Models.SearchServiceNameAvailabilityContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.Models.SearchServiceNameAvailabilityContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -567,7 +766,10 @@ namespace Azure.ResourceManager.Search.Models
         public bool? IsNameAvailable { get { throw null; } }
         public string Message { get { throw null; } }
         public Azure.ResourceManager.Search.Models.SearchServiceNameUnavailableReason? Reason { get { throw null; } }
+        protected virtual Azure.ResourceManager.Search.Models.SearchServiceNameAvailabilityResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Search.Models.SearchServiceNameAvailabilityResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Search.Models.SearchServiceNameAvailabilityResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.SearchServiceNameAvailabilityResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.SearchServiceNameAvailabilityResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Search.Models.SearchServiceNameAvailabilityResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.Models.SearchServiceNameAvailabilityResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -587,6 +789,7 @@ namespace Azure.ResourceManager.Search.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Search.Models.SearchServiceNameUnavailableReason left, Azure.ResourceManager.Search.Models.SearchServiceNameUnavailableReason right) { throw null; }
         public static implicit operator Azure.ResourceManager.Search.Models.SearchServiceNameUnavailableReason (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Search.Models.SearchServiceNameUnavailableReason? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Search.Models.SearchServiceNameUnavailableReason left, Azure.ResourceManager.Search.Models.SearchServiceNameUnavailableReason right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -595,7 +798,10 @@ namespace Azure.ResourceManager.Search.Models
         public SearchServiceNetworkRuleSet() { }
         public Azure.ResourceManager.Search.Models.SearchBypass? Bypass { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Search.Models.SearchServiceIPRule> IPRules { get { throw null; } }
+        protected virtual Azure.ResourceManager.Search.Models.SearchServiceNetworkRuleSet JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Search.Models.SearchServiceNetworkRuleSet PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Search.Models.SearchServiceNetworkRuleSet System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.SearchServiceNetworkRuleSet>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.SearchServiceNetworkRuleSet>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Search.Models.SearchServiceNetworkRuleSet System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.Models.SearchServiceNetworkRuleSet>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -608,7 +814,10 @@ namespace Azure.ResourceManager.Search.Models
         public Azure.Core.ResourceIdentifier Id { get { throw null; } set { } }
         public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
         public System.Guid? PerimeterGuid { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeter JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeter PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -620,7 +829,10 @@ namespace Azure.ResourceManager.Search.Models
         public SearchServiceNetworkSecurityPerimeterAccessRule() { }
         public string Name { get { throw null; } set { } }
         public Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterAccessRuleProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterAccessRule JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterAccessRule PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterAccessRule System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterAccessRule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterAccessRule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterAccessRule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterAccessRule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -640,6 +852,7 @@ namespace Azure.ResourceManager.Search.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterAccessRuleDirection left, Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterAccessRuleDirection right) { throw null; }
         public static implicit operator Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterAccessRuleDirection (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterAccessRuleDirection? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterAccessRuleDirection left, Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterAccessRuleDirection right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -653,7 +866,10 @@ namespace Azure.ResourceManager.Search.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeter> NetworkSecurityPerimeters { get { throw null; } }
         public System.Collections.Generic.IList<string> PhoneNumbers { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> Subscriptions { get { throw null; } }
+        protected virtual Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterAccessRuleProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterAccessRuleProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterAccessRuleProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterAccessRuleProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterAccessRuleProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterAccessRuleProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterAccessRuleProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -668,7 +884,10 @@ namespace Azure.ResourceManager.Search.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterProvisioningIssue> ProvisioningIssues { get { throw null; } }
         public Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterConfigurationProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterResourceAssociation ResourceAssociation { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterConfigurationProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterConfigurationProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterConfigurationProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterConfigurationProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterConfigurationProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterConfigurationProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterConfigurationProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -693,15 +912,19 @@ namespace Azure.ResourceManager.Search.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterConfigurationProvisioningState left, Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterConfigurationProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterConfigurationProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterConfigurationProvisioningState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterConfigurationProvisioningState left, Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterConfigurationProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class SearchServiceNetworkSecurityPerimeterProvisioningIssue : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterProvisioningIssue>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterProvisioningIssue>
     {
-        internal SearchServiceNetworkSecurityPerimeterProvisioningIssue() { }
+        public SearchServiceNetworkSecurityPerimeterProvisioningIssue() { }
         public string Name { get { throw null; } }
         public Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterProvisioningIssueProperties Properties { get { throw null; } }
+        protected virtual Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterProvisioningIssue JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterProvisioningIssue PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterProvisioningIssue System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterProvisioningIssue>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterProvisioningIssue>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterProvisioningIssue System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterProvisioningIssue>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -710,13 +933,16 @@ namespace Azure.ResourceManager.Search.Models
     }
     public partial class SearchServiceNetworkSecurityPerimeterProvisioningIssueProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterProvisioningIssueProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterProvisioningIssueProperties>
     {
-        internal SearchServiceNetworkSecurityPerimeterProvisioningIssueProperties() { }
+        public SearchServiceNetworkSecurityPerimeterProvisioningIssueProperties() { }
         public string Description { get { throw null; } }
         public Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterProvisioningIssueType? IssueType { get { throw null; } }
         public Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterProvisioningIssueSeverity? Severity { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterAccessRule> SuggestedAccessRules { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Core.ResourceIdentifier> SuggestedResourceIds { get { throw null; } }
+        protected virtual Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterProvisioningIssueProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterProvisioningIssueProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterProvisioningIssueProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterProvisioningIssueProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterProvisioningIssueProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterProvisioningIssueProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterProvisioningIssueProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -736,6 +962,7 @@ namespace Azure.ResourceManager.Search.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterProvisioningIssueSeverity left, Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterProvisioningIssueSeverity right) { throw null; }
         public static implicit operator Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterProvisioningIssueSeverity (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterProvisioningIssueSeverity? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterProvisioningIssueSeverity left, Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterProvisioningIssueSeverity right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -754,6 +981,7 @@ namespace Azure.ResourceManager.Search.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterProvisioningIssueType left, Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterProvisioningIssueType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterProvisioningIssueType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterProvisioningIssueType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterProvisioningIssueType left, Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterProvisioningIssueType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -762,7 +990,10 @@ namespace Azure.ResourceManager.Search.Models
         public SearchServiceNetworkSecurityPerimeterResourceAssociation() { }
         public Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterResourceAssociationAccessMode? AccessMode { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterResourceAssociation JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterResourceAssociation PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterResourceAssociation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterResourceAssociation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterResourceAssociation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterResourceAssociation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterResourceAssociation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -783,6 +1014,7 @@ namespace Azure.ResourceManager.Search.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterResourceAssociationAccessMode left, Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterResourceAssociationAccessMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterResourceAssociationAccessMode (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterResourceAssociationAccessMode? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterResourceAssociationAccessMode left, Azure.ResourceManager.Search.Models.SearchServiceNetworkSecurityPerimeterResourceAssociationAccessMode right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -800,6 +1032,7 @@ namespace Azure.ResourceManager.Search.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.Search.Models.SearchServiceIPRule> IPRules { get { throw null; } }
         public bool? IsLocalAuthDisabled { get { throw null; } set { } }
         public Azure.ResourceManager.Search.Models.SearchServiceUpgradeAvailable? IsUpgradeAvailable { get { throw null; } set { } }
+        public Azure.ResourceManager.Search.Models.SearchKnowledgeRetrieval? KnowledgeRetrieval { get { throw null; } set { } }
         public Azure.ResourceManager.Search.Models.SearchServiceNetworkRuleSet NetworkRuleSet { get { throw null; } set { } }
         public int? PartitionCount { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Search.SearchPrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
@@ -814,7 +1047,10 @@ namespace Azure.ResourceManager.Search.Models
         public Azure.ResourceManager.Search.Models.SearchSkuName? SkuName { get { throw null; } set { } }
         public Azure.ResourceManager.Search.Models.SearchServiceStatus? Status { get { throw null; } }
         public string StatusDetails { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Search.Models.SearchServicePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.SearchServicePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.SearchServicePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Search.Models.SearchServicePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.Models.SearchServicePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -828,7 +1064,10 @@ namespace Azure.ResourceManager.Search.Models
         public string GroupId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier PrivateEndpointId { get { throw null; } set { } }
         public Azure.ResourceManager.Search.Models.SearchPrivateLinkServiceConnectionProvisioningState? ProvisioningState { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Search.Models.SearchServicePrivateEndpointConnectionProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Search.Models.SearchServicePrivateEndpointConnectionProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Search.Models.SearchServicePrivateEndpointConnectionProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.SearchServicePrivateEndpointConnectionProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.SearchServicePrivateEndpointConnectionProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Search.Models.SearchServicePrivateEndpointConnectionProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.Models.SearchServicePrivateEndpointConnectionProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -841,7 +1080,10 @@ namespace Azure.ResourceManager.Search.Models
         public string ActionsRequired { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
         public Azure.ResourceManager.Search.Models.SearchServicePrivateLinkServiceConnectionStatus? Status { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Search.Models.SearchServicePrivateLinkServiceConnectionState JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Search.Models.SearchServicePrivateLinkServiceConnectionState PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Search.Models.SearchServicePrivateLinkServiceConnectionState System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.SearchServicePrivateLinkServiceConnectionState>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.SearchServicePrivateLinkServiceConnectionState>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Search.Models.SearchServicePrivateLinkServiceConnectionState System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.Models.SearchServicePrivateLinkServiceConnectionState>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -875,6 +1117,7 @@ namespace Azure.ResourceManager.Search.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Search.Models.SearchServicePublicInternetAccess left, Azure.ResourceManager.Search.Models.SearchServicePublicInternetAccess right) { throw null; }
         public static implicit operator Azure.ResourceManager.Search.Models.SearchServicePublicInternetAccess (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Search.Models.SearchServicePublicInternetAccess? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Search.Models.SearchServicePublicInternetAccess left, Azure.ResourceManager.Search.Models.SearchServicePublicInternetAccess right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -888,7 +1131,10 @@ namespace Azure.ResourceManager.Search.Models
         internal SearchServiceQueryKey() { }
         public string Key { get { throw null; } }
         public string Name { get { throw null; } }
+        protected virtual Azure.ResourceManager.Search.Models.SearchServiceQueryKey JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Search.Models.SearchServiceQueryKey PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Search.Models.SearchServiceQueryKey System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.SearchServiceQueryKey>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.SearchServiceQueryKey>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Search.Models.SearchServiceQueryKey System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.Models.SearchServiceQueryKey>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -907,6 +1153,7 @@ namespace Azure.ResourceManager.Search.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Search.Models.SearchServiceResourceType left, Azure.ResourceManager.Search.Models.SearchServiceResourceType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Search.Models.SearchServiceResourceType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Search.Models.SearchServiceResourceType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Search.Models.SearchServiceResourceType left, Azure.ResourceManager.Search.Models.SearchServiceResourceType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -926,6 +1173,7 @@ namespace Azure.ResourceManager.Search.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Search.Models.SearchServiceSharedPrivateLinkResourceProvisioningState left, Azure.ResourceManager.Search.Models.SearchServiceSharedPrivateLinkResourceProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Search.Models.SearchServiceSharedPrivateLinkResourceProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Search.Models.SearchServiceSharedPrivateLinkResourceProvisioningState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Search.Models.SearchServiceSharedPrivateLinkResourceProvisioningState left, Azure.ResourceManager.Search.Models.SearchServiceSharedPrivateLinkResourceProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -944,6 +1192,7 @@ namespace Azure.ResourceManager.Search.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Search.Models.SearchServiceSharedPrivateLinkResourceStatus left, Azure.ResourceManager.Search.Models.SearchServiceSharedPrivateLinkResourceStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Search.Models.SearchServiceSharedPrivateLinkResourceStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Search.Models.SearchServiceSharedPrivateLinkResourceStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Search.Models.SearchServiceSharedPrivateLinkResourceStatus left, Azure.ResourceManager.Search.Models.SearchServiceSharedPrivateLinkResourceStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -955,6 +1204,7 @@ namespace Azure.ResourceManager.Search.Models
         public SearchServiceSkuName(string value) { throw null; }
         public static Azure.ResourceManager.Search.Models.SearchServiceSkuName Basic { get { throw null; } }
         public static Azure.ResourceManager.Search.Models.SearchServiceSkuName Free { get { throw null; } }
+        public static Azure.ResourceManager.Search.Models.SearchServiceSkuName Serverless { get { throw null; } }
         public static Azure.ResourceManager.Search.Models.SearchServiceSkuName Standard { get { throw null; } }
         public static Azure.ResourceManager.Search.Models.SearchServiceSkuName Standard2 { get { throw null; } }
         public static Azure.ResourceManager.Search.Models.SearchServiceSkuName Standard3 { get { throw null; } }
@@ -965,6 +1215,7 @@ namespace Azure.ResourceManager.Search.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Search.Models.SearchServiceSkuName left, Azure.ResourceManager.Search.Models.SearchServiceSkuName right) { throw null; }
         public static implicit operator Azure.ResourceManager.Search.Models.SearchServiceSkuName (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Search.Models.SearchServiceSkuName? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Search.Models.SearchServiceSkuName left, Azure.ResourceManager.Search.Models.SearchServiceSkuName right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -976,6 +1227,7 @@ namespace Azure.ResourceManager.Search.Models
         Degraded = 3,
         Disabled = 4,
         Error = 5,
+        Stopped = 6,
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SearchServiceUpgradeAvailable : System.IEquatable<Azure.ResourceManager.Search.Models.SearchServiceUpgradeAvailable>
@@ -990,8 +1242,29 @@ namespace Azure.ResourceManager.Search.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Search.Models.SearchServiceUpgradeAvailable left, Azure.ResourceManager.Search.Models.SearchServiceUpgradeAvailable right) { throw null; }
         public static implicit operator Azure.ResourceManager.Search.Models.SearchServiceUpgradeAvailable (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Search.Models.SearchServiceUpgradeAvailable? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Search.Models.SearchServiceUpgradeAvailable left, Azure.ResourceManager.Search.Models.SearchServiceUpgradeAvailable right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class SearchSkuLimits : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.SearchSkuLimits>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.Models.SearchSkuLimits>
+    {
+        internal SearchSkuLimits() { }
+        public int? Indexers { get { throw null; } }
+        public int? Indexes { get { throw null; } }
+        public int? Partitions { get { throw null; } }
+        public float? PartitionStorageInGigabytes { get { throw null; } }
+        public float? PartitionVectorStorageInGigabytes { get { throw null; } }
+        public int? Replicas { get { throw null; } }
+        public int? SearchUnits { get { throw null; } }
+        protected virtual Azure.ResourceManager.Search.Models.SearchSkuLimits JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Search.Models.SearchSkuLimits PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Search.Models.SearchSkuLimits System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.SearchSkuLimits>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.SearchSkuLimits>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Search.Models.SearchSkuLimits System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.Models.SearchSkuLimits>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.Models.SearchSkuLimits>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.Models.SearchSkuLimits>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public enum SearchSkuName
     {
@@ -1003,13 +1276,31 @@ namespace Azure.ResourceManager.Search.Models
         StorageOptimizedL1 = 5,
         StorageOptimizedL2 = 6,
     }
+    public partial class SearchSkuOffering : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.SearchSkuOffering>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.Models.SearchSkuOffering>
+    {
+        internal SearchSkuOffering() { }
+        public Azure.ResourceManager.Search.Models.SearchSkuLimits Limits { get { throw null; } }
+        public Azure.ResourceManager.Search.Models.SearchServiceSkuName? SearchSkuName { get { throw null; } }
+        protected virtual Azure.ResourceManager.Search.Models.SearchSkuOffering JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Search.Models.SearchSkuOffering PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Search.Models.SearchSkuOffering System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.SearchSkuOffering>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.SearchSkuOffering>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Search.Models.SearchSkuOffering System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.Models.SearchSkuOffering>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.Models.SearchSkuOffering>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.Models.SearchSkuOffering>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class ShareableSearchServicePrivateLinkResourceProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.ShareableSearchServicePrivateLinkResourceProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.Models.ShareableSearchServicePrivateLinkResourceProperties>
     {
         internal ShareableSearchServicePrivateLinkResourceProperties() { }
         public string Description { get { throw null; } }
         public string GroupId { get { throw null; } }
         public string ShareablePrivateLinkResourcePropertiesType { get { throw null; } }
+        protected virtual Azure.ResourceManager.Search.Models.ShareableSearchServicePrivateLinkResourceProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Search.Models.ShareableSearchServicePrivateLinkResourceProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Search.Models.ShareableSearchServicePrivateLinkResourceProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.ShareableSearchServicePrivateLinkResourceProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.ShareableSearchServicePrivateLinkResourceProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Search.Models.ShareableSearchServicePrivateLinkResourceProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.Models.ShareableSearchServicePrivateLinkResourceProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1021,7 +1312,10 @@ namespace Azure.ResourceManager.Search.Models
         internal ShareableSearchServicePrivateLinkResourceType() { }
         public string Name { get { throw null; } }
         public Azure.ResourceManager.Search.Models.ShareableSearchServicePrivateLinkResourceProperties Properties { get { throw null; } }
+        protected virtual Azure.ResourceManager.Search.Models.ShareableSearchServicePrivateLinkResourceType JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Search.Models.ShareableSearchServicePrivateLinkResourceType PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Search.Models.ShareableSearchServicePrivateLinkResourceType System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.ShareableSearchServicePrivateLinkResourceType>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.ShareableSearchServicePrivateLinkResourceType>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Search.Models.ShareableSearchServicePrivateLinkResourceType System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.Models.ShareableSearchServicePrivateLinkResourceType>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1039,7 +1333,10 @@ namespace Azure.ResourceManager.Search.Models
         public Azure.ResourceManager.Search.Models.SearchServiceSharedPrivateLinkResourceProvisioningState? SharedPrivateLinkResourceProvisioningState { get { throw null; } set { } }
         public Azure.ResourceManager.Search.Models.SearchServiceSharedPrivateLinkResourceStatus? SharedPrivateLinkResourceStatus { get { throw null; } set { } }
         public Azure.ResourceManager.Search.Models.SharedSearchServicePrivateLinkResourceStatus? Status { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Search.Models.SharedSearchServicePrivateLinkResourceProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Search.Models.SharedSearchServicePrivateLinkResourceProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Search.Models.SharedSearchServicePrivateLinkResourceProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.SharedSearchServicePrivateLinkResourceProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.SharedSearchServicePrivateLinkResourceProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Search.Models.SharedSearchServicePrivateLinkResourceProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.Models.SharedSearchServicePrivateLinkResourceProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

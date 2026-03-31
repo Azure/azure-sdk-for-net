@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -19,8 +20,6 @@ namespace Azure.Compute.Batch
     public partial class BatchClient
     {
         private readonly Uri _endpoint;
-        /// <summary> A credential used to authenticate to the service. </summary>
-        private readonly TokenCredential _tokenCredential;
         private static readonly string[] AuthorizationScopes = new string[] { "https://batch.core.windows.net//.default" };
         private readonly string _apiVersion;
 
@@ -34,6 +33,36 @@ namespace Azure.Compute.Batch
         /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public BatchClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new BatchClientOptions())
+        {
+        }
+
+        /// <summary> Initializes a new instance of BatchClient. </summary>
+        /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        internal BatchClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, BatchClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+
+            options ??= new BatchClientOptions();
+
+            _endpoint = endpoint;
+            if (authenticationPolicy != null)
+            {
+                Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
+            }
+            else
+            {
+                Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
+            }
+            _apiVersion = options.Version;
+            ClientDiagnostics = new ClientDiagnostics(options, true);
+        }
+
+        /// <summary> Initializes a new instance of BatchClient from a <see cref="BatchClientSettings"/>. </summary>
+        /// <param name="settings"> The settings for BatchClient. </param>
+        [Experimental("SCME0002")]
+        public BatchClient(BatchClientSettings settings) : this(null, settings?.Endpoint, settings?.Options)
         {
         }
 
