@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="latestOperationStatus"> The latest operation status of the service. Minimum API version for this property is 2025-04-01. </param>
         /// <param name="lastStatusChangeOn"> The last UTC time when the operation status changed. Minimum API version for this property is 2025-04-01. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OrchestrationServiceSummary(OrchestrationServiceNames? serviceName, OrchestrationServiceState? serviceState, OrchestrationServiceOperationStatus? latestOperationStatus, DateTimeOffset? lastStatusChangeOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OrchestrationServiceSummary(OrchestrationServiceName? serviceName, OrchestrationServiceState? serviceState, OrchestrationServiceOperationStatus? latestOperationStatus, DateTimeOffset? lastStatusChangeOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ServiceName = serviceName;
             ServiceState = serviceState;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> The name of the service. </summary>
-        public OrchestrationServiceNames? ServiceName { get; }
+        public OrchestrationServiceName? ServiceName { get; }
 
         /// <summary> The current state of the service. </summary>
         public OrchestrationServiceState? ServiceState { get; }

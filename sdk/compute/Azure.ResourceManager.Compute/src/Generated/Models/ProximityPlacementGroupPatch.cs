@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies information about the proximity placement group. </summary>
-    public partial class ProximityPlacementGroupPatch : UpdateResource
+    public partial class ProximityPlacementGroupPatch : ComputeResourcePatch
     {
         /// <summary> Initializes a new instance of <see cref="ProximityPlacementGroupPatch"/>. </summary>
         public ProximityPlacementGroupPatch()

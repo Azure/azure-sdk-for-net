@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="GalleryImageVersionSafetyProfile"/>. </summary>
         public GalleryImageVersionSafetyProfile()
         {
-            PolicyViolations = new ChangeTrackingList<PolicyViolation>();
+            PolicyViolations = new ChangeTrackingList<GalleryImageVersionPolicyViolation>();
         }
 
         /// <summary> Initializes a new instance of <see cref="GalleryImageVersionSafetyProfile"/>. </summary>
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="reportedForPolicyViolation"> Indicates whether this image has been reported as violating Microsoft's policies. </param>
         /// <param name="policyViolations"> A list of Policy Violations that have been reported for this Gallery Image Version. </param>
         /// <param name="blockDeletionBeforeEndOfLife"> Indicates whether or not the deletion is blocked for this Gallery Image Version if its End Of Life has not expired. </param>
-        internal GalleryImageVersionSafetyProfile(bool? allowDeletionOfReplicatedLocations, IDictionary<string, BinaryData> additionalBinaryDataProperties, bool? reportedForPolicyViolation, IReadOnlyList<PolicyViolation> policyViolations, bool? blockDeletionBeforeEndOfLife) : base(allowDeletionOfReplicatedLocations, additionalBinaryDataProperties)
+        internal GalleryImageVersionSafetyProfile(bool? allowDeletionOfReplicatedLocations, IDictionary<string, BinaryData> additionalBinaryDataProperties, bool? reportedForPolicyViolation, IReadOnlyList<GalleryImageVersionPolicyViolation> policyViolations, bool? blockDeletionBeforeEndOfLife) : base(allowDeletionOfReplicatedLocations, additionalBinaryDataProperties)
         {
             ReportedForPolicyViolation = reportedForPolicyViolation;
             PolicyViolations = policyViolations;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Models
         public bool? ReportedForPolicyViolation { get; }
 
         /// <summary> A list of Policy Violations that have been reported for this Gallery Image Version. </summary>
-        public IReadOnlyList<PolicyViolation> PolicyViolations { get; }
+        public IReadOnlyList<GalleryImageVersionPolicyViolation> PolicyViolations { get; }
 
         /// <summary> Indicates whether or not the deletion is blocked for this Gallery Image Version if its End Of Life has not expired. </summary>
         public bool? BlockDeletionBeforeEndOfLife { get; set; }

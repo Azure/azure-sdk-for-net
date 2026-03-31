@@ -15,7 +15,7 @@ using Azure.ResourceManager.Compute.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    internal partial class GalleryInVMAccessControlProfilesGetByGalleryAsyncCollectionResultOfT : AsyncPageable<GalleryInVMAccessControlProfileData>
+    internal partial class GalleryInVMAccessControlProfilesGetByGalleryAsyncCollectionResultOfT : AsyncPageable<GalleryInVmAccessControlProfileData>
     {
         private readonly GalleryInVMAccessControlProfiles _client;
         private readonly string _subscriptionId;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of GalleryInVMAccessControlProfilesGetByGalleryAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<GalleryInVMAccessControlProfileData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<GalleryInVmAccessControlProfileData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.Compute
                 {
                     yield break;
                 }
-                GalleryInVMAccessControlProfileList result = GalleryInVMAccessControlProfileList.FromResponse(response);
-                yield return Page<GalleryInVMAccessControlProfileData>.FromValues((IReadOnlyList<GalleryInVMAccessControlProfileData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                GalleryInVmAccessControlProfileList result = GalleryInVmAccessControlProfileList.FromResponse(response);
+                yield return Page<GalleryInVmAccessControlProfileData>.FromValues((IReadOnlyList<GalleryInVmAccessControlProfileData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Compute
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByGalleryRequest(nextLink, _subscriptionId, _resourceGroupName, _galleryName, _context) : _client.CreateGetByGalleryRequest(_subscriptionId, _resourceGroupName, _galleryName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("GalleryInVMAccessControlProfileCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("GalleryInVmAccessControlProfileCollection.GetAll");
             scope.Start();
             try
             {

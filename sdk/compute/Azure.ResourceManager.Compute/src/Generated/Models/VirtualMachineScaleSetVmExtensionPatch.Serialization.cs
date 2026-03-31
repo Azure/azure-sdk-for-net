@@ -15,61 +15,61 @@ using Azure.ResourceManager.Compute;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes a VMSS VM Extension. </summary>
-    public partial class VirtualMachineScaleSetVMExtensionPatch : SubResourceReadOnly, IJsonModel<VirtualMachineScaleSetVMExtensionPatch>
+    public partial class VirtualMachineScaleSetVmExtensionPatch : SubResourceReadOnly, IJsonModel<VirtualMachineScaleSetVmExtensionPatch>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override SubResourceReadOnly PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetVMExtensionPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetVmExtensionPatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeVirtualMachineScaleSetVMExtensionPatch(document.RootElement, options);
+                        return DeserializeVirtualMachineScaleSetVmExtensionPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineScaleSetVMExtensionPatch)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineScaleSetVmExtensionPatch)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetVMExtensionPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetVmExtensionPatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineScaleSetVMExtensionPatch)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineScaleSetVmExtensionPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<VirtualMachineScaleSetVMExtensionPatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<VirtualMachineScaleSetVmExtensionPatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VirtualMachineScaleSetVMExtensionPatch IPersistableModel<VirtualMachineScaleSetVMExtensionPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => (VirtualMachineScaleSetVMExtensionPatch)PersistableModelCreateCore(data, options);
+        VirtualMachineScaleSetVmExtensionPatch IPersistableModel<VirtualMachineScaleSetVmExtensionPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => (VirtualMachineScaleSetVmExtensionPatch)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<VirtualMachineScaleSetVMExtensionPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<VirtualMachineScaleSetVmExtensionPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="virtualMachineScaleSetVMExtensionPatch"> The <see cref="VirtualMachineScaleSetVMExtensionPatch"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(VirtualMachineScaleSetVMExtensionPatch virtualMachineScaleSetVMExtensionPatch)
+        /// <param name="virtualMachineScaleSetVmExtensionPatch"> The <see cref="VirtualMachineScaleSetVmExtensionPatch"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(VirtualMachineScaleSetVmExtensionPatch virtualMachineScaleSetVmExtensionPatch)
         {
-            if (virtualMachineScaleSetVMExtensionPatch == null)
+            if (virtualMachineScaleSetVmExtensionPatch == null)
             {
                 return null;
             }
-            return RequestContent.Create(virtualMachineScaleSetVMExtensionPatch, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(virtualMachineScaleSetVmExtensionPatch, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<VirtualMachineScaleSetVMExtensionPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<VirtualMachineScaleSetVmExtensionPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetVMExtensionPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetVmExtensionPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineScaleSetVMExtensionPatch)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineScaleSetVmExtensionPatch)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (options.Format != "W" && Optional.IsDefined(Name))
@@ -105,24 +105,24 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VirtualMachineScaleSetVMExtensionPatch IJsonModel<VirtualMachineScaleSetVMExtensionPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (VirtualMachineScaleSetVMExtensionPatch)JsonModelCreateCore(ref reader, options);
+        VirtualMachineScaleSetVmExtensionPatch IJsonModel<VirtualMachineScaleSetVmExtensionPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (VirtualMachineScaleSetVmExtensionPatch)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override SubResourceReadOnly JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetVMExtensionPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetVmExtensionPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineScaleSetVMExtensionPatch)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineScaleSetVmExtensionPatch)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeVirtualMachineScaleSetVMExtensionPatch(document.RootElement, options);
+            return DeserializeVirtualMachineScaleSetVmExtensionPatch(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static VirtualMachineScaleSetVMExtensionPatch DeserializeVirtualMachineScaleSetVMExtensionPatch(JsonElement element, ModelReaderWriterOptions options)
+        internal static VirtualMachineScaleSetVmExtensionPatch DeserializeVirtualMachineScaleSetVmExtensionPatch(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Compute.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new VirtualMachineScaleSetVMExtensionPatch(id, additionalBinaryDataProperties, name, @type, properties);
+            return new VirtualMachineScaleSetVmExtensionPatch(id, additionalBinaryDataProperties, name, @type, properties);
         }
     }
 }

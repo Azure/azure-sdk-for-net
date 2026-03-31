@@ -15,61 +15,61 @@ using Azure.ResourceManager.Compute;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies a list of virtual machine instance IDs from the VM scale set. </summary>
-    public partial class VirtualMachineScaleSetVMInstanceIDs : IJsonModel<VirtualMachineScaleSetVMInstanceIDs>
+    public partial class VirtualMachineScaleSetVmInstanceIds : IJsonModel<VirtualMachineScaleSetVmInstanceIds>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual VirtualMachineScaleSetVMInstanceIDs PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual VirtualMachineScaleSetVmInstanceIds PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetVMInstanceIDs>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetVmInstanceIds>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeVirtualMachineScaleSetVMInstanceIDs(document.RootElement, options);
+                        return DeserializeVirtualMachineScaleSetVmInstanceIds(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineScaleSetVMInstanceIDs)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineScaleSetVmInstanceIds)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetVMInstanceIDs>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetVmInstanceIds>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineScaleSetVMInstanceIDs)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineScaleSetVmInstanceIds)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<VirtualMachineScaleSetVMInstanceIDs>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<VirtualMachineScaleSetVmInstanceIds>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VirtualMachineScaleSetVMInstanceIDs IPersistableModel<VirtualMachineScaleSetVMInstanceIDs>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        VirtualMachineScaleSetVmInstanceIds IPersistableModel<VirtualMachineScaleSetVmInstanceIds>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<VirtualMachineScaleSetVMInstanceIDs>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<VirtualMachineScaleSetVmInstanceIds>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="virtualMachineScaleSetVMInstanceIDs"> The <see cref="VirtualMachineScaleSetVMInstanceIDs"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(VirtualMachineScaleSetVMInstanceIDs virtualMachineScaleSetVMInstanceIDs)
+        /// <param name="virtualMachineScaleSetVmInstanceIds"> The <see cref="VirtualMachineScaleSetVmInstanceIds"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(VirtualMachineScaleSetVmInstanceIds virtualMachineScaleSetVmInstanceIds)
         {
-            if (virtualMachineScaleSetVMInstanceIDs == null)
+            if (virtualMachineScaleSetVmInstanceIds == null)
             {
                 return null;
             }
-            return RequestContent.Create(virtualMachineScaleSetVMInstanceIDs, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(virtualMachineScaleSetVmInstanceIds, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<VirtualMachineScaleSetVMInstanceIDs>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<VirtualMachineScaleSetVmInstanceIds>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetVMInstanceIDs>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetVmInstanceIds>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineScaleSetVMInstanceIDs)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineScaleSetVmInstanceIds)} does not support writing '{format}' format.");
             }
             if (Optional.IsCollectionDefined(InstanceIds))
             {
@@ -119,24 +119,24 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VirtualMachineScaleSetVMInstanceIDs IJsonModel<VirtualMachineScaleSetVMInstanceIDs>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        VirtualMachineScaleSetVmInstanceIds IJsonModel<VirtualMachineScaleSetVmInstanceIds>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual VirtualMachineScaleSetVMInstanceIDs JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual VirtualMachineScaleSetVmInstanceIds JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetVMInstanceIDs>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetVmInstanceIds>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineScaleSetVMInstanceIDs)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineScaleSetVmInstanceIds)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeVirtualMachineScaleSetVMInstanceIDs(document.RootElement, options);
+            return DeserializeVirtualMachineScaleSetVmInstanceIds(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static VirtualMachineScaleSetVMInstanceIDs DeserializeVirtualMachineScaleSetVMInstanceIDs(JsonElement element, ModelReaderWriterOptions options)
+        internal static VirtualMachineScaleSetVmInstanceIds DeserializeVirtualMachineScaleSetVmInstanceIds(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Compute.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new VirtualMachineScaleSetVMInstanceIDs(instanceIds ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
+            return new VirtualMachineScaleSetVmInstanceIds(instanceIds ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }

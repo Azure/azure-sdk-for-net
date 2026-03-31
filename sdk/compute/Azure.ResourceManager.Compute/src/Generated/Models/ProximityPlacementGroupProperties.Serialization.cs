@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 writer.WritePropertyName("virtualMachines"u8);
                 writer.WriteStartArray();
-                foreach (SubResourceWithColocationStatus item in VirtualMachines)
+                foreach (ComputeSubResourceDataWithColocationStatus item in VirtualMachines)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 writer.WritePropertyName("virtualMachineScaleSets"u8);
                 writer.WriteStartArray();
-                foreach (SubResourceWithColocationStatus item in VirtualMachineScaleSets)
+                foreach (ComputeSubResourceDataWithColocationStatus item in VirtualMachineScaleSets)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 writer.WritePropertyName("availabilitySets"u8);
                 writer.WriteStartArray();
-                foreach (SubResourceWithColocationStatus item in AvailabilitySets)
+                foreach (ComputeSubResourceDataWithColocationStatus item in AvailabilitySets)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -162,9 +162,9 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             ProximityPlacementGroupType? proximityPlacementGroupType = default;
-            IReadOnlyList<SubResourceWithColocationStatus> virtualMachines = default;
-            IReadOnlyList<SubResourceWithColocationStatus> virtualMachineScaleSets = default;
-            IReadOnlyList<SubResourceWithColocationStatus> availabilitySets = default;
+            IReadOnlyList<ComputeSubResourceDataWithColocationStatus> virtualMachines = default;
+            IReadOnlyList<ComputeSubResourceDataWithColocationStatus> virtualMachineScaleSets = default;
+            IReadOnlyList<ComputeSubResourceDataWithColocationStatus> availabilitySets = default;
             InstanceViewStatus colocationStatus = default;
             ProximityPlacementGroupPropertiesIntent intent = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -185,10 +185,10 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    List<SubResourceWithColocationStatus> array = new List<SubResourceWithColocationStatus>();
+                    List<ComputeSubResourceDataWithColocationStatus> array = new List<ComputeSubResourceDataWithColocationStatus>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(SubResourceWithColocationStatus.DeserializeSubResourceWithColocationStatus(item, options));
+                        array.Add(ComputeSubResourceDataWithColocationStatus.DeserializeComputeSubResourceDataWithColocationStatus(item, options));
                     }
                     virtualMachines = array;
                     continue;
@@ -199,10 +199,10 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    List<SubResourceWithColocationStatus> array = new List<SubResourceWithColocationStatus>();
+                    List<ComputeSubResourceDataWithColocationStatus> array = new List<ComputeSubResourceDataWithColocationStatus>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(SubResourceWithColocationStatus.DeserializeSubResourceWithColocationStatus(item, options));
+                        array.Add(ComputeSubResourceDataWithColocationStatus.DeserializeComputeSubResourceDataWithColocationStatus(item, options));
                     }
                     virtualMachineScaleSets = array;
                     continue;
@@ -213,10 +213,10 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    List<SubResourceWithColocationStatus> array = new List<SubResourceWithColocationStatus>();
+                    List<ComputeSubResourceDataWithColocationStatus> array = new List<ComputeSubResourceDataWithColocationStatus>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(SubResourceWithColocationStatus.DeserializeSubResourceWithColocationStatus(item, options));
+                        array.Add(ComputeSubResourceDataWithColocationStatus.DeserializeComputeSubResourceDataWithColocationStatus(item, options));
                     }
                     availabilitySets = array;
                     continue;
@@ -246,9 +246,9 @@ namespace Azure.ResourceManager.Compute.Models
             }
             return new ProximityPlacementGroupProperties(
                 proximityPlacementGroupType,
-                virtualMachines ?? new ChangeTrackingList<SubResourceWithColocationStatus>(),
-                virtualMachineScaleSets ?? new ChangeTrackingList<SubResourceWithColocationStatus>(),
-                availabilitySets ?? new ChangeTrackingList<SubResourceWithColocationStatus>(),
+                virtualMachines ?? new ChangeTrackingList<ComputeSubResourceDataWithColocationStatus>(),
+                virtualMachineScaleSets ?? new ChangeTrackingList<ComputeSubResourceDataWithColocationStatus>(),
+                availabilitySets ?? new ChangeTrackingList<ComputeSubResourceDataWithColocationStatus>(),
                 colocationStatus,
                 intent,
                 additionalBinaryDataProperties);

@@ -251,19 +251,19 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            HardwareProfile hardwareProfile = default;
+            VirtualMachineHardwareProfile hardwareProfile = default;
             ScheduledEventsPolicy scheduledEventsPolicy = default;
-            StorageProfile storageProfile = default;
+            VirtualMachineStorageProfile storageProfile = default;
             AdditionalCapabilities additionalCapabilities = default;
-            OSProfile osProfile = default;
-            NetworkProfile networkProfile = default;
+            VirtualMachineOSProfile osProfile = default;
+            VirtualMachineNetworkProfile networkProfile = default;
             SecurityProfile securityProfile = default;
             DiagnosticsProfile diagnosticsProfile = default;
             SubResource availabilitySet = default;
             SubResource virtualMachineScaleSet = default;
             SubResource proximityPlacementGroup = default;
-            VirtualMachinePriorityTypes? priority = default;
-            VirtualMachineEvictionPolicyTypes? evictionPolicy = default;
+            VirtualMachinePriorityType? priority = default;
+            VirtualMachineEvictionPolicyType? evictionPolicy = default;
             BillingProfile billingProfile = default;
             SubResource host = default;
             SubResource hostGroup = default;
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.Compute.Models
             string vmId = default;
             string extensionsTimeBudget = default;
             int? platformFaultDomain = default;
-            ScheduledEventsProfile scheduledEventsProfile = default;
+            ComputeScheduledEventsProfile scheduledEventsProfile = default;
             string userData = default;
             CapacityReservationProfile capacityReservation = default;
             ApplicationProfile applicationProfile = default;
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    hardwareProfile = HardwareProfile.DeserializeHardwareProfile(prop.Value, options);
+                    hardwareProfile = VirtualMachineHardwareProfile.DeserializeVirtualMachineHardwareProfile(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("scheduledEventsPolicy"u8))
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    storageProfile = StorageProfile.DeserializeStorageProfile(prop.Value, options);
+                    storageProfile = VirtualMachineStorageProfile.DeserializeVirtualMachineStorageProfile(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("additionalCapabilities"u8))
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    osProfile = OSProfile.DeserializeOSProfile(prop.Value, options);
+                    osProfile = VirtualMachineOSProfile.DeserializeVirtualMachineOSProfile(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("networkProfile"u8))
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    networkProfile = NetworkProfile.DeserializeNetworkProfile(prop.Value, options);
+                    networkProfile = VirtualMachineNetworkProfile.DeserializeVirtualMachineNetworkProfile(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("securityProfile"u8))
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    priority = new VirtualMachinePriorityTypes(prop.Value.GetString());
+                    priority = new VirtualMachinePriorityType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("evictionPolicy"u8))
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    evictionPolicy = new VirtualMachineEvictionPolicyTypes(prop.Value.GetString());
+                    evictionPolicy = new VirtualMachineEvictionPolicyType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("billingProfile"u8))
@@ -469,7 +469,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    scheduledEventsProfile = ScheduledEventsProfile.DeserializeScheduledEventsProfile(prop.Value, options);
+                    scheduledEventsProfile = ComputeScheduledEventsProfile.DeserializeComputeScheduledEventsProfile(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("userData"u8))

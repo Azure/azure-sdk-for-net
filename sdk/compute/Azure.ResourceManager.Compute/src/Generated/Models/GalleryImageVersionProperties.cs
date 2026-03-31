@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="restore"> Indicates if this is a soft-delete resource restoration request. </param>
         /// <param name="validationsProfile"> This is the validations profile of a Gallery Image Version. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GalleryImageVersionProperties(GalleryImageVersionPublishingProfile publishingProfile, GalleryProvisioningState? provisioningState, GalleryImageVersionStorageProfile storageProfile, GalleryImageVersionSafetyProfile safetyProfile, ReplicationStatus replicationStatus, ImageVersionSecurityProfile securityProfile, bool? restore, ValidationsProfile validationsProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GalleryImageVersionProperties(GalleryImageVersionPublishingProfile publishingProfile, GalleryProvisioningState? provisioningState, GalleryImageVersionStorageProfile storageProfile, GalleryImageVersionSafetyProfile safetyProfile, ReplicationStatus replicationStatus, ImageVersionSecurityProfile securityProfile, bool? restore, GalleryImageValidationsProfile validationsProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PublishingProfile = publishingProfile;
             ProvisioningState = provisioningState;
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Compute.Models
         public bool? Restore { get; set; }
 
         /// <summary> This is the validations profile of a Gallery Image Version. </summary>
-        public ValidationsProfile ValidationsProfile { get; }
+        public GalleryImageValidationsProfile ValidationsProfile { get; }
 
         /// <summary> Contains UEFI settings for the image version. </summary>
         public GalleryImageVersionUefiSettings SecurityUefiSettings

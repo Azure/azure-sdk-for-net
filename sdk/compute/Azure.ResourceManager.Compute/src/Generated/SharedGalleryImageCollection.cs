@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="sharedTo"> The query parameter to decide what shared galleries to fetch when doing listing operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SharedGalleryImageResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SharedGalleryImageResource> GetAllAsync(SharedToValues? sharedTo = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SharedGalleryImageResource> GetAllAsync(SharedToValue? sharedTo = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="sharedTo"> The query parameter to decide what shared galleries to fetch when doing listing operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SharedGalleryImageResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SharedGalleryImageResource> GetAll(SharedToValues? sharedTo = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<SharedGalleryImageResource> GetAll(SharedToValue? sharedTo = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {

@@ -29,6 +29,8 @@ namespace Azure.ResourceManager.Compute
     {
         private readonly ClientDiagnostics _restorePointCollectionsClientDiagnostics;
         private readonly RestorePointCollections _restorePointCollectionsRestClient;
+        private readonly ClientDiagnostics _restorePointCollectionsSubscriptionClientDiagnostics;
+        private readonly RestorePointCollectionsSubscription _restorePointCollectionsSubscriptionRestClient;
 
         /// <summary> Initializes a new instance of RestorePointCollectionCollection for mocking. </summary>
         protected RestorePointCollectionCollection()
@@ -43,6 +45,8 @@ namespace Azure.ResourceManager.Compute
             TryGetApiVersion(RestorePointCollectionResource.ResourceType, out string restorePointCollectionApiVersion);
             _restorePointCollectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", RestorePointCollectionResource.ResourceType.Namespace, Diagnostics);
             _restorePointCollectionsRestClient = new RestorePointCollections(_restorePointCollectionsClientDiagnostics, Pipeline, Endpoint, restorePointCollectionApiVersion ?? "2025-04-01");
+            _restorePointCollectionsSubscriptionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", RestorePointCollectionResource.ResourceType.Namespace, Diagnostics);
+            _restorePointCollectionsSubscriptionRestClient = new RestorePointCollectionsSubscription(_restorePointCollectionsSubscriptionClientDiagnostics, Pipeline, Endpoint, restorePointCollectionApiVersion ?? "2025-04-01");
             ValidateResourceId(id);
         }
 
@@ -291,7 +295,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RestorePointCollectionData, RestorePointCollectionResource>(new RestorePointCollectionsListAsyncCollectionResultOfT(_restorePointCollectionsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new RestorePointCollectionResource(Client, data));
+            return new AsyncPageableWrapper<RestorePointCollectionData, RestorePointCollectionResource>(new RestorePointCollectionsGetAllAsyncCollectionResultOfT(_restorePointCollectionsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new RestorePointCollectionResource(Client, data));
         }
 
         /// <summary>
@@ -319,7 +323,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RestorePointCollectionData, RestorePointCollectionResource>(new RestorePointCollectionsListCollectionResultOfT(_restorePointCollectionsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new RestorePointCollectionResource(Client, data));
+            return new PageableWrapper<RestorePointCollectionData, RestorePointCollectionResource>(new RestorePointCollectionsGetAllCollectionResultOfT(_restorePointCollectionsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new RestorePointCollectionResource(Client, data));
         }
 
         /// <summary>

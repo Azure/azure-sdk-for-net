@@ -14,7 +14,7 @@ using Azure.ResourceManager.Compute.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    internal partial class GalleryInVMAccessControlProfileVersionsGetByGalleryInVMAccessControlProfileCollectionResultOfT : Pageable<GalleryInVMAccessControlProfileVersionData>
+    internal partial class GalleryInVMAccessControlProfileVersionsGetByGalleryInVMAccessControlProfileCollectionResultOfT : Pageable<GalleryInVmAccessControlProfileVersionData>
     {
         private readonly GalleryInVMAccessControlProfileVersions _client;
         private readonly string _subscriptionId;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of GalleryInVMAccessControlProfileVersionsGetByGalleryInVMAccessControlProfileCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<GalleryInVMAccessControlProfileVersionData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<GalleryInVmAccessControlProfileVersionData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -54,8 +54,8 @@ namespace Azure.ResourceManager.Compute
                 {
                     yield break;
                 }
-                GalleryInVMAccessControlProfileVersionList result = GalleryInVMAccessControlProfileVersionList.FromResponse(response);
-                yield return Page<GalleryInVMAccessControlProfileVersionData>.FromValues((IReadOnlyList<GalleryInVMAccessControlProfileVersionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                GalleryInVmAccessControlProfileVersionList result = GalleryInVmAccessControlProfileVersionList.FromResponse(response);
+                yield return Page<GalleryInVmAccessControlProfileVersionData>.FromValues((IReadOnlyList<GalleryInVmAccessControlProfileVersionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Compute
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByGalleryInVMAccessControlProfileRequest(nextLink, _subscriptionId, _resourceGroupName, _galleryName, _inVMAccessControlProfileName, _context) : _client.CreateGetByGalleryInVMAccessControlProfileRequest(_subscriptionId, _resourceGroupName, _galleryName, _inVMAccessControlProfileName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("GalleryInVMAccessControlProfileVersionCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("GalleryInVmAccessControlProfileVersionCollection.GetAll");
             scope.Start();
             try
             {

@@ -192,48 +192,6 @@ namespace Azure.ResourceManager.Compute
             return message;
         }
 
-        internal HttpMessage CreateGetAllRequest(string subscriptionId, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/Microsoft.Compute/virtualMachineScaleSets", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, string subscriptionId, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            if (nextPage.IsAbsoluteUri)
-            {
-                uri.Reset(nextPage);
-            }
-            else
-            {
-                uri.Reset(new Uri(_endpoint, nextPage));
-            }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/json");
-            return message;
-        }
-
         internal HttpMessage CreateApproveRollingUpgradeRequest(string subscriptionId, string resourceGroupName, string vmScaleSetName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();

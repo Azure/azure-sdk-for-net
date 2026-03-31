@@ -12,21 +12,21 @@ using Azure.ResourceManager.Compute;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes a virtual machine scale set VM network profile. </summary>
-    internal partial class VirtualMachineScaleSetVMNetworkProfileConfiguration
+    internal partial class VirtualMachineScaleSetVmNetworkProfileConfiguration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetVMNetworkProfileConfiguration"/>. </summary>
-        public VirtualMachineScaleSetVMNetworkProfileConfiguration()
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetVmNetworkProfileConfiguration"/>. </summary>
+        public VirtualMachineScaleSetVmNetworkProfileConfiguration()
         {
             NetworkInterfaceConfigurations = new ChangeTrackingList<VirtualMachineScaleSetNetworkConfiguration>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetVMNetworkProfileConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetVmNetworkProfileConfiguration"/>. </summary>
         /// <param name="networkInterfaceConfigurations"> The list of network configurations. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineScaleSetVMNetworkProfileConfiguration(IList<VirtualMachineScaleSetNetworkConfiguration> networkInterfaceConfigurations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineScaleSetVmNetworkProfileConfiguration(IList<VirtualMachineScaleSetNetworkConfiguration> networkInterfaceConfigurations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NetworkInterfaceConfigurations = networkInterfaceConfigurations;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

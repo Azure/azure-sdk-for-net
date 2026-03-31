@@ -11,17 +11,17 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes a virtual machine scale set virtual machine profile. </summary>
-    public partial class VirtualMachineScaleSetUpdateVMProfile
+    public partial class VirtualMachineScaleSetUpdateVmProfile
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetUpdateVMProfile"/>. </summary>
-        public VirtualMachineScaleSetUpdateVMProfile()
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetUpdateVmProfile"/>. </summary>
+        public VirtualMachineScaleSetUpdateVmProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetUpdateVMProfile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetUpdateVmProfile"/>. </summary>
         /// <param name="osProfile"> The virtual machine scale set OS profile. </param>
         /// <param name="storageProfile"> The virtual machine scale set storage profile. </param>
         /// <param name="networkProfile"> The virtual machine scale set network profile. </param>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="userData"> UserData for the VM, which must be base-64 encoded. Customer should not pass any secrets in here. &lt;br&gt;&lt;br&gt;Minimum api-version: 2021-03-01. </param>
         /// <param name="hardwareProfile"> Specifies the hardware profile related details of a scale set. Minimum api-version: 2021-11-01. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineScaleSetUpdateVMProfile(VirtualMachineScaleSetUpdateOSProfile osProfile, VirtualMachineScaleSetUpdateStorageProfile storageProfile, VirtualMachineScaleSetUpdateNetworkProfile networkProfile, SecurityPostureReferenceUpdate securityPostureReference, SecurityProfile securityProfile, DiagnosticsProfile diagnosticsProfile, VirtualMachineScaleSetExtensionProfile extensionProfile, string licenseType, BillingProfile billingProfile, ScheduledEventsProfile scheduledEventsProfile, string userData, VirtualMachineScaleSetHardwareProfile hardwareProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineScaleSetUpdateVmProfile(VirtualMachineScaleSetUpdateOSProfile osProfile, VirtualMachineScaleSetUpdateStorageProfile storageProfile, VirtualMachineScaleSetUpdateNetworkProfile networkProfile, SecurityPostureReferenceUpdate securityPostureReference, SecurityProfile securityProfile, DiagnosticsProfile diagnosticsProfile, VirtualMachineScaleSetExtensionProfile extensionProfile, string licenseType, BillingProfile billingProfile, ComputeScheduledEventsProfile scheduledEventsProfile, string userData, VirtualMachineScaleSetHardwareProfile hardwareProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OsProfile = osProfile;
             StorageProfile = storageProfile;
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Compute.Models
         internal BillingProfile BillingProfile { get; set; }
 
         /// <summary> Specifies Scheduled Event related configurations. </summary>
-        public ScheduledEventsProfile ScheduledEventsProfile { get; set; }
+        public ComputeScheduledEventsProfile ScheduledEventsProfile { get; set; }
 
         /// <summary> UserData for the VM, which must be base-64 encoded. Customer should not pass any secrets in here. &lt;br&gt;&lt;br&gt;Minimum api-version: 2021-03-01. </summary>
         public string UserData { get; set; }

@@ -12,7 +12,7 @@ using Azure.ResourceManager.Compute;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies information about the dedicated host group that the dedicated host should be assigned to. Only tags may be updated. </summary>
-    public partial class DedicatedHostGroupPatch : UpdateResource
+    public partial class DedicatedHostGroupPatch : ComputeResourcePatch
     {
         /// <summary> Initializes a new instance of <see cref="DedicatedHostGroupPatch"/>. </summary>
         public DedicatedHostGroupPatch()

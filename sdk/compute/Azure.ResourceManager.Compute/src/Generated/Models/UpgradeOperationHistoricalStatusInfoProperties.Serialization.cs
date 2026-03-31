@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             UpgradeOperationHistoryStatus runningStatus = default;
             RollingUpgradeProgressInfo progress = default;
-            ApiError error = default;
+            ComputeApiError error = default;
             UpgradeOperationInvoker? startedBy = default;
             ImageReference targetImageReference = default;
             RollbackStatusInfo rollbackInfo = default;
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    error = ApiError.DeserializeApiError(prop.Value, options);
+                    error = ComputeApiError.DeserializeComputeApiError(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("startedBy"u8))

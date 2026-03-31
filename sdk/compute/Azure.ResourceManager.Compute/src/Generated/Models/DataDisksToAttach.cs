@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="diskEncryptionSet"> Specifies the customer managed disk encryption set resource id for the managed disk. </param>
         /// <param name="writeAcceleratorEnabled"> Specifies whether writeAccelerator should be enabled or disabled on the disk. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataDisksToAttach(string diskId, int? lun, CachingTypes? caching, DiskDeleteOptionTypes? deleteOption, DiskEncryptionSetParameters diskEncryptionSet, bool? writeAcceleratorEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataDisksToAttach(string diskId, int? lun, CachingType? caching, DiskDeleteOptionType? deleteOption, DiskEncryptionSetParameters diskEncryptionSet, bool? writeAcceleratorEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DiskId = diskId;
             Lun = lun;
@@ -53,10 +53,10 @@ namespace Azure.ResourceManager.Compute.Models
         public int? Lun { get; set; }
 
         /// <summary> Specifies the caching requirements. Possible values are: <b>None,</b> <b>ReadOnly,</b> <b>ReadWrite.</b> The defaulting behavior is: <b>None for Standard storage. ReadOnly for Premium storage.</b>. </summary>
-        public CachingTypes? Caching { get; set; }
+        public CachingType? Caching { get; set; }
 
         /// <summary> Specifies whether data disk should be deleted or detached upon VM deletion. Possible values are: <b>Delete.</b> If this value is used, the data disk is deleted when VM is deleted. <b>Detach.</b> If this value is used, the data disk is retained after VM is deleted. The default value is set to <b>Detach</b>. </summary>
-        public DiskDeleteOptionTypes? DeleteOption { get; set; }
+        public DiskDeleteOptionType? DeleteOption { get; set; }
 
         /// <summary> Specifies the customer managed disk encryption set resource id for the managed disk. </summary>
         internal DiskEncryptionSetParameters DiskEncryptionSet { get; set; }

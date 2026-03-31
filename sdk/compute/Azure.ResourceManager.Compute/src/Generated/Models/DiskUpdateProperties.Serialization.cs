@@ -223,13 +223,13 @@ namespace Azure.ResourceManager.Compute.Models
             }
             OperatingSystemTypes? osType = default;
             int? diskSizeGB = default;
-            EncryptionSettingsCollection encryptionSettingsCollection = default;
+            EncryptionSettingsGroup encryptionSettingsCollection = default;
             long? diskIOPSReadWrite = default;
             long? diskMBpsReadWrite = default;
             long? diskIOPSReadOnly = default;
             long? diskMBpsReadOnly = default;
             int? maxShares = default;
-            Encryption encryption = default;
+            DiskEncryption encryption = default;
             NetworkAccessPolicy? networkAccessPolicy = default;
             string diskAccessId = default;
             string tier = default;
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Compute.Models
             SupportedCapabilities supportedCapabilities = default;
             PropertyUpdatesInProgress propertyUpdatesInProgress = default;
             bool? supportsHibernation = default;
-            PublicNetworkAccess? publicNetworkAccess = default;
+            DiskPublicNetworkAccess? publicNetworkAccess = default;
             DataAccessAuthMode? dataAccessAuthMode = default;
             bool? optimizedForFrequentAttach = default;
             AvailabilityPolicy availabilityPolicy = default;
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    encryptionSettingsCollection = EncryptionSettingsCollection.DeserializeEncryptionSettingsCollection(prop.Value, options);
+                    encryptionSettingsCollection = EncryptionSettingsGroup.DeserializeEncryptionSettingsGroup(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("diskIOPSReadWrite"u8))
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    encryption = Encryption.DeserializeEncryption(prop.Value, options);
+                    encryption = DiskEncryption.DeserializeDiskEncryption(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("networkAccessPolicy"u8))
@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    publicNetworkAccess = new PublicNetworkAccess(prop.Value.GetString());
+                    publicNetworkAccess = new DiskPublicNetworkAccess(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("dataAccessAuthMode"u8))

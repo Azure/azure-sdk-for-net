@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="LinuxParameters"/>. </summary>
         public LinuxParameters()
         {
-            ClassificationsToInclude = new ChangeTrackingList<Models.VmGuestPatchClassificationForLinux>();
+            ClassificationsToInclude = new ChangeTrackingList<VmGuestPatchClassificationForLinux>();
             PackageNameMasksToInclude = new ChangeTrackingList<string>();
             PackageNameMasksToExclude = new ChangeTrackingList<string>();
         }
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="packageNameMasksToExclude"> packages to exclude in the patch operation. Format: packageName_packageVersion. </param>
         /// <param name="maintenanceRunId"> This is used as a maintenance run identifier for Auto VM Guest Patching in Linux. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LinuxParameters(IList<Models.VmGuestPatchClassificationForLinux> classificationsToInclude, IList<string> packageNameMasksToInclude, IList<string> packageNameMasksToExclude, string maintenanceRunId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LinuxParameters(IList<VmGuestPatchClassificationForLinux> classificationsToInclude, IList<string> packageNameMasksToInclude, IList<string> packageNameMasksToExclude, string maintenanceRunId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ClassificationsToInclude = classificationsToInclude;
             PackageNameMasksToInclude = packageNameMasksToInclude;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> The update classifications to select when installing patches for Linux. </summary>
-        public IList<Models.VmGuestPatchClassificationForLinux> ClassificationsToInclude { get; }
+        public IList<VmGuestPatchClassificationForLinux> ClassificationsToInclude { get; }
 
         /// <summary> packages to include in the patch operation. Format: packageName_packageVersion. </summary>
         public IList<string> PackageNameMasksToInclude { get; }

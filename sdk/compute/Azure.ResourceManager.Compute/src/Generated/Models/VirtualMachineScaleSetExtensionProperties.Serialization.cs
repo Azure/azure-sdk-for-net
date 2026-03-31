@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("publisher"u8);
                 writer.WriteStringValue(Publisher);
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(ExtensionType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type);
+                writer.WriteStringValue(ExtensionType);
             }
             if (Optional.IsDefined(TypeHandlerVersion))
             {
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             string forceUpdateTag = default;
             string publisher = default;
-            string @type = default;
+            string extensionType = default;
             string typeHandlerVersion = default;
             bool? autoUpgradeMinorVersion = default;
             bool? enableAutomaticUpgrade = default;
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    extensionType = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("typeHandlerVersion"u8))
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.Compute.Models
             return new VirtualMachineScaleSetExtensionProperties(
                 forceUpdateTag,
                 publisher,
-                @type,
+                extensionType,
                 typeHandlerVersion,
                 autoUpgradeMinorVersion,
                 enableAutomaticUpgrade,

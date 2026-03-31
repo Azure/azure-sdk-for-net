@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes a Virtual Machine Image. </summary>
-    public partial class VirtualMachineImage : VirtualMachineImageResource
+    public partial class VirtualMachineImage : VirtualMachineImageBase
     {
         /// <summary> Initializes a new instance of <see cref="VirtualMachineImage"/>. </summary>
         /// <param name="name"> The name of the resource. </param>
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Specifies the Architecture Type. </summary>
-        public ArchitectureTypes? Architecture
+        public ArchitectureType? Architecture
         {
             get
             {

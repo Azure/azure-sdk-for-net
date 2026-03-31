@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="storageAccountType"> Specifies the storage account type to be used to create the direct drive replicas. </param>
         /// <param name="regionalReplicaCount"> The number of direct drive replicas of the Image Version to be created.This Property is updatable. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AdditionalReplicaSet(StorageAccountType? storageAccountType, int? regionalReplicaCount, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AdditionalReplicaSet(ImageStorageAccountType? storageAccountType, int? regionalReplicaCount, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StorageAccountType = storageAccountType;
             RegionalReplicaCount = regionalReplicaCount;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Specifies the storage account type to be used to create the direct drive replicas. </summary>
-        public StorageAccountType? StorageAccountType { get; set; }
+        public ImageStorageAccountType? StorageAccountType { get; set; }
 
         /// <summary> The number of direct drive replicas of the Image Version to be created.This Property is updatable. </summary>
         public int? RegionalReplicaCount { get; set; }

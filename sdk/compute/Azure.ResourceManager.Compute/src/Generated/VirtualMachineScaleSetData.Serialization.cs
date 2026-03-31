@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Compute
             IList<string> zones = default;
             ExtendedLocation extendedLocation = default;
             string eTag = default;
-            Placement placement = default;
+            VirtualMachinePlacement placement = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         continue;
                     }
-                    placement = Placement.DeserializePlacement(prop.Value, options);
+                    placement = VirtualMachinePlacement.DeserializeVirtualMachinePlacement(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

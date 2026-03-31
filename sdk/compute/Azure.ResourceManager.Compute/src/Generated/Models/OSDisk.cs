@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of <see cref="OSDisk"/>. </summary>
         /// <param name="createOption"> Specifies how the virtual machine disk should be created. Possible values are <b>Attach:</b> This value is used when you are using a specialized disk to create the virtual machine. <b>FromImage:</b> This value is used when you are using an image to create the virtual machine. If you are using a platform image, you should also use the imageReference element described above. If you are using a marketplace image, you should also use the plan element previously described. </param>
-        public OSDisk(DiskCreateOptionTypes createOption)
+        public OSDisk(DiskCreateOptionType createOption)
         {
             CreateOption = createOption;
         }
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="managedDisk"> The managed disk parameters. </param>
         /// <param name="deleteOption"> Specifies whether OS Disk should be deleted or detached upon VM deletion. Possible values are: <b>Delete.</b> If this value is used, the OS disk is deleted when VM is deleted. <b>Detach.</b> If this value is used, the os disk is retained after VM is deleted. The default value is set to <b>Detach</b>. For an ephemeral OS Disk, the default value is set to <b>Delete</b>. The user cannot change the delete option for an ephemeral OS Disk. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OSDisk(OperatingSystemTypes? osType, DiskEncryptionSettings encryptionSettings, string name, VirtualHardDisk vhd, VirtualHardDisk image, CachingTypes? caching, bool? writeAcceleratorEnabled, DiffDiskSettings diffDiskSettings, DiskCreateOptionTypes createOption, int? diskSizeGB, ManagedDiskParameters managedDisk, DiskDeleteOptionTypes? deleteOption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OSDisk(OperatingSystemTypes? osType, DiskEncryptionSettings encryptionSettings, string name, VirtualHardDisk vhd, VirtualHardDisk image, CachingType? caching, bool? writeAcceleratorEnabled, DiffDiskSettings diffDiskSettings, DiskCreateOptionType createOption, int? diskSizeGB, VirtualMachineManagedDisk managedDisk, DiskDeleteOptionType? deleteOption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OsType = osType;
             EncryptionSettings = encryptionSettings;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Compute.Models
         internal VirtualHardDisk Image { get; set; }
 
         /// <summary> Specifies the caching requirements. Possible values are: <b>None,</b> <b>ReadOnly,</b> <b>ReadWrite.</b> The defaulting behavior is: <b>None for Standard storage. ReadOnly for Premium storage.</b>. </summary>
-        public CachingTypes? Caching { get; set; }
+        public CachingType? Caching { get; set; }
 
         /// <summary> Specifies whether writeAccelerator should be enabled or disabled on the disk. </summary>
         public bool? WriteAcceleratorEnabled { get; set; }
@@ -79,16 +79,16 @@ namespace Azure.ResourceManager.Compute.Models
         public DiffDiskSettings DiffDiskSettings { get; set; }
 
         /// <summary> Specifies how the virtual machine disk should be created. Possible values are <b>Attach:</b> This value is used when you are using a specialized disk to create the virtual machine. <b>FromImage:</b> This value is used when you are using an image to create the virtual machine. If you are using a platform image, you should also use the imageReference element described above. If you are using a marketplace image, you should also use the plan element previously described. </summary>
-        public DiskCreateOptionTypes CreateOption { get; set; }
+        public DiskCreateOptionType CreateOption { get; set; }
 
         /// <summary> Specifies the size of an empty data disk in gigabytes. This element can be used to overwrite the size of the disk in a virtual machine image. The property 'diskSizeGB' is the number of bytes x 1024^3 for the disk and the value cannot be larger than 1023. </summary>
         public int? DiskSizeGB { get; set; }
 
         /// <summary> The managed disk parameters. </summary>
-        public ManagedDiskParameters ManagedDisk { get; set; }
+        public VirtualMachineManagedDisk ManagedDisk { get; set; }
 
         /// <summary> Specifies whether OS Disk should be deleted or detached upon VM deletion. Possible values are: <b>Delete.</b> If this value is used, the OS disk is deleted when VM is deleted. <b>Detach.</b> If this value is used, the os disk is retained after VM is deleted. The default value is set to <b>Detach</b>. For an ephemeral OS Disk, the default value is set to <b>Delete</b>. The user cannot change the delete option for an ephemeral OS Disk. </summary>
-        public DiskDeleteOptionTypes? DeleteOption { get; set; }
+        public DiskDeleteOptionType? DeleteOption { get; set; }
 
         /// <summary> Specifies the virtual hard disk's uri. </summary>
         public string VhdUri

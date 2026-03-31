@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStringValue(EndOfLifeOn.Value, "O");
             }
             writer.WritePropertyName("identifier"u8);
-            writer.WriteObjectValue(Identifier, options);
+            writer.WriteObjectValue(ImageIdentifier, options);
             if (Optional.IsDefined(Recommended))
             {
                 writer.WritePropertyName("recommended"u8);
@@ -194,9 +194,9 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             OperatingSystemTypes osType = default;
-            OperatingSystemStateTypes osState = default;
+            OperatingSystemStateType osState = default;
             DateTimeOffset? endOfLifeOn = default;
-            GalleryImageIdentifier identifier = default;
+            GalleryImageIdentifier imageIdentifier = default;
             RecommendedMachineConfiguration recommended = default;
             Disallowed disallowed = default;
             HyperVGeneration? hyperVGeneration = default;
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (prop.NameEquals("osState"u8))
                 {
-                    osState = prop.Value.GetString().ToOperatingSystemStateTypes();
+                    osState = prop.Value.GetString().ToOperatingSystemStateType();
                     continue;
                 }
                 if (prop.NameEquals("endOfLifeDate"u8))
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (prop.NameEquals("identifier"u8))
                 {
-                    identifier = GalleryImageIdentifier.DeserializeGalleryImageIdentifier(prop.Value, options);
+                    imageIdentifier = GalleryImageIdentifier.DeserializeGalleryImageIdentifier(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("recommended"u8))
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.Compute.Models
                 osType,
                 osState,
                 endOfLifeOn,
-                identifier,
+                imageIdentifier,
                 recommended,
                 disallowed,
                 hyperVGeneration,

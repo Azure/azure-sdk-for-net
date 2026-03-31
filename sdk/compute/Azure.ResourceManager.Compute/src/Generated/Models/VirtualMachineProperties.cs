@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="applicationProfile"> Specifies the gallery applications that should be made available to the VM/VMSS. </param>
         /// <param name="timeCreated"> Specifies the time at which the Virtual Machine resource was created. Minimum api-version: 2021-11-01. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineProperties(HardwareProfile hardwareProfile, ScheduledEventsPolicy scheduledEventsPolicy, StorageProfile storageProfile, AdditionalCapabilities additionalCapabilities, OSProfile osProfile, NetworkProfile networkProfile, SecurityProfile securityProfile, DiagnosticsProfile diagnosticsProfile, SubResource availabilitySet, SubResource virtualMachineScaleSet, SubResource proximityPlacementGroup, VirtualMachinePriorityTypes? priority, VirtualMachineEvictionPolicyTypes? evictionPolicy, BillingProfile billingProfile, SubResource host, SubResource hostGroup, string provisioningState, VirtualMachineInstanceView instanceView, string licenseType, string vmId, string extensionsTimeBudget, int? platformFaultDomain, ScheduledEventsProfile scheduledEventsProfile, string userData, CapacityReservationProfile capacityReservation, ApplicationProfile applicationProfile, DateTimeOffset? timeCreated, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineProperties(VirtualMachineHardwareProfile hardwareProfile, ScheduledEventsPolicy scheduledEventsPolicy, VirtualMachineStorageProfile storageProfile, AdditionalCapabilities additionalCapabilities, VirtualMachineOSProfile osProfile, VirtualMachineNetworkProfile networkProfile, SecurityProfile securityProfile, DiagnosticsProfile diagnosticsProfile, SubResource availabilitySet, SubResource virtualMachineScaleSet, SubResource proximityPlacementGroup, VirtualMachinePriorityType? priority, VirtualMachineEvictionPolicyType? evictionPolicy, BillingProfile billingProfile, SubResource host, SubResource hostGroup, string provisioningState, VirtualMachineInstanceView instanceView, string licenseType, string vmId, string extensionsTimeBudget, int? platformFaultDomain, ComputeScheduledEventsProfile scheduledEventsProfile, string userData, CapacityReservationProfile capacityReservation, ApplicationProfile applicationProfile, DateTimeOffset? timeCreated, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             HardwareProfile = hardwareProfile;
             ScheduledEventsPolicy = scheduledEventsPolicy;
@@ -83,22 +83,22 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Specifies the hardware settings for the virtual machine. </summary>
-        public HardwareProfile HardwareProfile { get; set; }
+        public VirtualMachineHardwareProfile HardwareProfile { get; set; }
 
         /// <summary> Specifies Redeploy, Reboot and ScheduledEventsAdditionalPublishingTargets Scheduled Event related configurations for the virtual machine. </summary>
         public ScheduledEventsPolicy ScheduledEventsPolicy { get; set; }
 
         /// <summary> Specifies the storage settings for the virtual machine disks. </summary>
-        public StorageProfile StorageProfile { get; set; }
+        public VirtualMachineStorageProfile StorageProfile { get; set; }
 
         /// <summary> Specifies additional capabilities enabled or disabled on the virtual machine. </summary>
         public AdditionalCapabilities AdditionalCapabilities { get; set; }
 
         /// <summary> Specifies the operating system settings used while creating the virtual machine. Some of the settings cannot be changed once VM is provisioned. </summary>
-        public OSProfile OsProfile { get; set; }
+        public VirtualMachineOSProfile OsProfile { get; set; }
 
         /// <summary> Specifies the network interfaces of the virtual machine. </summary>
-        public NetworkProfile NetworkProfile { get; set; }
+        public VirtualMachineNetworkProfile NetworkProfile { get; set; }
 
         /// <summary> Specifies the Security related profile settings for the virtual machine. </summary>
         public SecurityProfile SecurityProfile { get; set; }
@@ -116,10 +116,10 @@ namespace Azure.ResourceManager.Compute.Models
         internal SubResource ProximityPlacementGroup { get; set; }
 
         /// <summary> Specifies the priority for the virtual machine. Minimum api-version: 2019-03-01. </summary>
-        public VirtualMachinePriorityTypes? Priority { get; set; }
+        public VirtualMachinePriorityType? Priority { get; set; }
 
         /// <summary> Specifies the eviction policy for the Azure Spot virtual machine and Azure Spot scale set. For Azure Spot virtual machines, both 'Deallocate' and 'Delete' are supported and the minimum api-version is 2019-03-01. For Azure Spot scale sets, both 'Deallocate' and 'Delete' are supported and the minimum api-version is 2017-10-30-preview. </summary>
-        public VirtualMachineEvictionPolicyTypes? EvictionPolicy { get; set; }
+        public VirtualMachineEvictionPolicyType? EvictionPolicy { get; set; }
 
         /// <summary> Specifies the billing related details of a Azure Spot virtual machine. Minimum api-version: 2019-03-01. </summary>
         internal BillingProfile BillingProfile { get; set; }
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Compute.Models
         public int? PlatformFaultDomain { get; set; }
 
         /// <summary> Specifies Scheduled Event related configurations. </summary>
-        public ScheduledEventsProfile ScheduledEventsProfile { get; set; }
+        public ComputeScheduledEventsProfile ScheduledEventsProfile { get; set; }
 
         /// <summary> UserData for the VM, which must be base-64 encoded. Customer should not pass any secrets in here. Minimum api-version: 2021-03-01. </summary>
         public string UserData { get; set; }
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Specifies the gallery applications that should be made available to the VM/VMSS. </summary>
-        public IList<VMGalleryApplication> GalleryApplications
+        public IList<VirtualMachineGalleryApplication> GalleryApplications
         {
             get
             {

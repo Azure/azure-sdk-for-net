@@ -12,7 +12,7 @@ using Azure.ResourceManager.Compute;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes a Virtual Machine Scale Set. </summary>
-    public partial class VirtualMachineScaleSetPatch : UpdateResource
+    public partial class VirtualMachineScaleSetPatch : ComputeResourcePatch
     {
         /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetPatch"/>. </summary>
         public VirtualMachineScaleSetPatch()
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Compute.Models
         public IList<string> Zones { get; }
 
         /// <summary> The upgrade policy. </summary>
-        public UpgradePolicy UpgradePolicy
+        public VirtualMachineScaleSetUpgradePolicy UpgradePolicy
         {
             get
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> The virtual machine profile. </summary>
-        public VirtualMachineScaleSetUpdateVMProfile VirtualMachineProfile
+        public VirtualMachineScaleSetUpdateVmProfile VirtualMachineProfile
         {
             get
             {
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Specifies the desired targets for mixing Spot and Regular priority VMs within the same VMSS Flex instance. </summary>
-        public PriorityMixPolicy PriorityMixPolicy
+        public VirtualMachineScaleSetPriorityMixPolicy PriorityMixPolicy
         {
             get
             {
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Specifies the sku profile for the virtual machine scale set. </summary>
-        public SkuProfile SkuProfile
+        public ComputeSkuProfile SkuProfile
         {
             get
             {

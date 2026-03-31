@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 writer.WritePropertyName("classificationsToInclude"u8);
                 writer.WriteStartArray();
-                foreach (Models.VmGuestPatchClassificationForLinux item in ClassificationsToInclude)
+                foreach (VmGuestPatchClassificationForLinux item in ClassificationsToInclude)
                 {
                     writer.WriteStringValue(item.ToString());
                 }
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            IList<Models.VmGuestPatchClassificationForLinux> classificationsToInclude = default;
+            IList<VmGuestPatchClassificationForLinux> classificationsToInclude = default;
             IList<string> packageNameMasksToInclude = default;
             IList<string> packageNameMasksToExclude = default;
             string maintenanceRunId = default;
@@ -174,10 +174,10 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    List<Models.VmGuestPatchClassificationForLinux> array = new List<Models.VmGuestPatchClassificationForLinux>();
+                    List<VmGuestPatchClassificationForLinux> array = new List<VmGuestPatchClassificationForLinux>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(new Models.VmGuestPatchClassificationForLinux(item.GetString()));
+                        array.Add(new VmGuestPatchClassificationForLinux(item.GetString()));
                     }
                     classificationsToInclude = array;
                     continue;
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Compute.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new LinuxParameters(classificationsToInclude ?? new ChangeTrackingList<Models.VmGuestPatchClassificationForLinux>(), packageNameMasksToInclude ?? new ChangeTrackingList<string>(), packageNameMasksToExclude ?? new ChangeTrackingList<string>(), maintenanceRunId, additionalBinaryDataProperties);
+            return new LinuxParameters(classificationsToInclude ?? new ChangeTrackingList<VmGuestPatchClassificationForLinux>(), packageNameMasksToInclude ?? new ChangeTrackingList<string>(), packageNameMasksToExclude ?? new ChangeTrackingList<string>(), maintenanceRunId, additionalBinaryDataProperties);
         }
     }
 }

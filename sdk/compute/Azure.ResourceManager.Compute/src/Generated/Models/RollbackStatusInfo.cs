@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="failedRolledbackInstanceCount"> The number of instances which failed to rollback. </param>
         /// <param name="rollbackError"> Error details if OS rollback failed. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RollbackStatusInfo(int? successfullyRolledbackInstanceCount, int? failedRolledbackInstanceCount, ApiError rollbackError, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RollbackStatusInfo(int? successfullyRolledbackInstanceCount, int? failedRolledbackInstanceCount, ComputeApiError rollbackError, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SuccessfullyRolledbackInstanceCount = successfullyRolledbackInstanceCount;
             FailedRolledbackInstanceCount = failedRolledbackInstanceCount;
@@ -41,6 +41,6 @@ namespace Azure.ResourceManager.Compute.Models
         public int? FailedRolledbackInstanceCount { get; }
 
         /// <summary> Error details if OS rollback failed. </summary>
-        public ApiError RollbackError { get; }
+        public ComputeApiError RollbackError { get; }
     }
 }

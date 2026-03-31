@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="securityProfile"> Contains the security related information for the resource. </param>
         /// <param name="logicalSectorSize"> Logical sector size in bytes for disk restore points of UltraSSD_LRS and PremiumV2_LRS disks. Supported values are 512 and 4096. 4096 is the default. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DiskRestorePointProperties(DateTimeOffset? timeCreated, string sourceResourceId, OperatingSystemTypes? osType, HyperVGeneration? hyperVGeneration, DiskPurchasePlan purchasePlan, SupportedCapabilities supportedCapabilities, string familyId, string sourceUniqueId, Encryption encryption, bool? supportsHibernation, NetworkAccessPolicy? networkAccessPolicy, PublicNetworkAccess? publicNetworkAccess, string diskAccessId, float? completionPercent, string replicationState, string sourceResourceLocation, DiskSecurityProfile securityProfile, int? logicalSectorSize, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DiskRestorePointProperties(DateTimeOffset? timeCreated, string sourceResourceId, OperatingSystemTypes? osType, HyperVGeneration? hyperVGeneration, DiskPurchasePlan purchasePlan, SupportedCapabilities supportedCapabilities, string familyId, string sourceUniqueId, DiskEncryption encryption, bool? supportsHibernation, NetworkAccessPolicy? networkAccessPolicy, DiskPublicNetworkAccess? publicNetworkAccess, string diskAccessId, float? completionPercent, string replicationState, string sourceResourceLocation, DiskSecurityProfile securityProfile, int? logicalSectorSize, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TimeCreated = timeCreated;
             SourceResourceId = sourceResourceId;
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Compute.Models
         public string SourceUniqueId { get; }
 
         /// <summary> Encryption property can be used to encrypt data at rest with customer managed keys or platform managed keys. </summary>
-        public Encryption Encryption { get; }
+        public DiskEncryption Encryption { get; }
 
         /// <summary> Indicates the OS on a disk supports hibernation. </summary>
         public bool? SupportsHibernation { get; }
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Compute.Models
         public NetworkAccessPolicy? NetworkAccessPolicy { get; }
 
         /// <summary> Policy for controlling export on the disk. </summary>
-        public PublicNetworkAccess? PublicNetworkAccess { get; }
+        public DiskPublicNetworkAccess? PublicNetworkAccess { get; }
 
         /// <summary> ARM id of the DiskAccess resource for using private endpoints on disks. </summary>
         public string DiskAccessId { get; }

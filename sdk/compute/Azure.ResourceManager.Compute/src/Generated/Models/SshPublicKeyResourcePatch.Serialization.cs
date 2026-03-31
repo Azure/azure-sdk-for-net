@@ -15,11 +15,11 @@ using Azure.ResourceManager.Compute;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies information about the SSH public key. </summary>
-    public partial class SshPublicKeyResourcePatch : UpdateResource, IJsonModel<SshPublicKeyResourcePatch>
+    public partial class SshPublicKeyResourcePatch : ComputeResourcePatch, IJsonModel<SshPublicKeyResourcePatch>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override UpdateResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override ComputeResourcePatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<SshPublicKeyResourcePatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override UpdateResource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override ComputeResourcePatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<SshPublicKeyResourcePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

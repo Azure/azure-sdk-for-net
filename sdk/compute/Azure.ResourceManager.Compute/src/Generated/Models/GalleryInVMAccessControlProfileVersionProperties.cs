@@ -11,18 +11,18 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes the properties of an inVMAccessControlProfile version. </summary>
-    internal partial class GalleryInVMAccessControlProfileVersionProperties : GalleryResourceProfileVersionPropertiesBase
+    internal partial class GalleryInVmAccessControlProfileVersionProperties : GalleryResourceProfileVersionPropertiesBase
     {
-        /// <summary> Initializes a new instance of <see cref="GalleryInVMAccessControlProfileVersionProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="GalleryInVmAccessControlProfileVersionProperties"/>. </summary>
         /// <param name="mode"> This property allows you to specify whether the access control rules are in Audit mode, in Enforce mode or Disabled. Possible values are: 'Audit', 'Enforce' or 'Disabled'. </param>
         /// <param name="defaultAccess"> This property allows you to specify if the requests will be allowed to access the host endpoints. Possible values are: 'Allow', 'Deny'. </param>
-        public GalleryInVMAccessControlProfileVersionProperties(AccessControlRulesMode mode, EndpointAccess defaultAccess)
+        public GalleryInVmAccessControlProfileVersionProperties(GalleryInVmAccessControlRulesMode mode, ComputeGalleryEndpointAccess defaultAccess)
         {
             Mode = mode;
             DefaultAccess = defaultAccess;
         }
 
-        /// <summary> Initializes a new instance of <see cref="GalleryInVMAccessControlProfileVersionProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="GalleryInVmAccessControlProfileVersionProperties"/>. </summary>
         /// <param name="targetLocations"> The target regions where the Resource Profile version is going to be replicated to. This property is updatable. </param>
         /// <param name="excludeFromLatest"> If set to true, Virtual Machines deployed from the latest version of the Resource Profile won't use this Profile version. </param>
         /// <param name="publishedOn"> The timestamp for when the Resource Profile Version is published. </param>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="mode"> This property allows you to specify whether the access control rules are in Audit mode, in Enforce mode or Disabled. Possible values are: 'Audit', 'Enforce' or 'Disabled'. </param>
         /// <param name="defaultAccess"> This property allows you to specify if the requests will be allowed to access the host endpoints. Possible values are: 'Allow', 'Deny'. </param>
         /// <param name="rules"> This is the Access Control Rules specification for an inVMAccessControlProfile version. </param>
-        internal GalleryInVMAccessControlProfileVersionProperties(IList<TargetRegion> targetLocations, bool? excludeFromLatest, DateTimeOffset? publishedOn, GalleryProvisioningState? provisioningState, ReplicationStatus replicationStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties, AccessControlRulesMode mode, EndpointAccess defaultAccess, AccessControlRules rules) : base(targetLocations, excludeFromLatest, publishedOn, provisioningState, replicationStatus, additionalBinaryDataProperties)
+        internal GalleryInVmAccessControlProfileVersionProperties(IList<TargetRegion> targetLocations, bool? excludeFromLatest, DateTimeOffset? publishedOn, GalleryProvisioningState? provisioningState, ReplicationStatus replicationStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties, GalleryInVmAccessControlRulesMode mode, ComputeGalleryEndpointAccess defaultAccess, GalleryInVmAccessControlRules rules) : base(targetLocations, excludeFromLatest, publishedOn, provisioningState, replicationStatus, additionalBinaryDataProperties)
         {
             Mode = mode;
             DefaultAccess = defaultAccess;
@@ -40,12 +40,12 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> This property allows you to specify whether the access control rules are in Audit mode, in Enforce mode or Disabled. Possible values are: 'Audit', 'Enforce' or 'Disabled'. </summary>
-        public AccessControlRulesMode Mode { get; set; }
+        public GalleryInVmAccessControlRulesMode Mode { get; set; }
 
         /// <summary> This property allows you to specify if the requests will be allowed to access the host endpoints. Possible values are: 'Allow', 'Deny'. </summary>
-        public EndpointAccess DefaultAccess { get; set; }
+        public ComputeGalleryEndpointAccess DefaultAccess { get; set; }
 
         /// <summary> This is the Access Control Rules specification for an inVMAccessControlProfile version. </summary>
-        public AccessControlRules Rules { get; set; }
+        public GalleryInVmAccessControlRules Rules { get; set; }
     }
 }

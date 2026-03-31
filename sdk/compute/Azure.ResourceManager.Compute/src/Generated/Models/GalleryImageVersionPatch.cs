@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> This is the validations profile of a Gallery Image Version. </summary>
-        public ValidationsProfile ValidationsProfile
+        public GalleryImageValidationsProfile ValidationsProfile
         {
             get
             {

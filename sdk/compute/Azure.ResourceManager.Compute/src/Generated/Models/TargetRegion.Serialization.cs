@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             string name = default;
             int? regionalReplicaCount = default;
-            StorageAccountType? storageAccountType = default;
+            ImageStorageAccountType? storageAccountType = default;
             EncryptionImages encryption = default;
             bool? excludeFromLatest = default;
             IList<AdditionalReplicaSet> additionalReplicaSets = default;
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    storageAccountType = new StorageAccountType(prop.Value.GetString());
+                    storageAccountType = new ImageStorageAccountType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("encryption"u8))

@@ -183,13 +183,13 @@ namespace Azure.ResourceManager.Compute.Models
             string name = default;
             VirtualHardDisk vhd = default;
             VirtualHardDisk image = default;
-            CachingTypes? caching = default;
+            CachingType? caching = default;
             bool? writeAcceleratorEnabled = default;
             DiffDiskSettings diffDiskSettings = default;
-            DiskCreateOptionTypes createOption = default;
+            DiskCreateOptionType createOption = default;
             int? diskSizeGB = default;
-            ManagedDiskParameters managedDisk = default;
-            DiskDeleteOptionTypes? deleteOption = default;
+            VirtualMachineManagedDisk managedDisk = default;
+            DiskDeleteOptionType? deleteOption = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    caching = prop.Value.GetString().ToCachingTypes();
+                    caching = prop.Value.GetString().ToCachingType();
                     continue;
                 }
                 if (prop.NameEquals("writeAcceleratorEnabled"u8))
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (prop.NameEquals("createOption"u8))
                 {
-                    createOption = new DiskCreateOptionTypes(prop.Value.GetString());
+                    createOption = new DiskCreateOptionType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("diskSizeGB"u8))
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    managedDisk = ManagedDiskParameters.DeserializeManagedDiskParameters(prop.Value, options);
+                    managedDisk = VirtualMachineManagedDisk.DeserializeVirtualMachineManagedDisk(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("deleteOption"u8))
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    deleteOption = new DiskDeleteOptionTypes(prop.Value.GetString());
+                    deleteOption = new DiskDeleteOptionType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

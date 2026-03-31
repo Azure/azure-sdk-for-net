@@ -11,27 +11,27 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies information about the gallery inVMAccessControlProfile version that you want to update. </summary>
-    public partial class GalleryInVMAccessControlProfileVersionPatch : UpdateResourceDefinition
+    public partial class GalleryInVmAccessControlProfileVersionPatch : UpdateResourceDefinition
     {
-        /// <summary> Initializes a new instance of <see cref="GalleryInVMAccessControlProfileVersionPatch"/>. </summary>
-        public GalleryInVMAccessControlProfileVersionPatch()
+        /// <summary> Initializes a new instance of <see cref="GalleryInVmAccessControlProfileVersionPatch"/>. </summary>
+        public GalleryInVmAccessControlProfileVersionPatch()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="GalleryInVMAccessControlProfileVersionPatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="GalleryInVmAccessControlProfileVersionPatch"/>. </summary>
         /// <param name="id"> Resource Id. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="type"> Resource type. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Describes the properties of an inVMAccessControlProfile version. </param>
-        internal GalleryInVMAccessControlProfileVersionPatch(string id, string name, string @type, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, GalleryInVMAccessControlProfileVersionProperties properties) : base(id, name, @type, tags, additionalBinaryDataProperties)
+        internal GalleryInVmAccessControlProfileVersionPatch(string id, string name, string @type, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, GalleryInVmAccessControlProfileVersionProperties properties) : base(id, name, @type, tags, additionalBinaryDataProperties)
         {
             Properties = properties;
         }
 
         /// <summary> Describes the properties of an inVMAccessControlProfile version. </summary>
-        internal GalleryInVMAccessControlProfileVersionProperties Properties { get; set; }
+        internal GalleryInVmAccessControlProfileVersionProperties Properties { get; set; }
 
         /// <summary> The target regions where the Resource Profile version is going to be replicated to. This property is updatable. </summary>
         public IList<TargetRegion> TargetLocations
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 if (Properties is null)
                 {
-                    Properties = new GalleryInVMAccessControlProfileVersionProperties();
+                    Properties = new GalleryInVmAccessControlProfileVersionProperties();
                 }
                 return Properties.TargetLocations;
             }
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 if (Properties is null)
                 {
-                    Properties = new GalleryInVMAccessControlProfileVersionProperties();
+                    Properties = new GalleryInVmAccessControlProfileVersionProperties();
                 }
                 Properties.ExcludeFromLatest = value.Value;
             }
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> This property allows you to specify whether the access control rules are in Audit mode, in Enforce mode or Disabled. Possible values are: 'Audit', 'Enforce' or 'Disabled'. </summary>
-        public AccessControlRulesMode Mode
+        public GalleryInVmAccessControlRulesMode Mode
         {
             get
             {
@@ -101,14 +101,14 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 if (Properties is null)
                 {
-                    Properties = new GalleryInVMAccessControlProfileVersionProperties();
+                    Properties = new GalleryInVmAccessControlProfileVersionProperties();
                 }
                 Properties.Mode = value;
             }
         }
 
         /// <summary> This property allows you to specify if the requests will be allowed to access the host endpoints. Possible values are: 'Allow', 'Deny'. </summary>
-        public EndpointAccess DefaultAccess
+        public ComputeGalleryEndpointAccess DefaultAccess
         {
             get
             {
@@ -118,14 +118,14 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 if (Properties is null)
                 {
-                    Properties = new GalleryInVMAccessControlProfileVersionProperties();
+                    Properties = new GalleryInVmAccessControlProfileVersionProperties();
                 }
                 Properties.DefaultAccess = value;
             }
         }
 
         /// <summary> This is the Access Control Rules specification for an inVMAccessControlProfile version. </summary>
-        public AccessControlRules Rules
+        public GalleryInVmAccessControlRules Rules
         {
             get
             {
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 if (Properties is null)
                 {
-                    Properties = new GalleryInVMAccessControlProfileVersionProperties();
+                    Properties = new GalleryInVmAccessControlProfileVersionProperties();
                 }
                 Properties.Rules = value;
             }

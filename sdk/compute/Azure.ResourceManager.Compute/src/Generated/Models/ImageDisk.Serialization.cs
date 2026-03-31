@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Compute.Models
             SubResource snapshot = default;
             SubResource managedDisk = default;
             string blobUri = default;
-            CachingTypes? caching = default;
+            CachingType? caching = default;
             int? diskSizeGB = default;
             StorageAccountTypes? storageAccountType = default;
             DiskEncryptionSetParameters diskEncryptionSet = default;
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    caching = prop.Value.GetString().ToCachingTypes();
+                    caching = prop.Value.GetString().ToCachingType();
                     continue;
                 }
                 if (prop.NameEquals("diskSizeGB"u8))

@@ -114,13 +114,13 @@ namespace Azure.ResourceManager.Compute.Models
             SubResource snapshot = default;
             SubResource managedDisk = default;
             string blobUri = default;
-            CachingTypes? caching = default;
+            CachingType? caching = default;
             int? diskSizeGB = default;
             StorageAccountTypes? storageAccountType = default;
             DiskEncryptionSetParameters diskEncryptionSet = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             OperatingSystemTypes osType = default;
-            OperatingSystemStateTypes osState = default;
+            OperatingSystemStateType osState = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("snapshot"u8))
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    caching = prop.Value.GetString().ToCachingTypes();
+                    caching = prop.Value.GetString().ToCachingType();
                     continue;
                 }
                 if (prop.NameEquals("diskSizeGB"u8))
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (prop.NameEquals("osState"u8))
                 {
-                    osState = prop.Value.GetString().ToOperatingSystemStateTypes();
+                    osState = prop.Value.GetString().ToOperatingSystemStateType();
                     continue;
                 }
                 if (options.Format != "W")

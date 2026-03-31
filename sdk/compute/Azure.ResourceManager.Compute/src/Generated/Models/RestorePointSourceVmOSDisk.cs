@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="diskRestorePoint"> Contains Disk Restore Point properties. </param>
         /// <param name="writeAcceleratorEnabled"> Shows true if the disk is write-accelerator enabled. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RestorePointSourceVMOSDisk(OperatingSystemType? osType, DiskEncryptionSettings encryptionSettings, string name, CachingTypes? caching, int? diskSizeGB, ManagedDiskParameters managedDisk, DiskRestorePointAttributes diskRestorePoint, bool? writeAcceleratorEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RestorePointSourceVMOSDisk(SupportedOperatingSystemType? osType, DiskEncryptionSettings encryptionSettings, string name, CachingType? caching, int? diskSizeGB, VirtualMachineManagedDisk managedDisk, DiskRestorePointAttributes diskRestorePoint, bool? writeAcceleratorEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OsType = osType;
             EncryptionSettings = encryptionSettings;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Gets the Operating System type. </summary>
-        public OperatingSystemType? OsType { get; }
+        public SupportedOperatingSystemType? OsType { get; }
 
         /// <summary> Gets the disk encryption settings. </summary>
         public DiskEncryptionSettings EncryptionSettings { get; }
@@ -54,13 +54,13 @@ namespace Azure.ResourceManager.Compute.Models
         public string Name { get; }
 
         /// <summary> Gets the caching type. </summary>
-        public CachingTypes? Caching { get; }
+        public CachingType? Caching { get; }
 
         /// <summary> Gets the disk size in GB. </summary>
         public int? DiskSizeGB { get; }
 
         /// <summary> Gets the managed disk details. </summary>
-        public ManagedDiskParameters ManagedDisk { get; set; }
+        public VirtualMachineManagedDisk ManagedDisk { get; set; }
 
         /// <summary> Contains Disk Restore Point properties. </summary>
         public DiskRestorePointAttributes DiskRestorePoint { get; set; }

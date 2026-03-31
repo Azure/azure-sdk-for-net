@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="VmImagesInEdgeZoneListResult"/>. </summary>
         internal VmImagesInEdgeZoneListResult()
         {
-            Value = new ChangeTrackingList<VirtualMachineImageResource>();
+            Value = new ChangeTrackingList<VirtualMachineImageBase>();
         }
 
         /// <summary> Initializes a new instance of <see cref="VmImagesInEdgeZoneListResult"/>. </summary>
         /// <param name="value"> The list of VMImages in EdgeZone. </param>
         /// <param name="nextLink"> The URI to fetch the next page of VMImages in EdgeZone. Call ListNext() with this URI to fetch the next page of VmImages. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VmImagesInEdgeZoneListResult(IList<VirtualMachineImageResource> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VmImagesInEdgeZoneListResult(IList<VirtualMachineImageBase> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> The list of VMImages in EdgeZone. </summary>
-        public IList<VirtualMachineImageResource> Value { get; }
+        public IList<VirtualMachineImageBase> Value { get; }
 
         /// <summary> The URI to fetch the next page of VMImages in EdgeZone. Call ListNext() with this URI to fetch the next page of VmImages. </summary>
         public string NextLink { get; }

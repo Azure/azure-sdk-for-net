@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Encryption property can be used to encrypt data at rest with customer managed keys or platform managed keys. </summary>
-        public Encryption Encryption
+        public DiskEncryption Encryption
         {
             get
             {
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Policy for controlling export on the disk. </summary>
-        public PublicNetworkAccess? PublicNetworkAccess
+        public DiskPublicNetworkAccess? PublicNetworkAccess
         {
             get
             {

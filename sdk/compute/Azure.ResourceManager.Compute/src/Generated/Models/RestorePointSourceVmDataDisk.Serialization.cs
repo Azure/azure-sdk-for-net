@@ -153,9 +153,9 @@ namespace Azure.ResourceManager.Compute.Models
             }
             int? lun = default;
             string name = default;
-            CachingTypes? caching = default;
+            CachingType? caching = default;
             int? diskSizeGB = default;
-            ManagedDiskParameters managedDisk = default;
+            VirtualMachineManagedDisk managedDisk = default;
             DiskRestorePointAttributes diskRestorePoint = default;
             bool? writeAcceleratorEnabled = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    caching = prop.Value.GetString().ToCachingTypes();
+                    caching = prop.Value.GetString().ToCachingType();
                     continue;
                 }
                 if (prop.NameEquals("diskSizeGB"u8))
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    managedDisk = ManagedDiskParameters.DeserializeManagedDiskParameters(prop.Value, options);
+                    managedDisk = VirtualMachineManagedDisk.DeserializeVirtualMachineManagedDisk(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("diskRestorePoint"u8))

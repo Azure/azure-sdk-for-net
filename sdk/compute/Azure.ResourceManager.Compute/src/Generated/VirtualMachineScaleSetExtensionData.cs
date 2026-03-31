@@ -87,11 +87,11 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Specifies the type of the extension; an example is "CustomScriptExtension". </summary>
-        public string Type
+        public string ExtensionType
         {
             get
             {
-                return Properties is null ? default : Properties.Type;
+                return Properties is null ? default : Properties.ExtensionType;
             }
             set
             {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     Properties = new VirtualMachineScaleSetExtensionProperties();
                 }
-                Properties.Type = value;
+                Properties.ExtensionType = value;
             }
         }
 

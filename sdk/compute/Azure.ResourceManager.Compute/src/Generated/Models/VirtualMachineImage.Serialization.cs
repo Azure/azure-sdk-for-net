@@ -15,7 +15,7 @@ using Azure.ResourceManager.Compute;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes a Virtual Machine Image. </summary>
-    public partial class VirtualMachineImage : VirtualMachineImageResource, IJsonModel<VirtualMachineImage>
+    public partial class VirtualMachineImage : VirtualMachineImageBase, IJsonModel<VirtualMachineImage>
     {
         /// <summary> Initializes a new instance of <see cref="VirtualMachineImage"/> for deserialization. </summary>
         internal VirtualMachineImage()

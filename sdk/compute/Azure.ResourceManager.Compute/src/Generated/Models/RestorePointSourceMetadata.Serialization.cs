@@ -166,9 +166,9 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            HardwareProfile hardwareProfile = default;
+            VirtualMachineHardwareProfile hardwareProfile = default;
             RestorePointSourceVMStorageProfile storageProfile = default;
-            OSProfile osProfile = default;
+            VirtualMachineOSProfile osProfile = default;
             DiagnosticsProfile diagnosticsProfile = default;
             string licenseType = default;
             string vmId = default;
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    hardwareProfile = HardwareProfile.DeserializeHardwareProfile(prop.Value, options);
+                    hardwareProfile = VirtualMachineHardwareProfile.DeserializeVirtualMachineHardwareProfile(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("storageProfile"u8))
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    osProfile = OSProfile.DeserializeOSProfile(prop.Value, options);
+                    osProfile = VirtualMachineOSProfile.DeserializeVirtualMachineOSProfile(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("diagnosticsProfile"u8))

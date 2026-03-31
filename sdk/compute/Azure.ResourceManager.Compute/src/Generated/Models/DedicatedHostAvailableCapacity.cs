@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="DedicatedHostAvailableCapacity"/>. </summary>
         internal DedicatedHostAvailableCapacity()
         {
-            AllocatableVMs = new ChangeTrackingList<DedicatedHostAllocatableVM>();
+            AllocatableVMs = new ChangeTrackingList<DedicatedHostAllocatableVm>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DedicatedHostAvailableCapacity"/>. </summary>
         /// <param name="allocatableVMs"> The unutilized capacity of the dedicated host represented in terms of each VM size that is allowed to be deployed to the dedicated host. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DedicatedHostAvailableCapacity(IList<DedicatedHostAllocatableVM> allocatableVMs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DedicatedHostAvailableCapacity(IList<DedicatedHostAllocatableVm> allocatableVMs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AllocatableVMs = allocatableVMs;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The unutilized capacity of the dedicated host represented in terms of each VM size that is allowed to be deployed to the dedicated host. </summary>
-        public IList<DedicatedHostAllocatableVM> AllocatableVMs { get; }
+        public IList<DedicatedHostAllocatableVm> AllocatableVMs { get; }
     }
 }

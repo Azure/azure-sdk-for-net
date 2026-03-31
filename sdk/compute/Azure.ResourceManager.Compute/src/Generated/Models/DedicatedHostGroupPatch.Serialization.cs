@@ -15,11 +15,11 @@ using Azure.ResourceManager.Compute;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies information about the dedicated host group that the dedicated host should be assigned to. Only tags may be updated. </summary>
-    public partial class DedicatedHostGroupPatch : UpdateResource, IJsonModel<DedicatedHostGroupPatch>
+    public partial class DedicatedHostGroupPatch : ComputeResourcePatch, IJsonModel<DedicatedHostGroupPatch>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override UpdateResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override ComputeResourcePatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<DedicatedHostGroupPatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override UpdateResource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override ComputeResourcePatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<DedicatedHostGroupPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

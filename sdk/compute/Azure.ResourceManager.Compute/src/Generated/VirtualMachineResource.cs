@@ -28,6 +28,8 @@ namespace Azure.ResourceManager.Compute
     {
         private readonly ClientDiagnostics _virtualMachinesClientDiagnostics;
         private readonly VirtualMachines _virtualMachinesRestClient;
+        private readonly ClientDiagnostics _virtualMachinesSubscriptionClientDiagnostics;
+        private readonly VirtualMachinesSubscription _virtualMachinesSubscriptionRestClient;
         private readonly VirtualMachineData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Compute/virtualMachines";
@@ -54,6 +56,8 @@ namespace Azure.ResourceManager.Compute
             TryGetApiVersion(ResourceType, out string virtualMachineApiVersion);
             _virtualMachinesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, Diagnostics);
             _virtualMachinesRestClient = new VirtualMachines(_virtualMachinesClientDiagnostics, Pipeline, Endpoint, virtualMachineApiVersion ?? "2025-04-01");
+            _virtualMachinesSubscriptionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, Diagnostics);
+            _virtualMachinesSubscriptionRestClient = new VirtualMachinesSubscription(_virtualMachinesSubscriptionClientDiagnostics, Pipeline, Endpoint, virtualMachineApiVersion ?? "2025-04-01");
             ValidateResourceId(id);
         }
 
@@ -546,7 +550,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="content"> Parameters supplied to the attach and detach data disks operation on the virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<StorageProfile>> AttachDetachDataDisksAsync(WaitUntil waitUntil, AttachDetachDataDisksRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<VirtualMachineStorageProfile>> AttachDetachDataDisksAsync(WaitUntil waitUntil, AttachDetachDataDisksRequest content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -560,8 +564,8 @@ namespace Azure.ResourceManager.Compute
                 };
                 HttpMessage message = _virtualMachinesRestClient.CreateAttachDetachDataDisksRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, AttachDetachDataDisksRequest.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ComputeArmOperation<StorageProfile> operation = new ComputeArmOperation<StorageProfile>(
-                    new StorageProfileOperationSource(),
+                ComputeArmOperation<VirtualMachineStorageProfile> operation = new ComputeArmOperation<VirtualMachineStorageProfile>(
+                    new VirtualMachineStorageProfileOperationSource(),
                     _virtualMachinesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -605,7 +609,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="content"> Parameters supplied to the attach and detach data disks operation on the virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<StorageProfile> AttachDetachDataDisks(WaitUntil waitUntil, AttachDetachDataDisksRequest content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<VirtualMachineStorageProfile> AttachDetachDataDisks(WaitUntil waitUntil, AttachDetachDataDisksRequest content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -619,8 +623,8 @@ namespace Azure.ResourceManager.Compute
                 };
                 HttpMessage message = _virtualMachinesRestClient.CreateAttachDetachDataDisksRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, AttachDetachDataDisksRequest.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ComputeArmOperation<StorageProfile> operation = new ComputeArmOperation<StorageProfile>(
-                    new StorageProfileOperationSource(),
+                ComputeArmOperation<VirtualMachineStorageProfile> operation = new ComputeArmOperation<VirtualMachineStorageProfile>(
+                    new VirtualMachineStorageProfileOperationSource(),
                     _virtualMachinesClientDiagnostics,
                     Pipeline,
                     message.Request,

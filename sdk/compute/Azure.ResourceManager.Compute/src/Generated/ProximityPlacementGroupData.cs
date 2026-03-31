@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> A list of references to all virtual machines in the proximity placement group. </summary>
-        public IReadOnlyList<SubResourceWithColocationStatus> VirtualMachines
+        public IReadOnlyList<ComputeSubResourceDataWithColocationStatus> VirtualMachines
         {
             get
             {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> A list of references to all virtual machine scale sets in the proximity placement group. </summary>
-        public IReadOnlyList<SubResourceWithColocationStatus> VirtualMachineScaleSets
+        public IReadOnlyList<ComputeSubResourceDataWithColocationStatus> VirtualMachineScaleSets
         {
             get
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> A list of references to all availability sets in the proximity placement group. </summary>
-        public IReadOnlyList<SubResourceWithColocationStatus> AvailabilitySets
+        public IReadOnlyList<ComputeSubResourceDataWithColocationStatus> AvailabilitySets
         {
             get
             {

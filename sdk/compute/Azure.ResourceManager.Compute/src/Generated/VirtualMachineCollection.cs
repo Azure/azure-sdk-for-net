@@ -29,6 +29,8 @@ namespace Azure.ResourceManager.Compute
     {
         private readonly ClientDiagnostics _virtualMachinesClientDiagnostics;
         private readonly VirtualMachines _virtualMachinesRestClient;
+        private readonly ClientDiagnostics _virtualMachinesSubscriptionClientDiagnostics;
+        private readonly VirtualMachinesSubscription _virtualMachinesSubscriptionRestClient;
 
         /// <summary> Initializes a new instance of VirtualMachineCollection for mocking. </summary>
         protected VirtualMachineCollection()
@@ -43,6 +45,8 @@ namespace Azure.ResourceManager.Compute
             TryGetApiVersion(VirtualMachineResource.ResourceType, out string virtualMachineApiVersion);
             _virtualMachinesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", VirtualMachineResource.ResourceType.Namespace, Diagnostics);
             _virtualMachinesRestClient = new VirtualMachines(_virtualMachinesClientDiagnostics, Pipeline, Endpoint, virtualMachineApiVersion ?? "2025-04-01");
+            _virtualMachinesSubscriptionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", VirtualMachineResource.ResourceType.Namespace, Diagnostics);
+            _virtualMachinesSubscriptionRestClient = new VirtualMachinesSubscription(_virtualMachinesSubscriptionClientDiagnostics, Pipeline, Endpoint, virtualMachineApiVersion ?? "2025-04-01");
             ValidateResourceId(id);
         }
 
@@ -301,7 +305,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<VirtualMachineData, VirtualMachineResource>(new VirtualMachinesListAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<VirtualMachineData, VirtualMachineResource>(new VirtualMachinesGetAllAsyncCollectionResultOfT(
                 _virtualMachinesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -337,7 +341,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<VirtualMachineData, VirtualMachineResource>(new VirtualMachinesListCollectionResultOfT(
+            return new PageableWrapper<VirtualMachineData, VirtualMachineResource>(new VirtualMachinesGetAllCollectionResultOfT(
                 _virtualMachinesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

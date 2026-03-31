@@ -150,8 +150,8 @@ namespace Azure.ResourceManager.Compute.Models
             }
             string diskId = default;
             int? lun = default;
-            CachingTypes? caching = default;
-            DiskDeleteOptionTypes? deleteOption = default;
+            CachingType? caching = default;
+            DiskDeleteOptionType? deleteOption = default;
             DiskEncryptionSetParameters diskEncryptionSet = default;
             bool? writeAcceleratorEnabled = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    caching = prop.Value.GetString().ToCachingTypes();
+                    caching = prop.Value.GetString().ToCachingType();
                     continue;
                 }
                 if (prop.NameEquals("deleteOption"u8))
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    deleteOption = new DiskDeleteOptionTypes(prop.Value.GetString());
+                    deleteOption = new DiskDeleteOptionType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("diskEncryptionSet"u8))

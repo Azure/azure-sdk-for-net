@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="VirtualMachineExtensionProperties"/>. </summary>
         /// <param name="forceUpdateTag"> How the extension handler should be forced to update even if the extension configuration has not changed. </param>
         /// <param name="publisher"> The name of the extension handler publisher. </param>
-        /// <param name="type"> Specifies the type of the extension; an example is "CustomScriptExtension". </param>
+        /// <param name="extensionType"> Specifies the type of the extension; an example is "CustomScriptExtension". </param>
         /// <param name="typeHandlerVersion"> Specifies the version of the script handler. </param>
         /// <param name="autoUpgradeMinorVersion"> Indicates whether the extension should use a newer minor version if one is available at deployment time. Once deployed, however, the extension will not upgrade minor versions unless redeployed, even with this property set to true. </param>
         /// <param name="enableAutomaticUpgrade"> Indicates whether the extension should be automatically upgraded by the platform if there is a newer version of the extension available. </param>
@@ -39,11 +39,11 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="protectedSettingsFromKeyVault"> The extensions protected settings that are passed by reference, and consumed from key vault. </param>
         /// <param name="provisionAfterExtensions"> Collection of extension names after which this extension needs to be provisioned. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineExtensionProperties(string forceUpdateTag, string publisher, string @type, string typeHandlerVersion, bool? autoUpgradeMinorVersion, bool? enableAutomaticUpgrade, BinaryData settings, BinaryData protectedSettings, string provisioningState, VirtualMachineExtensionInstanceView instanceView, bool? suppressFailures, KeyVaultSecretReference protectedSettingsFromKeyVault, IList<string> provisionAfterExtensions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineExtensionProperties(string forceUpdateTag, string publisher, string extensionType, string typeHandlerVersion, bool? autoUpgradeMinorVersion, bool? enableAutomaticUpgrade, BinaryData settings, BinaryData protectedSettings, string provisioningState, VirtualMachineExtensionInstanceView instanceView, bool? suppressFailures, KeyVaultSecretReference protectedSettingsFromKeyVault, IList<string> provisionAfterExtensions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ForceUpdateTag = forceUpdateTag;
             Publisher = publisher;
-            Type = @type;
+            ExtensionType = extensionType;
             TypeHandlerVersion = typeHandlerVersion;
             AutoUpgradeMinorVersion = autoUpgradeMinorVersion;
             EnableAutomaticUpgrade = enableAutomaticUpgrade;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Compute.Models
         public string Publisher { get; set; }
 
         /// <summary> Specifies the type of the extension; an example is "CustomScriptExtension". </summary>
-        public string Type { get; set; }
+        public string ExtensionType { get; set; }
 
         /// <summary> Specifies the version of the script handler. </summary>
         public string TypeHandlerVersion { get; set; }

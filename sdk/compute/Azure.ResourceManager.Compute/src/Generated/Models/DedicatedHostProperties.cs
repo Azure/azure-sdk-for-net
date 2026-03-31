@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="instanceView"> The dedicated host instance view. </param>
         /// <param name="timeCreated"> Specifies the time at which the Dedicated Host resource was created. Minimum api-version: 2021-11-01. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DedicatedHostProperties(int? platformFaultDomain, bool? autoReplaceOnFailure, string hostId, IReadOnlyList<SubResourceReadOnly> virtualMachines, DedicatedHostLicenseTypes? licenseType, DateTimeOffset? provisioningOn, string provisioningState, DedicatedHostInstanceView instanceView, DateTimeOffset? timeCreated, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DedicatedHostProperties(int? platformFaultDomain, bool? autoReplaceOnFailure, string hostId, IReadOnlyList<SubResourceReadOnly> virtualMachines, DedicatedHostLicenseType? licenseType, DateTimeOffset? provisioningOn, string provisioningState, DedicatedHostInstanceView instanceView, DateTimeOffset? timeCreated, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PlatformFaultDomain = platformFaultDomain;
             AutoReplaceOnFailure = autoReplaceOnFailure;
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Compute.Models
         public IReadOnlyList<SubResourceReadOnly> VirtualMachines { get; } = new ChangeTrackingList<SubResourceReadOnly>();
 
         /// <summary> Specifies the software license type that will be applied to the VMs deployed on the dedicated host. Possible values are: <b>None,</b> <b>Windows_Server_Hybrid,</b> <b>Windows_Server_Perpetual.</b> The default value is: <b>None.</b>. </summary>
-        public DedicatedHostLicenseTypes? LicenseType { get; set; }
+        public DedicatedHostLicenseType? LicenseType { get; set; }
 
         /// <summary> The date when the host was first provisioned. </summary>
         public DateTimeOffset? ProvisioningOn { get; }

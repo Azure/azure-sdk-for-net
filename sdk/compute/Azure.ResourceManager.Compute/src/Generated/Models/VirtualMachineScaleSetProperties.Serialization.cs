@@ -236,10 +236,10 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            UpgradePolicy upgradePolicy = default;
+            VirtualMachineScaleSetUpgradePolicy upgradePolicy = default;
             ScheduledEventsPolicy scheduledEventsPolicy = default;
             AutomaticRepairsPolicy automaticRepairsPolicy = default;
-            VirtualMachineScaleSetVMProfile virtualMachineProfile = default;
+            VirtualMachineScaleSetVmProfile virtualMachineProfile = default;
             string provisioningState = default;
             bool? overprovision = default;
             bool? doNotRunExtensionsOnOverprovisionedVMs = default;
@@ -253,12 +253,12 @@ namespace Azure.ResourceManager.Compute.Models
             ScaleInPolicy scaleInPolicy = default;
             OrchestrationMode? orchestrationMode = default;
             SpotRestorePolicy spotRestorePolicy = default;
-            PriorityMixPolicy priorityMixPolicy = default;
+            VirtualMachineScaleSetPriorityMixPolicy priorityMixPolicy = default;
             DateTimeOffset? timeCreated = default;
             bool? constrainedMaximumCapacity = default;
             ResiliencyPolicy resiliencyPolicy = default;
             ZonalPlatformFaultDomainAlignMode? zonalPlatformFaultDomainAlignMode = default;
-            SkuProfile skuProfile = default;
+            ComputeSkuProfile skuProfile = default;
             HighSpeedInterconnectPlacement? highSpeedInterconnectPlacement = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    upgradePolicy = UpgradePolicy.DeserializeUpgradePolicy(prop.Value, options);
+                    upgradePolicy = VirtualMachineScaleSetUpgradePolicy.DeserializeVirtualMachineScaleSetUpgradePolicy(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("scheduledEventsPolicy"u8))
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    virtualMachineProfile = VirtualMachineScaleSetVMProfile.DeserializeVirtualMachineScaleSetVMProfile(prop.Value, options);
+                    virtualMachineProfile = VirtualMachineScaleSetVmProfile.DeserializeVirtualMachineScaleSetVmProfile(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    priorityMixPolicy = PriorityMixPolicy.DeserializePriorityMixPolicy(prop.Value, options);
+                    priorityMixPolicy = VirtualMachineScaleSetPriorityMixPolicy.DeserializeVirtualMachineScaleSetPriorityMixPolicy(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("timeCreated"u8))
@@ -459,7 +459,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    skuProfile = SkuProfile.DeserializeSkuProfile(prop.Value, options);
+                    skuProfile = ComputeSkuProfile.DeserializeComputeSkuProfile(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("highSpeedInterconnectPlacement"u8))

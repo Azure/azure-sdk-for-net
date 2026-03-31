@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             string diskId = default;
-            DiskDetachOptionTypes? detachOption = default;
+            DiskDetachOptionType? detachOption = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    detachOption = new DiskDetachOptionTypes(prop.Value.GetString());
+                    detachOption = new DiskDetachOptionType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            StorageAccountType? storageAccountType = default;
+            ImageStorageAccountType? storageAccountType = default;
             int? regionalReplicaCount = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    storageAccountType = new StorageAccountType(prop.Value.GetString());
+                    storageAccountType = new ImageStorageAccountType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("regionalReplicaCount"u8))

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies information about the SSH public key. </summary>
-    public partial class SshPublicKeyResourcePatch : UpdateResource
+    public partial class SshPublicKeyResourcePatch : ComputeResourcePatch
     {
         /// <summary> Initializes a new instance of <see cref="SshPublicKeyResourcePatch"/>. </summary>
         public SshPublicKeyResourcePatch()

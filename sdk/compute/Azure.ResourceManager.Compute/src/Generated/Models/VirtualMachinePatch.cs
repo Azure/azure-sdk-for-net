@@ -12,7 +12,7 @@ using Azure.ResourceManager.Compute;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes a Virtual Machine Update. </summary>
-    public partial class VirtualMachinePatch : UpdateResource
+    public partial class VirtualMachinePatch : ComputeResourcePatch
     {
         /// <summary> Initializes a new instance of <see cref="VirtualMachinePatch"/>. </summary>
         public VirtualMachinePatch()
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Compute.Models
         public IList<string> Zones { get; }
 
         /// <summary> Specifies the hardware settings for the virtual machine. </summary>
-        public HardwareProfile HardwareProfile
+        public VirtualMachineHardwareProfile HardwareProfile
         {
             get
             {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Specifies the storage settings for the virtual machine disks. </summary>
-        public StorageProfile StorageProfile
+        public VirtualMachineStorageProfile StorageProfile
         {
             get
             {
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Specifies the operating system settings used while creating the virtual machine. Some of the settings cannot be changed once VM is provisioned. </summary>
-        public OSProfile OsProfile
+        public VirtualMachineOSProfile OsProfile
         {
             get
             {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Specifies the network interfaces of the virtual machine. </summary>
-        public NetworkProfile NetworkProfile
+        public VirtualMachineNetworkProfile NetworkProfile
         {
             get
             {
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Specifies the priority for the virtual machine. Minimum api-version: 2019-03-01. </summary>
-        public VirtualMachinePriorityTypes? Priority
+        public VirtualMachinePriorityType? Priority
         {
             get
             {
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Specifies the eviction policy for the Azure Spot virtual machine and Azure Spot scale set. For Azure Spot virtual machines, both 'Deallocate' and 'Delete' are supported and the minimum api-version is 2019-03-01. For Azure Spot scale sets, both 'Deallocate' and 'Delete' are supported and the minimum api-version is 2017-10-30-preview. </summary>
-        public VirtualMachineEvictionPolicyTypes? EvictionPolicy
+        public VirtualMachineEvictionPolicyType? EvictionPolicy
         {
             get
             {
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Specifies Scheduled Event related configurations. </summary>
-        public ScheduledEventsProfile ScheduledEventsProfile
+        public ComputeScheduledEventsProfile ScheduledEventsProfile
         {
             get
             {
@@ -458,7 +458,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Specifies the gallery applications that should be made available to the VM/VMSS. </summary>
-        public IList<VMGalleryApplication> GalleryApplications
+        public IList<VirtualMachineGalleryApplication> GalleryApplications
         {
             get
             {

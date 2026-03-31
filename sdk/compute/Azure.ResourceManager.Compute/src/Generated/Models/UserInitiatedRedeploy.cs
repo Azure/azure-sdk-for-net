@@ -22,15 +22,15 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="UserInitiatedRedeploy"/>. </summary>
-        /// <param name="automaticallyApprove"> Specifies Redeploy Scheduled Event related configurations. </param>
+        /// <param name="automaticallyApproveRedeploy"> Specifies Redeploy Scheduled Event related configurations. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UserInitiatedRedeploy(bool? automaticallyApprove, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal UserInitiatedRedeploy(bool? automaticallyApproveRedeploy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            AutomaticallyApprove = automaticallyApprove;
+            AutomaticallyApproveRedeploy = automaticallyApproveRedeploy;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Specifies Redeploy Scheduled Event related configurations. </summary>
-        public bool? AutomaticallyApprove { get; set; }
+        public bool? AutomaticallyApproveRedeploy { get; set; }
     }
 }

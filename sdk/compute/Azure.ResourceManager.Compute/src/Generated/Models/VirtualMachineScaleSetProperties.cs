@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="skuProfile"> Specifies the sku profile for the virtual machine scale set. </param>
         /// <param name="highSpeedInterconnectPlacement"> Specifies the high speed interconnect placement for the virtual machine scale set. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineScaleSetProperties(UpgradePolicy upgradePolicy, ScheduledEventsPolicy scheduledEventsPolicy, AutomaticRepairsPolicy automaticRepairsPolicy, VirtualMachineScaleSetVMProfile virtualMachineProfile, string provisioningState, bool? overprovision, bool? doNotRunExtensionsOnOverprovisionedVMs, string uniqueId, bool? singlePlacementGroup, bool? zoneBalance, int? platformFaultDomainCount, SubResource proximityPlacementGroup, SubResource hostGroup, AdditionalCapabilities additionalCapabilities, ScaleInPolicy scaleInPolicy, OrchestrationMode? orchestrationMode, SpotRestorePolicy spotRestorePolicy, PriorityMixPolicy priorityMixPolicy, DateTimeOffset? timeCreated, bool? constrainedMaximumCapacity, ResiliencyPolicy resiliencyPolicy, ZonalPlatformFaultDomainAlignMode? zonalPlatformFaultDomainAlignMode, SkuProfile skuProfile, HighSpeedInterconnectPlacement? highSpeedInterconnectPlacement, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineScaleSetProperties(VirtualMachineScaleSetUpgradePolicy upgradePolicy, ScheduledEventsPolicy scheduledEventsPolicy, AutomaticRepairsPolicy automaticRepairsPolicy, VirtualMachineScaleSetVmProfile virtualMachineProfile, string provisioningState, bool? overprovision, bool? doNotRunExtensionsOnOverprovisionedVMs, string uniqueId, bool? singlePlacementGroup, bool? zoneBalance, int? platformFaultDomainCount, SubResource proximityPlacementGroup, SubResource hostGroup, AdditionalCapabilities additionalCapabilities, ScaleInPolicy scaleInPolicy, OrchestrationMode? orchestrationMode, SpotRestorePolicy spotRestorePolicy, VirtualMachineScaleSetPriorityMixPolicy priorityMixPolicy, DateTimeOffset? timeCreated, bool? constrainedMaximumCapacity, ResiliencyPolicy resiliencyPolicy, ZonalPlatformFaultDomainAlignMode? zonalPlatformFaultDomainAlignMode, ComputeSkuProfile skuProfile, HighSpeedInterconnectPlacement? highSpeedInterconnectPlacement, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             UpgradePolicy = upgradePolicy;
             ScheduledEventsPolicy = scheduledEventsPolicy;
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> The upgrade policy. </summary>
-        public UpgradePolicy UpgradePolicy { get; set; }
+        public VirtualMachineScaleSetUpgradePolicy UpgradePolicy { get; set; }
 
         /// <summary> The ScheduledEventsPolicy. </summary>
         public ScheduledEventsPolicy ScheduledEventsPolicy { get; set; }
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Compute.Models
         public AutomaticRepairsPolicy AutomaticRepairsPolicy { get; set; }
 
         /// <summary> The virtual machine profile. </summary>
-        public VirtualMachineScaleSetVMProfile VirtualMachineProfile { get; set; }
+        public VirtualMachineScaleSetVmProfile VirtualMachineProfile { get; set; }
 
         /// <summary> The provisioning state, which only appears in the response. </summary>
         public string ProvisioningState { get; }
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Compute.Models
         public SpotRestorePolicy SpotRestorePolicy { get; set; }
 
         /// <summary> Specifies the desired targets for mixing Spot and Regular priority VMs within the same VMSS Flex instance. </summary>
-        public PriorityMixPolicy PriorityMixPolicy { get; set; }
+        public VirtualMachineScaleSetPriorityMixPolicy PriorityMixPolicy { get; set; }
 
         /// <summary> Specifies the time at which the Virtual Machine Scale Set resource was created. Minimum api-version: 2021-11-01. </summary>
         public DateTimeOffset? TimeCreated { get; }
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Compute.Models
         public ZonalPlatformFaultDomainAlignMode? ZonalPlatformFaultDomainAlignMode { get; set; }
 
         /// <summary> Specifies the sku profile for the virtual machine scale set. </summary>
-        public SkuProfile SkuProfile { get; set; }
+        public ComputeSkuProfile SkuProfile { get; set; }
 
         /// <summary> Specifies the high speed interconnect placement for the virtual machine scale set. </summary>
         public HighSpeedInterconnectPlacement? HighSpeedInterconnectPlacement { get; set; }

@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            WindowsVMGuestPatchAutomaticByPlatformRebootSetting? rebootSetting = default;
+            WindowsVmGuestPatchAutomaticByPlatformRebootSetting? rebootSetting = default;
             bool? bypassPlatformSafetyChecksOnUserSchedule = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    rebootSetting = new WindowsVMGuestPatchAutomaticByPlatformRebootSetting(prop.Value.GetString());
+                    rebootSetting = new WindowsVmGuestPatchAutomaticByPlatformRebootSetting(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("bypassPlatformSafetyChecksOnUserSchedule"u8))

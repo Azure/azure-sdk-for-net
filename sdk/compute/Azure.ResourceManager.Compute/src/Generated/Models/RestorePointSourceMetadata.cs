@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="userData"> UserData associated with the source VM for which restore point is captured, which is a base-64 encoded value. </param>
         /// <param name="hyperVGeneration"> HyperVGeneration of the source VM for which restore point is captured. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RestorePointSourceMetadata(HardwareProfile hardwareProfile, RestorePointSourceVMStorageProfile storageProfile, OSProfile osProfile, DiagnosticsProfile diagnosticsProfile, string licenseType, string vmId, SecurityProfile securityProfile, string location, string userData, HyperVGenerationTypes? hyperVGeneration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RestorePointSourceMetadata(VirtualMachineHardwareProfile hardwareProfile, RestorePointSourceVMStorageProfile storageProfile, VirtualMachineOSProfile osProfile, DiagnosticsProfile diagnosticsProfile, string licenseType, string vmId, SecurityProfile securityProfile, string location, string userData, HyperVGenerationTypes? hyperVGeneration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             HardwareProfile = hardwareProfile;
             StorageProfile = storageProfile;
@@ -49,13 +49,13 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Gets the hardware profile. </summary>
-        public HardwareProfile HardwareProfile { get; }
+        public VirtualMachineHardwareProfile HardwareProfile { get; }
 
         /// <summary> Gets the storage profile. </summary>
         public RestorePointSourceVMStorageProfile StorageProfile { get; set; }
 
         /// <summary> Gets the OS profile. </summary>
-        public OSProfile OsProfile { get; }
+        public VirtualMachineOSProfile OsProfile { get; }
 
         /// <summary> Gets the diagnostics profile. </summary>
         internal DiagnosticsProfile DiagnosticsProfile { get; }

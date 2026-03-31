@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary></summary>
-    internal partial class GalleryInVMAccessControlProfileOperationSource : IOperationSource<GalleryInVMAccessControlProfileResource>
+    internal partial class GalleryInVmAccessControlProfileOperationSource : IOperationSource<GalleryInVmAccessControlProfileResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal GalleryInVMAccessControlProfileOperationSource(ArmClient client)
+        internal GalleryInVmAccessControlProfileOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.Compute
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        GalleryInVMAccessControlProfileResource IOperationSource<GalleryInVMAccessControlProfileResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        GalleryInVmAccessControlProfileResource IOperationSource<GalleryInVmAccessControlProfileResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            GalleryInVMAccessControlProfileData data = GalleryInVMAccessControlProfileData.DeserializeGalleryInVMAccessControlProfileData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new GalleryInVMAccessControlProfileResource(_client, data);
+            GalleryInVmAccessControlProfileData data = GalleryInVmAccessControlProfileData.DeserializeGalleryInVmAccessControlProfileData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new GalleryInVmAccessControlProfileResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<GalleryInVMAccessControlProfileResource> IOperationSource<GalleryInVMAccessControlProfileResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<GalleryInVmAccessControlProfileResource> IOperationSource<GalleryInVmAccessControlProfileResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            GalleryInVMAccessControlProfileData data = GalleryInVMAccessControlProfileData.DeserializeGalleryInVMAccessControlProfileData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new GalleryInVMAccessControlProfileResource(_client, data);
+            GalleryInVmAccessControlProfileData data = GalleryInVmAccessControlProfileData.DeserializeGalleryInVmAccessControlProfileData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new GalleryInVmAccessControlProfileResource(_client, data);
         }
     }
 }

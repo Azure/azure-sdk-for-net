@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="ApplicationProfile"/>. </summary>
         public ApplicationProfile()
         {
-            GalleryApplications = new ChangeTrackingList<VMGalleryApplication>();
+            GalleryApplications = new ChangeTrackingList<VirtualMachineGalleryApplication>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ApplicationProfile"/>. </summary>
         /// <param name="galleryApplications"> Specifies the gallery applications that should be made available to the VM/VMSS. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationProfile(IList<VMGalleryApplication> galleryApplications, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApplicationProfile(IList<VirtualMachineGalleryApplication> galleryApplications, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             GalleryApplications = galleryApplications;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Specifies the gallery applications that should be made available to the VM/VMSS. </summary>
-        public IList<VMGalleryApplication> GalleryApplications { get; }
+        public IList<VirtualMachineGalleryApplication> GalleryApplications { get; }
     }
 }

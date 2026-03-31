@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies information about the capacity reservation group. Only tags can be updated. </summary>
-    public partial class CapacityReservationGroupPatch : UpdateResource
+    public partial class CapacityReservationGroupPatch : ComputeResourcePatch
     {
         /// <summary> Initializes a new instance of <see cref="CapacityReservationGroupPatch"/>. </summary>
         public CapacityReservationGroupPatch()
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Indicates the type of capacity reservation. Allowed values are 'Block' for block capacity reservations and 'Targeted' for reservations that enable a VM to consume a specific capacity reservation when a capacity reservation group is provided. The reservation type is immutable and cannot be changed after it is assigned. </summary>
-        public ReservationType? ReservationType
+        public CapacityReservationType? ReservationType
         {
             get
             {

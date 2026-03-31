@@ -15,11 +15,11 @@ using Azure.ResourceManager.Compute;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies information about the capacity reservation. sku.capacity cannot be updated for Block Capacity Reservation. Tags can be update for all Capacity Reservation Types. </summary>
-    public partial class CapacityReservationPatch : UpdateResource, IJsonModel<CapacityReservationPatch>
+    public partial class CapacityReservationPatch : ComputeResourcePatch, IJsonModel<CapacityReservationPatch>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override UpdateResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override ComputeResourcePatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<CapacityReservationPatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override UpdateResource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override ComputeResourcePatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<CapacityReservationPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

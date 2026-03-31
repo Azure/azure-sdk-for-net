@@ -13,25 +13,25 @@ using Azure.ResourceManager.Compute;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies a list of virtual machine instance IDs from the VM scale set. </summary>
-    public partial class VirtualMachineScaleSetVMInstanceRequiredIDs
+    public partial class VirtualMachineScaleSetVmInstanceRequiredIds
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetVMInstanceRequiredIDs"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetVmInstanceRequiredIds"/>. </summary>
         /// <param name="instanceIds"> The virtual machine scale set instance ids. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="instanceIds"/> is null. </exception>
-        public VirtualMachineScaleSetVMInstanceRequiredIDs(IEnumerable<string> instanceIds)
+        public VirtualMachineScaleSetVmInstanceRequiredIds(IEnumerable<string> instanceIds)
         {
             Argument.AssertNotNull(instanceIds, nameof(instanceIds));
 
             InstanceIds = instanceIds.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetVMInstanceRequiredIDs"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetVmInstanceRequiredIds"/>. </summary>
         /// <param name="instanceIds"> The virtual machine scale set instance ids. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineScaleSetVMInstanceRequiredIDs(IList<string> instanceIds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineScaleSetVmInstanceRequiredIds(IList<string> instanceIds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             InstanceIds = instanceIds;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

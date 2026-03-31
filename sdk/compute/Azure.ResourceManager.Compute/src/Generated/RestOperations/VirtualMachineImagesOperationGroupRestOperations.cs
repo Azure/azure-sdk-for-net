@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetByEdgeZoneRequest(string subscriptionId, string location, string edgeZone, RequestContext context)
+        internal HttpMessage CreateGetVirtualMachineImagesByEdgeZoneRequest(string subscriptionId, string location, string edgeZone, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Compute
             return message;
         }
 
-        internal HttpMessage CreateGetPublishersRequest(string subscriptionId, string location, RequestContext context)
+        internal HttpMessage CreateGetVirtualMachineImagePublishersRequest(string subscriptionId, string location, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Compute
             return message;
         }
 
-        internal HttpMessage CreateGetOffersRequest(string subscriptionId, string location, string publisherName, RequestContext context)
+        internal HttpMessage CreateGetVirtualMachineImageOffersRequest(string subscriptionId, string location, string publisherName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Compute
             return message;
         }
 
-        internal HttpMessage CreateGetSkusRequest(string subscriptionId, string location, string publisherName, string offer, RequestContext context)
+        internal HttpMessage CreateGetVirtualMachineImageSkusRequest(string subscriptionId, string location, string publisherName, string offer, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Compute
             return message;
         }
 
-        internal HttpMessage CreateGetAllRequest(string subscriptionId, string location, string publisherName, string offer, string skus, string expand, int? top, string @orderby, RequestContext context)
+        internal HttpMessage CreateGetVirtualMachineImagesRequest(string subscriptionId, string location, string publisherName, string offer, string skus, string expand, int? top, string @orderby, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Compute
             return message;
         }
 
-        internal HttpMessage CreateGetWithPropertiesRequest(string subscriptionId, string location, string publisherName, string offer, string skus, string expand, int? top, string @orderby, RequestContext context)
+        internal HttpMessage CreateGetVirtualMachineImagesWithPropertiesRequest(string subscriptionId, string location, string publisherName, string offer, string skus, string expand, int? top, string @orderby, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Compute
             return message;
         }
 
-        internal HttpMessage CreateGetRequest(AzureLocation location, string publisherName, string offer, string skus, string version, string subscriptionId, RequestContext context)
+        internal HttpMessage CreateGetVirtualMachineImageRequest(AzureLocation location, string publisherName, string offer, string skus, string version, string subscriptionId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

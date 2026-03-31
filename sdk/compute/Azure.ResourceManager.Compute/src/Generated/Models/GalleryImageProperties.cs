@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="osState"> This property allows the user to specify whether the virtual machines created under this image are 'Generalized' or 'Specialized'. </param>
         /// <param name="identifier"> This is the gallery image definition identifier. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="identifier"/> is null. </exception>
-        public GalleryImageProperties(OperatingSystemTypes osType, OperatingSystemStateTypes osState, GalleryImageIdentifier identifier)
+        public GalleryImageProperties(OperatingSystemTypes osType, OperatingSystemStateType osState, GalleryImageIdentifier identifier)
         {
             Argument.AssertNotNull(identifier, nameof(identifier));
 
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="architecture"> The architecture of the image. Applicable to OS disks only. </param>
         /// <param name="allowUpdateImage"> Optional. Must be set to true if the gallery image features are being updated. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GalleryImageProperties(string description, string eula, string privacyStatementUri, string releaseNoteUri, OperatingSystemTypes osType, OperatingSystemStateTypes osState, HyperVGeneration? hyperVGeneration, DateTimeOffset? endOfLifeOn, GalleryImageIdentifier identifier, RecommendedMachineConfiguration recommended, Disallowed disallowed, ImagePurchasePlan purchasePlan, GalleryProvisioningState? provisioningState, IList<GalleryImageFeature> features, Architecture? architecture, bool? allowUpdateImage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GalleryImageProperties(string description, string eula, string privacyStatementUri, string releaseNoteUri, OperatingSystemTypes osType, OperatingSystemStateType osState, HyperVGeneration? hyperVGeneration, DateTimeOffset? endOfLifeOn, GalleryImageIdentifier identifier, RecommendedMachineConfiguration recommended, Disallowed disallowed, ImagePurchasePlan purchasePlan, GalleryProvisioningState? provisioningState, IList<GalleryImageFeature> features, Architecture? architecture, bool? allowUpdateImage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             Eula = eula;
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Compute.Models
         public OperatingSystemTypes OsType { get; set; }
 
         /// <summary> This property allows the user to specify whether the virtual machines created under this image are 'Generalized' or 'Specialized'. </summary>
-        public OperatingSystemStateTypes OsState { get; set; }
+        public OperatingSystemStateType OsState { get; set; }
 
         /// <summary> The hypervisor generation of the Virtual Machine. Applicable to OS disks only. </summary>
         public HyperVGeneration? HyperVGeneration { get; set; }

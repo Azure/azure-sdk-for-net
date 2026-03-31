@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 writer.WritePropertyName("extensions"u8);
                 writer.WriteStartArray();
-                foreach (VirtualMachineScaleSetVMExtensionsSummary item in Extensions)
+                foreach (VirtualMachineScaleSetVmExtensionsSummary item in Extensions)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             VirtualMachineScaleSetInstanceViewStatusesSummary virtualMachine = default;
-            IReadOnlyList<VirtualMachineScaleSetVMExtensionsSummary> extensions = default;
+            IReadOnlyList<VirtualMachineScaleSetVmExtensionsSummary> extensions = default;
             IReadOnlyList<InstanceViewStatus> statuses = default;
             IReadOnlyList<OrchestrationServiceSummary> orchestrationServices = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -181,10 +181,10 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    List<VirtualMachineScaleSetVMExtensionsSummary> array = new List<VirtualMachineScaleSetVMExtensionsSummary>();
+                    List<VirtualMachineScaleSetVmExtensionsSummary> array = new List<VirtualMachineScaleSetVmExtensionsSummary>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(VirtualMachineScaleSetVMExtensionsSummary.DeserializeVirtualMachineScaleSetVMExtensionsSummary(item, options));
+                        array.Add(VirtualMachineScaleSetVmExtensionsSummary.DeserializeVirtualMachineScaleSetVmExtensionsSummary(item, options));
                     }
                     extensions = array;
                     continue;
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Compute.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new VirtualMachineScaleSetInstanceView(virtualMachine, extensions ?? new ChangeTrackingList<VirtualMachineScaleSetVMExtensionsSummary>(), statuses ?? new ChangeTrackingList<InstanceViewStatus>(), orchestrationServices ?? new ChangeTrackingList<OrchestrationServiceSummary>(), additionalBinaryDataProperties);
+            return new VirtualMachineScaleSetInstanceView(virtualMachine, extensions ?? new ChangeTrackingList<VirtualMachineScaleSetVmExtensionsSummary>(), statuses ?? new ChangeTrackingList<InstanceViewStatus>(), orchestrationServices ?? new ChangeTrackingList<OrchestrationServiceSummary>(), additionalBinaryDataProperties);
         }
     }
 }

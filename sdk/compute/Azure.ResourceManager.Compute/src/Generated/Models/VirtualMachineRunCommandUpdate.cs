@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes a Virtual Machine run command. </summary>
-    public partial class VirtualMachineRunCommandUpdate : UpdateResource
+    public partial class VirtualMachineRunCommandUpdate : ComputeResourcePatch
     {
         /// <summary> Initializes a new instance of <see cref="VirtualMachineRunCommandUpdate"/>. </summary>
         public VirtualMachineRunCommandUpdate()

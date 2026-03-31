@@ -992,11 +992,11 @@ namespace Azure.ResourceManager.Compute
             return GetGalleryScripts().Get(galleryScriptName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of GalleryInVMAccessControlProfiles in the <see cref="GalleryResource"/>. </summary>
-        /// <returns> An object representing collection of GalleryInVMAccessControlProfiles and their operations over a GalleryInVMAccessControlProfileResource. </returns>
-        public virtual GalleryInVMAccessControlProfileCollection GetGalleryInVMAccessControlProfiles()
+        /// <summary> Gets a collection of GalleryInVmAccessControlProfiles in the <see cref="GalleryResource"/>. </summary>
+        /// <returns> An object representing collection of GalleryInVmAccessControlProfiles and their operations over a GalleryInVmAccessControlProfileResource. </returns>
+        public virtual GalleryInVmAccessControlProfileCollection GetGalleryInVmAccessControlProfiles()
         {
-            return GetCachedClient(client => new GalleryInVMAccessControlProfileCollection(client, Id));
+            return GetCachedClient(client => new GalleryInVmAccessControlProfileCollection(client, Id));
         }
 
         /// <summary> Retrieves information about a gallery inVMAccessControlProfile. </summary>
@@ -1005,11 +1005,11 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="inVMAccessControlProfileName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="inVMAccessControlProfileName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<GalleryInVMAccessControlProfileResource>> GetGalleryInVMAccessControlProfileAsync(string inVMAccessControlProfileName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<GalleryInVmAccessControlProfileResource>> GetGalleryInVmAccessControlProfileAsync(string inVMAccessControlProfileName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(inVMAccessControlProfileName, nameof(inVMAccessControlProfileName));
 
-            return await GetGalleryInVMAccessControlProfiles().GetAsync(inVMAccessControlProfileName, cancellationToken).ConfigureAwait(false);
+            return await GetGalleryInVmAccessControlProfiles().GetAsync(inVMAccessControlProfileName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Retrieves information about a gallery inVMAccessControlProfile. </summary>
@@ -1018,11 +1018,11 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="inVMAccessControlProfileName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="inVMAccessControlProfileName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<GalleryInVMAccessControlProfileResource> GetGalleryInVMAccessControlProfile(string inVMAccessControlProfileName, CancellationToken cancellationToken = default)
+        public virtual Response<GalleryInVmAccessControlProfileResource> GetGalleryInVmAccessControlProfile(string inVMAccessControlProfileName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(inVMAccessControlProfileName, nameof(inVMAccessControlProfileName));
 
-            return GetGalleryInVMAccessControlProfiles().Get(inVMAccessControlProfileName, cancellationToken);
+            return GetGalleryInVmAccessControlProfiles().Get(inVMAccessControlProfileName, cancellationToken);
         }
     }
 }

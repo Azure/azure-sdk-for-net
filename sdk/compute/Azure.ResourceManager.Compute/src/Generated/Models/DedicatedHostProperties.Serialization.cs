@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Compute.Models
             bool? autoReplaceOnFailure = default;
             string hostId = default;
             IReadOnlyList<SubResourceReadOnly> virtualMachines = default;
-            DedicatedHostLicenseTypes? licenseType = default;
+            DedicatedHostLicenseType? licenseType = default;
             DateTimeOffset? provisioningOn = default;
             string provisioningState = default;
             DedicatedHostInstanceView instanceView = default;
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    licenseType = prop.Value.GetString().ToDedicatedHostLicenseTypes();
+                    licenseType = prop.Value.GetString().ToDedicatedHostLicenseType();
                     continue;
                 }
                 if (prop.NameEquals("provisioningTime"u8))

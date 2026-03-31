@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="targetImageReference"> Image Reference details. </param>
         /// <param name="rollbackInfo"> Information about OS rollback if performed. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UpgradeOperationHistoricalStatusInfoProperties(UpgradeOperationHistoryStatus runningStatus, RollingUpgradeProgressInfo progress, ApiError error, UpgradeOperationInvoker? startedBy, ImageReference targetImageReference, RollbackStatusInfo rollbackInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal UpgradeOperationHistoricalStatusInfoProperties(UpgradeOperationHistoryStatus runningStatus, RollingUpgradeProgressInfo progress, ComputeApiError error, UpgradeOperationInvoker? startedBy, ImageReference targetImageReference, RollbackStatusInfo rollbackInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RunningStatus = runningStatus;
             Progress = progress;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Compute.Models
         public RollingUpgradeProgressInfo Progress { get; }
 
         /// <summary> Error Details for this upgrade if there are any. </summary>
-        public ApiError Error { get; }
+        public ComputeApiError Error { get; }
 
         /// <summary> Invoker of the Upgrade Operation. </summary>
         public UpgradeOperationInvoker? StartedBy { get; }

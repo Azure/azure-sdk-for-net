@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="diskRestorePoint"> Contains Disk Restore Point properties. </param>
         /// <param name="writeAcceleratorEnabled"> Shows true if the disk is write-accelerator enabled. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RestorePointSourceVMDataDisk(int? lun, string name, CachingTypes? caching, int? diskSizeGB, ManagedDiskParameters managedDisk, DiskRestorePointAttributes diskRestorePoint, bool? writeAcceleratorEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RestorePointSourceVMDataDisk(int? lun, string name, CachingType? caching, int? diskSizeGB, VirtualMachineManagedDisk managedDisk, DiskRestorePointAttributes diskRestorePoint, bool? writeAcceleratorEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Lun = lun;
             Name = name;
@@ -49,13 +49,13 @@ namespace Azure.ResourceManager.Compute.Models
         public string Name { get; }
 
         /// <summary> Gets the caching type. </summary>
-        public CachingTypes? Caching { get; }
+        public CachingType? Caching { get; }
 
         /// <summary> Gets the initial disk size in GB for blank data disks, and the new desired size for existing OS and Data disks. </summary>
         public int? DiskSizeGB { get; }
 
         /// <summary> Contains the managed disk details. </summary>
-        public ManagedDiskParameters ManagedDisk { get; set; }
+        public VirtualMachineManagedDisk ManagedDisk { get; set; }
 
         /// <summary> Contains Disk Restore Point properties. </summary>
         public DiskRestorePointAttributes DiskRestorePoint { get; set; }

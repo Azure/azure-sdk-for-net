@@ -167,14 +167,14 @@ namespace Azure.ResourceManager.Compute.Models
             }
             string name = default;
             int lun = default;
-            CachingTypes? caching = default;
+            CachingType? caching = default;
             bool? writeAcceleratorEnabled = default;
-            DiskCreateOptionTypes createOption = default;
+            DiskCreateOptionType createOption = default;
             int? diskSizeGB = default;
             VirtualMachineScaleSetManagedDiskParameters managedDisk = default;
             long? diskIOPSReadWrite = default;
             long? diskMBpsReadWrite = default;
-            DiskDeleteOptionTypes? deleteOption = default;
+            DiskDeleteOptionType? deleteOption = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    caching = prop.Value.GetString().ToCachingTypes();
+                    caching = prop.Value.GetString().ToCachingType();
                     continue;
                 }
                 if (prop.NameEquals("writeAcceleratorEnabled"u8))
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (prop.NameEquals("createOption"u8))
                 {
-                    createOption = new DiskCreateOptionTypes(prop.Value.GetString());
+                    createOption = new DiskCreateOptionType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("diskSizeGB"u8))
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    deleteOption = new DiskDeleteOptionTypes(prop.Value.GetString());
+                    deleteOption = new DiskDeleteOptionType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 writer.WritePropertyName("policyViolations"u8);
                 writer.WriteStartArray();
-                foreach (PolicyViolation item in PolicyViolations)
+                foreach (GalleryImageVersionPolicyViolation item in PolicyViolations)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Compute.Models
             bool? allowDeletionOfReplicatedLocations = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             bool? reportedForPolicyViolation = default;
-            IReadOnlyList<PolicyViolation> policyViolations = default;
+            IReadOnlyList<GalleryImageVersionPolicyViolation> policyViolations = default;
             bool? blockDeletionBeforeEndOfLife = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -153,10 +153,10 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    List<PolicyViolation> array = new List<PolicyViolation>();
+                    List<GalleryImageVersionPolicyViolation> array = new List<GalleryImageVersionPolicyViolation>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(PolicyViolation.DeserializePolicyViolation(item, options));
+                        array.Add(GalleryImageVersionPolicyViolation.DeserializeGalleryImageVersionPolicyViolation(item, options));
                     }
                     policyViolations = array;
                     continue;
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Compute.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new GalleryImageVersionSafetyProfile(allowDeletionOfReplicatedLocations, additionalBinaryDataProperties, reportedForPolicyViolation, policyViolations ?? new ChangeTrackingList<PolicyViolation>(), blockDeletionBeforeEndOfLife);
+            return new GalleryImageVersionSafetyProfile(allowDeletionOfReplicatedLocations, additionalBinaryDataProperties, reportedForPolicyViolation, policyViolations ?? new ChangeTrackingList<GalleryImageVersionPolicyViolation>(), blockDeletionBeforeEndOfLife);
         }
     }
 }

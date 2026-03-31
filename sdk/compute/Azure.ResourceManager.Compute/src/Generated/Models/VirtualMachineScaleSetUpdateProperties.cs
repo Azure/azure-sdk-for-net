@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="zonalPlatformFaultDomainAlignMode"> Specifies the align mode between Virtual Machine Scale Set compute and storage Fault Domain count. </param>
         /// <param name="skuProfile"> Specifies the sku profile for the virtual machine scale set. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineScaleSetUpdateProperties(UpgradePolicy upgradePolicy, AutomaticRepairsPolicy automaticRepairsPolicy, VirtualMachineScaleSetUpdateVMProfile virtualMachineProfile, bool? overprovision, bool? doNotRunExtensionsOnOverprovisionedVMs, bool? singlePlacementGroup, AdditionalCapabilities additionalCapabilities, ScaleInPolicy scaleInPolicy, SubResource proximityPlacementGroup, PriorityMixPolicy priorityMixPolicy, SpotRestorePolicy spotRestorePolicy, ResiliencyPolicy resiliencyPolicy, ZonalPlatformFaultDomainAlignMode? zonalPlatformFaultDomainAlignMode, SkuProfile skuProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineScaleSetUpdateProperties(VirtualMachineScaleSetUpgradePolicy upgradePolicy, AutomaticRepairsPolicy automaticRepairsPolicy, VirtualMachineScaleSetUpdateVmProfile virtualMachineProfile, bool? overprovision, bool? doNotRunExtensionsOnOverprovisionedVMs, bool? singlePlacementGroup, AdditionalCapabilities additionalCapabilities, ScaleInPolicy scaleInPolicy, SubResource proximityPlacementGroup, VirtualMachineScaleSetPriorityMixPolicy priorityMixPolicy, SpotRestorePolicy spotRestorePolicy, ResiliencyPolicy resiliencyPolicy, ZonalPlatformFaultDomainAlignMode? zonalPlatformFaultDomainAlignMode, ComputeSkuProfile skuProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             UpgradePolicy = upgradePolicy;
             AutomaticRepairsPolicy = automaticRepairsPolicy;
@@ -57,13 +57,13 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> The upgrade policy. </summary>
-        public UpgradePolicy UpgradePolicy { get; set; }
+        public VirtualMachineScaleSetUpgradePolicy UpgradePolicy { get; set; }
 
         /// <summary> Policy for automatic repairs. </summary>
         public AutomaticRepairsPolicy AutomaticRepairsPolicy { get; set; }
 
         /// <summary> The virtual machine profile. </summary>
-        public VirtualMachineScaleSetUpdateVMProfile VirtualMachineProfile { get; set; }
+        public VirtualMachineScaleSetUpdateVmProfile VirtualMachineProfile { get; set; }
 
         /// <summary> Specifies whether the Virtual Machine Scale Set should be overprovisioned. </summary>
         public bool? Overprovision { get; set; }
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Compute.Models
         internal SubResource ProximityPlacementGroup { get; set; }
 
         /// <summary> Specifies the desired targets for mixing Spot and Regular priority VMs within the same VMSS Flex instance. </summary>
-        public PriorityMixPolicy PriorityMixPolicy { get; set; }
+        public VirtualMachineScaleSetPriorityMixPolicy PriorityMixPolicy { get; set; }
 
         /// <summary> Specifies the Spot Restore properties for the virtual machine scale set. </summary>
         public SpotRestorePolicy SpotRestorePolicy { get; set; }
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Compute.Models
         public ZonalPlatformFaultDomainAlignMode? ZonalPlatformFaultDomainAlignMode { get; set; }
 
         /// <summary> Specifies the sku profile for the virtual machine scale set. </summary>
-        public SkuProfile SkuProfile { get; set; }
+        public ComputeSkuProfile SkuProfile { get; set; }
 
         /// <summary> Resource Id. </summary>
         public string ProximityPlacementGroupId

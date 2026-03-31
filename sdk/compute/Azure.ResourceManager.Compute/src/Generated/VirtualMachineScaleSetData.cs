@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="extendedLocation"> The extended location of the Virtual Machine Scale Set. </param>
         /// <param name="eTag"> Etag is property returned in Create/Update/Get response of the VMSS, so that customer can supply it in the header to ensure optimistic updates. </param>
         /// <param name="placement"> Placement section specifies the user-defined constraints for virtual machine scale set hardware placement. This property cannot be changed once VMSS is provisioned. Minimum api-version: 2025-04-01. </param>
-        internal VirtualMachineScaleSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, ComputeSku sku, ComputePlan plan, VirtualMachineScaleSetProperties properties, VirtualMachineScaleSetIdentity identity, IList<string> zones, ExtendedLocation extendedLocation, string eTag, Placement placement) : base(id, name, resourceType, systemData, tags, location)
+        internal VirtualMachineScaleSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, ComputeSku sku, ComputePlan plan, VirtualMachineScaleSetProperties properties, VirtualMachineScaleSetIdentity identity, IList<string> zones, ExtendedLocation extendedLocation, string eTag, VirtualMachinePlacement placement) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Sku = sku;
@@ -77,10 +77,10 @@ namespace Azure.ResourceManager.Compute
         public string ETag { get; }
 
         /// <summary> Placement section specifies the user-defined constraints for virtual machine scale set hardware placement. This property cannot be changed once VMSS is provisioned. Minimum api-version: 2025-04-01. </summary>
-        public Placement Placement { get; set; }
+        public VirtualMachinePlacement Placement { get; set; }
 
         /// <summary> The upgrade policy. </summary>
-        public UpgradePolicy UpgradePolicy
+        public VirtualMachineScaleSetUpgradePolicy UpgradePolicy
         {
             get
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> The virtual machine profile. </summary>
-        public VirtualMachineScaleSetVMProfile VirtualMachineProfile
+        public VirtualMachineScaleSetVmProfile VirtualMachineProfile
         {
             get
             {
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Specifies the desired targets for mixing Spot and Regular priority VMs within the same VMSS Flex instance. </summary>
-        public PriorityMixPolicy PriorityMixPolicy
+        public VirtualMachineScaleSetPriorityMixPolicy PriorityMixPolicy
         {
             get
             {
@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Specifies the sku profile for the virtual machine scale set. </summary>
-        public SkuProfile SkuProfile
+        public ComputeSkuProfile SkuProfile
         {
             get
             {

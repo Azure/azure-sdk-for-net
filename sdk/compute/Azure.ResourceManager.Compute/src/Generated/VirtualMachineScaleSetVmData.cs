@@ -14,20 +14,20 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary> Describes a virtual machine scale set virtual machine. </summary>
-    public partial class VirtualMachineScaleSetVMData : TrackedResourceData
+    public partial class VirtualMachineScaleSetVmData : TrackedResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetVMData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetVmData"/>. </summary>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        public VirtualMachineScaleSetVMData(AzureLocation location) : base(location)
+        public VirtualMachineScaleSetVmData(AzureLocation location) : base(location)
         {
             Resources = new ChangeTrackingList<VirtualMachineExtensionData>();
             Zones = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetVMData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetVmData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="zones"> The virtual machine zones. </param>
         /// <param name="identity"> The identity of the virtual machine, if configured. </param>
         /// <param name="eTag"> Etag is property returned in Update/Get response of the VMSS VM, so that customer can supply it in the header to ensure optimistic updates. </param>
-        internal VirtualMachineScaleSetVMData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, VirtualMachineScaleSetVMProperties properties, string instanceId, ComputeSku sku, ComputePlan plan, IReadOnlyList<VirtualMachineExtensionData> resources, IReadOnlyList<string> zones, VirtualMachineIdentity identity, string eTag) : base(id, name, resourceType, systemData, tags, location)
+        internal VirtualMachineScaleSetVmData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, VirtualMachineScaleSetVmProperties properties, string instanceId, ComputeSku sku, ComputePlan plan, IReadOnlyList<VirtualMachineExtensionData> resources, IReadOnlyList<string> zones, VirtualMachineIdentity identity, string eTag) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Describes the properties of a virtual machine scale set virtual machine. </summary>
-        internal VirtualMachineScaleSetVMProperties Properties { get; set; }
+        internal VirtualMachineScaleSetVmProperties Properties { get; set; }
 
         /// <summary> The virtual machine instance ID. </summary>
         public string InstanceId { get; }
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> The virtual machine instance view. </summary>
-        public VirtualMachineScaleSetVMInstanceView InstanceView
+        public VirtualMachineScaleSetVmInstanceView InstanceView
         {
             get
             {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Specifies the hardware settings for the virtual machine. </summary>
-        public HardwareProfile HardwareProfile
+        public VirtualMachineHardwareProfile HardwareProfile
         {
             get
             {
@@ -118,14 +118,14 @@ namespace Azure.ResourceManager.Compute
             {
                 if (Properties is null)
                 {
-                    Properties = new VirtualMachineScaleSetVMProperties();
+                    Properties = new VirtualMachineScaleSetVmProperties();
                 }
                 Properties.HardwareProfile = value;
             }
         }
 
         /// <summary> Specifies the resilient VM deletion status for the virtual machine. </summary>
-        public ResilientVMDeletionStatus? ResilientVMDeletionStatus
+        public ResilientVmDeletionStatus? ResilientVMDeletionStatus
         {
             get
             {
@@ -135,14 +135,14 @@ namespace Azure.ResourceManager.Compute
             {
                 if (Properties is null)
                 {
-                    Properties = new VirtualMachineScaleSetVMProperties();
+                    Properties = new VirtualMachineScaleSetVmProperties();
                 }
                 Properties.ResilientVMDeletionStatus = value.Value;
             }
         }
 
         /// <summary> Specifies the storage settings for the virtual machine disks. </summary>
-        public StorageProfile StorageProfile
+        public VirtualMachineStorageProfile StorageProfile
         {
             get
             {
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Compute
             {
                 if (Properties is null)
                 {
-                    Properties = new VirtualMachineScaleSetVMProperties();
+                    Properties = new VirtualMachineScaleSetVmProperties();
                 }
                 Properties.StorageProfile = value;
             }
@@ -169,14 +169,14 @@ namespace Azure.ResourceManager.Compute
             {
                 if (Properties is null)
                 {
-                    Properties = new VirtualMachineScaleSetVMProperties();
+                    Properties = new VirtualMachineScaleSetVmProperties();
                 }
                 Properties.AdditionalCapabilities = value;
             }
         }
 
         /// <summary> Specifies the operating system settings for the virtual machine. </summary>
-        public OSProfile OsProfile
+        public VirtualMachineOSProfile OsProfile
         {
             get
             {
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Compute
             {
                 if (Properties is null)
                 {
-                    Properties = new VirtualMachineScaleSetVMProperties();
+                    Properties = new VirtualMachineScaleSetVmProperties();
                 }
                 Properties.OsProfile = value;
             }
@@ -203,14 +203,14 @@ namespace Azure.ResourceManager.Compute
             {
                 if (Properties is null)
                 {
-                    Properties = new VirtualMachineScaleSetVMProperties();
+                    Properties = new VirtualMachineScaleSetVmProperties();
                 }
                 Properties.SecurityProfile = value;
             }
         }
 
         /// <summary> Specifies the network interfaces of the virtual machine. </summary>
-        public NetworkProfile NetworkProfile
+        public VirtualMachineNetworkProfile NetworkProfile
         {
             get
             {
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Compute
             {
                 if (Properties is null)
                 {
-                    Properties = new VirtualMachineScaleSetVMProperties();
+                    Properties = new VirtualMachineScaleSetVmProperties();
                 }
                 Properties.NetworkProfile = value;
             }
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Compute
             {
                 if (Properties is null)
                 {
-                    Properties = new VirtualMachineScaleSetVMProperties();
+                    Properties = new VirtualMachineScaleSetVmProperties();
                 }
                 Properties.LicenseType = value;
             }
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Specifies the protection policy of the virtual machine. </summary>
-        public VirtualMachineScaleSetVMProtectionPolicy ProtectionPolicy
+        public VirtualMachineScaleSetVmProtectionPolicy ProtectionPolicy
         {
             get
             {
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.Compute
             {
                 if (Properties is null)
                 {
-                    Properties = new VirtualMachineScaleSetVMProperties();
+                    Properties = new VirtualMachineScaleSetVmProperties();
                 }
                 Properties.ProtectionPolicy = value;
             }
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.Compute
             {
                 if (Properties is null)
                 {
-                    Properties = new VirtualMachineScaleSetVMProperties();
+                    Properties = new VirtualMachineScaleSetVmProperties();
                 }
                 Properties.UserData = value;
             }
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.Compute
             {
                 if (Properties is null)
                 {
-                    Properties = new VirtualMachineScaleSetVMProperties();
+                    Properties = new VirtualMachineScaleSetVmProperties();
                 }
                 return Properties.NetworkInterfaceConfigurations;
             }
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.Compute
             {
                 if (Properties is null)
                 {
-                    Properties = new VirtualMachineScaleSetVMProperties();
+                    Properties = new VirtualMachineScaleSetVmProperties();
                 }
                 Properties.BootDiagnostics = value;
             }
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.Compute
             {
                 if (Properties is null)
                 {
-                    Properties = new VirtualMachineScaleSetVMProperties();
+                    Properties = new VirtualMachineScaleSetVmProperties();
                 }
                 Properties.AvailabilitySetId = value;
             }

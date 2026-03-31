@@ -186,20 +186,20 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            UpgradePolicy upgradePolicy = default;
+            VirtualMachineScaleSetUpgradePolicy upgradePolicy = default;
             AutomaticRepairsPolicy automaticRepairsPolicy = default;
-            VirtualMachineScaleSetUpdateVMProfile virtualMachineProfile = default;
+            VirtualMachineScaleSetUpdateVmProfile virtualMachineProfile = default;
             bool? overprovision = default;
             bool? doNotRunExtensionsOnOverprovisionedVMs = default;
             bool? singlePlacementGroup = default;
             AdditionalCapabilities additionalCapabilities = default;
             ScaleInPolicy scaleInPolicy = default;
             SubResource proximityPlacementGroup = default;
-            PriorityMixPolicy priorityMixPolicy = default;
+            VirtualMachineScaleSetPriorityMixPolicy priorityMixPolicy = default;
             SpotRestorePolicy spotRestorePolicy = default;
             ResiliencyPolicy resiliencyPolicy = default;
             ZonalPlatformFaultDomainAlignMode? zonalPlatformFaultDomainAlignMode = default;
-            SkuProfile skuProfile = default;
+            ComputeSkuProfile skuProfile = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    upgradePolicy = UpgradePolicy.DeserializeUpgradePolicy(prop.Value, options);
+                    upgradePolicy = VirtualMachineScaleSetUpgradePolicy.DeserializeVirtualMachineScaleSetUpgradePolicy(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("automaticRepairsPolicy"u8))
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    virtualMachineProfile = VirtualMachineScaleSetUpdateVMProfile.DeserializeVirtualMachineScaleSetUpdateVMProfile(prop.Value, options);
+                    virtualMachineProfile = VirtualMachineScaleSetUpdateVmProfile.DeserializeVirtualMachineScaleSetUpdateVmProfile(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("overprovision"u8))
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    priorityMixPolicy = PriorityMixPolicy.DeserializePriorityMixPolicy(prop.Value, options);
+                    priorityMixPolicy = VirtualMachineScaleSetPriorityMixPolicy.DeserializeVirtualMachineScaleSetPriorityMixPolicy(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("spotRestorePolicy"u8))
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    skuProfile = SkuProfile.DeserializeSkuProfile(prop.Value, options);
+                    skuProfile = ComputeSkuProfile.DeserializeComputeSkuProfile(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

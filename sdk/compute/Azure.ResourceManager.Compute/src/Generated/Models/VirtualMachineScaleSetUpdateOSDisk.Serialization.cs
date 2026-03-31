@@ -166,14 +166,14 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            CachingTypes? caching = default;
+            CachingType? caching = default;
             bool? writeAcceleratorEnabled = default;
             DiffDiskSettings diffDiskSettings = default;
             int? diskSizeGB = default;
             VirtualHardDisk image = default;
             IList<string> vhdContainers = default;
             VirtualMachineScaleSetManagedDiskParameters managedDisk = default;
-            DiskDeleteOptionTypes? deleteOption = default;
+            DiskDeleteOptionType? deleteOption = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    caching = prop.Value.GetString().ToCachingTypes();
+                    caching = prop.Value.GetString().ToCachingType();
                     continue;
                 }
                 if (prop.NameEquals("writeAcceleratorEnabled"u8))
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    deleteOption = new DiskDeleteOptionTypes(prop.Value.GetString());
+                    deleteOption = new DiskDeleteOptionType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Specifies the software license type that will be applied to the VMs deployed on the dedicated host. Possible values are: <b>None,</b> <b>Windows_Server_Hybrid,</b> <b>Windows_Server_Perpetual.</b> The default value is: <b>None.</b>. </summary>
-        public DedicatedHostLicenseTypes? LicenseType
+        public DedicatedHostLicenseType? LicenseType
         {
             get
             {

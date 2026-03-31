@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="diskId"> ID of the managed data disk. </param>
         /// <param name="detachOption"> Supported options available for Detach of a disk from a VM. Refer to DetachOption object reference for more details. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataDisksToDetach(string diskId, DiskDetachOptionTypes? detachOption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataDisksToDetach(string diskId, DiskDetachOptionType? detachOption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DiskId = diskId;
             DetachOption = detachOption;
@@ -42,6 +42,6 @@ namespace Azure.ResourceManager.Compute.Models
         public string DiskId { get; }
 
         /// <summary> Supported options available for Detach of a disk from a VM. Refer to DetachOption object reference for more details. </summary>
-        public DiskDetachOptionTypes? DetachOption { get; set; }
+        public DiskDetachOptionType? DetachOption { get; set; }
     }
 }

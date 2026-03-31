@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="excludeFromLatest"> Contains the flag setting to hide an image when users specify version='latest'. </param>
         /// <param name="additionalReplicaSets"> List of storage sku with replica count to create direct drive replicas. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TargetRegion(string name, int? regionalReplicaCount, StorageAccountType? storageAccountType, EncryptionImages encryption, bool? excludeFromLatest, IList<AdditionalReplicaSet> additionalReplicaSets, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TargetRegion(string name, int? regionalReplicaCount, ImageStorageAccountType? storageAccountType, EncryptionImages encryption, bool? excludeFromLatest, IList<AdditionalReplicaSet> additionalReplicaSets, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             RegionalReplicaCount = regionalReplicaCount;
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Compute.Models
         public int? RegionalReplicaCount { get; set; }
 
         /// <summary> Specifies the storage account type to be used to store the image. This property is not updatable. </summary>
-        public StorageAccountType? StorageAccountType { get; set; }
+        public ImageStorageAccountType? StorageAccountType { get; set; }
 
         /// <summary> Optional. Allows users to provide customer managed keys for encrypting the OS and data disks in the gallery artifact. </summary>
         public EncryptionImages Encryption { get; set; }

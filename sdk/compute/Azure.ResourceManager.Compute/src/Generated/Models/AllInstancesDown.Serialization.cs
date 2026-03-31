@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 throw new FormatException($"The model {nameof(AllInstancesDown)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(AutomaticallyApprove))
+            if (Optional.IsDefined(AutomaticallyApproveAllDown))
             {
                 writer.WritePropertyName("automaticallyApprove"u8);
-                writer.WriteBooleanValue(AutomaticallyApprove.Value);
+                writer.WriteBooleanValue(AutomaticallyApproveAllDown.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            bool? automaticallyApprove = default;
+            bool? automaticallyApproveAllDown = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    automaticallyApprove = prop.Value.GetBoolean();
+                    automaticallyApproveAllDown = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Compute.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AllInstancesDown(automaticallyApprove, additionalBinaryDataProperties);
+            return new AllInstancesDown(automaticallyApproveAllDown, additionalBinaryDataProperties);
         }
     }
 }

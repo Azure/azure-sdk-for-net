@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="architecture"> Specifies the Architecture Type. </param>
         /// <param name="imageDeprecationStatus"> Describes image deprecation status properties on the image. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineImageProperties(PurchasePlan plan, OSDiskImage osDiskImage, IList<DataDiskImage> dataDiskImages, AutomaticOSUpgradeProperties automaticOSUpgradeProperties, HyperVGenerationTypes? hyperVGeneration, DisallowedConfiguration disallowed, IList<VirtualMachineImageFeature> features, ArchitectureTypes? architecture, ImageDeprecationStatus imageDeprecationStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineImageProperties(PurchasePlan plan, OSDiskImage osDiskImage, IList<DataDiskImage> dataDiskImages, AutomaticOSUpgradeProperties automaticOSUpgradeProperties, HyperVGenerationTypes? hyperVGeneration, DisallowedConfiguration disallowed, IList<VirtualMachineImageFeature> features, ArchitectureType? architecture, ImageDeprecationStatus imageDeprecationStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Plan = plan;
             OsDiskImage = osDiskImage;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Compute.Models
         public IList<VirtualMachineImageFeature> Features { get; } = new ChangeTrackingList<VirtualMachineImageFeature>();
 
         /// <summary> Specifies the Architecture Type. </summary>
-        public ArchitectureTypes? Architecture { get; }
+        public ArchitectureType? Architecture { get; }
 
         /// <summary> Describes image deprecation status properties on the image. </summary>
         public ImageDeprecationStatus ImageDeprecationStatus { get; }

@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Compute.Models
             ReplicationStatus replicationStatus = default;
             ImageVersionSecurityProfile securityProfile = default;
             bool? restore = default;
-            ValidationsProfile validationsProfile = default;
+            GalleryImageValidationsProfile validationsProfile = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    validationsProfile = ValidationsProfile.DeserializeValidationsProfile(prop.Value, options);
+                    validationsProfile = GalleryImageValidationsProfile.DeserializeGalleryImageValidationsProfile(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

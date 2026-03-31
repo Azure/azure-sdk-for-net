@@ -29,6 +29,8 @@ namespace Azure.ResourceManager.Compute
     {
         private readonly ClientDiagnostics _virtualMachineScaleSetsClientDiagnostics;
         private readonly VirtualMachineScaleSets _virtualMachineScaleSetsRestClient;
+        private readonly ClientDiagnostics _virtualMachineScaleSetsSubscriptionClientDiagnostics;
+        private readonly VirtualMachineScaleSetsSubscription _virtualMachineScaleSetsSubscriptionRestClient;
 
         /// <summary> Initializes a new instance of VirtualMachineScaleSetCollection for mocking. </summary>
         protected VirtualMachineScaleSetCollection()
@@ -43,6 +45,8 @@ namespace Azure.ResourceManager.Compute
             TryGetApiVersion(VirtualMachineScaleSetResource.ResourceType, out string virtualMachineScaleSetApiVersion);
             _virtualMachineScaleSetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", VirtualMachineScaleSetResource.ResourceType.Namespace, Diagnostics);
             _virtualMachineScaleSetsRestClient = new VirtualMachineScaleSets(_virtualMachineScaleSetsClientDiagnostics, Pipeline, Endpoint, virtualMachineScaleSetApiVersion ?? "2025-04-01");
+            _virtualMachineScaleSetsSubscriptionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", VirtualMachineScaleSetResource.ResourceType.Namespace, Diagnostics);
+            _virtualMachineScaleSetsSubscriptionRestClient = new VirtualMachineScaleSetsSubscription(_virtualMachineScaleSetsSubscriptionClientDiagnostics, Pipeline, Endpoint, virtualMachineScaleSetApiVersion ?? "2025-04-01");
             ValidateResourceId(id);
         }
 
@@ -299,7 +303,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<VirtualMachineScaleSetData, VirtualMachineScaleSetResource>(new VirtualMachineScaleSetsListAsyncCollectionResultOfT(_virtualMachineScaleSetsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new VirtualMachineScaleSetResource(Client, data));
+            return new AsyncPageableWrapper<VirtualMachineScaleSetData, VirtualMachineScaleSetResource>(new VirtualMachineScaleSetsGetAllAsyncCollectionResultOfT(_virtualMachineScaleSetsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new VirtualMachineScaleSetResource(Client, data));
         }
 
         /// <summary>
@@ -327,7 +331,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<VirtualMachineScaleSetData, VirtualMachineScaleSetResource>(new VirtualMachineScaleSetsListCollectionResultOfT(_virtualMachineScaleSetsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new VirtualMachineScaleSetResource(Client, data));
+            return new PageableWrapper<VirtualMachineScaleSetData, VirtualMachineScaleSetResource>(new VirtualMachineScaleSetsGetAllCollectionResultOfT(_virtualMachineScaleSetsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new VirtualMachineScaleSetResource(Client, data));
         }
 
         /// <summary>

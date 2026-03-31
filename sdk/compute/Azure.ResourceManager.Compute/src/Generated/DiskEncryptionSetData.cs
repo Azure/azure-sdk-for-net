@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> The error that was encountered during auto-key rotation. If an error is present, then auto-key rotation will not be attempted until the error on this disk encryption set is fixed. </summary>
-        public ApiError AutoKeyRotationError
+        public ComputeApiError AutoKeyRotationError
         {
             get
             {

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetDataDisk"/>. </summary>
         /// <param name="lun"> Specifies the logical unit number of the data disk. This value is used to identify data disks within the VM and therefore must be unique for each data disk attached to a VM. </param>
         /// <param name="createOption"> The create option. </param>
-        public VirtualMachineScaleSetDataDisk(int lun, DiskCreateOptionTypes createOption)
+        public VirtualMachineScaleSetDataDisk(int lun, DiskCreateOptionType createOption)
         {
             Lun = lun;
             CreateOption = createOption;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="diskMBpsReadWrite"> Specifies the bandwidth in MB per second for the managed disk. Should be used only when StorageAccountType is UltraSSD_LRS. If not specified, a default value would be assigned based on diskSizeGB. </param>
         /// <param name="deleteOption"> Specifies whether data disk should be deleted or detached upon VMSS Flex deletion (This feature is available for VMSS with Flexible OrchestrationMode only).&lt;br&gt;&lt;br&gt; Possible values: &lt;br&gt;&lt;br&gt; <b>Delete</b> If this value is used, the data disk is deleted when the VMSS Flex VM is deleted.&lt;br&gt;&lt;br&gt; <b>Detach</b> If this value is used, the data disk is retained after VMSS Flex VM is deleted.&lt;br&gt;&lt;br&gt; The default value is set to <b>Delete</b>. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineScaleSetDataDisk(string name, int lun, CachingTypes? caching, bool? writeAcceleratorEnabled, DiskCreateOptionTypes createOption, int? diskSizeGB, VirtualMachineScaleSetManagedDiskParameters managedDisk, long? diskIOPSReadWrite, long? diskMBpsReadWrite, DiskDeleteOptionTypes? deleteOption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineScaleSetDataDisk(string name, int lun, CachingType? caching, bool? writeAcceleratorEnabled, DiskCreateOptionType createOption, int? diskSizeGB, VirtualMachineScaleSetManagedDiskParameters managedDisk, long? diskIOPSReadWrite, long? diskMBpsReadWrite, DiskDeleteOptionType? deleteOption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Lun = lun;
@@ -59,13 +59,13 @@ namespace Azure.ResourceManager.Compute.Models
         public int Lun { get; set; }
 
         /// <summary> Specifies the caching requirements. Possible values are: <b>None,</b> <b>ReadOnly,</b> <b>ReadWrite.</b> The default values are: <b>None for Standard storage. ReadOnly for Premium storage.</b>. </summary>
-        public CachingTypes? Caching { get; set; }
+        public CachingType? Caching { get; set; }
 
         /// <summary> Specifies whether writeAccelerator should be enabled or disabled on the disk. </summary>
         public bool? WriteAcceleratorEnabled { get; set; }
 
         /// <summary> The create option. </summary>
-        public DiskCreateOptionTypes CreateOption { get; set; }
+        public DiskCreateOptionType CreateOption { get; set; }
 
         /// <summary> Specifies the size of an empty data disk in gigabytes. This element can be used to overwrite the size of the disk in a virtual machine image. The property diskSizeGB is the number of bytes x 1024^3 for the disk and the value cannot be larger than 1023. </summary>
         public int? DiskSizeGB { get; set; }
@@ -80,6 +80,6 @@ namespace Azure.ResourceManager.Compute.Models
         public long? DiskMBpsReadWrite { get; set; }
 
         /// <summary> Specifies whether data disk should be deleted or detached upon VMSS Flex deletion (This feature is available for VMSS with Flexible OrchestrationMode only).&lt;br&gt;&lt;br&gt; Possible values: &lt;br&gt;&lt;br&gt; <b>Delete</b> If this value is used, the data disk is deleted when the VMSS Flex VM is deleted.&lt;br&gt;&lt;br&gt; <b>Detach</b> If this value is used, the data disk is retained after VMSS Flex VM is deleted.&lt;br&gt;&lt;br&gt; The default value is set to <b>Delete</b>. </summary>
-        public DiskDeleteOptionTypes? DeleteOption { get; set; }
+        public DiskDeleteOptionType? DeleteOption { get; set; }
     }
 }

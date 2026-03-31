@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="availablePatches"> The list of patches that have been detected as available for installation. </param>
         /// <param name="error"> The errors that were encountered during execution of the operation. The details array contains the list of them. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineAssessPatchesResult(PatchOperationStatus? status, string assessmentActivityId, bool? rebootPending, int? criticalAndSecurityPatchCount, int? otherPatchCount, DateTimeOffset? startOn, IReadOnlyList<VirtualMachineSoftwarePatchProperties> availablePatches, ApiError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineAssessPatchesResult(PatchOperationStatus? status, string assessmentActivityId, bool? rebootPending, int? criticalAndSecurityPatchCount, int? otherPatchCount, DateTimeOffset? startOn, IReadOnlyList<VirtualMachineSoftwarePatchProperties> availablePatches, ComputeApiError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
             AssessmentActivityId = assessmentActivityId;
@@ -68,6 +68,6 @@ namespace Azure.ResourceManager.Compute.Models
         public IReadOnlyList<VirtualMachineSoftwarePatchProperties> AvailablePatches { get; }
 
         /// <summary> The errors that were encountered during execution of the operation. The details array contains the list of them. </summary>
-        public ApiError Error { get; }
+        public ComputeApiError Error { get; }
     }
 }

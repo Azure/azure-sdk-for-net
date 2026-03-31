@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetOSDisk"/>. </summary>
         /// <param name="createOption"> Specifies how the virtual machines in the scale set should be created. The only allowed value is: <b>FromImage.</b> This value is used when you are using an image to create the virtual machine. If you are using a platform image, you also use the imageReference element described above. If you are using a marketplace image, you  also use the plan element previously described. </param>
-        public VirtualMachineScaleSetOSDisk(DiskCreateOptionTypes createOption)
+        public VirtualMachineScaleSetOSDisk(DiskCreateOptionType createOption)
         {
             CreateOption = createOption;
             VhdContainers = new ChangeTrackingList<string>();
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="managedDisk"> The managed disk parameters. </param>
         /// <param name="deleteOption"> Specifies whether OS Disk should be deleted or detached upon VMSS Flex deletion (This feature is available for VMSS with Flexible OrchestrationMode only). &lt;br&gt;&lt;br&gt; Possible values: &lt;br&gt;&lt;br&gt; <b>Delete</b> If this value is used, the OS disk is deleted when VMSS Flex VM is deleted.&lt;br&gt;&lt;br&gt; <b>Detach</b> If this value is used, the OS disk is retained after VMSS Flex VM is deleted. &lt;br&gt;&lt;br&gt; The default value is set to <b>Delete</b>. For an Ephemeral OS Disk, the default value is set to <b>Delete</b>. User cannot change the delete option for Ephemeral OS Disk. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineScaleSetOSDisk(string name, CachingTypes? caching, bool? writeAcceleratorEnabled, DiskCreateOptionTypes createOption, DiffDiskSettings diffDiskSettings, int? diskSizeGB, OperatingSystemTypes? osType, VirtualHardDisk image, IList<string> vhdContainers, VirtualMachineScaleSetManagedDiskParameters managedDisk, DiskDeleteOptionTypes? deleteOption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineScaleSetOSDisk(string name, CachingType? caching, bool? writeAcceleratorEnabled, DiskCreateOptionType createOption, DiffDiskSettings diffDiskSettings, int? diskSizeGB, OperatingSystemTypes? osType, VirtualHardDisk image, IList<string> vhdContainers, VirtualMachineScaleSetManagedDiskParameters managedDisk, DiskDeleteOptionType? deleteOption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Caching = caching;
@@ -58,13 +58,13 @@ namespace Azure.ResourceManager.Compute.Models
         public string Name { get; set; }
 
         /// <summary> Specifies the caching requirements. Possible values are: <b>None,</b> <b>ReadOnly,</b> <b>ReadWrite.</b> The default values are: <b>None for Standard storage. ReadOnly for Premium storage.</b>. </summary>
-        public CachingTypes? Caching { get; set; }
+        public CachingType? Caching { get; set; }
 
         /// <summary> Specifies whether writeAccelerator should be enabled or disabled on the disk. </summary>
         public bool? WriteAcceleratorEnabled { get; set; }
 
         /// <summary> Specifies how the virtual machines in the scale set should be created. The only allowed value is: <b>FromImage.</b> This value is used when you are using an image to create the virtual machine. If you are using a platform image, you also use the imageReference element described above. If you are using a marketplace image, you  also use the plan element previously described. </summary>
-        public DiskCreateOptionTypes CreateOption { get; set; }
+        public DiskCreateOptionType CreateOption { get; set; }
 
         /// <summary> Specifies the ephemeral disk Settings for the operating system disk used by the virtual machine scale set. </summary>
         public DiffDiskSettings DiffDiskSettings { get; set; }
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Compute.Models
         public VirtualMachineScaleSetManagedDiskParameters ManagedDisk { get; set; }
 
         /// <summary> Specifies whether OS Disk should be deleted or detached upon VMSS Flex deletion (This feature is available for VMSS with Flexible OrchestrationMode only). &lt;br&gt;&lt;br&gt; Possible values: &lt;br&gt;&lt;br&gt; <b>Delete</b> If this value is used, the OS disk is deleted when VMSS Flex VM is deleted.&lt;br&gt;&lt;br&gt; <b>Detach</b> If this value is used, the OS disk is retained after VMSS Flex VM is deleted. &lt;br&gt;&lt;br&gt; The default value is set to <b>Delete</b>. For an Ephemeral OS Disk, the default value is set to <b>Delete</b>. User cannot change the delete option for Ephemeral OS Disk. </summary>
-        public DiskDeleteOptionTypes? DeleteOption { get; set; }
+        public DiskDeleteOptionType? DeleteOption { get; set; }
 
         /// <summary> Specifies the virtual hard disk's uri. </summary>
         public string ImageUri

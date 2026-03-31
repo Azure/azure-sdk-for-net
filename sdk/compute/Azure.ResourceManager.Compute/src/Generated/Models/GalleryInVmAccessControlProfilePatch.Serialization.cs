@@ -15,61 +15,61 @@ using Azure.ResourceManager.Compute;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies information about the gallery inVMAccessControlProfile that you want to update. </summary>
-    public partial class GalleryInVMAccessControlProfilePatch : UpdateResourceDefinition, IJsonModel<GalleryInVMAccessControlProfilePatch>
+    public partial class GalleryInVmAccessControlProfilePatch : UpdateResourceDefinition, IJsonModel<GalleryInVmAccessControlProfilePatch>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override UpdateResourceDefinition PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GalleryInVMAccessControlProfilePatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GalleryInVmAccessControlProfilePatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeGalleryInVMAccessControlProfilePatch(document.RootElement, options);
+                        return DeserializeGalleryInVmAccessControlProfilePatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GalleryInVMAccessControlProfilePatch)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GalleryInVmAccessControlProfilePatch)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GalleryInVMAccessControlProfilePatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GalleryInVmAccessControlProfilePatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(GalleryInVMAccessControlProfilePatch)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GalleryInVmAccessControlProfilePatch)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<GalleryInVMAccessControlProfilePatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<GalleryInVmAccessControlProfilePatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        GalleryInVMAccessControlProfilePatch IPersistableModel<GalleryInVMAccessControlProfilePatch>.Create(BinaryData data, ModelReaderWriterOptions options) => (GalleryInVMAccessControlProfilePatch)PersistableModelCreateCore(data, options);
+        GalleryInVmAccessControlProfilePatch IPersistableModel<GalleryInVmAccessControlProfilePatch>.Create(BinaryData data, ModelReaderWriterOptions options) => (GalleryInVmAccessControlProfilePatch)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<GalleryInVMAccessControlProfilePatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<GalleryInVmAccessControlProfilePatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="galleryInVMAccessControlProfilePatch"> The <see cref="GalleryInVMAccessControlProfilePatch"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(GalleryInVMAccessControlProfilePatch galleryInVMAccessControlProfilePatch)
+        /// <param name="galleryInVmAccessControlProfilePatch"> The <see cref="GalleryInVmAccessControlProfilePatch"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(GalleryInVmAccessControlProfilePatch galleryInVmAccessControlProfilePatch)
         {
-            if (galleryInVMAccessControlProfilePatch == null)
+            if (galleryInVmAccessControlProfilePatch == null)
             {
                 return null;
             }
-            return RequestContent.Create(galleryInVMAccessControlProfilePatch, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(galleryInVmAccessControlProfilePatch, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<GalleryInVMAccessControlProfilePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<GalleryInVmAccessControlProfilePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GalleryInVMAccessControlProfilePatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GalleryInVmAccessControlProfilePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GalleryInVMAccessControlProfilePatch)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(GalleryInVmAccessControlProfilePatch)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -95,24 +95,24 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        GalleryInVMAccessControlProfilePatch IJsonModel<GalleryInVMAccessControlProfilePatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (GalleryInVMAccessControlProfilePatch)JsonModelCreateCore(ref reader, options);
+        GalleryInVmAccessControlProfilePatch IJsonModel<GalleryInVmAccessControlProfilePatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (GalleryInVmAccessControlProfilePatch)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override UpdateResourceDefinition JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GalleryInVMAccessControlProfilePatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GalleryInVmAccessControlProfilePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GalleryInVMAccessControlProfilePatch)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(GalleryInVmAccessControlProfilePatch)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeGalleryInVMAccessControlProfilePatch(document.RootElement, options);
+            return DeserializeGalleryInVmAccessControlProfilePatch(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static GalleryInVMAccessControlProfilePatch DeserializeGalleryInVMAccessControlProfilePatch(JsonElement element, ModelReaderWriterOptions options)
+        internal static GalleryInVmAccessControlProfilePatch DeserializeGalleryInVmAccessControlProfilePatch(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Compute.Models
             string @type = default;
             IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            GalleryInVMAccessControlProfileProperties properties = default;
+            GalleryInVmAccessControlProfileProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    properties = GalleryInVMAccessControlProfileProperties.DeserializeGalleryInVMAccessControlProfileProperties(prop.Value, options);
+                    properties = GalleryInVmAccessControlProfileProperties.DeserializeGalleryInVmAccessControlProfileProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Compute.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new GalleryInVMAccessControlProfilePatch(
+            return new GalleryInVmAccessControlProfilePatch(
                 id,
                 name,
                 @type,

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies information about the capacity reservation. sku.capacity cannot be updated for Block Capacity Reservation. Tags can be update for all Capacity Reservation Types. </summary>
-    public partial class CapacityReservationPatch : UpdateResource
+    public partial class CapacityReservationPatch : ComputeResourcePatch
     {
         /// <summary> Initializes a new instance of <see cref="CapacityReservationPatch"/>. </summary>
         public CapacityReservationPatch()

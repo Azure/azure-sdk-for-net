@@ -16,68 +16,68 @@ using Azure.ResourceManager.Compute.Models;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary> Describes a VMSS VM Extension. </summary>
-    public partial class VirtualMachineScaleSetVMExtensionData : SubResourceReadOnly, IJsonModel<VirtualMachineScaleSetVMExtensionData>
+    public partial class VirtualMachineScaleSetVmExtensionData : SubResourceReadOnly, IJsonModel<VirtualMachineScaleSetVmExtensionData>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override SubResourceReadOnly PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetVMExtensionData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetVmExtensionData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeVirtualMachineScaleSetVMExtensionData(document.RootElement, options);
+                        return DeserializeVirtualMachineScaleSetVmExtensionData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineScaleSetVMExtensionData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineScaleSetVmExtensionData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetVMExtensionData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetVmExtensionData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineScaleSetVMExtensionData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineScaleSetVmExtensionData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<VirtualMachineScaleSetVMExtensionData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<VirtualMachineScaleSetVmExtensionData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VirtualMachineScaleSetVMExtensionData IPersistableModel<VirtualMachineScaleSetVMExtensionData>.Create(BinaryData data, ModelReaderWriterOptions options) => (VirtualMachineScaleSetVMExtensionData)PersistableModelCreateCore(data, options);
+        VirtualMachineScaleSetVmExtensionData IPersistableModel<VirtualMachineScaleSetVmExtensionData>.Create(BinaryData data, ModelReaderWriterOptions options) => (VirtualMachineScaleSetVmExtensionData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<VirtualMachineScaleSetVMExtensionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<VirtualMachineScaleSetVmExtensionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="virtualMachineScaleSetVMExtensionData"> The <see cref="VirtualMachineScaleSetVMExtensionData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(VirtualMachineScaleSetVMExtensionData virtualMachineScaleSetVMExtensionData)
+        /// <param name="virtualMachineScaleSetVmExtensionData"> The <see cref="VirtualMachineScaleSetVmExtensionData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(VirtualMachineScaleSetVmExtensionData virtualMachineScaleSetVmExtensionData)
         {
-            if (virtualMachineScaleSetVMExtensionData == null)
+            if (virtualMachineScaleSetVmExtensionData == null)
             {
                 return null;
             }
-            return RequestContent.Create(virtualMachineScaleSetVMExtensionData, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(virtualMachineScaleSetVmExtensionData, ModelSerializationExtensions.WireOptions);
         }
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="VirtualMachineScaleSetVMExtensionData"/> from. </param>
-        internal static VirtualMachineScaleSetVMExtensionData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="VirtualMachineScaleSetVmExtensionData"/> from. </param>
+        internal static VirtualMachineScaleSetVmExtensionData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeVirtualMachineScaleSetVMExtensionData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeVirtualMachineScaleSetVmExtensionData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<VirtualMachineScaleSetVMExtensionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<VirtualMachineScaleSetVmExtensionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -88,10 +88,10 @@ namespace Azure.ResourceManager.Compute
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetVMExtensionData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetVmExtensionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineScaleSetVMExtensionData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineScaleSetVmExtensionData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -118,24 +118,24 @@ namespace Azure.ResourceManager.Compute
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VirtualMachineScaleSetVMExtensionData IJsonModel<VirtualMachineScaleSetVMExtensionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (VirtualMachineScaleSetVMExtensionData)JsonModelCreateCore(ref reader, options);
+        VirtualMachineScaleSetVmExtensionData IJsonModel<VirtualMachineScaleSetVmExtensionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (VirtualMachineScaleSetVmExtensionData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override SubResourceReadOnly JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetVMExtensionData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetVmExtensionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineScaleSetVMExtensionData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineScaleSetVmExtensionData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeVirtualMachineScaleSetVMExtensionData(document.RootElement, options);
+            return DeserializeVirtualMachineScaleSetVmExtensionData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static VirtualMachineScaleSetVMExtensionData DeserializeVirtualMachineScaleSetVMExtensionData(JsonElement element, ModelReaderWriterOptions options)
+        internal static VirtualMachineScaleSetVmExtensionData DeserializeVirtualMachineScaleSetVmExtensionData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Compute
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new VirtualMachineScaleSetVMExtensionData(
+            return new VirtualMachineScaleSetVmExtensionData(
                 id,
                 additionalBinaryDataProperties,
                 properties,

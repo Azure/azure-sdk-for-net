@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (VirtualMachineImageResource item in Value)
+                foreach (VirtualMachineImageBase item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            IList<VirtualMachineImageResource> value = default;
+            IList<VirtualMachineImageBase> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -150,10 +150,10 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    List<VirtualMachineImageResource> array = new List<VirtualMachineImageResource>();
+                    List<VirtualMachineImageBase> array = new List<VirtualMachineImageBase>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(VirtualMachineImageResource.DeserializeVirtualMachineImageResource(item, options));
+                        array.Add(VirtualMachineImageBase.DeserializeVirtualMachineImageBase(item, options));
                     }
                     value = array;
                     continue;
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Compute.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new VmImagesInEdgeZoneListResult(value ?? new ChangeTrackingList<VirtualMachineImageResource>(), nextLink, additionalBinaryDataProperties);
+            return new VmImagesInEdgeZoneListResult(value ?? new ChangeTrackingList<VirtualMachineImageBase>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

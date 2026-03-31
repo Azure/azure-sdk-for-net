@@ -13,14 +13,14 @@ using Azure.ResourceManager.Compute.Models;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary> Describes a VMSS VM Extension. </summary>
-    public partial class VirtualMachineScaleSetVMExtensionData : SubResourceReadOnly
+    public partial class VirtualMachineScaleSetVmExtensionData : SubResourceReadOnly
     {
-        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetVMExtensionData"/>. </summary>
-        public VirtualMachineScaleSetVMExtensionData()
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetVmExtensionData"/>. </summary>
+        public VirtualMachineScaleSetVmExtensionData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetVMExtensionData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetVmExtensionData"/>. </summary>
         /// <param name="id"> Resource Id. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Describes the properties of a Virtual Machine Extension. </param>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="type"> Resource type. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="vmssExtensionName"> The name of the virtual machine extension. </param>
-        internal VirtualMachineScaleSetVMExtensionData(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, VirtualMachineExtensionProperties properties, string parentName, string location, string @type, string name, string vmssExtensionName) : base(id, additionalBinaryDataProperties)
+        internal VirtualMachineScaleSetVmExtensionData(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, VirtualMachineExtensionProperties properties, string parentName, string location, string @type, string name, string vmssExtensionName) : base(id, additionalBinaryDataProperties)
         {
             Properties = properties;
             ParentName = parentName;
@@ -92,11 +92,11 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Specifies the type of the extension; an example is "CustomScriptExtension". </summary>
-        public string Type
+        public string ExtensionType
         {
             get
             {
-                return Properties is null ? default : Properties.Type;
+                return Properties is null ? default : Properties.ExtensionType;
             }
             set
             {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     Properties = new VirtualMachineExtensionProperties();
                 }
-                Properties.Type = value;
+                Properties.ExtensionType = value;
             }
         }
 

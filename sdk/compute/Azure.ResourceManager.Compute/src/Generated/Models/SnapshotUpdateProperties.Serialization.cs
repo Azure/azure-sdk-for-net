@@ -173,12 +173,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
             OperatingSystemTypes? osType = default;
             int? diskSizeGB = default;
-            EncryptionSettingsCollection encryptionSettingsCollection = default;
-            Encryption encryption = default;
+            EncryptionSettingsGroup encryptionSettingsCollection = default;
+            DiskEncryption encryption = default;
             NetworkAccessPolicy? networkAccessPolicy = default;
             string diskAccessId = default;
             bool? supportsHibernation = default;
-            PublicNetworkAccess? publicNetworkAccess = default;
+            DiskPublicNetworkAccess? publicNetworkAccess = default;
             DataAccessAuthMode? dataAccessAuthMode = default;
             SupportedCapabilities supportedCapabilities = default;
             SnapshotAccessState? snapshotAccessState = default;
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    encryptionSettingsCollection = EncryptionSettingsCollection.DeserializeEncryptionSettingsCollection(prop.Value, options);
+                    encryptionSettingsCollection = EncryptionSettingsGroup.DeserializeEncryptionSettingsGroup(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("encryption"u8))
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    encryption = Encryption.DeserializeEncryption(prop.Value, options);
+                    encryption = DiskEncryption.DeserializeDiskEncryption(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("networkAccessPolicy"u8))
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    publicNetworkAccess = new PublicNetworkAccess(prop.Value.GetString());
+                    publicNetworkAccess = new DiskPublicNetworkAccess(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("dataAccessAuthMode"u8))

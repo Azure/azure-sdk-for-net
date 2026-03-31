@@ -12,27 +12,27 @@ using Azure.ResourceManager.Compute;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The List VMSS VM Extension operation response. </summary>
-    public partial class VirtualMachineScaleSetVMExtensionsListResult
+    public partial class VirtualMachineScaleSetVmExtensionsListResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetVMExtensionsListResult"/>. </summary>
-        internal VirtualMachineScaleSetVMExtensionsListResult()
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetVmExtensionsListResult"/>. </summary>
+        internal VirtualMachineScaleSetVmExtensionsListResult()
         {
-            Value = new ChangeTrackingList<VirtualMachineScaleSetVMExtensionData>();
+            Value = new ChangeTrackingList<VirtualMachineScaleSetVmExtensionData>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetVMExtensionsListResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetVmExtensionsListResult"/>. </summary>
         /// <param name="value"> The list of VMSS VM extensions. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineScaleSetVMExtensionsListResult(IList<VirtualMachineScaleSetVMExtensionData> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineScaleSetVmExtensionsListResult(IList<VirtualMachineScaleSetVmExtensionData> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The list of VMSS VM extensions. </summary>
-        public IList<VirtualMachineScaleSetVMExtensionData> Value { get; }
+        public IList<VirtualMachineScaleSetVmExtensionData> Value { get; }
     }
 }

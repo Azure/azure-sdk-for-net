@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 writer.WritePropertyName("allocatableVMs"u8);
                 writer.WriteStartArray();
-                foreach (DedicatedHostAllocatableVM item in AllocatableVMs)
+                foreach (DedicatedHostAllocatableVm item in AllocatableVMs)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            IList<DedicatedHostAllocatableVM> allocatableVMs = default;
+            IList<DedicatedHostAllocatableVm> allocatableVMs = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -136,10 +136,10 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    List<DedicatedHostAllocatableVM> array = new List<DedicatedHostAllocatableVM>();
+                    List<DedicatedHostAllocatableVm> array = new List<DedicatedHostAllocatableVm>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(DedicatedHostAllocatableVM.DeserializeDedicatedHostAllocatableVM(item, options));
+                        array.Add(DedicatedHostAllocatableVm.DeserializeDedicatedHostAllocatableVm(item, options));
                     }
                     allocatableVMs = array;
                     continue;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Compute.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DedicatedHostAvailableCapacity(allocatableVMs ?? new ChangeTrackingList<DedicatedHostAllocatableVM>(), additionalBinaryDataProperties);
+            return new DedicatedHostAvailableCapacity(allocatableVMs ?? new ChangeTrackingList<DedicatedHostAllocatableVm>(), additionalBinaryDataProperties);
         }
     }
 }

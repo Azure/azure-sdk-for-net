@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> ConsistencyMode of the RestorePoint. Can be specified in the input while creating a restore point. For now, only CrashConsistent is accepted as a valid input. Please refer to https://aka.ms/RestorePoints for more details. </summary>
-        public ConsistencyModeTypes? ConsistencyMode
+        public ConsistencyModeType? ConsistencyMode
         {
             get
             {

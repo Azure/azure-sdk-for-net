@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetInstanceView"/>. </summary>
         internal VirtualMachineScaleSetInstanceView()
         {
-            Extensions = new ChangeTrackingList<VirtualMachineScaleSetVMExtensionsSummary>();
+            Extensions = new ChangeTrackingList<VirtualMachineScaleSetVmExtensionsSummary>();
             Statuses = new ChangeTrackingList<InstanceViewStatus>();
             OrchestrationServices = new ChangeTrackingList<OrchestrationServiceSummary>();
         }
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="statuses"> The resource status information. </param>
         /// <param name="orchestrationServices"> The orchestration services information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineScaleSetInstanceView(VirtualMachineScaleSetInstanceViewStatusesSummary virtualMachine, IReadOnlyList<VirtualMachineScaleSetVMExtensionsSummary> extensions, IReadOnlyList<InstanceViewStatus> statuses, IReadOnlyList<OrchestrationServiceSummary> orchestrationServices, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineScaleSetInstanceView(VirtualMachineScaleSetInstanceViewStatusesSummary virtualMachine, IReadOnlyList<VirtualMachineScaleSetVmExtensionsSummary> extensions, IReadOnlyList<InstanceViewStatus> statuses, IReadOnlyList<OrchestrationServiceSummary> orchestrationServices, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VirtualMachine = virtualMachine;
             Extensions = extensions;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Compute.Models
         internal VirtualMachineScaleSetInstanceViewStatusesSummary VirtualMachine { get; }
 
         /// <summary> The extensions information. </summary>
-        public IReadOnlyList<VirtualMachineScaleSetVMExtensionsSummary> Extensions { get; }
+        public IReadOnlyList<VirtualMachineScaleSetVmExtensionsSummary> Extensions { get; }
 
         /// <summary> The resource status information. </summary>
         public IReadOnlyList<InstanceViewStatus> Statuses { get; }

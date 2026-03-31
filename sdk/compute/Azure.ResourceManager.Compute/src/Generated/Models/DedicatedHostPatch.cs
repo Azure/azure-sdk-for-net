@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies information about the dedicated host. Only tags, autoReplaceOnFailure and licenseType may be updated. </summary>
-    public partial class DedicatedHostPatch : UpdateResource
+    public partial class DedicatedHostPatch : ComputeResourcePatch
     {
         /// <summary> Initializes a new instance of <see cref="DedicatedHostPatch"/>. </summary>
         public DedicatedHostPatch()
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Specifies the software license type that will be applied to the VMs deployed on the dedicated host. Possible values are: <b>None,</b> <b>Windows_Server_Hybrid,</b> <b>Windows_Server_Perpetual.</b> The default value is: <b>None.</b>. </summary>
-        public DedicatedHostLicenseTypes? LicenseType
+        public DedicatedHostLicenseType? LicenseType
         {
             get
             {

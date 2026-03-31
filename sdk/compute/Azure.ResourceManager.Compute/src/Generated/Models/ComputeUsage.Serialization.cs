@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Compute.Models
             string unit = default;
             int currentValue = default;
             long limit = default;
-            UsageName name = default;
+            ComputeUsageName name = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (prop.NameEquals("name"u8))
                 {
-                    name = UsageName.DeserializeUsageName(prop.Value, options);
+                    name = ComputeUsageName.DeserializeComputeUsageName(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
