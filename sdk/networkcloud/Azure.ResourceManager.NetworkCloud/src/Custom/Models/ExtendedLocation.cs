@@ -6,6 +6,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text.Json;
 using Azure.Core;
 
@@ -32,6 +33,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     // types, and IJsonModel serialization) to avoid breaking changes for existing consumers.
 
     /// <summary> The complex type of the extended location. </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("This type is obsolete and will be removed in a future release. Please use Azure.ResourceManager.Resources.Models.ExtendedLocation instead.", false)]
     public partial class ExtendedLocation : IUtf8JsonSerializable, IJsonModel<ExtendedLocation>
     {
         /// <summary>
