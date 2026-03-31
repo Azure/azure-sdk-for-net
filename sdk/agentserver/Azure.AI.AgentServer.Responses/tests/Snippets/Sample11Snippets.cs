@@ -16,7 +16,7 @@ using OpenAI.Responses;
 namespace Azure.AI.AgentServer.Responses.Tests.Snippets
 {
     /// <summary>
-    /// Code snippets backing Sample11_NonStreamingOpenAIProxy.md. Compiled to prevent rot.
+    /// Code snippets backing Sample11_NonStreamingOpenAIUpstream.md. Compiled to prevent rot.
     /// </summary>
     [TestFixture]
     [Explicit("Snippets are compiled to prevent rot but require a running server to execute.")]
@@ -26,7 +26,7 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
         public void StartServer()
         {
             #region Snippet:Responses_Sample11_StartServer
-            ResponsesServer.Run<NonStreamingProxyHandler>(configure: builder =>
+            ResponsesServer.Run<NonStreamingUpstreamHandler>(configure: builder =>
             {
                 builder.Services.AddSingleton(new ResponsesClient(
                     new ApiKeyCredential(
@@ -42,18 +42,18 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
         }
 
         [Test]
-        public void Implement_NonStreamingProxyHandler()
+        public void Implement_NonStreamingUpstreamHandler()
         {
-            var handler = new NonStreamingProxyHandler(new ResponsesClient("test-key"));
+            var handler = new NonStreamingUpstreamHandler(new ResponsesClient("test-key"));
             Assert.That(handler, Is.Not.Null);
         }
 
-        #region Snippet:Responses_Sample11_NonStreamingProxyHandler
-        public class NonStreamingProxyHandler : ResponseHandler
+        #region Snippet:Responses_Sample11_NonStreamingUpstreamHandler
+        public class NonStreamingUpstreamHandler : ResponseHandler
         {
             private readonly ResponsesClient _upstream;
 
-            public NonStreamingProxyHandler(ResponsesClient upstream) => _upstream = upstream;
+            public NonStreamingUpstreamHandler(ResponsesClient upstream) => _upstream = upstream;
 
             public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
                 CreateResponse request,

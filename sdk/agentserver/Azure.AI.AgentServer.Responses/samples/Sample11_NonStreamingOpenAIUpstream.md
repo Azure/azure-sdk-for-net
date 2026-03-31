@@ -1,8 +1,12 @@
-# Sample 11: Non-Streaming OpenAI Proxy — Call upstream and build event stream
+# Sample 11: Non-Streaming Upstream Integration — Call upstream and build event stream
 
-This sample shows how to implement a `ResponseHandler` that acts as a **non-streaming proxy**: it calls an upstream [OpenAI-compatible responses server](https://platform.openai.com/docs/api-reference/responses) using the [OpenAI .NET SDK](https://github.com/openai/openai-dotnet), waits for the complete response, and translates every output item back into a standard SSE event stream for the client.
+This sample shows how to implement a `ResponseHandler` that integrates with an upstream [OpenAI-compatible responses server](https://platform.openai.com/docs/api-reference/responses) using the [OpenAI .NET SDK](https://github.com/openai/openai-dotnet). The handler calls the upstream without streaming, waits for the complete response, and uses the builder API to construct output items for the client.
 
-All item types (messages, function calls, reasoning, file search, etc.) are preserved with full fidelity using the built-in `.Translate().To<T>()` helper:
+This pattern is useful when your handler needs to inspect or transform the full response before streaming it to the client — for example, filtering output items, injecting additional context, or calling multiple upstreams.
+
+> **Conversation ID isolation.** If you use conversation IDs (`previous_response_id`) to maintain conversation state, use a **different** conversation ID for the upstream call than the one your client uses. Both servers persist conversation history, and sharing the same ID can cause duplicate messages or state conflicts.
+
+All item types (messages, function calls, reasoning, file search, etc.) are translated using the built-in `.Translate().To<T>()` helper:
 
 ```csharp
 // Our Item → OpenAI ResponseItem (input)
@@ -11,8 +15,6 @@ options.InputItems.Add(item.Translate().To<ResponseItem>());
 // OpenAI ResponseItem → our OutputItem (output)
 OutputItem outputItem = upstreamItem.Translate().To<OutputItem>();
 ```
-
-This pattern is useful when your handler needs to inspect or transform the full response before streaming it to the client.
 
 ## Prerequisites
 
@@ -23,12 +25,14 @@ dotnet add package OpenAI
 
 ## Implement the handler
 
-```C# Snippet:Responses_Sample11_NonStreamingProxyHandler
-public class NonStreamingProxyHandler : ResponseHandler
+The handler calls the upstream without streaming, then iterates over the output items and uses the generic `AddOutputItem<T>()` builder to emit `output_item.added` / `output_item.done` pairs for each. Add orchestration logic (filtering, transformation, enrichment) between the upstream call and the output loop.
+
+```C# Snippet:Responses_Sample11_NonStreamingUpstreamHandler
+public class NonStreamingUpstreamHandler : ResponseHandler
 {
     private readonly ResponsesClient _upstream;
 
-    public NonStreamingProxyHandler(ResponsesClient upstream) => _upstream = upstream;
+    public NonStreamingUpstreamHandler(ResponsesClient upstream) => _upstream = upstream;
 
     public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
         CreateResponse request,
@@ -76,7 +80,7 @@ public class NonStreamingProxyHandler : ResponseHandler
 ## Start the server
 
 ```C# Snippet:Responses_Sample11_StartServer
-ResponsesServer.Run<NonStreamingProxyHandler>(configure: builder =>
+ResponsesServer.Run<NonStreamingUpstreamHandler>(configure: builder =>
 {
     builder.Services.AddSingleton(new ResponsesClient(
         new ApiKeyCredential(

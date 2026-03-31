@@ -16,6 +16,9 @@ using NUnit.Framework;
 using OpenAI;
 using OpenAI.Responses;
 
+using AzureMessageRole = Azure.AI.AgentServer.Responses.Models.MessageRole;
+using SdkResponseStatus = OpenAI.Responses.ResponseStatus;
+
 namespace Azure.AI.AgentServer.Responses.Tests;
 
 /// <summary>
@@ -29,6 +32,15 @@ namespace Azure.AI.AgentServer.Responses.Tests;
 /// <see cref="WireFormatExtensions.Translate{T}"/>, and streams back to the test.
 /// Tests use properly-structured input items (type=message with role/content) to
 /// exercise the full validation pipeline, including the ItemMessageValidator.
+///
+/// The <see cref="UpstreamIntegration_MultiOutputItem_AllRoundTrip"/> and related
+/// tests validate the upstream-integration pattern (Sample 10) where:
+///
+///   OpenAI SDK client ──▶ Server A (handler) ──▶ Server B (rich backend)
+///
+/// Server B emits a multi-output stream (function call + text message).
+/// Server A uses the builder API to construct output items from the upstream
+/// streaming deltas — the same pattern shown in Sample 10.
 /// </summary>
 [TestFixture]
 public class OpenAIProxyEndToEndTests
@@ -389,5 +401,465 @@ public class OpenAIProxyEndToEndTests
 
             return Task.FromResult(httpResponse);
         }
+    }
+
+    // ═══════════════════════════════════════════════════════════════════
+    //  Upstream integration: Server A ──▶ Server B (real TestServer)
+    //  Same pattern as Sample 10 — translate events, stamp response ID.
+    // ═══════════════════════════════════════════════════════════════════
+
+    /// <summary>
+    /// Full end-to-end: OpenAI SDK → Server A (upstream handler) → Server B (multi-output backend).
+    /// Verifies that all three output items (reasoning + function call + message)
+    /// arrive at the client with correct types and content.
+    /// </summary>
+    [Test]
+    public async Task UpstreamIntegration_MultiOutputItem_AllRoundTrip()
+    {
+        using var serverB = CreateServerB(EmitMultiOutput);
+        var serverBClient = serverB.CreateClient();
+
+        using var serverA = CreateServerAUpstream(serverBClient);
+        var sdkClient = CreateSdkClient(serverA);
+
+        var opts = new CreateResponseOptions { Model = "test-model" };
+        opts.InputItems.Add(ResponseItem.CreateUserMessageItem(
+            [ResponseContentPart.CreateInputTextPart("What's the weather?")]));
+
+        var result = await sdkClient.CreateResponseAsync(opts);
+
+        // 3 output items: reasoning, function call, message
+        Assert.That(result.Value.OutputItems, Has.Count.EqualTo(3));
+        XAssert.IsAssignableFrom<ReasoningResponseItem>(result.Value.OutputItems[0]);
+
+        var fc = XAssert.IsAssignableFrom<FunctionCallResponseItem>(result.Value.OutputItems[1]);
+        Assert.That(fc.FunctionName, Is.EqualTo("get_weather"));
+        Assert.That(fc.CallId, Is.EqualTo("call_proxy_001"));
+        Assert.That(fc.FunctionArguments.ToString(), Is.EqualTo("""{"city":"Seattle"}"""));
+
+        var msg = XAssert.IsAssignableFrom<MessageResponseItem>(result.Value.OutputItems[2]);
+        Assert.That(msg.Content[0].Text, Is.EqualTo("The answer is 42."));
+
+        Assert.That(result.Value.Status, Is.EqualTo(SdkResponseStatus.Completed));
+    }
+
+    /// <summary>
+    /// Streaming variant: verifies that all streaming updates (deltas, added/done)
+    /// from multiple output types arrive through the upstream integration chain.
+    /// </summary>
+    [Test]
+    public async Task UpstreamIntegration_MultiOutputItem_Streaming_AllRoundTrip()
+    {
+        using var serverB = CreateServerB(EmitMultiOutput);
+        var serverBClient = serverB.CreateClient();
+
+        using var serverA = CreateServerAUpstream(serverBClient);
+        var sdkClient = CreateSdkClient(serverA);
+
+        var opts = new CreateResponseOptions { Model = "test-model", StreamingEnabled = true };
+        opts.InputItems.Add(ResponseItem.CreateUserMessageItem(
+            [ResponseContentPart.CreateInputTextPart("What's the weather?")]));
+
+        var updates = new List<StreamingResponseUpdate>();
+        await foreach (var update in sdkClient.CreateResponseStreamingAsync(opts))
+        {
+            updates.Add(update);
+        }
+
+        // output_item.added for reasoning, function_call, message
+        var addedUpdates = updates.OfType<StreamingResponseOutputItemAddedUpdate>().ToList();
+        Assert.That(addedUpdates, Has.Count.EqualTo(3));
+
+        // output_item.done for all three
+        var doneUpdates = updates.OfType<StreamingResponseOutputItemDoneUpdate>().ToList();
+        Assert.That(doneUpdates, Has.Count.EqualTo(3));
+
+        // Reasoning summary deltas
+        var reasoningDeltas = updates.OfType<StreamingResponseReasoningSummaryTextDeltaUpdate>().ToList();
+        Assert.That(reasoningDeltas, Has.Count.GreaterThan(0));
+
+        // Function call argument deltas
+        var argDeltas = updates.OfType<StreamingResponseFunctionCallArgumentsDeltaUpdate>().ToList();
+        Assert.That(argDeltas, Has.Count.GreaterThan(0));
+
+        // Text deltas
+        var textDeltas = updates.OfType<StreamingResponseOutputTextDeltaUpdate>().ToList();
+        var fullText = string.Join("", textDeltas.Select(d => d.Delta));
+        Assert.That(fullText, Is.EqualTo("The answer is 42."));
+
+        // Terminal
+        var completed = updates.OfType<StreamingResponseCompletedUpdate>().ToList();
+        Assert.That(completed, Has.Count.EqualTo(1));
+    }
+
+    /// <summary>
+    /// Verifies that input items from the client are forwarded correctly
+    /// through the upstream handler to the backend. Server B captures the
+    /// request and asserts on it.
+    /// </summary>
+    [Test]
+    public async Task UpstreamIntegration_InputItems_ForwardedToBackend()
+    {
+        CreateResponse? capturedRequest = null;
+        var backendHandler = new TestHandler
+        {
+            EventFactory = (req, ctx, ct) =>
+            {
+                capturedRequest = req;
+                return EmitTextOnly("ok")(req, ctx, ct);
+            }
+        };
+
+        using var serverB = new TestWebApplicationFactory(backendHandler);
+        var serverBClient = serverB.CreateClient();
+
+        using var serverA = CreateServerAUpstream(serverBClient);
+        var sdkClient = CreateSdkClient(serverA);
+
+        var opts = new CreateResponseOptions
+        {
+            Model = "gpt-4o",
+            Instructions = "Be helpful",
+        };
+        opts.InputItems.Add(ResponseItem.CreateUserMessageItem(
+            [ResponseContentPart.CreateInputTextPart("Hello from the proxy test")]));
+        opts.InputItems.Add(ResponseItem.CreateFunctionCallItem("call_input_001", "get_data",
+            BinaryData.FromString("""{"query":"test"}""")));
+        opts.InputItems.Add(ResponseItem.CreateFunctionCallOutputItem("call_input_001", "result: 42"));
+
+        await sdkClient.CreateResponseAsync(opts);
+
+        Assert.That(capturedRequest, Is.Not.Null);
+        var items = capturedRequest!.GetInputExpanded();
+        Assert.That(items, Has.Count.EqualTo(3));
+
+        // Verify the message came through
+        var msg = XAssert.IsType<ItemMessage>(items[0]);
+        Assert.That(msg.Role, Is.EqualTo(AzureMessageRole.User));
+
+        // Verify function call came through
+        var fc = XAssert.IsType<ItemFunctionToolCall>(items[1]);
+        Assert.That(fc.Name, Is.EqualTo("get_data"));
+        Assert.That(fc.CallId, Is.EqualTo("call_input_001"));
+
+        // Verify function call output came through
+        var fco = XAssert.IsType<FunctionCallOutputItemParam>(items[2]);
+        Assert.That(fco.CallId, Is.EqualTo("call_input_001"));
+        Assert.That(fco.Output.ToString(), Is.EqualTo("\"result: 42\""));
+    }
+
+    /// <summary>
+    /// Verifies that when the upstream (Server B) fails, the handler
+    /// propagates the failure to the client.
+    /// </summary>
+    [Test]
+    public async Task UpstreamIntegration_UpstreamFailed_PropagatesFailure()
+    {
+        using var serverB = CreateServerB(EmitFailed);
+        var serverBClient = serverB.CreateClient();
+
+        using var serverA = CreateServerAUpstream(serverBClient);
+        var client = serverA.CreateClient();
+
+        var json = """
+            {
+                "model": "test-model",
+                "input": [
+                    {
+                        "type": "message",
+                        "role": "user",
+                        "content": [{ "type": "input_text", "text": "trigger failure" }]
+                    }
+                ],
+                "stream": true
+            }
+            """;
+        var response = await client.PostAsync("/responses", new StringContent(json, Encoding.UTF8, "application/json"));
+        response.EnsureSuccessStatusCode();
+
+        var body = await response.Content.ReadAsStringAsync();
+        var events = SseParser.Parse(body);
+
+        var failedEvent = events.FirstOrDefault(e => e.EventType == "response.failed");
+        Assert.That(failedEvent, Is.Not.Null, "Expected a response.failed event");
+
+        using var doc = JsonDocument.Parse(failedEvent!.Data);
+        var responseObj = doc.RootElement.GetProperty("response");
+        Assert.That(responseObj.GetProperty("status").GetString(), Is.EqualTo("failed"));
+
+        var completedEvent = events.FirstOrDefault(e => e.EventType == "response.completed");
+        Assert.That(completedEvent, Is.Null, "Should not have response.completed when upstream failed");
+    }
+
+    /// <summary>
+    /// Verifies that Server A stamps its own response ID on all events.
+    /// The upstream's response ID must not leak through.
+    /// </summary>
+    [Test]
+    public async Task UpstreamIntegration_ResponseIds_AreIndependent()
+    {
+        using var serverB = CreateServerB(EmitMultiOutput);
+        var serverBClient = serverB.CreateClient();
+
+        using var serverA = CreateServerAUpstream(serverBClient);
+        var client = serverA.CreateClient();
+
+        var json = """
+            {
+                "model": "test-model",
+                "input": [
+                    {
+                        "type": "message",
+                        "role": "user",
+                        "content": [{ "type": "input_text", "text": "test" }]
+                    }
+                ],
+                "stream": true
+            }
+            """;
+        var response = await client.PostAsync("/responses", new StringContent(json, Encoding.UTF8, "application/json"));
+        response.EnsureSuccessStatusCode();
+
+        var body = await response.Content.ReadAsStringAsync();
+        var events = SseParser.Parse(body);
+
+        // response.created carries Server A's response ID (caresp_ prefix)
+        var createdEvent = events.First(e => e.EventType == "response.created");
+        using var createdDoc = JsonDocument.Parse(createdEvent.Data);
+        var serverAId = createdDoc.RootElement.GetProperty("response").GetProperty("id").GetString();
+
+        Assert.That(serverAId, Is.Not.Null.And.Not.Empty);
+        Assert.That(serverAId, Does.StartWith("caresp_"));
+
+        // response.completed should carry the same ID
+        var completedEvent = events.First(e => e.EventType == "response.completed");
+        using var completedDoc = JsonDocument.Parse(completedEvent.Data);
+        var completedId = completedDoc.RootElement.GetProperty("response").GetProperty("id").GetString();
+        Assert.That(completedId, Is.EqualTo(serverAId));
+
+        // output_item.added events should carry Server A's response ID (auto-stamped)
+        var itemAddedEvents = events.Where(e => e.EventType == "response.output_item.added").ToList();
+        foreach (var evt in itemAddedEvents)
+        {
+            using var itemDoc = JsonDocument.Parse(evt.Data);
+            if (itemDoc.RootElement.TryGetProperty("item", out var item) &&
+                item.TryGetProperty("response_id", out var rid))
+            {
+                Assert.That(rid.GetString(), Is.EqualTo(serverAId),
+                    "Output item response_id should match Server A's ID, not Server B's");
+            }
+        }
+    }
+
+    // ── Upstream integration infrastructure ──
+
+    private static TestWebApplicationFactory CreateServerB(
+        Func<CreateResponse, ResponseContext, CancellationToken, IAsyncEnumerable<ResponseStreamEvent>> eventFactory)
+    {
+        return new TestWebApplicationFactory(new TestHandler { EventFactory = eventFactory });
+    }
+
+    /// <summary>
+    /// Creates Server A — uses the <see cref="UpstreamIntegrationHandler"/>
+    /// (same pattern as Sample 10) to forward requests to Server B.
+    /// </summary>
+    private static TestWebApplicationFactory CreateServerAUpstream(HttpClient serverBClient)
+    {
+        return new TestWebApplicationFactory(
+            configureTestServices: services =>
+            {
+                var upstream = new ResponsesClient(
+                    new ApiKeyCredential("unused-key"),
+                    new OpenAIClientOptions
+                    {
+                        Endpoint = new Uri("http://server-b"),
+                        Transport = new HttpClientPipelineTransport(serverBClient),
+                    });
+                services.AddSingleton(upstream);
+                services.AddSingleton<ResponseHandler, UpstreamIntegrationHandler>();
+            });
+    }
+
+    private static ResponsesClient CreateSdkClient(TestWebApplicationFactory factory)
+    {
+        var httpClient = factory.CreateClient();
+        return new ResponsesClient(
+            new ApiKeyCredential("test-key"),
+            new OpenAIClientOptions
+            {
+                Endpoint = new Uri("http://localhost"),
+                Transport = new HttpClientPipelineTransport(httpClient),
+            });
+    }
+
+    // ── Upstream integration handler (mirrors Sample 10) ──
+
+    /// <summary>
+    /// Translates upstream content events via ser/deser while owning the
+    /// response lifecycle. Same pattern as Sample 10.
+    /// </summary>
+    private sealed class UpstreamIntegrationHandler : ResponseHandler
+    {
+        private readonly ResponsesClient _upstream;
+        public UpstreamIntegrationHandler(ResponsesClient upstream) => _upstream = upstream;
+
+        public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
+            CreateResponse request,
+            ResponseContext context,
+            [EnumeratorCancellation] CancellationToken cancellationToken)
+        {
+            var options = new CreateResponseOptions
+            {
+                Model = request.Model,
+                Instructions = request.Instructions,
+                StreamingEnabled = true,
+            };
+
+            foreach (Item item in request.GetInputExpanded())
+            {
+                options.InputItems.Add(item.Translate().To<ResponseItem>());
+            }
+
+            // Own the lifecycle — construct events directly.
+            int seq = 0;
+            var conversationId = request.GetConversationId();
+            var response = new Models.ResponseObject(context.ResponseId, request.Model ?? "")
+            {
+                Status = Models.ResponseStatus.InProgress,
+                Metadata = request.Metadata!,
+                AgentReference = request.AgentReference,
+                Background = request.Background,
+                Conversation = conversationId != null
+                    ? new Models.ConversationReference(conversationId) : null,
+                PreviousResponseId = request.PreviousResponseId,
+            };
+            yield return new ResponseCreatedEvent(seq++, response);
+            yield return new ResponseInProgressEvent(seq++, response);
+
+            // Translate content events from upstream, skip lifecycle events.
+            var outputItems = new List<Models.OutputItem>();
+            bool upstreamFailed = false;
+
+            await foreach (StreamingResponseUpdate update in
+                _upstream.CreateResponseStreamingAsync(options, cancellationToken))
+            {
+                if (update is StreamingResponseCreatedUpdate
+                    or StreamingResponseInProgressUpdate)
+                    continue;
+
+                if (update is StreamingResponseCompletedUpdate)
+                    break;
+
+                if (update is StreamingResponseFailedUpdate)
+                {
+                    upstreamFailed = true;
+                    break;
+                }
+
+                ResponseStreamEvent evt = update.Translate().To<ResponseStreamEvent>();
+
+                // Clear upstream response_id so auto-stamp fills ours.
+                if (evt is ResponseOutputItemAddedEvent added)
+                    added.Item.ResponseId = null;
+                else if (evt is ResponseOutputItemDoneEvent done)
+                {
+                    done.Item.ResponseId = null;
+                    outputItems.Add(done.Item);
+                }
+
+                yield return evt;
+            }
+
+            if (upstreamFailed)
+            {
+                response.Status = Models.ResponseStatus.Failed;
+                response.Error = new Models.ResponseErrorInfo(
+                    Models.ResponseErrorCode.ServerError, "Upstream request failed");
+                yield return new ResponseFailedEvent(seq++, response);
+            }
+            else
+            {
+                response.Status = Models.ResponseStatus.Completed;
+                foreach (var item in outputItems)
+                    response.Output.Add(item);
+                yield return new ResponseCompletedEvent(seq++, response);
+            }
+        }
+    }
+
+    // ── Backend event factories ──
+
+    private static async IAsyncEnumerable<ResponseStreamEvent> EmitMultiOutput(
+        CreateResponse req, ResponseContext ctx, [EnumeratorCancellation] CancellationToken ct)
+    {
+        var stream = new ResponseEventStream(ctx, req);
+        yield return stream.EmitCreated();
+        yield return stream.EmitInProgress();
+
+        // 1. Reasoning
+        var reasoning = stream.AddOutputItemReasoningItem();
+        yield return reasoning.EmitAdded();
+        var sp = reasoning.AddSummaryPart();
+        yield return sp.EmitAdded();
+        yield return sp.EmitTextDelta("Thinking about");
+        yield return sp.EmitTextDelta(" the answer...");
+        yield return sp.EmitTextDone("Thinking about the answer...");
+        yield return sp.EmitDone();
+        reasoning.EmitSummaryPartDone(sp);
+        yield return reasoning.EmitDone();
+
+        // 2. Function call
+        var fc = stream.AddOutputItemFunctionCall("get_weather", "call_proxy_001");
+        yield return fc.EmitAdded();
+        yield return fc.EmitArgumentsDelta("{\"city\":");
+        yield return fc.EmitArgumentsDelta("\"Seattle\"}");
+        yield return fc.EmitArgumentsDone("{\"city\":\"Seattle\"}");
+        yield return fc.EmitDone();
+
+        // 3. Text message
+        var msg = stream.AddOutputItemMessage();
+        yield return msg.EmitAdded();
+        var tc = msg.AddTextContent();
+        yield return tc.EmitAdded();
+        yield return tc.EmitDelta("The answer");
+        yield return tc.EmitDelta(" is 42.");
+        yield return tc.EmitDone("The answer is 42.");
+        yield return msg.EmitContentDone(tc);
+        yield return msg.EmitDone();
+
+        yield return stream.EmitCompleted();
+        await Task.CompletedTask;
+    }
+
+    private static async IAsyncEnumerable<ResponseStreamEvent> EmitFailed(
+        CreateResponse req, ResponseContext ctx, [EnumeratorCancellation] CancellationToken ct)
+    {
+        var stream = new ResponseEventStream(ctx, req);
+        yield return stream.EmitCreated();
+        yield return stream.EmitInProgress();
+        yield return stream.EmitFailed(
+            Models.ResponseErrorCode.ServerError,
+            "Backend processing error");
+        await Task.CompletedTask;
+    }
+
+    private static Func<CreateResponse, ResponseContext, CancellationToken, IAsyncEnumerable<ResponseStreamEvent>>
+        EmitTextOnly(string text) => (req, ctx, ct) => EmitTextOnlyCore(req, ctx, text);
+
+    private static async IAsyncEnumerable<ResponseStreamEvent> EmitTextOnlyCore(
+        CreateResponse req, ResponseContext ctx, string text)
+    {
+        var stream = new ResponseEventStream(ctx, req);
+        yield return stream.EmitCreated();
+        yield return stream.EmitInProgress();
+        var msg = stream.AddOutputItemMessage();
+        yield return msg.EmitAdded();
+        var tc = msg.AddTextContent();
+        yield return tc.EmitAdded();
+        yield return tc.EmitDone(text);
+        yield return msg.EmitContentDone(tc);
+        yield return msg.EmitDone();
+        yield return stream.EmitCompleted();
+        await Task.CompletedTask;
     }
 }

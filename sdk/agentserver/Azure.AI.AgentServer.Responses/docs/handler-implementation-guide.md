@@ -919,7 +919,7 @@ The library recognises specific exception types and maps them to structured erro
 
 **The `ResponseError` on the response object** (visible via `GET /responses/{id}` when `store=true`) contains only `code` and `message` — no `type` or `param`. This is a different (smaller) shape than the HTTP error envelope.
 
-> For the complete error-to-status mapping, see [Library Behavioural Specification — Error Handling Pipeline](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/library-behaviour-spec.md#error-handling-pipeline) (S-027–S-030). For .NET exception class details, see [.NET Design — Error Handling](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/design/error-handling.md).
+> For the complete error-to-status mapping, see [Library Behavioural Specification — Error Handling Pipeline](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/library-behaviour-spec.md#error-handling-pipeline) (S-027–S-030).
 
 ### Explicit Failure
 
@@ -1282,7 +1282,7 @@ builder.Services.Configure<InMemoryProviderOptions>(opts =>
 
 If you register a custom `ResponsesProvider`, you manage your own retention strategy. `InMemoryProviderOptions` only affects the built-in in-memory provider.
 
-See [Event Stream Replay Availability (B35)](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/api-behaviour-contract.md#event-stream-replay-availability-rule-b35) for the protocol-level behaviour. See [.NET Design — Provider Contract](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/design/provider-contract.md) for implementation details.
+See [Event Stream Replay Availability (B35)](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/api-behaviour-contract.md#event-stream-replay-availability-rule-b35) for the protocol-level behaviour.
 
 ### SSE Keep-Alive
 

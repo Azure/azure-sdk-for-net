@@ -17,13 +17,10 @@ The Responses library has three **authoritative contract documents** that define
 | **Library Behaviour Spec** | `docs/library-behaviour-spec.md` | Language-agnostic library requirements: event processing, state management, terminal authority, cancellation, persistence, observability (S-001–S-046) |
 | **Handler Implementation Guide** | `docs/handler-implementation-guide.md` | Handler contract, builder pattern, cancellation, error handling, configuration |
 
-### Supporting design docs (.NET-specific)
+### Supporting docs
 
 | Document | Path | Defines |
 |----------|------|---------|
-| Error handling | `docs/design/error-handling.md` | Exception hierarchy, error mapping |
-| Provider contract | `docs/design/provider-contract.md` | `ResponsesProvider`, `ResponsesCancellationSignalProvider`, `ResponsesStreamProvider` |
-| Orchestration | `docs/design/orchestration.md` | `ResponseOrchestrator` pipeline, event processing |
 | Doc ownership matrix | `docs/doc-ownership-matrix.md` | Topic-to-document mapping, canonical sources |
 
 ### Compliance workflow
