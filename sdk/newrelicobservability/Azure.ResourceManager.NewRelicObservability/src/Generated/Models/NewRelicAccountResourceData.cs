@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.NewRelicObservability;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
@@ -18,11 +17,6 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
-        /// <summary> Initializes a new instance of <see cref="NewRelicAccountResourceData"/>. </summary>
-        internal NewRelicAccountResourceData()
-        {
-        }
 
         /// <summary> Initializes a new instance of <see cref="NewRelicAccountResourceData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -35,50 +29,6 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
-        }
-
-        /// <summary> The resource-specific properties for this resource. </summary>
-        [WirePath("properties")]
-        internal AccountProperties Properties { get; }
-
-        /// <summary> organization id. </summary>
-        [WirePath("properties.organizationId")]
-        public string OrganizationId
-        {
-            get
-            {
-                return Properties.OrganizationId;
-            }
-        }
-
-        /// <summary> account id. </summary>
-        [WirePath("properties.accountId")]
-        public string AccountId
-        {
-            get
-            {
-                return Properties.AccountId;
-            }
-        }
-
-        /// <summary> account name. </summary>
-        [WirePath("properties.accountName")]
-        public string AccountName
-        {
-            get
-            {
-                return Properties.AccountName;
-            }
-        }
-
-        /// <summary> Region where New Relic account is present. </summary>
-        [WirePath("properties.region")]
-        public AzureLocation? Region
-        {
-            get
-            {
-                return Properties.Region;
-            }
         }
     }
 }
