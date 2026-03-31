@@ -45,13 +45,16 @@ namespace Azure.ResourceManager.Hci.Tests
 
             var patch = new ArcSettingPatch()
             {
-                ConnectivityProperties = new ArcConnectivityProperties()
+                Properties = new ArcSettingsPatchProperties()
                 {
-                    Enabled = false
+                    ConnectivityProperties = new ArcConnectivityProperties()
+                    {
+                        Enabled = false
+                    }
                 }
             };
             ArcSettingResource arcSettingFromUpdate = await arcSetting.UpdateAsync(patch);
-            Assert.False(arcSettingFromUpdate.Data.ConnectivityProperties?.Enabled);
+            Assert.False(arcSettingFromUpdate.Data.Properties?.ConnectivityProperties?.Enabled);
 
             ArcSettingResource arcSettingFromGet = await arcSettingFromUpdate.GetAsync();
             Assert.AreEqual(arcSettingFromGet.Data.Name, arcSettingName);

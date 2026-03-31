@@ -98,12 +98,15 @@ namespace Azure.ResourceManager.Hci.Samples
             // invoke the operation
             ArcSettingPatch patch = new ArcSettingPatch
             {
-                ConnectivityProperties = new ArcConnectivityProperties
+                Properties = new ArcSettingsPatchProperties
                 {
-                    Enabled = true,
-                    ServiceConfigurations =
+                    ConnectivityProperties = new ArcConnectivityProperties
                     {
-                        new ServiceConfiguration(ServiceName.WAC, 6516)
+                        Enabled = true,
+                        ServiceConfigurations =
+                        {
+                            new ServiceConfiguration(ServiceName.WAC, 6516)
+                        },
                     },
                 },
             };
