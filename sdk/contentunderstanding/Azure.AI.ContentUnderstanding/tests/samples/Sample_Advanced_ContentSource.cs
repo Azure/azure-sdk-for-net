@@ -3,7 +3,12 @@
 
 #nullable enable
 
+using System;
 using System.Drawing;
+using System.Linq;
+using System.Threading.Tasks;
+using Azure.Core.TestFramework;
+using NUnit.Framework;
 
 namespace Azure.AI.ContentUnderstanding.Samples
 {
@@ -111,15 +116,20 @@ namespace Azure.AI.ContentUnderstanding.Samples
             ContentField fieldWithSource = documentContent.Fields.Values
                 .First(f => f.Sources != null);
 
-            // Convert the parsed sources back to their wire-format string using ToRawString().
+            // --- DocumentSource.Parse(): typed API that returns DocumentSource[] directly ---
             string sourceString = fieldWithSource.Sources!.ToRawString();
             Console.WriteLine($"Source wire format: {sourceString}");
 
-            // Parse the wire-format string back into typed ContentSource instances.
+            // DocumentSource.Parse() returns DocumentSource[] — no casting needed.
+            DocumentSource[] docSources = DocumentSource.Parse(sourceString);
+            DocumentSource firstDoc = docSources[0];
+            Console.WriteLine($"DocumentSource.Parse: page {firstDoc.PageNumber}, polygon points: {firstDoc.Polygon?.Count ?? 0}");
+            Console.WriteLine($"  BoundingBox: {firstDoc.BoundingBox}");
+
+            // --- ContentSource.Parse(): base-class API that returns ContentSource[] (polymorphic) ---
             ContentSource[] roundTripped = ContentSource.Parse(sourceString);
             DocumentSource roundTrippedDoc = (DocumentSource)roundTripped[0];
-            Console.WriteLine($"Round-tripped: page {roundTrippedDoc.PageNumber}, polygon points: {roundTrippedDoc.Polygon?.Count ?? 0}");
-            Console.WriteLine($"  BoundingBox: {roundTrippedDoc.BoundingBox}");
+            Console.WriteLine($"ContentSource.Parse: page {roundTrippedDoc.PageNumber}, polygon points: {roundTrippedDoc.Polygon?.Count ?? 0}");
 
             // Find a field with multiple source segments (e.g., multi-line addresses).
             ContentField multiSourceField = documentContent.Fields.Values
@@ -131,7 +141,6 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Console.WriteLine($"Multi-segment: {multiParsed.Length} sources on pages {string.Join(", ", multiParsed.OfType<DocumentSource>().Select(s => s.PageNumber))}");
 
             // ContentSource.Parse() also handles page-only format (no polygon coordinates).
-            // Construct a page-only source string from a real field's page number.
             int realPageNumber = ((DocumentSource)fieldWithSource.Sources![0]).PageNumber;
             ContentSource[] pageOnlySources = ContentSource.Parse($"D({realPageNumber})");
             DocumentSource pageOnly = (DocumentSource)pageOnlySources[0];
@@ -139,12 +148,16 @@ namespace Azure.AI.ContentUnderstanding.Samples
             #endregion
 
             #region Assertion:ContentUnderstandingContentSourceParse
-            // Verify round-trip: sources → ToRawString → Parse → same data
+            // Verify DocumentSource.Parse() round-trip
+            Assert.IsTrue(docSources.Length >= 1);
+            Assert.AreEqual(((DocumentSource)fieldWithSource.Sources![0]).PageNumber, firstDoc.PageNumber);
+            Assert.IsNotNull(firstDoc.Polygon);
+            Assert.IsTrue(firstDoc.BoundingBox.HasValue);
+
+            // Verify ContentSource.Parse() round-trip (same data, base-class API)
             Assert.IsTrue(roundTripped.Length >= 1);
             Assert.IsInstanceOf<DocumentSource>(roundTripped[0]);
-            Assert.AreEqual(((DocumentSource)fieldWithSource.Sources![0]).PageNumber, roundTrippedDoc.PageNumber);
-            Assert.IsNotNull(roundTrippedDoc.Polygon);
-            Assert.IsTrue(roundTrippedDoc.BoundingBox.HasValue);
+            Assert.AreEqual(firstDoc.PageNumber, roundTrippedDoc.PageNumber);
 
             // Verify multi-segment round-trip
             Assert.IsTrue(multiParsed.Length > 1, $"Expected multiple segments, got {multiParsed.Length}");
