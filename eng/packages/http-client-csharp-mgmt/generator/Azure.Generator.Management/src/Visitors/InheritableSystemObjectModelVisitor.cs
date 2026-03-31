@@ -274,10 +274,7 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
         var initializer = signature.Initializer;
         if (initializer is not null)
         {
-            var filteredArgs = initializer.Arguments
-                .Where(arg => arg is VariableExpression variable && variable.Declaration.RequestedName != RawDataParameterName)
-                .ToArray();
-            var updatedInitializer = new ConstructorInitializer(initializer.IsBase, filteredArgs);
+            var updatedInitializer = new ConstructorInitializer(initializer.IsBase, initializer.Arguments.Where(arg => arg is VariableExpression variable && variable.Declaration.RequestedName != RawDataParameterName).ToArray());
             var updatedSignature = new ConstructorSignature(signature.Type, signature.Description, signature.Modifiers, signature.Parameters, signature.Attributes, updatedInitializer);
             model.FullConstructor.Update(signature: updatedSignature);
         }
