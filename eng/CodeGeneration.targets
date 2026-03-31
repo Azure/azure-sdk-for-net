@@ -29,6 +29,19 @@
     <Error Text="You used skipped sync but didn't have the TempTypeSpecFiles in your project directory.  Please run 'dotnet build /t:GenerateCode /p:SaveInputs=true' without SkipSync first at least once" Condition="'$(SkipSync)' == 'true' AND !Exists('$(MSBuildProjectDirectory)/../TempTypeSpecFiles')" />
     <Exec Condition="'$(SkipSync)' == 'true'" Command="$(_TypeSpecProjectGenerateCommand) $(_SaveInputs) $(_TypespecAdditionalOptions) $(_Trace)"/>
     <Exec Condition="'$(SkipSync)' != 'true'" Command="$(_TypeSpecProjectSyncAndGenerateCommand) $(_SaveInputs) $(_LocalSpecRepo) $(_TypespecAdditionalOptions) $(_Trace)"/>
+    <!-- Remove generated NuGet.targets files — Azure SDK handles ConfigurationSchema packing
+         centrally via eng/ConfigurationSchema.targets and Directory.Build.Common.targets -->
+    <ItemGroup>
+      <_GeneratedNuGetTargets Include="$(MSBuildProjectDirectory)/../*.NuGet.targets" />
+    </ItemGroup>
+    <Delete Files="@(_GeneratedNuGetTargets)" Condition="@(_GeneratedNuGetTargets) != ''" />
+    <!-- Adjust ConfigurationSchema.json for Azure conventions: rename "Clients" section to
+         "AzureClients" and replace "options" refs with "azureOptions". This is needed for
+         libraries using the unbranded emitter + plugin, where the AzureClientGenerator
+         override does not apply. For Azure emitter libraries the schema is already correct,
+         so the replacements are safe no-ops. -->
+    <Exec Condition="Exists('$(MSBuildProjectDirectory)/../schema/ConfigurationSchema.json')"
+          Command="pwsh -NoProfile -NonInteractive -Command &quot;$$f = '$(MSBuildProjectDirectory)/../schema/ConfigurationSchema.json'; $$c = Get-Content $$f -Raw; $$u = $$c -replace '&quot;&quot;Clients&quot;&quot;', '&quot;&quot;AzureClients&quot;&quot;' -replace '#/definitions/options', '#/definitions/azureOptions'; if ($$u -ne $$c) { Set-Content $$f $$u -NoNewline; Write-Host 'Adjusted ConfigurationSchema.json for Azure conventions' }&quot;" />
   </Target>
 
 </Project>
