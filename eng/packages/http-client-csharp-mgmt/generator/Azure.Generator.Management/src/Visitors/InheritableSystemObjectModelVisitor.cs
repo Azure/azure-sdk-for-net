@@ -264,8 +264,23 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
         model.FullConstructor.Update(signature: updatedSignature);
     }
 
-    private static readonly HashSet<string> _methodNamesToUpdate = new(){ "JsonModelCreateCore", "PersistableModelCreateCore", "PersistableModelWriteCore" };
-    private static readonly HashSet<string> _methodNamesToFixReturnType = new(){ "JsonModelCreateCore", "PersistableModelCreateCore" };
+    private const string JsonModelCreateCoreMethodName = "JsonModelCreateCore";
+    private const string PersistableModelCreateCoreMethodName = "PersistableModelCreateCore";
+    private const string PersistableModelWriteCoreMethodName = "PersistableModelWriteCore";
+
+    private static readonly HashSet<string> _methodNamesToUpdate = new()
+    {
+        JsonModelCreateCoreMethodName,
+        PersistableModelCreateCoreMethodName,
+        PersistableModelWriteCoreMethodName
+    };
+
+    private static readonly HashSet<string> _methodNamesToFixReturnType = new()
+    {
+        JsonModelCreateCoreMethodName,
+        PersistableModelCreateCoreMethodName
+    };
+
     private static void UpdateSerialization(ModelProvider model)
     {
         var serializationProvider = model.SerializationProviders;
@@ -285,15 +300,14 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
 
     /// <summary>
     /// Fixes the return type of serialization override methods (PersistableModelCreateCore,
-    /// JsonModelCreateCore) to match the base virtual method's declared return type.
-    /// Without this, the framework generates overrides with model.Type.BaseType as the return
-    /// type, which can be a covariant return type (e.g., returning CustomPatchBase instead of
-    /// ResourceData). Covariant returns are not supported on .NET Framework.
+    /// JsonModelCreateCore) to use the system base type (e.g., ResourceData) instead of the
+    /// immediate parent type. Without this, the framework generates overrides with
+    /// model.Type.BaseType as the return type, which can produce a covariant return type
+    /// (e.g., returning CustomPatchBase instead of ResourceData). Covariant returns are not
+    /// supported on .NET Framework.
     /// </summary>
-    private static void FixSerializationReturnTypes(ModelProvider model)
+    private void FixSerializationReturnTypes(ModelProvider model)
     {
-        // The base virtual serialization methods always use the system type (ResourceData)
-        // as their return type. Walk up the hierarchy to find it.
         var systemBaseType = FindSystemBaseType(model);
         if (systemBaseType is null)
         {
@@ -318,21 +332,30 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
         }
     }
 
+    private readonly Dictionary<ModelProvider, CSharpType?> _systemBaseTypeCache = new();
+
     /// <summary>
     /// Walks up the model hierarchy to find the system base type (e.g., ResourceData)
     /// that the virtual serialization methods use as their return type.
     /// </summary>
-    private static CSharpType? FindSystemBaseType(ModelProvider model)
+    private CSharpType? FindSystemBaseType(ModelProvider model)
     {
+        if (_systemBaseTypeCache.TryGetValue(model, out var cached))
+        {
+            return cached;
+        }
+
         var current = model.BaseModelProvider;
         while (current is not null)
         {
             if (current is InheritableSystemObjectModelProvider { IsSystemBase: true } systemModel)
             {
+                _systemBaseTypeCache[model] = systemModel.Type;
                 return systemModel.Type;
             }
             current = current.BaseModelProvider;
         }
+        _systemBaseTypeCache[model] = null;
         return null;
     }
 
