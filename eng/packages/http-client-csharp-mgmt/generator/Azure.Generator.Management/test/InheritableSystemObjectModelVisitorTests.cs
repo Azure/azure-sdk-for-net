@@ -14,6 +14,85 @@ namespace Azure.Generator.Mgmt.Tests
     internal class InheritableSystemObjectModelVisitorTests
     {
         /// <summary>
+        /// Verifies that a model extending TrackedResource resolves to TrackedResourceData
+        /// as its base type, not ArmResource or any other incorrect type.
+        /// This reproduces the bug where the framework eagerly caches CSharpType.BaseType
+        /// during model construction. When model processing order causes the derived model
+        /// to be constructed before the base model's InheritableSystemObjectModelProvider,
+        /// the cached BaseType gets permanently set to the wrong value.
+        /// </summary>
+        [TestCase("Azure.ResourceManager.CommonTypes.TrackedResource", typeof(Azure.ResourceManager.Models.TrackedResourceData))]
+        [TestCase("Azure.ResourceManager.CommonTypes.ProxyResource", typeof(Azure.ResourceManager.Models.ResourceData))]
+        [TestCase("Azure.ResourceManager.CommonTypes.ExtensionResource", typeof(Azure.ResourceManager.Models.ResourceData))]
+        public void ResourceDataModelInheritsCorrectBaseType(string baseModelCrossLanguageId, System.Type expectedBaseType)
+        {
+            // Arrange: Create a base model (TrackedResource/ProxyResource) and a derived model
+            var baseModel = new InputModelType(
+                "TrackedResource",
+                "Azure.ResourceManager.CommonTypes",
+                baseModelCrossLanguageId,
+                "public",
+                null,
+                null,
+                "ARM Tracked Resource",
+                InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                [
+                    InputFactory.Property("id", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("name", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("type", InputPrimitiveType.String, isReadOnly: true),
+                ],
+                null,
+                [],
+                null,
+                null,
+                new Dictionary<string, InputModelType>(),
+                null,
+                false,
+                new InputSerializationOptions(),
+                false);
+
+            var derivedModel = new InputModelType(
+                "MonitorResource",
+                "Samples.Models",
+                "MonitorResource",
+                "public",
+                null,
+                null,
+                "Monitor Resource extending tracked resource",
+                InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                [InputFactory.Property("monitorName", InputPrimitiveType.String)],
+                baseModel,
+                [],
+                null,
+                null,
+                new Dictionary<string, InputModelType>(),
+                null,
+                false,
+                new InputSerializationOptions(),
+                false);
+
+            // Load with derived model FIRST to stress model ordering
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [derivedModel, baseModel]);
+
+            // Act - create the derived model
+            var derivedType = plugin.Object.TypeFactory.CreateModel(derivedModel);
+
+            // Assert
+            Assert.IsNotNull(derivedType, "Derived model should be created");
+            Assert.IsNotNull(derivedType!.BaseModelProvider, "Derived model should have a base model provider");
+
+            // The critical assertion: the derived model's CSharpType.BaseType should be the
+            // correct framework type (TrackedResourceData/ResourceData), not ArmResource.
+            var actualBaseType = derivedType.Type.BaseType;
+            Assert.IsNotNull(actualBaseType, "Derived model's CSharpType.BaseType should not be null");
+            Assert.IsTrue(actualBaseType!.IsFrameworkType,
+                $"Expected framework type {expectedBaseType.Name} but got non-framework type: {actualBaseType.Name} ({actualBaseType.Namespace})");
+            Assert.AreEqual(expectedBaseType, actualBaseType.FrameworkType,
+                $"Derived model should inherit from {expectedBaseType.Name}");
+        }
+
+        /// <summary>
         /// Verifies that creating a discriminated model extending ARM Resource does not cause
         /// a stack overflow. Before the fix, UpdateSerialization accessed Methods during
         /// PreVisitModel which triggered building DerivedModels -> CreateModel for derived types

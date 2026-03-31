@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
+using Azure.AI.Projects.Memory;
 using OpenAI.Responses;
 
 namespace Azure.AI.Projects.Tests.Samples;
@@ -85,7 +86,7 @@ public class Sample_MemoryStore : SamplesBase
             options: opts
         );
         Console.WriteLine("==The output from memory tool.==");
-        foreach (Azure.AI.Projects.MemorySearchItem item in resp.Memories)
+        foreach (MemorySearchItem item in resp.Memories)
         {
             Console.WriteLine(item.MemoryItem.Content);
         }
@@ -175,7 +176,7 @@ public class Sample_MemoryStore : SamplesBase
             options: opts
         );
         Console.WriteLine("==The output from memory tool.==");
-        foreach (Azure.AI.Projects.MemorySearchItem item in resp.Memories)
+        foreach (MemorySearchItem item in resp.Memories)
         {
             Console.WriteLine(item.MemoryItem.Content);
         }

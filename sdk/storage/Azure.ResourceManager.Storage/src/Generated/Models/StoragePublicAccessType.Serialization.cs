@@ -11,19 +11,30 @@ namespace Azure.ResourceManager.Storage.Models
 {
     internal static partial class StoragePublicAccessTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this StoragePublicAccessType value) => value switch
         {
-            StoragePublicAccessType.None => "None",
             StoragePublicAccessType.Container => "Container",
             StoragePublicAccessType.Blob => "Blob",
+            StoragePublicAccessType.None => "None",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown StoragePublicAccessType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static StoragePublicAccessType ToStoragePublicAccessType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "None")) return StoragePublicAccessType.None;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Container")) return StoragePublicAccessType.Container;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Blob")) return StoragePublicAccessType.Blob;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Container"))
+            {
+                return StoragePublicAccessType.Container;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Blob"))
+            {
+                return StoragePublicAccessType.Blob;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "None"))
+            {
+                return StoragePublicAccessType.None;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown StoragePublicAccessType value.");
         }
     }
