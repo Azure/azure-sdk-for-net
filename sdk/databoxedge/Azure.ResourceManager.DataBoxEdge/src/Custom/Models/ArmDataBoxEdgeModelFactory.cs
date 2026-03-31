@@ -1,10 +1,11 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-// Why: Baseline ModelFactory methods had non-nullable enum/struct parameters and different method names
-// (without "Data" suffix) for sub-resource types. This provides backward-compatible overloads.
-// After regen, the generator no longer emits these factory methods (types now use Properties bags),
-// so these custom methods construct objects directly via internal constructors.
+// Baseline ModelFactory methods used non-nullable value-type/enum parameters (e.g. TimeSpan, ShareStatus),
+// but the new generator produces nullable versions (TimeSpan?, ShareStatus?). These are different CLR
+// signatures, so backward-compat overloads with the original non-nullable signatures are required.
+// The 3 type-shim methods (CapacityInfo, NetworkSettings, UpdateSummary) also return backward-compat
+// wrapper types (without "Data" suffix).
 
 using System;
 using System.Collections.Generic;

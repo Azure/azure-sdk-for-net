@@ -27,8 +27,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Argument.AssertNotNull(sourceInfoShareId, nameof(sourceInfoShareId));
             Argument.AssertNotNull(sinkInfoRoleId, nameof(sinkInfoRoleId));
 
-            SourceInfo = sourceInfoShareId is null ? default : new EdgeFileSourceInfo(sourceInfoShareId, null);
-            SinkInfo = sinkInfoRoleId is null ? default : new DataBoxEdgeRoleSinkInfo(sinkInfoRoleId, null);
+            SourceInfo = new EdgeFileSourceInfo(sourceInfoShareId);
+            SinkInfo = new DataBoxEdgeRoleSinkInfo(sinkInfoRoleId);
         }
 
         /// <summary> Initializes a new instance of <see cref="FileTriggerProperties"/>. </summary>

@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-// Why: Baseline had this type in Models namespace as a plain model. New generator creates it as
+// Baseline had this type in Models namespace as a plain model. New generator creates it as
 // DataBoxEdgeDeviceNetworkSettingsData in the base namespace. This subclass provides backward-compatible
 // type name and namespace.
 

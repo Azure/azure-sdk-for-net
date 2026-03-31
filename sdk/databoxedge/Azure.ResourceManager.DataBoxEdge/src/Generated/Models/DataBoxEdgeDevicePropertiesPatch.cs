@@ -23,31 +23,31 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DataBoxEdgeDevicePropertiesPatch"/>. </summary>
-        /// <param name="edgeProfile"> Edge Profile property of the Data Box Edge/Gateway device. </param>
+        /// <param name="profile"> Edge Profile property of the Data Box Edge/Gateway device. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataBoxEdgeDevicePropertiesPatch(EdgeProfilePatch edgeProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataBoxEdgeDevicePropertiesPatch(EdgeProfilePatch profile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            EdgeProfile = edgeProfile;
+            Profile = profile;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Edge Profile property of the Data Box Edge/Gateway device. </summary>
-        internal EdgeProfilePatch EdgeProfile { get; set; }
+        internal EdgeProfilePatch Profile { get; set; }
 
         /// <summary> The path ID that uniquely identifies the subscription of the edge profile. </summary>
-        public ResourceIdentifier EdgeSubscriptionId
+        public ResourceIdentifier SubscriptionId
         {
             get
             {
-                return EdgeProfile is null ? default : EdgeProfile.SubscriptionId;
+                return Profile is null ? default : Profile.SubscriptionId;
             }
             set
             {
-                if (EdgeProfile is null)
+                if (Profile is null)
                 {
-                    EdgeProfile = new EdgeProfilePatch();
+                    Profile = new EdgeProfilePatch();
                 }
-                EdgeProfile.SubscriptionId = value;
+                Profile.SubscriptionId = value;
             }
         }
     }

@@ -279,13 +279,13 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         /// <param name="tags"> The tags attached to the Data Box Edge/Gateway resource. </param>
         /// <param name="identity"> Msi identity of the resource. </param>
-        /// <param name="edgeSubscriptionId"> The path ID that uniquely identifies the subscription of the edge profile. </param>
+        /// <param name="subscriptionId"> The path ID that uniquely identifies the subscription of the edge profile. </param>
         /// <returns> A new <see cref="Models.DataBoxEdgeDevicePatch"/> instance for mocking. </returns>
-        public static DataBoxEdgeDevicePatch DataBoxEdgeDevicePatch(IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default, ResourceIdentifier edgeSubscriptionId = default)
+        public static DataBoxEdgeDevicePatch DataBoxEdgeDevicePatch(IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default, ResourceIdentifier subscriptionId = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new DataBoxEdgeDevicePatch(tags, identity, edgeSubscriptionId is null ? default : new DataBoxEdgeDevicePropertiesPatch(new EdgeProfilePatch(new EdgeProfileSubscriptionPatch(edgeSubscriptionId, null), null), null), additionalBinaryDataProperties: null);
+            return new DataBoxEdgeDevicePatch(tags, identity, subscriptionId is null ? default : new DataBoxEdgeDevicePropertiesPatch(new EdgeProfilePatch(new EdgeProfileSubscriptionPatch(subscriptionId, null), null), null), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Used in activation key generation flow. </summary>

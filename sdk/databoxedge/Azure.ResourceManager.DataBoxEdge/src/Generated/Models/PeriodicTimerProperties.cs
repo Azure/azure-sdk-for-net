@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Argument.AssertNotNull(sinkInfoRoleId, nameof(sinkInfoRoleId));
 
             SourceInfo = sourceInfo;
-            SinkInfo = sinkInfoRoleId is null ? default : new DataBoxEdgeRoleSinkInfo(sinkInfoRoleId, null);
+            SinkInfo = new DataBoxEdgeRoleSinkInfo(sinkInfoRoleId);
         }
 
         /// <summary> Initializes a new instance of <see cref="PeriodicTimerProperties"/>. </summary>

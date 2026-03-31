@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WritePropertyName("ioTHostHubId"u8);
                 writer.WriteStringValue(IotHostHubId);
             }
-            if (Optional.IsDefined(Authentication))
+            if (Optional.IsDefined(Profile))
             {
                 writer.WritePropertyName("authentication"u8);
-                writer.WriteObjectValue(Authentication, options);
+                writer.WriteObjectValue(Profile, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             string deviceId = default;
             string iotHostHub = default;
             ResourceIdentifier iotHostHubId = default;
-            Authentication authentication = default;
+            Authentication profile = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     {
                         continue;
                     }
-                    authentication = Authentication.DeserializeAuthentication(prop.Value, options);
+                    profile = Authentication.DeserializeAuthentication(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new EdgeIotDeviceInfo(deviceId, iotHostHub, iotHostHubId, authentication, additionalBinaryDataProperties);
+            return new EdgeIotDeviceInfo(deviceId, iotHostHub, iotHostHubId, profile, additionalBinaryDataProperties);
         }
     }
 }

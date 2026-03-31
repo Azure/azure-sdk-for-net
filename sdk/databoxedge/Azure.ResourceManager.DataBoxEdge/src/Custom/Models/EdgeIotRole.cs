@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-// Why: Generated flattened RoleStatus/HostPlatform properties are non-nullable (DataBoxEdgeRoleStatus, DataBoxEdgeOSPlatformType),
+// Generated flattened RoleStatus/HostPlatform properties are non-nullable (DataBoxEdgeRoleStatus, DataBoxEdgeOSPlatformType),
 // but baseline API had nullable types (DataBoxEdgeRoleStatus?, DataBoxEdgeOSPlatformType?). These Custom/ properties shadow
 // the generated ones to restore nullable type signatures for backward compatibility.
 

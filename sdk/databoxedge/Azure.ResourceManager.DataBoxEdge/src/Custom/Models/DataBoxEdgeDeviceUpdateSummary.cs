@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-// Why: Baseline had this type in Models namespace as a plain model. New generator creates it as
+// Baseline had this type in Models namespace as a plain model. New generator creates it as
 // DataBoxEdgeDeviceUpdateSummaryData in the base namespace. This subclass provides backward-compatible
 // type name and namespace.
 
@@ -22,7 +22,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         {
         }
 
-        // Why: Baseline had setters on these output-only properties. Shadow with new + no-op setter for backward compat.
         /// <summary> The last time when a scan was done on the device. </summary>
         public new DateTimeOffset? DeviceLastScannedOn
         {

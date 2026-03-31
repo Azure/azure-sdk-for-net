@@ -7,9 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
+    /// <summary> The properties of security settings. </summary>
     internal partial class SecuritySettingsProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -17,8 +19,11 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         /// <summary> Initializes a new instance of <see cref="SecuritySettingsProperties"/>. </summary>
         /// <param name="deviceAdminPassword"> Device administrator password as an encrypted string (encrypted using RSA PKCS #1) is used to sign into the  local web UI of the device. The Actual password should have at least 8 characters that are a combination of  uppercase, lowercase, numeric, and special characters. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deviceAdminPassword"/> is null. </exception>
         public SecuritySettingsProperties(AsymmetricEncryptedSecret deviceAdminPassword)
         {
+            Argument.AssertNotNull(deviceAdminPassword, nameof(deviceAdminPassword));
+
             DeviceAdminPassword = deviceAdminPassword;
         }
 
@@ -30,5 +35,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             DeviceAdminPassword = deviceAdminPassword;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Device administrator password as an encrypted string (encrypted using RSA PKCS #1) is used to sign into the  local web UI of the device. The Actual password should have at least 8 characters that are a combination of  uppercase, lowercase, numeric, and special characters. </summary>
+        public AsymmetricEncryptedSecret DeviceAdminPassword { get; set; }
     }
 }

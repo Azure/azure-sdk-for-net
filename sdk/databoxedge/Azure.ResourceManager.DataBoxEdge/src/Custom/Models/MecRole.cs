@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-// Why: Generated flattened RoleStatus property is non-nullable (DataBoxEdgeRoleStatus), but baseline API had nullable type.
+// Generated flattened RoleStatus property is non-nullable (DataBoxEdgeRoleStatus), but baseline API had nullable type.
 // This Custom/ property shadows the generated one to restore nullable type signature for backward compatibility.
 
 namespace Azure.ResourceManager.DataBoxEdge.Models

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -19,11 +20,24 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         /// <summary> Initializes a new instance of <see cref="DataBoxEdgeRoleSinkInfo"/>. </summary>
         /// <param name="roleId"> Compute role ID. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleId"/> is null. </exception>
+        public DataBoxEdgeRoleSinkInfo(ResourceIdentifier roleId)
+        {
+            Argument.AssertNotNull(roleId, nameof(roleId));
+
+            RoleId = roleId;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeRoleSinkInfo"/>. </summary>
+        /// <param name="roleId"> Compute role ID. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal DataBoxEdgeRoleSinkInfo(ResourceIdentifier roleId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RoleId = roleId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Compute role ID. </summary>
+        public ResourceIdentifier RoleId { get; set; }
     }
 }

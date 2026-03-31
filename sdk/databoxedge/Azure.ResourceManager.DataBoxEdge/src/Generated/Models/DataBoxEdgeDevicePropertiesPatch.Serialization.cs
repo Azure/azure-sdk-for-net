@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 throw new FormatException($"The model {nameof(DataBoxEdgeDevicePropertiesPatch)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(EdgeProfile))
+            if (Optional.IsDefined(Profile))
             {
                 writer.WritePropertyName("edgeProfile"u8);
-                writer.WriteObjectValue(EdgeProfile, options);
+                writer.WriteObjectValue(Profile, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            EdgeProfilePatch edgeProfile = default;
+            EdgeProfilePatch profile = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     {
                         continue;
                     }
-                    edgeProfile = EdgeProfilePatch.DeserializeEdgeProfilePatch(prop.Value, options);
+                    profile = EdgeProfilePatch.DeserializeEdgeProfilePatch(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DataBoxEdgeDevicePropertiesPatch(edgeProfile, additionalBinaryDataProperties);
+            return new DataBoxEdgeDevicePropertiesPatch(profile, additionalBinaryDataProperties);
         }
     }
 }

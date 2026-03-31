@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-// Why: Baseline had GetDeviceCapacityInfo/GetNetworkSettings/GetUpdateSummary methods returning model types.
+// Baseline had GetDeviceCapacityInfo/GetNetworkSettings/GetUpdateSummary methods returning model types.
 // New generator uses sub-resource pattern. These wrapper methods provide backward-compatible API.
 
 using System.Threading;
