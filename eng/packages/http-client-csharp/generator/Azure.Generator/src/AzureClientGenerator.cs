@@ -8,6 +8,10 @@ using Microsoft.TypeSpec.Generator.ClientModel;
 using System;
 using System.ComponentModel.Composition;
 using System.IO;
+using System.Linq;
+using System.Text.Json;
+using System.Text.Json.Nodes;
+using System.Threading.Tasks;
 using Azure.Core.Expressions.DataFactory;
 using Azure.Generator.Providers;
 
@@ -96,5 +100,88 @@ public class AzureClientGenerator : ScmCodeModelGenerator
         AddVisitor(new InvokeDelimitedMethodVisitor());
         AddVisitor(new XmlSerializableVisitor());
         AddVisitor(new ClientSettingsVisitor());
+    }
+
+    /// <summary>
+    /// Writes additional files for the Azure client SDK.
+    /// Overrides the base implementation to use "AzureClients" section and "azureOptions"
+    /// instead of the default "Clients" and "options", and suppresses the NuGet.targets
+    /// file which is handled centrally by the Azure SDK build infrastructure.
+    /// </summary>
+    public override async Task WriteAdditionalFiles(string outputPath)
+    {
+        // Let the base generate ConfigurationSchema.json and NuGet.targets
+        await base.WriteAdditionalFiles(outputPath);
+
+        // Adjust ConfigurationSchema.json for Azure conventions
+        var schemaPath = Path.Combine(outputPath, "schema", "ConfigurationSchema.json");
+        if (File.Exists(schemaPath))
+        {
+            var json = JsonNode.Parse(await File.ReadAllTextAsync(schemaPath));
+            if (json is JsonObject root)
+            {
+                AdjustSchemaForAzure(root);
+                var options = new JsonSerializerOptions { WriteIndented = true };
+                await File.WriteAllTextAsync(schemaPath, root.ToJsonString(options).ReplaceLineEndings("\n") + "\n");
+            }
+        }
+
+        // Remove the NuGet.targets file — Azure SDK handles this centrally
+        // via eng/ConfigurationSchema.targets and Directory.Build.Common.targets
+        var targetsPath = Path.Combine(outputPath, $"{Configuration.PackageName}.NuGet.targets");
+        if (File.Exists(targetsPath))
+        {
+            File.Delete(targetsPath);
+        }
+    }
+
+    /// <summary>
+    /// Adjusts the generated ConfigurationSchema.json for Azure SDK conventions:
+    /// renames the "Clients" section to "AzureClients" and replaces references
+    /// to the base "options" definition with "azureOptions".
+    /// </summary>
+    private static void AdjustSchemaForAzure(JsonObject root)
+    {
+        // Rename "Clients" → "AzureClients" in the top-level properties
+        if (root["properties"] is JsonObject properties &&
+            properties.ContainsKey("Clients"))
+        {
+            var clientsNode = properties["Clients"];
+            properties.Remove("Clients");
+            properties["AzureClients"] = clientsNode;
+        }
+
+        // Replace all $ref values from "#/definitions/options" to "#/definitions/azureOptions"
+        ReplaceRefValues(root, "#/definitions/options", "#/definitions/azureOptions");
+    }
+
+    private static void ReplaceRefValues(JsonNode node, string oldRef, string newRef)
+    {
+        if (node is JsonObject obj)
+        {
+            if (obj.TryGetPropertyValue("$ref", out var refValue) &&
+                refValue?.GetValue<string>() == oldRef)
+            {
+                obj["$ref"] = newRef;
+            }
+
+            foreach (var property in obj.ToArray())
+            {
+                if (property.Value != null)
+                {
+                    ReplaceRefValues(property.Value, oldRef, newRef);
+                }
+            }
+        }
+        else if (node is JsonArray array)
+        {
+            foreach (var item in array)
+            {
+                if (item != null)
+                {
+                    ReplaceRefValues(item, oldRef, newRef);
+                }
+            }
+        }
     }
 }

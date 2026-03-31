@@ -1,7 +1,7 @@
 {
   "type": "object",
   "properties": {
-    "Clients": {
+    "AzureClients": {
       "type": "object",
       "properties": {
         "SingleClient": {
@@ -32,7 +32,7 @@
     "singleClientOptions": {
       "allOf": [
         {
-          "$ref": "#/definitions/options"
+          "$ref": "#/definitions/azureOptions"
         }
       ]
     }

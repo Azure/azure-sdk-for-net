@@ -1,7 +1,7 @@
 {
   "type": "object",
   "properties": {
-    "Clients": {
+    "AzureClients": {
       "type": "object",
       "properties": {
         "FirstClient": {
@@ -64,14 +64,14 @@
     "firstClientOptions": {
       "allOf": [
         {
-          "$ref": "#/definitions/options"
+          "$ref": "#/definitions/azureOptions"
         }
       ]
     },
     "subNamespaceSecondClientOptions": {
       "allOf": [
         {
-          "$ref": "#/definitions/options"
+          "$ref": "#/definitions/azureOptions"
         }
       ]
     }
