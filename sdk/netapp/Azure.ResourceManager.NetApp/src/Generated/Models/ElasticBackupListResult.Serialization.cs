@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            IReadOnlyList<ElasticBackupData> value = default;
+            IReadOnlyList<NetAppElasticBackupData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<ElasticBackupData> array = new List<ElasticBackupData>();
+                    List<NetAppElasticBackupData> array = new List<NetAppElasticBackupData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ElasticBackupData.DeserializeElasticBackupData(item, options));
+                        array.Add(NetAppElasticBackupData.DeserializeNetAppElasticBackupData(item, options));
                     }
                     value = array;
                     continue;

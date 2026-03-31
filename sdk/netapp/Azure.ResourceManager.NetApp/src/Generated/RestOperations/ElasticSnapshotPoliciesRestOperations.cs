@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="snapshotPolicyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="snapshotPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ElasticSnapshotPolicyData>> GetAsync(string subscriptionId, string resourceGroupName, string accountName, string snapshotPolicyName, CancellationToken cancellationToken = default)
+        public async Task<Response<NetAppElasticSnapshotPolicyData>> GetAsync(string subscriptionId, string resourceGroupName, string accountName, string snapshotPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -189,13 +189,13 @@ namespace Azure.ResourceManager.NetApp
             {
                 case 200:
                     {
-                        ElasticSnapshotPolicyData value = default;
+                        NetAppElasticSnapshotPolicyData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ElasticSnapshotPolicyData.DeserializeElasticSnapshotPolicyData(document.RootElement);
+                        value = NetAppElasticSnapshotPolicyData.DeserializeNetAppElasticSnapshotPolicyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ElasticSnapshotPolicyData)null, message.Response);
+                    return Response.FromValue((NetAppElasticSnapshotPolicyData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="snapshotPolicyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="snapshotPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ElasticSnapshotPolicyData> Get(string subscriptionId, string resourceGroupName, string accountName, string snapshotPolicyName, CancellationToken cancellationToken = default)
+        public Response<NetAppElasticSnapshotPolicyData> Get(string subscriptionId, string resourceGroupName, string accountName, string snapshotPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -222,19 +222,19 @@ namespace Azure.ResourceManager.NetApp
             {
                 case 200:
                     {
-                        ElasticSnapshotPolicyData value = default;
+                        NetAppElasticSnapshotPolicyData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ElasticSnapshotPolicyData.DeserializeElasticSnapshotPolicyData(document.RootElement);
+                        value = NetAppElasticSnapshotPolicyData.DeserializeNetAppElasticSnapshotPolicyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ElasticSnapshotPolicyData)null, message.Response);
+                    return Response.FromValue((NetAppElasticSnapshotPolicyData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string accountName, string snapshotPolicyName, ElasticSnapshotPolicyData data)
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string accountName, string snapshotPolicyName, NetAppElasticSnapshotPolicyData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.NetApp
             return uri;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string accountName, string snapshotPolicyName, ElasticSnapshotPolicyData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string accountName, string snapshotPolicyName, NetAppElasticSnapshotPolicyData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="snapshotPolicyName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="snapshotPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string accountName, string snapshotPolicyName, ElasticSnapshotPolicyData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string accountName, string snapshotPolicyName, NetAppElasticSnapshotPolicyData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="snapshotPolicyName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="snapshotPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string accountName, string snapshotPolicyName, ElasticSnapshotPolicyData data, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string accountName, string snapshotPolicyName, NetAppElasticSnapshotPolicyData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.NetApp
             }
         }
 
-        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string accountName, string snapshotPolicyName, ElasticSnapshotPolicyPatch patch)
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string accountName, string snapshotPolicyName, NetAppElasticSnapshotPolicyPatch patch)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.NetApp
             return uri;
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string accountName, string snapshotPolicyName, ElasticSnapshotPolicyPatch patch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string accountName, string snapshotPolicyName, NetAppElasticSnapshotPolicyPatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="snapshotPolicyName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="snapshotPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string accountName, string snapshotPolicyName, ElasticSnapshotPolicyPatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string accountName, string snapshotPolicyName, NetAppElasticSnapshotPolicyPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="snapshotPolicyName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="snapshotPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Update(string subscriptionId, string resourceGroupName, string accountName, string snapshotPolicyName, ElasticSnapshotPolicyPatch patch, CancellationToken cancellationToken = default)
+        public Response Update(string subscriptionId, string resourceGroupName, string accountName, string snapshotPolicyName, NetAppElasticSnapshotPolicyPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));

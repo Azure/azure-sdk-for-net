@@ -5,6 +5,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Threading;
+using Azure.AI.Projects.Evaluation;
+using Azure.AI.Projects.Memory;
 
 namespace Azure.AI.Projects
 {
@@ -29,12 +32,30 @@ namespace Azure.AI.Projects
         private RedTeams _cachedRedTeams;
         private EvaluationRules _cachedEvaluationRules;
         private EvaluationTaxonomies _cachedEvaluationTaxonomies;
-        private Evaluators _cachedEvaluators;
-        private Insights _cachedInsights;
-        private Schedules _cachedSchedules;
+        private ProjectEvaluators _cachedProjectEvaluators;
+        private ProjectInsights _cachedProjectInsights;
+        private ProjectSchedules _cachedProjectSchedules;
         private AIProjectMemoryStoresOperations _cachedAIProjectMemoryStoresOperations;
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public ClientPipeline Pipeline { get; }
+
+        /// <summary> Initializes a new instance of ProjectEvaluators. </summary>
+        public virtual ProjectEvaluators GetProjectEvaluatorsClient()
+        {
+            return Volatile.Read(ref _cachedProjectEvaluators) ?? Interlocked.CompareExchange(ref _cachedProjectEvaluators, new ProjectEvaluators(Pipeline, _endpoint, _apiVersion), null) ?? _cachedProjectEvaluators;
+        }
+
+        /// <summary> Initializes a new instance of ProjectInsights. </summary>
+        public virtual ProjectInsights GetProjectInsightsClient()
+        {
+            return Volatile.Read(ref _cachedProjectInsights) ?? Interlocked.CompareExchange(ref _cachedProjectInsights, new ProjectInsights(Pipeline, _endpoint, _apiVersion), null) ?? _cachedProjectInsights;
+        }
+
+        /// <summary> Initializes a new instance of ProjectSchedules. </summary>
+        public virtual ProjectSchedules GetProjectSchedulesClient()
+        {
+            return Volatile.Read(ref _cachedProjectSchedules) ?? Interlocked.CompareExchange(ref _cachedProjectSchedules, new ProjectSchedules(Pipeline, _endpoint, _apiVersion), null) ?? _cachedProjectSchedules;
+        }
     }
 }

@@ -4,9 +4,11 @@
 
 ### Features Added
 
+- Upgraded API version to 2025-08-01 and 2026-01-01-preview.
+
 ### Breaking Changes
 
-### Bugs Fixed
+- Migrated from AutoRest to TypeSpec-based code generation.
 
 ### Other Changes
 

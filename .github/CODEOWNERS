@@ -39,8 +39,8 @@
 # Automation
 ################
 
-# Git Hub integration and bot rules
-/.github/                                                          @jsquire @ronniegeraghty
+# GitHub integration and bot rules
+/.github/                                                          @jsquire @ronniegeraghty @ArthurMa1978
 
 # PRLabel: %EngSys
 /sdk/template/                                                     @hallipr @weshaggard @benbp @jsquire
@@ -93,6 +93,12 @@
 
 # ServiceLabel: %AI Projects
 # ServiceOwners:                                                   @dargilco @nick863 @trangevi
+
+# PRLabel: %AI Agents
+/sdk/agentserver/                                                  @RaviPidaparthi @ankitbko
+
+# ServiceLabel: %AI Agents
+# ServiceOwners:                                                   @RaviPidaparthi @ankitbko
 
 # PRLabel: %App Configuration
 /sdk/appconfiguration/                                             @avanigupta @zhiyuanliang-ms @linglingye001
@@ -150,6 +156,9 @@
 
 # PRLabel: %Cognitive - Content Understanding
 /sdk/contentunderstanding/                                         @bojunehsu @changjian-wang @chienyuanchang @yungshinlintw
+
+# ServiceLabel: %Cognitive - Content Understanding
+# ServiceOwners:                                                   @bojunehsu @changjian-wang @chienyuanchang @yungshinlintw
 
 # PRLabel: %Cognitive - Custom Vision
 /sdk/cognitiveservices/Vision.CustomVision*/                       @areddish @tburns10
@@ -272,10 +281,10 @@
 # ServiceOwners:                                                   @Drewm3 @hilaryw29 @MsGabsta @nikhilpatel909 @sandeepraichura @TravisCragg-MSFT @ushnaarshadkhan
 
 # PRLabel: %Confidential Ledger
-/sdk/confidentialledger/                                           @andpiccione @Azure/azure-sdk-write-acl @christothes @ivarprudnikov @msftsettiy @musabbir @PallabPaul @prathod09 @ryazhang-microsoft @weirenlai
+/sdk/confidentialledger/                                           @andpiccione @Azure/azure-sdk-write-acl @christothes @ivarprudnikov @msftsettiy @musabbir @PallabPaul @ryazhang-microsoft @weirenlai
 
 # ServiceLabel: %Confidential Ledger
-# ServiceOwners:                                                   @andpiccione @Azure/azure-sdk-write-acl @ivarprudnikov @msftsettiy @musabbir @PallabPaul @prathod09 @ryazhang-microsoft @weirenlai
+# ServiceOwners:                                                   @andpiccione @Azure/azure-sdk-write-acl @ivarprudnikov @msftsettiy @musabbir @PallabPaul @ryazhang-microsoft @weirenlai
 
 # PRLabel: %Container Registry
 /sdk/containerregistry/                                            @Azure/azure-sdk-write-acr
@@ -1050,9 +1059,6 @@
 # ServiceLabel: %Monitor
 # ServiceOwners:                                                   @thomasp98296
 
-# PRLabel: %Neon Postgres
-/sdk/neonpostgres/Azure.ResourceManager.*/                         @ArcturusZhang @ArthurMa1978
-
 # PRLabel: %NetApp Files
 /sdk/netapp/Azure.ResourceManager.*/                               @audunn @Azure/azure-sdk-write-netappfiles
 
@@ -1069,10 +1075,10 @@
 # ServiceOwners:                                                   @tundwed @anamikanupur
 
 # PRLabel: %Network - DNS Private Resolver
-/sdk/dnsresolver/Azure.ResourceManager.*/                          @jamesvoongms @jotrivet
+/sdk/dnsresolver/Azure.ResourceManager.*/                          @ArcturusZhang @ArthurMa1978 @jotrivet
 
 # ServiceLabel: %Network - DNS Private Resolver %Mgmt
-# ServiceOwners:                                                   @jamesvoongms @jotrivet
+# ServiceOwners:                                                   @jotrivet
 
 # PRLabel: %Network - Front Door
 /sdk/frontdoor/Azure.ResourceManager.*/                            @ArcturusZhang @ArthurMa1978

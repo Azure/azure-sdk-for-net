@@ -6,11 +6,12 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Recurrence based trigger. </summary>
-    public partial class RecurrenceTrigger : Trigger, IJsonModel<RecurrenceTrigger>
+    public partial class RecurrenceTrigger : ScheduleTrigger, IJsonModel<RecurrenceTrigger>
     {
         /// <summary> Initializes a new instance of <see cref="RecurrenceTrigger"/> for deserialization. </summary>
         internal RecurrenceTrigger()
@@ -19,7 +20,7 @@ namespace Azure.AI.Projects
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override Trigger PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override ScheduleTrigger PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<RecurrenceTrigger>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -103,7 +104,7 @@ namespace Azure.AI.Projects
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override Trigger JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override ScheduleTrigger JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<RecurrenceTrigger>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

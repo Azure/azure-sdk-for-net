@@ -136,7 +136,7 @@ MemoryStoreSearchResponse resp = projectClient.MemoryStores.SearchMemories(
     options: opts
 );
 Console.WriteLine("==The output from memory tool.==");
-foreach (Azure.AI.Projects.MemorySearchItem item in resp.Memories)
+foreach (MemorySearchItem item in resp.Memories)
 {
     Console.WriteLine(item.MemoryItem.Content);
 }
@@ -154,7 +154,7 @@ MemoryStoreSearchResponse resp = await projectClient.MemoryStores.SearchMemories
     options: opts
 );
 Console.WriteLine("==The output from memory tool.==");
-foreach (Azure.AI.Projects.MemorySearchItem item in resp.Memories)
+foreach (MemorySearchItem item in resp.Memories)
 {
     Console.WriteLine(item.MemoryItem.Content);
 }

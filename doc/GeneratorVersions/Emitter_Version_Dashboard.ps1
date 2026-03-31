@@ -95,32 +95,65 @@ $linkLatestMgmt  = Get-NpmVersionLink "@azure-typespec/http-client-csharp-mgmt" 
 $linkLatestProv  = Get-NpmVersionLink "@azure-typespec/http-client-csharp-provisioning" $latestProv
 
 # --- Resolve the git commit that corresponds to each dependency version ---
-# Version format: 1.0.0-alpha.YYYYMMDD.N — extract the date and find the last
-# commit to the dependency's source directory on or before that date.
+# We query the npm registry for the exact publish timestamp of each dependency
+# version, then find the last commit to the source directory before that time.
+# This is more accurate than deriving a date from the version string, because
+# the version date can differ from the actual publish date and end-of-day
+# timestamps could pick up commits made after the CI build.
 
 Write-Host "Resolving git commits for dependency versions..."
 
-function Get-DateFromVersion([string]$Version) {
+function Get-NpmPublishTime([string]$PackageName, [string]$Version) {
+    try {
+        $encodedName = $PackageName -replace '/', '%2F'
+        $response = Invoke-RestMethod -Uri "https://registry.npmjs.org/$encodedName" -Method Get -ErrorAction Stop
+        $publishTime = $response.time.$Version
+        if ($publishTime) {
+            if ($publishTime -is [DateTime]) {
+                return $publishTime.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ssZ")
+            }
+            return $publishTime
+        }
+    } catch {}
+    return $null
+}
+
+function Get-VersionTimestamp([string]$PackageName, [string]$Version) {
+    # Prefer the exact publish timestamp from npm
+    if ($PackageName) {
+        $publishTime = Get-NpmPublishTime $PackageName $Version
+        if ($publishTime) { return $publishTime }
+    }
+    # Fall back to end-of-day derived from the version string
     if ($Version -match '(\d{4})(\d{2})(\d{2})\.\d+$') {
-        return "$($Matches[1])-$($Matches[2])-$($Matches[3])"
+        return "$($Matches[1])-$($Matches[2])-$($Matches[3])T23:59:59Z"
     }
     return $null
 }
 
-function Get-CommitForVersion([string]$RepoRoot, [string]$RelativePath, [string]$Version) {
-    $date = Get-DateFromVersion $Version
-    if (-not $date) { return @{ Hash = $null; Short = "unknown" } }
-    $hash = git -C $RepoRoot log --until="${date}T23:59:59" -1 --format="%H" -- $RelativePath 2>$null
+function Get-CommitForVersion([string]$RepoRoot, [string]$RelativePath, [string]$Version,
+    [string]$PackageName, [string]$GitHubOwner, [string]$GitHubRepo) {
+    $until = Get-VersionTimestamp $PackageName $Version
+    if (-not $until) { return @{ Hash = $null; Short = "unknown" } }
+    # Try local git log first (works with full clones)
+    $hash = git -C $RepoRoot log --until="$until" -1 --format="%H" -- $RelativePath 2>$null
+    # Fall back to GitHub API when local history is unavailable (e.g. shallow clones)
+    if (-not $hash -and $GitHubOwner -and $GitHubRepo) {
+        return Get-CommitForVersionGitHub $GitHubOwner $GitHubRepo $RelativePath $until
+    }
     $shortHash = if ($hash) { $hash.Substring(0, 7) } else { "unknown" }
     return @{ Hash = $hash; Short = $shortHash }
 }
 
-function Get-CommitForVersionGitHub([string]$Owner, [string]$Repo, [string]$Path, [string]$Version) {
-    $date = Get-DateFromVersion $Version
-    if (-not $date) { return @{ Hash = $null; Short = "unknown" } }
+function Get-CommitForVersionGitHub([string]$Owner, [string]$Repo, [string]$Path, [string]$Until) {
+    if (-not $Until) { return @{ Hash = $null; Short = "unknown" } }
     try {
-        $hash = gh api "repos/$Owner/$Repo/commits?path=$Path&until=${date}T23:59:59Z&per_page=1" --jq ".[0].sha" 2>$null
-        $shortHash = if ($hash) { $hash.Substring(0, 7) } else { "unknown" }
+        $encodedPath = [System.Uri]::EscapeDataString($Path)
+        $hash = gh api "repos/$Owner/$Repo/commits?path=$encodedPath&until=$Until&per_page=1" --jq ".[0].sha" 2>$null
+        if (-not $hash -or $hash -eq "null") {
+            return @{ Hash = $null; Short = "unknown" }
+        }
+        $shortHash = $hash.Substring(0, 7)
         return @{ Hash = $hash; Short = $shortHash }
     } catch {
         return @{ Hash = $null; Short = "unknown" }
@@ -128,12 +161,13 @@ function Get-CommitForVersionGitHub([string]$Owner, [string]$Repo, [string]$Path
 }
 
 # @typespec/http-client-csharp is from microsoft/typespec
-$commitBase = Get-CommitForVersionGitHub "microsoft" "typespec" "packages/http-client-csharp" $baseDep_azure
+$untilBase = Get-VersionTimestamp "@typespec/http-client-csharp" $baseDep_azure
+$commitBase = Get-CommitForVersionGitHub "microsoft" "typespec" "packages/http-client-csharp" $untilBase
 $commitBaseLink = if ($commitBase.Hash) { "https://github.com/microsoft/typespec/commit/$($commitBase.Hash)" } else { $null }
 
 # Azure packages are from this repo
-$commitAzure = Get-CommitForVersion $RepoRoot "eng/packages/http-client-csharp" $azureDep_mgmt
-$commitMgmt  = Get-CommitForVersion $RepoRoot "eng/packages/http-client-csharp-mgmt" $mgmtDep_prov
+$commitAzure = Get-CommitForVersion $RepoRoot "eng/packages/http-client-csharp" $azureDep_mgmt "@azure-typespec/http-client-csharp" "Azure" "azure-sdk-for-net"
+$commitMgmt  = Get-CommitForVersion $RepoRoot "eng/packages/http-client-csharp-mgmt" $mgmtDep_prov "@azure-typespec/http-client-csharp-mgmt" "Azure" "azure-sdk-for-net"
 
 # Always link to the canonical Azure SDK for .NET repository
 $gitBaseUrl = "https://github.com/Azure/azure-sdk-for-net"

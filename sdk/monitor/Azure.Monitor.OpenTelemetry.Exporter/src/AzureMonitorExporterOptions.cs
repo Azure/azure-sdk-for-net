@@ -130,7 +130,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         /// Gets or sets a value indicating whether performance counters should be collected.
         /// Default is true.
         /// </summary>
-        public bool EnablePerfCounters { get; set; } = true;
+        public bool EnablePerformanceCounters { get; set; } = true;
 
         internal void SetValueToLiveMetricsOptions(AzureMonitorLiveMetricsOptions liveMetricsOptions)
         {

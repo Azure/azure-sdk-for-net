@@ -6,6 +6,7 @@ using Azure.Generator.Management.Providers;
 using Azure.Generator.Management.Tests.Common;
 using Azure.Generator.Management.Tests.TestHelpers;
 using Azure.ResourceManager;
+using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using NUnit.Framework;
@@ -159,6 +160,110 @@ namespace Azure.Generator.Management.Tests.Providers
             Assert.NotNull(bodyStatements);
             var exptected = Helpers.GetExpectedFromFile();
             Assert.AreEqual(exptected, bodyStatements);
+        }
+
+        [TestCase]
+        public void Verify_NestedChildResource_CollectionGetter_IncludesPathParameters()
+        {
+            var (parentClient, childClient, models) = InputResourceData.ClientWithNestedChildResource();
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => models,
+                clients: () => [parentClient, childClient]);
+
+            var parentResource = plugin.Object.OutputLibrary.TypeProviders
+                .OfType<ResourceClientProvider>()
+                .FirstOrDefault(p => p.ResourceName == "ParentType");
+            Assert.NotNull(parentResource);
+
+            // Find the collection getter method — the name is based on pluralized resource name
+            var childMethods = parentResource!.Methods
+                .Where(m => m.Signature.Name.Contains("Child"))
+                .Select(m => m.Signature.Name)
+                .ToList();
+
+            // The collection getter should exist
+            Assert.IsTrue(childMethods.Count > 0, $"Parent resource should have child methods. Available methods: {string.Join(", ", parentResource.Methods.Select(m => m.Signature.Name))}");
+
+            var collectionGetter = parentResource.Methods
+                .FirstOrDefault(m => m.Signature.ReturnType?.Name?.Contains("Collection") == true);
+            Assert.NotNull(collectionGetter, $"Parent resource should have a collection getter. Available methods: {string.Join(", ", parentResource.Methods.Select(m => m.Signature.Name))}");
+
+            // The collection getter should include nestedTypeName as a path parameter
+            var nestedTypeParam = collectionGetter!.Signature.Parameters
+                .FirstOrDefault(p => p.Name == "nestedTypeName");
+            Assert.NotNull(nestedTypeParam, $"Collection getter '{collectionGetter.Signature.Name}' should include 'nestedTypeName' path parameter. Params: {string.Join(", ", collectionGetter.Signature.Parameters.Select(p => p.Name))}");
+            Assert.AreEqual(typeof(string), nestedTypeParam!.Type.FrameworkType);
+        }
+
+        [TestCase]
+        public void Verify_NestedChildResource_GetMethods_IncludePathParameters()
+        {
+            var (parentClient, childClient, models) = InputResourceData.ClientWithNestedChildResource();
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => models,
+                clients: () => [parentClient, childClient]);
+
+            var parentResource = plugin.Object.OutputLibrary.TypeProviders
+                .OfType<ResourceClientProvider>()
+                .FirstOrDefault(p => p.ResourceName == "ParentType");
+            Assert.NotNull(parentResource);
+
+            // Check sync Get method
+            var getMethod = parentResource!.Methods
+                .FirstOrDefault(m => m.Signature.Name == "GetChildType");
+            Assert.NotNull(getMethod, "Parent resource should have a GetChildType method");
+
+            // Should include nestedTypeName + childName parameters (plus cancellationToken)
+            var nestedTypeParam = getMethod!.Signature.Parameters
+                .FirstOrDefault(p => p.Name == "nestedTypeName");
+            Assert.NotNull(nestedTypeParam, "GetChildType should include 'nestedTypeName' path parameter");
+
+            var childNameParam = getMethod.Signature.Parameters
+                .FirstOrDefault(p => p.Name == "childName");
+            Assert.NotNull(childNameParam, "GetChildType should include 'childName' path parameter");
+
+            // Check async Get method
+            var getAsyncMethod = parentResource.Methods
+                .FirstOrDefault(m => m.Signature.Name == "GetChildTypeAsync");
+            Assert.NotNull(getAsyncMethod, "Parent resource should have a GetChildTypeAsync method");
+
+            var asyncNestedTypeParam = getAsyncMethod!.Signature.Parameters
+                .FirstOrDefault(p => p.Name == "nestedTypeName");
+            Assert.NotNull(asyncNestedTypeParam, "GetChildTypeAsync should include 'nestedTypeName' path parameter");
+        }
+
+        /// <summary>
+        /// Demonstrates that ArmResource.GetCachedClient uses typeof(T) as cache key,
+        /// so different parameter values captured in the factory closure are silently ignored
+        /// after the first call. This means parameterized collection getters that use
+        /// GetCachedClient will return stale instances when called with different path parameters.
+        /// </summary>
+        [TestCase]
+        public void Verify_GetCachedClient_IgnoresParameterChanges()
+        {
+            // ArmResource._clientCache is ConcurrentDictionary<Type, object>
+            // GetCachedClient<T> calls: _clientCache.GetOrAdd(typeof(T), _ => clientFactory(Client))
+            // This means the cache key is ONLY the type T, not the parameters.
+
+            // Simulate the exact same caching mechanism used by ArmResource.GetCachedClient
+            var cache = new System.Collections.Concurrent.ConcurrentDictionary<System.Type, object>();
+
+            // First call with nestedTypeName = "typeA"
+            var collection1 = cache.GetOrAdd(typeof(FakeCollection), _ => new FakeCollection("typeA")) as FakeCollection;
+
+            // Second call with nestedTypeName = "typeB" — expects a DIFFERENT collection
+            var collection2 = cache.GetOrAdd(typeof(FakeCollection), _ => new FakeCollection("typeB")) as FakeCollection;
+
+            // BUG: Both return the same instance — the second parameter is silently ignored
+            Assert.AreSame(collection1, collection2, "GetCachedClient returns the same instance regardless of parameter values");
+            Assert.AreEqual("typeA", collection2!.NestedTypeName,
+                "Second call should have nestedTypeName='typeB' but got 'typeA' because GetCachedClient ignores the closure parameters after first call");
+        }
+
+        private class FakeCollection
+        {
+            public string NestedTypeName { get; }
+            public FakeCollection(string nestedTypeName) => NestedTypeName = nestedTypeName;
         }
     }
 }

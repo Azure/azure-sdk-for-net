@@ -10,6 +10,8 @@ using System.Collections.Generic;
 using System.Threading;
 using Azure.AI.Extensions.OpenAI;
 using Azure.AI.Projects.Agents;
+using Azure.AI.Projects.Evaluation;
+using Azure.AI.Projects.Memory;
 
 #pragma warning disable AZC0007
 
@@ -165,22 +167,22 @@ namespace Azure.AI.Projects
             return Volatile.Read(ref _cachedEvaluationTaxonomies) ?? Interlocked.CompareExchange(ref _cachedEvaluationTaxonomies, new EvaluationTaxonomies(Pipeline, _endpoint, _apiVersion), null) ?? _cachedEvaluationTaxonomies;
         }
 
-        /// <summary> Initializes a new instance of Evaluators. </summary>
-        internal virtual Evaluators GetEvaluatorsClient()
+        /// <summary> Initializes a new instance of ProjectEvaluators. </summary>
+        internal virtual ProjectEvaluators GetEvaluatorsClient()
         {
-            return Volatile.Read(ref _cachedEvaluators) ?? Interlocked.CompareExchange(ref _cachedEvaluators, new Evaluators(Pipeline, _endpoint, _apiVersion), null) ?? _cachedEvaluators;
+            return Volatile.Read(ref _cachedProjectEvaluators) ?? Interlocked.CompareExchange(ref _cachedProjectEvaluators, new ProjectEvaluators(Pipeline, _endpoint, _apiVersion), null) ?? _cachedProjectEvaluators;
         }
 
-        /// <summary> Initializes a new instance of Insights. </summary>
-        internal virtual Insights GetInsightsClient()
+        /// <summary> Initializes a new instance of ProjectInsights. </summary>
+        internal virtual ProjectInsights GetInsightsClient()
         {
-            return Volatile.Read(ref _cachedInsights) ?? Interlocked.CompareExchange(ref _cachedInsights, new Insights(Pipeline, _endpoint, _apiVersion), null) ?? _cachedInsights;
+            return Volatile.Read(ref _cachedProjectInsights) ?? Interlocked.CompareExchange(ref _cachedProjectInsights, new ProjectInsights(Pipeline, _endpoint, _apiVersion), null) ?? _cachedProjectInsights;
         }
 
-        /// <summary> Initializes a new instance of Schedules. </summary>
-        internal virtual Schedules GetSchedulesClient()
+        /// <summary> Initializes a new instance of ProjectSchedules. </summary>
+        internal virtual ProjectSchedules GetSchedulesClient()
         {
-            return Volatile.Read(ref _cachedSchedules) ?? Interlocked.CompareExchange(ref _cachedSchedules, new Schedules(Pipeline, _endpoint, _apiVersion), null) ?? _cachedSchedules;
+            return Volatile.Read(ref _cachedProjectSchedules) ?? Interlocked.CompareExchange(ref _cachedProjectSchedules, new ProjectSchedules(Pipeline, _endpoint, _apiVersion), null) ?? _cachedProjectSchedules;
         }
 
         /// <summary> Initializes a new instance of AIProjectMemoryStoresOperations. </summary>
@@ -203,9 +205,9 @@ namespace Azure.AI.Projects
         public virtual RedTeams RedTeams => GetRedTeamsClient();
         public virtual EvaluationRules EvaluationRules => GetEvaluationRulesClient();
         public virtual EvaluationTaxonomies EvaluationTaxonomies => GetEvaluationTaxonomiesClient();
-        public virtual Evaluators Evaluators => GetEvaluatorsClient();
-        public virtual Insights Insights => GetInsightsClient();
-        public virtual Schedules Schedules => GetSchedulesClient();
+        public virtual ProjectEvaluators Evaluators => GetEvaluatorsClient();
+        public virtual ProjectInsights Insights => GetInsightsClient();
+        public virtual ProjectSchedules Schedules => GetSchedulesClient();
         /// <summary> Gets the client for telemetry operations. </summary>
         public virtual AIProjectTelemetry Telemetry { get => new AIProjectTelemetry(this); }
 

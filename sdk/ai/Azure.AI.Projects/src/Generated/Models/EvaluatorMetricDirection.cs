@@ -4,8 +4,9 @@
 
 using System;
 using System.ComponentModel;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> The direction of the metric indicating whether a higher value is better, a lower value is better, or neutral. </summary>
     public readonly partial struct EvaluatorMetricDirection : IEquatable<EvaluatorMetricDirection>

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework;
 using Microsoft.Extensions.Logging;
 using OpenTelemetry;
@@ -360,6 +361,79 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
                     { "intArray", "1,2,3" } },
                 expectedSpanId: spanId,
                 expectedTraceId: traceId);
+        }
+
+        [Theory]
+        [InlineData(ActivityKind.Client, "RemoteDependency")]
+        [InlineData(ActivityKind.Server, "Request")]
+        public void VerifyContextTagAttributes_MappedToEnvelopeTags(ActivityKind activityKind, string expectedTelemetryName)
+        {
+            // SETUP
+            var uniqueTestId = Guid.NewGuid();
+
+            var activitySourceName = $"activitySourceName{uniqueTestId}";
+            using var activitySource = new ActivitySource(activitySourceName);
+
+            var tracerProvider = Sdk.CreateTracerProviderBuilder()
+                .ConfigureResource(x => x.AddAttributes(testResourceAttributes))
+                .AddSource(activitySourceName)
+                .AddAzureMonitorTraceExporterForTest(out List<TelemetryItem> telemetryItems)
+                .Build();
+
+            // ACT
+            using (var activity = activitySource.StartActivity(name: "TestOperation", kind: activityKind))
+            {
+                Assert.NotNull(activity);
+
+                // Set all context tag attributes from the shim
+                activity.SetTag(SemanticConventions.AttributeUserAgentOriginal, "TestAgent/1.0");
+                activity.SetTag(SemanticConventions.AttributeMicrosoftSessionId, "session-123");
+                activity.SetTag(SemanticConventions.AttributeAiDeviceId, "device-456");
+                activity.SetTag(SemanticConventions.AttributeAiDeviceModel, "Surface Pro");
+                activity.SetTag(SemanticConventions.AttributeAiDeviceType, "PC");
+                activity.SetTag(SemanticConventions.AttributeAiDeviceOsVersion, "Microsoft Windows NT 10.0.22621.0");
+                activity.SetTag(SemanticConventions.AttributeMicrosoftSyntheticSource, "test-bot");
+                activity.SetTag(SemanticConventions.AttributeMicrosoftUserAccountId, "account-789");
+            }
+
+            // CLEANUP
+            tracerProvider?.Dispose();
+
+            // ASSERT
+            Assert.True(telemetryItems.Any(), "Unit test failed to collect telemetry.");
+            this.telemetryOutput.Write(telemetryItems);
+            var telemetryItem = telemetryItems.First(x => x.Name == expectedTelemetryName);
+
+            // Verify context tags are mapped to envelope tags
+            Assert.Equal("TestAgent/1.0", telemetryItem.Tags["ai.user.userAgent"]);
+            Assert.Equal("session-123", telemetryItem.Tags[ContextTagKeys.AiSessionId.ToString()]);
+            Assert.Equal("device-456", telemetryItem.Tags[ContextTagKeys.AiDeviceId.ToString()]);
+            Assert.Equal("Surface Pro", telemetryItem.Tags[ContextTagKeys.AiDeviceModel.ToString()]);
+            Assert.Equal("PC", telemetryItem.Tags[ContextTagKeys.AiDeviceType.ToString()]);
+            Assert.Equal("Microsoft Windows NT 10.0.22621.0", telemetryItem.Tags[ContextTagKeys.AiDeviceOSVersion.ToString()]);
+            Assert.Equal("test-bot", telemetryItem.Tags[ContextTagKeys.AiOperationSyntheticSource.ToString()]);
+            Assert.Equal("account-789", telemetryItem.Tags[ContextTagKeys.AiUserAccountId.ToString()]);
+
+            // Verify context tags are NOT in customDimensions
+            var baseData = telemetryItem.Data.BaseData;
+            IDictionary<string, string> properties;
+            if (baseData is RemoteDependencyData depData)
+            {
+                properties = depData.Properties;
+            }
+            else
+            {
+                properties = ((RequestData)baseData).Properties;
+            }
+
+            Assert.False(properties.ContainsKey(SemanticConventions.AttributeUserAgentOriginal));
+            Assert.False(properties.ContainsKey(SemanticConventions.AttributeMicrosoftSessionId));
+            Assert.False(properties.ContainsKey(SemanticConventions.AttributeAiDeviceId));
+            Assert.False(properties.ContainsKey(SemanticConventions.AttributeAiDeviceModel));
+            Assert.False(properties.ContainsKey(SemanticConventions.AttributeAiDeviceType));
+            Assert.False(properties.ContainsKey(SemanticConventions.AttributeAiDeviceOsVersion));
+            Assert.False(properties.ContainsKey(SemanticConventions.AttributeMicrosoftSyntheticSource));
+            Assert.False(properties.ContainsKey(SemanticConventions.AttributeMicrosoftUserAccountId));
         }
     }
 }

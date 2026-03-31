@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -14,22 +15,23 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public partial class FileShareRecoveryPoint : BackupGenericRecoveryPoint
     {
         /// <summary> Initializes a new instance of <see cref="FileShareRecoveryPoint"/>. </summary>
-        public FileShareRecoveryPoint()
+        public FileShareRecoveryPoint() : base("AzureFileShareRecoveryPoint")
         {
             RecoveryPointTierDetails = new ChangeTrackingList<RecoveryPointTierInformation>();
-            ObjectType = "AzureFileShareRecoveryPoint";
         }
 
         /// <summary> Initializes a new instance of <see cref="FileShareRecoveryPoint"/>. </summary>
         /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="threatStatus"> Threat status of the recovery point. </param>
+        /// <param name="threatInfo"> Recovery point threat information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="recoveryPointType"> Type of the backup copy. Specifies whether it is a crash consistent backup or app consistent. </param>
         /// <param name="recoveryPointOn"> Time at which this backup copy was created. </param>
         /// <param name="fileShareSnapshotUri"> Contains Url to the snapshot of fileshare, if applicable. </param>
         /// <param name="recoveryPointSizeInGB"> Contains recovery point size. </param>
         /// <param name="recoveryPointProperties"> Properties of Recovery Point. </param>
         /// <param name="recoveryPointTierDetails"> Recovery point tier information. </param>
-        internal FileShareRecoveryPoint(string objectType, IDictionary<string, BinaryData> serializedAdditionalRawData, string recoveryPointType, DateTimeOffset? recoveryPointOn, Uri fileShareSnapshotUri, int? recoveryPointSizeInGB, RecoveryPointProperties recoveryPointProperties, IList<RecoveryPointTierInformation> recoveryPointTierDetails) : base(objectType, serializedAdditionalRawData)
+        internal FileShareRecoveryPoint(string objectType, RecoveryPointThreatStatus? threatStatus, IList<RecoveryPointThreatInformation> threatInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties, string recoveryPointType, DateTimeOffset? recoveryPointOn, Uri fileShareSnapshotUri, int? recoveryPointSizeInGB, RecoveryPointProperties recoveryPointProperties, IList<RecoveryPointTierInformation> recoveryPointTierDetails) : base(objectType, threatStatus, threatInfo, additionalBinaryDataProperties)
         {
             RecoveryPointType = recoveryPointType;
             RecoveryPointOn = recoveryPointOn;
@@ -37,19 +39,23 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             RecoveryPointSizeInGB = recoveryPointSizeInGB;
             RecoveryPointProperties = recoveryPointProperties;
             RecoveryPointTierDetails = recoveryPointTierDetails;
-            ObjectType = objectType ?? "AzureFileShareRecoveryPoint";
         }
 
         /// <summary> Type of the backup copy. Specifies whether it is a crash consistent backup or app consistent. </summary>
         public string RecoveryPointType { get; set; }
+
         /// <summary> Time at which this backup copy was created. </summary>
         public DateTimeOffset? RecoveryPointOn { get; set; }
+
         /// <summary> Contains Url to the snapshot of fileshare, if applicable. </summary>
         public Uri FileShareSnapshotUri { get; set; }
+
         /// <summary> Contains recovery point size. </summary>
         public int? RecoveryPointSizeInGB { get; set; }
+
         /// <summary> Properties of Recovery Point. </summary>
         public RecoveryPointProperties RecoveryPointProperties { get; set; }
+
         /// <summary> Recovery point tier information. </summary>
         public IList<RecoveryPointTierInformation> RecoveryPointTierDetails { get; }
     }

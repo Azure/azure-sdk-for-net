@@ -112,13 +112,21 @@ namespace Azure.Generator.Provisioning
         /// </summary>
         private CSharpType? GetUnwrappedCSharpType(InputType inputType)
         {
-            // For model types, return the provider type directly
-            if (inputType is InputModelType)
+            // For model types, check provisioning mapping first, then fall back to base
+            if (inputType is InputModelType inputModel)
+            {
+                if (KnownProvisioningTypes.TryGetProvisioningType(inputModel.CrossLanguageDefinitionId, out var provType))
+                    return provType;
                 return base.CreateCSharpTypeCore(inputType) ?? CreateCSharpType(inputType);
+            }
 
-            // For enum types, return the system type or string
-            if (inputType is InputEnumType)
+            // For enum types, check provisioning mapping first, then fall back to base
+            if (inputType is InputEnumType inputEnum)
+            {
+                if (KnownProvisioningTypes.TryGetProvisioningType(inputEnum.CrossLanguageDefinitionId, out var provEnumType))
+                    return provEnumType;
                 return base.CreateCSharpTypeCore(inputType) ?? typeof(string);
+            }
 
             // For all other types, use the base resolution (returns raw .NET type)
             return base.CreateCSharpTypeCore(inputType);
@@ -208,8 +216,9 @@ namespace Azure.Generator.Provisioning
                 var info = infoProvider.GetProvisioningPropertyInfo(inputModelProperty);
                 if (info == null) return null;
                 var resolvedName = baseProperty?.Name ?? info.PropertyName;
-                var bicepType = CreateCSharpType(inputModelProperty.Type);
+                var bicepType = info.TypeOverride ?? CreateCSharpType(inputModelProperty.Type);
                 if (bicepType == null) return null;
+
                 return ProvisioningPropertyProvider.Create(
                     resolvedName, bicepType,
                     info.IsOutput, info.IsRequired, info.BicepPath, info.DefaultValue,

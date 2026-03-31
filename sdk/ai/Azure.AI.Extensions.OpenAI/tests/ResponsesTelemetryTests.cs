@@ -156,9 +156,9 @@ public partial class ResponsesTelemetryTests : ProjectsOpenAITestBase
             Instructions = "You are a helpful assistant."
         };
         var agentName = "responseTelemetryTestAgent";
-        AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+        ProjectsAgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
             agentName,
-            new AgentVersionCreationOptions(agentDefinition));
+            new ProjectsAgentVersionCreationOptions(agentDefinition));
 
         try
         {

@@ -25,7 +25,7 @@ DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         ),
     }
 };
-AgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
+ProjectsAgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
     agentName: "myAgent",
     options: new(agentDefinition));
 ```
@@ -43,7 +43,7 @@ DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         ),
     }
 };
-AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+ProjectsAgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
     agentName: "myAgent",
     options: new(agentDefinition));
 ```

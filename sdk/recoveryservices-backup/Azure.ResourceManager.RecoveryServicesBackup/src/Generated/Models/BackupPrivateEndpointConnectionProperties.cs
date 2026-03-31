@@ -8,44 +8,15 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Private Endpoint Connection Response Properties. </summary>
     public partial class BackupPrivateEndpointConnectionProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BackupPrivateEndpointConnectionProperties"/>. </summary>
         public BackupPrivateEndpointConnectionProperties()
@@ -58,35 +29,43 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="privateEndpoint"> Gets or sets private endpoint associated with the private endpoint connection. </param>
         /// <param name="groupIds"> Group Ids for the Private Endpoint. </param>
         /// <param name="privateLinkServiceConnectionState"> Gets or sets private link service connection state. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BackupPrivateEndpointConnectionProperties(BackupPrivateEndpointConnectionProvisioningState? provisioningState, WritableSubResource privateEndpoint, IList<VaultSubResourceType> groupIds, RecoveryServicesBackupPrivateLinkServiceConnectionState privateLinkServiceConnectionState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BackupPrivateEndpointConnectionProperties(BackupPrivateEndpointConnectionProvisioningState? provisioningState, PrivateEndpoint privateEndpoint, IList<VaultSubResourceType> groupIds, RecoveryServicesBackupPrivateLinkServiceConnectionState privateLinkServiceConnectionState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             PrivateEndpoint = privateEndpoint;
             GroupIds = groupIds;
             PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Gets or sets provisioning state of the private endpoint connection. </summary>
         public BackupPrivateEndpointConnectionProvisioningState? ProvisioningState { get; set; }
+
         /// <summary> Gets or sets private endpoint associated with the private endpoint connection. </summary>
-        internal WritableSubResource PrivateEndpoint { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        public ResourceIdentifier PrivateEndpointId
-        {
-            get => PrivateEndpoint is null ? default : PrivateEndpoint.Id;
-            set
-            {
-                if (PrivateEndpoint is null)
-                    PrivateEndpoint = new WritableSubResource();
-                PrivateEndpoint.Id = value;
-            }
-        }
+        internal PrivateEndpoint PrivateEndpoint { get; set; }
 
         /// <summary> Group Ids for the Private Endpoint. </summary>
         public IList<VaultSubResourceType> GroupIds { get; }
+
         /// <summary> Gets or sets private link service connection state. </summary>
         public RecoveryServicesBackupPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; set; }
+
+        /// <summary> Gets or sets id. </summary>
+        public ResourceIdentifier PrivateEndpointId
+        {
+            get
+            {
+                return PrivateEndpoint is null ? default : PrivateEndpoint.Id;
+            }
+            set
+            {
+                if (PrivateEndpoint is null)
+                {
+                    PrivateEndpoint = new PrivateEndpoint();
+                }
+                PrivateEndpoint.Id = value;
+            }
+        }
     }
 }

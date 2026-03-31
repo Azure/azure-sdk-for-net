@@ -32,12 +32,14 @@ namespace Azure.ResourceManager.ContainerService
         [EditorBrowsable(EditorBrowsableState.Never)]
         public AgentPoolGpuDriver? GpuDriver
         {
-            get => GpuProfile is null ? default : GpuProfile.Driver;
+            get => Properties?.GpuProfile is null ? default : Properties.GpuProfile.Driver;
             set
             {
-                if (GpuProfile is null)
-                    GpuProfile = new AgentPoolGpuProfile();
-                GpuProfile.Driver = value;
+                if (Properties is null)
+                    Properties = new ManagedClusterAgentPoolProfileProperties();
+                if (Properties.GpuProfile is null)
+                    Properties.GpuProfile = new AgentPoolGpuProfile();
+                Properties.GpuProfile.Driver = value;
             }
         }
 
@@ -46,7 +48,7 @@ namespace Azure.ResourceManager.ContainerService
         [EditorBrowsable(EditorBrowsableState.Never)]
         public IList<ManualScaleProfile> ScaleManual
         {
-            get => VirtualMachinesScale is null ? default : VirtualMachinesScale.Manual;
+            get => VirtualMachinesScaleManual;
         }
 
         /// <summary> The type of Agent Pool. </summary>
