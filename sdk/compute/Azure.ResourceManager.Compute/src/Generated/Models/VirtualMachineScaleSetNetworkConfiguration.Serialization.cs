@@ -14,7 +14,7 @@ using Azure.ResourceManager.Compute;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes a virtual machine scale set network profile's network configurations. </summary>
-    public partial class VirtualMachineScaleSetNetworkConfiguration : ComputeWriteableSubResourceData, IJsonModel<VirtualMachineScaleSetNetworkConfiguration>
+    public partial class VirtualMachineScaleSetNetworkConfiguration : IJsonModel<VirtualMachineScaleSetNetworkConfiguration>
     {
         /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetNetworkConfiguration"/> for deserialization. </summary>
         internal VirtualMachineScaleSetNetworkConfiguration()

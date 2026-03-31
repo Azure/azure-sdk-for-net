@@ -14,7 +14,7 @@ using Azure.ResourceManager.Compute;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The identifier information of shared gallery. </summary>
-    public partial class SharedGalleryIdentifier : IJsonModel<SharedGalleryIdentifier>
+    internal partial class SharedGalleryIdentifier : IJsonModel<SharedGalleryIdentifier>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

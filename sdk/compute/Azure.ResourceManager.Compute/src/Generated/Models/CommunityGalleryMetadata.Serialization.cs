@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Compute.Models
             Uri publisherUri = default;
             string publisherContact = default;
             string eula = default;
-            IList<string> publicNames = default;
+            IReadOnlyList<string> publicNames = default;
             Uri privacyStatementUri = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())

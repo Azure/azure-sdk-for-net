@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="diskRestorePoints"> The disk restore points information. </param>
         /// <param name="statuses"> The resource status information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RestorePointInstanceView(IList<DiskRestorePointInstanceView> diskRestorePoints, IList<InstanceViewStatus> statuses, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RestorePointInstanceView(IReadOnlyList<DiskRestorePointInstanceView> diskRestorePoints, IReadOnlyList<InstanceViewStatus> statuses, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DiskRestorePoints = diskRestorePoints;
             Statuses = statuses;
@@ -36,9 +36,9 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> The disk restore points information. </summary>
-        public IList<DiskRestorePointInstanceView> DiskRestorePoints { get; }
+        public IReadOnlyList<DiskRestorePointInstanceView> DiskRestorePoints { get; }
 
         /// <summary> The resource status information. </summary>
-        public IList<InstanceViewStatus> Statuses { get; }
+        public IReadOnlyList<InstanceViewStatus> Statuses { get; }
     }
 }

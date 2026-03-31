@@ -66,6 +66,15 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
+        /// <summary> This is the community gallery image definition identifier. </summary>
+        public CommunityGalleryImageIdentifier Identifier
+        {
+            get
+            {
+                return Properties.Identifier;
+            }
+        }
+
         /// <summary> The properties describe the recommended machine configuration for this Image Definition. These properties are updatable. </summary>
         public RecommendedMachineConfiguration Recommended
         {

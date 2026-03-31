@@ -142,8 +142,8 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             string name = default;
-            IList<DiskEncryptionSettings> encryptionSettings = default;
-            IList<InstanceViewStatus> statuses = default;
+            IReadOnlyList<DiskEncryptionSettings> encryptionSettings = default;
+            IReadOnlyList<InstanceViewStatus> statuses = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {

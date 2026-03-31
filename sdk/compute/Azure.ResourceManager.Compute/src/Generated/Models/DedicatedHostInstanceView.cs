@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="availableCapacity"> Unutilized capacity of the dedicated host. </param>
         /// <param name="statuses"> The resource status information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DedicatedHostInstanceView(string assetId, DedicatedHostAvailableCapacity availableCapacity, IList<InstanceViewStatus> statuses, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DedicatedHostInstanceView(string assetId, DedicatedHostAvailableCapacity availableCapacity, IReadOnlyList<InstanceViewStatus> statuses, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AssetId = assetId;
             AvailableCapacity = availableCapacity;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Compute.Models
         internal DedicatedHostAvailableCapacity AvailableCapacity { get; }
 
         /// <summary> The resource status information. </summary>
-        public IList<InstanceViewStatus> Statuses { get; }
+        public IReadOnlyList<InstanceViewStatus> Statuses { get; }
 
         /// <summary> The unutilized capacity of the dedicated host represented in terms of each VM size that is allowed to be deployed to the dedicated host. </summary>
         public IList<DedicatedHostAllocatableVM> AvailableCapacityAllocatableVMs

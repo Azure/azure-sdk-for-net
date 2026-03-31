@@ -14,7 +14,7 @@ using Azure.ResourceManager.Compute;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The identifier information of community gallery. </summary>
-    public partial class CommunityGalleryIdentifier : IJsonModel<CommunityGalleryIdentifier>
+    internal partial class CommunityGalleryIdentifier : IJsonModel<CommunityGalleryIdentifier>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

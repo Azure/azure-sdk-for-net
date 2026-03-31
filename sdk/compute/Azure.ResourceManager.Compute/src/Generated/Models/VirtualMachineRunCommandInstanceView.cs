@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="endOn"> Script end time. </param>
         /// <param name="statuses"> The resource status information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineRunCommandInstanceView(ExecutionState? executionState, string executionMessage, int? exitCode, string output, string error, DateTimeOffset? startOn, DateTimeOffset? endOn, IList<InstanceViewStatus> statuses, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineRunCommandInstanceView(ExecutionState? executionState, string executionMessage, int? exitCode, string output, string error, DateTimeOffset? startOn, DateTimeOffset? endOn, IReadOnlyList<InstanceViewStatus> statuses, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ExecutionState = executionState;
             ExecutionMessage = executionMessage;
@@ -68,6 +68,6 @@ namespace Azure.ResourceManager.Compute.Models
         public DateTimeOffset? EndOn { get; }
 
         /// <summary> The resource status information. </summary>
-        public IList<InstanceViewStatus> Statuses { get; }
+        public IReadOnlyList<InstanceViewStatus> Statuses { get; }
     }
 }

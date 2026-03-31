@@ -55,6 +55,9 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The number of replicas of the Image Version to be created per region. This property would take effect for a region when regionalReplicaCount is not specified. This property is updatable. </summary>
         public int? ReplicaCount { get; set; }
 
+        /// <summary> If set to true, Virtual Machines deployed from the latest version of the Image Definition won't use this Image Version. </summary>
+        public bool? ExcludeFromLatest { get; set; }
+
         /// <summary> The timestamp for when the gallery image version is published. </summary>
         public DateTimeOffset? PublishedOn { get; }
 

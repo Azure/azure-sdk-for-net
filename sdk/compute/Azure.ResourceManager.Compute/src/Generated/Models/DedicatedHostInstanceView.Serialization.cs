@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             string assetId = default;
             DedicatedHostAvailableCapacity availableCapacity = default;
-            IList<InstanceViewStatus> statuses = default;
+            IReadOnlyList<InstanceViewStatus> statuses = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {

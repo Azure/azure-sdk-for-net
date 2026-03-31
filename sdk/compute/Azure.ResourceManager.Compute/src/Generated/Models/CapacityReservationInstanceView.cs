@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="utilizationInfo"> Unutilized capacity of the capacity reservation. </param>
         /// <param name="statuses"> The resource status information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CapacityReservationInstanceView(CapacityReservationUtilization utilizationInfo, IList<InstanceViewStatus> statuses, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CapacityReservationInstanceView(CapacityReservationUtilization utilizationInfo, IReadOnlyList<InstanceViewStatus> statuses, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             UtilizationInfo = utilizationInfo;
             Statuses = statuses;
@@ -38,6 +38,6 @@ namespace Azure.ResourceManager.Compute.Models
         public CapacityReservationUtilization UtilizationInfo { get; }
 
         /// <summary> The resource status information. </summary>
-        public IList<InstanceViewStatus> Statuses { get; }
+        public IReadOnlyList<InstanceViewStatus> Statuses { get; }
     }
 }

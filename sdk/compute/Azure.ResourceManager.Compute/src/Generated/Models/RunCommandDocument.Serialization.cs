@@ -143,8 +143,8 @@ namespace Azure.ResourceManager.Compute.Models
             string label = default;
             string description = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            IList<string> script = default;
-            IList<RunCommandParameterDefinition> parameters = default;
+            IReadOnlyList<string> script = default;
+            IReadOnlyList<RunCommandParameterDefinition> parameters = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("$schema"u8))

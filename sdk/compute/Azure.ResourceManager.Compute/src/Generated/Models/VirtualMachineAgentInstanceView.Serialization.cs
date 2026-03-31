@@ -142,8 +142,8 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             string vmAgentVersion = default;
-            IList<VirtualMachineExtensionHandlerInstanceView> extensionHandlers = default;
-            IList<InstanceViewStatus> statuses = default;
+            IReadOnlyList<VirtualMachineExtensionHandlerInstanceView> extensionHandlers = default;
+            IReadOnlyList<InstanceViewStatus> statuses = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {

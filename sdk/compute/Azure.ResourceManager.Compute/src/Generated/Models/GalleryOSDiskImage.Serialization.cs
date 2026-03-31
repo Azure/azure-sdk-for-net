@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             int? sizeInGB = default;
             HostCaching? hostCaching = default;
-            GalleryArtifactVersionSource source = default;
+            GalleryDiskImageSource source = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    source = GalleryArtifactVersionSource.DeserializeGalleryArtifactVersionSource(prop.Value, options);
+                    source = GalleryDiskImageSource.DeserializeGalleryDiskImageSource(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

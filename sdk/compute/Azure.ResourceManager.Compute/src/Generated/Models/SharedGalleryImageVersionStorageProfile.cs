@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="osDiskImage"> This is the OS disk image. </param>
         /// <param name="dataDiskImages"> A list of data disk images. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SharedGalleryImageVersionStorageProfile(SharedGalleryOSDiskImage osDiskImage, IList<SharedGalleryDataDiskImage> dataDiskImages, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SharedGalleryImageVersionStorageProfile(SharedGalleryOSDiskImage osDiskImage, IReadOnlyList<SharedGalleryDataDiskImage> dataDiskImages, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OsDiskImage = osDiskImage;
             DataDiskImages = dataDiskImages;
@@ -38,6 +38,6 @@ namespace Azure.ResourceManager.Compute.Models
         public SharedGalleryOSDiskImage OsDiskImage { get; }
 
         /// <summary> A list of data disk images. </summary>
-        public IList<SharedGalleryDataDiskImage> DataDiskImages { get; }
+        public IReadOnlyList<SharedGalleryDataDiskImage> DataDiskImages { get; }
     }
 }

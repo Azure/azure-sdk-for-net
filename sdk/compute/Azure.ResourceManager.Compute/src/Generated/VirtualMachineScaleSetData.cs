@@ -79,6 +79,100 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Placement section specifies the user-defined constraints for virtual machine scale set hardware placement. This property cannot be changed once VMSS is provisioned. Minimum api-version: 2025-04-01. </summary>
         public Placement Placement { get; set; }
 
+        /// <summary> The upgrade policy. </summary>
+        public UpgradePolicy UpgradePolicy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UpgradePolicy;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineScaleSetProperties();
+                }
+                Properties.UpgradePolicy = value;
+            }
+        }
+
+        /// <summary> The ScheduledEventsPolicy. </summary>
+        public ScheduledEventsPolicy ScheduledEventsPolicy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ScheduledEventsPolicy;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineScaleSetProperties();
+                }
+                Properties.ScheduledEventsPolicy = value;
+            }
+        }
+
+        /// <summary> Policy for automatic repairs. </summary>
+        public AutomaticRepairsPolicy AutomaticRepairsPolicy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AutomaticRepairsPolicy;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineScaleSetProperties();
+                }
+                Properties.AutomaticRepairsPolicy = value;
+            }
+        }
+
+        /// <summary> The virtual machine profile. </summary>
+        public VirtualMachineScaleSetVMProfile VirtualMachineProfile
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VirtualMachineProfile;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineScaleSetProperties();
+                }
+                Properties.VirtualMachineProfile = value;
+            }
+        }
+
+        /// <summary> The provisioning state, which only appears in the response. </summary>
+        public string ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> Specifies whether the Virtual Machine Scale Set should be overprovisioned. </summary>
+        public bool? Overprovision
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Overprovision;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineScaleSetProperties();
+                }
+                Properties.Overprovision = value.Value;
+            }
+        }
+
         /// <summary> When Overprovision is enabled, extensions are launched only on the requested number of VMs which are finally kept. This property will hence ensure that the extensions do not run on the extra overprovisioned VMs. </summary>
         public bool? DoNotRunExtensionsOnOverprovisionedVMs
         {
@@ -93,6 +187,160 @@ namespace Azure.ResourceManager.Compute
                     Properties = new VirtualMachineScaleSetProperties();
                 }
                 Properties.DoNotRunExtensionsOnOverprovisionedVMs = value.Value;
+            }
+        }
+
+        /// <summary> Specifies the ID which uniquely identifies a Virtual Machine Scale Set. </summary>
+        public string UniqueId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UniqueId;
+            }
+        }
+
+        /// <summary> When true this limits the scale set to a single placement group, of max size 100 virtual machines. NOTE: If singlePlacementGroup is true, it may be modified to false. However, if singlePlacementGroup is false, it may not be modified to true. </summary>
+        public bool? SinglePlacementGroup
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SinglePlacementGroup;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineScaleSetProperties();
+                }
+                Properties.SinglePlacementGroup = value.Value;
+            }
+        }
+
+        /// <summary> Whether to force strictly even Virtual Machine distribution cross x-zones in case there is zone outage. zoneBalance property can only be set if the zones property of the scale set contains more than one zone. If there are no zones or only one zone specified, then zoneBalance property should not be set. </summary>
+        public bool? ZoneBalance
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ZoneBalance;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineScaleSetProperties();
+                }
+                Properties.ZoneBalance = value.Value;
+            }
+        }
+
+        /// <summary> Fault Domain count for each placement group. </summary>
+        public int? PlatformFaultDomainCount
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PlatformFaultDomainCount;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineScaleSetProperties();
+                }
+                Properties.PlatformFaultDomainCount = value.Value;
+            }
+        }
+
+        /// <summary> Specifies additional capabilities enabled or disabled on the Virtual Machines in the Virtual Machine Scale Set. For instance: whether the Virtual Machines have the capability to support attaching managed data disks with UltraSSD_LRS storage account type. </summary>
+        public AdditionalCapabilities AdditionalCapabilities
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AdditionalCapabilities;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineScaleSetProperties();
+                }
+                Properties.AdditionalCapabilities = value;
+            }
+        }
+
+        /// <summary> Specifies the policies applied when scaling in Virtual Machines in the Virtual Machine Scale Set. </summary>
+        public ScaleInPolicy ScaleInPolicy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ScaleInPolicy;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineScaleSetProperties();
+                }
+                Properties.ScaleInPolicy = value;
+            }
+        }
+
+        /// <summary> Specifies the orchestration mode for the virtual machine scale set. </summary>
+        public OrchestrationMode? OrchestrationMode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OrchestrationMode;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineScaleSetProperties();
+                }
+                Properties.OrchestrationMode = value.Value;
+            }
+        }
+
+        /// <summary> Specifies the Spot Restore properties for the virtual machine scale set. </summary>
+        public SpotRestorePolicy SpotRestorePolicy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SpotRestorePolicy;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineScaleSetProperties();
+                }
+                Properties.SpotRestorePolicy = value;
+            }
+        }
+
+        /// <summary> Specifies the desired targets for mixing Spot and Regular priority VMs within the same VMSS Flex instance. </summary>
+        public PriorityMixPolicy PriorityMixPolicy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PriorityMixPolicy;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineScaleSetProperties();
+                }
+                Properties.PriorityMixPolicy = value;
+            }
+        }
+
+        /// <summary> Specifies the time at which the Virtual Machine Scale Set resource was created. Minimum api-version: 2021-11-01. </summary>
+        public DateTimeOffset? TimeCreated
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TimeCreated;
             }
         }
 
@@ -113,6 +361,57 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
+        /// <summary> Policy for Resiliency. </summary>
+        public ResiliencyPolicy ResiliencyPolicy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ResiliencyPolicy;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineScaleSetProperties();
+                }
+                Properties.ResiliencyPolicy = value;
+            }
+        }
+
+        /// <summary> Specifies the align mode between Virtual Machine Scale Set compute and storage Fault Domain count. </summary>
+        public ZonalPlatformFaultDomainAlignMode? ZonalPlatformFaultDomainAlignMode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ZonalPlatformFaultDomainAlignMode;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineScaleSetProperties();
+                }
+                Properties.ZonalPlatformFaultDomainAlignMode = value.Value;
+            }
+        }
+
+        /// <summary> Specifies the sku profile for the virtual machine scale set. </summary>
+        public SkuProfile SkuProfile
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SkuProfile;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineScaleSetProperties();
+                }
+                Properties.SkuProfile = value;
+            }
+        }
+
         /// <summary> Specifies the high speed interconnect placement for the virtual machine scale set. </summary>
         public HighSpeedInterconnectPlacement? HighSpeedInterconnectPlacement
         {
@@ -127,6 +426,40 @@ namespace Azure.ResourceManager.Compute
                     Properties = new VirtualMachineScaleSetProperties();
                 }
                 Properties.HighSpeedInterconnectPlacement = value.Value;
+            }
+        }
+
+        /// <summary> Resource Id. </summary>
+        public string ProximityPlacementGroupId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProximityPlacementGroupId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineScaleSetProperties();
+                }
+                Properties.ProximityPlacementGroupId = value;
+            }
+        }
+
+        /// <summary> Resource Id. </summary>
+        public string HostGroupId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HostGroupId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineScaleSetProperties();
+                }
+                Properties.HostGroupId = value;
             }
         }
     }

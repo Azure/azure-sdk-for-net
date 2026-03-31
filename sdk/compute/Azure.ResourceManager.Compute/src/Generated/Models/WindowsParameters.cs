@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="WindowsParameters"/>. </summary>
         public WindowsParameters()
         {
-            ClassificationsToInclude = new ChangeTrackingList<VMGuestPatchClassificationWindows>();
+            ClassificationsToInclude = new ChangeTrackingList<Models.VmGuestPatchClassificationForWindows>();
             KbNumbersToInclude = new ChangeTrackingList<string>();
             KbNumbersToExclude = new ChangeTrackingList<string>();
             PatchNameMasksToInclude = new ChangeTrackingList<string>();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="patchNameMasksToInclude"> This is used to include patches that match the given patch name masks. Alphanumeric strings and wildcard expressions consisting of * and ? are only supported as input values in the list. Null, empty and only whitespaces strings as inputs values are not supported. </param>
         /// <param name="patchNameMasksToExclude"> This is used to exclude patches that match the given patch name masks. Alphanumeric strings and wildcard expressions consisting of * and ? are only supported as input values in the list. Null, empty and only whitespaces strings as inputs values are not supported. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WindowsParameters(IList<VMGuestPatchClassificationWindows> classificationsToInclude, IList<string> kbNumbersToInclude, IList<string> kbNumbersToExclude, bool? excludeKbsRequiringReboot, DateTimeOffset? maxPatchPublishOn, IList<string> patchNameMasksToInclude, IList<string> patchNameMasksToExclude, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WindowsParameters(IList<Models.VmGuestPatchClassificationForWindows> classificationsToInclude, IList<string> kbNumbersToInclude, IList<string> kbNumbersToExclude, bool? excludeKbsRequiringReboot, DateTimeOffset? maxPatchPublishOn, IList<string> patchNameMasksToInclude, IList<string> patchNameMasksToExclude, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ClassificationsToInclude = classificationsToInclude;
             KbNumbersToInclude = kbNumbersToInclude;
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> The update classifications to select when installing patches for Windows. </summary>
-        public IList<VMGuestPatchClassificationWindows> ClassificationsToInclude { get; }
+        public IList<Models.VmGuestPatchClassificationForWindows> ClassificationsToInclude { get; }
 
         /// <summary> Kbs to include in the patch operation. </summary>
         public IList<string> KbNumbersToInclude { get; }

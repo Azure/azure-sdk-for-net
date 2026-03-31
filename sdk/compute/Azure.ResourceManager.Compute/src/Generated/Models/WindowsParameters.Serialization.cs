@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 writer.WritePropertyName("classificationsToInclude"u8);
                 writer.WriteStartArray();
-                foreach (VMGuestPatchClassificationWindows item in ClassificationsToInclude)
+                foreach (Models.VmGuestPatchClassificationForWindows item in ClassificationsToInclude)
                 {
                     writer.WriteStringValue(item.ToString());
                 }
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            IList<VMGuestPatchClassificationWindows> classificationsToInclude = default;
+            IList<Models.VmGuestPatchClassificationForWindows> classificationsToInclude = default;
             IList<string> kbNumbersToInclude = default;
             IList<string> kbNumbersToExclude = default;
             bool? excludeKbsRequiringReboot = default;
@@ -212,10 +212,10 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    List<VMGuestPatchClassificationWindows> array = new List<VMGuestPatchClassificationWindows>();
+                    List<Models.VmGuestPatchClassificationForWindows> array = new List<Models.VmGuestPatchClassificationForWindows>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(new VMGuestPatchClassificationWindows(item.GetString()));
+                        array.Add(new Models.VmGuestPatchClassificationForWindows(item.GetString()));
                     }
                     classificationsToInclude = array;
                     continue;
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             return new WindowsParameters(
-                classificationsToInclude ?? new ChangeTrackingList<VMGuestPatchClassificationWindows>(),
+                classificationsToInclude ?? new ChangeTrackingList<Models.VmGuestPatchClassificationForWindows>(),
                 kbNumbersToInclude ?? new ChangeTrackingList<string>(),
                 kbNumbersToExclude ?? new ChangeTrackingList<string>(),
                 excludeKbsRequiringReboot,

@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             VirtualMachineScaleSetInstanceViewStatusesSummary virtualMachine = default;
             IReadOnlyList<VirtualMachineScaleSetVMExtensionsSummary> extensions = default;
-            IList<InstanceViewStatus> statuses = default;
+            IReadOnlyList<InstanceViewStatus> statuses = default;
             IReadOnlyList<OrchestrationServiceSummary> orchestrationServices = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())

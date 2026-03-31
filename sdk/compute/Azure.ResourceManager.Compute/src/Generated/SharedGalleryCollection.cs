@@ -5,9 +5,14 @@
 
 #nullable disable
 
+using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
+using System.Threading.Tasks;
 using Azure;
+using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Compute.Models;
@@ -24,6 +29,134 @@ namespace Azure.ResourceManager.Compute
     {
         private readonly ClientDiagnostics _sharedGalleriesClientDiagnostics;
         private readonly SharedGalleries _sharedGalleriesRestClient;
+        /// <summary> The location. </summary>
+        private readonly AzureLocation _location;
+
+        /// <summary> Initializes a new instance of SharedGalleryCollection for mocking. </summary>
+        protected SharedGalleryCollection()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SharedGalleryCollection"/> class. </summary>
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="location"> The location for the resource. </param>
+        internal SharedGalleryCollection(ArmClient client, ResourceIdentifier id, AzureLocation location) : base(client, id)
+        {
+            TryGetApiVersion(SharedGalleryResource.ResourceType, out string sharedGalleryApiVersion);
+            _location = location;
+            _sharedGalleriesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", SharedGalleryResource.ResourceType.Namespace, Diagnostics);
+            _sharedGalleriesRestClient = new SharedGalleries(_sharedGalleriesClientDiagnostics, Pipeline, Endpoint, sharedGalleryApiVersion ?? "2025-03-03");
+            ValidateResourceId(id);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != SubscriptionResource.ResourceType)
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), id);
+            }
+        }
+
+        /// <summary>
+        /// Get a shared gallery by subscription id or tenant id.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries/{galleryUniqueName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SharedGalleries_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-03. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="galleryUniqueName"> The unique name of the Shared Gallery. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="galleryUniqueName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="galleryUniqueName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<SharedGalleryResource>> GetAsync(string galleryUniqueName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(galleryUniqueName, nameof(galleryUniqueName));
+
+            using DiagnosticScope scope = _sharedGalleriesClientDiagnostics.CreateScope("SharedGalleryCollection.Get");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _sharedGalleriesRestClient.CreateGetRequest(Id.SubscriptionId, _location, galleryUniqueName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SharedGalleryData> response = Response.FromValue(SharedGalleryData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new SharedGalleryResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get a shared gallery by subscription id or tenant id.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries/{galleryUniqueName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SharedGalleries_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-03. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="galleryUniqueName"> The unique name of the Shared Gallery. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="galleryUniqueName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="galleryUniqueName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<SharedGalleryResource> Get(string galleryUniqueName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(galleryUniqueName, nameof(galleryUniqueName));
+
+            using DiagnosticScope scope = _sharedGalleriesClientDiagnostics.CreateScope("SharedGalleryCollection.Get");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _sharedGalleriesRestClient.CreateGetRequest(Id.SubscriptionId, _location, galleryUniqueName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SharedGalleryData> response = Response.FromValue(SharedGalleryData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new SharedGalleryResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
 
         /// <summary>
         /// List shared galleries by subscription id or tenant id.
@@ -81,6 +214,258 @@ namespace Azure.ResourceManager.Compute
                 CancellationToken = cancellationToken
             };
             return new PageableWrapper<SharedGalleryData, SharedGalleryResource>(new SharedGalleriesGetAllCollectionResultOfT(_sharedGalleriesRestClient, Id.SubscriptionId, _location, sharedTo?.ToString(), context), data => new SharedGalleryResource(Client, data));
+        }
+
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries/{galleryUniqueName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SharedGalleries_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-03. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="galleryUniqueName"> The unique name of the Shared Gallery. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="galleryUniqueName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="galleryUniqueName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string galleryUniqueName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(galleryUniqueName, nameof(galleryUniqueName));
+
+            using DiagnosticScope scope = _sharedGalleriesClientDiagnostics.CreateScope("SharedGalleryCollection.Exists");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _sharedGalleriesRestClient.CreateGetRequest(Id.SubscriptionId, _location, galleryUniqueName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<SharedGalleryData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SharedGalleryData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SharedGalleryData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries/{galleryUniqueName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SharedGalleries_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-03. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="galleryUniqueName"> The unique name of the Shared Gallery. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="galleryUniqueName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="galleryUniqueName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<bool> Exists(string galleryUniqueName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(galleryUniqueName, nameof(galleryUniqueName));
+
+            using DiagnosticScope scope = _sharedGalleriesClientDiagnostics.CreateScope("SharedGalleryCollection.Exists");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _sharedGalleriesRestClient.CreateGetRequest(Id.SubscriptionId, _location, galleryUniqueName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<SharedGalleryData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SharedGalleryData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SharedGalleryData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries/{galleryUniqueName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SharedGalleries_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-03. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="galleryUniqueName"> The unique name of the Shared Gallery. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="galleryUniqueName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="galleryUniqueName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<NullableResponse<SharedGalleryResource>> GetIfExistsAsync(string galleryUniqueName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(galleryUniqueName, nameof(galleryUniqueName));
+
+            using DiagnosticScope scope = _sharedGalleriesClientDiagnostics.CreateScope("SharedGalleryCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _sharedGalleriesRestClient.CreateGetRequest(Id.SubscriptionId, _location, galleryUniqueName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<SharedGalleryData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SharedGalleryData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SharedGalleryData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
+                if (response.Value == null)
+                {
+                    return new NoValueResponse<SharedGalleryResource>(response.GetRawResponse());
+                }
+                return Response.FromValue(new SharedGalleryResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries/{galleryUniqueName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SharedGalleries_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-03. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="galleryUniqueName"> The unique name of the Shared Gallery. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="galleryUniqueName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="galleryUniqueName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual NullableResponse<SharedGalleryResource> GetIfExists(string galleryUniqueName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(galleryUniqueName, nameof(galleryUniqueName));
+
+            using DiagnosticScope scope = _sharedGalleriesClientDiagnostics.CreateScope("SharedGalleryCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _sharedGalleriesRestClient.CreateGetRequest(Id.SubscriptionId, _location, galleryUniqueName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<SharedGalleryData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SharedGalleryData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SharedGalleryData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
+                if (response.Value == null)
+                {
+                    return new NoValueResponse<SharedGalleryResource>(response.GetRawResponse());
+                }
+                return Response.FromValue(new SharedGalleryResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        IEnumerator<SharedGalleryResource> IEnumerable<SharedGalleryResource>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        IAsyncEnumerator<SharedGalleryResource> IAsyncEnumerable<SharedGalleryResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

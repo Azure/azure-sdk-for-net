@@ -14,7 +14,7 @@ using Azure.ResourceManager.Compute;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies if Scheduled Events should be auto-approved when all instances are down. </summary>
-    public partial class AllInstancesDown : IJsonModel<AllInstancesDown>
+    internal partial class AllInstancesDown : IJsonModel<AllInstancesDown>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

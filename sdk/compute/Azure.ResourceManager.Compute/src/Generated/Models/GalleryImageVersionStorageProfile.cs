@@ -28,13 +28,16 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="osDiskImage"> This is the OS disk image. </param>
         /// <param name="dataDiskImages"> A list of data disk images. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GalleryImageVersionStorageProfile(GalleryArtifactVersionSource source, GalleryOSDiskImage osDiskImage, IList<GalleryDataDiskImage> dataDiskImages, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GalleryImageVersionStorageProfile(GalleryArtifactVersionFullSource source, GalleryOSDiskImage osDiskImage, IList<GalleryDataDiskImage> dataDiskImages, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Source = source;
             OsDiskImage = osDiskImage;
             DataDiskImages = dataDiskImages;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> The source of the gallery artifact version. </summary>
+        public GalleryArtifactVersionFullSource Source { get; set; }
 
         /// <summary> This is the OS disk image. </summary>
         public GalleryOSDiskImage OsDiskImage { get; set; }

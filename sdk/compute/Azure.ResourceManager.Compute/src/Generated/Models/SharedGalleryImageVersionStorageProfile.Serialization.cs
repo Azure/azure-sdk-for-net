@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             SharedGalleryOSDiskImage osDiskImage = default;
-            IList<SharedGalleryDataDiskImage> dataDiskImages = default;
+            IReadOnlyList<SharedGalleryDataDiskImage> dataDiskImages = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {

@@ -14,7 +14,7 @@ using Azure.ResourceManager.Compute;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes a virtual machine scale set network profile's IP configuration. NOTE: The subnet of a scale set may be modified as long as the original subnet and the new subnet are in the same virtual network. </summary>
-    public partial class VirtualMachineScaleSetUpdateIPConfiguration : ComputeWriteableSubResourceData, IJsonModel<VirtualMachineScaleSetUpdateIPConfiguration>
+    public partial class VirtualMachineScaleSetUpdateIPConfiguration : IJsonModel<VirtualMachineScaleSetUpdateIPConfiguration>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="extensionHandlers"> The virtual machine extension handler instance view. </param>
         /// <param name="statuses"> The resource status information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineAgentInstanceView(string vmAgentVersion, IList<VirtualMachineExtensionHandlerInstanceView> extensionHandlers, IList<InstanceViewStatus> statuses, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineAgentInstanceView(string vmAgentVersion, IReadOnlyList<VirtualMachineExtensionHandlerInstanceView> extensionHandlers, IReadOnlyList<InstanceViewStatus> statuses, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VmAgentVersion = vmAgentVersion;
             ExtensionHandlers = extensionHandlers;
@@ -41,9 +41,9 @@ namespace Azure.ResourceManager.Compute.Models
         public string VmAgentVersion { get; }
 
         /// <summary> The virtual machine extension handler instance view. </summary>
-        public IList<VirtualMachineExtensionHandlerInstanceView> ExtensionHandlers { get; }
+        public IReadOnlyList<VirtualMachineExtensionHandlerInstanceView> ExtensionHandlers { get; }
 
         /// <summary> The resource status information. </summary>
-        public IList<InstanceViewStatus> Statuses { get; }
+        public IReadOnlyList<InstanceViewStatus> Statuses { get; }
     }
 }

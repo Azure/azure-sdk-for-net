@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Compute.Models
             string name = default;
             GalleryExtendedLocation extendedLocation = default;
             int? extendedLocationReplicaCount = default;
-            ImageStorageAccountType? storageAccountType = default;
+            EdgeZoneStorageAccountType? storageAccountType = default;
             EncryptionImages encryption = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    storageAccountType = new ImageStorageAccountType(prop.Value.GetString());
+                    storageAccountType = new EdgeZoneStorageAccountType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("encryption"u8))

@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(PublisherUri))
             {
                 writer.WritePropertyName("publisherUri"u8);
-                writer.WriteStringValue(PublisherUri.AbsoluteUri);
+                writer.WriteStringValue(PublisherUri);
             }
             if (Optional.IsDefined(PublisherContact))
             {
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Uri publisherUri = default;
+            string publisherUri = default;
             string publisherContact = default;
             string eula = default;
             string publicNamePrefix = default;
@@ -167,11 +167,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 if (prop.NameEquals("publisherUri"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    publisherUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    publisherUri = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("publisherContact"u8))

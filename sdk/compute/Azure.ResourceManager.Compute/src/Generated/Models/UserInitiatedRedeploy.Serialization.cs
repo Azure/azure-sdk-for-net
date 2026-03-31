@@ -14,7 +14,7 @@ using Azure.ResourceManager.Compute;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies Redeploy related Scheduled Event related configurations. </summary>
-    public partial class UserInitiatedRedeploy : IJsonModel<UserInitiatedRedeploy>
+    internal partial class UserInitiatedRedeploy : IJsonModel<UserInitiatedRedeploy>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

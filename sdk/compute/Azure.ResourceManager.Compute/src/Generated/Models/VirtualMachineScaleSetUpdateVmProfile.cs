@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes a virtual machine scale set virtual machine profile. </summary>
-    internal partial class VirtualMachineScaleSetUpdateVMProfile
+    public partial class VirtualMachineScaleSetUpdateVMProfile
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

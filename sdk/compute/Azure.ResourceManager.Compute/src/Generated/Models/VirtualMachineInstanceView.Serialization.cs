@@ -233,12 +233,12 @@ namespace Azure.ResourceManager.Compute.Models
             string rdpThumbPrint = default;
             VirtualMachineAgentInstanceView vmAgent = default;
             MaintenanceRedeployStatus maintenanceRedeployStatus = default;
-            IList<DiskInstanceView> disks = default;
-            IList<VirtualMachineExtensionInstanceView> extensions = default;
+            IReadOnlyList<DiskInstanceView> disks = default;
+            IReadOnlyList<VirtualMachineExtensionInstanceView> extensions = default;
             VirtualMachineHealthStatus vmHealth = default;
             BootDiagnosticsInstanceView bootDiagnostics = default;
             string assignedHost = default;
-            IList<InstanceViewStatus> statuses = default;
+            IReadOnlyList<InstanceViewStatus> statuses = default;
             VirtualMachinePatchStatus patchStatus = default;
             bool? isVMInStandbyPool = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();

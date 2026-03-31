@@ -246,6 +246,141 @@ namespace Azure.ResourceManager.Compute.Mocking
             return GetVirtualMachineExtensionImages(location, publisherName, @type).Get(version, cancellationToken);
         }
 
+        /// <summary> Gets a collection of SharedGalleries in the <see cref="SubscriptionResource"/>. </summary>
+        /// <param name="location"> The location for the resource. </param>
+        /// <returns> An object representing collection of SharedGalleries and their operations over a SharedGalleryResource. </returns>
+        public virtual SharedGalleryCollection GetSharedGalleries(AzureLocation location)
+        {
+            return GetCachedClient(client => new SharedGalleryCollection(client, Id, location));
+        }
+
+        /// <summary>
+        /// Get a shared gallery by subscription id or tenant id.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries/{galleryUniqueName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SharedGalleries_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-03. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location for the resource. </param>
+        /// <param name="galleryUniqueName"> The unique name of the Shared Gallery. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="galleryUniqueName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="galleryUniqueName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SharedGalleryResource>> GetSharedGalleryAsync(AzureLocation location, string galleryUniqueName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(galleryUniqueName, nameof(galleryUniqueName));
+
+            return await GetSharedGalleries(location).GetAsync(galleryUniqueName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a shared gallery by subscription id or tenant id.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries/{galleryUniqueName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SharedGalleries_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-03. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location for the resource. </param>
+        /// <param name="galleryUniqueName"> The unique name of the Shared Gallery. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="galleryUniqueName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="galleryUniqueName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SharedGalleryResource> GetSharedGallery(AzureLocation location, string galleryUniqueName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(galleryUniqueName, nameof(galleryUniqueName));
+
+            return GetSharedGalleries(location).Get(galleryUniqueName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of CommunityGalleries in the <see cref="SubscriptionResource"/>. </summary>
+        /// <returns> An object representing collection of CommunityGalleries and their operations over a CommunityGalleryResource. </returns>
+        public virtual CommunityGalleryCollection GetCommunityGalleries()
+        {
+            return GetCachedClient(client => new CommunityGalleryCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a community gallery by gallery public name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/communityGalleries/{publicGalleryName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CommunityGalleries_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-03. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="publicGalleryName"> The public name of the community gallery. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="publicGalleryName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="publicGalleryName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<CommunityGalleryResource>> GetCommunityGalleryAsync(AzureLocation location, string publicGalleryName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(publicGalleryName, nameof(publicGalleryName));
+
+            return await GetCommunityGalleries().GetAsync(location, publicGalleryName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a community gallery by gallery public name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/communityGalleries/{publicGalleryName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CommunityGalleries_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-03. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="publicGalleryName"> The public name of the community gallery. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="publicGalleryName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="publicGalleryName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<CommunityGalleryResource> GetCommunityGallery(AzureLocation location, string publicGalleryName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(publicGalleryName, nameof(publicGalleryName));
+
+            return GetCommunityGalleries().Get(location, publicGalleryName, cancellationToken);
+        }
+
         /// <summary>
         /// Gets a list of all VM Scale Sets in the subscription, regardless of the associated resource group. Use nextLink property in the response to get the next page of VM Scale Sets. Do this till nextLink is null to fetch all the VM Scale Sets.
         /// <list type="bullet">

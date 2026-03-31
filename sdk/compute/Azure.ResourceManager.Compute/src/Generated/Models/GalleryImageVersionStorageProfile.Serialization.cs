@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            GalleryArtifactVersionSource source = default;
+            GalleryArtifactVersionFullSource source = default;
             GalleryOSDiskImage osDiskImage = default;
             IList<GalleryDataDiskImage> dataDiskImages = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    source = GalleryArtifactVersionSource.DeserializeGalleryArtifactVersionSource(prop.Value, options);
+                    source = GalleryArtifactVersionFullSource.DeserializeGalleryArtifactVersionFullSource(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("osDiskImage"u8))

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies Redeploy related Scheduled Event related configurations. </summary>
-    public partial class UserInitiatedRedeploy
+    internal partial class UserInitiatedRedeploy
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

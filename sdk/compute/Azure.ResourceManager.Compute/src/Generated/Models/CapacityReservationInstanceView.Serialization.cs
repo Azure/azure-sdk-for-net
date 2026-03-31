@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             CapacityReservationUtilization utilizationInfo = default;
-            IList<InstanceViewStatus> statuses = default;
+            IReadOnlyList<InstanceViewStatus> statuses = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {

@@ -14,7 +14,7 @@ using Azure.ResourceManager.Compute;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes virtual machine scale set operating system disk Update Object. This should be used for Updating VMSS OS Disk. </summary>
-    internal partial class VirtualMachineScaleSetUpdateOSDisk : IJsonModel<VirtualMachineScaleSetUpdateOSDisk>
+    public partial class VirtualMachineScaleSetUpdateOSDisk : IJsonModel<VirtualMachineScaleSetUpdateOSDisk>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

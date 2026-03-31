@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Compute.Models
             string error = default;
             DateTimeOffset? startOn = default;
             DateTimeOffset? endOn = default;
-            IList<InstanceViewStatus> statuses = default;
+            IReadOnlyList<InstanceViewStatus> statuses = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {

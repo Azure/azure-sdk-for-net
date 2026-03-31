@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.Compute.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Specifies whether password authentication should be disabled. </summary>
+        public bool? DisablePasswordAuthentication { get; set; }
+
         /// <summary> Specifies the ssh key configuration for a Linux OS. </summary>
         internal SshConfiguration Ssh { get; set; }
 

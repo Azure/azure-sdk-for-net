@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             SharingState? aggregatedState = default;
-            IList<RegionalSharingStatus> summary = default;
+            IReadOnlyList<RegionalSharingStatus> summary = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
