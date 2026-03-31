@@ -179,7 +179,6 @@
     <PackageVersion Include="Microsoft.Bcl.Numerics" Version="10.0.3" />
 
     <!-- Other approved packages -->
-    <PackageVersion Include="Apache.Arrow" Version="22.1.0" />
     <PackageVersion Include="Microsoft.Azure.Amqp" Version="2.7.0" />
     <PackageVersion Include="Microsoft.Azure.WebPubSub.Common" Version="1.5.0" />
     <PackageVersion Include="Microsoft.Identity.Client" Version="4.83.1" />
