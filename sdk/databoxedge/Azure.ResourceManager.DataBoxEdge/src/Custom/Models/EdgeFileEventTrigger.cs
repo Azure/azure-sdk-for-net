@@ -1,8 +1,11 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-// Why: Baseline constructor took EdgeFileSourceInfo and DataBoxEdgeRoleSinkInfo wrapper types.
-// New generator flattened these to ResourceIdentifier. This adds backward-compatible constructor overload.
+// Backward-compat constructor overload for ApiCompat.
+// The new generator safe-flattens EdgeFileSourceInfo and DataBoxEdgeRoleSinkInfo
+// (single-property wrappers) into ResourceIdentifier parameters, changing the
+// generated constructor signature from (EdgeFileSourceInfo, DataBoxEdgeRoleSinkInfo)
+// to (ResourceIdentifier, ResourceIdentifier). This overload preserves the old signature.
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {

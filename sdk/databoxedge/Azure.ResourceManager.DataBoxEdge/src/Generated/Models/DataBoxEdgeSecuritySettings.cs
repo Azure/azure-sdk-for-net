@@ -43,6 +43,23 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         }
 
         /// <summary> Properties of the security settings. </summary>
-        internal SecuritySettingsProperties Properties { get; }
+        internal SecuritySettingsProperties Properties { get; set; }
+
+        /// <summary> Device administrator password as an encrypted string (encrypted using RSA PKCS #1) is used to sign into the  local web UI of the device. The Actual password should have at least 8 characters that are a combination of  uppercase, lowercase, numeric, and special characters. </summary>
+        public AsymmetricEncryptedSecret DeviceAdminPassword
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DeviceAdminPassword;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SecuritySettingsProperties();
+                }
+                Properties.DeviceAdminPassword = value;
+            }
+        }
     }
 }

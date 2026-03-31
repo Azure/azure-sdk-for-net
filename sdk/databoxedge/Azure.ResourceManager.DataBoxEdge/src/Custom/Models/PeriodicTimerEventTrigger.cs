@@ -1,8 +1,11 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-// Why: Baseline constructor took DataBoxEdgeRoleSinkInfo wrapper type.
-// New generator flattened it to ResourceIdentifier. This adds backward-compatible constructor overload.
+// Backward-compat constructor overload for ApiCompat.
+// The new generator safe-flattens DataBoxEdgeRoleSinkInfo (single-property wrapper)
+// into a ResourceIdentifier parameter, changing the generated constructor signature
+// from (PeriodicTimerSourceInfo, DataBoxEdgeRoleSinkInfo) to
+// (PeriodicTimerSourceInfo, ResourceIdentifier). This overload preserves the old signature.
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -19,11 +20,24 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         /// <summary> Initializes a new instance of <see cref="EdgeFileSourceInfo"/>. </summary>
         /// <param name="shareId"> File share ID. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="shareId"/> is null. </exception>
+        public EdgeFileSourceInfo(ResourceIdentifier shareId)
+        {
+            Argument.AssertNotNull(shareId, nameof(shareId));
+
+            ShareId = shareId;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EdgeFileSourceInfo"/>. </summary>
+        /// <param name="shareId"> File share ID. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal EdgeFileSourceInfo(ResourceIdentifier shareId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ShareId = shareId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> File share ID. </summary>
+        public ResourceIdentifier ShareId { get; set; }
     }
 }

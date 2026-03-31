@@ -13,6 +13,7 @@ using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
+    /// <summary> The properties of security settings. </summary>
     internal partial class SecuritySettingsProperties : IJsonModel<SecuritySettingsProperties>
     {
         /// <summary> Initializes a new instance of <see cref="SecuritySettingsProperties"/> for deserialization. </summary>

@@ -35,14 +35,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="deviceId"> ID of the IoT device/edge device. </param>
         /// <param name="iotHostHub"> Host name for the IoT hub associated to the device. </param>
         /// <param name="iotHostHubId"> Id for the IoT hub associated to the device. </param>
-        /// <param name="authentication"> Encrypted IoT device/IoT edge device connection string. </param>
+        /// <param name="profile"> Encrypted IoT device/IoT edge device connection string. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EdgeIotDeviceInfo(string deviceId, string iotHostHub, ResourceIdentifier iotHostHubId, Authentication authentication, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EdgeIotDeviceInfo(string deviceId, string iotHostHub, ResourceIdentifier iotHostHubId, Authentication profile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DeviceId = deviceId;
             IotHostHub = iotHostHub;
             IotHostHubId = iotHostHubId;
-            Authentication = authentication;
+            Profile = profile;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -56,22 +56,22 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public ResourceIdentifier IotHostHubId { get; set; }
 
         /// <summary> Encrypted IoT device/IoT edge device connection string. </summary>
-        internal Authentication Authentication { get; set; }
+        internal Authentication Profile { get; set; }
 
         /// <summary> Connection string based on the symmetric key. </summary>
-        public AsymmetricEncryptedSecret AuthenticationSymmetricKeyConnectionString
+        public AsymmetricEncryptedSecret SymmetricKeyConnectionString
         {
             get
             {
-                return Authentication is null ? default : Authentication.SymmetricKeyConnectionString;
+                return Profile is null ? default : Profile.SymmetricKeyConnectionString;
             }
             set
             {
-                if (Authentication is null)
+                if (Profile is null)
                 {
-                    Authentication = new Authentication();
+                    Profile = new Authentication();
                 }
-                Authentication.SymmetricKeyConnectionString = value;
+                Profile.SymmetricKeyConnectionString = value;
             }
         }
     }

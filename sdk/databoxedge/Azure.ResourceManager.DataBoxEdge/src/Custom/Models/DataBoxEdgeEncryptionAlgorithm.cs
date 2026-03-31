@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-// Why: Generator strips underscores from @@clientName targets. This member needs underscore in name to match baseline API.
+// Generator strips underscores from @@clientName targets. This member needs underscore in name to match baseline API.
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {

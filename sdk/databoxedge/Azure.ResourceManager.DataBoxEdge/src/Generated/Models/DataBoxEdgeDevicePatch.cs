@@ -48,11 +48,11 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         internal DataBoxEdgeDevicePropertiesPatch Properties { get; set; }
 
         /// <summary> The path ID that uniquely identifies the subscription of the edge profile. </summary>
-        public ResourceIdentifier EdgeSubscriptionId
+        public ResourceIdentifier SubscriptionId
         {
             get
             {
-                return Properties is null ? default : Properties.EdgeSubscriptionId;
+                return Properties is null ? default : Properties.SubscriptionId;
             }
             set
             {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 {
                     Properties = new DataBoxEdgeDevicePropertiesPatch();
                 }
-                Properties.EdgeSubscriptionId = value;
+                Properties.SubscriptionId = value;
             }
         }
     }

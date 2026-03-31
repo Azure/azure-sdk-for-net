@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-// Why: Baseline had IReadOnlyList<SubscriptionRegisteredFeatures> return type.
+// Baseline had IReadOnlyList<SubscriptionRegisteredFeatures> return type.
 // Generated code returns IList<SubscriptionRegisteredFeatures>.
 // This shadows the property to restore IReadOnlyList for backward compatibility.
 
