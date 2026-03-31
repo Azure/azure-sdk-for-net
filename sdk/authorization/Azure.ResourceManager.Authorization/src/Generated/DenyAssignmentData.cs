@@ -72,8 +72,14 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="principals"> Array of principals to which the deny assignment applies. </param>
         /// <param name="excludePrincipals"> Array of principals to which the deny assignment does not apply. </param>
         /// <param name="isSystemProtected"> Specifies whether this deny assignment was created by Azure and cannot be edited or deleted. </param>
+        /// <param name="condition"> The conditions on the deny assignment. This limits the resources it can be assigned to. e.g.: @Resource[Microsoft.Storage/storageAccounts/blobServices/containers:ContainerName] StringEqualsIgnoreCase 'foo_storage_container'. </param>
+        /// <param name="conditionVersion"> Version of the condition. </param>
+        /// <param name="createdOn"> Time it was created. </param>
+        /// <param name="updatedOn"> Time it was updated. </param>
+        /// <param name="createdBy"> Id of the user who created the assignment. </param>
+        /// <param name="updatedBy"> Id of the user who updated the assignment. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DenyAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string denyAssignmentName, string description, IReadOnlyList<DenyAssignmentPermission> permissions, string scope, bool? isAppliedToChildScopes, IReadOnlyList<RoleManagementPrincipal> principals, IReadOnlyList<RoleManagementPrincipal> excludePrincipals, bool? isSystemProtected, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal DenyAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string denyAssignmentName, string description, IReadOnlyList<DenyAssignmentPermission> permissions, string scope, bool? isAppliedToChildScopes, IReadOnlyList<RoleManagementPrincipal> principals, IReadOnlyList<RoleManagementPrincipal> excludePrincipals, bool? isSystemProtected, string condition, string conditionVersion, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string createdBy, string updatedBy, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             DenyAssignmentName = denyAssignmentName;
             Description = description;
@@ -83,6 +89,12 @@ namespace Azure.ResourceManager.Authorization
             Principals = principals;
             ExcludePrincipals = excludePrincipals;
             IsSystemProtected = isSystemProtected;
+            Condition = condition;
+            ConditionVersion = conditionVersion;
+            CreatedOn = createdOn;
+            UpdatedOn = updatedOn;
+            CreatedBy = createdBy;
+            UpdatedBy = updatedBy;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -110,5 +122,23 @@ namespace Azure.ResourceManager.Authorization
         /// <summary> Specifies whether this deny assignment was created by Azure and cannot be edited or deleted. </summary>
         [WirePath("properties.isSystemProtected")]
         public bool? IsSystemProtected { get; }
+        /// <summary> The conditions on the deny assignment. This limits the resources it can be assigned to. e.g.: @Resource[Microsoft.Storage/storageAccounts/blobServices/containers:ContainerName] StringEqualsIgnoreCase 'foo_storage_container'. </summary>
+        [WirePath("properties.condition")]
+        public string Condition { get; }
+        /// <summary> Version of the condition. </summary>
+        [WirePath("properties.conditionVersion")]
+        public string ConditionVersion { get; }
+        /// <summary> Time it was created. </summary>
+        [WirePath("properties.createdOn")]
+        public DateTimeOffset? CreatedOn { get; }
+        /// <summary> Time it was updated. </summary>
+        [WirePath("properties.updatedOn")]
+        public DateTimeOffset? UpdatedOn { get; }
+        /// <summary> Id of the user who created the assignment. </summary>
+        [WirePath("properties.createdBy")]
+        public string CreatedBy { get; }
+        /// <summary> Id of the user who updated the assignment. </summary>
+        [WirePath("properties.updatedBy")]
+        public string UpdatedBy { get; }
     }
 }
