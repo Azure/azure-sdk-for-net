@@ -8,6 +8,7 @@ using Microsoft.TypeSpec.Generator.Providers;
 using System;
 using System.ClientModel.Primitives;
 using System.IO;
+using System.Linq;
 using System.Text.Json;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
@@ -41,8 +42,27 @@ namespace Azure.Generator.Management.Providers
 
         protected override PropertyProvider[] BuildProperties() =>
             [
-                new PropertyProvider(null, MethodSignatureModifiers.Private | MethodSignatureModifiers.Static, _jsonModelInterfaceType, "DataDeserializationInstance", new ExpressionPropertyBody(new AssignmentExpression(_dataField, New.Instance(_resourceDataType), true)), this)
+                new PropertyProvider(null, MethodSignatureModifiers.Private | MethodSignatureModifiers.Static, _jsonModelInterfaceType, "DataDeserializationInstance", new ExpressionPropertyBody(new AssignmentExpression(_dataField, New.Instance(GetInstantiableDataType()), true)), this)
             ];
+
+        /// <summary>
+        /// Gets the concrete type to use for instantiating the DataDeserializationInstance.
+        /// For abstract data types (from @discriminator), uses the Unknown proxy type instead.
+        /// </summary>
+        private CSharpType GetInstantiableDataType()
+        {
+            var resourceData = _resoruce.ResourceData;
+            if (resourceData.DeclarationModifiers.HasFlag(TypeSignatureModifiers.Abstract))
+            {
+                var unknownDerivedModel = resourceData.DerivedModels
+                    .FirstOrDefault(m => m.IsUnknownDiscriminatorModel);
+                if (unknownDerivedModel != null)
+                {
+                    return unknownDerivedModel.Type;
+                }
+            }
+            return _resourceDataType;
+        }
 
         protected override MethodProvider[] BuildMethods()
         {
