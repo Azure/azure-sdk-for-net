@@ -991,7 +991,7 @@
 # ServiceOwners:                                                   @ArthurMa1978
 
 # PRLabel: %Device Registry
-/sdk/deviceregistry/Azure.ResourceManager.DeviceRegistry/          @atastrophic @rohankhandelwal
+/sdk/deviceregistry/Azure.ResourceManager.DeviceRegistry/          @atastrophic @rohankhandelwal @siongithub @mryanlo
 
 # ServiceLabel: %Device Registry %Mgmt
 # ServiceOwners:                                                   @atastrophic @rohankhandelwal
