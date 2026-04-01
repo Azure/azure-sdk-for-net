@@ -1,9 +1,9 @@
-# TypeSpec generated output — ignore everything except hand-written customisations
-Azure.AI.AgentServer.Responses.Contracts/src/TypeSpec/tsp-output/**
-# Allow the Custom/ folder through (hand-written partial classes)
-!Azure.AI.AgentServer.Responses.Contracts/src/TypeSpec/tsp-output/src/
-!Azure.AI.AgentServer.Responses.Contracts/src/TypeSpec/tsp-output/src/Custom/
-!Azure.AI.AgentServer.Responses.Contracts/src/TypeSpec/tsp-output/src/Custom/**
+# TypeSpec emitter output (intermediate; committed files are in Generated/)
+Azure.AI.AgentServer.Responses/src/TypeSpec/tsp-output/**
+# Un-ignore parent directories so Git traverses into them
+!Azure.AI.AgentServer.Responses/src/TypeSpec/tsp-output/src/
+!Azure.AI.AgentServer.Responses/src/TypeSpec/tsp-output/src/Custom/
+!Azure.AI.AgentServer.Responses/src/TypeSpec/tsp-output/src/Custom/**
 
 # Python bytecode
 __pycache__/

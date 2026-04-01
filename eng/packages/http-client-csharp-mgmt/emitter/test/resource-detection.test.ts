@@ -3607,8 +3607,12 @@ interface Containers {
     );
 
     // BlobService should still have its own methods (Read + Create)
-    ok(blobServiceResource.metadata.methods.some((m: any) => m.kind === "Read"));
-    ok(blobServiceResource.metadata.methods.some((m: any) => m.kind === "Create"));
+    ok(
+      blobServiceResource.metadata.methods.some((m: any) => m.kind === "Read")
+    );
+    ok(
+      blobServiceResource.metadata.methods.some((m: any) => m.kind === "Create")
+    );
 
     // Validate using resolveArmResources API - use deep equality to ensure schemas match
     const resolvedSchema = resolveArmResources(program, sdkContext);

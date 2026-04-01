@@ -914,7 +914,10 @@ function getPagingItemModelId(
 ): string | undefined {
   if (method.kind !== "paging" && method.kind !== "lropaging") return undefined;
   const responseType = method.response?.type;
-  if (responseType?.kind === "array" && responseType.valueType.kind === "model") {
+  if (
+    responseType?.kind === "array" &&
+    responseType.valueType.kind === "model"
+  ) {
     return (responseType.valueType as SdkModelType).crossLanguageDefinitionId;
   }
   return undefined;

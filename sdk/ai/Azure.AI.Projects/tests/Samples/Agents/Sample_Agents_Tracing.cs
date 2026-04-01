@@ -48,12 +48,12 @@ public class Sample_Agents_Tracing : SamplesBase
         {
             Instructions = "You are a prompt agent."
         };
-        ProjectsAgentVersion agentVersion1 = await projectClient.Agents.CreateAgentVersionAsync(
+        ProjectsAgentVersion agentVersion1 = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             agentName: "myAgent1",
             options: new(agentDefinition));
         Console.WriteLine($"Agent created (id: {agentVersion1.Id}, name: {agentVersion1.Name}, version: {agentVersion1.Version})");
 
-        projectClient.Agents.DeleteAgentVersion(agentName: agentVersion1.Name, agentVersion: agentVersion1.Version);
+        projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: agentVersion1.Name, agentVersion: agentVersion1.Version);
         Console.WriteLine($"Agent deleted (name: {agentVersion1.Name}, version: {agentVersion1.Version})");
     }
 
@@ -85,12 +85,12 @@ public class Sample_Agents_Tracing : SamplesBase
             {
                 Instructions = "You are a prompt agent."
             };
-            ProjectsAgentVersion agentVersion1 = projectClient.Agents.CreateAgentVersion(
+            ProjectsAgentVersion agentVersion1 = projectClient.AgentAdministrationClient.CreateAgentVersion(
                 agentName: "myAgent1",
                 options: new(agentDefinition));
             Console.WriteLine($"Agent created (id: {agentVersion1.Id}, name: {agentVersion1.Name}, version: {agentVersion1.Version})");
 
-            projectClient.Agents.DeleteAgentVersion(agentName: agentVersion1.Name, agentVersion: agentVersion1.Version);
+            projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: agentVersion1.Name, agentVersion: agentVersion1.Version);
             Console.WriteLine($"Agent deleted (name: {agentVersion1.Name}, version: {agentVersion1.Version})");
         }
     }
@@ -129,12 +129,12 @@ public class Sample_Agents_Tracing : SamplesBase
             {
                 Instructions = "You are a prompt agent."
             };
-            ProjectsAgentVersion agentVersion1 = await projectClient.Agents.CreateAgentVersionAsync(
+            ProjectsAgentVersion agentVersion1 = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
                 agentName: "myAgent1",
                 options: new(agentDefinition));
             Console.WriteLine($"Agent created (id: {agentVersion1.Id}, name: {agentVersion1.Name}, version: {agentVersion1.Version})");
 
-            projectClient.Agents.DeleteAgentVersion(agentName: agentVersion1.Name, agentVersion: agentVersion1.Version);
+            projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: agentVersion1.Name, agentVersion: agentVersion1.Version);
             Console.WriteLine($"Agent deleted (name: {agentVersion1.Name}, version: {agentVersion1.Version})");
         }
     }
@@ -171,12 +171,12 @@ public class Sample_Agents_Tracing : SamplesBase
             {
                 Instructions = "You are a prompt agent."
             };
-            ProjectsAgentVersion agentVersion1 = projectClient.Agents.CreateAgentVersion(
+            ProjectsAgentVersion agentVersion1 = projectClient.AgentAdministrationClient.CreateAgentVersion(
                 agentName: "myAgent1",
                 options: new(agentDefinition));
             Console.WriteLine($"Agent created (id: {agentVersion1.Id}, name: {agentVersion1.Name}, version: {agentVersion1.Version})");
 
-            projectClient.Agents.DeleteAgentVersion(agentName: agentVersion1.Name, agentVersion: agentVersion1.Version);
+            projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: agentVersion1.Name, agentVersion: agentVersion1.Version);
             Console.WriteLine($"Agent deleted (name: {agentVersion1.Name}, version: {agentVersion1.Version})");
         }
     }
