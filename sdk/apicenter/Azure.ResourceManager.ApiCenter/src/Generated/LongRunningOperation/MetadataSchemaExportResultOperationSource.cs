@@ -8,23 +8,38 @@
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.ApiCenter.Models;
 
 namespace Azure.ResourceManager.ApiCenter
 {
-    internal class MetadataSchemaExportResultOperationSource : IOperationSource<MetadataSchemaExportResult>
+    /// <summary></summary>
+    internal partial class MetadataSchemaExportResultOperationSource : IOperationSource<MetadataSchemaExportResult>
     {
-        MetadataSchemaExportResult IOperationSource<MetadataSchemaExportResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        /// <summary></summary>
+        internal MetadataSchemaExportResultOperationSource()
         {
-            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-            return MetadataSchemaExportResult.DeserializeMetadataSchemaExportResult(document.RootElement);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
+        MetadataSchemaExportResult IOperationSource<MetadataSchemaExportResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            MetadataSchemaExportResult result = MetadataSchemaExportResult.DeserializeMetadataSchemaExportResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
+        }
+
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<MetadataSchemaExportResult> IOperationSource<MetadataSchemaExportResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-            return MetadataSchemaExportResult.DeserializeMetadataSchemaExportResult(document.RootElement);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            MetadataSchemaExportResult result = MetadataSchemaExportResult.DeserializeMetadataSchemaExportResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
         }
     }
 }

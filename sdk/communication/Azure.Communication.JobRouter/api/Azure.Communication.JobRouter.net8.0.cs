@@ -499,6 +499,8 @@ namespace Azure.Communication.JobRouter
     public partial class JobRouterAdministrationClient
     {
         protected JobRouterAdministrationClient() { }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+        public JobRouterAdministrationClient(Azure.Communication.JobRouter.JobRouterAdministrationClientSettings settings) { }
         public JobRouterAdministrationClient(string connectionString, Azure.Communication.JobRouter.JobRouterClientOptions options = null) { }
         public JobRouterAdministrationClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.Communication.JobRouter.JobRouterClientOptions options = null) { }
         public JobRouterAdministrationClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
@@ -577,9 +579,19 @@ namespace Azure.Communication.JobRouter
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.JobRouter.RouterQueue>> UpdateQueueAsync(Azure.Communication.JobRouter.RouterQueue queue, Azure.RequestConditions requestConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> UpdateQueueAsync(string queueId, Azure.Core.RequestContent content, Azure.RequestConditions requestConditions = null, Azure.RequestContext context = null) { throw null; }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+    public partial class JobRouterAdministrationClientSettings : System.ClientModel.Primitives.ClientSettings
+    {
+        public JobRouterAdministrationClientSettings() { }
+        public System.Uri Endpoint { get { throw null; } set { } }
+        public Azure.Communication.JobRouter.JobRouterClientOptions Options { get { throw null; } set { } }
+        protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
+    }
     public partial class JobRouterClient
     {
         protected JobRouterClient() { }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+        public JobRouterClient(Azure.Communication.JobRouter.JobRouterClientSettings settings) { }
         public JobRouterClient(string connectionString, Azure.Communication.JobRouter.JobRouterClientOptions options = null) { }
         public JobRouterClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.Communication.JobRouter.JobRouterClientOptions options = null) { }
         public JobRouterClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
@@ -681,6 +693,14 @@ namespace Azure.Communication.JobRouter
             V2023_11_01 = 1,
             V2024_01_18_Preview = 2,
         }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+    public partial class JobRouterClientSettings : System.ClientModel.Primitives.ClientSettings
+    {
+        public JobRouterClientSettings() { }
+        public System.Uri Endpoint { get { throw null; } set { } }
+        public Azure.Communication.JobRouter.JobRouterClientOptions Options { get { throw null; } set { } }
+        protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
     }
     public static partial class JobRouterModelFactory
     {

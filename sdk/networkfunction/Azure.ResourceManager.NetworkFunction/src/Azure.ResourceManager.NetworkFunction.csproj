@@ -4,6 +4,5 @@
     <PackageId>Azure.ResourceManager.NetworkFunction</PackageId>
     <Description>Microsoft Azure Resource Manager client SDK for Azure resource provider Microsoft.NetworkFunction.</Description>
     <PackageTags>azure;management;arm;resource manager;networkfunction</PackageTags>
-    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 </Project>

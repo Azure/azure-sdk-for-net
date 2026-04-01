@@ -11,9 +11,9 @@ namespace Azure.ResourceManager.ServiceBus.Models
 {
     internal static partial class ServiceBusMessagingEntityStatusExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ServiceBusMessagingEntityStatus value) => value switch
         {
-            ServiceBusMessagingEntityStatus.Unknown => "Unknown",
             ServiceBusMessagingEntityStatus.Active => "Active",
             ServiceBusMessagingEntityStatus.Disabled => "Disabled",
             ServiceBusMessagingEntityStatus.Restoring => "Restoring",
@@ -22,20 +22,49 @@ namespace Azure.ResourceManager.ServiceBus.Models
             ServiceBusMessagingEntityStatus.Creating => "Creating",
             ServiceBusMessagingEntityStatus.Deleting => "Deleting",
             ServiceBusMessagingEntityStatus.Renaming => "Renaming",
+            ServiceBusMessagingEntityStatus.Unknown => "Unknown",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ServiceBusMessagingEntityStatus value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static ServiceBusMessagingEntityStatus ToServiceBusMessagingEntityStatus(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Unknown")) return ServiceBusMessagingEntityStatus.Unknown;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Active")) return ServiceBusMessagingEntityStatus.Active;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled")) return ServiceBusMessagingEntityStatus.Disabled;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Restoring")) return ServiceBusMessagingEntityStatus.Restoring;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SendDisabled")) return ServiceBusMessagingEntityStatus.SendDisabled;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ReceiveDisabled")) return ServiceBusMessagingEntityStatus.ReceiveDisabled;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Creating")) return ServiceBusMessagingEntityStatus.Creating;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Deleting")) return ServiceBusMessagingEntityStatus.Deleting;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Renaming")) return ServiceBusMessagingEntityStatus.Renaming;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Active"))
+            {
+                return ServiceBusMessagingEntityStatus.Active;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled"))
+            {
+                return ServiceBusMessagingEntityStatus.Disabled;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Restoring"))
+            {
+                return ServiceBusMessagingEntityStatus.Restoring;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SendDisabled"))
+            {
+                return ServiceBusMessagingEntityStatus.SendDisabled;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ReceiveDisabled"))
+            {
+                return ServiceBusMessagingEntityStatus.ReceiveDisabled;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Creating"))
+            {
+                return ServiceBusMessagingEntityStatus.Creating;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Deleting"))
+            {
+                return ServiceBusMessagingEntityStatus.Deleting;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Renaming"))
+            {
+                return ServiceBusMessagingEntityStatus.Renaming;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Unknown"))
+            {
+                return ServiceBusMessagingEntityStatus.Unknown;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ServiceBusMessagingEntityStatus value.");
         }
     }

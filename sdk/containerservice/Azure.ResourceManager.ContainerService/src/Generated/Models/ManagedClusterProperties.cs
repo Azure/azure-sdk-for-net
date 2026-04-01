@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Initializes a new instance of <see cref="ManagedClusterProperties"/>. </summary>
         /// <param name="provisioningState"> The current provisioning state. </param>
         /// <param name="powerState"> The Power State of the cluster. </param>
-        /// <param name="creationData"> CreationData to be used to specify the source Snapshot ID if the cluster will be created/upgraded using a snapshot. </param>
         /// <param name="maxAgentPools"> The max number of agent pools for the managed cluster. </param>
         /// <param name="kubernetesVersion"> The version of Kubernetes specified by the user. Both patch version &lt;major.minor.patch&gt; (e.g. 1.20.13) and &lt;major.minor&gt; (e.g. 1.20) are supported. When &lt;major.minor&gt; is specified, the latest supported GA patch version is chosen automatically. Updating the cluster with the same &lt;major.minor&gt; once it has been created (e.g. 1.14.x -&gt; 1.14) will not trigger an upgrade, even if a newer patch version is available. When you upgrade a supported AKS cluster, Kubernetes minor versions cannot be skipped. All upgrades must be performed sequentially by major version number. For example, upgrades between 1.14.x -&gt; 1.15.x or 1.15.x -&gt; 1.16.x are allowed, however 1.14.x -&gt; 1.16.x is not allowed. See [upgrading an AKS cluster](https://docs.microsoft.com/azure/aks/upgrade-cluster) for more details. </param>
         /// <param name="currentKubernetesVersion"> The version of Kubernetes the Managed Cluster is running. If kubernetesVersion was a fully specified version &lt;major.minor.patch&gt;, this field will be exactly equal to it. If kubernetesVersion was &lt;major.minor&gt;, this field will contain the full &lt;major.minor.patch&gt; version being used. </param>
@@ -51,7 +50,6 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="nodeResourceGroupProfile"> Profile of the node resource group configuration. </param>
         /// <param name="isRbacEnabled"> Whether to enable Kubernetes Role-Based Access Control. </param>
         /// <param name="supportPlan"> The support plan for the Managed Cluster. If unspecified, the default is 'KubernetesOfficial'. </param>
-        /// <param name="isNamespaceResourcesEnabled"> Enable namespace as Azure resource. The default value is false. It can be enabled/disabled on creation and updating of the managed cluster. See [https://aka.ms/NamespaceARMResource](https://aka.ms/NamespaceARMResource) for more details on Namespace as a ARM Resource. </param>
         /// <param name="networkProfile"> The network configuration profile. </param>
         /// <param name="aadProfile"> The Azure Active Directory configuration. </param>
         /// <param name="autoUpgradeProfile"> The auto upgrade configuration. </param>
@@ -75,16 +73,12 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="nodeProvisioningProfile"> Node provisioning settings that apply to the whole cluster. </param>
         /// <param name="bootstrapProfile"> Profile of the cluster bootstrap configuration. </param>
         /// <param name="aiToolchainOperatorProfile"> AI toolchain operator settings that apply to the whole cluster. </param>
-        /// <param name="schedulerProfile"> Profile of the pod scheduler configuration. </param>
-        /// <param name="hostedSystemProfile"> Settings for hosted system addons. For more information, see https://aka.ms/aks/automatic/systemcomponents. </param>
-        /// <param name="healthMonitorProfile"> Health monitor profile for the managed cluster. </param>
         /// <param name="status"> Contains read-only information about the Managed Cluster. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterProperties(string provisioningState, ContainerServicePowerState powerState, ContainerServiceCreationData creationData, int? maxAgentPools, string kubernetesVersion, string currentKubernetesVersion, string dnsPrefix, string fqdnSubdomain, string fqdn, string privateFqdn, string azurePortalFqdn, IList<ManagedClusterAgentPoolProfile> agentPoolProfiles, ContainerServiceLinuxProfile linuxProfile, ManagedClusterWindowsProfile windowsProfile, ManagedClusterServicePrincipalProfile servicePrincipalProfile, IDictionary<string, ManagedClusterAddonProfile> addonProfiles, ManagedClusterPodIdentityProfile podIdentityProfile, ManagedClusterOidcIssuerProfile oidcIssuerProfile, string nodeResourceGroup, ManagedClusterNodeResourceGroupProfile nodeResourceGroupProfile, bool? isRbacEnabled, KubernetesSupportPlan? supportPlan, bool? isNamespaceResourcesEnabled, ContainerServiceNetworkProfile networkProfile, ManagedClusterAadProfile aadProfile, ManagedClusterAutoUpgradeProfile autoUpgradeProfile, ClusterUpgradeSettings upgradeSettings, ManagedClusterAutoScalerProfile autoScalerProfile, ManagedClusterApiServerAccessProfile apiServerAccessProfile, ResourceIdentifier diskEncryptionSetId, IDictionary<string, ContainerServiceUserAssignedIdentity> identityProfile, IList<ContainerServicePrivateLinkResourceData> privateLinkResources, bool? isLocalAccountsDisabled, ManagedClusterHttpProxyConfig httpProxyConfig, ManagedClusterSecurityProfile securityProfile, ManagedClusterStorageProfile storageProfile, ManagedClusterIngressProfile ingressProfile, ContainerServicePublicNetworkAccess? publicNetworkAccess, ManagedClusterWorkloadAutoScalerProfile workloadAutoScalerProfile, ManagedClusterAzureMonitorProfile azureMonitorProfile, ServiceMeshProfile serviceMeshProfile, ResourceIdentifier resourceId, ManagedClusterMetricsProfile metricsProfile, ManagedClusterNodeProvisioningProfile nodeProvisioningProfile, ManagedClusterBootstrapProfile bootstrapProfile, ManagedClusterAIToolchainOperatorProfile aiToolchainOperatorProfile, SchedulerProfile schedulerProfile, ManagedClusterHostedSystemProfile hostedSystemProfile, ManagedClusterHealthMonitorProfile healthMonitorProfile, ManagedClusterStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedClusterProperties(string provisioningState, ContainerServicePowerState powerState, int? maxAgentPools, string kubernetesVersion, string currentKubernetesVersion, string dnsPrefix, string fqdnSubdomain, string fqdn, string privateFqdn, string azurePortalFqdn, IList<ManagedClusterAgentPoolProfile> agentPoolProfiles, ContainerServiceLinuxProfile linuxProfile, ManagedClusterWindowsProfile windowsProfile, ManagedClusterServicePrincipalProfile servicePrincipalProfile, IDictionary<string, ManagedClusterAddonProfile> addonProfiles, ManagedClusterPodIdentityProfile podIdentityProfile, ManagedClusterOidcIssuerProfile oidcIssuerProfile, string nodeResourceGroup, ManagedClusterNodeResourceGroupProfile nodeResourceGroupProfile, bool? isRbacEnabled, KubernetesSupportPlan? supportPlan, ContainerServiceNetworkProfile networkProfile, ManagedClusterAadProfile aadProfile, ManagedClusterAutoUpgradeProfile autoUpgradeProfile, ClusterUpgradeSettings upgradeSettings, ManagedClusterAutoScalerProfile autoScalerProfile, ManagedClusterApiServerAccessProfile apiServerAccessProfile, ResourceIdentifier diskEncryptionSetId, IDictionary<string, ContainerServiceUserAssignedIdentity> identityProfile, IList<ContainerServicePrivateLinkResourceData> privateLinkResources, bool? isLocalAccountsDisabled, ManagedClusterHttpProxyConfig httpProxyConfig, ManagedClusterSecurityProfile securityProfile, ManagedClusterStorageProfile storageProfile, ManagedClusterIngressProfile ingressProfile, ContainerServicePublicNetworkAccess? publicNetworkAccess, ManagedClusterWorkloadAutoScalerProfile workloadAutoScalerProfile, ManagedClusterAzureMonitorProfile azureMonitorProfile, ServiceMeshProfile serviceMeshProfile, ResourceIdentifier resourceId, ManagedClusterMetricsProfile metricsProfile, ManagedClusterNodeProvisioningProfile nodeProvisioningProfile, ManagedClusterBootstrapProfile bootstrapProfile, ManagedClusterAIToolchainOperatorProfile aiToolchainOperatorProfile, ManagedClusterStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             PowerState = powerState;
-            CreationData = creationData;
             MaxAgentPools = maxAgentPools;
             KubernetesVersion = kubernetesVersion;
             CurrentKubernetesVersion = currentKubernetesVersion;
@@ -104,7 +98,6 @@ namespace Azure.ResourceManager.ContainerService.Models
             NodeResourceGroupProfile = nodeResourceGroupProfile;
             IsRbacEnabled = isRbacEnabled;
             SupportPlan = supportPlan;
-            IsNamespaceResourcesEnabled = isNamespaceResourcesEnabled;
             NetworkProfile = networkProfile;
             AadProfile = aadProfile;
             AutoUpgradeProfile = autoUpgradeProfile;
@@ -128,9 +121,6 @@ namespace Azure.ResourceManager.ContainerService.Models
             NodeProvisioningProfile = nodeProvisioningProfile;
             BootstrapProfile = bootstrapProfile;
             AiToolchainOperatorProfile = aiToolchainOperatorProfile;
-            SchedulerProfile = schedulerProfile;
-            HostedSystemProfile = hostedSystemProfile;
-            HealthMonitorProfile = healthMonitorProfile;
             Status = status;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -142,10 +132,6 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> The Power State of the cluster. </summary>
         [WirePath("powerState")]
         internal ContainerServicePowerState PowerState { get; }
-
-        /// <summary> CreationData to be used to specify the source Snapshot ID if the cluster will be created/upgraded using a snapshot. </summary>
-        [WirePath("creationData")]
-        internal ContainerServiceCreationData CreationData { get; set; }
 
         /// <summary> The max number of agent pools for the managed cluster. </summary>
         [WirePath("maxAgentPools")]
@@ -223,10 +209,6 @@ namespace Azure.ResourceManager.ContainerService.Models
         [WirePath("supportPlan")]
         public KubernetesSupportPlan? SupportPlan { get; set; }
 
-        /// <summary> Enable namespace as Azure resource. The default value is false. It can be enabled/disabled on creation and updating of the managed cluster. See [https://aka.ms/NamespaceARMResource](https://aka.ms/NamespaceARMResource) for more details on Namespace as a ARM Resource. </summary>
-        [WirePath("enableNamespaceResources")]
-        public bool? IsNamespaceResourcesEnabled { get; set; }
-
         /// <summary> The network configuration profile. </summary>
         [WirePath("networkProfile")]
         public ContainerServiceNetworkProfile NetworkProfile { get; set; }
@@ -281,7 +263,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Ingress profile for the managed cluster. </summary>
         [WirePath("ingressProfile")]
-        public ManagedClusterIngressProfile IngressProfile { get; set; }
+        internal ManagedClusterIngressProfile IngressProfile { get; set; }
 
         /// <summary> PublicNetworkAccess of the managedCluster. Allow or deny public network access for AKS. </summary>
         [WirePath("publicNetworkAccess")]
@@ -293,7 +275,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Azure Monitor addon profiles for monitoring the managed cluster. </summary>
         [WirePath("azureMonitorProfile")]
-        public ManagedClusterAzureMonitorProfile AzureMonitorProfile { get; set; }
+        internal ManagedClusterAzureMonitorProfile AzureMonitorProfile { get; set; }
 
         /// <summary> Service mesh profile for a managed cluster. </summary>
         [WirePath("serviceMeshProfile")]
@@ -319,18 +301,6 @@ namespace Azure.ResourceManager.ContainerService.Models
         [WirePath("aiToolchainOperatorProfile")]
         internal ManagedClusterAIToolchainOperatorProfile AiToolchainOperatorProfile { get; set; }
 
-        /// <summary> Profile of the pod scheduler configuration. </summary>
-        [WirePath("schedulerProfile")]
-        internal SchedulerProfile SchedulerProfile { get; set; }
-
-        /// <summary> Settings for hosted system addons. For more information, see https://aka.ms/aks/automatic/systemcomponents. </summary>
-        [WirePath("hostedSystemProfile")]
-        internal ManagedClusterHostedSystemProfile HostedSystemProfile { get; set; }
-
-        /// <summary> Health monitor profile for the managed cluster. </summary>
-        [WirePath("healthMonitorProfile")]
-        public ManagedClusterHealthMonitorProfile HealthMonitorProfile { get; set; }
-
         /// <summary> Contains read-only information about the Managed Cluster. </summary>
         [WirePath("status")]
         internal ManagedClusterStatus Status { get; set; }
@@ -342,24 +312,6 @@ namespace Azure.ResourceManager.ContainerService.Models
             get
             {
                 return PowerState.Code;
-            }
-        }
-
-        /// <summary> This is the ARM ID of the source object to be used to create the target object. </summary>
-        [WirePath("creationData.sourceResourceId")]
-        public ResourceIdentifier CreationDataSourceResourceId
-        {
-            get
-            {
-                return CreationData is null ? default : CreationData.SourceResourceId;
-            }
-            set
-            {
-                if (CreationData is null)
-                {
-                    CreationData = new ContainerServiceCreationData();
-                }
-                CreationData.SourceResourceId = value;
             }
         }
 
@@ -399,6 +351,42 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
         }
 
+        /// <summary> App Routing settings for the ingress profile. You can find an overview and onboarding guide for this feature at https://learn.microsoft.com/en-us/azure/aks/app-routing?tabs=default%2Cdeploy-app-default. </summary>
+        [WirePath("ingressProfile.webAppRouting")]
+        public ManagedClusterIngressProfileWebAppRouting IngressWebAppRouting
+        {
+            get
+            {
+                return IngressProfile is null ? default : IngressProfile.WebAppRouting;
+            }
+            set
+            {
+                if (IngressProfile is null)
+                {
+                    IngressProfile = new ManagedClusterIngressProfile();
+                }
+                IngressProfile.WebAppRouting = value;
+            }
+        }
+
+        /// <summary> Metrics profile for the Azure Monitor managed service for Prometheus addon. Collect out-of-the-box Kubernetes infrastructure metrics to send to an Azure Monitor Workspace and configure additional scraping for custom targets. See aka.ms/AzureManagedPrometheus for an overview. </summary>
+        [WirePath("azureMonitorProfile.metrics")]
+        public ManagedClusterMonitorProfileMetrics AzureMonitorMetrics
+        {
+            get
+            {
+                return AzureMonitorProfile is null ? default : AzureMonitorProfile.Metrics;
+            }
+            set
+            {
+                if (AzureMonitorProfile is null)
+                {
+                    AzureMonitorProfile = new ManagedClusterAzureMonitorProfile();
+                }
+                AzureMonitorProfile.Metrics = value;
+            }
+        }
+
         /// <summary> Whether to enable cost analysis. The Managed Cluster sku.tier must be set to 'Standard' or 'Premium' to enable this feature. Enabling this will add Kubernetes Namespace and Deployment details to the Cost Analysis views in the Azure portal. If not specified, the default is false. For more information see aka.ms/aks/docs/cost-analysis. </summary>
         [WirePath("metricsProfile.costAnalysis.enabled")]
         public bool? IsCostAnalysisEnabled
@@ -432,42 +420,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                     AiToolchainOperatorProfile = new ManagedClusterAIToolchainOperatorProfile();
                 }
                 AiToolchainOperatorProfile.IsAIToolchainOperatorEnabled = value;
-            }
-        }
-
-        /// <summary> The config customization mode for this scheduler instance. </summary>
-        [WirePath("schedulerProfile.schedulerInstanceProfiles.upstream.schedulerConfigMode")]
-        public SchedulerConfigMode? UpstreamSchedulerConfigMode
-        {
-            get
-            {
-                return SchedulerProfile is null ? default : SchedulerProfile.UpstreamSchedulerConfigMode;
-            }
-            set
-            {
-                if (SchedulerProfile is null)
-                {
-                    SchedulerProfile = new SchedulerProfile();
-                }
-                SchedulerProfile.UpstreamSchedulerConfigMode = value;
-            }
-        }
-
-        /// <summary> Whether to enable hosted system addons for the cluster. </summary>
-        [WirePath("hostedSystemProfile.enabled")]
-        public bool? IsHostedSystemAddonsEnabled
-        {
-            get
-            {
-                return HostedSystemProfile is null ? default : HostedSystemProfile.IsHostedSystemAddonsEnabled;
-            }
-            set
-            {
-                if (HostedSystemProfile is null)
-                {
-                    HostedSystemProfile = new ManagedClusterHostedSystemProfile();
-                }
-                HostedSystemProfile.IsHostedSystemAddonsEnabled = value;
             }
         }
 

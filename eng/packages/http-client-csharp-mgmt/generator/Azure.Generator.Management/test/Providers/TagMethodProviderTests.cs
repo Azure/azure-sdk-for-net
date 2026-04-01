@@ -144,6 +144,74 @@ namespace Azure.Generator.Management.Tests.Providers
             Assert.AreEqual(expected, bodyStatements);
         }
 
+        [TestCase]
+        public void Verify_NoTagMethods_WhenPatchHasNoBody()
+        {
+            var (client, models) = InputResourceData.ClientWithResourceBodylessPatch();
+            _ = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
+            var resourceClientProvider = ManagementClientGenerator.Instance.OutputLibrary.TypeProviders.OfType<ResourceClientProvider>().First();
+            Assert.IsNotNull(resourceClientProvider);
+
+            // Verify that no tag methods are generated
+            var tagMethodNames = new[] { "AddTag", "AddTagAsync", "SetTags", "SetTagsAsync", "RemoveTag", "RemoveTagAsync" };
+            foreach (var tagMethodName in tagMethodNames)
+            {
+                var method = resourceClientProvider.Methods.SingleOrDefault(m => m.Signature.Name == tagMethodName);
+                Assert.IsNull(method, $"Tag method '{tagMethodName}' should not be generated when PATCH has no body parameter.");
+            }
+        }
+
+        [TestCase]
+        public void Verify_TagMethodsGenerated_WhenPatchHasNoBodyButPutExists()
+        {
+            var (client, models) = InputResourceData.ClientWithResourceBodylessPatchAndPut();
+            _ = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
+            var resourceClientProvider = ManagementClientGenerator.Instance.OutputLibrary.TypeProviders.OfType<ResourceClientProvider>().First();
+            Assert.IsNotNull(resourceClientProvider);
+
+            // Verify that tag methods ARE generated using the PUT fallback
+            var tagMethodNames = new[] { "AddTag", "AddTagAsync", "SetTags", "SetTagsAsync", "RemoveTag", "RemoveTagAsync" };
+            foreach (var tagMethodName in tagMethodNames)
+            {
+                var method = resourceClientProvider.Methods.SingleOrDefault(m => m.Signature.Name == tagMethodName);
+                Assert.IsNotNull(method, $"Tag method '{tagMethodName}' should be generated using PUT fallback when PATCH has no body.");
+            }
+        }
+
+        [TestCase]
+        public void Verify_NoTagMethods_WhenPatchBodyHasNoTags()
+        {
+            var (client, models) = InputResourceData.ClientWithResourcePatchBodyWithoutTags();
+            _ = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
+            var resourceClientProvider = ManagementClientGenerator.Instance.OutputLibrary.TypeProviders.OfType<ResourceClientProvider>().First();
+            Assert.IsNotNull(resourceClientProvider);
+
+            // Verify that no tag methods are generated when PATCH body does not define tags
+            var tagMethodNames = new[] { "AddTag", "AddTagAsync", "SetTags", "SetTagsAsync", "RemoveTag", "RemoveTagAsync" };
+            foreach (var tagMethodName in tagMethodNames)
+            {
+                var method = resourceClientProvider.Methods.SingleOrDefault(m => m.Signature.Name == tagMethodName);
+                Assert.IsNull(method, $"Tag method '{tagMethodName}' should not be generated when PATCH body does not define a tags property.");
+            }
+        }
+
+        [TestCase]
+        public void Verify_NoTagMethods_WhenPatchReturnsNoContent()
+        {
+            var (client, models) = InputResourceData.ClientWithResourcePatchNoContent();
+            _ = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
+            var resourceClientProvider = ManagementClientGenerator.Instance.OutputLibrary.TypeProviders.OfType<ResourceClientProvider>().First();
+            Assert.IsNotNull(resourceClientProvider);
+
+            // Verify that no tag methods are generated when PATCH returns no content
+            var tagMethodNames = new[] { "AddTag", "AddTagAsync", "SetTags", "SetTagsAsync", "RemoveTag", "RemoveTagAsync" };
+            foreach (var tagMethodName in tagMethodNames)
+            {
+                var method = resourceClientProvider.Methods.SingleOrDefault(m => m.Signature.Name == tagMethodName);
+                Assert.IsNull(method, $"Tag method '{tagMethodName}' should not be generated when PATCH returns no content.");
+            }
+        }
+
         private static MethodProvider GetTagMethodByName(string methodName, bool isAsync)
         {
             var (resource, restClient) = GetResourceClientProvider();

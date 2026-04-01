@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -14,47 +15,67 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public readonly partial struct FileShareRecoveryType : IEquatable<FileShareRecoveryType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="FileShareRecoveryType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public FileShareRecoveryType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string InvalidValue = "Invalid";
         private const string OriginalLocationValue = "OriginalLocation";
         private const string AlternateLocationValue = "AlternateLocation";
         private const string RestoreDisksValue = "RestoreDisks";
         private const string OfflineValue = "Offline";
 
-        /// <summary> Invalid. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileShareRecoveryType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public FileShareRecoveryType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Invalid. </summary>
         public static FileShareRecoveryType Invalid { get; } = new FileShareRecoveryType(InvalidValue);
-        /// <summary> OriginalLocation. </summary>
+
+        /// <summary> Gets the OriginalLocation. </summary>
         public static FileShareRecoveryType OriginalLocation { get; } = new FileShareRecoveryType(OriginalLocationValue);
-        /// <summary> AlternateLocation. </summary>
+
+        /// <summary> Gets the AlternateLocation. </summary>
         public static FileShareRecoveryType AlternateLocation { get; } = new FileShareRecoveryType(AlternateLocationValue);
-        /// <summary> RestoreDisks. </summary>
+
+        /// <summary> Gets the RestoreDisks. </summary>
         public static FileShareRecoveryType RestoreDisks { get; } = new FileShareRecoveryType(RestoreDisksValue);
-        /// <summary> Offline. </summary>
+
+        /// <summary> Gets the Offline. </summary>
         public static FileShareRecoveryType Offline { get; } = new FileShareRecoveryType(OfflineValue);
+
         /// <summary> Determines if two <see cref="FileShareRecoveryType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(FileShareRecoveryType left, FileShareRecoveryType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="FileShareRecoveryType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(FileShareRecoveryType left, FileShareRecoveryType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="FileShareRecoveryType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="FileShareRecoveryType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator FileShareRecoveryType(string value) => new FileShareRecoveryType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="FileShareRecoveryType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator FileShareRecoveryType?(string value) => value == null ? null : new FileShareRecoveryType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is FileShareRecoveryType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(FileShareRecoveryType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

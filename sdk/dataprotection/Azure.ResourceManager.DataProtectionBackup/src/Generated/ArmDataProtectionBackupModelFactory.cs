@@ -1555,13 +1555,13 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="provisioningState"> Specifies the provisioning state of the resource i.e. provisioning/updating/Succeeded/Failed. </param>
         /// <param name="dataSourceAuthCredentials">
         /// Credentials to use to authenticate with data source provider.
-        ///             Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        ///             The available derived classes include .
+        ///                         Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        ///                         The available derived classes include .
         /// </param>
         /// <param name="validationType"> Specifies the type of validation. In case of DeepValidation, all validations from /validateForBackup API will run again. </param>
         /// <param name="identityDetails">
         /// Contains information of the Identity Details for the BI.
-        ///             If it is null, default will be considered as System Assigned.
+        ///                         If it is null, default will be considered as System Assigned.
         /// </param>
         /// <param name="objectType"></param>
         /// <returns> A new <see cref="Models.DataProtectionBackupInstanceProperties"/> instance for mocking. </returns>
@@ -1693,13 +1693,13 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="provisioningState"> Specifies the provisioning state of the resource i.e. provisioning/updating/Succeeded/Failed. </param>
         /// <param name="dataSourceAuthCredentials">
         /// Credentials to use to authenticate with data source provider.
-        ///             Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        ///             The available derived classes include .
+        ///                         Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        ///                         The available derived classes include .
         /// </param>
         /// <param name="validationType"> Specifies the type of validation. In case of DeepValidation, all validations from /validateForBackup API will run again. </param>
         /// <param name="identityDetails">
         /// Contains information of the Identity Details for the BI.
-        ///             If it is null, default will be considered as System Assigned.
+        ///                         If it is null, default will be considered as System Assigned.
         /// </param>
         /// <param name="objectType"></param>
         /// <param name="deletionInfo"> Deletion info of Backup Instance. </param>
@@ -1882,14 +1882,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <summary> Initializes a new instance of <see cref="Models.BackupRestoreWithRehydrationContent"/>. </summary>
         /// <param name="restoreTargetInfo">
         /// Gets or sets the restore target information.
-        ///             Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        ///             The available derived classes include ,  and .
+        ///                         Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        ///                         The available derived classes include ,  and .
         /// </param>
         /// <param name="sourceDataStoreType"> Gets or sets the type of the source data store. </param>
         /// <param name="sourceResourceId"> Fully qualified Azure Resource Manager ID of the datasource which is being recovered. </param>
         /// <param name="identityDetails">
         /// Contains information of the Identity Details for the BI.
-        ///             If it is null, default will be considered as System Assigned.
+        ///                         If it is null, default will be considered as System Assigned.
         /// </param>
         /// <param name="recoveryPointId"></param>
         /// <param name="rehydrationPriority"> Priority to be used for rehydration. Values High or Standard. </param>
@@ -1904,14 +1904,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <summary> Initializes a new instance of <see cref="Models.BackupRecoveryTimeBasedRestoreContent"/>. </summary>
         /// <param name="restoreTargetInfo">
         /// Gets or sets the restore target information.
-        ///             Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        ///             The available derived classes include ,  and .
+        ///                         Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        ///                         The available derived classes include ,  and .
         /// </param>
         /// <param name="sourceDataStoreType"> Gets or sets the type of the source data store. </param>
         /// <param name="sourceResourceId"> Fully qualified Azure Resource Manager ID of the datasource which is being recovered. </param>
         /// <param name="identityDetails">
         /// Contains information of the Identity Details for the BI.
-        ///             If it is null, default will be considered as System Assigned.
+        ///                         If it is null, default will be considered as System Assigned.
         /// </param>
         /// <param name="recoverOn"> The recovery time in ISO 8601 format example - 2020-08-14T17:30:00.0000000Z. </param>
         /// <returns> A new <see cref="Models.BackupRecoveryTimeBasedRestoreContent"/> instance for mocking. </returns>
@@ -1924,14 +1924,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <summary> Initializes a new instance of <see cref="Models.BackupRecoveryPointBasedRestoreContent"/>. </summary>
         /// <param name="restoreTargetInfo">
         /// Gets or sets the restore target information.
-        ///             Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        ///             The available derived classes include ,  and .
+        ///                         Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        ///                         The available derived classes include ,  and .
         /// </param>
         /// <param name="sourceDataStoreType"> Gets or sets the type of the source data store. </param>
         /// <param name="sourceResourceId"> Fully qualified Azure Resource Manager ID of the datasource which is being recovered. </param>
         /// <param name="identityDetails">
         /// Contains information of the Identity Details for the BI.
-        ///             If it is null, default will be considered as System Assigned.
+        ///                         If it is null, default will be considered as System Assigned.
         /// </param>
         /// <param name="recoveryPointId"></param>
         /// <returns> A new <see cref="Models.BackupRecoveryPointBasedRestoreContent"/> instance for mocking. </returns>
@@ -1986,13 +1986,13 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="provisioningState"> Specifies the provisioning state of the resource i.e. provisioning/updating/Succeeded/Failed. </param>
         /// <param name="dataSourceAuthCredentials">
         /// Credentials to use to authenticate with data source provider.
-        ///             Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        ///             The available derived classes include .
+        ///                         Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        ///                         The available derived classes include .
         /// </param>
         /// <param name="validationType"> Specifies the type of validation. In case of DeepValidation, all validations from /validateForBackup API will run again. </param>
         /// <param name="identityDetails">
         /// Contains information of the Identity Details for the BI.
-        ///             If it is null, default will be considered as System Assigned.
+        ///                         If it is null, default will be considered as System Assigned.
         /// </param>
         /// <param name="objectType"></param>
         /// <returns> A new <see cref="Models.DataProtectionBackupInstanceProperties"/> instance for mocking. </returns>
@@ -2027,13 +2027,13 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="provisioningState"> Specifies the provisioning state of the resource i.e. provisioning/updating/Succeeded/Failed. </param>
         /// <param name="dataSourceAuthCredentials">
         /// Credentials to use to authenticate with data source provider.
-        ///             Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        ///             The available derived classes include .
+        ///                         Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        ///                         The available derived classes include .
         /// </param>
         /// <param name="validationType"> Specifies the type of validation. In case of DeepValidation, all validations from /validateForBackup API will run again. </param>
         /// <param name="identityDetails">
         /// Contains information of the Identity Details for the BI.
-        ///             If it is null, default will be considered as System Assigned.
+        ///                         If it is null, default will be considered as System Assigned.
         /// </param>
         /// <param name="objectType"></param>
         /// <param name="deletionInfo"> Deletion info of Backup Instance. </param>

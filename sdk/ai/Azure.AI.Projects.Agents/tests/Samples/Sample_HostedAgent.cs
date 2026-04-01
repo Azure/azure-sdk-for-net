@@ -36,7 +36,7 @@ public class Sample_HostedAgent : SamplesBase
     private static  HostedAgentDefinition GetAgentDefinition(string dockerImage, string modelDeploymentName, string accountId, string applicationInsightConnectionString, string projectEndpoint)
     {
         HostedAgentDefinition agentDefinition = new(
-            versions: [new ProtocolVersionRecord(AgentProtocol.ActivityProtocol, "v1")],
+            versions: [new ProtocolVersionRecord(ProjectsAgentProtocol.ActivityProtocol, "v1")],
             cpu: "1",
             memory: "2Gi"
         )
@@ -73,12 +73,9 @@ public class Sample_HostedAgent : SamplesBase
         string[] pathParts = uriEndpoint.AbsolutePath.Split('/');
         string projectName = pathParts[pathParts.Length - 1];
         string accountId = uriEndpoint.Authority.Substring(0, uriEndpoint.Authority.IndexOf('.'));
-        AgentsClientOptions options = new()
-        {
-            Endpoint = new Uri(projectEndpoint)
-        };
+        AgentAdministrationClientOptions options = new();
         options.AddPolicy(new FeaturePolicy("HostedAgents=V1Preview"), PipelinePosition.PerCall);
-        AgentsClient agentsClient = new(tokenProvider: new DefaultAzureCredential(), options: options);
+        AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
 
         HostedAgentDefinition agentDefinition = GetAgentDefinition(
             dockerImage: dockerImage,
@@ -87,7 +84,7 @@ public class Sample_HostedAgent : SamplesBase
             applicationInsightConnectionString: projectName,
             projectEndpoint: projectEndpoint
         );
-        AgentVersion agentVersion = await agentsClient.CreateAgentVersionAsync(
+        ProjectsAgentVersion agentVersion = await agentsClient.CreateAgentVersionAsync(
             agentName: "myHostedAgent",
             options: new(agentDefinition));
         await agentsClient.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
@@ -112,12 +109,9 @@ public class Sample_HostedAgent : SamplesBase
         string[] pathParts = uriEndpoint.AbsolutePath.Split('/');
         string projectName = pathParts[pathParts.Length - 1];
         string accountId = uriEndpoint.Authority.Substring(0, uriEndpoint.Authority.IndexOf('.'));
-        AgentsClientOptions options = new()
-        {
-            Endpoint = new Uri(projectEndpoint)
-        };
+        AgentAdministrationClientOptions options = new();
         options.AddPolicy(new FeaturePolicy("HostedAgents=V1Preview"), PipelinePosition.PerCall);
-        AgentsClient agentsClient = new(tokenProvider: new DefaultAzureCredential(), options: options);
+        AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
 
         HostedAgentDefinition agentDefinition = GetAgentDefinition(
             dockerImage: dockerImage,
@@ -126,7 +120,7 @@ public class Sample_HostedAgent : SamplesBase
             applicationInsightConnectionString: projectName,
             projectEndpoint: projectEndpoint
         );
-        AgentVersion agentVersion = agentsClient.CreateAgentVersion(
+        ProjectsAgentVersion agentVersion = agentsClient.CreateAgentVersion(
             agentName: "myHostedAgent",
             options: new(agentDefinition));
         agentsClient.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);

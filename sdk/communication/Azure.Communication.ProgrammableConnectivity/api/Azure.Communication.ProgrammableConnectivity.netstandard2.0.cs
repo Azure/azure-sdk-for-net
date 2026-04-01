@@ -200,6 +200,7 @@ namespace Azure.Communication.ProgrammableConnectivity
     public partial class ProgrammableConnectivityClient
     {
         protected ProgrammableConnectivityClient() { }
+        public ProgrammableConnectivityClient(Azure.Communication.ProgrammableConnectivity.ProgrammableConnectivityClientSettings settings) { }
         public ProgrammableConnectivityClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
         public ProgrammableConnectivityClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Communication.ProgrammableConnectivity.ProgrammableConnectivityClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
@@ -215,6 +216,13 @@ namespace Azure.Communication.ProgrammableConnectivity
         {
             V2024_02_09_Preview = 1,
         }
+    }
+    public partial class ProgrammableConnectivityClientSettings : System.ClientModel.Primitives.ClientSettings
+    {
+        public ProgrammableConnectivityClientSettings() { }
+        public System.Uri Endpoint { get { throw null; } set { } }
+        public Azure.Communication.ProgrammableConnectivity.ProgrammableConnectivityClientOptions Options { get { throw null; } set { } }
+        protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
     }
     public static partial class ProgrammableConnectivityModelFactory
     {

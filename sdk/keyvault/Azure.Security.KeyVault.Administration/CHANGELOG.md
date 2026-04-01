@@ -2,6 +2,11 @@
 
 ## 4.8.0-beta.1 (2026-03-31)
 
+### Features Added
+
+- Added `KeyVaultAccessControlClientSettings` to support creating a `KeyVaultAccessControlClient` from `IConfiguration`, including configuration-based credential resolution and dependency injection registration.
+- Added `KeyVaultRestClientSettings` to support creating a `KeyVaultRestClient` from `IConfiguration`, including configuration-based credential resolution and dependency injection registration.
+
 ## 4.7.0 (2026-03-04)
 
 ### Bugs Fixed

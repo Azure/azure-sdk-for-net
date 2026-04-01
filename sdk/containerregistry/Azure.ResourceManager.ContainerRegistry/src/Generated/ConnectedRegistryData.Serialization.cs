@@ -126,6 +126,11 @@ namespace Azure.ResourceManager.ContainerRegistry
                 writer.WritePropertyName("garbageCollection"u8);
                 writer.WriteObjectValue(GarbageCollection, options);
             }
+            if (Optional.IsDefined(RegistrySyncResult))
+            {
+                writer.WritePropertyName("registrySyncResult"u8);
+                writer.WriteObjectValue(RegistrySyncResult, options);
+            }
             writer.WriteEndObject();
         }
 
@@ -166,6 +171,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             IReadOnlyList<ConnectedRegistryStatusDetail> statusDetails = default;
             IList<string> notificationsList = default;
             GarbageCollectionProperties garbageCollection = default;
+            ContainerRegistrySyncResult registrySyncResult = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -338,6 +344,15 @@ namespace Azure.ResourceManager.ContainerRegistry
                             garbageCollection = GarbageCollectionProperties.DeserializeGarbageCollectionProperties(property0.Value, options);
                             continue;
                         }
+                        if (property0.NameEquals("registrySyncResult"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            registrySyncResult = ContainerRegistrySyncResult.DeserializeContainerRegistrySyncResult(property0.Value, options);
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -365,6 +380,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 statusDetails ?? new ChangeTrackingList<ConnectedRegistryStatusDetail>(),
                 notificationsList ?? new ChangeTrackingList<string>(),
                 garbageCollection,
+                registrySyncResult,
                 serializedAdditionalRawData);
         }
 
@@ -682,6 +698,21 @@ namespace Azure.ResourceManager.ContainerRegistry
                 {
                     builder.Append("    garbageCollection: ");
                     BicepSerializationHelpers.AppendChildObject(builder, GarbageCollection, options, 4, false, "    garbageCollection: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RegistrySyncResult), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    registrySyncResult: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RegistrySyncResult))
+                {
+                    builder.Append("    registrySyncResult: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, RegistrySyncResult, options, 4, false, "    registrySyncResult: ");
                 }
             }
 
