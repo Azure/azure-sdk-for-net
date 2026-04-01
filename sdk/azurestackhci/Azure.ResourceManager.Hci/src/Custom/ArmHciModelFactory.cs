@@ -15,11 +15,7 @@ namespace Azure.ResourceManager.Hci.Models
     // TODO: remove these when https://github.com/Azure/azure-sdk-for-net/issues/57525 is resolved
     [CodeGenSuppress("ArcSettingData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(HciProvisioningState?), typeof(string), typeof(Guid?), typeof(Guid?), typeof(Guid?), typeof(Guid?), typeof(ArcSettingAggregateState?), typeof(IEnumerable<PerNodeArcState>), typeof(ArcConnectivityProperties), typeof(IEnumerable<ArcDefaultExtensionDetails>))]
     [CodeGenSuppress("ArcSettingPatch", typeof(IDictionary<string, string>), typeof(ArcConnectivityProperties))]
-
-    [CodeGenSuppress("HciExtensionInstanceView", typeof(string), typeof(string), typeof(string), typeof(ExtensionInstanceViewStatus))]
-    // TODO: Remove below suppression when https://github.com/Azure/azure-sdk-for-net/issues/57613 is fixed (generator emits `global::.ArcExtensionInstanceViewStatus`)
-    [CodeGenSuppress("HciExtensionInstanceView", typeof(string), typeof(string), typeof(string), typeof(ArcExtensionInstanceViewStatus))]
-    [CodeGenSuppress("PerNodeExtensionState", typeof(string), typeof(string), typeof(string), typeof(NodeExtensionState?), typeof(HciExtensionInstanceView))]
+    [CodeGenSuppress("PerNodeExtensionState", typeof(string), typeof(string), typeof(string), typeof(NodeExtensionState?), typeof(ArcExtensionInstanceView))]
     public static partial class ArmHciModelFactory
     {
         /// <summary> Initializes a new instance of <see cref="Models.HciExtensionInstanceView"/>. </summary>
@@ -43,12 +39,6 @@ namespace Azure.ResourceManager.Hci.Models
         [Obsolete("This method is now deprecated. Please use the new method `ArcExtensionInstanceView` moving forward.")]
         public static PerNodeExtensionState PerNodeExtensionState(string name = default, string extension = default, string typeHandlerVersion = default, NodeExtensionState? state = default, HciExtensionInstanceView instanceView = default)
          => throw new NotSupportedException("This method is now deprecated. Please use the new method `ArcExtensionInstanceView` moving forward.");
-
-        /// <summary> Initializes a new instance of <see cref="Models.ArcExtensionInstanceView"/>. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This method is now deprecated. Please use the new overload moving forward.")]
-        public static ArcExtensionInstanceView ArcExtensionInstanceView(string name, string arcExtensionInstanceViewType, string typeHandlerVersion, ArcExtensionInstanceViewStatus status)
-         => throw new NotSupportedException("This method is now deprecated. Please use the new overload moving forward.");
 
         /// <summary> Initializes a new instance of <see cref="Models.ExtensionInstanceViewStatus"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]

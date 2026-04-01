@@ -169,6 +169,11 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WritePropertyName("billingModel"u8);
                 writer.WriteStringValue(BillingModel);
             }
+            if (options.Format != "W" && Optional.IsDefined(BillingProperties))
+            {
+                writer.WritePropertyName("billingProperties"u8);
+                writer.WriteObjectValue(BillingProperties, options);
+            }
             if (options.Format != "W" && Optional.IsDefined(RegistrationTimestamp))
             {
                 writer.WritePropertyName("registrationTimestamp"u8);
@@ -234,6 +239,11 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WritePropertyName("identityProvider"u8);
                 writer.WriteStringValue(IdentityProvider.Value.ToString());
             }
+            if (options.Format != "W" && Optional.IsDefined(StorageType))
+            {
+                writer.WritePropertyName("storageType"u8);
+                writer.WriteStringValue(StorageType.Value.ToString());
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -295,6 +305,7 @@ namespace Azure.ResourceManager.Hci.Models
             IsolatedVmAttestationConfiguration isolatedVmAttestationConfiguration = default;
             float? trialDaysRemaining = default;
             string billingModel = default;
+            ClusterBillingProperties billingProperties = default;
             DateTimeOffset? registrationTimestamp = default;
             DateTimeOffset? lastSyncTimestamp = default;
             DateTimeOffset? lastBillingTimestamp = default;
@@ -306,6 +317,7 @@ namespace Azure.ResourceManager.Hci.Models
             ClusterSdnProperties sdnProperties = default;
             IList<LocalAvailabilityZones> localAvailabilityZones = default;
             IdentityProvider? identityProvider = default;
+            StorageType? storageType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -468,6 +480,15 @@ namespace Azure.ResourceManager.Hci.Models
                     billingModel = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("billingProperties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    billingProperties = ClusterBillingProperties.DeserializeClusterBillingProperties(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("registrationTimestamp"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -569,6 +590,15 @@ namespace Azure.ResourceManager.Hci.Models
                     identityProvider = new IdentityProvider(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("storageType"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    storageType = new StorageType(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -594,6 +624,7 @@ namespace Azure.ResourceManager.Hci.Models
                 isolatedVmAttestationConfiguration,
                 trialDaysRemaining,
                 billingModel,
+                billingProperties,
                 registrationTimestamp,
                 lastSyncTimestamp,
                 lastBillingTimestamp,
@@ -605,6 +636,7 @@ namespace Azure.ResourceManager.Hci.Models
                 sdnProperties,
                 localAvailabilityZones ?? new ChangeTrackingList<LocalAvailabilityZones>(),
                 identityProvider,
+                storageType,
                 additionalBinaryDataProperties);
         }
     }

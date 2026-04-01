@@ -83,6 +83,11 @@ namespace Azure.ResourceManager.Hci.Models
             writer.WriteStringValue(OwnershipVoucher);
             writer.WritePropertyName("ownerKeyType"u8);
             writer.WriteStringValue(OwnerKeyType.ToString());
+            if (options.Format != "W" && Optional.IsDefined(ValidationDetails))
+            {
+                writer.WritePropertyName("validationDetails"u8);
+                writer.WriteObjectValue(ValidationDetails, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -127,6 +132,7 @@ namespace Azure.ResourceManager.Hci.Models
             }
             string ownershipVoucher = default;
             OwnerKeyType ownerKeyType = default;
+            OwnershipVoucherValidationDetails validationDetails = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -140,12 +146,21 @@ namespace Azure.ResourceManager.Hci.Models
                     ownerKeyType = new OwnerKeyType(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("validationDetails"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    validationDetails = OwnershipVoucherValidationDetails.DeserializeOwnershipVoucherValidationDetails(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new OwnershipVoucherDetails(ownershipVoucher, ownerKeyType, additionalBinaryDataProperties);
+            return new OwnershipVoucherDetails(ownershipVoucher, ownerKeyType, validationDetails, additionalBinaryDataProperties);
         }
     }
 }

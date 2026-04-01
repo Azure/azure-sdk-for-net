@@ -12,7 +12,7 @@ using Azure.ResourceManager.Hci;
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> The Storage config of AzureStackHCI Cluster. </summary>
-    internal partial class DeploymentSettingStorage
+    public partial class DeploymentSettingStorage
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -24,15 +24,33 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Initializes a new instance of <see cref="DeploymentSettingStorage"/>. </summary>
         /// <param name="configurationMode"> By default, this mode is set to Express and your storage is configured as per best practices based on the number of nodes in the cluster. Allowed values are 'Express','InfraOnly', 'KeepStorage'. </param>
+        /// <param name="storageType"> Storage type for the HCI Cluster. Allowed values are 'S2D', 'SAN', 'SANS2D'. </param>
+        /// <param name="s2d"> S2D (Storage Spaces Direct) configuration. Applicable when StorageType is 'S2D' or 'SANS2D'. </param>
+        /// <param name="san"> SAN (Storage Area Network) configuration. Applicable when StorageType is 'SAN' or 'SANS2D'. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeploymentSettingStorage(string configurationMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeploymentSettingStorage(string configurationMode, StorageType? storageType, StorageS2dConfig s2d, StorageSanConfig san, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ConfigurationMode = configurationMode;
+            StorageType = storageType;
+            S2d = s2d;
+            San = san;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> By default, this mode is set to Express and your storage is configured as per best practices based on the number of nodes in the cluster. Allowed values are 'Express','InfraOnly', 'KeepStorage'. </summary>
         [WirePath("configurationMode")]
         public string ConfigurationMode { get; set; }
+
+        /// <summary> Storage type for the HCI Cluster. Allowed values are 'S2D', 'SAN', 'SANS2D'. </summary>
+        [WirePath("storageType")]
+        public StorageType? StorageType { get; set; }
+
+        /// <summary> S2D (Storage Spaces Direct) configuration. Applicable when StorageType is 'S2D' or 'SANS2D'. </summary>
+        [WirePath("s2d")]
+        public StorageS2dConfig S2d { get; set; }
+
+        /// <summary> SAN (Storage Area Network) configuration. Applicable when StorageType is 'SAN' or 'SANS2D'. </summary>
+        [WirePath("san")]
+        public StorageSanConfig San { get; set; }
     }
 }

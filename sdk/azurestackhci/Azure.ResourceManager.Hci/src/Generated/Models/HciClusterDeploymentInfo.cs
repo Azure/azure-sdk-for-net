@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Storage config to deploy AzureStackHCI Cluster. </summary>
         [WirePath("storage")]
-        internal DeploymentSettingStorage Storage { get; set; }
+        public DeploymentSettingStorage Storage { get; set; }
 
         /// <summary> naming prefix to deploy cluster. </summary>
         [WirePath("namingPrefix")]
@@ -140,24 +140,6 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Assembly Package details for Validated Solution Recipe for AzureStackHCI Cluster. </summary>
         [WirePath("assemblyInfo")]
         public AssemblyInfo AssemblyInfo { get; set; }
-
-        /// <summary> By default, this mode is set to Express and your storage is configured as per best practices based on the number of nodes in the cluster. Allowed values are 'Express','InfraOnly', 'KeepStorage'. </summary>
-        [WirePath("storage.configurationMode")]
-        public string StorageConfigurationMode
-        {
-            get
-            {
-                return Storage is null ? default : Storage.ConfigurationMode;
-            }
-            set
-            {
-                if (Storage is null)
-                {
-                    Storage = new DeploymentSettingStorage();
-                }
-                Storage.ConfigurationMode = value;
-            }
-        }
 
         /// <summary> network controller config for SDN Integration to deploy AzureStackHCI Cluster. </summary>
         [WirePath("sdnIntegration.networkController")]

@@ -22,23 +22,6 @@ namespace Azure.ResourceManager.Hci.Models
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="PerNodeExtensionState"/>. </summary>
-        /// <param name="name"> Name of the node in HCI Cluster. </param>
-        /// <param name="extension"> Fully qualified resource ID for the particular Arc Extension on this node. </param>
-        /// <param name="typeHandlerVersion"> Specifies the version of the script handler. </param>
-        /// <param name="state"> State of Arc Extension in this node. Reflects the current lifecycle status of the extension on the individual node, such as whether it's being created, updated, deleted, or has encountered an error. </param>
-        /// <param name="instanceView"> The extension instance view. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PerNodeExtensionState(string name, string extension, string typeHandlerVersion, NodeExtensionState? state, HciExtensionInstanceView instanceView, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-        {
-            Name = name;
-            Extension = extension;
-            TypeHandlerVersion = typeHandlerVersion;
-            State = state;
-            InstanceView = instanceView;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-        }
-
         /// <summary> Name of the node in HCI Cluster. </summary>
         [WirePath("name")]
         public string Name { get; }

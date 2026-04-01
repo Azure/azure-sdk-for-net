@@ -261,10 +261,12 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="sdnProperties"> Software Defined Networking Properties of the cluster. </param>
         /// <param name="localAvailabilityZones"> Local Availability Zone information for HCI cluster. </param>
         /// <param name="identityProvider"> Identity Provider for the cluster. </param>
+        /// <param name="storageType"> Storage type of the cluster. Indicates whether the cluster uses S2D, SAN, or a combination. </param>
+        /// <param name="nextBillingModel"> The next billing model to be applied to the cluster. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="kind"> This property identifies the purpose of the Cluster deployment. For example, a valid value is AzureLocal. </param>
         /// <returns> A new <see cref="Hci.HciClusterData"/> instance for mocking. </returns>
-        public static HciClusterData HciClusterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HciProvisioningState? provisioningState = default, HciClusterStatus? status = default, HciClusterConnectivityStatus? connectivityStatus = default, Guid? cloudId = default, string ring = default, string cloudManagementEndpoint = default, Guid? aadClientId = default, Guid? aadTenantId = default, Guid? aadApplicationObjectId = default, Guid? aadServicePrincipalObjectId = default, SoftwareAssuranceProperties softwareAssuranceProperties = default, bool? isManagementCluster = default, LogCollectionProperties logCollectionProperties = default, RemoteSupportProperties remoteSupportProperties = default, HciClusterDesiredProperties desiredProperties = default, HciClusterReportedProperties reportedProperties = default, IsolatedVmAttestationConfiguration isolatedVmAttestationConfiguration = default, float? trialDaysRemaining = default, string billingModel = default, DateTimeOffset? registrationTimestamp = default, DateTimeOffset? lastSyncTimestamp = default, DateTimeOffset? lastBillingTimestamp = default, string serviceEndpoint = default, string resourceProviderObjectId = default, IEnumerable<SecretsLocationDetails> secretsLocations = default, ClusterPattern? clusterPattern = default, ConfidentialVmProperties confidentialVmProperties = default, ClusterSdnProperties sdnProperties = default, IEnumerable<LocalAvailabilityZones> localAvailabilityZones = default, IdentityProvider? identityProvider = default, ManagedServiceIdentity identity = default, string kind = default)
+        public static HciClusterData HciClusterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HciProvisioningState? provisioningState = default, HciClusterStatus? status = default, HciClusterConnectivityStatus? connectivityStatus = default, Guid? cloudId = default, string ring = default, string cloudManagementEndpoint = default, Guid? aadClientId = default, Guid? aadTenantId = default, Guid? aadApplicationObjectId = default, Guid? aadServicePrincipalObjectId = default, SoftwareAssuranceProperties softwareAssuranceProperties = default, bool? isManagementCluster = default, LogCollectionProperties logCollectionProperties = default, RemoteSupportProperties remoteSupportProperties = default, HciClusterDesiredProperties desiredProperties = default, HciClusterReportedProperties reportedProperties = default, IsolatedVmAttestationConfiguration isolatedVmAttestationConfiguration = default, float? trialDaysRemaining = default, string billingModel = default, DateTimeOffset? registrationTimestamp = default, DateTimeOffset? lastSyncTimestamp = default, DateTimeOffset? lastBillingTimestamp = default, string serviceEndpoint = default, string resourceProviderObjectId = default, IEnumerable<SecretsLocationDetails> secretsLocations = default, ClusterPattern? clusterPattern = default, ConfidentialVmProperties confidentialVmProperties = default, ClusterSdnProperties sdnProperties = default, IEnumerable<LocalAvailabilityZones> localAvailabilityZones = default, IdentityProvider? identityProvider = default, StorageType? storageType = default, NextBillingModel nextBillingModel = default, ManagedServiceIdentity identity = default, string kind = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -276,7 +278,7 @@ namespace Azure.ResourceManager.Hci.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                provisioningState is null && status is null && connectivityStatus is null && cloudId is null && ring is null && cloudManagementEndpoint is null && aadClientId is null && aadTenantId is null && aadApplicationObjectId is null && aadServicePrincipalObjectId is null && softwareAssuranceProperties is null && isManagementCluster is null && logCollectionProperties is null && remoteSupportProperties is null && desiredProperties is null && reportedProperties is null && isolatedVmAttestationConfiguration is null && trialDaysRemaining is null && billingModel is null && registrationTimestamp is null && lastSyncTimestamp is null && lastBillingTimestamp is null && serviceEndpoint is null && resourceProviderObjectId is null && secretsLocations is null && clusterPattern is null && confidentialVmProperties is null && sdnProperties is null && localAvailabilityZones is null && identityProvider is null ? default : new ClusterProperties(
+                provisioningState is null && status is null && connectivityStatus is null && cloudId is null && ring is null && cloudManagementEndpoint is null && aadClientId is null && aadTenantId is null && aadApplicationObjectId is null && aadServicePrincipalObjectId is null && softwareAssuranceProperties is null && isManagementCluster is null && logCollectionProperties is null && remoteSupportProperties is null && desiredProperties is null && reportedProperties is null && isolatedVmAttestationConfiguration is null && trialDaysRemaining is null && billingModel is null && registrationTimestamp is null && lastSyncTimestamp is null && lastBillingTimestamp is null && serviceEndpoint is null && resourceProviderObjectId is null && secretsLocations is null && clusterPattern is null && confidentialVmProperties is null && sdnProperties is null && localAvailabilityZones is null && identityProvider is null && storageType is null && nextBillingModel is null ? default : new ClusterProperties(
                     provisioningState,
                     status,
                     connectivityStatus,
@@ -296,6 +298,7 @@ namespace Azure.ResourceManager.Hci.Models
                     isolatedVmAttestationConfiguration,
                     trialDaysRemaining,
                     billingModel,
+                    new ClusterBillingProperties(nextBillingModel, null),
                     registrationTimestamp,
                     lastSyncTimestamp,
                     lastBillingTimestamp,
@@ -307,6 +310,7 @@ namespace Azure.ResourceManager.Hci.Models
                     sdnProperties,
                     (localAvailabilityZones ?? new ChangeTrackingList<LocalAvailabilityZones>()).ToList(),
                     identityProvider,
+                    storageType,
                     null),
                 identity,
                 kind);
@@ -340,8 +344,9 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="remoteSupportType"> Remote Support Type for cluster. </param>
         /// <param name="remoteSupportNodeSettings"></param>
         /// <param name="remoteSupportSessionDetails"></param>
+        /// <param name="remoteSupportProvisioningState"> Remote Support Provisioning State. </param>
         /// <returns> A new <see cref="Models.RemoteSupportProperties"/> instance for mocking. </returns>
-        public static RemoteSupportProperties RemoteSupportProperties(HciClusterAccessLevel? accessLevel = default, DateTimeOffset? expireOn = default, RemoteSupportType? remoteSupportType = default, IEnumerable<RemoteSupportNodeSettings> remoteSupportNodeSettings = default, IEnumerable<PerNodeRemoteSupportSession> remoteSupportSessionDetails = default)
+        public static RemoteSupportProperties RemoteSupportProperties(HciClusterAccessLevel? accessLevel = default, DateTimeOffset? expireOn = default, RemoteSupportType? remoteSupportType = default, IEnumerable<RemoteSupportNodeSettings> remoteSupportNodeSettings = default, IEnumerable<PerNodeRemoteSupportSession> remoteSupportSessionDetails = default, RemoteSupportProvisioningState? remoteSupportProvisioningState = default)
         {
             remoteSupportNodeSettings ??= new ChangeTrackingList<RemoteSupportNodeSettings>();
             remoteSupportSessionDetails ??= new ChangeTrackingList<PerNodeRemoteSupportSession>();
@@ -352,6 +357,7 @@ namespace Azure.ResourceManager.Hci.Models
                 remoteSupportType,
                 remoteSupportNodeSettings.ToList(),
                 remoteSupportSessionDetails.ToList(),
+                remoteSupportProvisioningState,
                 additionalBinaryDataProperties: null);
         }
 
@@ -383,8 +389,9 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="nodeName"> Name of the node. </param>
         /// <param name="duration"> Duration of Remote Support Enablement. </param>
         /// <param name="accessLevel"> Remote Support Access Level. </param>
+        /// <param name="transcriptLocation"> The location where the session transcript is stored. </param>
         /// <returns> A new <see cref="Models.PerNodeRemoteSupportSession"/> instance for mocking. </returns>
-        public static PerNodeRemoteSupportSession PerNodeRemoteSupportSession(DateTimeOffset? sessionStartOn = default, DateTimeOffset? sessionEndOn = default, string nodeName = default, long? duration = default, HciClusterAccessLevel? accessLevel = default)
+        public static PerNodeRemoteSupportSession PerNodeRemoteSupportSession(DateTimeOffset? sessionStartOn = default, DateTimeOffset? sessionEndOn = default, string nodeName = default, long? duration = default, HciClusterAccessLevel? accessLevel = default, string transcriptLocation = default)
         {
             return new PerNodeRemoteSupportSession(
                 sessionStartOn,
@@ -392,6 +399,7 @@ namespace Azure.ResourceManager.Hci.Models
                 nodeName,
                 duration,
                 accessLevel,
+                transcriptLocation,
                 additionalBinaryDataProperties: null);
         }
 
@@ -478,6 +486,18 @@ namespace Azure.ResourceManager.Hci.Models
         public static IsolatedVmAttestationConfiguration IsolatedVmAttestationConfiguration(ResourceIdentifier attestationResourceId = default, string relyingPartyServiceEndpoint = default, string attestationServiceEndpoint = default)
         {
             return new IsolatedVmAttestationConfiguration(attestationResourceId, relyingPartyServiceEndpoint, attestationServiceEndpoint, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Details of the next billing model for the cluster. </summary>
+        /// <param name="billingModel"> Type of billing model. </param>
+        /// <param name="capabilitiesEnabled"> Capabilities enabled under this billing model. </param>
+        /// <param name="trialDaysRemaining"> Number of days remaining in the trial period. </param>
+        /// <returns> A new <see cref="Models.NextBillingModel"/> instance for mocking. </returns>
+        public static NextBillingModel NextBillingModel(string billingModel = default, IEnumerable<string> capabilitiesEnabled = default, float? trialDaysRemaining = default)
+        {
+            capabilitiesEnabled ??= new ChangeTrackingList<string>();
+
+            return new NextBillingModel(billingModel, capabilitiesEnabled.ToList(), trialDaysRemaining, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Represents the Confidential Virtual Machine (CVM) support intent and current status for the cluster resource. </summary>
@@ -619,7 +639,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="observability"> Observability config to deploy AzureStackHCI Cluster. </param>
         /// <param name="cluster"> Observability config to deploy AzureStackHCI Cluster. </param>
         /// <param name="identityProvider"> Identity Provider for the cluster. </param>
-        /// <param name="storageConfigurationMode"> By default, this mode is set to Express and your storage is configured as per best practices based on the number of nodes in the cluster. Allowed values are 'Express','InfraOnly', 'KeepStorage'. </param>
+        /// <param name="storage"> Storage config to deploy AzureStackHCI Cluster. </param>
         /// <param name="namingPrefix"> naming prefix to deploy cluster. </param>
         /// <param name="domainFqdn"> FQDN to deploy cluster. </param>
         /// <param name="infrastructureNetwork"> InfrastructureNetwork config to deploy AzureStackHCI Cluster. </param>
@@ -634,7 +654,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="localAvailabilityZones"> Local Availability Zone information for HCI cluster. </param>
         /// <param name="assemblyInfo"> Assembly Package details for Validated Solution Recipe for AzureStackHCI Cluster. </param>
         /// <returns> A new <see cref="Models.HciClusterDeploymentInfo"/> instance for mocking. </returns>
-        public static HciClusterDeploymentInfo HciClusterDeploymentInfo(HciClusterDeploymentSecuritySettings securitySettings = default, DeploymentSettingObservability observability = default, HciDeploymentCluster cluster = default, IdentityProvider? identityProvider = default, string storageConfigurationMode = default, string namingPrefix = default, string domainFqdn = default, IEnumerable<DeploymentSettingInfrastructureNetwork> infrastructureNetwork = default, IEnumerable<DeploymentSettingPhysicalNodes> physicalNodes = default, DeploymentSettingHostNetwork hostNetwork = default, DeploymentSettingNetworkController sdnIntegrationNetworkController = default, bool? isManagementCluster = default, string adouPath = default, string secretsLocation = default, IEnumerable<EceDeploymentSecrets> secrets = default, string optionalServicesCustomLocation = default, IEnumerable<LocalAvailabilityZones> localAvailabilityZones = default, AssemblyInfo assemblyInfo = default)
+        public static HciClusterDeploymentInfo HciClusterDeploymentInfo(HciClusterDeploymentSecuritySettings securitySettings = default, DeploymentSettingObservability observability = default, HciDeploymentCluster cluster = default, IdentityProvider? identityProvider = default, DeploymentSettingStorage storage = default, string namingPrefix = default, string domainFqdn = default, IEnumerable<DeploymentSettingInfrastructureNetwork> infrastructureNetwork = default, IEnumerable<DeploymentSettingPhysicalNodes> physicalNodes = default, DeploymentSettingHostNetwork hostNetwork = default, DeploymentSettingNetworkController sdnIntegrationNetworkController = default, bool? isManagementCluster = default, string adouPath = default, string secretsLocation = default, IEnumerable<EceDeploymentSecrets> secrets = default, string optionalServicesCustomLocation = default, IEnumerable<LocalAvailabilityZones> localAvailabilityZones = default, AssemblyInfo assemblyInfo = default)
         {
             infrastructureNetwork ??= new ChangeTrackingList<DeploymentSettingInfrastructureNetwork>();
             physicalNodes ??= new ChangeTrackingList<DeploymentSettingPhysicalNodes>();
@@ -646,7 +666,7 @@ namespace Azure.ResourceManager.Hci.Models
                 observability,
                 cluster,
                 identityProvider,
-                storageConfigurationMode is null ? default : new DeploymentSettingStorage(storageConfigurationMode, null),
+                storage,
                 namingPrefix,
                 domainFqdn,
                 infrastructureNetwork.ToList(),
@@ -722,18 +742,24 @@ namespace Azure.ResourceManager.Hci.Models
             return new DnsZones(dnsZoneName, dnsForwarder.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The HostNetwork of a cluster. </summary>
         /// <param name="intents"> The network intents assigned to the network reference pattern used for the deployment. Each intent will define its own name, traffic type, adapter names, and overrides as recommended by your OEM. </param>
         /// <param name="storageNetworks"> List of StorageNetworks config to deploy AzureStackHCI Cluster. </param>
+        /// <param name="sanNetworksClusterNetworkConfig"> Cluster (CSV/LiveMig) network configuration for SAN deployments. </param>
         /// <param name="storageConnectivitySwitchless"> Defines how the storage adapters between nodes are connected either switch or switch less.. </param>
         /// <param name="enableStorageAutoIP"> Optional parameter required only for 3 Nodes Switchless deployments. This allows users to specify IPs and Mask for Storage NICs when Network ATC is not assigning the IPs for storage automatically. </param>
         /// <returns> A new <see cref="Models.DeploymentSettingHostNetwork"/> instance for mocking. </returns>
-        public static DeploymentSettingHostNetwork DeploymentSettingHostNetwork(IEnumerable<DeploymentSettingIntents> intents = default, IEnumerable<DeploymentSettingStorageNetworks> storageNetworks = default, bool? storageConnectivitySwitchless = default, bool? enableStorageAutoIP = default)
+        public static DeploymentSettingHostNetwork DeploymentSettingHostNetwork(IEnumerable<DeploymentSettingIntents> intents = default, IEnumerable<DeploymentSettingStorageNetworks> storageNetworks = default, SanClusterNetworkConfig sanNetworksClusterNetworkConfig = default, bool? storageConnectivitySwitchless = default, bool? enableStorageAutoIP = default)
         {
             intents ??= new ChangeTrackingList<DeploymentSettingIntents>();
             storageNetworks ??= new ChangeTrackingList<DeploymentSettingStorageNetworks>();
 
-            return new DeploymentSettingHostNetwork(intents.ToList(), storageNetworks.ToList(), storageConnectivitySwitchless, enableStorageAutoIP, additionalBinaryDataProperties: null);
+            return new DeploymentSettingHostNetwork(
+                intents.ToList(),
+                storageNetworks.ToList(),
+                sanNetworksClusterNetworkConfig is null ? default : new SanNetworks(sanNetworksClusterNetworkConfig, null),
+                storageConnectivitySwitchless,
+                enableStorageAutoIP,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> The Intents of a cluster. </summary>
@@ -776,6 +802,17 @@ namespace Azure.ResourceManager.Hci.Models
             storageAdapterIPInfo ??= new ChangeTrackingList<DeploymentSettingStorageAdapterIPInfo>();
 
             return new DeploymentSettingStorageNetworks(name, networkAdapterName, vlanId, storageAdapterIPInfo.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Cluster network configuration for SAN deployments (CSV/LiveMig traffic). </summary>
+        /// <param name="adapterProperties"> QoS and adapter overrides for the cluster network. </param>
+        /// <param name="adapterIPConfig"> Per-adapter IP configuration for the cluster network. </param>
+        /// <returns> A new <see cref="Models.SanClusterNetworkConfig"/> instance for mocking. </returns>
+        public static SanClusterNetworkConfig SanClusterNetworkConfig(SanAdapterProperties adapterProperties = default, IEnumerable<SanAdapterIPConfig> adapterIPConfig = default)
+        {
+            adapterIPConfig ??= new ChangeTrackingList<SanAdapterIPConfig>();
+
+            return new SanClusterNetworkConfig(adapterProperties, adapterIPConfig.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Assembly Package details for Validated Solution Recipe for AzureStackHCI Cluster. </summary>
@@ -1129,10 +1166,10 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="networkProfile"> HCI device network information. </param>
         /// <param name="osProfile"> HCI device OS specific information. </param>
         /// <param name="sbeDeploymentPackageInfo"> Solution builder extension (SBE) deployment package information. </param>
-        /// <param name="storagePoolableDisksCount"> Number of storage disks in the device with $CanPool as true. </param>
+        /// <param name="storageProfile"> Hci device storage specific information. </param>
         /// <param name="hardwareProcessorType"> Process type of the device. </param>
         /// <returns> A new <see cref="Models.HciReportedProperties"/> instance for mocking. </returns>
-        public static HciReportedProperties HciReportedProperties(HciEdgeDeviceState? deviceState = default, ExtensionProfile extensionProfile = default, DateTimeOffset? lastSyncTimestamp = default, ConfidentialVmProfile confidentialVmProfile = default, HciNetworkProfile networkProfile = default, HciOSProfile osProfile = default, SbeDeploymentPackageInfo sbeDeploymentPackageInfo = default, long? storagePoolableDisksCount = default, string hardwareProcessorType = default)
+        public static HciReportedProperties HciReportedProperties(HciEdgeDeviceState? deviceState = default, ExtensionProfile extensionProfile = default, DateTimeOffset? lastSyncTimestamp = default, ConfidentialVmProfile confidentialVmProfile = default, HciNetworkProfile networkProfile = default, HciOSProfile osProfile = default, SbeDeploymentPackageInfo sbeDeploymentPackageInfo = default, HciStorageProfile storageProfile = default, string hardwareProcessorType = default)
         {
             return new HciReportedProperties(
                 deviceState,
@@ -1143,7 +1180,7 @@ namespace Azure.ResourceManager.Hci.Models
                 networkProfile,
                 osProfile,
                 sbeDeploymentPackageInfo,
-                storagePoolableDisksCount is null ? default : new HciStorageProfile(storagePoolableDisksCount, null),
+                storageProfile,
                 hardwareProcessorType is null ? default : new HciHardwareProfile(hardwareProcessorType, null));
         }
 
@@ -1344,6 +1381,27 @@ namespace Azure.ResourceManager.Hci.Models
             return new SbeDeploymentPackageInfo(code, message, sbeManifest, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Storage configurations for HCI device. </summary>
+        /// <param name="poolableDisksCount"> Number of storage disks in the device with $CanPool as true. </param>
+        /// <param name="disks"> List of storage disks on the device. </param>
+        /// <returns> A new <see cref="Models.HciStorageProfile"/> instance for mocking. </returns>
+        public static HciStorageProfile HciStorageProfile(long? poolableDisksCount = default, IEnumerable<EdgeDeviceDisks> disks = default)
+        {
+            disks ??= new ChangeTrackingList<EdgeDeviceDisks>();
+
+            return new HciStorageProfile(poolableDisksCount, disks.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Represents a storage disk on the device. </summary>
+        /// <param name="id"> The unique identifier of the disk. </param>
+        /// <param name="sizeInBytes"> The size of the disk in bytes. </param>
+        /// <param name="type"> The type of the disk. For example, S2D or SAN. </param>
+        /// <returns> A new <see cref="Models.EdgeDeviceDisks"/> instance for mocking. </returns>
+        public static EdgeDeviceDisks EdgeDeviceDisks(string id = default, string sizeInBytes = default, string @type = default)
+        {
+            return new EdgeDeviceDisks(id, sizeInBytes, @type, additionalBinaryDataProperties: null);
+        }
+
         /// <param name="deviceState"> edge device state. </param>
         /// <param name="extensions"> List of Arc extensions installed on edge device. </param>
         /// <param name="lastSyncTimestamp"> Most recent edge device sync timestamp in UTC. </param>
@@ -1512,6 +1570,17 @@ namespace Azure.ResourceManager.Hci.Models
                     (perNodeExtensionDetails ?? new ChangeTrackingList<PerNodeExtensionState>()).ToList(),
                     managedBy,
                     null));
+        }
+
+        /// <summary> Describes the Extension Instance View. </summary>
+        /// <param name="name"> The extension name. </param>
+        /// <param name="type"> Specifies the type of the extension; an example is "MicrosoftMonitoringAgent". </param>
+        /// <param name="typeHandlerVersion"> Specifies the version of the script handler. </param>
+        /// <param name="status"> Instance view status. </param>
+        /// <returns> A new <see cref="Models.ArcExtensionInstanceView"/> instance for mocking. </returns>
+        public static ArcExtensionInstanceView ArcExtensionInstanceView(string name = default, string @type = default, string typeHandlerVersion = default, ArcExtensionInstanceViewStatus status = default)
+        {
+            return new ArcExtensionInstanceView(name, @type, typeHandlerVersion, status, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Instance view status. </summary>
@@ -1945,6 +2014,40 @@ namespace Azure.ResourceManager.Hci.Models
             bypassList ??= new ChangeTrackingList<Uri>();
 
             return new WebProxyConfiguration(connectionUri, port, bypassList.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Details for ownership voucher. </summary>
+        /// <param name="ownershipVoucher"> Ownership voucher in base64 encoded format. </param>
+        /// <param name="ownerKeyType"> Owner key type. </param>
+        /// <param name="validationDetails"> Ownership Voucher Validation Details. </param>
+        /// <returns> A new <see cref="Models.OwnershipVoucherDetails"/> instance for mocking. </returns>
+        public static OwnershipVoucherDetails OwnershipVoucherDetails(string ownershipVoucher = default, OwnerKeyType ownerKeyType = default, OwnershipVoucherValidationDetails validationDetails = default)
+        {
+            return new OwnershipVoucherDetails(ownershipVoucher, ownerKeyType, validationDetails, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Ownership Voucher Validation Details. </summary>
+        /// <param name="validationStatus"> The ownership voucher validation status. </param>
+        /// <param name="serialNumber"> Serial number of the device. </param>
+        /// <param name="id"> FDO guid of the Ownership Voucher. </param>
+        /// <param name="manufacturer"> Name of the manufacturer. </param>
+        /// <param name="modelName"> Name of the model. </param>
+        /// <param name="version"> Version of the Ownership Voucher format. </param>
+        /// <param name="azureMachineId"> Azure Machine Id of the Ownership voucher. </param>
+        /// <param name="error"> Error details if the validation failed. </param>
+        /// <returns> A new <see cref="Models.OwnershipVoucherValidationDetails"/> instance for mocking. </returns>
+        public static OwnershipVoucherValidationDetails OwnershipVoucherValidationDetails(OwnershipVoucherValidationStatus? validationStatus = default, string serialNumber = default, string id = default, string manufacturer = default, string modelName = default, string version = default, string azureMachineId = default, ResponseError error = default)
+        {
+            return new OwnershipVoucherValidationDetails(
+                validationStatus,
+                serialNumber,
+                id,
+                manufacturer,
+                modelName,
+                version,
+                azureMachineId,
+                error,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Details for device provisioning. </summary>
@@ -2389,30 +2492,6 @@ namespace Azure.ResourceManager.Hci.Models
             return new ValidateOwnershipVouchersResponse(ownershipVoucherValidationDetails.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Ownership Voucher Validation Details. </summary>
-        /// <param name="validationStatus"> The ownership voucher validation status. </param>
-        /// <param name="serialNumber"> Serial number of the device. </param>
-        /// <param name="id"> FDO guid of the Ownership Voucher. </param>
-        /// <param name="manufacturer"> Name of the manufacturer. </param>
-        /// <param name="modelName"> Name of the model. </param>
-        /// <param name="version"> Version of the Ownership Voucher format. </param>
-        /// <param name="azureMachineId"> Azure Machine Id of the Ownership voucher. </param>
-        /// <param name="error"> Error details if the validation failed. </param>
-        /// <returns> A new <see cref="Models.OwnershipVoucherValidationDetails"/> instance for mocking. </returns>
-        public static OwnershipVoucherValidationDetails OwnershipVoucherValidationDetails(OwnershipVoucherValidationStatus? validationStatus = default, string serialNumber = default, string id = default, string manufacturer = default, string modelName = default, string version = default, string azureMachineId = default, ResponseError error = default)
-        {
-            return new OwnershipVoucherValidationDetails(
-                validationStatus,
-                serialNumber,
-                id,
-                manufacturer,
-                modelName,
-                version,
-                azureMachineId,
-                error,
-                additionalBinaryDataProperties: null);
-        }
-
         /// <summary> Cluster Jobs resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -2747,6 +2826,32 @@ namespace Azure.ResourceManager.Hci.Models
                 additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.RemoteSupportProperties"/>. </summary>
+        /// <param name="accessLevel"> Remote Support Access Level. </param>
+        /// <param name="expireOn"> Expiration DateTimeStamp when Remote Support Access will be expired. </param>
+        /// <param name="remoteSupportType"> Remote Support Type for cluster. </param>
+        /// <param name="remoteSupportNodeSettings"></param>
+        /// <param name="remoteSupportSessionDetails"></param>
+        /// <returns> A new <see cref="Models.RemoteSupportProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static RemoteSupportProperties RemoteSupportProperties(HciClusterAccessLevel? accessLevel, DateTimeOffset? expireOn, RemoteSupportType? remoteSupportType, IEnumerable<RemoteSupportNodeSettings> remoteSupportNodeSettings, IEnumerable<PerNodeRemoteSupportSession> remoteSupportSessionDetails)
+        {
+            return RemoteSupportProperties(accessLevel, expireOn, remoteSupportType, remoteSupportNodeSettings, remoteSupportSessionDetails, remoteSupportProvisioningState: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.PerNodeRemoteSupportSession"/>. </summary>
+        /// <param name="sessionStartOn"> Remote Support Session StartTime on the Node. </param>
+        /// <param name="sessionEndOn"> Remote Support Session EndTime on the Node. </param>
+        /// <param name="nodeName"> Name of the node. </param>
+        /// <param name="duration"> Duration of Remote Support Enablement. </param>
+        /// <param name="accessLevel"> Remote Support Access Level. </param>
+        /// <returns> A new <see cref="Models.PerNodeRemoteSupportSession"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static PerNodeRemoteSupportSession PerNodeRemoteSupportSession(DateTimeOffset? sessionStartOn, DateTimeOffset? sessionEndOn, string nodeName, long? duration, HciClusterAccessLevel? accessLevel)
+        {
+            return PerNodeRemoteSupportSession(sessionStartOn, sessionEndOn, nodeName, duration, accessLevel, transcriptLocation: default);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.HciClusterReportedProperties"/>. </summary>
         /// <param name="clusterName"> Name of the on-prem cluster connected to this resource. </param>
         /// <param name="clusterId"> Unique id generated by the on-prem cluster. </param>
@@ -2801,7 +2906,7 @@ namespace Azure.ResourceManager.Hci.Models
                 extension,
                 typeHandlerVersion,
                 state,
-                default,
+                extensionInstanceView,
                 additionalBinaryDataProperties: null);
         }
 

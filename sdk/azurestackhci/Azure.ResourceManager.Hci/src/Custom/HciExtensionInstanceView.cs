@@ -6,41 +6,38 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Hci.Models
 {
+    /// <summary> Describes the Extension Instance View. </summary>
     [Obsolete("This class is now deprecated. Please use the new class `ArcExtensionInstanceView` moving forward.")]
-    [CodeGenSuppress("Status")]
-    [CodeGenSuppress("HciExtensionInstanceView", typeof(string), typeof(string), typeof(string), typeof(ExtensionInstanceViewStatus), typeof(IDictionary<string, BinaryData>))]
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class HciExtensionInstanceView
     {
-        /// <summary> Specifies the type of the extension. </summary>
-        public string ExtensionInstanceViewType => Type;
-
-        private ExtensionInstanceViewStatus _statusCompat;
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="HciExtensionInstanceView"/>. </summary>
-        internal HciExtensionInstanceView(string name, string type, string typeHandlerVersion, ArcExtensionInstanceViewStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HciExtensionInstanceView()
         {
-            Name = name;
-            Type = type;
-            TypeHandlerVersion = typeHandlerVersion;
-            if (status != null)
-            {
-                _statusCompat = new ExtensionInstanceViewStatus(status.Code, status.Level, status.DisplayStatus, status.Message, status.Time, null);
-            }
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Instance view status. </summary>
-        [Obsolete("This property is obsolete. Use Status with type ArcExtensionInstanceViewStatus instead.")]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [WirePath("status")]
-        public ExtensionInstanceViewStatus Status
+        /// <summary> Initializes a new instance of <see cref="HciExtensionInstanceView"/>. </summary>
+        internal HciExtensionInstanceView(string name, string extensionInstanceViewType, string typeHandlerVersion, ExtensionInstanceViewStatus status, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            get => _statusCompat;
-            internal set => _statusCompat = value;
+            Name = name;
+            ExtensionInstanceViewType = extensionInstanceViewType;
+            TypeHandlerVersion = typeHandlerVersion;
+            Status = status;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
+
+        /// <summary> The extension name. </summary>
+        public string Name { get; }
+        /// <summary> Specifies the type of the extension; an example is "MicrosoftMonitoringAgent". </summary>
+        public string ExtensionInstanceViewType { get; }
+        /// <summary> Specifies the version of the script handler. </summary>
+        public string TypeHandlerVersion { get; }
+        /// <summary> Instance view status. </summary>
+        public ExtensionInstanceViewStatus Status { get; }
     }
 }

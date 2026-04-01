@@ -32,11 +32,13 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Initializes a new instance of <see cref="OwnershipVoucherDetails"/>. </summary>
         /// <param name="ownershipVoucher"> Ownership voucher in base64 encoded format. </param>
         /// <param name="ownerKeyType"> Owner key type. </param>
+        /// <param name="validationDetails"> Ownership Voucher Validation Details. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OwnershipVoucherDetails(string ownershipVoucher, OwnerKeyType ownerKeyType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OwnershipVoucherDetails(string ownershipVoucher, OwnerKeyType ownerKeyType, OwnershipVoucherValidationDetails validationDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OwnershipVoucher = ownershipVoucher;
             OwnerKeyType = ownerKeyType;
+            ValidationDetails = validationDetails;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -47,5 +49,9 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Owner key type. </summary>
         [WirePath("ownerKeyType")]
         public OwnerKeyType OwnerKeyType { get; set; }
+
+        /// <summary> Ownership Voucher Validation Details. </summary>
+        [WirePath("validationDetails")]
+        public OwnershipVoucherValidationDetails ValidationDetails { get; }
     }
 }

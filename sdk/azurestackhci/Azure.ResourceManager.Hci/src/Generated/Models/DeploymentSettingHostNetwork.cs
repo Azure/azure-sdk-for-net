@@ -27,13 +27,15 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Initializes a new instance of <see cref="DeploymentSettingHostNetwork"/>. </summary>
         /// <param name="intents"> The network intents assigned to the network reference pattern used for the deployment. Each intent will define its own name, traffic type, adapter names, and overrides as recommended by your OEM. </param>
         /// <param name="storageNetworks"> List of StorageNetworks config to deploy AzureStackHCI Cluster. </param>
+        /// <param name="sanNetworks"> SAN network configuration for the host network. Applicable when StorageType is 'SAN' or 'SANS2D'. </param>
         /// <param name="storageConnectivitySwitchless"> Defines how the storage adapters between nodes are connected either switch or switch less.. </param>
         /// <param name="enableStorageAutoIP"> Optional parameter required only for 3 Nodes Switchless deployments. This allows users to specify IPs and Mask for Storage NICs when Network ATC is not assigning the IPs for storage automatically. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeploymentSettingHostNetwork(IList<DeploymentSettingIntents> intents, IList<DeploymentSettingStorageNetworks> storageNetworks, bool? storageConnectivitySwitchless, bool? enableStorageAutoIP, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeploymentSettingHostNetwork(IList<DeploymentSettingIntents> intents, IList<DeploymentSettingStorageNetworks> storageNetworks, SanNetworks sanNetworks, bool? storageConnectivitySwitchless, bool? enableStorageAutoIP, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Intents = intents;
             StorageNetworks = storageNetworks;
+            SanNetworks = sanNetworks;
             StorageConnectivitySwitchless = storageConnectivitySwitchless;
             EnableStorageAutoIP = enableStorageAutoIP;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -47,6 +49,10 @@ namespace Azure.ResourceManager.Hci.Models
         [WirePath("storageNetworks")]
         public IList<DeploymentSettingStorageNetworks> StorageNetworks { get; }
 
+        /// <summary> SAN network configuration for the host network. Applicable when StorageType is 'SAN' or 'SANS2D'. </summary>
+        [WirePath("sanNetworks")]
+        internal SanNetworks SanNetworks { get; set; }
+
         /// <summary> Defines how the storage adapters between nodes are connected either switch or switch less.. </summary>
         [WirePath("storageConnectivitySwitchless")]
         public bool? StorageConnectivitySwitchless { get; set; }
@@ -54,5 +60,23 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Optional parameter required only for 3 Nodes Switchless deployments. This allows users to specify IPs and Mask for Storage NICs when Network ATC is not assigning the IPs for storage automatically. </summary>
         [WirePath("enableStorageAutoIp")]
         public bool? EnableStorageAutoIP { get; set; }
+
+        /// <summary> Cluster (CSV/LiveMig) network configuration for SAN deployments. </summary>
+        [WirePath("sanNetworks.clusterNetworkConfig")]
+        public SanClusterNetworkConfig SanNetworksClusterNetworkConfig
+        {
+            get
+            {
+                return SanNetworks is null ? default : SanNetworks.ClusterNetworkConfig;
+            }
+            set
+            {
+                if (SanNetworks is null)
+                {
+                    SanNetworks = new SanNetworks();
+                }
+                SanNetworks.ClusterNetworkConfig = value;
+            }
+        }
     }
 }

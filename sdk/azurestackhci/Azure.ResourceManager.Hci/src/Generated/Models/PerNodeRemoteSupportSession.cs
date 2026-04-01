@@ -28,14 +28,16 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="nodeName"> Name of the node. </param>
         /// <param name="duration"> Duration of Remote Support Enablement. </param>
         /// <param name="accessLevel"> Remote Support Access Level. </param>
+        /// <param name="transcriptLocation"> The location where the session transcript is stored. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PerNodeRemoteSupportSession(DateTimeOffset? sessionStartOn, DateTimeOffset? sessionEndOn, string nodeName, long? duration, HciClusterAccessLevel? accessLevel, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PerNodeRemoteSupportSession(DateTimeOffset? sessionStartOn, DateTimeOffset? sessionEndOn, string nodeName, long? duration, HciClusterAccessLevel? accessLevel, string transcriptLocation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SessionStartOn = sessionStartOn;
             SessionEndOn = sessionEndOn;
             NodeName = nodeName;
             Duration = duration;
             AccessLevel = accessLevel;
+            TranscriptLocation = transcriptLocation;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -58,5 +60,9 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Remote Support Access Level. </summary>
         [WirePath("accessLevel")]
         public HciClusterAccessLevel? AccessLevel { get; }
+
+        /// <summary> The location where the session transcript is stored. </summary>
+        [WirePath("transcriptLocation")]
+        public string TranscriptLocation { get; }
     }
 }

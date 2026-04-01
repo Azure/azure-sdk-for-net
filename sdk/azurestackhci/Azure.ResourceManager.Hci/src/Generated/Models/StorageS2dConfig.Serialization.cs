@@ -13,52 +13,52 @@ using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> Describes the Extension Instance View. </summary>
-    public partial class HciExtensionInstanceView : IJsonModel<HciExtensionInstanceView>
+    /// <summary> The S2D (Storage Spaces Direct) configuration for AzureStackHCI Cluster storage. </summary>
+    public partial class StorageS2dConfig : IJsonModel<StorageS2dConfig>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual HciExtensionInstanceView PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual StorageS2dConfig PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HciExtensionInstanceView>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StorageS2dConfig>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeHciExtensionInstanceView(document.RootElement, options);
+                        return DeserializeStorageS2dConfig(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HciExtensionInstanceView)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageS2dConfig)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HciExtensionInstanceView>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StorageS2dConfig>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerHciContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(HciExtensionInstanceView)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageS2dConfig)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<HciExtensionInstanceView>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<StorageS2dConfig>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        HciExtensionInstanceView IPersistableModel<HciExtensionInstanceView>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        StorageS2dConfig IPersistableModel<StorageS2dConfig>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<HciExtensionInstanceView>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<StorageS2dConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<HciExtensionInstanceView>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<StorageS2dConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,30 +69,20 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HciExtensionInstanceView>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StorageS2dConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HciExtensionInstanceView)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageS2dConfig)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Name))
+            if (Optional.IsDefined(VolumeType))
             {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
+                writer.WritePropertyName("volumeType"u8);
+                writer.WriteStringValue(VolumeType.Value.ToString());
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(OverprovisioningRatio))
             {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type);
-            }
-            if (Optional.IsDefined(TypeHandlerVersion))
-            {
-                writer.WritePropertyName("typeHandlerVersion"u8);
-                writer.WriteStringValue(TypeHandlerVersion);
-            }
-            if (Optional.IsDefined(Status))
-            {
-                writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue(Status, options);
+                writer.WritePropertyName("overprovisioningRatio"u8);
+                writer.WriteStringValue(OverprovisioningRatio.Value.ToString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -113,58 +103,50 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        HciExtensionInstanceView IJsonModel<HciExtensionInstanceView>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        StorageS2dConfig IJsonModel<StorageS2dConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual HciExtensionInstanceView JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual StorageS2dConfig JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HciExtensionInstanceView>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StorageS2dConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HciExtensionInstanceView)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageS2dConfig)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeHciExtensionInstanceView(document.RootElement, options);
+            return DeserializeStorageS2dConfig(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static HciExtensionInstanceView DeserializeHciExtensionInstanceView(JsonElement element, ModelReaderWriterOptions options)
+        internal static StorageS2dConfig DeserializeStorageS2dConfig(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string name = default;
-            string @type = default;
-            string typeHandlerVersion = default;
-            ExtensionInstanceViewStatus status = default;
+            VolumeType? volumeType = default;
+            OverprovisioningRatio? overprovisioningRatio = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("name"u8))
-                {
-                    name = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("type"u8))
-                {
-                    @type = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("typeHandlerVersion"u8))
-                {
-                    typeHandlerVersion = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("status"u8))
+                if (prop.NameEquals("volumeType"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    status = ExtensionInstanceViewStatus.DeserializeExtensionInstanceViewStatus(prop.Value, options);
+                    volumeType = new VolumeType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("overprovisioningRatio"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    overprovisioningRatio = new OverprovisioningRatio(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -172,7 +154,7 @@ namespace Azure.ResourceManager.Hci.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new HciExtensionInstanceView(name, @type, typeHandlerVersion, status, additionalBinaryDataProperties);
+            return new StorageS2dConfig(volumeType, overprovisioningRatio, additionalBinaryDataProperties);
         }
     }
 }

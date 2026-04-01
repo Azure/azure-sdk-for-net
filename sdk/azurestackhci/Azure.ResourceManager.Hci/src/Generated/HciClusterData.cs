@@ -435,5 +435,25 @@ namespace Azure.ResourceManager.Hci
                 return Properties is null ? default : Properties.IdentityProvider;
             }
         }
+
+        /// <summary> Storage type of the cluster. Indicates whether the cluster uses S2D, SAN, or a combination. </summary>
+        [WirePath("properties.storageType")]
+        public StorageType? StorageType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StorageType;
+            }
+        }
+
+        /// <summary> The next billing model to be applied to the cluster. </summary>
+        [WirePath("properties.billingProperties.nextBillingModel")]
+        public NextBillingModel NextBillingModel
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NextBillingModel;
+            }
+        }
     }
 }

@@ -53,21 +53,11 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Hci device storage specific information. </summary>
         [WirePath("storageProfile")]
-        internal HciStorageProfile StorageProfile { get; }
+        public HciStorageProfile StorageProfile { get; }
 
         /// <summary> Hci device hardware specific information. </summary>
         [WirePath("hardwareProfile")]
         internal HciHardwareProfile HardwareProfile { get; }
-
-        /// <summary> Number of storage disks in the device with $CanPool as true. </summary>
-        [WirePath("storageProfile.poolableDisksCount")]
-        public long? StoragePoolableDisksCount
-        {
-            get
-            {
-                return StorageProfile.PoolableDisksCount;
-            }
-        }
 
         /// <summary> Process type of the device. </summary>
         [WirePath("hardwareProfile.processorType")]

@@ -44,6 +44,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="isolatedVmAttestationConfiguration"> Attestation configurations for isolated VM (e.g. TVM, CVM) of the cluster. </param>
         /// <param name="trialDaysRemaining"> Number of days remaining in the trial period. </param>
         /// <param name="billingModel"> Type of billing applied to the resource. </param>
+        /// <param name="billingProperties"> Billing properties of the cluster, including upcoming billing model details. </param>
         /// <param name="registrationTimestamp"> First cluster sync timestamp. </param>
         /// <param name="lastSyncTimestamp"> Most recent cluster sync timestamp. </param>
         /// <param name="lastBillingTimestamp"> Most recent billing meter timestamp. </param>
@@ -55,8 +56,9 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="sdnProperties"> Software Defined Networking Properties of the cluster. </param>
         /// <param name="localAvailabilityZones"> Local Availability Zone information for HCI cluster. </param>
         /// <param name="identityProvider"> Identity Provider for the cluster. </param>
+        /// <param name="storageType"> Storage type of the cluster. Indicates whether the cluster uses S2D, SAN, or a combination. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ClusterProperties(HciProvisioningState? provisioningState, HciClusterStatus? status, HciClusterConnectivityStatus? connectivityStatus, Guid? cloudId, string ring, string cloudManagementEndpoint, Guid? aadClientId, Guid? aadTenantId, Guid? aadApplicationObjectId, Guid? aadServicePrincipalObjectId, SoftwareAssuranceProperties softwareAssuranceProperties, bool? isManagementCluster, LogCollectionProperties logCollectionProperties, RemoteSupportProperties remoteSupportProperties, HciClusterDesiredProperties desiredProperties, HciClusterReportedProperties reportedProperties, IsolatedVmAttestationConfiguration isolatedVmAttestationConfiguration, float? trialDaysRemaining, string billingModel, DateTimeOffset? registrationTimestamp, DateTimeOffset? lastSyncTimestamp, DateTimeOffset? lastBillingTimestamp, string serviceEndpoint, string resourceProviderObjectId, IList<SecretsLocationDetails> secretsLocations, ClusterPattern? clusterPattern, ConfidentialVmProperties confidentialVmProperties, ClusterSdnProperties sdnProperties, IList<LocalAvailabilityZones> localAvailabilityZones, IdentityProvider? identityProvider, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ClusterProperties(HciProvisioningState? provisioningState, HciClusterStatus? status, HciClusterConnectivityStatus? connectivityStatus, Guid? cloudId, string ring, string cloudManagementEndpoint, Guid? aadClientId, Guid? aadTenantId, Guid? aadApplicationObjectId, Guid? aadServicePrincipalObjectId, SoftwareAssuranceProperties softwareAssuranceProperties, bool? isManagementCluster, LogCollectionProperties logCollectionProperties, RemoteSupportProperties remoteSupportProperties, HciClusterDesiredProperties desiredProperties, HciClusterReportedProperties reportedProperties, IsolatedVmAttestationConfiguration isolatedVmAttestationConfiguration, float? trialDaysRemaining, string billingModel, ClusterBillingProperties billingProperties, DateTimeOffset? registrationTimestamp, DateTimeOffset? lastSyncTimestamp, DateTimeOffset? lastBillingTimestamp, string serviceEndpoint, string resourceProviderObjectId, IList<SecretsLocationDetails> secretsLocations, ClusterPattern? clusterPattern, ConfidentialVmProperties confidentialVmProperties, ClusterSdnProperties sdnProperties, IList<LocalAvailabilityZones> localAvailabilityZones, IdentityProvider? identityProvider, StorageType? storageType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             Status = status;
@@ -77,6 +79,7 @@ namespace Azure.ResourceManager.Hci.Models
             IsolatedVmAttestationConfiguration = isolatedVmAttestationConfiguration;
             TrialDaysRemaining = trialDaysRemaining;
             BillingModel = billingModel;
+            BillingProperties = billingProperties;
             RegistrationTimestamp = registrationTimestamp;
             LastSyncTimestamp = lastSyncTimestamp;
             LastBillingTimestamp = lastBillingTimestamp;
@@ -88,6 +91,7 @@ namespace Azure.ResourceManager.Hci.Models
             SdnProperties = sdnProperties;
             LocalAvailabilityZones = localAvailabilityZones;
             IdentityProvider = identityProvider;
+            StorageType = storageType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -167,6 +171,10 @@ namespace Azure.ResourceManager.Hci.Models
         [WirePath("billingModel")]
         public string BillingModel { get; }
 
+        /// <summary> Billing properties of the cluster, including upcoming billing model details. </summary>
+        [WirePath("billingProperties")]
+        internal ClusterBillingProperties BillingProperties { get; }
+
         /// <summary> First cluster sync timestamp. </summary>
         [WirePath("registrationTimestamp")]
         public DateTimeOffset? RegistrationTimestamp { get; }
@@ -210,5 +218,19 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Identity Provider for the cluster. </summary>
         [WirePath("identityProvider")]
         public IdentityProvider? IdentityProvider { get; }
+
+        /// <summary> Storage type of the cluster. Indicates whether the cluster uses S2D, SAN, or a combination. </summary>
+        [WirePath("storageType")]
+        public StorageType? StorageType { get; }
+
+        /// <summary> The next billing model to be applied to the cluster. </summary>
+        [WirePath("billingProperties.nextBillingModel")]
+        public NextBillingModel NextBillingModel
+        {
+            get
+            {
+                return BillingProperties.NextBillingModel;
+            }
+        }
     }
 }

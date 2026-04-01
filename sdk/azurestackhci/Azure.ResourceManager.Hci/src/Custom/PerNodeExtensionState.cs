@@ -2,24 +2,36 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    // Backward-compat: preserves [Obsolete] from previous API version
+    [CodeGenSuppress("PerNodeExtensionState", typeof(string), typeof(string), typeof(string), typeof(NodeExtensionState?), typeof(HciExtensionInstanceView), typeof(IDictionary<string, BinaryData>))]
     [CodeGenSuppress("InstanceView")]
     public partial class PerNodeExtensionState
     {
+        /// <summary> Initializes a new instance of <see cref="PerNodeExtensionState"/>. </summary>
+        internal PerNodeExtensionState(string name, string extension, string typeHandlerVersion, NodeExtensionState? state, ArcExtensionInstanceView extensionInstanceView, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        {
+            Name = name;
+            Extension = extension;
+            TypeHandlerVersion = typeHandlerVersion;
+            State = state;
+            ExtensionInstanceView = extensionInstanceView;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
         /// <summary> The extension instance view. </summary>
         [WirePath("instanceView")]
-        [Obsolete("This property is now deprecated. Please use the new property `StartOn` moving forward.")]
-        public HciExtensionInstanceView InstanceView { get; }
+        public ArcExtensionInstanceView ExtensionInstanceView { get; }
 
-        /// <summary> The extension instance view (old property name). </summary>
-        [Obsolete("This property is now deprecated. Please use the new property `InstanceView` moving forward.")]
+        /// <summary> The extension instance view. </summary>
+        [Obsolete("This property is now deprecated. Please use ExtensionInstanceView with type ArcExtensionInstanceView instead.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         [WirePath("instanceView")]
-        public ArcExtensionInstanceView ExtensionInstanceView => InstanceView != null ? new ArcExtensionInstanceView(InstanceView.Name, InstanceView.Type, InstanceView.TypeHandlerVersion, InstanceView.Status, null) : null;
+        public HciExtensionInstanceView InstanceView
+            => throw new NotSupportedException("This property is now deprecated. Please use ExtensionInstanceView with type ArcExtensionInstanceView instead.");
     }
 }

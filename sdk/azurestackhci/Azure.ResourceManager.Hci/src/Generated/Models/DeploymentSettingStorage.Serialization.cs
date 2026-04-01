@@ -14,7 +14,7 @@ using Azure.ResourceManager.Hci;
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> The Storage config of AzureStackHCI Cluster. </summary>
-    internal partial class DeploymentSettingStorage : IJsonModel<DeploymentSettingStorage>
+    public partial class DeploymentSettingStorage : IJsonModel<DeploymentSettingStorage>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -79,6 +79,21 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WritePropertyName("configurationMode"u8);
                 writer.WriteStringValue(ConfigurationMode);
             }
+            if (Optional.IsDefined(StorageType))
+            {
+                writer.WritePropertyName("storageType"u8);
+                writer.WriteStringValue(StorageType.Value.ToString());
+            }
+            if (Optional.IsDefined(S2d))
+            {
+                writer.WritePropertyName("s2d"u8);
+                writer.WriteObjectValue(S2d, options);
+            }
+            if (Optional.IsDefined(San))
+            {
+                writer.WritePropertyName("san"u8);
+                writer.WriteObjectValue(San, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -122,6 +137,9 @@ namespace Azure.ResourceManager.Hci.Models
                 return null;
             }
             string configurationMode = default;
+            StorageType? storageType = default;
+            StorageS2dConfig s2d = default;
+            StorageSanConfig san = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -130,12 +148,39 @@ namespace Azure.ResourceManager.Hci.Models
                     configurationMode = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("storageType"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    storageType = new StorageType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("s2d"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    s2d = StorageS2dConfig.DeserializeStorageS2dConfig(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("san"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    san = StorageSanConfig.DeserializeStorageSanConfig(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DeploymentSettingStorage(configurationMode, additionalBinaryDataProperties);
+            return new DeploymentSettingStorage(configurationMode, storageType, s2d, san, additionalBinaryDataProperties);
         }
     }
 }
