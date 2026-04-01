@@ -82,13 +82,20 @@ namespace Azure.Storage.ChangeFeed.Common
                         chunks.Dequeue();
                         chunkIndex++;
                     }
-                    if (chunks.Count == 0) throw new ArgumentException($"Chunk {currentChunkPath} not found.");
+
+                    if (chunks.Count == 0)
+                        throw new ArgumentException($"Chunk {currentChunkPath} not found.");
                 }
 
                 BlobItem currentChunkBlobItem = chunks.Dequeue();
                 if (currentChunkBlobItem.Properties.ContentLength > blockOffset)
                 {
-                    currentChunk = await _chunkFactory.BuildChunk(async, currentChunkBlobItem.Name, blockOffset, eventIndex).ConfigureAwait(false);
+                    currentChunk = await _chunkFactory.BuildChunk(
+                        async,
+                        currentChunkBlobItem.Name,
+                        blockOffset,
+                        eventIndex)
+                        .ConfigureAwait(false);
                 }
                 else if (currentChunkBlobItem.Properties.ContentLength < blockOffset)
                 {
@@ -103,7 +110,13 @@ namespace Azure.Storage.ChangeFeed.Common
                 }
             }
 
-            return new ShardBase<TEvent>(_containerClient, _chunkFactory, chunks, currentChunk, chunkIndex, shardPath);
+            return new ShardBase<TEvent>(
+                _containerClient,
+                _chunkFactory,
+                chunks,
+                currentChunk,
+                chunkIndex,
+                shardPath);
         }
     }
 }

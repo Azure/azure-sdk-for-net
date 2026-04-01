@@ -33,7 +33,10 @@ namespace Azure.Storage.ChangeFeed.Common
         /// </summary>
         /// <returns>A <see cref="ShardCursor"/>, or null if no chunk is currently loaded.</returns>
         public virtual ShardCursor GetCursor()
-            => _currentChunk == null ? null : new ShardCursor(_currentChunk.ChunkPath, _currentChunk.BlockOffset, _currentChunk.EventIndex);
+            => _currentChunk == null ? null : new ShardCursor(
+                _currentChunk.ChunkPath,
+                _currentChunk.BlockOffset,
+                _currentChunk.EventIndex);
 
         /// <summary>
         /// Returns true if there are more events in the current chunk or additional chunks remaining.
@@ -52,7 +55,12 @@ namespace Azure.Storage.ChangeFeed.Common
             // After reading, check if current chunk is exhausted; if so, advance to the next chunk in the queue.
             if (!_currentChunk.HasNext() && _chunks.Count > 0)
             {
-                _currentChunk = await _chunkFactory.BuildChunk(async, _chunks.Dequeue().Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                _currentChunk = await _chunkFactory.BuildChunk(
+                    async,
+                    _chunks.Dequeue().Name,
+                    cancellationToken: cancellationToken)
+                    .ConfigureAwait(false);
+
                 _chunkIndex++;
             }
             return changeFeedEvent;
@@ -67,7 +75,13 @@ namespace Azure.Storage.ChangeFeed.Common
         /// <param name="currentChunk">The chunk currently being read.</param>
         /// <param name="chunkIndex">Index of the current chunk within the shard.</param>
         /// <param name="shardPath">Blob prefix path of this shard.</param>
-        public ShardBase(BlobContainerClient containerClient, ChunkFactoryBase<TEvent> chunkFactory, Queue<BlobItem> chunks, ChunkBase<TEvent> currentChunk, long chunkIndex, string shardPath)
+        public ShardBase(
+            BlobContainerClient containerClient,
+            ChunkFactoryBase<TEvent> chunkFactory,
+            Queue<BlobItem> chunks,
+            ChunkBase<TEvent> currentChunk,
+            long chunkIndex,
+            string shardPath)
         {
             _containerClient = containerClient;
             _chunkFactory = chunkFactory;

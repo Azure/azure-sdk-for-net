@@ -30,7 +30,15 @@ namespace Azure.Storage.ChangeFeed.Common
         /// <param name="blockOffset">Byte offset of the Avro block to resume from.</param>
         /// <param name="eventIndex">Event index within the block to resume from.</param>
         /// <returns>A new <see cref="AvroReader"/> positioned for resumption.</returns>
-        public virtual AvroReader BuildAvroReader(Stream dataStream, Stream headStream, long blockOffset, long eventIndex)
-            => new AvroReader(dataStream, headStream, blockOffset, eventIndex);
+        public virtual AvroReader BuildAvroReader(
+            Stream dataStream,
+            Stream headStream,
+            long blockOffset,
+            long eventIndex)
+            => new AvroReader(
+                dataStream,
+                headStream,
+                blockOffset,
+                eventIndex);
     }
 }

@@ -41,7 +41,12 @@ namespace Azure.Storage.ChangeFeed.Common
         /// <param name="eventIndex">Initial event index within the block (non-zero when resuming).</param>
         /// <param name="chunkPath">Blob path of the chunk.</param>
         /// <param name="eventParser">Delegate that converts a raw Avro record into a typed event.</param>
-        public ChunkBase(AvroReader avroReader, long blockOffset, long eventIndex, string chunkPath, Func<Dictionary<string, object>, TEvent> eventParser)
+        public ChunkBase(
+            AvroReader avroReader,
+            long blockOffset,
+            long eventIndex,
+            string chunkPath,
+            Func<Dictionary<string, object>, TEvent> eventParser)
         {
             _avroReader = avroReader;
             BlockOffset = blockOffset;

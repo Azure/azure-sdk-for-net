@@ -31,7 +31,10 @@ namespace Azure.Storage.ChangeFeed.Common
         /// <param name="containerClient">Container client for the change feed container.</param>
         /// <param name="shardFactory">Factory used to build shard instances.</param>
         /// <param name="config">Change feed configuration.</param>
-        public SegmentFactoryBase(BlobContainerClient containerClient, ShardFactoryBase<TEvent> shardFactory, ChangeFeedConfiguration<TEvent> config)
+        public SegmentFactoryBase(
+            BlobContainerClient containerClient,
+            ShardFactoryBase<TEvent> shardFactory,
+            ChangeFeedConfiguration<TEvent> config)
         {
             _containerClient = containerClient;
             _shardFactory = shardFactory;
@@ -47,7 +50,10 @@ namespace Azure.Storage.ChangeFeed.Common
         /// <param name="cursor">Optional segment cursor to resume from a previous position.</param>
         /// <returns>A new <see cref="SegmentBase{TEvent}"/> ready to produce events.</returns>
 #pragma warning disable CA1822
-        public virtual async Task<SegmentBase<TEvent>> BuildSegment(bool async, string manifestPath, SegmentCursor cursor = default)
+        public virtual async Task<SegmentBase<TEvent>> BuildSegment(
+            bool async,
+            string manifestPath,
+            SegmentCursor cursor = default)
 #pragma warning restore CA1822
         {
             List<ShardBase<TEvent>> shards = new List<ShardBase<TEvent>>();
@@ -55,6 +61,7 @@ namespace Azure.Storage.ChangeFeed.Common
 
             BlobClient blobClient = _containerClient.GetBlobClient(manifestPath);
             BlobDownloadStreamingResult blobDownloadStreamingResult;
+
             if (async)
                 blobDownloadStreamingResult = await blobClient.DownloadStreamingAsync().ConfigureAwait(false);
             else
@@ -79,7 +86,9 @@ namespace Azure.Storage.ChangeFeed.Common
                     else
                         shardPath = rawPath;
 
-                    ShardCursor shardCursor = cursor?.ShardCursors?.Find(x => x.CurrentChunkPath.StartsWith(shardPath, StringComparison.InvariantCulture));
+                    ShardCursor shardCursor = cursor?.ShardCursors?.Find(
+                        x => x.CurrentChunkPath.StartsWith(shardPath, StringComparison.InvariantCulture));
+
                     ShardBase<TEvent> shard = await _shardFactory.BuildShard(async, shardPath, shardCursor).ConfigureAwait(false);
                     if (shard.HasNext()) shards.Add(shard);
                 }

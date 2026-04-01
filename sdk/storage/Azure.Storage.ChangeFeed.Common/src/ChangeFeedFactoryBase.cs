@@ -28,7 +28,10 @@ namespace Azure.Storage.ChangeFeed.Common
         /// <param name="containerClient">Container client for the change feed container.</param>
         /// <param name="maxTransferSize">Optional override for the chunk download block size.</param>
         /// <param name="config">Change feed configuration.</param>
-        public ChangeFeedFactoryBase(BlobContainerClient containerClient, long? maxTransferSize, ChangeFeedConfiguration<TEvent> config)
+        public ChangeFeedFactoryBase(
+            BlobContainerClient containerClient,
+            long? maxTransferSize,
+            ChangeFeedConfiguration<TEvent> config)
         {
             _containerClient = containerClient;
             _config = config;
@@ -51,7 +54,10 @@ namespace Azure.Storage.ChangeFeed.Common
         /// <param name="containerClient">Container client for the change feed container.</param>
         /// <param name="segmentFactory">Pre-built segment factory.</param>
         /// <param name="config">Change feed configuration.</param>
-        public ChangeFeedFactoryBase(BlobContainerClient containerClient, SegmentFactoryBase<TEvent> segmentFactory, ChangeFeedConfiguration<TEvent> config)
+        public ChangeFeedFactoryBase(
+            BlobContainerClient containerClient,
+            SegmentFactoryBase<TEvent> segmentFactory,
+            ChangeFeedConfiguration<TEvent> config)
         {
             _containerClient = containerClient;
             _segmentFactory = segmentFactory;
@@ -67,7 +73,12 @@ namespace Azure.Storage.ChangeFeed.Common
         /// <param name="async">Whether to use async APIs.</param>
         /// <param name="cancellationToken">Cancellation token.</param>
         /// <returns>A <see cref="ChangeFeedBase{TEvent}"/> positioned and ready to produce events.</returns>
-        public async Task<ChangeFeedBase<TEvent>> BuildChangeFeed(DateTimeOffset? startTime, DateTimeOffset? endTime, string continuation, bool async, CancellationToken cancellationToken)
+        public async Task<ChangeFeedBase<TEvent>> BuildChangeFeed(
+            DateTimeOffset? startTime,
+            DateTimeOffset? endTime,
+            string continuation,
+            bool async,
+            CancellationToken cancellationToken)
         {
             DateTimeOffset lastConsumable;
             Queue<string> years = new Queue<string>();
@@ -94,7 +105,13 @@ namespace Azure.Storage.ChangeFeed.Common
             if (!changeFeedContainerExists)
                 throw new ArgumentException("Change Feed hasn't been enabled on this account, or is currently being enabled.");
 
-            DateTimeOffset? lastConsumableNullable = await GetLastConsumableInternal(_containerClient, _config.MetaSegmentsPath, async, cancellationToken).ConfigureAwait(false);
+            DateTimeOffset? lastConsumableNullable = await GetLastConsumableInternal(
+                _containerClient,
+                _config.MetaSegmentsPath,
+                async,
+                cancellationToken)
+                .ConfigureAwait(false);
+
             if (lastConsumableNullable.HasValue)
                 lastConsumable = lastConsumableNullable.Value;
             else
@@ -115,15 +132,33 @@ namespace Azure.Storage.ChangeFeed.Common
             while (segments.Count == 0 && years.Count > 0)
             {
                 segments = await ChangeFeedExtensionsBase.GetSegmentsInYearInternal(
-                    containerClient: _containerClient, yearPath: years.Dequeue(), startTime: startTime,
-                    endTime: ChangeFeedExtensionsBase.MinDateTime(lastConsumable, endTime), async: async, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    containerClient: _containerClient, yearPath: years.Dequeue(),
+                    startTime: startTime,
+                    endTime: ChangeFeedExtensionsBase.MinDateTime(lastConsumable, endTime),
+                    async: async,
+                    cancellationToken: cancellationToken)
+                    .ConfigureAwait(false);
             }
 
-            if (segments.Count == 0) return ChangeFeedBase<TEvent>.Empty();
+            if (segments.Count == 0)
+                return ChangeFeedBase<TEvent>.Empty();
 
-            SegmentBase<TEvent> currentSegment = await _segmentFactory.BuildSegment(async, segments.Dequeue(), cursor?.CurrentSegmentCursor).ConfigureAwait(false);
+            SegmentBase<TEvent> currentSegment = await _segmentFactory.BuildSegment(
+                async,
+                segments.Dequeue(),
+                cursor?.CurrentSegmentCursor)
+                .ConfigureAwait(false);
 
-            return new ChangeFeedBase<TEvent>(_containerClient, _segmentFactory, years, segments, currentSegment, lastConsumable, startTime, endTime, _config);
+            return new ChangeFeedBase<TEvent>(
+                _containerClient,
+                _segmentFactory,
+                years,
+                segments,
+                currentSegment,
+                lastConsumable,
+                startTime,
+                endTime,
+                _config);
         }
 
         /// <summary>
@@ -133,6 +168,7 @@ namespace Azure.Storage.ChangeFeed.Common
         {
             if (containerClient.Uri.Host != cursor.UrlHost)
                 throw new ArgumentException("Cursor URL Host does not match container URL host.");
+
             if (cursor.CursorVersion != 1)
                 throw new ArgumentException("Unsupported cursor version.");
         }
@@ -148,17 +184,26 @@ namespace Azure.Storage.ChangeFeed.Common
 
             if (async)
             {
-                await foreach (BlobHierarchyItem item in _containerClient.GetBlobsByHierarchyAsync(options: options, cancellationToken: cancellationToken).ConfigureAwait(false))
+                await foreach (BlobHierarchyItem item in _containerClient.GetBlobsByHierarchyAsync(
+                    options: options,
+                    cancellationToken: cancellationToken)
+                    .ConfigureAwait(false))
                 {
-                    if (item.Prefix.Contains(_config.InitializationSegment)) continue;
+                    if (item.Prefix.Contains(_config.InitializationSegment))
+                        continue;
+
                     list.Add(item.Prefix);
                 }
             }
             else
             {
-                foreach (BlobHierarchyItem item in _containerClient.GetBlobsByHierarchy(options: options, cancellationToken: cancellationToken))
+                foreach (BlobHierarchyItem item in _containerClient.GetBlobsByHierarchy(
+                    options: options,
+                    cancellationToken: cancellationToken))
                 {
-                    if (item.Prefix.Contains(_config.InitializationSegment)) continue;
+                    if (item.Prefix.Contains(_config.InitializationSegment))
+                        continue;
+
                     list.Add(item.Prefix);
                 }
             }
@@ -169,7 +214,11 @@ namespace Azure.Storage.ChangeFeed.Common
         /// Downloads and parses the meta/segments.json file to determine the last consumable timestamp.
         /// </summary>
         /// <returns>The last consumable <see cref="DateTimeOffset"/>, or null if the metadata blob does not exist.</returns>
-        internal static async Task<DateTimeOffset?> GetLastConsumableInternal(BlobContainerClient containerClient, string metaSegmentsPath, bool async, CancellationToken cancellationToken)
+        internal static async Task<DateTimeOffset?> GetLastConsumableInternal(
+            BlobContainerClient containerClient,
+            string metaSegmentsPath,
+            bool async,
+            CancellationToken cancellationToken)
         {
             BlobClient blobClient = containerClient.GetBlobClient(metaSegmentsPath);
             BlobDownloadStreamingResult blobDownloadInfo;
@@ -189,7 +238,10 @@ namespace Azure.Storage.ChangeFeed.Common
             try
             {
                 if (async)
-                    jsonMetaSegment = await JsonDocument.ParseAsync(blobDownloadInfo.Content, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    jsonMetaSegment = await JsonDocument.ParseAsync(
+                        blobDownloadInfo.Content,
+                        cancellationToken: cancellationToken)
+                        .ConfigureAwait(false);
                 else
                     jsonMetaSegment = JsonDocument.Parse(blobDownloadInfo.Content);
 

@@ -53,9 +53,12 @@ namespace Azure.Storage.ChangeFeed.Common
         /// <returns>The rounded value, or null if <paramref name="dateTimeOffset"/> is null.</returns>
         internal static DateTimeOffset? RoundDownToNearestInterval(this DateTimeOffset? dateTimeOffset, TimeSpan interval)
         {
-            if (dateTimeOffset == null) return null;
+            if (dateTimeOffset == null)
+                return null;
+
             long ticks = dateTimeOffset.Value.UtcTicks;
             long intervalTicks = interval.Ticks;
+
             // Subtract the remainder to snap down to the nearest interval boundary in tick space.
             return new DateTimeOffset(ticks - (ticks % intervalTicks), TimeSpan.Zero);
         }
@@ -97,7 +100,12 @@ namespace Azure.Storage.ChangeFeed.Common
         /// <param name="cancellationToken">Cancellation token.</param>
         /// <returns>A queue of segment paths ordered chronologically.</returns>
         internal static async Task<Queue<string>> GetSegmentsInYearInternal(
-            BlobContainerClient containerClient, string yearPath, DateTimeOffset? startTime, DateTimeOffset? endTime, bool async, CancellationToken cancellationToken)
+            BlobContainerClient containerClient,
+            string yearPath,
+            DateTimeOffset? startTime,
+            DateTimeOffset? endTime,
+            bool async,
+            CancellationToken cancellationToken)
         {
             // Single-pass algorithm: as we iterate, track the last segment at or before startTime
             // (the "enclosing" segment whose window may contain events at startTime). Once we pass
@@ -109,11 +117,18 @@ namespace Azure.Storage.ChangeFeed.Common
 
             if (async)
             {
-                await foreach (BlobHierarchyItem item in containerClient.GetBlobsByHierarchyAsync(options: options, cancellationToken: cancellationToken).ConfigureAwait(false))
+                await foreach (BlobHierarchyItem item in containerClient.GetBlobsByHierarchyAsync(
+                    options: options,
+                    cancellationToken: cancellationToken)
+                    .ConfigureAwait(false))
                 {
-                    if (item.IsPrefix) continue;
+                    if (item.IsPrefix)
+                        continue;
+
                     DateTimeOffset segmentDateTime = ToDateTimeOffset(item.Blob.Name).Value;
-                    if (endTime.HasValue && segmentDateTime > endTime) break;
+
+                    if (endTime.HasValue && segmentDateTime > endTime)
+                        break;
 
                     if (!pastStart)
                     {
@@ -140,11 +155,17 @@ namespace Azure.Storage.ChangeFeed.Common
             }
             else
             {
-                foreach (BlobHierarchyItem item in containerClient.GetBlobsByHierarchy(options: options, cancellationToken: cancellationToken))
+                foreach (BlobHierarchyItem item in containerClient.GetBlobsByHierarchy(
+                    options: options,
+                    cancellationToken: cancellationToken))
                 {
-                    if (item.IsPrefix) continue;
+                    if (item.IsPrefix)
+                        continue;
+
                     DateTimeOffset segmentDateTime = ToDateTimeOffset(item.Blob.Name).Value;
-                    if (endTime.HasValue && segmentDateTime > endTime) break;
+
+                    if (endTime.HasValue && segmentDateTime > endTime)
+                        break;
 
                     if (!pastStart)
                     {
@@ -180,7 +201,9 @@ namespace Azure.Storage.ChangeFeed.Common
         /// </summary>
         internal static DateTimeOffset MinDateTime(DateTimeOffset lastConsumable, DateTimeOffset? endDate)
         {
-            if (endDate.HasValue && endDate.Value < lastConsumable) return endDate.Value;
+            if (endDate.HasValue && endDate.Value < lastConsumable)
+                return endDate.Value;
+
             return lastConsumable;
         }
     }

@@ -45,7 +45,16 @@ namespace Azure.Storage.ChangeFeed.Common
         /// <param name="startTime">Optional inclusive start time for the change feed window.</param>
         /// <param name="endTime">Optional exclusive end time for the change feed window.</param>
         /// <param name="config">Change feed configuration.</param>
-        public ChangeFeedBase(BlobContainerClient containerClient, SegmentFactoryBase<TEvent> segmentFactory, Queue<string> years, Queue<string> segments, SegmentBase<TEvent> currentSegment, DateTimeOffset lastConsumable, DateTimeOffset? startTime, DateTimeOffset? endTime, ChangeFeedConfiguration<TEvent> config)
+        public ChangeFeedBase(
+            BlobContainerClient containerClient,
+            SegmentFactoryBase<TEvent> segmentFactory,
+            Queue<string> years,
+            Queue<string> segments,
+            SegmentBase<TEvent> currentSegment,
+            DateTimeOffset lastConsumable,
+            DateTimeOffset? startTime,
+            DateTimeOffset? endTime,
+            ChangeFeedConfiguration<TEvent> config)
         {
             _containerClient = containerClient;
             _segmentFactory = segmentFactory;
@@ -71,13 +80,21 @@ namespace Azure.Storage.ChangeFeed.Common
         /// <param name="pageSize">Requested number of events (capped by <see cref="ChangeFeedConfiguration{TEvent}.DefaultPageSize"/>).</param>
         /// <param name="cancellationToken">Cancellation token.</param>
         /// <returns>A page of events with a serialized continuation token.</returns>
-        public async Task<Page<TEvent>> GetPage(bool async, int pageSize, CancellationToken cancellationToken = default)
+        public async Task<Page<TEvent>> GetPage(
+            bool async,
+            int pageSize,
+            CancellationToken cancellationToken = default)
         {
-            if (!HasNext()) throw new InvalidOperationException("Change feed doesn't have any more events");
-            if (_currentSegment.DateTime >= _endTime) return ChangeFeedEventPageBase<TEvent>.Empty();
+            if (!HasNext())
+                throw new InvalidOperationException("Change feed doesn't have any more events");
+
+            if (_currentSegment.DateTime >= _endTime)
+                return ChangeFeedEventPageBase<TEvent>.Empty();
 
             int defaultPageSize = _config?.DefaultPageSize ?? 5000;
-            if (pageSize > defaultPageSize) pageSize = defaultPageSize;
+
+            if (pageSize > defaultPageSize)
+                pageSize = defaultPageSize;
 
             List<TEvent> events = new List<TEvent>();
             int remainingEvents = pageSize;
@@ -85,9 +102,17 @@ namespace Azure.Storage.ChangeFeed.Common
             // and continue filling the page until the requested size is reached or no segments remain.
             while (events.Count < pageSize && HasNext())
             {
-                List<TEvent> newEvents = await _currentSegment.GetPage(async, remainingEvents, _startTime, _endTime, cancellationToken).ConfigureAwait(false);
+                List<TEvent> newEvents = await _currentSegment.GetPage(
+                    async,
+                    remainingEvents,
+                    _startTime,
+                    _endTime,
+                    cancellationToken)
+                    .ConfigureAwait(false);
+
                 events.AddRange(newEvents);
                 remainingEvents = pageSize - events.Count;
+
                 await AdvanceSegmentIfNecessary(async, cancellationToken).ConfigureAwait(false);
             }
 
@@ -99,8 +124,12 @@ namespace Azure.Storage.ChangeFeed.Common
         /// </summary>
         public bool HasNext()
         {
-            if (_empty || _segments.Count == 0 && _years.Count == 0 && !_currentSegment.HasNext()) return false;
-            if (_endTime.HasValue) return _currentSegment.DateTime < _endTime;
+            if (_empty || _segments.Count == 0 && _years.Count == 0 && !_currentSegment.HasNext())
+                return false;
+
+            if (_endTime.HasValue)
+                return _currentSegment.DateTime < _endTime;
+
             return true;
         }
 
@@ -118,7 +147,8 @@ namespace Azure.Storage.ChangeFeed.Common
         /// </summary>
         private async Task AdvanceSegmentIfNecessary(bool async, CancellationToken cancellationToken)
         {
-            if (_currentSegment.HasNext()) return;
+            if (_currentSegment.HasNext())
+                return;
 
             if (_segments.Count > 0)
             {
@@ -128,7 +158,15 @@ namespace Azure.Storage.ChangeFeed.Common
             {
                 string yearPath = _years.Dequeue();
                 _segments = await ChangeFeedExtensionsBase.GetSegmentsInYearInternal(
-                    containerClient: _containerClient, yearPath: yearPath, startTime: _startTime, endTime: _endTime, async: async, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    containerClient:
+                    _containerClient,
+                    yearPath: yearPath,
+                    startTime: _startTime,
+                    endTime: _endTime,
+                    async: async,
+                    cancellationToken: cancellationToken)
+                    .ConfigureAwait(false);
+
                 if (_segments.Count > 0)
                 {
                     _currentSegment = await _segmentFactory.BuildSegment(async, _segments.Dequeue()).ConfigureAwait(false);
