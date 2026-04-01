@@ -20,11 +20,6 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
     [CodeGenSuppress("NewRelicAccountResourceData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(AccountProperties))]
     [CodeGenSuppress("NewRelicOrganizationResourceData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(OrganizationProperties))]
     [CodeGenSuppress("NewRelicPlanData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(PlanDataProperties))]
-    // Suppress generated flattened factory methods (no default param values) to provide backward-compat versions with defaults.
-    // See https://github.com/Azure/azure-sdk-for-net/issues/57525
-    [CodeGenSuppress("NewRelicAccountResourceData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(string), typeof(string), typeof(string), typeof(AzureLocation?))]
-    [CodeGenSuppress("NewRelicOrganizationResourceData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(string), typeof(string), typeof(NewRelicObservabilityBillingSource?))]
-    [CodeGenSuppress("NewRelicPlanData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(NewRelicPlanDetails), typeof(NewRelicObservabilityOrgCreationSource?), typeof(NewRelicObservabilityAccountCreationSource?))]
     public static partial class ArmNewRelicObservabilityModelFactory
     {
         /// <summary> Initializes a new instance of MarketplaceSaaSInfo (5-param overload). </summary>
