@@ -1,8 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.ResourceManager.CosmosDBForPostgreSql.Models;
-
 namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
 {
     // Backward-compat: baseline had ctor(string name) without type parameter.
