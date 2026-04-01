@@ -59,8 +59,7 @@ internal partial class UnknownBicepExpression : IJsonModel<BicepExpression>
             "nested-access" => NestedExpression.DeserializeNestedExpression(element),
             "decorator" => DecoratorExpression.DeserializeDecoratorExpression(element),
             "if-condition" => IfConditionExpression.DeserializeIfConditionExpression(element),
-            "for-expression" => throw new NotSupportedException(
-                "ForExpression deserialization is not yet implemented. See https://github.com/Azure/azure-sdk-for-net/issues/51592"),
+            "for-expression" => ForExpression.DeserializeForExpression(element),
             // TODO: For forward-compatibility, consider returning a node that preserves
             // the raw JSON payload so unknown kinds can round-trip without data loss.
             _ => throw new InvalidOperationException($"Unknown BicepExpression kind: {kind}")
