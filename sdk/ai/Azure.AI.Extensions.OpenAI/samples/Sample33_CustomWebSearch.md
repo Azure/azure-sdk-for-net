@@ -29,7 +29,7 @@ DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
     Instructions = "You are a helpful agent.",
     Tools = { webSearchTool }
 };
-ProjectsAgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
+ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.CreateAgentVersion(
     agentName: "myAgent",
     options: new(agentDefinition));
 ```
@@ -44,7 +44,7 @@ DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
     Instructions = "You are a helpful agent.",
     Tools = { webSearchTool }
 };
-ProjectsAgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
     agentName: "myAgent",
     options: new(agentDefinition));
 ```
@@ -75,7 +75,7 @@ private static string GetFormattedAnnotation(ResponseItem item)
 
 Synchronous sample:
 ```C# Snippet:Sample_StreamResponse_WebSearchCustomStreaming_Sync
-ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
+ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(agentVersion.Name);
 
 string annotation = "";
 string text = "";
@@ -115,7 +115,7 @@ Console.WriteLine($"{text}{annotation}");
 
 Asynchronous sample:
 ```C# Snippet:Sample_StreamResponse_WebSearchCustomStreaming_Async
-ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
+ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(agentVersion.Name);
 
 string annotation = "";
 string text = "";
@@ -157,10 +157,10 @@ Console.WriteLine($"{text}{annotation}");
 
 Synchronous sample:
 ```C# Snippet:Sample_Cleanup_WebSearchCustomStreaming_Sync
-projectClient.Agents.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_Cleanup_WebSearchCustomStreaming_Async
-await projectClient.Agents.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
 ```

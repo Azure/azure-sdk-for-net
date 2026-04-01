@@ -46,6 +46,7 @@ namespace Azure.Generator.Management.Visitors
 
         private void UpdateModelFactory(ModelFactoryProvider modelFactory)
         {
+            // First pass: update primary methods (replace 'properties' param with flattened params, fix body)
             foreach (var method in modelFactory.Methods)
             {
                 var returnType = method.Signature.ReturnType;
@@ -54,6 +55,123 @@ namespace Azure.Generator.Management.Visitors
                     UpdateModelFactoryMethod(method, propertyNameMap);
                 }
             }
+
+            // Second pass: fix backward-compat overloads whose bodies call primary methods
+            // via InvokeMethodExpression. The primary methods' parameter order may have changed
+            // after flattening, so positional arguments in overloads can be wrong.
+            FixBackwardCompatOverloads(modelFactory.Methods);
+        }
+
+        /// <summary>
+        /// Fixes backward-compat overload methods that call primary model factory methods.
+        /// After flattening reorders the primary method's parameters, the positional arguments
+        /// in these overloads may be in the wrong order. This method rebuilds the argument list
+        /// to match the primary method's current parameter order.
+        /// </summary>
+        internal static void FixBackwardCompatOverloads(IReadOnlyList<MethodProvider> methods)
+        {
+            // Build a lookup of primary methods by name
+            var primaryMethods = new Dictionary<string, MethodProvider>();
+            foreach (var method in methods)
+            {
+                if (!IsBackwardCompatMethod(method))
+                {
+                    var key = method.Signature.Name;
+                    // Use the one with the most parameters as the primary (latest) method
+                    if (!primaryMethods.TryGetValue(key, out var existing) || method.Signature.Parameters.Count > existing.Signature.Parameters.Count)
+                    {
+                        primaryMethods[key] = method;
+                    }
+                }
+            }
+
+            foreach (var method in methods)
+            {
+                if (!IsBackwardCompatMethod(method) || method.BodyStatements is null)
+                {
+                    continue;
+                }
+
+                // Look for backward-compat overloads that call another method via InvokeMethodExpression
+                var updatedBodyStatements = new List<MethodBodyStatement>();
+                var bodyUpdated = false;
+                foreach (var statement in method.BodyStatements)
+                {
+                    if (statement is ExpressionStatement expressionStatement
+                        && (expressionStatement.Expression as KeywordExpression)?.Expression is InvokeMethodExpression invokeExpression
+                        && (invokeExpression.MethodName ?? invokeExpression.MethodSignature?.Name) is string calledMethodName
+                        && primaryMethods.TryGetValue(calledMethodName, out var primaryMethod))
+                    {
+                        var primaryParams = primaryMethod.Signature.Parameters;
+                        var invokeArgs = invokeExpression.Arguments;
+                        var invokeSignatureParams = invokeExpression.MethodSignature?.Parameters;
+
+                        if (invokeSignatureParams is null || invokeSignatureParams.Count != invokeArgs.Count)
+                        {
+                            updatedBodyStatements.Add(statement);
+                            continue;
+                        }
+
+                        // Map: old param name -> argument expression
+                        var argsByName = new Dictionary<string, ValueExpression>(StringComparer.OrdinalIgnoreCase);
+                        for (int i = 0; i < invokeSignatureParams.Count; i++)
+                        {
+                            argsByName[invokeSignatureParams[i].Name] = invokeArgs[i];
+                        }
+
+                        // Rebuild arguments in the current primary method's parameter order,
+                        // tracking whether any reordering actually occurred.
+                        var newArgs = new List<ValueExpression>(primaryParams.Count);
+                        var changed = false;
+                        for (int i = 0; i < primaryParams.Count; i++)
+                        {
+                            if (argsByName.TryGetValue(primaryParams[i].Name, out var arg))
+                            {
+                                newArgs.Add(arg);
+                                if (!changed && (i >= invokeArgs.Count || !ReferenceEquals(arg, invokeArgs[i])))
+                                {
+                                    changed = true;
+                                }
+                            }
+                            else
+                            {
+                                // Parameter not in old call, use named default
+                                newArgs.Add(Snippet.PositionalReference(primaryParams[i], primaryParams[i].DefaultValue ?? Default));
+                                changed = true;
+                            }
+                        }
+
+                        if (changed)
+                        {
+                            updatedBodyStatements.Add(Return(new InvokeMethodExpression(null, primaryMethod.Signature, newArgs)));
+                            bodyUpdated = true;
+                        }
+                        else
+                        {
+                            updatedBodyStatements.Add(statement);
+                        }
+                    }
+                    else
+                    {
+                        updatedBodyStatements.Add(statement);
+                    }
+                }
+
+                if (bodyUpdated)
+                {
+                    method.Update(signature: method.Signature, bodyStatements: updatedBodyStatements);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Checks if a method is a backward-compatibility overload by looking for the
+        /// [EditorBrowsable(EditorBrowsableState.Never)] attribute on its signature.
+        /// </summary>
+        internal static bool IsBackwardCompatMethod(MethodProvider method)
+        {
+            return method.Signature.Attributes.Any(a =>
+                a.Type?.FrameworkType == typeof(System.ComponentModel.EditorBrowsableAttribute));
         }
 
         private bool TryGetFlattenPropertyInfo(CSharpType returnType, [NotNullWhen(true)] out Dictionary<string, List<FlattenPropertyInfo>>? propertyNameMap)

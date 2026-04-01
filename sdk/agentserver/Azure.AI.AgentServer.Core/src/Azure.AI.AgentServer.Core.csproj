@@ -3,8 +3,8 @@
     <RequiredTargetFrameworks>$(RequiredRunnableTargetFrameworks)</RequiredTargetFrameworks>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <RootNamespace>Azure.AI.AgentServer.Core</RootNamespace>
-    <Description>Shared hosting foundation for Azure AI Agent Server packages — provides port binding, health probes, OpenTelemetry, graceful shutdown, and the composable AgentServerBuilder.</Description>
-    <PackageTags>Microsoft Azure AI Agent Server Core ASP.NET OpenTelemetry</PackageTags>
+    <Description>Shared foundation for Azure AI Agent Server packages — provides port binding, health probes, OpenTelemetry, graceful shutdown, and the composable AgentHostBuilder.</Description>
+    <PackageTags>Microsoft Azure AI Agent Server Core ASP.NET Core OpenTelemetry</PackageTags>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <Nullable>enable</Nullable>
     <!-- AZC0100: Server-side hosting library on ASP.NET Core async pipeline — ConfigureAwait(false) is unnecessary and harmful.
