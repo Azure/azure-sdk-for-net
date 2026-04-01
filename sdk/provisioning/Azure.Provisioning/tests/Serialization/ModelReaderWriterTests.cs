@@ -247,43 +247,6 @@ public class ModelReaderWriterTests
     }
 
     [Test]
-    public void MRW_BicepExpression_ForExpression_RoundTrips()
-    {
-        var expr = new ForExpression(
-            "item",
-            new IdentifierExpression("items"),
-            new ObjectExpression(
-                new PropertyExpression("name", new IdentifierExpression("item"))));
-        SerializationTestHelpers.AssertExpressionRoundTrip(expr);
-    }
-
-    [Test]
-    public void MRW_BicepExpression_ForExpression_WithIndex_RoundTrips()
-    {
-        var expr = new ForExpression(
-            "item",
-            "i",
-            new IdentifierExpression("items"),
-            new ObjectExpression(
-                new PropertyExpression("name", new IdentifierExpression("item"))),
-            null);
-        SerializationTestHelpers.AssertExpressionRoundTrip(expr);
-    }
-
-    [Test]
-    public void MRW_BicepExpression_ForExpression_WithCondition_RoundTrips()
-    {
-        var expr = new ForExpression(
-            "item",
-            null,
-            new IdentifierExpression("items"),
-            new ObjectExpression(
-                new PropertyExpression("name", new IdentifierExpression("item"))),
-            new IdentifierExpression("enabled"));
-        SerializationTestHelpers.AssertExpressionRoundTrip(expr);
-    }
-
-    [Test]
     public void MRW_BicepExpression_NestedExpression_RoundTrips()
     {
         var expr = new NestedExpression(new IdentifierExpression("kv"), "secret");

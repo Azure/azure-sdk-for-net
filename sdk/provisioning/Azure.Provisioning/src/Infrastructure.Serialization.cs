@@ -341,23 +341,14 @@ public partial class Infrastructure : IJsonModel<Infrastructure>
         if (body != null)
         {
             resource.EnsureInitialized();
-
-            // Unwrap ForExpression — extract the inner body for property hydration
-            // For now, we preserve the ForExpression as-is on the resource body
-            // since ResourceBicepMetadata does not yet model loop metadata.
-            if (body is ForExpression forExpr)
-            {
-                body = forExpr.Body;
-            }
-
-            // Unwrap IfConditionExpression — extract the condition and inner body
+            // first check if the body is if-condition, and if so, extract the inner body for property hydration and set the condition on BicepMetadata
             if (body is IfConditionExpression ifExpr)
             {
-                resource.BicepMetadata.Condition = ifExpr.Condition;
+                var condition = ifExpr.Condition;
+                resource.BicepMetadata.Condition = condition;
                 body = ifExpr.Body;
             }
-
-            // Now the body should be the object expression with properties to hydrate
+            // now the body should be the object expression with properties to hydrate
             if (body is ObjectExpression objExpr)
             {
                 HydrateProperties(resource.ProvisionableProperties, objExpr);
@@ -365,7 +356,7 @@ public partial class Infrastructure : IJsonModel<Infrastructure>
             else
             {
                 throw new FormatException(
-                    $"Expected resource body to be an ObjectExpression after unwrapping, but got {body.GetType().Name}.");
+                    $"Expected resource body to be an ObjectExpression, but got {body.GetType().Name}.");
             }
         }
 

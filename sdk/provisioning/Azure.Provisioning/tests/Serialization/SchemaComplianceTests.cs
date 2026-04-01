@@ -498,15 +498,6 @@ public class SchemaComplianceTests
                 Assert.IsTrue(node.TryGetProperty("value", out JsonElement decVal), $"Decorator at {path} missing 'value'");
                 AssertExpressionNode(decVal, $"{path}.value");
                 break;
-            case "for-expression":
-                Assert.IsTrue(node.TryGetProperty("itemVariable", out _), $"ForExpression at {path} missing 'itemVariable'");
-                Assert.IsTrue(node.TryGetProperty("expression", out JsonElement forExpr), $"ForExpression at {path} missing 'expression'");
-                Assert.IsTrue(node.TryGetProperty("body", out JsonElement forBody), $"ForExpression at {path} missing 'body'");
-                AssertExpressionNode(forExpr, $"{path}.expression");
-                AssertExpressionNode(forBody, $"{path}.body");
-                if (node.TryGetProperty("condition", out JsonElement forCond))
-                    AssertExpressionNode(forCond, $"{path}.condition");
-                break;
         }
     }
 
