@@ -122,7 +122,14 @@ namespace Azure.ResourceManager.Hci.Models
             if (Optional.IsDefined(ConnectivityProperties))
             {
                 writer.WritePropertyName("connectivityProperties"u8);
-                writer.WriteObjectValue(ConnectivityProperties, options);
+#if NET6_0_OR_GREATER
+                writer.WriteRawValue(ConnectivityProperties);
+#else
+                using (JsonDocument document = JsonDocument.Parse(ConnectivityProperties))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(DefaultExtensions))
             {
@@ -184,7 +191,7 @@ namespace Azure.ResourceManager.Hci.Models
             Guid? arcApplicationObjectId = default;
             ArcSettingAggregateState? aggregateState = default;
             IReadOnlyList<PerNodeArcState> perNodeDetails = default;
-            ArcConnectivityProperties connectivityProperties = default;
+            BinaryData connectivityProperties = default;
             IReadOnlyList<ArcDefaultExtensionDetails> defaultExtensions = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -268,7 +275,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    connectivityProperties = ArcConnectivityProperties.DeserializeArcConnectivityProperties(prop.Value, options);
+                    connectivityProperties = BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("defaultExtensions"u8))

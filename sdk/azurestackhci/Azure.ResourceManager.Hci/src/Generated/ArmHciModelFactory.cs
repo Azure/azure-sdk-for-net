@@ -3083,7 +3083,15 @@ namespace Azure.ResourceManager.Hci.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ArcSettingData ArcSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, HciProvisioningState? provisioningState, string arcInstanceResourceGroup, Guid? arcApplicationClientId, Guid? arcApplicationTenantId, Guid? arcServicePrincipalObjectId, Guid? arcApplicationObjectId, ArcSettingAggregateState? aggregateState, IEnumerable<PerNodeArcState> perNodeDetails, BinaryData connectivityProperties)
         {
-            return ArcSettingData(id, name, resourceType, systemData, provisioningState: default, arcInstanceResourceGroup, arcApplicationClientId, arcApplicationTenantId, arcServicePrincipalObjectId, arcApplicationObjectId, aggregateState: default, perNodeDetails: default, connectivityProperties, defaultExtensions: default);
+            perNodeDetails ??= new ChangeTrackingList<PerNodeArcState>();
+
+            return new ArcSettingData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                default);
         }
 
         /// <summary> Initializes a new instance of PerNodeArcState. </summary>

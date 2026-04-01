@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.Hci
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
-    [ModelReaderWriterBuildable(typeof(ArcConnectivityProperties))]
     [ModelReaderWriterBuildable(typeof(ArcDefaultExtensionDetails))]
     [ModelReaderWriterBuildable(typeof(ArcExtensionData))]
     [ModelReaderWriterBuildable(typeof(ArcExtensionInstanceView))]
@@ -252,7 +251,6 @@ namespace Azure.ResourceManager.Hci
     [ModelReaderWriterBuildable(typeof(SecurityComplianceStatus))]
     [ModelReaderWriterBuildable(typeof(SecurityProperties))]
     [ModelReaderWriterBuildable(typeof(SecuritySettingListResult))]
-    [ModelReaderWriterBuildable(typeof(ServiceConfiguration))]
     [ModelReaderWriterBuildable(typeof(SiteDetails))]
     [ModelReaderWriterBuildable(typeof(SkuList))]
     [ModelReaderWriterBuildable(typeof(SkuProperties))]

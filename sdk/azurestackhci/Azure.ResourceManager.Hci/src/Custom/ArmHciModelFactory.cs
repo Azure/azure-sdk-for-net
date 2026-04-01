@@ -13,8 +13,8 @@ namespace Azure.ResourceManager.Hci.Models
 {
     // Backward-compat: preserves [Obsolete] from previous API version on backward-compat overloads
     // TODO: remove these when https://github.com/Azure/azure-sdk-for-net/issues/57525 is resolved
-    [CodeGenSuppress("ArcSettingData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(HciProvisioningState?), typeof(string), typeof(Guid?), typeof(Guid?), typeof(Guid?), typeof(Guid?), typeof(ArcSettingAggregateState?), typeof(IEnumerable<PerNodeArcState>), typeof(ArcConnectivityProperties), typeof(IEnumerable<ArcDefaultExtensionDetails>))]
-    [CodeGenSuppress("ArcSettingPatch", typeof(IDictionary<string, string>), typeof(ArcConnectivityProperties))]
+    [CodeGenSuppress("ArcSettingData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(HciProvisioningState?), typeof(string), typeof(Guid?), typeof(Guid?), typeof(Guid?), typeof(Guid?), typeof(ArcSettingAggregateState?), typeof(IEnumerable<PerNodeArcState>), typeof(BinaryData), typeof(IEnumerable<ArcDefaultExtensionDetails>))]
+    [CodeGenSuppress("ArcSettingPatch", typeof(IDictionary<string, string>), typeof(BinaryData))]
     [CodeGenSuppress("PerNodeExtensionState", typeof(string), typeof(string), typeof(string), typeof(NodeExtensionState?), typeof(ArcExtensionInstanceView))]
     public static partial class ArmHciModelFactory
     {

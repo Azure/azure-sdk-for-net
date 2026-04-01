@@ -41,5 +41,23 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> ArcSettings properties. </summary>
         [WirePath("properties")]
         internal ArcSettingsPatchProperties Properties { get; set; }
+
+        /// <summary> contains connectivity related configuration for ARC resources. </summary>
+        [WirePath("properties.connectivityProperties")]
+        public BinaryData ConnectivityProperties
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ConnectivityProperties;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ArcSettingsPatchProperties();
+                }
+                Properties.ConnectivityProperties = value;
+            }
+        }
     }
 }

@@ -97,7 +97,6 @@ namespace Azure.ResourceManager.Hci
         public System.Guid? ArcApplicationTenantId { get { throw null; } set { } }
         public string ArcInstanceResourceGroup { get { throw null; } set { } }
         public System.Guid? ArcServicePrincipalObjectId { get { throw null; } set { } }
-        [System.ObsoleteAttribute("This property is obsolete. Use Properties.ConnectivityProperties with type ArcConnectivityProperties instead.")]
         public System.BinaryData ConnectivityProperties { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Hci.Models.ArcDefaultExtensionDetails> DefaultExtensions { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Hci.Models.PerNodeArcState> PerNodeDetails { get { throw null; } }
@@ -1800,7 +1799,6 @@ namespace Azure.ResourceManager.Hci.Models
     public partial class ArcSettingPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Models.ArcSettingPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Models.ArcSettingPatch>
     {
         public ArcSettingPatch() { }
-        [System.ObsoleteAttribute("This property is obsolete. Use Properties.ConnectivityProperties with type ArcConnectivityProperties instead.")]
         public System.BinaryData ConnectivityProperties { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         protected virtual Azure.ResourceManager.Hci.Models.ArcSettingPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

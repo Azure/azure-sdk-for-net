@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
 using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="connectivityProperties"> contains connectivity related configuration for ARC resources. </param>
         /// <param name="defaultExtensions"> Properties for each of the default extensions category. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ArcSettingProperties(HciProvisioningState? provisioningState, string arcInstanceResourceGroup, Guid? arcApplicationClientId, Guid? arcApplicationTenantId, Guid? arcServicePrincipalObjectId, Guid? arcApplicationObjectId, ArcSettingAggregateState? aggregateState, IReadOnlyList<PerNodeArcState> perNodeDetails, ArcConnectivityProperties connectivityProperties, IReadOnlyList<ArcDefaultExtensionDetails> defaultExtensions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ArcSettingProperties(HciProvisioningState? provisioningState, string arcInstanceResourceGroup, Guid? arcApplicationClientId, Guid? arcApplicationTenantId, Guid? arcServicePrincipalObjectId, Guid? arcApplicationObjectId, ArcSettingAggregateState? aggregateState, IReadOnlyList<PerNodeArcState> perNodeDetails, BinaryData connectivityProperties, IReadOnlyList<ArcDefaultExtensionDetails> defaultExtensions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             ArcInstanceResourceGroup = arcInstanceResourceGroup;
@@ -83,9 +84,34 @@ namespace Azure.ResourceManager.Hci.Models
         [WirePath("perNodeDetails")]
         public IReadOnlyList<PerNodeArcState> PerNodeDetails { get; } = new ChangeTrackingList<PerNodeArcState>();
 
-        /// <summary> contains connectivity related configuration for ARC resources. </summary>
+        /// <summary>
+        /// contains connectivity related configuration for ARC resources
+        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
+        /// <description> Creates a payload of "foo". </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromString("\"foo\""). </term>
+        /// <description> Creates a payload of "foo". </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
         [WirePath("connectivityProperties")]
-        public ArcConnectivityProperties ConnectivityProperties { get; set; }
+        public BinaryData ConnectivityProperties { get; set; }
 
         /// <summary> Properties for each of the default extensions category. </summary>
         [WirePath("defaultExtensions")]

@@ -77,7 +77,14 @@ namespace Azure.ResourceManager.Hci.Models
             if (Optional.IsDefined(ConnectivityProperties))
             {
                 writer.WritePropertyName("connectivityProperties"u8);
-                writer.WriteObjectValue(ConnectivityProperties, options);
+#if NET6_0_OR_GREATER
+                writer.WriteRawValue(ConnectivityProperties);
+#else
+                using (JsonDocument document = JsonDocument.Parse(ConnectivityProperties))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -121,7 +128,7 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            ArcConnectivityProperties connectivityProperties = default;
+            BinaryData connectivityProperties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +138,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    connectivityProperties = ArcConnectivityProperties.DeserializeArcConnectivityProperties(prop.Value, options);
+                    connectivityProperties = BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
                 if (options.Format != "W")
