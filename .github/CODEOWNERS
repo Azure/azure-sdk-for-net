@@ -75,13 +75,9 @@
 # ServiceLabel: %Extensions
 # AzureSdkOwners:                                                  @jsquire
 
-# Test acceptable edit
-
 ####################
 # Client Libraries
 ####################
-
-# Test unacceptable edit
 
 # PRLabel: %AI Agents
 /sdk/agentserver/    @ankitbko @RaviPidaparthi
