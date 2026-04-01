@@ -13,7 +13,7 @@ using Azure.ResourceManager.Search;
 
 namespace Azure.ResourceManager.Search.Models
 {
-    /// <summary> The name of the SKU supported by Azure AI Search. </summary>
+    /// <summary> The SKU name information, including its identifier and localized display name. </summary>
     public partial class QuotaUsageResultName : IJsonModel<QuotaUsageResultName>
     {
         /// <param name="data"> The data to parse. </param>

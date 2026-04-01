@@ -4,7 +4,7 @@
 
 ### Features Added
 
-* Add ability to specify EnableStandardMetrics and EnablePerfCounters
+* Add ability to specify EnableStandardMetrics and EnablePerformanceCounters
   ([#56438](https://github.com/Azure/azure-sdk-for-net/pull/56438))
 
 ### Breaking Changes
