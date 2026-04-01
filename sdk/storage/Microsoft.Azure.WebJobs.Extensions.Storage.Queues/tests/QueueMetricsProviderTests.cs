@@ -9,6 +9,7 @@ using System.Threading;
 using Azure;
 using Azure.Core.TestFramework;
 using Azure.Storage.Queues;
+using Azure.Storage.Queues.Models;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests;
 using Microsoft.Extensions.DependencyInjection;
@@ -99,6 +100,30 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Tests
 
             var warning = _loggerProvider.GetAllLogMessages().Single(p => p.Level == Microsoft.Extensions.Logging.LogLevel.Warning);
             Assert.AreEqual("Error querying for queue scale status: Things are very wrong.", warning.FormattedMessage);
+        }
+
+        [Test]
+        public async Task GetMetrics_PeekFailure_PreservesApproximateMessageCount()
+        {
+            // Simulate: GetProperties returns 5 messages, but PeekMessages returns
+            // an empty array (e.g. MessageDecodingFailed handler silently filtered
+            // out un-decodable messages due to encoding mismatch).
+            // The queue length should be preserved as 5, not reset to 0.
+            var queueProperties = QueuesModelFactory.QueueProperties(metadata: null, approximateMessagesCount: 5);
+
+            _mockQueue.Setup(p => p.GetPropertiesAsync(It.IsAny<CancellationToken>()))
+                .Returns(Task.FromResult(Response.FromValue(queueProperties, Mock.Of<Response>())));
+
+            // PeekMessages returns empty array (handler swallowed the decode failure)
+            _mockQueue.Setup(p => p.PeekMessagesAsync(
+                It.IsAny<int?>(),
+                It.IsAny<CancellationToken>()))
+                .Returns(Task.FromResult(Response.FromValue(Array.Empty<PeekedMessage>(), Mock.Of<Response>())));
+
+            var metrics = await _metricsProvider.GetMetricsAsync();
+
+            Assert.AreEqual(5, metrics.QueueLength);
+            Assert.AreEqual(TimeSpan.Zero, metrics.QueueTime);
         }
 
         public class TestFixture : IDisposable

@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> Description of a tool that can be used by an agent. </summary>
-    internal partial class ToolDescription : IJsonModel<ToolDescription>
+    public partial class ToolDescription : IJsonModel<ToolDescription>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

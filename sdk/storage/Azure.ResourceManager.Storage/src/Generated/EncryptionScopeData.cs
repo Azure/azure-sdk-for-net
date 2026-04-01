@@ -13,43 +13,11 @@ using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
 {
-    /// <summary>
-    /// A class representing the EncryptionScope data model.
-    /// The Encryption Scope resource.
-    /// </summary>
+    /// <summary> The Encryption Scope resource. </summary>
     public partial class EncryptionScopeData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="EncryptionScopeData"/>. </summary>
         public EncryptionScopeData()
@@ -57,45 +25,112 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Initializes a new instance of <see cref="EncryptionScopeData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="source"> The provider for the encryption scope. Possible values (case-insensitive):  Microsoft.Storage, Microsoft.KeyVault. </param>
-        /// <param name="state"> The state of the encryption scope. Possible values (case-insensitive):  Enabled, Disabled. </param>
-        /// <param name="createdOn"> Gets the creation date and time of the encryption scope in UTC. </param>
-        /// <param name="lastModifiedOn"> Gets the last modification date and time of the encryption scope in UTC. </param>
-        /// <param name="keyVaultProperties"> The key vault properties for the encryption scope. This is a required field if encryption scope 'source' attribute is set to 'Microsoft.KeyVault'. </param>
-        /// <param name="requireInfrastructureEncryption"> A boolean indicating whether or not the service applies a secondary layer of encryption with platform managed keys for data at rest. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EncryptionScopeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EncryptionScopeSource? source, EncryptionScopeState? state, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, EncryptionScopeKeyVaultProperties keyVaultProperties, bool? requireInfrastructureEncryption, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="encryptionScopeProperties"> Properties of the encryption scope. </param>
+        internal EncryptionScopeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, EncryptionScopeProperties encryptionScopeProperties) : base(id, name, resourceType, systemData)
         {
-            Source = source;
-            State = state;
-            CreatedOn = createdOn;
-            LastModifiedOn = lastModifiedOn;
-            KeyVaultProperties = keyVaultProperties;
-            RequireInfrastructureEncryption = requireInfrastructureEncryption;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            EncryptionScopeProperties = encryptionScopeProperties;
         }
+
+        /// <summary> Properties of the encryption scope. </summary>
+        [WirePath("properties")]
+        internal EncryptionScopeProperties EncryptionScopeProperties { get; set; }
 
         /// <summary> The provider for the encryption scope. Possible values (case-insensitive):  Microsoft.Storage, Microsoft.KeyVault. </summary>
         [WirePath("properties.source")]
-        public EncryptionScopeSource? Source { get; set; }
+        public EncryptionScopeSource? Source
+        {
+            get
+            {
+                return EncryptionScopeProperties is null ? default : EncryptionScopeProperties.Source;
+            }
+            set
+            {
+                if (EncryptionScopeProperties is null)
+                {
+                    EncryptionScopeProperties = new EncryptionScopeProperties();
+                }
+                EncryptionScopeProperties.Source = value.Value;
+            }
+        }
+
         /// <summary> The state of the encryption scope. Possible values (case-insensitive):  Enabled, Disabled. </summary>
         [WirePath("properties.state")]
-        public EncryptionScopeState? State { get; set; }
+        public EncryptionScopeState? State
+        {
+            get
+            {
+                return EncryptionScopeProperties is null ? default : EncryptionScopeProperties.State;
+            }
+            set
+            {
+                if (EncryptionScopeProperties is null)
+                {
+                    EncryptionScopeProperties = new EncryptionScopeProperties();
+                }
+                EncryptionScopeProperties.State = value.Value;
+            }
+        }
+
         /// <summary> Gets the creation date and time of the encryption scope in UTC. </summary>
         [WirePath("properties.creationTime")]
-        public DateTimeOffset? CreatedOn { get; }
+        public DateTimeOffset? CreatedOn
+        {
+            get
+            {
+                return EncryptionScopeProperties is null ? default : EncryptionScopeProperties.CreatedOn;
+            }
+        }
+
         /// <summary> Gets the last modification date and time of the encryption scope in UTC. </summary>
         [WirePath("properties.lastModifiedTime")]
-        public DateTimeOffset? LastModifiedOn { get; }
+        public DateTimeOffset? LastModifiedOn
+        {
+            get
+            {
+                return EncryptionScopeProperties is null ? default : EncryptionScopeProperties.LastModifiedOn;
+            }
+        }
+
         /// <summary> The key vault properties for the encryption scope. This is a required field if encryption scope 'source' attribute is set to 'Microsoft.KeyVault'. </summary>
         [WirePath("properties.keyVaultProperties")]
-        public EncryptionScopeKeyVaultProperties KeyVaultProperties { get; set; }
+        public EncryptionScopeKeyVaultProperties KeyVaultProperties
+        {
+            get
+            {
+                return EncryptionScopeProperties is null ? default : EncryptionScopeProperties.KeyVaultProperties;
+            }
+            set
+            {
+                if (EncryptionScopeProperties is null)
+                {
+                    EncryptionScopeProperties = new EncryptionScopeProperties();
+                }
+                EncryptionScopeProperties.KeyVaultProperties = value;
+            }
+        }
+
         /// <summary> A boolean indicating whether or not the service applies a secondary layer of encryption with platform managed keys for data at rest. </summary>
         [WirePath("properties.requireInfrastructureEncryption")]
-        public bool? RequireInfrastructureEncryption { get; set; }
+        public bool? RequireInfrastructureEncryption
+        {
+            get
+            {
+                return EncryptionScopeProperties is null ? default : EncryptionScopeProperties.RequireInfrastructureEncryption;
+            }
+            set
+            {
+                if (EncryptionScopeProperties is null)
+                {
+                    EncryptionScopeProperties = new EncryptionScopeProperties();
+                }
+                EncryptionScopeProperties.RequireInfrastructureEncryption = value.Value;
+            }
+        }
     }
 }

@@ -453,18 +453,38 @@ namespace Azure.Generator.Management.Providers
 
         private (bool IsPatch, ResourceMethod? UpdateMethod) PopulateUpdateMethod()
         {
-            // First try to find a patch method that has a body parameter.
-            // A bodyless PATCH cannot carry tag changes, so skip it.
+            // First try to find a patch method that has a body parameter whose model defines a tags property
+            // and returns content. A bodyless PATCH, one whose body model lacks tags, or one that returns
+            // no content cannot be used for tag operations — skip it.
             var patchMethod = _resourceMetadata.Methods.FirstOrDefault(m => m.Kind == ResourceOperationKind.Update);
-            var hasBodyParameter = patchMethod?.InputMethod.Operation.Parameters.Any(p => p is InputBodyParameter) == true;
-            if (patchMethod is not null && hasBodyParameter)
+            var patchBodyParameter = patchMethod?.InputMethod.Operation.Parameters.OfType<InputBodyParameter>().FirstOrDefault();
+            if (patchMethod is not null && patchBodyParameter is not null)
             {
-                return (true, patchMethod);
+                if (ModelHasTags(patchBodyParameter.Type as InputModelType) && OperationReturnsContent(patchMethod.InputMethod))
+                {
+                    return (true, patchMethod);
+                }
+
+                // PATCH has a body but either the body model does not define tags or the operation
+                // returns no content — do not fall back to PUT, as the resource intentionally omits
+                // tags from its update path.
+                return (false, null);
             }
 
             // If there is no patch method with a body, fall back to the put method
             var putMethod = _resourceMetadata.Methods.FirstOrDefault(m => m.Kind == ResourceOperationKind.Create);
             return (false, putMethod);
+        }
+
+        private static bool OperationReturnsContent(InputServiceMethod method)
+        {
+            if (method is InputLongRunningServiceMethod lroMethod)
+            {
+                return lroMethod.LongRunningServiceMetadata.ReturnType is not null;
+            }
+
+            var response = method.Operation.Responses.FirstOrDefault(r => !r.IsErrorResponse);
+            return response?.BodyType is not null;
         }
 
         private List<MethodProvider> BuildGetChildResourceMethods()
@@ -540,7 +560,12 @@ namespace Azure.Generator.Management.Providers
 
         private bool HasTags()
         {
-            InputModelType? currentModel = _inputModel;
+            return ModelHasTags(_inputModel);
+        }
+
+        private static bool ModelHasTags(InputModelType? model)
+        {
+            InputModelType? currentModel = model;
             while (currentModel != null)
             {
                 foreach (var property in currentModel.Properties)

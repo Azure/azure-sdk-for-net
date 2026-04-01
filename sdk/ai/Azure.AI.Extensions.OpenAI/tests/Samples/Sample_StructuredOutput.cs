@@ -73,7 +73,7 @@ public class Sample_StructuredOutput : ProjectsOpenAITestBase
                            "and returns it in the desired structured output format.",
             TextOptions = textOptions
         };
-        ProjectsAgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+        ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             agentName: "myAgent",
             options: new(agentDefinition)
         );
@@ -83,14 +83,14 @@ public class Sample_StructuredOutput : ProjectsOpenAITestBase
         {
             Items = { ResponseItem.CreateUserMessageItem("Alice and Bob are going to a science fair this Friday, November 7, 2025.") }
         };
-        ProjectConversation conversation = await projectClient.OpenAI.GetProjectConversationsClient().CreateProjectConversationAsync(options);
-        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(new(name: agentVersion.Name, version: agentVersion.Version), defaultConversationId: conversation.Id);
+        ProjectConversation conversation = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationAsync(options);
+        ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(new(name: agentVersion.Name, version: agentVersion.Version), defaultConversationId: conversation.Id);
         ResponseResult response = await responseClient.CreateResponseAsync(options: new());
         Console.WriteLine(response.GetOutputText());
         #endregion
         #region Snippet:Sample_CleanUp_StructuredOutput_Async
-        await projectClient.OpenAI.GetProjectConversationsClient().DeleteConversationAsync(conversation.Id);
-        await projectClient.Agents.DeleteAgentAsync(agentName: "myAgent");
+        await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().DeleteConversationAsync(conversation.Id);
+        await projectClient.AgentAdministrationClient.DeleteAgentAsync(agentName: "myAgent");
         #endregion
     }
 
@@ -123,7 +123,7 @@ public class Sample_StructuredOutput : ProjectsOpenAITestBase
                            "and returns it in the desired structured output format.",
             TextOptions = textOptions
         };
-        ProjectsAgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
+        ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.CreateAgentVersion(
             agentName: "myAgent",
             options: new(agentDefinition)
         );
@@ -133,14 +133,14 @@ public class Sample_StructuredOutput : ProjectsOpenAITestBase
         {
             Items = { ResponseItem.CreateUserMessageItem("Alice and Bob are going to a science fair this Friday, November 7, 2025.") }
         };
-        ProjectConversation conversation = projectClient.OpenAI.GetProjectConversationsClient().CreateProjectConversation(options);
-        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(new(name: agentVersion.Name, version: agentVersion.Version), defaultConversationId: conversation.Id);
+        ProjectConversation conversation = projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversation(options);
+        ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(new(name: agentVersion.Name, version: agentVersion.Version), defaultConversationId: conversation.Id);
         ResponseResult response = responseClient.CreateResponse(options: new());
         Console.WriteLine(response.GetOutputText());
         #endregion
         #region Snippet:Sample_CleanUp_StructuredOutput_Sync
-        projectClient.OpenAI.GetProjectConversationsClient().DeleteConversation(conversation.Id);
-        projectClient.Agents.DeleteAgent(agentName: "myAgent");
+        projectClient.ProjectOpenAIClient.GetProjectConversationsClient().DeleteConversation(conversation.Id);
+        projectClient.AgentAdministrationClient.DeleteAgent(agentName: "myAgent");
         #endregion
     }
 

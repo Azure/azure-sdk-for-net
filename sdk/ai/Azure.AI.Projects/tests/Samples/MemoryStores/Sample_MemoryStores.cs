@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
+using Azure.AI.Projects.Memory;
 using OpenAI.Responses;
 
 namespace Azure.AI.Projects.Tests.Samples;
@@ -42,7 +43,7 @@ public class Sample_MemoryStore : SamplesBase
             chatModel: modelDeploymentName,
             embeddingModel: embeddingDeploymentName
         );
-        memoryStoreDefinition.Options = new(userProfileEnabled: true, chatSummaryEnabled: true);
+        memoryStoreDefinition.Options = new(isUserProfileEnabled: true, isChatSummaryEnabled: true);
         MemoryStore memoryStore = await projectClient.MemoryStores.CreateMemoryStoreAsync(
             name: "testMemoryStore",
             definition: memoryStoreDefinition,
@@ -85,7 +86,7 @@ public class Sample_MemoryStore : SamplesBase
             options: opts
         );
         Console.WriteLine("==The output from memory tool.==");
-        foreach (Azure.AI.Projects.MemorySearchItem item in resp.Memories)
+        foreach (MemorySearchItem item in resp.Memories)
         {
             Console.WriteLine(item.MemoryItem.Content);
         }
@@ -94,13 +95,13 @@ public class Sample_MemoryStore : SamplesBase
 
         #region Snippet:Sample_DeleteScope_MemoryStore_Async
         MemoryStoreDeleteScopeResponse deleteScopeResponse = await projectClient.MemoryStores.DeleteScopeAsync(name: memoryStore.Name, scope: "Flower");
-        string status = deleteScopeResponse.Deleted ? "" : " not";
+        string status = deleteScopeResponse.IsDeleted ? "" : " not";
         Console.WriteLine($"The scope {deleteScopeResponse.Name} was{status} deleted.");
         #endregion
 
         #region Snippet:Sample_Cleanup_MemoryStore_Async
         DeleteMemoryStoreResponse deleteResponse = await projectClient.MemoryStores.DeleteMemoryStoreAsync(name: memoryStore.Name);
-        status = deleteResponse.Deleted ? "" : " not";
+        status = deleteResponse.IsDeleted ? "" : " not";
         Console.WriteLine($"The memory store {deleteResponse.Name} was{status} deleted.");
         #endregion
     }
@@ -132,7 +133,7 @@ public class Sample_MemoryStore : SamplesBase
             chatModel: modelDeploymentName,
             embeddingModel: embeddingDeploymentName
         );
-        memoryStoreDefinition.Options = new(userProfileEnabled: true, chatSummaryEnabled: true);
+        memoryStoreDefinition.Options = new(isUserProfileEnabled: true, isChatSummaryEnabled: true);
         MemoryStore memoryStore = projectClient.MemoryStores.CreateMemoryStore(
             name: "testMemoryStore",
             definition: memoryStoreDefinition,
@@ -175,7 +176,7 @@ public class Sample_MemoryStore : SamplesBase
             options: opts
         );
         Console.WriteLine("==The output from memory tool.==");
-        foreach (Azure.AI.Projects.MemorySearchItem item in resp.Memories)
+        foreach (MemorySearchItem item in resp.Memories)
         {
             Console.WriteLine(item.MemoryItem.Content);
         }
@@ -184,13 +185,13 @@ public class Sample_MemoryStore : SamplesBase
 
         #region Snippet:Sample_DeleteScope_MemoryStore_Sync
         MemoryStoreDeleteScopeResponse deleteScopeResponse = projectClient.MemoryStores.DeleteScope(name: memoryStore.Name, scope: "Flower");
-        string status = deleteScopeResponse.Deleted ? "" : " not";
+        string status = deleteScopeResponse.IsDeleted ? "" : " not";
         Console.WriteLine($"The scope {deleteScopeResponse.Name} was{status} deleted.");
         #endregion
 
         #region Snippet:Sample_Cleanup_MemoryStore_Sync
         DeleteMemoryStoreResponse deleteResponse = projectClient.MemoryStores.DeleteMemoryStore(name: memoryStore.Name);
-        status = deleteResponse.Deleted ? "" : " not";
+        status = deleteResponse.IsDeleted ? "" : " not";
         Console.WriteLine($"The memory store {deleteResponse.Name} was{status} deleted.");
         #endregion
     }

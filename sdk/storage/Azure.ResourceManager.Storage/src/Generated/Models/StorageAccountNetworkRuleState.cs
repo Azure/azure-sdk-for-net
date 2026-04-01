@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -14,47 +15,67 @@ namespace Azure.ResourceManager.Storage.Models
     public readonly partial struct StorageAccountNetworkRuleState : IEquatable<StorageAccountNetworkRuleState>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="StorageAccountNetworkRuleState"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public StorageAccountNetworkRuleState(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string ProvisioningValue = "Provisioning";
         private const string DeprovisioningValue = "Deprovisioning";
         private const string SucceededValue = "Succeeded";
         private const string FailedValue = "Failed";
         private const string NetworkSourceDeletedValue = "NetworkSourceDeleted";
 
-        /// <summary> Provisioning. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageAccountNetworkRuleState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public StorageAccountNetworkRuleState(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Provisioning. </summary>
         public static StorageAccountNetworkRuleState Provisioning { get; } = new StorageAccountNetworkRuleState(ProvisioningValue);
-        /// <summary> Deprovisioning. </summary>
+
+        /// <summary> Gets the Deprovisioning. </summary>
         public static StorageAccountNetworkRuleState Deprovisioning { get; } = new StorageAccountNetworkRuleState(DeprovisioningValue);
-        /// <summary> Succeeded. </summary>
+
+        /// <summary> Gets the Succeeded. </summary>
         public static StorageAccountNetworkRuleState Succeeded { get; } = new StorageAccountNetworkRuleState(SucceededValue);
-        /// <summary> Failed. </summary>
+
+        /// <summary> Gets the Failed. </summary>
         public static StorageAccountNetworkRuleState Failed { get; } = new StorageAccountNetworkRuleState(FailedValue);
-        /// <summary> NetworkSourceDeleted. </summary>
+
+        /// <summary> Gets the NetworkSourceDeleted. </summary>
         public static StorageAccountNetworkRuleState NetworkSourceDeleted { get; } = new StorageAccountNetworkRuleState(NetworkSourceDeletedValue);
+
         /// <summary> Determines if two <see cref="StorageAccountNetworkRuleState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(StorageAccountNetworkRuleState left, StorageAccountNetworkRuleState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="StorageAccountNetworkRuleState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(StorageAccountNetworkRuleState left, StorageAccountNetworkRuleState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="StorageAccountNetworkRuleState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="StorageAccountNetworkRuleState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator StorageAccountNetworkRuleState(string value) => new StorageAccountNetworkRuleState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="StorageAccountNetworkRuleState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator StorageAccountNetworkRuleState?(string value) => value == null ? null : new StorageAccountNetworkRuleState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is StorageAccountNetworkRuleState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(StorageAccountNetworkRuleState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
