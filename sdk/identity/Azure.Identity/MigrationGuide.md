@@ -15,7 +15,7 @@ This guide covers the scenarios where you may need to take action.
 
 ## Understanding CS0433
 
-[CS0433](https://learn.microsoft.com/dotnet/csharp/misc/cs0433) is a compiler error that occurs when the same type is defined in two different assemblies. After the consolidation, types such as `DefaultAzureCredential` exist in both `Azure.Core` (where they now live) and in older versions of `Azure.Identity` (where they used to live). The compiler cannot determine which definition to use, so it reports the conflict.
+[CS0433](https://learn.microsoft.com/dotnet/csharp/language-reference/compiler-messages/cs0433) is a compiler error that occurs when the same type is defined in two different assemblies. After the consolidation, types such as `DefaultAzureCredential` exist in both `Azure.Core` (where they now live) and in older versions of `Azure.Identity` (where they used to live). The compiler cannot determine which definition to use, so it reports the conflict.
 
 ## Direct reference to an older Azure.Identity
 
