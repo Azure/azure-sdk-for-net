@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ContainerService
         {
             TryGetApiVersion(ResourceType, out string containerServiceMaintenanceConfigurationApiVersion);
             _maintenanceConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerService", ResourceType.Namespace, Diagnostics);
-            _maintenanceConfigurationsRestClient = new MaintenanceConfigurations(_maintenanceConfigurationsClientDiagnostics, Pipeline, Endpoint, containerServiceMaintenanceConfigurationApiVersion ?? "2026-01-02-preview");
+            _maintenanceConfigurationsRestClient = new MaintenanceConfigurations(_maintenanceConfigurationsClientDiagnostics, Pipeline, Endpoint, containerServiceMaintenanceConfigurationApiVersion ?? "2026-01-01");
             ValidateResourceId(id);
         }
 
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-02-preview. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-02-preview. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-02-preview. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-02-preview. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-02-preview. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-02-preview. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

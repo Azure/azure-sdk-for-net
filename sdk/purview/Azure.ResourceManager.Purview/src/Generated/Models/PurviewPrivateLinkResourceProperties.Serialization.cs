@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Purview;
 
 namespace Azure.ResourceManager.Purview.Models
 {
-    public partial class PurviewPrivateLinkResourceProperties : IUtf8JsonSerializable, IJsonModel<PurviewPrivateLinkResourceProperties>
+    /// <summary> A privately linkable resource properties. </summary>
+    public partial class PurviewPrivateLinkResourceProperties : IJsonModel<PurviewPrivateLinkResourceProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PurviewPrivateLinkResourceProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual PurviewPrivateLinkResourceProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PurviewPrivateLinkResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializePurviewPrivateLinkResourceProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PurviewPrivateLinkResourceProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PurviewPrivateLinkResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerPurviewContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(PurviewPrivateLinkResourceProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<PurviewPrivateLinkResourceProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PurviewPrivateLinkResourceProperties IPersistableModel<PurviewPrivateLinkResourceProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<PurviewPrivateLinkResourceProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PurviewPrivateLinkResourceProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +69,11 @@ namespace Azure.ResourceManager.Purview.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PurviewPrivateLinkResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PurviewPrivateLinkResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PurviewPrivateLinkResourceProperties)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsDefined(GroupId))
             {
                 writer.WritePropertyName("groupId"u8);
@@ -43,8 +83,13 @@ namespace Azure.ResourceManager.Purview.Models
             {
                 writer.WritePropertyName("requiredMembers"u8);
                 writer.WriteStartArray();
-                foreach (var item in RequiredMembers)
+                foreach (string item in RequiredMembers)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -53,21 +98,26 @@ namespace Azure.ResourceManager.Purview.Models
             {
                 writer.WritePropertyName("requiredZoneNames"u8);
                 writer.WriteStartArray();
-                foreach (var item in RequiredZoneNames)
+                foreach (string item in RequiredZoneNames)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -76,22 +126,27 @@ namespace Azure.ResourceManager.Purview.Models
             }
         }
 
-        PurviewPrivateLinkResourceProperties IJsonModel<PurviewPrivateLinkResourceProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PurviewPrivateLinkResourceProperties IJsonModel<PurviewPrivateLinkResourceProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual PurviewPrivateLinkResourceProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PurviewPrivateLinkResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PurviewPrivateLinkResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PurviewPrivateLinkResourceProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializePurviewPrivateLinkResourceProperties(document.RootElement, options);
         }
 
-        internal static PurviewPrivateLinkResourceProperties DeserializePurviewPrivateLinkResourceProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static PurviewPrivateLinkResourceProperties DeserializePurviewPrivateLinkResourceProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -99,81 +154,62 @@ namespace Azure.ResourceManager.Purview.Models
             string groupId = default;
             IReadOnlyList<string> requiredMembers = default;
             IReadOnlyList<string> requiredZoneNames = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("groupId"u8))
+                if (prop.NameEquals("groupId"u8))
                 {
-                    groupId = property.Value.GetString();
+                    groupId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("requiredMembers"u8))
+                if (prop.NameEquals("requiredMembers"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     requiredMembers = array;
                     continue;
                 }
-                if (property.NameEquals("requiredZoneNames"u8))
+                if (prop.NameEquals("requiredZoneNames"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     requiredZoneNames = array;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new PurviewPrivateLinkResourceProperties(groupId, requiredMembers ?? new ChangeTrackingList<string>(), requiredZoneNames ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new PurviewPrivateLinkResourceProperties(groupId, requiredMembers ?? new ChangeTrackingList<string>(), requiredZoneNames ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<PurviewPrivateLinkResourceProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<PurviewPrivateLinkResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerPurviewContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(PurviewPrivateLinkResourceProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        PurviewPrivateLinkResourceProperties IPersistableModel<PurviewPrivateLinkResourceProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<PurviewPrivateLinkResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializePurviewPrivateLinkResourceProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(PurviewPrivateLinkResourceProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<PurviewPrivateLinkResourceProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

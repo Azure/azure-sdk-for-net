@@ -9,7 +9,7 @@ using OpenAI;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The input definition information for a Browser Automation Tool, as used to configure an Agent. </summary>
-    public partial class BrowserAutomationPreviewTool : AgentTool
+    public partial class BrowserAutomationPreviewTool : ProjectsAgentTool
     {
         /// <summary> Initializes a new instance of <see cref="BrowserAutomationPreviewTool"/>. </summary>
         /// <param name="toolParameters"> The Browser Automation Tool parameters. </param>

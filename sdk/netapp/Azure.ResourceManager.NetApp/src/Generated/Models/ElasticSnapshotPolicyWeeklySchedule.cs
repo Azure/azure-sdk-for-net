@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Initializes a new instance of <see cref="ElasticSnapshotPolicyWeeklySchedule"/>. </summary>
         public ElasticSnapshotPolicyWeeklySchedule()
         {
-            Days = new ChangeTrackingList<DayOfWeek>();
+            Days = new ChangeTrackingList<NetAppDayOfWeek>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ElasticSnapshotPolicyWeeklySchedule"/>. </summary>
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="hour"> Indicates which hour in UTC timezone a snapshot should be taken. </param>
         /// <param name="minute"> Indicates which minute snapshot should be taken. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ElasticSnapshotPolicyWeeklySchedule(int? snapshotsToKeep, IList<DayOfWeek> days, int? hour, int? minute, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ElasticSnapshotPolicyWeeklySchedule(int? snapshotsToKeep, IList<NetAppDayOfWeek> days, int? hour, int? minute, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SnapshotsToKeep = snapshotsToKeep;
             Days = days;
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Weekly snapshot count to keep. </summary>
         public int? SnapshotsToKeep { get; set; }
         /// <summary> Indicates which weekday(s) snapshot(s) should be taken, accepts a list of week day names in english. </summary>
-        public IList<DayOfWeek> Days { get; }
+        public IList<NetAppDayOfWeek> Days { get; }
         /// <summary> Indicates which hour in UTC timezone a snapshot should be taken. </summary>
         public int? Hour { get; set; }
         /// <summary> Indicates which minute snapshot should be taken. </summary>

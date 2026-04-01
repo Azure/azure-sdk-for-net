@@ -6,42 +6,47 @@
 #nullable disable
 
 using System;
-using System.Text.Json;
-using System.Threading;
-using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.ApiCenter.Models;
 
 namespace Azure.ResourceManager.ApiCenter
 {
-    internal partial class DeploymentsRestOperations
+    internal partial class Deployments
     {
-        private readonly TelemetryDetails _userAgent;
-        private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of DeploymentsRestOperations. </summary>
+        /// <summary> Initializes a new instance of Deployments for mocking. </summary>
+        protected Deployments()
+        {
+        }
+
+        /// <summary> Initializes a new instance of Deployments. </summary>
+        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="applicationId"> The application id to use for user agent. </param>
-        /// <param name="endpoint"> server parameter. </param>
-        /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public DeploymentsRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="apiVersion"></param>
+        internal Deployments(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
-            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
-            _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-03-01";
-            _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+            ClientDiagnostics = clientDiagnostics;
+            _endpoint = endpoint;
+            Pipeline = pipeline;
+            _apiVersion = apiVersion;
         }
 
-        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string serviceName, string workspaceName, string apiName, string filter)
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
+
+        internal HttpMessage CreateGetRequest(Guid subscriptionId, string resourceGroupName, string serviceName, string workspaceName, string apiName, string deploymentName, RequestContext context)
         {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ApiCenter/services/", false);
@@ -50,118 +55,26 @@ namespace Azure.ResourceManager.ApiCenter
             uri.AppendPath(workspaceName, true);
             uri.AppendPath("/apis/", false);
             uri.AppendPath(apiName, true);
-            uri.AppendPath("/deployments", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (filter != null)
+            uri.AppendPath("/deployments/", false);
+            uri.AppendPath(deploymentName, true);
+            if (_apiVersion != null)
             {
-                uri.AppendQuery("$filter", filter, true);
+                uri.AppendQuery("api-version", _apiVersion, true);
             }
-            return uri;
-        }
-
-        internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string serviceName, string workspaceName, string apiName, string filter)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.ApiCenter/services/", false);
-            uri.AppendPath(serviceName, true);
-            uri.AppendPath("/workspaces/", false);
-            uri.AppendPath(workspaceName, true);
-            uri.AppendPath("/apis/", false);
-            uri.AppendPath(apiName, true);
-            uri.AppendPath("/deployments", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (filter != null)
-            {
-                uri.AppendQuery("$filter", filter, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Returns a collection of API deployments. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="serviceName"> The name of Azure API Center service. </param>
-        /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <param name="apiName"> The name of the API. </param>
-        /// <param name="filter"> OData filter parameter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceName"/> or <paramref name="apiName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceName"/> or <paramref name="apiName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DeploymentListResult>> ListAsync(string subscriptionId, string resourceGroupName, string serviceName, string workspaceName, string apiName, string filter = null, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateHeadDeploymentRequest(Guid subscriptionId, string resourceGroupName, string serviceName, string workspaceName, string apiName, string deploymentName, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
-            Argument.AssertNotNullOrEmpty(apiName, nameof(apiName));
-
-            using var message = CreateListRequest(subscriptionId, resourceGroupName, serviceName, workspaceName, apiName, filter);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        DeploymentListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = DeploymentListResult.DeserializeDeploymentListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Returns a collection of API deployments. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="serviceName"> The name of Azure API Center service. </param>
-        /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <param name="apiName"> The name of the API. </param>
-        /// <param name="filter"> OData filter parameter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceName"/> or <paramref name="apiName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceName"/> or <paramref name="apiName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DeploymentListResult> List(string subscriptionId, string resourceGroupName, string serviceName, string workspaceName, string apiName, string filter = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
-            Argument.AssertNotNullOrEmpty(apiName, nameof(apiName));
-
-            using var message = CreateListRequest(subscriptionId, resourceGroupName, serviceName, workspaceName, apiName, filter);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        DeploymentListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = DeploymentListResult.DeserializeDeploymentListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string serviceName, string workspaceName, string apiName, string deploymentName)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ApiCenter/services/", false);
@@ -172,373 +85,23 @@ namespace Azure.ResourceManager.ApiCenter
             uri.AppendPath(apiName, true);
             uri.AppendPath("/deployments/", false);
             uri.AppendPath(deploymentName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string serviceName, string workspaceName, string apiName, string deploymentName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.ApiCenter/services/", false);
-            uri.AppendPath(serviceName, true);
-            uri.AppendPath("/workspaces/", false);
-            uri.AppendPath(workspaceName, true);
-            uri.AppendPath("/apis/", false);
-            uri.AppendPath(apiName, true);
-            uri.AppendPath("/deployments/", false);
-            uri.AppendPath(deploymentName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Returns details of the API deployment. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="serviceName"> The name of Azure API Center service. </param>
-        /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <param name="apiName"> The name of the API. </param>
-        /// <param name="deploymentName"> The name of the API deployment. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceName"/>, <paramref name="apiName"/> or <paramref name="deploymentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceName"/>, <paramref name="apiName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ApiCenterDeploymentData>> GetAsync(string subscriptionId, string resourceGroupName, string serviceName, string workspaceName, string apiName, string deploymentName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
-            Argument.AssertNotNullOrEmpty(apiName, nameof(apiName));
-            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
-
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, serviceName, workspaceName, apiName, deploymentName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ApiCenterDeploymentData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ApiCenterDeploymentData.DeserializeApiCenterDeploymentData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((ApiCenterDeploymentData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Returns details of the API deployment. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="serviceName"> The name of Azure API Center service. </param>
-        /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <param name="apiName"> The name of the API. </param>
-        /// <param name="deploymentName"> The name of the API deployment. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceName"/>, <paramref name="apiName"/> or <paramref name="deploymentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceName"/>, <paramref name="apiName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ApiCenterDeploymentData> Get(string subscriptionId, string resourceGroupName, string serviceName, string workspaceName, string apiName, string deploymentName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
-            Argument.AssertNotNullOrEmpty(apiName, nameof(apiName));
-            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
-
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, serviceName, workspaceName, apiName, deploymentName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ApiCenterDeploymentData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ApiCenterDeploymentData.DeserializeApiCenterDeploymentData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((ApiCenterDeploymentData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string serviceName, string workspaceName, string apiName, string deploymentName, ApiCenterDeploymentData data)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.ApiCenter/services/", false);
-            uri.AppendPath(serviceName, true);
-            uri.AppendPath("/workspaces/", false);
-            uri.AppendPath(workspaceName, true);
-            uri.AppendPath("/apis/", false);
-            uri.AppendPath(apiName, true);
-            uri.AppendPath("/deployments/", false);
-            uri.AppendPath(deploymentName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string serviceName, string workspaceName, string apiName, string deploymentName, ApiCenterDeploymentData data)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.ApiCenter/services/", false);
-            uri.AppendPath(serviceName, true);
-            uri.AppendPath("/workspaces/", false);
-            uri.AppendPath(workspaceName, true);
-            uri.AppendPath("/apis/", false);
-            uri.AppendPath(apiName, true);
-            uri.AppendPath("/deployments/", false);
-            uri.AppendPath(deploymentName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
-            request.Content = content;
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Creates new or updates existing API deployment. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="serviceName"> The name of Azure API Center service. </param>
-        /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <param name="apiName"> The name of the API. </param>
-        /// <param name="deploymentName"> The name of the API deployment. </param>
-        /// <param name="data"> Resource create parameters. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceName"/>, <paramref name="apiName"/>, <paramref name="deploymentName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceName"/>, <paramref name="apiName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ApiCenterDeploymentData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string serviceName, string workspaceName, string apiName, string deploymentName, ApiCenterDeploymentData data, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
-            Argument.AssertNotNullOrEmpty(apiName, nameof(apiName));
-            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, serviceName, workspaceName, apiName, deploymentName, data);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 201:
-                    {
-                        ApiCenterDeploymentData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ApiCenterDeploymentData.DeserializeApiCenterDeploymentData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Creates new or updates existing API deployment. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="serviceName"> The name of Azure API Center service. </param>
-        /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <param name="apiName"> The name of the API. </param>
-        /// <param name="deploymentName"> The name of the API deployment. </param>
-        /// <param name="data"> Resource create parameters. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceName"/>, <paramref name="apiName"/>, <paramref name="deploymentName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceName"/>, <paramref name="apiName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ApiCenterDeploymentData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string serviceName, string workspaceName, string apiName, string deploymentName, ApiCenterDeploymentData data, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
-            Argument.AssertNotNullOrEmpty(apiName, nameof(apiName));
-            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, serviceName, workspaceName, apiName, deploymentName, data);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 201:
-                    {
-                        ApiCenterDeploymentData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ApiCenterDeploymentData.DeserializeApiCenterDeploymentData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string serviceName, string workspaceName, string apiName, string deploymentName)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.ApiCenter/services/", false);
-            uri.AppendPath(serviceName, true);
-            uri.AppendPath("/workspaces/", false);
-            uri.AppendPath(workspaceName, true);
-            uri.AppendPath("/apis/", false);
-            uri.AppendPath(apiName, true);
-            uri.AppendPath("/deployments/", false);
-            uri.AppendPath(deploymentName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string serviceName, string workspaceName, string apiName, string deploymentName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.ApiCenter/services/", false);
-            uri.AppendPath(serviceName, true);
-            uri.AppendPath("/workspaces/", false);
-            uri.AppendPath(workspaceName, true);
-            uri.AppendPath("/apis/", false);
-            uri.AppendPath(apiName, true);
-            uri.AppendPath("/deployments/", false);
-            uri.AppendPath(deploymentName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Deletes API deployment. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="serviceName"> The name of Azure API Center service. </param>
-        /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <param name="apiName"> The name of the API. </param>
-        /// <param name="deploymentName"> The name of the API deployment. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceName"/>, <paramref name="apiName"/> or <paramref name="deploymentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceName"/>, <paramref name="apiName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string serviceName, string workspaceName, string apiName, string deploymentName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
-            Argument.AssertNotNullOrEmpty(apiName, nameof(apiName));
-            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
-
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, serviceName, workspaceName, apiName, deploymentName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 204:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Deletes API deployment. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="serviceName"> The name of Azure API Center service. </param>
-        /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <param name="apiName"> The name of the API. </param>
-        /// <param name="deploymentName"> The name of the API deployment. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceName"/>, <paramref name="apiName"/> or <paramref name="deploymentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceName"/>, <paramref name="apiName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Delete(string subscriptionId, string resourceGroupName, string serviceName, string workspaceName, string apiName, string deploymentName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
-            Argument.AssertNotNullOrEmpty(apiName, nameof(apiName));
-            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
-
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, serviceName, workspaceName, apiName, deploymentName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 204:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateHeadRequestUri(string subscriptionId, string resourceGroupName, string serviceName, string workspaceName, string apiName, string deploymentName)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.ApiCenter/services/", false);
-            uri.AppendPath(serviceName, true);
-            uri.AppendPath("/workspaces/", false);
-            uri.AppendPath(workspaceName, true);
-            uri.AppendPath("/apis/", false);
-            uri.AppendPath(apiName, true);
-            uri.AppendPath("/deployments/", false);
-            uri.AppendPath(deploymentName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateHeadRequest(string subscriptionId, string resourceGroupName, string serviceName, string workspaceName, string apiName, string deploymentName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
             request.Method = RequestMethod.Head;
-            var uri = new RawRequestUriBuilder();
+            return message;
+        }
+
+        internal HttpMessage CreateCreateOrUpdateRequest(Guid subscriptionId, string resourceGroupName, string serviceName, string workspaceName, string apiName, string deploymentName, RequestContent content, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ApiCenter/services/", false);
@@ -549,181 +112,99 @@ namespace Azure.ResourceManager.ApiCenter
             uri.AppendPath(apiName, true);
             uri.AppendPath("/deployments/", false);
             uri.AppendPath(deploymentName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Method = RequestMethod.Put;
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
+            request.Content = content;
             return message;
         }
 
-        /// <summary> Checks if specified API deployment exists. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="serviceName"> The name of Azure API Center service. </param>
-        /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <param name="apiName"> The name of the API. </param>
-        /// <param name="deploymentName"> The name of the API deployment. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceName"/>, <paramref name="apiName"/> or <paramref name="deploymentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceName"/>, <paramref name="apiName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<bool>> HeadAsync(string subscriptionId, string resourceGroupName, string serviceName, string workspaceName, string apiName, string deploymentName, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateDeleteRequest(Guid subscriptionId, string resourceGroupName, string serviceName, string workspaceName, string apiName, string deploymentName, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
-            Argument.AssertNotNullOrEmpty(apiName, nameof(apiName));
-            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
-
-            using var message = CreateHeadRequest(subscriptionId, resourceGroupName, serviceName, workspaceName, apiName, deploymentName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case int s when s >= 200 && s < 300:
-                    {
-                        bool value = true;
-                        return Response.FromValue(value, message.Response);
-                    }
-                case int s when s >= 400 && s < 500:
-                    {
-                        bool value = false;
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Checks if specified API deployment exists. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="serviceName"> The name of Azure API Center service. </param>
-        /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <param name="apiName"> The name of the API. </param>
-        /// <param name="deploymentName"> The name of the API deployment. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceName"/>, <paramref name="apiName"/> or <paramref name="deploymentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceName"/>, <paramref name="apiName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<bool> Head(string subscriptionId, string resourceGroupName, string serviceName, string workspaceName, string apiName, string deploymentName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
-            Argument.AssertNotNullOrEmpty(apiName, nameof(apiName));
-            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
-
-            using var message = CreateHeadRequest(subscriptionId, resourceGroupName, serviceName, workspaceName, apiName, deploymentName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case int s when s >= 200 && s < 300:
-                    {
-                        bool value = true;
-                        return Response.FromValue(value, message.Response);
-                    }
-                case int s when s >= 400 && s < 500:
-                    {
-                        bool value = false;
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string workspaceName, string apiName, string filter)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            return uri;
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ApiCenter/services/", false);
+            uri.AppendPath(serviceName, true);
+            uri.AppendPath("/workspaces/", false);
+            uri.AppendPath(workspaceName, true);
+            uri.AppendPath("/apis/", false);
+            uri.AppendPath(apiName, true);
+            uri.AppendPath("/deployments/", false);
+            uri.AppendPath(deploymentName, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Delete;
+            return message;
         }
 
-        internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string workspaceName, string apiName, string filter)
+        internal HttpMessage CreateGetAllRequest(Guid subscriptionId, string resourceGroupName, string serviceName, string workspaceName, string apiName, string filter, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ApiCenter/services/", false);
+            uri.AppendPath(serviceName, true);
+            uri.AppendPath("/workspaces/", false);
+            uri.AppendPath(workspaceName, true);
+            uri.AppendPath("/apis/", false);
+            uri.AppendPath(apiName, true);
+            uri.AppendPath("/deployments", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Returns a collection of API deployments. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="serviceName"> The name of Azure API Center service. </param>
-        /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <param name="apiName"> The name of the API. </param>
-        /// <param name="filter"> OData filter parameter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceName"/> or <paramref name="apiName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceName"/> or <paramref name="apiName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DeploymentListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string workspaceName, string apiName, string filter = null, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string serviceName, string workspaceName, string apiName, string filter, RequestContext context)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
-            Argument.AssertNotNullOrEmpty(apiName, nameof(apiName));
-
-            using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, serviceName, workspaceName, apiName, filter);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            if (nextPage.IsAbsoluteUri)
             {
-                case 200:
-                    {
-                        DeploymentListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = DeploymentListResult.DeserializeDeploymentListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
+                uri.Reset(nextPage);
             }
-        }
-
-        /// <summary> Returns a collection of API deployments. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="serviceName"> The name of Azure API Center service. </param>
-        /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <param name="apiName"> The name of the API. </param>
-        /// <param name="filter"> OData filter parameter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceName"/> or <paramref name="apiName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceName"/> or <paramref name="apiName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DeploymentListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string workspaceName, string apiName, string filter = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
-            Argument.AssertNotNullOrEmpty(apiName, nameof(apiName));
-
-            using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, serviceName, workspaceName, apiName, filter);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
+            else
             {
-                case 200:
-                    {
-                        DeploymentListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = DeploymentListResult.DeserializeDeploymentListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
+                uri.Reset(new Uri(_endpoint, nextPage));
             }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
         }
     }
 }

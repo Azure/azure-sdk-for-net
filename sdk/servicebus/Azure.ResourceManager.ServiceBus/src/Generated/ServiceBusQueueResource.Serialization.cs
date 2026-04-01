@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.ServiceBus
 {
+    /// <summary></summary>
     public partial class ServiceBusQueueResource : IJsonModel<ServiceBusQueueData>
     {
-        private static ServiceBusQueueData s_dataDeserializationInstance;
-        private static ServiceBusQueueData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ServiceBusQueueData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ServiceBusQueueData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ServiceBusQueueData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ServiceBusQueueData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ServiceBusQueueData>)Data).Write(writer, options);
 
-        ServiceBusQueueData IJsonModel<ServiceBusQueueData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ServiceBusQueueData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ServiceBusQueueData IJsonModel<ServiceBusQueueData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ServiceBusQueueData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ServiceBusQueueData>(Data, options, AzureResourceManagerServiceBusContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ServiceBusQueueData IPersistableModel<ServiceBusQueueData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ServiceBusQueueData>(data, options, AzureResourceManagerServiceBusContext.Default);
 
-        string IPersistableModel<ServiceBusQueueData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ServiceBusQueueData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ServiceBusQueueData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

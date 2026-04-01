@@ -9,14 +9,60 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.NotificationHubs;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
-    public partial class BrowserCredential : IUtf8JsonSerializable, IJsonModel<BrowserCredential>
+    /// <summary> Description of a NotificationHub BrowserCredential. </summary>
+    public partial class BrowserCredential : IJsonModel<BrowserCredential>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BrowserCredential>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="BrowserCredential"/> for deserialization. </summary>
+        internal BrowserCredential()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BrowserCredential PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BrowserCredential>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeBrowserCredential(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BrowserCredential)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BrowserCredential>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNotificationHubsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(BrowserCredential)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<BrowserCredential>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BrowserCredential IPersistableModel<BrowserCredential>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<BrowserCredential>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BrowserCredential>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,30 +74,22 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BrowserCredential>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BrowserCredential>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BrowserCredential)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            writer.WritePropertyName("subject"u8);
-            writer.WriteStringValue(Subject);
-            writer.WritePropertyName("vapidPrivateKey"u8);
-            writer.WriteStringValue(VapidPrivateKey);
-            writer.WritePropertyName("vapidPublicKey"u8);
-            writer.WriteStringValue(VapidPublicKey);
-            writer.WriteEndObject();
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            writer.WriteObjectValue(Properties, options);
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -60,98 +98,46 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             }
         }
 
-        BrowserCredential IJsonModel<BrowserCredential>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BrowserCredential IJsonModel<BrowserCredential>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BrowserCredential JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BrowserCredential>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BrowserCredential>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BrowserCredential)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeBrowserCredential(document.RootElement, options);
         }
 
-        internal static BrowserCredential DeserializeBrowserCredential(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static BrowserCredential DeserializeBrowserCredential(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string subject = default;
-            string vapidPrivateKey = default;
-            string vapidPublicKey = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            BrowserCredentialProperties properties = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("properties"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("subject"u8))
-                        {
-                            subject = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("vapidPrivateKey"u8))
-                        {
-                            vapidPrivateKey = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("vapidPublicKey"u8))
-                        {
-                            vapidPublicKey = property0.Value.GetString();
-                            continue;
-                        }
-                    }
+                    properties = BrowserCredentialProperties.DeserializeBrowserCredentialProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new BrowserCredential(subject, vapidPrivateKey, vapidPublicKey, serializedAdditionalRawData);
+            return new BrowserCredential(properties, additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<BrowserCredential>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<BrowserCredential>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNotificationHubsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(BrowserCredential)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        BrowserCredential IPersistableModel<BrowserCredential>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<BrowserCredential>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeBrowserCredential(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(BrowserCredential)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<BrowserCredential>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
