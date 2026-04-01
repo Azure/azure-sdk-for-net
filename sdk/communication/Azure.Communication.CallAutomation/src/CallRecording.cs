@@ -395,13 +395,18 @@ namespace Azure.Communication.CallAutomation
         public virtual async Task<Response<Stream>> DownloadStreamingAsync(
             Uri sourceLocation,
             HttpRange range = default,
-            CancellationToken cancellationToken = default) =>
-            await _contentDownloader.DownloadStreamingInternal(
+            CancellationToken cancellationToken = default)
+        {
+            // Validate URL to prevent credential exfiltration
+            RecordingUrlValidator.ValidateRecordingUrl(sourceLocation, nameof(sourceLocation));
+
+            return await _contentDownloader.DownloadStreamingInternal(
                 sourceLocation,
                 range,
                 async: true,
                 cancellationToken)
             .ConfigureAwait(false);
+        }
 
         /// <summary>
         /// The <see cref="DownloadStreaming(Uri, HttpRange, CancellationToken)"/>
@@ -430,13 +435,18 @@ namespace Azure.Communication.CallAutomation
         public virtual Response<Stream> DownloadStreaming(
             Uri sourceLocation,
             HttpRange range = default,
-            CancellationToken cancellationToken = default) =>
-            _contentDownloader.DownloadStreamingInternal(
+            CancellationToken cancellationToken = default)
+        {
+            // Validate URL to prevent credential exfiltration
+            RecordingUrlValidator.ValidateRecordingUrl(sourceLocation, nameof(sourceLocation));
+
+            return _contentDownloader.DownloadStreamingInternal(
                 sourceLocation,
                 range,
                 async: false,
                 cancellationToken)
             .EnsureCompleted();
+        }
 
         /// <summary>
         /// The <see cref="DownloadTo(Uri, Stream, ContentTransferOptions, CancellationToken)"/>
@@ -465,8 +475,13 @@ namespace Azure.Communication.CallAutomation
         /// a failure occurs.
         /// </remarks>
         public virtual Response DownloadTo(Uri sourceLocation, Stream destinationStream,
-            ContentTransferOptions transferOptions = default, CancellationToken cancellationToken = default) =>
-            _contentDownloader.StagedDownloadAsync(sourceLocation, destinationStream, transferOptions, async: false, cancellationToken: cancellationToken).EnsureCompleted();
+            ContentTransferOptions transferOptions = default, CancellationToken cancellationToken = default)
+        {
+            // Validate URL to prevent credential exfiltration
+            RecordingUrlValidator.ValidateRecordingUrl(sourceLocation, nameof(sourceLocation));
+
+            return _contentDownloader.StagedDownloadAsync(sourceLocation, destinationStream, transferOptions, async: false, cancellationToken: cancellationToken).EnsureCompleted();
+        }
 
         /// <summary>
         /// The <see cref="DownloadToAsync(Uri, Stream, ContentTransferOptions, CancellationToken)"/>
@@ -494,8 +509,13 @@ namespace Azure.Communication.CallAutomation
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response> DownloadToAsync(Uri sourceLocation, Stream destinationStream, ContentTransferOptions transferOptions = default, CancellationToken cancellationToken = default) =>
-            await _contentDownloader.StagedDownloadAsync(sourceLocation, destinationStream, transferOptions, async: true, cancellationToken: cancellationToken).ConfigureAwait(false);
+        public virtual async Task<Response> DownloadToAsync(Uri sourceLocation, Stream destinationStream, ContentTransferOptions transferOptions = default, CancellationToken cancellationToken = default)
+        {
+            // Validate URL to prevent credential exfiltration
+            RecordingUrlValidator.ValidateRecordingUrl(sourceLocation, nameof(sourceLocation));
+
+            return await _contentDownloader.StagedDownloadAsync(sourceLocation, destinationStream, transferOptions, async: true, cancellationToken: cancellationToken).ConfigureAwait(false);
+        }
 
         /// <summary>
         /// The <see cref="DownloadTo(Uri, string, ContentTransferOptions, CancellationToken)"/>
@@ -526,6 +546,9 @@ namespace Azure.Communication.CallAutomation
         public virtual Response DownloadTo(Uri sourceLocation, string destinationPath,
             ContentTransferOptions transferOptions = default, CancellationToken cancellationToken = default)
         {
+            // Validate URL to prevent credential exfiltration
+            RecordingUrlValidator.ValidateRecordingUrl(sourceLocation, nameof(sourceLocation));
+
             using Stream destination = File.Create(destinationPath);
             return _contentDownloader.StagedDownloadAsync(sourceLocation, destination, transferOptions,
                 async: false, cancellationToken: cancellationToken).EnsureCompleted();
@@ -560,6 +583,9 @@ namespace Azure.Communication.CallAutomation
         public virtual async Task<Response> DownloadToAsync(Uri sourceLocation, string destinationPath,
             ContentTransferOptions transferOptions = default, CancellationToken cancellationToken = default)
         {
+            // Validate URL to prevent credential exfiltration
+            RecordingUrlValidator.ValidateRecordingUrl(sourceLocation, nameof(sourceLocation));
+
             using Stream destination = File.Create(destinationPath);
             return await _contentDownloader.StagedDownloadAsync(sourceLocation, destination, transferOptions,
                 async: true, cancellationToken: cancellationToken).ConfigureAwait(false);
@@ -585,6 +611,9 @@ namespace Azure.Communication.CallAutomation
         /// </remarks>
         public virtual Response Delete(Uri recordingLocation, CancellationToken cancellationToken = default)
         {
+            // Validate URL to prevent credential exfiltration
+            RecordingUrlValidator.ValidateRecordingUrl(recordingLocation, nameof(recordingLocation));
+
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallRecording)}.{nameof(Delete)}");
             scope.Start();
             try
@@ -628,6 +657,9 @@ namespace Azure.Communication.CallAutomation
         /// </remarks>
         public virtual async Task<Response> DeleteAsync(Uri recordingLocation, CancellationToken cancellationToken = default)
         {
+            // Validate URL to prevent credential exfiltration
+            RecordingUrlValidator.ValidateRecordingUrl(recordingLocation, nameof(recordingLocation));
+
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallRecording)}.{nameof(Delete)}");
             scope.Start();
             try
