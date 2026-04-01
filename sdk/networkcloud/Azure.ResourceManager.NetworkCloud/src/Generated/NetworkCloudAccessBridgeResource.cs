@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
         /// <param name="accessBridgeName"> The accessBridgeName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, AccessBridgeAllowedName accessBridgeName)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, NetworkCloudAccessBridgeAllowedName accessBridgeName)
         {
             string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/accessBridges/{accessBridgeName}";
             return new ResourceIdentifier(resourceId);

@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> Initializes a new instance of <see cref="KubernetesVersionProperties"/>. </summary>
         public KubernetesVersionProperties()
         {
-            Values = new ChangeTrackingList<KubernetesVersionValue>();
+            Values = new ChangeTrackingList<NetworkCloudKubernetesVersionValue>();
         }
 
         /// <summary> Initializes a new instance of <see cref="KubernetesVersionProperties"/>. </summary>
         /// <param name="values"> The list of available Kubernetes versions. </param>
         /// <param name="provisioningState"> The provisioning state of the Kubernetes version resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KubernetesVersionProperties(IReadOnlyList<KubernetesVersionValue> values, KubernetesVersionProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KubernetesVersionProperties(IReadOnlyList<NetworkCloudKubernetesVersionValue> values, NetworkCloudKubernetesVersionProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Values = values;
             ProvisioningState = provisioningState;
@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         }
 
         /// <summary> The list of available Kubernetes versions. </summary>
-        public IReadOnlyList<KubernetesVersionValue> Values { get; } = new ChangeTrackingList<KubernetesVersionValue>();
+        public IReadOnlyList<NetworkCloudKubernetesVersionValue> Values { get; } = new ChangeTrackingList<NetworkCloudKubernetesVersionValue>();
 
         /// <summary> The provisioning state of the Kubernetes version resource. </summary>
-        public KubernetesVersionProvisioningState? ProvisioningState { get; }
+        public NetworkCloudKubernetesVersionProvisioningState? ProvisioningState { get; }
     }
 }

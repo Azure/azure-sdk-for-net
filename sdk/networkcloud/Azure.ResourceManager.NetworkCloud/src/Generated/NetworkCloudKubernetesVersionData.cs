@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.NetworkCloud
         public Resources.Models.ExtendedLocation ExtendedLocation { get; set; }
 
         /// <summary> The list of available Kubernetes versions. </summary>
-        public IReadOnlyList<KubernetesVersionValue> Values
+        public IReadOnlyList<NetworkCloudKubernetesVersionValue> Values
         {
             get
             {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.NetworkCloud
         }
 
         /// <summary> The provisioning state of the Kubernetes version resource. </summary>
-        public KubernetesVersionProvisioningState? ProvisioningState
+        public NetworkCloudKubernetesVersionProvisioningState? ProvisioningState
         {
             get
             {

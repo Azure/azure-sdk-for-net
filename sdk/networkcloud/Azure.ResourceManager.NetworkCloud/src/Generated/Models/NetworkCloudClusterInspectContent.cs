@@ -12,22 +12,22 @@ using Azure.ResourceManager.NetworkCloud;
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
     /// <summary> ClusterInspectParameters represents the body of the request to inspect the cluster. </summary>
-    public partial class ClusterInspectContent
+    public partial class NetworkCloudClusterInspectContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ClusterInspectContent"/>. </summary>
-        public ClusterInspectContent()
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudClusterInspectContent"/>. </summary>
+        public NetworkCloudClusterInspectContent()
         {
             AdditionalActions = new ChangeTrackingList<ClusterInspectAdditionalAction>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ClusterInspectContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudClusterInspectContent"/>. </summary>
         /// <param name="additionalActions"> Additional actions supplement the default non-disruptive cluster inspection. Additional actions may be disallowed if the cluster is in a deployed and running state. </param>
         /// <param name="filterDevices"> Indicates which devices are included in the inspection. By default, all devices that can be targeted will be included in the inspection. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ClusterInspectContent(IList<ClusterInspectAdditionalAction> additionalActions, NetworkCloudFilterDevices filterDevices, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetworkCloudClusterInspectContent(IList<ClusterInspectAdditionalAction> additionalActions, NetworkCloudFilterDevices filterDevices, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AdditionalActions = additionalActions;
             FilterDevices = filterDevices;

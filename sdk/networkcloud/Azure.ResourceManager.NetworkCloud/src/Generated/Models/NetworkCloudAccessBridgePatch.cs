@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> The list of security rules enforced by the access bridge. </summary>
-        public IList<AccessBridgeSecurityRule> AccessBridgePatchSecurityRules
+        public IList<NetworkCloudAccessBridgeSecurityRule> AccessBridgePatchSecurityRules
         {
             get
             {

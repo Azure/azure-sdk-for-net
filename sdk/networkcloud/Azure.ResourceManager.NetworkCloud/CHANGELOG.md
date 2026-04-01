@@ -4,13 +4,12 @@
 
 ### Features Added
 
-- Migrated SDK generation from AutoRest/Swagger to TypeSpec-based generation.
 - Added support for API version `2026-01-01-preview`.
-- Added new resource types: `AccessBridge`, `KubernetesVersion`.
 
 ### Other Changes
 
-- Updated custom code to adapt to new TypeSpec generator output for ExtendedLocation handling.
+- Upgraded dependent Azure.Core to 1.52.0.
+- Upgraded Azure.ResourceManager from 1.14.0.
 
 ## 1.3.0 (2026-01-26)
 

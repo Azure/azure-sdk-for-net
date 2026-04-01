@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> Initializes a new instance of <see cref="AccessBridgePatchProperties"/>. </summary>
         public AccessBridgePatchProperties()
         {
-            SecurityRules = new ChangeTrackingList<AccessBridgeSecurityRule>();
+            SecurityRules = new ChangeTrackingList<NetworkCloudAccessBridgeSecurityRule>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AccessBridgePatchProperties"/>. </summary>
         /// <param name="securityRules"> The list of security rules enforced by the access bridge. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AccessBridgePatchProperties(IList<AccessBridgeSecurityRule> securityRules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AccessBridgePatchProperties(IList<NetworkCloudAccessBridgeSecurityRule> securityRules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SecurityRules = securityRules;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The list of security rules enforced by the access bridge. </summary>
-        public IList<AccessBridgeSecurityRule> SecurityRules { get; }
+        public IList<NetworkCloudAccessBridgeSecurityRule> SecurityRules { get; }
     }
 }

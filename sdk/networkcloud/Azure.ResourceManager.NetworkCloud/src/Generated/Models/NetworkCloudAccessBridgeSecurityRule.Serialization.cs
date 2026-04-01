@@ -14,56 +14,56 @@ using Azure.ResourceManager.NetworkCloud;
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
     /// <summary> AccessBridgeSecurityRule captures an individual access rule enforced by the bridge. </summary>
-    public partial class AccessBridgeSecurityRule : IJsonModel<AccessBridgeSecurityRule>
+    public partial class NetworkCloudAccessBridgeSecurityRule : IJsonModel<NetworkCloudAccessBridgeSecurityRule>
     {
-        /// <summary> Initializes a new instance of <see cref="AccessBridgeSecurityRule"/> for deserialization. </summary>
-        internal AccessBridgeSecurityRule()
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudAccessBridgeSecurityRule"/> for deserialization. </summary>
+        internal NetworkCloudAccessBridgeSecurityRule()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AccessBridgeSecurityRule PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual NetworkCloudAccessBridgeSecurityRule PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AccessBridgeSecurityRule>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkCloudAccessBridgeSecurityRule>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAccessBridgeSecurityRule(document.RootElement, options);
+                        return DeserializeNetworkCloudAccessBridgeSecurityRule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AccessBridgeSecurityRule)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkCloudAccessBridgeSecurityRule)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AccessBridgeSecurityRule>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkCloudAccessBridgeSecurityRule>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkCloudContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AccessBridgeSecurityRule)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkCloudAccessBridgeSecurityRule)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AccessBridgeSecurityRule>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<NetworkCloudAccessBridgeSecurityRule>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AccessBridgeSecurityRule IPersistableModel<AccessBridgeSecurityRule>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        NetworkCloudAccessBridgeSecurityRule IPersistableModel<NetworkCloudAccessBridgeSecurityRule>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AccessBridgeSecurityRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<NetworkCloudAccessBridgeSecurityRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AccessBridgeSecurityRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<NetworkCloudAccessBridgeSecurityRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AccessBridgeSecurityRule>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkCloudAccessBridgeSecurityRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AccessBridgeSecurityRule)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkCloudAccessBridgeSecurityRule)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(Description))
             {
@@ -137,31 +137,31 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AccessBridgeSecurityRule IJsonModel<AccessBridgeSecurityRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        NetworkCloudAccessBridgeSecurityRule IJsonModel<NetworkCloudAccessBridgeSecurityRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AccessBridgeSecurityRule JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual NetworkCloudAccessBridgeSecurityRule JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AccessBridgeSecurityRule>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkCloudAccessBridgeSecurityRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AccessBridgeSecurityRule)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkCloudAccessBridgeSecurityRule)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAccessBridgeSecurityRule(document.RootElement, options);
+            return DeserializeNetworkCloudAccessBridgeSecurityRule(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AccessBridgeSecurityRule DeserializeAccessBridgeSecurityRule(JsonElement element, ModelReaderWriterOptions options)
+        internal static NetworkCloudAccessBridgeSecurityRule DeserializeNetworkCloudAccessBridgeSecurityRule(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string description = default;
-            SecurityRuleDirection direction = default;
+            NetworkCloudSecurityRuleDirection direction = default;
             IList<string> ipv4Addresses = default;
             IList<string> ipv6Addresses = default;
             string port = default;
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
                 if (prop.NameEquals("direction"u8))
                 {
-                    direction = new SecurityRuleDirection(prop.Value.GetString());
+                    direction = new NetworkCloudSecurityRuleDirection(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("ipv4Addresses"u8))
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AccessBridgeSecurityRule(
+            return new NetworkCloudAccessBridgeSecurityRule(
                 description,
                 direction,
                 ipv4Addresses ?? new ChangeTrackingList<string>(),

@@ -15,61 +15,61 @@ using Azure.ResourceManager.NetworkCloud;
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
     /// <summary> ClusterInspectParameters represents the body of the request to inspect the cluster. </summary>
-    public partial class ClusterInspectContent : IJsonModel<ClusterInspectContent>
+    public partial class NetworkCloudClusterInspectContent : IJsonModel<NetworkCloudClusterInspectContent>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ClusterInspectContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual NetworkCloudClusterInspectContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ClusterInspectContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkCloudClusterInspectContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeClusterInspectContent(document.RootElement, options);
+                        return DeserializeNetworkCloudClusterInspectContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ClusterInspectContent)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkCloudClusterInspectContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ClusterInspectContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkCloudClusterInspectContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkCloudContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ClusterInspectContent)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkCloudClusterInspectContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ClusterInspectContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<NetworkCloudClusterInspectContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ClusterInspectContent IPersistableModel<ClusterInspectContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        NetworkCloudClusterInspectContent IPersistableModel<NetworkCloudClusterInspectContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ClusterInspectContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<NetworkCloudClusterInspectContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="clusterInspectContent"> The <see cref="ClusterInspectContent"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(ClusterInspectContent clusterInspectContent)
+        /// <param name="networkCloudClusterInspectContent"> The <see cref="NetworkCloudClusterInspectContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(NetworkCloudClusterInspectContent networkCloudClusterInspectContent)
         {
-            if (clusterInspectContent == null)
+            if (networkCloudClusterInspectContent == null)
             {
                 return null;
             }
-            return RequestContent.Create(clusterInspectContent, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(networkCloudClusterInspectContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ClusterInspectContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<NetworkCloudClusterInspectContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ClusterInspectContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkCloudClusterInspectContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClusterInspectContent)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkCloudClusterInspectContent)} does not support writing '{format}' format.");
             }
             if (Optional.IsCollectionDefined(AdditionalActions))
             {
@@ -119,24 +119,24 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ClusterInspectContent IJsonModel<ClusterInspectContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        NetworkCloudClusterInspectContent IJsonModel<NetworkCloudClusterInspectContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ClusterInspectContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual NetworkCloudClusterInspectContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ClusterInspectContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkCloudClusterInspectContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClusterInspectContent)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkCloudClusterInspectContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeClusterInspectContent(document.RootElement, options);
+            return DeserializeNetworkCloudClusterInspectContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ClusterInspectContent DeserializeClusterInspectContent(JsonElement element, ModelReaderWriterOptions options)
+        internal static NetworkCloudClusterInspectContent DeserializeNetworkCloudClusterInspectContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ClusterInspectContent(additionalActions ?? new ChangeTrackingList<ClusterInspectAdditionalAction>(), filterDevices, additionalBinaryDataProperties);
+            return new NetworkCloudClusterInspectContent(additionalActions ?? new ChangeTrackingList<ClusterInspectAdditionalAction>(), filterDevices, additionalBinaryDataProperties);
         }
     }
 }

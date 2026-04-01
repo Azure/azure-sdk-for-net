@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="extendedLocation"> The extended location of the resource. This property is required when creating the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="networkId"/> is null. </exception>
         /// <returns> A new <see cref="NetworkCloud.NetworkCloudAccessBridgeData"/> instance for mocking. </returns>
-        public static NetworkCloudAccessBridgeData NetworkCloudAccessBridgeData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string ipv4ConnectedPrefix = default, string ipv6ConnectedPrefix = default, ResourceIdentifier networkId = default, IEnumerable<AccessBridgeSecurityRule> securityRules = default, AccessBridgeDetailedStatus? detailedStatus = default, string detailedStatusMessage = default, IEnumerable<AccessBridgeEndpoint> endpoints = default, TransportProtocol? protocol = default, AccessBridgeProvisioningState? provisioningState = default, ETag? etag = default, Resources.Models.ExtendedLocation extendedLocation = default)
+        public static NetworkCloudAccessBridgeData NetworkCloudAccessBridgeData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string ipv4ConnectedPrefix = default, string ipv6ConnectedPrefix = default, ResourceIdentifier networkId = default, IEnumerable<NetworkCloudAccessBridgeSecurityRule> securityRules = default, NetworkCloudAccessBridgeDetailedStatus? detailedStatus = default, string detailedStatusMessage = default, IEnumerable<NetworkCloudAccessBridgeEndpoint> endpoints = default, NetworkCloudTransportProtocol? protocol = default, NetworkCloudAccessBridgeProvisioningState? provisioningState = default, ETag? etag = default, Resources.Models.ExtendedLocation extendedLocation = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -57,10 +57,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     ipv4ConnectedPrefix,
                     ipv6ConnectedPrefix,
                     networkId,
-                    (securityRules ?? new ChangeTrackingList<AccessBridgeSecurityRule>()).ToList(),
+                    (securityRules ?? new ChangeTrackingList<NetworkCloudAccessBridgeSecurityRule>()).ToList(),
                     detailedStatus,
                     detailedStatusMessage,
-                    (endpoints ?? new ChangeTrackingList<AccessBridgeEndpoint>()).ToList(),
+                    (endpoints ?? new ChangeTrackingList<NetworkCloudAccessBridgeEndpoint>()).ToList(),
                     protocol,
                     provisioningState,
                     null),
@@ -74,13 +74,13 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="ipv4Addresses"> The set of IPv4 addresses permitted as the source or destination of the security rule. For as single address, utilize a /32 (CIDR notation). One or both Ipv4Addresses and Ipv6Addresses must be specified. Example formats: 10.10.10.10-10.10.10.20 or 10.10.10.10/24. </param>
         /// <param name="ipv6Addresses"> The set of IPv6 addresses permitted as the source or destination of the security rule. For as single address, utilize a /128 (CIDR notation). One or both Ipv4Addresses and Ipv6Addresses must be specified. Example formats: 2001:db8:abcd::1-2001:db8:abcd::ff or 2001:db8:abcd::1/64. </param>
         /// <param name="port"> The source or destination port or port range. Example 24562 or 24562-24570. </param>
-        /// <returns> A new <see cref="Models.AccessBridgeSecurityRule"/> instance for mocking. </returns>
-        public static AccessBridgeSecurityRule AccessBridgeSecurityRule(string description = default, SecurityRuleDirection direction = default, IEnumerable<string> ipv4Addresses = default, IEnumerable<string> ipv6Addresses = default, string port = default)
+        /// <returns> A new <see cref="Models.NetworkCloudAccessBridgeSecurityRule"/> instance for mocking. </returns>
+        public static NetworkCloudAccessBridgeSecurityRule NetworkCloudAccessBridgeSecurityRule(string description = default, NetworkCloudSecurityRuleDirection direction = default, IEnumerable<string> ipv4Addresses = default, IEnumerable<string> ipv6Addresses = default, string port = default)
         {
             ipv4Addresses ??= new ChangeTrackingList<string>();
             ipv6Addresses ??= new ChangeTrackingList<string>();
 
-            return new AccessBridgeSecurityRule(
+            return new NetworkCloudAccessBridgeSecurityRule(
                 description,
                 direction,
                 ipv4Addresses.ToList(),
@@ -94,20 +94,20 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="ipv4Address"> The IPv4 address associated with the endpoint. </param>
         /// <param name="ipv6Address"> The IPv6 address associated with the endpoint. </param>
         /// <param name="name"> The name that identifies the type of endpoint (for example VIP or host). </param>
-        /// <returns> A new <see cref="Models.AccessBridgeEndpoint"/> instance for mocking. </returns>
-        public static AccessBridgeEndpoint AccessBridgeEndpoint(string fqdn = default, string ipv4Address = default, string ipv6Address = default, string name = default)
+        /// <returns> A new <see cref="Models.NetworkCloudAccessBridgeEndpoint"/> instance for mocking. </returns>
+        public static NetworkCloudAccessBridgeEndpoint NetworkCloudAccessBridgeEndpoint(string fqdn = default, string ipv4Address = default, string ipv6Address = default, string name = default)
         {
-            return new AccessBridgeEndpoint(fqdn, ipv4Address, ipv6Address, name, additionalBinaryDataProperties: null);
+            return new NetworkCloudAccessBridgeEndpoint(fqdn, ipv4Address, ipv6Address, name, additionalBinaryDataProperties: null);
         }
 
         /// <param name="accessBridgePatchSecurityRules"> The list of security rules enforced by the access bridge. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.NetworkCloudAccessBridgePatch"/> instance for mocking. </returns>
-        public static NetworkCloudAccessBridgePatch NetworkCloudAccessBridgePatch(IEnumerable<AccessBridgeSecurityRule> accessBridgePatchSecurityRules = default, IDictionary<string, string> tags = default)
+        public static NetworkCloudAccessBridgePatch NetworkCloudAccessBridgePatch(IEnumerable<NetworkCloudAccessBridgeSecurityRule> accessBridgePatchSecurityRules = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new NetworkCloudAccessBridgePatch(accessBridgePatchSecurityRules is null ? default : new AccessBridgePatchProperties((accessBridgePatchSecurityRules ?? new ChangeTrackingList<AccessBridgeSecurityRule>()).ToList(), null), tags, additionalBinaryDataProperties: null);
+            return new NetworkCloudAccessBridgePatch(accessBridgePatchSecurityRules is null ? default : new AccessBridgePatchProperties((accessBridgePatchSecurityRules ?? new ChangeTrackingList<NetworkCloudAccessBridgeSecurityRule>()).ToList(), null), tags, additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -546,10 +546,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="connectionState"> The state to set for the private endpoint connection. </param>
         /// <param name="description"> The description to associate with the private endpoint connection. </param>
         /// <param name="privateEndpointResourceId"> The resource ID of private endpoint to be permitted or denied connection to the relay namespace. </param>
-        /// <returns> A new <see cref="Models.ClusterManagerUpdateRelayPrivateEndpointConnectionContent"/> instance for mocking. </returns>
-        public static ClusterManagerUpdateRelayPrivateEndpointConnectionContent ClusterManagerUpdateRelayPrivateEndpointConnectionContent(RelayPrivateEndpointConnectionState connectionState = default, string description = default, ResourceIdentifier privateEndpointResourceId = default)
+        /// <returns> A new <see cref="Models.NetworkCloudClusterManagerRelayPrivateEndpointConnectionContent"/> instance for mocking. </returns>
+        public static NetworkCloudClusterManagerRelayPrivateEndpointConnectionContent NetworkCloudClusterManagerRelayPrivateEndpointConnectionContent(NetworkCloudRelayPrivateEndpointConnectionState connectionState = default, string description = default, ResourceIdentifier privateEndpointResourceId = default)
         {
-            return new ClusterManagerUpdateRelayPrivateEndpointConnectionContent(connectionState, description, privateEndpointResourceId, additionalBinaryDataProperties: null);
+            return new NetworkCloudClusterManagerRelayPrivateEndpointConnectionContent(connectionState, description, privateEndpointResourceId, additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -799,12 +799,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> ClusterInspectParameters represents the body of the request to inspect the cluster. </summary>
         /// <param name="additionalActions"> Additional actions supplement the default non-disruptive cluster inspection. Additional actions may be disallowed if the cluster is in a deployed and running state. </param>
         /// <param name="filterDevices"> Indicates which devices are included in the inspection. By default, all devices that can be targeted will be included in the inspection. </param>
-        /// <returns> A new <see cref="Models.ClusterInspectContent"/> instance for mocking. </returns>
-        public static ClusterInspectContent ClusterInspectContent(IEnumerable<ClusterInspectAdditionalAction> additionalActions = default, NetworkCloudFilterDevices filterDevices = default)
+        /// <returns> A new <see cref="Models.NetworkCloudClusterInspectContent"/> instance for mocking. </returns>
+        public static NetworkCloudClusterInspectContent NetworkCloudClusterInspectContent(IEnumerable<ClusterInspectAdditionalAction> additionalActions = default, NetworkCloudFilterDevices filterDevices = default)
         {
             additionalActions ??= new ChangeTrackingList<ClusterInspectAdditionalAction>();
 
-            return new ClusterInspectContent(additionalActions.ToList(), filterDevices, additionalBinaryDataProperties: null);
+            return new NetworkCloudClusterInspectContent(additionalActions.ToList(), filterDevices, additionalBinaryDataProperties: null);
         }
 
         /// <summary> FilterDevices defines the filtered target of the inspection. </summary>
@@ -1089,7 +1089,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="etag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
         /// <param name="extendedLocation"> The extended location of the resource. This property is required when creating the resource. </param>
         /// <returns> A new <see cref="NetworkCloud.NetworkCloudKubernetesVersionData"/> instance for mocking. </returns>
-        public static NetworkCloudKubernetesVersionData NetworkCloudKubernetesVersionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, IEnumerable<KubernetesVersionValue> values = default, KubernetesVersionProvisioningState? provisioningState = default, ETag? etag = default, Resources.Models.ExtendedLocation extendedLocation = default)
+        public static NetworkCloudKubernetesVersionData NetworkCloudKubernetesVersionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, IEnumerable<NetworkCloudKubernetesVersionValue> values = default, NetworkCloudKubernetesVersionProvisioningState? provisioningState = default, ETag? etag = default, Resources.Models.ExtendedLocation extendedLocation = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1101,7 +1101,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                values is null && provisioningState is null ? default : new KubernetesVersionProperties((values ?? new ChangeTrackingList<KubernetesVersionValue>()).ToList(), provisioningState, null),
+                values is null && provisioningState is null ? default : new KubernetesVersionProperties((values ?? new ChangeTrackingList<NetworkCloudKubernetesVersionValue>()).ToList(), provisioningState, null),
                 etag,
                 extendedLocation);
         }
@@ -1109,10 +1109,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> KubernetesVersionValue describes a specific Kubernetes version that can be deployed. </summary>
         /// <param name="description"> Additional description for the Kubernetes version. </param>
         /// <param name="version"> The Kubernetes version identifier. </param>
-        /// <returns> A new <see cref="Models.KubernetesVersionValue"/> instance for mocking. </returns>
-        public static KubernetesVersionValue KubernetesVersionValue(string description = default, string version = default)
+        /// <returns> A new <see cref="Models.NetworkCloudKubernetesVersionValue"/> instance for mocking. </returns>
+        public static NetworkCloudKubernetesVersionValue NetworkCloudKubernetesVersionValue(string description = default, string version = default)
         {
-            return new KubernetesVersionValue(description, version, additionalBinaryDataProperties: null);
+            return new NetworkCloudKubernetesVersionValue(description, version, additionalBinaryDataProperties: null);
         }
 
         /// <summary> KubernetesVersionPatchParameters represents the body of the request to patch Kubernetes version tags. </summary>

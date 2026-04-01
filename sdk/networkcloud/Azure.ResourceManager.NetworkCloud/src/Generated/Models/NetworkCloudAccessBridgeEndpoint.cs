@@ -11,23 +11,23 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
     /// <summary> AccessBridgeEndpoint describes a single advertised service endpoint. </summary>
-    public partial class AccessBridgeEndpoint
+    public partial class NetworkCloudAccessBridgeEndpoint
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AccessBridgeEndpoint"/>. </summary>
-        internal AccessBridgeEndpoint()
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudAccessBridgeEndpoint"/>. </summary>
+        internal NetworkCloudAccessBridgeEndpoint()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AccessBridgeEndpoint"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudAccessBridgeEndpoint"/>. </summary>
         /// <param name="fqdn"> The fully qualified domain name used to describe the certificate name for the endpoint. </param>
         /// <param name="ipv4Address"> The IPv4 address associated with the endpoint. </param>
         /// <param name="ipv6Address"> The IPv6 address associated with the endpoint. </param>
         /// <param name="name"> The name that identifies the type of endpoint (for example VIP or host). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AccessBridgeEndpoint(string fqdn, string ipv4Address, string ipv6Address, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetworkCloudAccessBridgeEndpoint(string fqdn, string ipv4Address, string ipv6Address, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Fqdn = fqdn;
             Ipv4Address = ipv4Address;

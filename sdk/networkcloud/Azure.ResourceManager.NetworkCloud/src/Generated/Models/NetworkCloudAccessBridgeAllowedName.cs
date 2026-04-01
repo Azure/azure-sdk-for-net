@@ -12,7 +12,7 @@ using Azure.ResourceManager.NetworkCloud;
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
     /// <summary> The allowed names for the access bridge. </summary>
-    public readonly partial struct AccessBridgeAllowedName : IEquatable<AccessBridgeAllowedName>
+    public readonly partial struct NetworkCloudAccessBridgeAllowedName : IEquatable<NetworkCloudAccessBridgeAllowedName>
     {
         private readonly string _value;
         /// <summary> The access bridge for bare metal machine bastion access. </summary>
@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> The access bridge for access to the storage dashboard. </summary>
         private const string StorageDashboardValue = "StorageDashboard";
 
-        /// <summary> Initializes a new instance of <see cref="AccessBridgeAllowedName"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudAccessBridgeAllowedName"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public AccessBridgeAllowedName(string value)
+        public NetworkCloudAccessBridgeAllowedName(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -33,38 +33,38 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         }
 
         /// <summary> The access bridge for bare metal machine bastion access. </summary>
-        public static AccessBridgeAllowedName Bastion { get; } = new AccessBridgeAllowedName(BastionValue);
+        public static NetworkCloudAccessBridgeAllowedName Bastion { get; } = new NetworkCloudAccessBridgeAllowedName(BastionValue);
 
         /// <summary> The access bridge for cluster access to private vault. </summary>
-        public static AccessBridgeAllowedName PrivateVault { get; } = new AccessBridgeAllowedName(PrivateVaultValue);
+        public static NetworkCloudAccessBridgeAllowedName PrivateVault { get; } = new NetworkCloudAccessBridgeAllowedName(PrivateVaultValue);
 
         /// <summary> The access bridge for access to the storage dashboard. </summary>
-        public static AccessBridgeAllowedName StorageDashboard { get; } = new AccessBridgeAllowedName(StorageDashboardValue);
+        public static NetworkCloudAccessBridgeAllowedName StorageDashboard { get; } = new NetworkCloudAccessBridgeAllowedName(StorageDashboardValue);
 
-        /// <summary> Determines if two <see cref="AccessBridgeAllowedName"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="NetworkCloudAccessBridgeAllowedName"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(AccessBridgeAllowedName left, AccessBridgeAllowedName right) => left.Equals(right);
+        public static bool operator ==(NetworkCloudAccessBridgeAllowedName left, NetworkCloudAccessBridgeAllowedName right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="AccessBridgeAllowedName"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="NetworkCloudAccessBridgeAllowedName"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(AccessBridgeAllowedName left, AccessBridgeAllowedName right) => !left.Equals(right);
+        public static bool operator !=(NetworkCloudAccessBridgeAllowedName left, NetworkCloudAccessBridgeAllowedName right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="AccessBridgeAllowedName"/>. </summary>
+        /// <summary> Converts a string to a <see cref="NetworkCloudAccessBridgeAllowedName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AccessBridgeAllowedName(string value) => new AccessBridgeAllowedName(value);
+        public static implicit operator NetworkCloudAccessBridgeAllowedName(string value) => new NetworkCloudAccessBridgeAllowedName(value);
 
-        /// <summary> Converts a string to a <see cref="AccessBridgeAllowedName"/>. </summary>
+        /// <summary> Converts a string to a <see cref="NetworkCloudAccessBridgeAllowedName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AccessBridgeAllowedName?(string value) => value == null ? null : new AccessBridgeAllowedName(value);
+        public static implicit operator NetworkCloudAccessBridgeAllowedName?(string value) => value == null ? null : new NetworkCloudAccessBridgeAllowedName(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is AccessBridgeAllowedName other && Equals(other);
+        public override bool Equals(object obj) => obj is NetworkCloudAccessBridgeAllowedName other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(AccessBridgeAllowedName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(NetworkCloudAccessBridgeAllowedName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

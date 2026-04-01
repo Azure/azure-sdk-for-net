@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 writer.WritePropertyName("values"u8);
                 writer.WriteStartArray();
-                foreach (KubernetesVersionValue item in Values)
+                foreach (NetworkCloudKubernetesVersionValue item in Values)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -131,8 +131,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            IReadOnlyList<KubernetesVersionValue> values = default;
-            KubernetesVersionProvisioningState? provisioningState = default;
+            IReadOnlyList<NetworkCloudKubernetesVersionValue> values = default;
+            NetworkCloudKubernetesVersionProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -142,10 +142,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     {
                         continue;
                     }
-                    List<KubernetesVersionValue> array = new List<KubernetesVersionValue>();
+                    List<NetworkCloudKubernetesVersionValue> array = new List<NetworkCloudKubernetesVersionValue>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(KubernetesVersionValue.DeserializeKubernetesVersionValue(item, options));
+                        array.Add(NetworkCloudKubernetesVersionValue.DeserializeNetworkCloudKubernetesVersionValue(item, options));
                     }
                     values = array;
                     continue;
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     {
                         continue;
                     }
-                    provisioningState = new KubernetesVersionProvisioningState(prop.Value.GetString());
+                    provisioningState = new NetworkCloudKubernetesVersionProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new KubernetesVersionProperties(values ?? new ChangeTrackingList<KubernetesVersionValue>(), provisioningState, additionalBinaryDataProperties);
+            return new KubernetesVersionProperties(values ?? new ChangeTrackingList<NetworkCloudKubernetesVersionValue>(), provisioningState, additionalBinaryDataProperties);
         }
     }
 }

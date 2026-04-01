@@ -425,7 +425,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<NetworkCloudOperationStatusResult>> UpdateRelayPrivateEndpointConnectionAsync(WaitUntil waitUntil, ClusterManagerUpdateRelayPrivateEndpointConnectionContent content = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<NetworkCloudOperationStatusResult>> UpdateRelayPrivateEndpointConnectionAsync(WaitUntil waitUntil, NetworkCloudClusterManagerRelayPrivateEndpointConnectionContent content = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clusterManagersClientDiagnostics.CreateScope("NetworkCloudClusterManagerResource.UpdateRelayPrivateEndpointConnection");
             scope.Start();
@@ -435,7 +435,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clusterManagersRestClient.CreateUpdateRelayPrivateEndpointConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ClusterManagerUpdateRelayPrivateEndpointConnectionContent.ToRequestContent(content), context);
+                HttpMessage message = _clusterManagersRestClient.CreateUpdateRelayPrivateEndpointConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkCloudClusterManagerRelayPrivateEndpointConnectionContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkCloudArmOperation<NetworkCloudOperationStatusResult> operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(
                     new NetworkCloudOperationStatusResultOperationSource(),
@@ -481,7 +481,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<NetworkCloudOperationStatusResult> UpdateRelayPrivateEndpointConnection(WaitUntil waitUntil, ClusterManagerUpdateRelayPrivateEndpointConnectionContent content = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<NetworkCloudOperationStatusResult> UpdateRelayPrivateEndpointConnection(WaitUntil waitUntil, NetworkCloudClusterManagerRelayPrivateEndpointConnectionContent content = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clusterManagersClientDiagnostics.CreateScope("NetworkCloudClusterManagerResource.UpdateRelayPrivateEndpointConnection");
             scope.Start();
@@ -491,7 +491,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clusterManagersRestClient.CreateUpdateRelayPrivateEndpointConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ClusterManagerUpdateRelayPrivateEndpointConnectionContent.ToRequestContent(content), context);
+                HttpMessage message = _clusterManagersRestClient.CreateUpdateRelayPrivateEndpointConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkCloudClusterManagerRelayPrivateEndpointConnectionContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkCloudArmOperation<NetworkCloudOperationStatusResult> operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(
                     new NetworkCloudOperationStatusResultOperationSource(),

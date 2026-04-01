@@ -12,7 +12,7 @@ using Azure.ResourceManager.NetworkCloud;
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
     /// <summary> The protocol advertised by the access bridge endpoints. </summary>
-    public readonly partial struct TransportProtocol : IEquatable<TransportProtocol>
+    public readonly partial struct NetworkCloudTransportProtocol : IEquatable<NetworkCloudTransportProtocol>
     {
         private readonly string _value;
         /// <summary> The TCP transport protocol. </summary>
@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> The UDP transport protocol. </summary>
         private const string UdpValue = "UDP";
 
-        /// <summary> Initializes a new instance of <see cref="TransportProtocol"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudTransportProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public TransportProtocol(string value)
+        public NetworkCloudTransportProtocol(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,35 +31,35 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         }
 
         /// <summary> The TCP transport protocol. </summary>
-        public static TransportProtocol Tcp { get; } = new TransportProtocol(TcpValue);
+        public static NetworkCloudTransportProtocol Tcp { get; } = new NetworkCloudTransportProtocol(TcpValue);
 
         /// <summary> The UDP transport protocol. </summary>
-        public static TransportProtocol Udp { get; } = new TransportProtocol(UdpValue);
+        public static NetworkCloudTransportProtocol Udp { get; } = new NetworkCloudTransportProtocol(UdpValue);
 
-        /// <summary> Determines if two <see cref="TransportProtocol"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="NetworkCloudTransportProtocol"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(TransportProtocol left, TransportProtocol right) => left.Equals(right);
+        public static bool operator ==(NetworkCloudTransportProtocol left, NetworkCloudTransportProtocol right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="TransportProtocol"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="NetworkCloudTransportProtocol"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(TransportProtocol left, TransportProtocol right) => !left.Equals(right);
+        public static bool operator !=(NetworkCloudTransportProtocol left, NetworkCloudTransportProtocol right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="TransportProtocol"/>. </summary>
+        /// <summary> Converts a string to a <see cref="NetworkCloudTransportProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TransportProtocol(string value) => new TransportProtocol(value);
+        public static implicit operator NetworkCloudTransportProtocol(string value) => new NetworkCloudTransportProtocol(value);
 
-        /// <summary> Converts a string to a <see cref="TransportProtocol"/>. </summary>
+        /// <summary> Converts a string to a <see cref="NetworkCloudTransportProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TransportProtocol?(string value) => value == null ? null : new TransportProtocol(value);
+        public static implicit operator NetworkCloudTransportProtocol?(string value) => value == null ? null : new NetworkCloudTransportProtocol(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is TransportProtocol other && Equals(other);
+        public override bool Equals(object obj) => obj is NetworkCloudTransportProtocol other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(TransportProtocol other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(NetworkCloudTransportProtocol other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

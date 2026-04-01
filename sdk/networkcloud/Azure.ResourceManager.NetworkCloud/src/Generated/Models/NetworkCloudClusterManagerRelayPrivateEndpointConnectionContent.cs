@@ -13,16 +13,16 @@ using Azure.ResourceManager.NetworkCloud;
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
     /// <summary> ClusterManagerUpdateRelayPrivateEndpointConnectionParameters represents the body of the request to approve or reject the relay private endpoint connection for the private relay managed by a cluster manager. </summary>
-    public partial class ClusterManagerUpdateRelayPrivateEndpointConnectionContent
+    public partial class NetworkCloudClusterManagerRelayPrivateEndpointConnectionContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ClusterManagerUpdateRelayPrivateEndpointConnectionContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudClusterManagerRelayPrivateEndpointConnectionContent"/>. </summary>
         /// <param name="connectionState"> The state to set for the private endpoint connection. </param>
         /// <param name="privateEndpointResourceId"> The resource ID of private endpoint to be permitted or denied connection to the relay namespace. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointResourceId"/> is null. </exception>
-        public ClusterManagerUpdateRelayPrivateEndpointConnectionContent(RelayPrivateEndpointConnectionState connectionState, ResourceIdentifier privateEndpointResourceId)
+        public NetworkCloudClusterManagerRelayPrivateEndpointConnectionContent(NetworkCloudRelayPrivateEndpointConnectionState connectionState, ResourceIdentifier privateEndpointResourceId)
         {
             Argument.AssertNotNull(privateEndpointResourceId, nameof(privateEndpointResourceId));
 
@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             PrivateEndpointResourceId = privateEndpointResourceId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ClusterManagerUpdateRelayPrivateEndpointConnectionContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudClusterManagerRelayPrivateEndpointConnectionContent"/>. </summary>
         /// <param name="connectionState"> The state to set for the private endpoint connection. </param>
         /// <param name="description"> The description to associate with the private endpoint connection. </param>
         /// <param name="privateEndpointResourceId"> The resource ID of private endpoint to be permitted or denied connection to the relay namespace. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ClusterManagerUpdateRelayPrivateEndpointConnectionContent(RelayPrivateEndpointConnectionState connectionState, string description, ResourceIdentifier privateEndpointResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetworkCloudClusterManagerRelayPrivateEndpointConnectionContent(NetworkCloudRelayPrivateEndpointConnectionState connectionState, string description, ResourceIdentifier privateEndpointResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ConnectionState = connectionState;
             Description = description;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         }
 
         /// <summary> The state to set for the private endpoint connection. </summary>
-        public RelayPrivateEndpointConnectionState ConnectionState { get; }
+        public NetworkCloudRelayPrivateEndpointConnectionState ConnectionState { get; }
 
         /// <summary> The description to associate with the private endpoint connection. </summary>
         public string Description { get; set; }

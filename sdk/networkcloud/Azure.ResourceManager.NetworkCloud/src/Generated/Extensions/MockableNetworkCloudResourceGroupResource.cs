@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// <param name="accessBridgeName"> The name of the access bridge. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual async Task<Response<NetworkCloudAccessBridgeResource>> GetNetworkCloudAccessBridgeAsync(AccessBridgeAllowedName accessBridgeName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetworkCloudAccessBridgeResource>> GetNetworkCloudAccessBridgeAsync(NetworkCloudAccessBridgeAllowedName accessBridgeName, CancellationToken cancellationToken = default)
         {
             return await GetNetworkCloudAccessBridges().GetAsync(accessBridgeName, cancellationToken).ConfigureAwait(false);
         }
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// <param name="accessBridgeName"> The name of the access bridge. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual Response<NetworkCloudAccessBridgeResource> GetNetworkCloudAccessBridge(AccessBridgeAllowedName accessBridgeName, CancellationToken cancellationToken = default)
+        public virtual Response<NetworkCloudAccessBridgeResource> GetNetworkCloudAccessBridge(NetworkCloudAccessBridgeAllowedName accessBridgeName, CancellationToken cancellationToken = default)
         {
             return GetNetworkCloudAccessBridges().Get(accessBridgeName, cancellationToken);
         }

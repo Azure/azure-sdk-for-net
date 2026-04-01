@@ -26,8 +26,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             Argument.AssertNotNull(networkId, nameof(networkId));
 
             NetworkId = networkId;
-            SecurityRules = new ChangeTrackingList<AccessBridgeSecurityRule>();
-            Endpoints = new ChangeTrackingList<AccessBridgeEndpoint>();
+            SecurityRules = new ChangeTrackingList<NetworkCloudAccessBridgeSecurityRule>();
+            Endpoints = new ChangeTrackingList<NetworkCloudAccessBridgeEndpoint>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AccessBridgeProperties"/>. </summary>
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="protocol"> The protocol advertised by the access bridge endpoints. </param>
         /// <param name="provisioningState"> The provisioning state of the access bridge. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AccessBridgeProperties(string ipv4ConnectedPrefix, string ipv6ConnectedPrefix, ResourceIdentifier networkId, IList<AccessBridgeSecurityRule> securityRules, AccessBridgeDetailedStatus? detailedStatus, string detailedStatusMessage, IReadOnlyList<AccessBridgeEndpoint> endpoints, TransportProtocol? protocol, AccessBridgeProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AccessBridgeProperties(string ipv4ConnectedPrefix, string ipv6ConnectedPrefix, ResourceIdentifier networkId, IList<NetworkCloudAccessBridgeSecurityRule> securityRules, NetworkCloudAccessBridgeDetailedStatus? detailedStatus, string detailedStatusMessage, IReadOnlyList<NetworkCloudAccessBridgeEndpoint> endpoints, NetworkCloudTransportProtocol? protocol, NetworkCloudAccessBridgeProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Ipv4ConnectedPrefix = ipv4ConnectedPrefix;
             Ipv6ConnectedPrefix = ipv6ConnectedPrefix;
@@ -65,21 +65,21 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public ResourceIdentifier NetworkId { get; set; }
 
         /// <summary> The list of security rules enforced by the access bridge. </summary>
-        public IList<AccessBridgeSecurityRule> SecurityRules { get; } = new ChangeTrackingList<AccessBridgeSecurityRule>();
+        public IList<NetworkCloudAccessBridgeSecurityRule> SecurityRules { get; } = new ChangeTrackingList<NetworkCloudAccessBridgeSecurityRule>();
 
         /// <summary> The detailed status reported by the access bridge. </summary>
-        public AccessBridgeDetailedStatus? DetailedStatus { get; }
+        public NetworkCloudAccessBridgeDetailedStatus? DetailedStatus { get; }
 
         /// <summary> The descriptive message that accompanies the detailed status. </summary>
         public string DetailedStatusMessage { get; }
 
         /// <summary> The observed endpoints that clients should use to reach the access bridge. </summary>
-        public IReadOnlyList<AccessBridgeEndpoint> Endpoints { get; } = new ChangeTrackingList<AccessBridgeEndpoint>();
+        public IReadOnlyList<NetworkCloudAccessBridgeEndpoint> Endpoints { get; } = new ChangeTrackingList<NetworkCloudAccessBridgeEndpoint>();
 
         /// <summary> The protocol advertised by the access bridge endpoints. </summary>
-        public TransportProtocol? Protocol { get; }
+        public NetworkCloudTransportProtocol? Protocol { get; }
 
         /// <summary> The provisioning state of the access bridge. </summary>
-        public AccessBridgeProvisioningState? ProvisioningState { get; }
+        public NetworkCloudAccessBridgeProvisioningState? ProvisioningState { get; }
     }
 }

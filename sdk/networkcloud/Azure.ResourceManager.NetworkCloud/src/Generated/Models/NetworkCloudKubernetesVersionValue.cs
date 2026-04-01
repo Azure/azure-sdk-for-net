@@ -11,21 +11,21 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
     /// <summary> KubernetesVersionValue describes a specific Kubernetes version that can be deployed. </summary>
-    public partial class KubernetesVersionValue
+    public partial class NetworkCloudKubernetesVersionValue
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="KubernetesVersionValue"/>. </summary>
-        internal KubernetesVersionValue()
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudKubernetesVersionValue"/>. </summary>
+        internal NetworkCloudKubernetesVersionValue()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="KubernetesVersionValue"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudKubernetesVersionValue"/>. </summary>
         /// <param name="description"> Additional description for the Kubernetes version. </param>
         /// <param name="version"> The Kubernetes version identifier. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KubernetesVersionValue(string description, string version, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetworkCloudKubernetesVersionValue(string description, string version, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             Version = version;

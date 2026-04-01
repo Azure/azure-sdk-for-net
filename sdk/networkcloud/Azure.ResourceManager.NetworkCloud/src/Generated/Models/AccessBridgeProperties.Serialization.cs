@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 writer.WritePropertyName("securityRules"u8);
                 writer.WriteStartArray();
-                foreach (AccessBridgeSecurityRule item in SecurityRules)
+                foreach (NetworkCloudAccessBridgeSecurityRule item in SecurityRules)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 writer.WritePropertyName("endpoints"u8);
                 writer.WriteStartArray();
-                foreach (AccessBridgeEndpoint item in Endpoints)
+                foreach (NetworkCloudAccessBridgeEndpoint item in Endpoints)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -177,12 +177,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             string ipv4ConnectedPrefix = default;
             string ipv6ConnectedPrefix = default;
             ResourceIdentifier networkId = default;
-            IList<AccessBridgeSecurityRule> securityRules = default;
-            AccessBridgeDetailedStatus? detailedStatus = default;
+            IList<NetworkCloudAccessBridgeSecurityRule> securityRules = default;
+            NetworkCloudAccessBridgeDetailedStatus? detailedStatus = default;
             string detailedStatusMessage = default;
-            IReadOnlyList<AccessBridgeEndpoint> endpoints = default;
-            TransportProtocol? protocol = default;
-            AccessBridgeProvisioningState? provisioningState = default;
+            IReadOnlyList<NetworkCloudAccessBridgeEndpoint> endpoints = default;
+            NetworkCloudTransportProtocol? protocol = default;
+            NetworkCloudAccessBridgeProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -207,10 +207,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     {
                         continue;
                     }
-                    List<AccessBridgeSecurityRule> array = new List<AccessBridgeSecurityRule>();
+                    List<NetworkCloudAccessBridgeSecurityRule> array = new List<NetworkCloudAccessBridgeSecurityRule>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(AccessBridgeSecurityRule.DeserializeAccessBridgeSecurityRule(item, options));
+                        array.Add(NetworkCloudAccessBridgeSecurityRule.DeserializeNetworkCloudAccessBridgeSecurityRule(item, options));
                     }
                     securityRules = array;
                     continue;
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     {
                         continue;
                     }
-                    detailedStatus = new AccessBridgeDetailedStatus(prop.Value.GetString());
+                    detailedStatus = new NetworkCloudAccessBridgeDetailedStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("detailedStatusMessage"u8))
@@ -235,10 +235,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     {
                         continue;
                     }
-                    List<AccessBridgeEndpoint> array = new List<AccessBridgeEndpoint>();
+                    List<NetworkCloudAccessBridgeEndpoint> array = new List<NetworkCloudAccessBridgeEndpoint>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(AccessBridgeEndpoint.DeserializeAccessBridgeEndpoint(item, options));
+                        array.Add(NetworkCloudAccessBridgeEndpoint.DeserializeNetworkCloudAccessBridgeEndpoint(item, options));
                     }
                     endpoints = array;
                     continue;
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     {
                         continue;
                     }
-                    protocol = new TransportProtocol(prop.Value.GetString());
+                    protocol = new NetworkCloudTransportProtocol(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     {
                         continue;
                     }
-                    provisioningState = new AccessBridgeProvisioningState(prop.Value.GetString());
+                    provisioningState = new NetworkCloudAccessBridgeProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -270,10 +270,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 ipv4ConnectedPrefix,
                 ipv6ConnectedPrefix,
                 networkId,
-                securityRules ?? new ChangeTrackingList<AccessBridgeSecurityRule>(),
+                securityRules ?? new ChangeTrackingList<NetworkCloudAccessBridgeSecurityRule>(),
                 detailedStatus,
                 detailedStatusMessage,
-                endpoints ?? new ChangeTrackingList<AccessBridgeEndpoint>(),
+                endpoints ?? new ChangeTrackingList<NetworkCloudAccessBridgeEndpoint>(),
                 protocol,
                 provisioningState,
                 additionalBinaryDataProperties);

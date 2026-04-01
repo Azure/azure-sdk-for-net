@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 writer.WritePropertyName("securityRules"u8);
                 writer.WriteStartArray();
-                foreach (AccessBridgeSecurityRule item in SecurityRules)
+                foreach (NetworkCloudAccessBridgeSecurityRule item in SecurityRules)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            IList<AccessBridgeSecurityRule> securityRules = default;
+            IList<NetworkCloudAccessBridgeSecurityRule> securityRules = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -136,10 +136,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     {
                         continue;
                     }
-                    List<AccessBridgeSecurityRule> array = new List<AccessBridgeSecurityRule>();
+                    List<NetworkCloudAccessBridgeSecurityRule> array = new List<NetworkCloudAccessBridgeSecurityRule>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(AccessBridgeSecurityRule.DeserializeAccessBridgeSecurityRule(item, options));
+                        array.Add(NetworkCloudAccessBridgeSecurityRule.DeserializeNetworkCloudAccessBridgeSecurityRule(item, options));
                     }
                     securityRules = array;
                     continue;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AccessBridgePatchProperties(securityRules ?? new ChangeTrackingList<AccessBridgeSecurityRule>(), additionalBinaryDataProperties);
+            return new AccessBridgePatchProperties(securityRules ?? new ChangeTrackingList<NetworkCloudAccessBridgeSecurityRule>(), additionalBinaryDataProperties);
         }
     }
 }

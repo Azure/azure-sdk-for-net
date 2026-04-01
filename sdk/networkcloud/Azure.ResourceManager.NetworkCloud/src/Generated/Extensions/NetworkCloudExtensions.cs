@@ -437,7 +437,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// Get the properties of the provided access bridge.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkCloudResourceGroupResource.GetNetworkCloudAccessBridgeAsync(AccessBridgeAllowedName, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNetworkCloudResourceGroupResource.GetNetworkCloudAccessBridgeAsync(NetworkCloudAccessBridgeAllowedName, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -445,7 +445,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<NetworkCloudAccessBridgeResource>> GetNetworkCloudAccessBridgeAsync(this ResourceGroupResource resourceGroupResource, AccessBridgeAllowedName accessBridgeName, CancellationToken cancellationToken = default)
+        public static async Task<Response<NetworkCloudAccessBridgeResource>> GetNetworkCloudAccessBridgeAsync(this ResourceGroupResource resourceGroupResource, NetworkCloudAccessBridgeAllowedName accessBridgeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -456,7 +456,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// Get the properties of the provided access bridge.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkCloudResourceGroupResource.GetNetworkCloudAccessBridge(AccessBridgeAllowedName, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNetworkCloudResourceGroupResource.GetNetworkCloudAccessBridge(NetworkCloudAccessBridgeAllowedName, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -464,7 +464,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<NetworkCloudAccessBridgeResource> GetNetworkCloudAccessBridge(this ResourceGroupResource resourceGroupResource, AccessBridgeAllowedName accessBridgeName, CancellationToken cancellationToken = default)
+        public static Response<NetworkCloudAccessBridgeResource> GetNetworkCloudAccessBridge(this ResourceGroupResource resourceGroupResource, NetworkCloudAccessBridgeAllowedName accessBridgeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 

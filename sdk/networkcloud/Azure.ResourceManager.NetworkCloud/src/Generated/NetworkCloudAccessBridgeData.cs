@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.NetworkCloud
         }
 
         /// <summary> The list of security rules enforced by the access bridge. </summary>
-        public IList<AccessBridgeSecurityRule> SecurityRules
+        public IList<NetworkCloudAccessBridgeSecurityRule> SecurityRules
         {
             get
             {
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.NetworkCloud
         }
 
         /// <summary> The detailed status reported by the access bridge. </summary>
-        public AccessBridgeDetailedStatus? DetailedStatus
+        public NetworkCloudAccessBridgeDetailedStatus? DetailedStatus
         {
             get
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.NetworkCloud
         }
 
         /// <summary> The observed endpoints that clients should use to reach the access bridge. </summary>
-        public IReadOnlyList<AccessBridgeEndpoint> Endpoints
+        public IReadOnlyList<NetworkCloudAccessBridgeEndpoint> Endpoints
         {
             get
             {
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.NetworkCloud
         }
 
         /// <summary> The protocol advertised by the access bridge endpoints. </summary>
-        public TransportProtocol? Protocol
+        public NetworkCloudTransportProtocol? Protocol
         {
             get
             {
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.NetworkCloud
         }
 
         /// <summary> The provisioning state of the access bridge. </summary>
-        public AccessBridgeProvisioningState? ProvisioningState
+        public NetworkCloudAccessBridgeProvisioningState? ProvisioningState
         {
             get
             {

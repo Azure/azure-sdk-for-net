@@ -12,7 +12,7 @@ using Azure.ResourceManager.NetworkCloud;
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
     /// <summary> The detailed status reported by the access bridge. </summary>
-    public readonly partial struct AccessBridgeDetailedStatus : IEquatable<AccessBridgeDetailedStatus>
+    public readonly partial struct NetworkCloudAccessBridgeDetailedStatus : IEquatable<NetworkCloudAccessBridgeDetailedStatus>
     {
         private readonly string _value;
         /// <summary> The access bridge is healthy and operating normally. </summary>
@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> The access bridge is not operational. </summary>
         private const string FailedValue = "Failed";
 
-        /// <summary> Initializes a new instance of <see cref="AccessBridgeDetailedStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudAccessBridgeDetailedStatus"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public AccessBridgeDetailedStatus(string value)
+        public NetworkCloudAccessBridgeDetailedStatus(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -33,38 +33,38 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         }
 
         /// <summary> The access bridge is healthy and operating normally. </summary>
-        public static AccessBridgeDetailedStatus Running { get; } = new AccessBridgeDetailedStatus(RunningValue);
+        public static NetworkCloudAccessBridgeDetailedStatus Running { get; } = new NetworkCloudAccessBridgeDetailedStatus(RunningValue);
 
         /// <summary> The access bridge is experiencing degraded performance or partial outages. </summary>
-        public static AccessBridgeDetailedStatus Degraded { get; } = new AccessBridgeDetailedStatus(DegradedValue);
+        public static NetworkCloudAccessBridgeDetailedStatus Degraded { get; } = new NetworkCloudAccessBridgeDetailedStatus(DegradedValue);
 
         /// <summary> The access bridge is not operational. </summary>
-        public static AccessBridgeDetailedStatus Failed { get; } = new AccessBridgeDetailedStatus(FailedValue);
+        public static NetworkCloudAccessBridgeDetailedStatus Failed { get; } = new NetworkCloudAccessBridgeDetailedStatus(FailedValue);
 
-        /// <summary> Determines if two <see cref="AccessBridgeDetailedStatus"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="NetworkCloudAccessBridgeDetailedStatus"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(AccessBridgeDetailedStatus left, AccessBridgeDetailedStatus right) => left.Equals(right);
+        public static bool operator ==(NetworkCloudAccessBridgeDetailedStatus left, NetworkCloudAccessBridgeDetailedStatus right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="AccessBridgeDetailedStatus"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="NetworkCloudAccessBridgeDetailedStatus"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(AccessBridgeDetailedStatus left, AccessBridgeDetailedStatus right) => !left.Equals(right);
+        public static bool operator !=(NetworkCloudAccessBridgeDetailedStatus left, NetworkCloudAccessBridgeDetailedStatus right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="AccessBridgeDetailedStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="NetworkCloudAccessBridgeDetailedStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AccessBridgeDetailedStatus(string value) => new AccessBridgeDetailedStatus(value);
+        public static implicit operator NetworkCloudAccessBridgeDetailedStatus(string value) => new NetworkCloudAccessBridgeDetailedStatus(value);
 
-        /// <summary> Converts a string to a <see cref="AccessBridgeDetailedStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="NetworkCloudAccessBridgeDetailedStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AccessBridgeDetailedStatus?(string value) => value == null ? null : new AccessBridgeDetailedStatus(value);
+        public static implicit operator NetworkCloudAccessBridgeDetailedStatus?(string value) => value == null ? null : new NetworkCloudAccessBridgeDetailedStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is AccessBridgeDetailedStatus other && Equals(other);
+        public override bool Equals(object obj) => obj is NetworkCloudAccessBridgeDetailedStatus other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(AccessBridgeDetailedStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(NetworkCloudAccessBridgeDetailedStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
