@@ -180,7 +180,7 @@ function Add-TestDependsOnDependency {
             }
         }
 
-        $newLine = "${indent}TestDependsOnDependency: $($PackageNames | Sort-Object | Join-String -Separator ' ')"
+        $newLine = "${indent}TestDependsOnDependency: $(($PackageNames | Sort-Object) -join ' ')"
 
         # Append before the last line of the file (or at end)
         $trimmed = $content.TrimEnd()
