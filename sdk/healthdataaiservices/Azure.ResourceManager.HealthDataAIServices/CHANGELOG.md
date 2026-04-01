@@ -6,6 +6,10 @@
 
 ### Breaking Changes
 
+- Removed `Update` and `UpdateAsync` methods from `DeidServiceResource`
+- Removed model `DeidServicePatch`
+- Removed model `DeidPropertiesUpdate`
+
 ### Bugs Fixed
 
 ### Other Changes

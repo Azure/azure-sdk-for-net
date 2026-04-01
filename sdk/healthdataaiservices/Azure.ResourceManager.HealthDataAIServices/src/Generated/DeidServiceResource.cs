@@ -194,124 +194,6 @@ namespace Azure.ResourceManager.HealthDataAIServices
         }
 
         /// <summary>
-        /// Update a DeidService
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthDataAIServices/deidServices/{deidServiceName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DeidServices_Update. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-09-20. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="DeidServiceResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="patch"> The resource properties to be updated. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<ArmOperation<DeidServiceResource>> UpdateAsync(WaitUntil waitUntil, DeidServicePatch patch, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(patch, nameof(patch));
-
-            using DiagnosticScope scope = _deidServicesClientDiagnostics.CreateScope("DeidServiceResource.Update");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _deidServicesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DeidServicePatch.ToRequestContent(patch), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                HealthDataAIServicesArmOperation<DeidServiceResource> operation = new HealthDataAIServicesArmOperation<DeidServiceResource>(
-                    new DeidServiceOperationSource(Client),
-                    _deidServicesClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Update a DeidService
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthDataAIServices/deidServices/{deidServiceName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DeidServices_Update. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-09-20. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="DeidServiceResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="patch"> The resource properties to be updated. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual ArmOperation<DeidServiceResource> Update(WaitUntil waitUntil, DeidServicePatch patch, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(patch, nameof(patch));
-
-            using DiagnosticScope scope = _deidServicesClientDiagnostics.CreateScope("DeidServiceResource.Update");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _deidServicesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DeidServicePatch.ToRequestContent(patch), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                HealthDataAIServicesArmOperation<DeidServiceResource> operation = new HealthDataAIServicesArmOperation<DeidServiceResource>(
-                    new DeidServiceOperationSource(Client),
-                    _deidServicesClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    operation.WaitForCompletion(cancellationToken);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
         /// Delete a DeidService
         /// <list type="bullet">
         /// <item>
@@ -473,6 +355,124 @@ namespace Azure.ResourceManager.HealthDataAIServices
             return new PrivateLinksGetPrivateLinksCollectionResultOfT(_privateLinksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
         }
 
+        /// <summary>
+        /// Update a DeidService.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthDataAIServices/deidServices/{deidServiceName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DeidServices_Create. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-20. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DeidServiceResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="data"> Resource create parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<DeidServiceResource>> UpdateAsync(WaitUntil waitUntil, DeidServiceData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(data, nameof(data));
+
+            using DiagnosticScope scope = _deidServicesClientDiagnostics.CreateScope("DeidServiceResource.Update");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _deidServicesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DeidServiceData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                HealthDataAIServicesArmOperation<DeidServiceResource> operation = new HealthDataAIServicesArmOperation<DeidServiceResource>(
+                    new DeidServiceOperationSource(Client),
+                    _deidServicesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Update a DeidService.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthDataAIServices/deidServices/{deidServiceName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DeidServices_Create. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-20. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DeidServiceResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="data"> Resource create parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<DeidServiceResource> Update(WaitUntil waitUntil, DeidServiceData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(data, nameof(data));
+
+            using DiagnosticScope scope = _deidServicesClientDiagnostics.CreateScope("DeidServiceResource.Update");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _deidServicesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DeidServiceData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                HealthDataAIServicesArmOperation<DeidServiceResource> operation = new HealthDataAIServicesArmOperation<DeidServiceResource>(
+                    new DeidServiceOperationSource(Client),
+                    _deidServicesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
@@ -504,13 +504,8 @@ namespace Azure.ResourceManager.HealthDataAIServices
                 else
                 {
                     DeidServiceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    DeidServicePatch patch = new DeidServicePatch();
-                    foreach (KeyValuePair<string, string> tag in current.Tags)
-                    {
-                        patch.Tags.Add(tag);
-                    }
-                    patch.Tags[key] = value;
-                    ArmOperation<DeidServiceResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    current.Tags[key] = value;
+                    ArmOperation<DeidServiceResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -552,13 +547,8 @@ namespace Azure.ResourceManager.HealthDataAIServices
                 else
                 {
                     DeidServiceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    DeidServicePatch patch = new DeidServicePatch();
-                    foreach (KeyValuePair<string, string> tag in current.Tags)
-                    {
-                        patch.Tags.Add(tag);
-                    }
-                    patch.Tags[key] = value;
-                    ArmOperation<DeidServiceResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    current.Tags[key] = value;
+                    ArmOperation<DeidServiceResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -599,9 +589,8 @@ namespace Azure.ResourceManager.HealthDataAIServices
                 else
                 {
                     DeidServiceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    DeidServicePatch patch = new DeidServicePatch();
-                    patch.Tags.ReplaceWith(tags);
-                    ArmOperation<DeidServiceResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    current.Tags.ReplaceWith(tags);
+                    ArmOperation<DeidServiceResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -642,9 +631,8 @@ namespace Azure.ResourceManager.HealthDataAIServices
                 else
                 {
                     DeidServiceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    DeidServicePatch patch = new DeidServicePatch();
-                    patch.Tags.ReplaceWith(tags);
-                    ArmOperation<DeidServiceResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    current.Tags.ReplaceWith(tags);
+                    ArmOperation<DeidServiceResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -684,13 +672,8 @@ namespace Azure.ResourceManager.HealthDataAIServices
                 else
                 {
                     DeidServiceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    DeidServicePatch patch = new DeidServicePatch();
-                    foreach (KeyValuePair<string, string> tag in current.Tags)
-                    {
-                        patch.Tags.Add(tag);
-                    }
-                    patch.Tags.Remove(key);
-                    ArmOperation<DeidServiceResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    current.Tags.Remove(key);
+                    ArmOperation<DeidServiceResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -730,13 +713,8 @@ namespace Azure.ResourceManager.HealthDataAIServices
                 else
                 {
                     DeidServiceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    DeidServicePatch patch = new DeidServicePatch();
-                    foreach (KeyValuePair<string, string> tag in current.Tags)
-                    {
-                        patch.Tags.Add(tag);
-                    }
-                    patch.Tags.Remove(key);
-                    ArmOperation<DeidServiceResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    current.Tags.Remove(key);
+                    ArmOperation<DeidServiceResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }

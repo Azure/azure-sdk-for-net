@@ -88,17 +88,6 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
             return new PrivateEndpointConnectionProperties(groupIds.ToList(), privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, null), privateLinkServiceConnectionState, provisioningState, additionalBinaryDataProperties: null);
         }
 
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="identity"> Updatable managed service identity. </param>
-        /// <param name="deidPropertiesUpdatePublicNetworkAccess"> Gets or sets allow or disallow public network access to resource. </param>
-        /// <returns> A new <see cref="Models.DeidServicePatch"/> instance for mocking. </returns>
-        public static DeidServicePatch DeidServicePatch(IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default, HealthDataAIServicesPublicNetworkAccess? deidPropertiesUpdatePublicNetworkAccess = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new DeidServicePatch(tags, identity, deidPropertiesUpdatePublicNetworkAccess is null ? default : new DeidPropertiesUpdate(deidPropertiesUpdatePublicNetworkAccess, null), additionalBinaryDataProperties: null);
-        }
-
         /// <summary> Holder for private endpoint connections. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
