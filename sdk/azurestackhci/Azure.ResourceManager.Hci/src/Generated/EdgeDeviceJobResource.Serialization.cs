@@ -8,12 +8,17 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
+using Azure.ResourceManager.Hci.Models;
 
 namespace Azure.ResourceManager.Hci
 {
     /// <summary></summary>
     public partial class EdgeDeviceJobResource : IJsonModel<EdgeDeviceJobData>
     {
+        private static IJsonModel<EdgeDeviceJobData> s_dataDeserializationInstance;
+
+        private static IJsonModel<EdgeDeviceJobData> DataDeserializationInstance => s_dataDeserializationInstance ??= new UnknownEdgeDeviceJob();
+
         /// <param name="writer"> The writer to serialize the model to. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<EdgeDeviceJobData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<EdgeDeviceJobData>)Data).Write(writer, options);

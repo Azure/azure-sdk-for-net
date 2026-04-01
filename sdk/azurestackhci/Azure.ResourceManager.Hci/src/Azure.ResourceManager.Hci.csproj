@@ -19,8 +19,5 @@
          Tracked in https://github.com/Azure/azure-sdk-for-net/issues/56961 — remove when fixed. -->
     <Compile Remove="Generated\Models\ExtensionProfile.cs" />
     <Compile Remove="Generated\Models\ExtensionProfile.Serialization.cs" />
-    <!-- TODO: Remove when generator correctly maps @@clientName for ExtensionInstanceView → ArcExtensionInstanceView
-         in PerNodeExtensionState serialization (currently emits HciExtensionInstanceView.DeserializeHciExtensionInstanceView) -->
-    <Compile Remove="Generated\Models\PerNodeExtensionState.Serialization.cs" />
   </ItemGroup>
 </Project>

@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        HciEdgeDeviceData IPersistableModel<HciEdgeDeviceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (UnknownHciEdgeDevice)PersistableModelCreateCore(data, options);
+        HciEdgeDeviceData IPersistableModel<HciEdgeDeviceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (HciEdgeDeviceData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<HciEdgeDeviceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        HciEdgeDeviceData IJsonModel<HciEdgeDeviceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (UnknownHciEdgeDevice)JsonModelCreateCore(ref reader, options);
+        HciEdgeDeviceData IJsonModel<HciEdgeDeviceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (HciEdgeDeviceData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
