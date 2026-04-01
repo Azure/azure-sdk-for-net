@@ -7,8 +7,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
+using Azure.AI.Projects.Evaluation;
 using NUnit.Framework;
-using OpenAI.Evals;
 
 namespace Azure.AI.Projects.Tests.Samples.Evaluation;
 
