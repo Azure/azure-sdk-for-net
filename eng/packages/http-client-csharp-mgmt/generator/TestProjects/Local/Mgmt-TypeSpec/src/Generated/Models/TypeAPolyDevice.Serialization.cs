@@ -19,11 +19,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
     /// <summary> The TypeAPolyDevice. </summary>
     public partial class TypeAPolyDevice : PolyDeviceData, IJsonModel<TypeAPolyDevice>
     {
-        /// <summary> Initializes a new instance of <see cref="TypeAPolyDevice"/> for deserialization. </summary>
-        internal TypeAPolyDevice()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
