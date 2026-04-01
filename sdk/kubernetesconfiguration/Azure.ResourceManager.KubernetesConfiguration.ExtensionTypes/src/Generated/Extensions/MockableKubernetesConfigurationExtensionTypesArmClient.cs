@@ -26,13 +26,6 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes.Mocking
         {
         }
 
-        /// <summary> Gets an object representing a <see cref="ExtensionTypeInterfaceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ExtensionTypeInterfaceResource"/> object. </returns>
-        public virtual ExtensionTypeInterfaceResource GetExtensionTypeInterfaceResource(ResourceIdentifier id)
-        {
-            ExtensionTypeInterfaceResource.ValidateResourceId(id);
-            return new ExtensionTypeInterfaceResource(Client, id);
-        }
+
     }
 }
