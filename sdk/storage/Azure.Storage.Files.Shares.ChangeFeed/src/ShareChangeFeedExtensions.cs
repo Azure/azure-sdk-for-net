@@ -2,8 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Core;
-using Azure.Core.Pipeline;
 using Azure.Storage.Blobs;
 using Azure.Storage.Files.Shares;
 

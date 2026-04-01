@@ -3,18 +3,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using Azure.Core.TestFramework;
-using Azure.Storage.Blobs;
-using Azure.Storage.Blobs.Models;
-using Azure.Storage.ChangeFeed.Common;
 using Azure.Storage.Files.Shares;
-using Azure.Storage.Internal.Avro;
-using Moq;
 using NUnit.Framework;
 
 namespace Azure.Storage.Files.Shares.ChangeFeed.Tests

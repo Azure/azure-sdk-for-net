@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core.Pipeline;
 using Azure.Storage.Blobs;
 using Azure.Storage.ChangeFeed.Common;
 

@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Storage.Blobs;
@@ -12,7 +11,6 @@ using Azure.Storage.Blobs.Models;
 using Azure.Storage.Files.Shares;
 using Azure.Storage.Files.Shares.Models;
 using NUnit.Framework;
-using static Azure.Storage.Constants;
 
 namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
 {
