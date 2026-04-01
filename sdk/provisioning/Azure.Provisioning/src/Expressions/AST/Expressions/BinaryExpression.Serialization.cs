@@ -13,7 +13,7 @@ public partial class BinaryExpression : IJsonModel<BicepExpression>
     void IJsonModel<BicepExpression>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
     {
         writer.WriteStartObject();
-        writer.WriteString("kind", "binary");
+        writer.WriteString("kind", "binary-operation");
         writer.WriteString("operator", OperatorToString(Operator));
         writer.WritePropertyName("left");
         ((IJsonModel<BicepExpression>)Left).Write(writer, options);
