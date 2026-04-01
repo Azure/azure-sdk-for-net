@@ -1,0 +1,79 @@
+{
+  "type": "object",
+  "properties": {
+    "Clients": {
+      "type": "object",
+      "properties": {
+        "ClientAClient": {
+          "type": "object",
+          "description": "Configuration for ClientAClient.",
+          "properties": {
+            "Endpoint": {
+              "type": "string",
+              "format": "uri",
+              "description": "Gets or sets the Endpoint."
+            },
+            "Client": {
+              "$ref": "#/definitions/clientType"
+            },
+            "Credential": {
+              "$ref": "#/definitions/credential"
+            },
+            "Options": {
+              "$ref": "#/definitions/clientAClientOptions"
+            }
+          }
+        },
+        "ClientBClient": {
+          "type": "object",
+          "description": "Configuration for ClientBClient.",
+          "properties": {
+            "Endpoint": {
+              "type": "string",
+              "format": "uri",
+              "description": "Gets or sets the Endpoint."
+            },
+            "Client": {
+              "$ref": "#/definitions/clientType"
+            },
+            "Credential": {
+              "$ref": "#/definitions/credential"
+            },
+            "Options": {
+              "$ref": "#/definitions/clientBClientOptions"
+            }
+          }
+        }
+      },
+      "additionalProperties": {
+        "type": "object",
+        "description": "Configuration for a named client instance."
+      }
+    }
+  },
+  "definitions": {
+    "clientAClientOptions": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/options"
+        }
+      ]
+    },
+    "clientBClientOptions": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/options"
+        }
+      ]
+    },
+    "clientType": {
+      "enum": [
+        "default",
+        "multi-client",
+        "renamed-operation",
+        "two-operation-group",
+        "client-operation-group"
+      ]
+    }
+  }
+}

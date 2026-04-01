@@ -1,0 +1,40 @@
+{
+  "type": "object",
+  "properties": {
+    "Clients": {
+      "type": "object",
+      "properties": {
+        "ArrayClient": {
+          "type": "object",
+          "description": "Configuration for ArrayClient.",
+          "properties": {
+            "Endpoint": {
+              "type": "string",
+              "format": "uri",
+              "description": "Gets or sets the Endpoint."
+            },
+            "Credential": {
+              "$ref": "#/definitions/credential"
+            },
+            "Options": {
+              "$ref": "#/definitions/arrayClientOptions"
+            }
+          }
+        }
+      },
+      "additionalProperties": {
+        "type": "object",
+        "description": "Configuration for a named client instance."
+      }
+    }
+  },
+  "definitions": {
+    "arrayClientOptions": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/options"
+        }
+      ]
+    }
+  }
+}

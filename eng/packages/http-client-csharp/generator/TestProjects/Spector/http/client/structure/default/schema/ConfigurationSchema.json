@@ -1,0 +1,52 @@
+{
+  "type": "object",
+  "properties": {
+    "Clients": {
+      "type": "object",
+      "properties": {
+        "ServiceClient": {
+          "type": "object",
+          "description": "Configuration for ServiceClient.",
+          "properties": {
+            "Endpoint": {
+              "type": "string",
+              "format": "uri",
+              "description": "Gets or sets the Endpoint."
+            },
+            "Client": {
+              "$ref": "#/definitions/clientType"
+            },
+            "Credential": {
+              "$ref": "#/definitions/credential"
+            },
+            "Options": {
+              "$ref": "#/definitions/serviceClientOptions"
+            }
+          }
+        }
+      },
+      "additionalProperties": {
+        "type": "object",
+        "description": "Configuration for a named client instance."
+      }
+    }
+  },
+  "definitions": {
+    "clientType": {
+      "enum": [
+        "default",
+        "multi-client",
+        "renamed-operation",
+        "two-operation-group",
+        "client-operation-group"
+      ]
+    },
+    "serviceClientOptions": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/options"
+        }
+      ]
+    }
+  }
+}
