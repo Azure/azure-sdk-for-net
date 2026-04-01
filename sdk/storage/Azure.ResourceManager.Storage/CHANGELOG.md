@@ -4,6 +4,9 @@
 
 ### Features Added
 
+- Upgraded API version to `2025-08-01`
+- Migrated from AutoRest/Swagger to TypeSpec-based generation
+
 ### Breaking Changes
 
 ### Bugs Fixed

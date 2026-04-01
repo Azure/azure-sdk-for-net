@@ -8,27 +8,23 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// AzureWorkload SQL -specific restore. Specifically for full/diff restore
-    /// Please note <see cref="WorkloadSqlRestoreContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="WorkloadSqlPointInTimeRestoreContent"/>, <see cref="WorkloadSqlPointInTimeRestoreWithRehydrateContent"/> and <see cref="WorkloadSqlRestoreWithRehydrateContent"/>.
-    /// </summary>
+    /// <summary> AzureWorkload SQL -specific restore. Specifically for full/diff restore. </summary>
     public partial class WorkloadSqlRestoreContent : WorkloadRestoreContent
     {
         /// <summary> Initializes a new instance of <see cref="WorkloadSqlRestoreContent"/>. </summary>
         public WorkloadSqlRestoreContent()
         {
             AlternateDirectoryPaths = new ChangeTrackingList<SqlDataDirectoryMapping>();
-            ObjectType = "AzureWorkloadSQLRestoreRequest";
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkloadSqlRestoreContent"/>. </summary>
         /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
         /// <param name="resourceGuardOperationRequests"> ResourceGuardOperationRequests on which LAC check will be performed. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="recoveryType"> Type of this recovery. </param>
         /// <param name="sourceResourceId"> Fully qualified ARM ID of the VM on which workload that was running is being recovered. </param>
         /// <param name="propertyBag"> Workload specific property bag. </param>
@@ -50,18 +46,26 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="shouldUseAlternateTargetLocation"> Default option set to true. If this is set to false, alternate data directory must be provided. </param>
         /// <param name="isNonRecoverable"> SQL specific property where user can chose to set no-recovery when restore operation is tried. </param>
         /// <param name="alternateDirectoryPaths"> Data directory details. </param>
-        internal WorkloadSqlRestoreContent(string objectType, IList<string> resourceGuardOperationRequests, IDictionary<string, BinaryData> serializedAdditionalRawData, FileShareRecoveryType? recoveryType, ResourceIdentifier sourceResourceId, IDictionary<string, string> propertyBag, TargetRestoreInfo targetInfo, RecoveryMode? recoveryMode, string targetResourceGroupName, UserAssignedManagedIdentityDetails userAssignedManagedIdentityDetails, SnapshotRestoreContent snapshotRestoreParameters, ResourceIdentifier targetVirtualMachineId, bool? shouldUseAlternateTargetLocation, bool? isNonRecoverable, IList<SqlDataDirectoryMapping> alternateDirectoryPaths) : base(objectType, resourceGuardOperationRequests, serializedAdditionalRawData, recoveryType, sourceResourceId, propertyBag, targetInfo, recoveryMode, targetResourceGroupName, userAssignedManagedIdentityDetails, snapshotRestoreParameters, targetVirtualMachineId)
+        internal WorkloadSqlRestoreContent(string objectType, IList<string> resourceGuardOperationRequests, IDictionary<string, BinaryData> additionalBinaryDataProperties, FileShareRecoveryType? recoveryType, ResourceIdentifier sourceResourceId, IDictionary<string, string> propertyBag, TargetRestoreInfo targetInfo, RecoveryMode? recoveryMode, string targetResourceGroupName, UserAssignedManagedIdentityDetails userAssignedManagedIdentityDetails, SnapshotRestoreContent snapshotRestoreParameters, ResourceIdentifier targetVirtualMachineId, bool? shouldUseAlternateTargetLocation, bool? isNonRecoverable, IList<SqlDataDirectoryMapping> alternateDirectoryPaths) : base(objectType, resourceGuardOperationRequests, additionalBinaryDataProperties, recoveryType, sourceResourceId, propertyBag, targetInfo, recoveryMode, targetResourceGroupName, userAssignedManagedIdentityDetails, snapshotRestoreParameters, targetVirtualMachineId)
         {
             ShouldUseAlternateTargetLocation = shouldUseAlternateTargetLocation;
             IsNonRecoverable = isNonRecoverable;
             AlternateDirectoryPaths = alternateDirectoryPaths;
-            ObjectType = objectType ?? "AzureWorkloadSQLRestoreRequest";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="WorkloadSqlRestoreContent"/>. </summary>
+        /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
+        private protected WorkloadSqlRestoreContent(string objectType) : base("AzureWorkloadSQLRestoreRequest")
+        {
+            AlternateDirectoryPaths = new ChangeTrackingList<SqlDataDirectoryMapping>();
         }
 
         /// <summary> Default option set to true. If this is set to false, alternate data directory must be provided. </summary>
         public bool? ShouldUseAlternateTargetLocation { get; set; }
+
         /// <summary> SQL specific property where user can chose to set no-recovery when restore operation is tried. </summary>
         public bool? IsNonRecoverable { get; set; }
+
         /// <summary> Data directory details. </summary>
         public IList<SqlDataDirectoryMapping> AlternateDirectoryPaths { get; }
     }

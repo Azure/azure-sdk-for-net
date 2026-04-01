@@ -41,17 +41,17 @@ public class Sample_AzureAISearch : ProjectsOpenAITestBase
             Filter = "category eq 'sleeping bag'",
             QueryType = AzureAISearchQueryType.Simple
         };
-        PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+        DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a helpful assistant. You must always provide citations for answers using the tool and render them as: `\u3010message_idx:search_idx\u2020source\u3011`.",
             Tools = { new AzureAISearchTool(new AzureAISearchToolOptions(indexes: [index])) }
         };
-        AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+        ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             agentName: "myAgent",
             options: new(agentDefinition));
         #endregion
         #region Snippet:Sample_CreateResponse_AzureAISearch_Async
-        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
+        ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(agentVersion.Name);
 
         ResponseResult response = await responseClient.CreateResponseAsync("What is the temperature rating of the cozynights sleeping bag?");
         #endregion
@@ -62,7 +62,7 @@ public class Sample_AzureAISearch : ProjectsOpenAITestBase
         #endregion
 
         #region Snippet:Sample_Cleanup_AzureAISearch_Async
-        await projectClient.Agents.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+        await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         #endregion
     }
 
@@ -91,17 +91,17 @@ public class Sample_AzureAISearch : ProjectsOpenAITestBase
             Filter = "category eq 'sleeping bag'",
             QueryType = AzureAISearchQueryType.Simple
         };
-        PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+        DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a helpful assistant. You must always provide citations for answers using the tool and render them as: `\u3010message_idx:search_idx\u2020source\u3011`.",
             Tools = { new AzureAISearchTool(new AzureAISearchToolOptions(indexes: [index])) }
         };
-        AgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
+        ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.CreateAgentVersion(
             agentName: "myAgent",
             options: new(agentDefinition));
         #endregion
         #region Snippet:Sample_CreateResponse_AzureAISearch_Sync
-        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
+        ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(agentVersion.Name);
 
         ResponseResult response = responseClient.CreateResponse("What is the temperature rating of the cozynights sleeping bag?");
         #endregion
@@ -110,7 +110,7 @@ public class Sample_AzureAISearch : ProjectsOpenAITestBase
         Console.WriteLine($"{response.GetOutputText()}{GetFormattedAnnotation(response)}");
 
         #region Snippet:Sample_Cleanup_AzureAISearch_Sync
-        projectClient.Agents.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+        projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         #endregion
     }
 

@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.BotService
 {
+    /// <summary></summary>
     public partial class BotChannelResource : IJsonModel<BotChannelData>
     {
-        private static BotChannelData s_dataDeserializationInstance;
-        private static BotChannelData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<BotChannelData> s_dataDeserializationInstance;
 
+        private static IJsonModel<BotChannelData> DataDeserializationInstance => s_dataDeserializationInstance ??= new BotChannelData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BotChannelData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<BotChannelData>)Data).Write(writer, options);
 
-        BotChannelData IJsonModel<BotChannelData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<BotChannelData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BotChannelData IJsonModel<BotChannelData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<BotChannelData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<BotChannelData>(Data, options, AzureResourceManagerBotServiceContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         BotChannelData IPersistableModel<BotChannelData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BotChannelData>(data, options, AzureResourceManagerBotServiceContext.Default);
 
-        string IPersistableModel<BotChannelData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BotChannelData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<BotChannelData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

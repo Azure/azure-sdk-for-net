@@ -39,14 +39,11 @@
 # Automation
 ################
 
-# Git Hub integration and bot rules
-/.github/                                                          @jsquire @ronniegeraghty
+# GitHub integration and bot rules
+/.github/                                                          @jsquire @ronniegeraghty @ArthurMa1978
 
 # PRLabel: %EngSys
 /sdk/template/                                                     @hallipr @weshaggard @benbp @jsquire
-
-# Smoke tests
-/common/SmokeTests/                                                @jsquire @m-redding
 
 #########
 # SDK
@@ -97,6 +94,12 @@
 # ServiceLabel: %AI Projects
 # ServiceOwners:                                                   @dargilco @nick863 @trangevi
 
+# PRLabel: %AI Agents
+/sdk/agentserver/                                                  @RaviPidaparthi @ankitbko
+
+# ServiceLabel: %AI Agents
+# ServiceOwners:                                                   @RaviPidaparthi @ankitbko
+
 # PRLabel: %App Configuration
 /sdk/appconfiguration/                                             @avanigupta @zhiyuanliang-ms @linglingye001
 
@@ -133,14 +136,8 @@
 # ServiceLabel: %Cognitive - Anomaly Detector
 # ServiceOwners:                                                   @conhua @juaduan @mengaims @moreOver0
 
-# PRLabel: %Cognitive - Bing
-/sdk/cognitiveservices/Search.Bing*/                               @arwong @jaggerbodas-ms
-
 # ServiceLabel: %Cognitive - Bing
 # ServiceOwners:                                                   @arwong @jaggerbodas-ms
-
-# PRLabel: %Cognitive - Computer Vision
-/sdk/cognitiveservices/Vision.ComputerVision/                      @areddish @ryogok @tburns10 @TFR258 @toothache
 
 # ServiceLabel: %Cognitive - Computer Vision
 # ServiceOwners:                                                   @areddish @ryogok @tburns10 @TFR258 @toothache
@@ -154,14 +151,11 @@
 # PRLabel: %Cognitive - Content Understanding
 /sdk/contentunderstanding/                                         @bojunehsu @changjian-wang @chienyuanchang @yungshinlintw
 
-# PRLabel: %Cognitive - Custom Vision
-/sdk/cognitiveservices/Vision.CustomVision*/                       @areddish @tburns10
+# ServiceLabel: %Cognitive - Content Understanding
+# ServiceOwners:                                                   @bojunehsu @changjian-wang @chienyuanchang @yungshinlintw
 
 # ServiceLabel: %Cognitive - Custom Vision
 # ServiceOwners:                                                   @areddish @tburns10
-
-# PRLabel: %Cognitive - Face
-/sdk/cognitiveservices/Vision.Face/                                @dipidoo @Han-msft @leareai @longli0 @ShaoAnLin
 
 # PRLabel: %Cognitive - Face
 /sdk/face/                                                         @dipidoo @Han-msft @leareai @longli0 @ShaoAnLin
@@ -196,9 +190,6 @@
 # ServiceLabel: %Cognitive - Language
 # ServiceOwners:                                                   @quentinRobinson
 
-# PRLabel: %Cognitive - LUIS
-/sdk/cognitiveservices/Language.LUIS*/                             @cahann @kayousef
-
 # ServiceLabel: %Cognitive - LUIS
 # ServiceOwners:                                                   @cahann @kayousef
 
@@ -213,9 +204,6 @@
 
 # ServiceLabel: %Cognitive - Personalizer
 # ServiceOwners:                                                   @orenmichaely @tyclintw
-
-# PRLabel: %Cognitive - QnA Maker
-/sdk/cognitiveservices/Knowledge.QnAMaker/                         @bingisbestest @nerajput1607
 
 # ServiceLabel: %Cognitive - QnA Maker
 # ServiceOwners:                                                   @bingisbestest @nerajput1607
@@ -275,10 +263,10 @@
 # ServiceOwners:                                                   @Drewm3 @hilaryw29 @MsGabsta @nikhilpatel909 @sandeepraichura @TravisCragg-MSFT @ushnaarshadkhan
 
 # PRLabel: %Confidential Ledger
-/sdk/confidentialledger/                                           @andpiccione @Azure/azure-sdk-write-acl @christothes @ivarprudnikov @msftsettiy @musabbir @PallabPaul @prathod09 @ryazhang-microsoft @weirenlai
+/sdk/confidentialledger/                                           @andpiccione @Azure/azure-sdk-write-acl @christothes @ivarprudnikov @msftsettiy @musabbir @PallabPaul @ryazhang-microsoft @weirenlai
 
 # ServiceLabel: %Confidential Ledger
-# ServiceOwners:                                                   @andpiccione @Azure/azure-sdk-write-acl @ivarprudnikov @msftsettiy @musabbir @PallabPaul @prathod09 @ryazhang-microsoft @weirenlai
+# ServiceOwners:                                                   @andpiccione @Azure/azure-sdk-write-acl @ivarprudnikov @msftsettiy @musabbir @PallabPaul @ryazhang-microsoft @weirenlai
 
 # PRLabel: %Container Registry
 /sdk/containerregistry/                                            @Azure/azure-sdk-write-acr
@@ -985,7 +973,7 @@
 # ServiceOwners:                                                   @ArthurMa1978
 
 # PRLabel: %Device Registry
-/sdk/deviceregistry/Azure.ResourceManager.DeviceRegistry/          @atastrophic @rohankhandelwal
+/sdk/deviceregistry/Azure.ResourceManager.DeviceRegistry/          @atastrophic @rohankhandelwal @siongithub @mryanlo
 
 # ServiceLabel: %Device Registry %Mgmt
 # ServiceOwners:                                                   @atastrophic @rohankhandelwal
@@ -1053,9 +1041,6 @@
 # ServiceLabel: %Monitor
 # ServiceOwners:                                                   @thomasp98296
 
-# PRLabel: %Neon Postgres
-/sdk/neonpostgres/Azure.ResourceManager.*/                         @ArcturusZhang @ArthurMa1978
-
 # PRLabel: %NetApp Files
 /sdk/netapp/Azure.ResourceManager.*/                               @audunn @Azure/azure-sdk-write-netappfiles
 
@@ -1072,10 +1057,10 @@
 # ServiceOwners:                                                   @tundwed @anamikanupur
 
 # PRLabel: %Network - DNS Private Resolver
-/sdk/dnsresolver/Azure.ResourceManager.*/                          @jamesvoongms @jotrivet
+/sdk/dnsresolver/Azure.ResourceManager.*/                          @ArcturusZhang @ArthurMa1978 @jotrivet
 
 # ServiceLabel: %Network - DNS Private Resolver %Mgmt
-# ServiceOwners:                                                   @jamesvoongms @jotrivet
+# ServiceOwners:                                                   @jotrivet
 
 # PRLabel: %Network - Front Door
 /sdk/frontdoor/Azure.ResourceManager.*/                            @ArcturusZhang @ArthurMa1978

@@ -7,10 +7,14 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Azure.AI.Agents.Persistent.Telemetry;
 using Azure.AI.Agents.Persistent.Tests.Utilities;
 using Azure.Core.TestFramework;
 using Azure.Identity;
@@ -26,6 +30,7 @@ public partial class PersistentAgentTelemetryTests : RecordedTestBase<AIAgentsTe
     public const string TraceContentsEnvironmentVariable = "AZURE_TRACING_GEN_AI_CONTENT_RECORDING_ENABLED";
     public const string EnableOpenTelemetryEnvironmentVariable = "AZURE_EXPERIMENTAL_ENABLE_ACTIVITY_SOURCE";
     private const string STREAMING_CONSTRAINT = "The test framework does not support iteration of stream in Sync mode.";
+    private const string OPENAPI_SPEC_FILE = "weather_openapi.json";
     private MemoryTraceExporter _exporter;
     private TracerProvider _tracerProvider;
     private GenAiTraceVerifier _traceVerifier;
@@ -335,19 +340,34 @@ public partial class PersistentAgentTelemetryTests : RecordedTestBase<AIAgentsTe
         );
     }
 
-    [RecordedTest]
-    public async Task TestAgentChatWithFunctionToolTracingContentRecordingEnabled()
+    private static FunctionToolDefinition GetFunctionToolDefinition(bool argumentAsList)
     {
-        Environment.SetEnvironmentVariable(TraceContentsEnvironmentVariable, "true", EnvironmentVariableTarget.Process);
-        var type = typeof(Azure.AI.Agents.Persistent.Telemetry.OpenTelemetryScope);
-        var methodInfo = type.GetMethod("ReinitializeConfiguration", BindingFlags.Static | BindingFlags.NonPublic);
-        methodInfo?.Invoke(null, null);
-
-        var client = GetClient();
-        var modelDeploymentName = GetModelDeploymentName();
-
-        // Define the function tool
-        FunctionToolDefinition getCurrentWeatherAtLocationTool = new FunctionToolDefinition(
+        if (argumentAsList)
+        {
+            return new FunctionToolDefinition(
+                name: "getCurrentWeatherAtLocation",
+                description: "Return the array describing weather for each location, provided as a string array. The order of output array is the same as in input.",
+                parameters: BinaryData.FromObjectAsJson(
+                    new
+                    {
+                        Type = "object",
+                        Properties = new
+                        {
+                            Locations = new
+                            {
+                                Type = "array",
+                                Description = "The cities to get the weather for.",
+                                Items = new
+                                {
+                                    Type = "string"
+                                }
+                            },
+                        },
+                        Required = new[] { "locations" },
+                    },
+                    new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }));
+        }
+        return new FunctionToolDefinition(
             name: "getCurrentWeatherAtLocation",
             description: "Gets the current weather at a provided location.",
             parameters: BinaryData.FromObjectAsJson(
@@ -365,7 +385,122 @@ public partial class PersistentAgentTelemetryTests : RecordedTestBase<AIAgentsTe
                     Required = new[] { "location" },
                 },
                 new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }));
+    }
 
+    private static string GetFunctionArrayResults(string serializedArguments)
+    {
+        using JsonDocument argumentsJson = JsonDocument.Parse(serializedArguments);
+        JsonElement locationArgument = argumentsJson.RootElement.GetProperty("locations");
+        Assert.That(locationArgument.ValueKind, Is.EqualTo(JsonValueKind.Array), $"Expected array, but got {locationArgument.ValueKind}");
+        List<string> weather = [];
+        foreach (JsonElement inputValue in locationArgument.EnumerateArray())
+        {
+            Assert.That(inputValue.ValueKind, Is.EqualTo(JsonValueKind.String));
+            weather.Add(inputValue.GetString() switch
+            {
+                "Alpine" => "Cloudy",
+                "Baird" => "Sunny",
+                "Frankfort" => "Rainy",
+                _ => "Unknown",
+            });
+        }
+        Dictionary<string, string[]> rv = new()
+        {
+            { "weather", weather.ToArray() },
+        };
+        return JsonSerializer.Serialize(rv);
+    }
+
+    [Test]
+    [SyncOnly]
+    public void TestArgumentsSerialization()
+    {
+        object data = new
+        {
+            variable1 = "String",
+            variable2 = 1,
+            variable3 = 1.1,
+            variable4 = true,
+            variable5 = new
+            {
+                dictKey = "dictVal"
+            },
+            variable6 = new[]
+            {
+                1, 2
+            },
+            variable7 = new[]
+            {
+                1.1, 2.1
+            },
+            variable8 = new[]
+            {
+                "st1", "st2"
+            },
+            variable9 = new[]
+            {
+               new { dictKey1 = "dictVal1" },
+               new { dictKey1 = "dictVal2" }
+            },
+            variable10 = new[]
+            {
+               new[] {"st3", "st4"},
+               new[] {"st5", "st6"}
+            },
+            variable11 = new[]
+            {
+                true, false
+            },
+        };
+        string jsonString = JsonSerializer.Serialize(data);
+        Dictionary<string, string> decodedData = OpenTelemetryScope.DeserializeFunctionArguments(jsonString);
+        Assert.That(decodedData["variable1"], Is.EqualTo("String"));
+        Assert.That(decodedData["variable2"], Is.EqualTo("1"));
+        Assert.That(decodedData["variable3"].StartsWith("1.1"), Is.True);
+        Assert.That(decodedData["variable4"], Is.EqualTo("True"));
+        Assert.That(decodedData["variable5"], Is.EqualTo("{\"dictKey\":\"dictVal\"}"));
+        Assert.That(decodedData["variable6"], Is.EqualTo("1, 2"));
+        Assert.That(Regex.IsMatch(decodedData["variable7"], "1.1\\d*, 2.1\\d*"), Is.True);
+        Assert.That(decodedData["variable8"], Is.EqualTo("st1, st2"));
+        Assert.That(decodedData["variable9"], Is.EqualTo("{\"dictKey1\":\"dictVal1\"}, {\"dictKey1\":\"dictVal2\"}"));
+        Assert.That(decodedData["variable10"], Is.EqualTo("[\"st3\",\"st4\"], [\"st5\",\"st6\"]"));
+        Assert.That(decodedData["variable11"], Is.EqualTo("True, False"));
+    }
+
+    [Test]
+    [SyncOnly]
+    public void TestNonParseableArguments()
+    {
+        string notAJson = "When shall we three meet again In thunder, lightning, or in rain?";
+        Dictionary<string, string> decodedData = OpenTelemetryScope.DeserializeFunctionArguments(notAJson);
+        Assert.That(decodedData["NonParseableArgument"], Is.EqualTo(notAJson));
+    }
+
+    [Test]
+    [SyncOnly]
+    public void TestIncorrectJSONArgument()
+    {
+        object data = new object[] { "foo", "bar", "baz" };
+        string badJson = JsonSerializer.Serialize(data);
+        Dictionary<string, string> decodedData = OpenTelemetryScope.DeserializeFunctionArguments(badJson);
+        Assert.That(decodedData["NonParseableArgument"], Is.EqualTo(badJson));
+    }
+
+    [RecordedTest]
+    [TestCase(true)]
+    [TestCase(false)]
+    public async Task TestAgentChatWithFunctionToolTracingContentRecordingEnabled(bool argumentAsList)
+    {
+        Environment.SetEnvironmentVariable(TraceContentsEnvironmentVariable, "true", EnvironmentVariableTarget.Process);
+        var type = typeof(Azure.AI.Agents.Persistent.Telemetry.OpenTelemetryScope);
+        var methodInfo = type.GetMethod("ReinitializeConfiguration", BindingFlags.Static | BindingFlags.NonPublic);
+        methodInfo?.Invoke(null, null);
+
+        var client = GetClient();
+        var modelDeploymentName = GetModelDeploymentName();
+
+        // Define the function tool
+        FunctionToolDefinition getCurrentWeatherAtLocationTool = GetFunctionToolDefinition(argumentAsList);
         // Create agent with toolset
         PersistentAgent agent = await client.Administration.CreateAgentAsync(
             model: modelDeploymentName,
@@ -375,10 +510,11 @@ public partial class PersistentAgentTelemetryTests : RecordedTestBase<AIAgentsTe
 
         PersistentAgentThread thread = await client.Threads.CreateThreadAsync();
 
+        string question = argumentAsList ? "What is the weather in Alpine, Baird and Frankfort." : "What is the weather in Seattle.";
         PersistentThreadMessage message = await client.Messages.CreateMessageAsync(
             thread.Id,
             MessageRole.User,
-            "What is the weather in Seattle.");
+            question);
 
         ThreadRun run = await client.Runs.CreateRunAsync(
             thread.Id,
@@ -397,9 +533,14 @@ public partial class PersistentAgentTelemetryTests : RecordedTestBase<AIAgentsTe
                 {
                     if (toolCall is RequiredFunctionToolCall functionToolCall)
                     {
-                        var argumentsJson = JsonDocument.Parse(functionToolCall.Arguments);
-                        var locationArgument = argumentsJson.RootElement.GetProperty("location").GetString();
-                        toolOutputs.Add(new ToolOutput(toolCall.Id, "{\"weather\": \"Sunny\"}"));
+                        if (argumentAsList)
+                        {
+                            toolOutputs.Add(new ToolOutput(toolCall.Id, GetFunctionArrayResults(functionToolCall.Arguments)));
+                        }
+                        else
+                        {
+                            toolOutputs.Add(new ToolOutput(toolCall.Id, "{\"weather\": \"Sunny\"}"));
+                        }
                     }
                 }
                 run = await client.Runs.SubmitToolOutputsToRunAsync(run, toolOutputs, toolApprovals: null);
@@ -437,15 +578,25 @@ public partial class PersistentAgentTelemetryTests : RecordedTestBase<AIAgentsTe
         Activity createMessageSpan = _exporter.GetExportedActivities().FirstOrDefault(s => s.DisplayName == "create_message");
         CheckCreateMessageSpan(
             createMessageActivity: createMessageSpan,
-            content: "{\"content\": \"What is the weather in Seattle.\", \"role\": \"user\"}"
+            content: $"{{\"content\": \"{question}\", \"role\": \"user\"}}"
         );
 
         // Verify submit_tool_outputs span explicitly
         Activity submitToolOutputsSpan = _exporter.GetExportedActivities().FirstOrDefault(s => s.DisplayName == "submit_tool_outputs");
-        CheckSubmitToolOutputSpan(
-            submitActivity: submitToolOutputsSpan,
-            content: "{\"content\":\"{\\\"weather\\\": \\\"Sunny\\\"}\",\"id\":\"*\"}"
-        );
+        if (argumentAsList)
+        {
+            CheckSubmitToolOutputSpan(
+                submitActivity: submitToolOutputsSpan,
+                content: "{\"content\":\"{\\\"weather\\\":[\\\"Cloudy\\\",\\\"Sunny\\\",\\\"Rainy\\\"]}\",\"id\":\"*\"}"
+            );
+        }
+        else
+        {
+            CheckSubmitToolOutputSpan(
+                submitActivity: submitToolOutputsSpan,
+                content: "{\"content\":\"{\\\"weather\\\": \\\"Sunny\\\"}\",\"id\":\"*\"}"
+            );
+        }
 
         // Verify get_thread_run span
         var getThreadRunSpan = _exporter.GetExportedActivities().LastOrDefault(s => s.DisplayName == "get_thread_run");
@@ -455,15 +606,25 @@ public partial class PersistentAgentTelemetryTests : RecordedTestBase<AIAgentsTe
         Activity listMessagesSpan = _exporter.GetExportedActivities().FirstOrDefault(s => s.DisplayName == "list_messages");
         CheckListMessages(
             listActivity: listMessagesSpan,
-            contents: ["{\"content\":{\"text\":{\"value\":\"What is the weather in Seattle.\"}},\"role\":\"user\"}", "{\"content\":{\"text\":{\"value\":\"*\"}},\"role\":\"assistant\"}"],
+            contents: [$"{{\"content\":{{\"text\":{{\"value\":\"{question}\"}}}},\"role\":\"user\"}}", "{\"content\":{\"text\":{\"value\":\"*\"}},\"role\":\"assistant\"}"],
             roles: ["gen_ai.user.message", "gen_ai.assistant.message"]
         );
 
         // Verify list_run_steps span
+        string toolcallsSerialized;
+        if (argumentAsList)
+        {
+            toolcallsSerialized = "{\"tool_calls\":[{\"id\":\"*\",\"type\":\"function\",\"function\":{\"name\":\"getCurrentWeatherAtLocation\",\"arguments\":{\"locations\":\"Alpine, Baird, Frankfort\"}}}]}";
+        }
+        else
+        {
+            toolcallsSerialized = "{\"tool_calls\":[{\"id\":\"*\",\"type\":\"function\",\"function\":{\"name\":\"getCurrentWeatherAtLocation\",\"arguments\":{\"location\":\"Seattle, WA\"}}}]}";
+        }
+
         var listRunStepsSpan = _exporter.GetExportedActivities().FirstOrDefault(s => s.DisplayName == "list_run_steps");
         CheckRunSteps(
             runStepActivity: listRunStepsSpan,
-            contents: [null, "{\"tool_calls\":[{\"id\":\"*\",\"type\":\"function\",\"function\":{\"name\":\"getCurrentWeatherAtLocation\",\"arguments\":{\"location\":\"Seattle, WA\"}}}]}"],
+            contents: [null, toolcallsSerialized],
             events: ["gen_ai.run_step.message_creation", "gen_ai.run_step.tool_calls"]);
     }
 
@@ -557,6 +718,99 @@ public partial class PersistentAgentTelemetryTests : RecordedTestBase<AIAgentsTe
         CheckRunSteps(
             runStepActivity: listRunStepsSpan,
             contents: [null, "{\"tool_calls\":[{\"id\":\"*\",\"type\":\"bing_custom_search\",\"details\":{\"requesturl\":\"*\",\"response_metadata\":\"*\"}}]}"],
+            events: ["gen_ai.run_step.message_creation", "gen_ai.run_step.tool_calls"]);
+    }
+
+    [RecordedTest]
+    public async Task TestOpenAPITracingContentRecordingEnabled()
+    {
+        Environment.SetEnvironmentVariable(TraceContentsEnvironmentVariable, "true", EnvironmentVariableTarget.Process);
+        Type type = typeof(Azure.AI.Agents.Persistent.Telemetry.OpenTelemetryScope);
+        MethodInfo methodInfo = type.GetMethod("ReinitializeConfiguration", BindingFlags.Static | BindingFlags.NonPublic);
+        methodInfo?.Invoke(null, null);
+
+        PersistentAgentsClient client = GetClient();
+        var modelDeploymentName = GetModelDeploymentName();
+
+        string system_prompt = "You are helpful agent.";
+        string prompt = "What is the weather in Seattle?";
+        string agentName = "WeatherAgent";
+        // Create agent with toolset
+        OpenApiToolDefinition openapiTool = new(
+            name: "get_weather",
+            description: "Retrieve weather information for a location",
+            spec: BinaryData.FromBytes(System.IO.File.ReadAllBytes(GetFile(fileName: OPENAPI_SPEC_FILE))),
+            openApiAuthentication: new OpenApiAnonymousAuthDetails(),
+            defaultParams: ["format"]
+        );
+        PersistentAgent agent = await client.Administration.CreateAgentAsync(
+            model: modelDeploymentName,
+            name: agentName,
+            instructions: system_prompt,
+            tools: [openapiTool]);
+
+        PersistentAgentThread thread = await client.Threads.CreateThreadAsync();
+
+        PersistentThreadMessage message = await client.Messages.CreateMessageAsync(
+            thread.Id,
+            MessageRole.User,
+            prompt);
+
+        ThreadRun run = await client.Runs.CreateRunAsync(
+            thread.Id,
+            agent.Id
+        );
+        run = await WaitForRun(client, run);
+
+        // Enumerate messages and run steps to trigger spans
+        await foreach (PersistentThreadMessage messageInList in client.Messages.GetMessagesAsync(thread.Id))
+        {
+            _ = messageInList;
+        }
+
+        await foreach (RunStep step in client.Runs.GetRunStepsAsync(thread.Id, run.Id))
+        {
+            _ = step;
+        }
+
+        await client.Administration.DeleteAgentAsync(agent.Id);
+
+        // Force flush spans
+        _exporter.ForceFlush();
+
+        // Verify create_agent span
+        Activity createAgentSpan = _exporter.GetExportedActivities().FirstOrDefault(s => s.DisplayName == $"create_agent {agentName}");
+        CheckCreateAgentEvent(
+            createAgentSpan: createAgentSpan,
+            modelName: modelDeploymentName,
+            agentName: agentName,
+            content: $"{{\"content\": \"{system_prompt}\"}}"
+        );
+
+        // Verify create_message span
+        Activity createMessageSpan = _exporter.GetExportedActivities().FirstOrDefault(s => s.DisplayName == "create_message");
+        CheckCreateMessageSpan(
+            createMessageActivity: createMessageSpan,
+            content: $"{{\"content\":\"{prompt}\",\"role\":\"user\"}}"
+        );
+
+        // Verify get_thread_run span
+        var getThreadRunSpan = _exporter.GetExportedActivities().LastOrDefault(s => s.DisplayName == "get_thread_run");
+        CheckThreadRunAttribute(threadRunActivity: getThreadRunSpan, modelName: modelDeploymentName);
+
+        // Verify list_messages span explicitly
+        Activity listMessagesSpan = _exporter.GetExportedActivities().FirstOrDefault(s => s.DisplayName == "list_messages");
+        CheckListMessages(
+            listActivity: listMessagesSpan,
+            contents: [$"{{\"content\":{{\"text\":{{\"value\":\"{prompt}\"}}}},\"role\":\"user\"}}", "{\"content\":{\"text\":{\"value\":\"*\"}},\"role\":\"assistant\"}"],
+            roles: ["gen_ai.user.message", "gen_ai.assistant.message"]
+        );
+
+        // Verify list_run_steps span
+        var listRunStepsSpan = _exporter.GetExportedActivities().FirstOrDefault(s => s.DisplayName == "list_run_steps");
+        CheckRunSteps(
+            runStepActivity: listRunStepsSpan,
+            contents: [null, "{\"tool_calls\":[{\"id\":\"*\",\"type\":\"openapi\"}]}"],
             events: ["gen_ai.run_step.message_creation", "gen_ai.run_step.tool_calls"]);
     }
 
@@ -735,7 +989,9 @@ public partial class PersistentAgentTelemetryTests : RecordedTestBase<AIAgentsTe
     }
 
     [RecordedTest]
-    public async Task TestAgentChatWithFunctionToolTracingContentRecordingDisabled()
+    [TestCase(true)]
+    [TestCase(false)]
+    public async Task TestAgentChatWithFunctionToolTracingContentRecordingDisabled(bool argumentAsList)
     {
         Environment.SetEnvironmentVariable(TraceContentsEnvironmentVariable, "false", EnvironmentVariableTarget.Process);
         var type = typeof(Azure.AI.Agents.Persistent.Telemetry.OpenTelemetryScope);
@@ -746,25 +1002,7 @@ public partial class PersistentAgentTelemetryTests : RecordedTestBase<AIAgentsTe
         var modelDeploymentName = GetModelDeploymentName();
 
         // Define the function tool
-        FunctionToolDefinition getCurrentWeatherAtLocationTool = new FunctionToolDefinition(
-            name: "getCurrentWeatherAtLocation",
-            description: "Gets the current weather at a provided location.",
-            parameters: BinaryData.FromObjectAsJson(
-                new
-                {
-                    Type = "object",
-                    Properties = new
-                    {
-                        Location = new
-                        {
-                            Type = "string",
-                            Description = "The city and state, e.g. San Francisco, CA",
-                        },
-                    },
-                    Required = new[] { "location" },
-                },
-                new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }));
-
+        FunctionToolDefinition getCurrentWeatherAtLocationTool = GetFunctionToolDefinition(argumentAsList);
         // Create agent with toolset
         PersistentAgent agent = await client.Administration.CreateAgentAsync(
             model: modelDeploymentName,
@@ -774,10 +1012,11 @@ public partial class PersistentAgentTelemetryTests : RecordedTestBase<AIAgentsTe
 
         PersistentAgentThread thread = await client.Threads.CreateThreadAsync();
 
+        string question = argumentAsList ? "What is the weather in Alpine, Baird and Frankfort." : "What is the weather in Seattle.";
         PersistentThreadMessage message = await client.Messages.CreateMessageAsync(
             thread.Id,
             MessageRole.User,
-            "What is the weather in Seattle.");
+            question);
 
         ThreadRun run = await client.Runs.CreateRunAsync(
             thread.Id,
@@ -796,9 +1035,14 @@ public partial class PersistentAgentTelemetryTests : RecordedTestBase<AIAgentsTe
                 {
                     if (toolCall is RequiredFunctionToolCall functionToolCall)
                     {
-                        var argumentsJson = JsonDocument.Parse(functionToolCall.Arguments);
-                        var locationArgument = argumentsJson.RootElement.GetProperty("location").GetString();
-                        toolOutputs.Add(new ToolOutput(toolCall.Id, "{\"weather\": \"Sunny\"}"));
+                        if (argumentAsList)
+                        {
+                            toolOutputs.Add(new ToolOutput(toolCall.Id, GetFunctionArrayResults(functionToolCall.Arguments)));
+                        }
+                        else
+                        {
+                            toolOutputs.Add(new ToolOutput(toolCall.Id, "{\"weather\": \"Sunny\"}"));
+                        }
                     }
                 }
                 run = await client.Runs.SubmitToolOutputsToRunAsync(run, toolOutputs, toolApprovals: null);
@@ -841,7 +1085,10 @@ public partial class PersistentAgentTelemetryTests : RecordedTestBase<AIAgentsTe
         Activity submitToolOutputsSpan = _exporter.GetExportedActivities().FirstOrDefault(s => s.DisplayName == "submit_tool_outputs");
         CheckSubmitToolOutputSpan(
             submitActivity: submitToolOutputsSpan,
-            content: "{\"content\":\"\",\"id\":\"*\"}"
+            content: "{\"content\":\"\",\"id\":\"*\"}",
+            // Agent can send three requests separately or all at once, so when we have a list
+            // we need to control for that.
+            allowAdditionalEvents: argumentAsList
         );
 
         // Verify get_thread_run span
@@ -1364,7 +1611,7 @@ public partial class PersistentAgentTelemetryTests : RecordedTestBase<AIAgentsTe
         Assert.IsTrue(_traceVerifier.CheckSpanEvents(createMessageActivity, expectedCreateMessageEvents));
     }
 
-    private void CheckSubmitToolOutputSpan(Activity submitActivity, string content)
+    private void CheckSubmitToolOutputSpan(Activity submitActivity, string content, bool allowAdditionalEvents=false)
     {
         Assert.IsNotNull(submitActivity);
         var expectedSubmitToolOutputsAttributes = new Dictionary<string, object>
@@ -1385,7 +1632,7 @@ public partial class PersistentAgentTelemetryTests : RecordedTestBase<AIAgentsTe
                 { "gen_ai.event.content", content }
             })
         };
-        Assert.IsTrue(_traceVerifier.CheckSpanEvents(submitActivity, expectedSubmitToolOutputsEvents));
+        Assert.IsTrue(_traceVerifier.CheckSpanEvents(submitActivity.Events.ToList(), expectedSubmitToolOutputsEvents, allowAdditionalEvents));
     }
 
     private void CheckListMessages(Activity listActivity, string[] contents, string[] roles)
@@ -1544,6 +1791,12 @@ public partial class PersistentAgentTelemetryTests : RecordedTestBase<AIAgentsTe
     {
         if (Mode != RecordedTestMode.Playback)
             await Task.Delay(timeout);
+    }
+
+    private static string GetFile([CallerFilePath] string pth = "", string fileName = "")
+    {
+        var dirName = Path.GetDirectoryName(pth) ?? "";
+        return Path.Combine(new string[] { dirName, "TestData", fileName });
     }
     #endregion
 }

@@ -4,8 +4,9 @@
 
 using System;
 using System.ComponentModel;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Strategies for attacks. </summary>
     public readonly partial struct AttackStrategy : IEquatable<AttackStrategy>

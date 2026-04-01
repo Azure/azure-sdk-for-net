@@ -12,7 +12,7 @@ using System.Reflection;
 namespace Azure.Provisioning.Generator.Specifications;
 
 public class AppServiceSpecification() :
-    Specification("AppService", typeof(AppServiceExtensions))
+    Specification("AppService", typeof(AppServiceExtensions), serviceDirectory: "websites")
 {
     protected override void Customize()
     {

@@ -139,6 +139,7 @@ namespace Azure.AI.ContentSafety
     public partial class BlocklistClient
     {
         protected BlocklistClient() { }
+        public BlocklistClient(Azure.AI.ContentSafety.BlocklistClientSettings settings) { }
         public BlocklistClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
         public BlocklistClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.AI.ContentSafety.ContentSafetyClientOptions options) { }
         public BlocklistClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
@@ -175,9 +176,17 @@ namespace Azure.AI.ContentSafety
         public virtual System.Threading.Tasks.Task<Azure.Response> RemoveBlocklistItemsAsync(string name, Azure.AI.ContentSafety.RemoveTextBlocklistItemsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> RemoveBlocklistItemsAsync(string name, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
     }
+    public partial class BlocklistClientSettings : System.ClientModel.Primitives.ClientSettings
+    {
+        public BlocklistClientSettings() { }
+        public System.Uri Endpoint { get { throw null; } set { } }
+        public Azure.AI.ContentSafety.ContentSafetyClientOptions Options { get { throw null; } set { } }
+        protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
+    }
     public partial class ContentSafetyClient
     {
         protected ContentSafetyClient() { }
+        public ContentSafetyClient(Azure.AI.ContentSafety.ContentSafetyClientSettings settings) { }
         public ContentSafetyClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
         public ContentSafetyClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.AI.ContentSafety.ContentSafetyClientOptions options) { }
         public ContentSafetyClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
@@ -214,6 +223,13 @@ namespace Azure.AI.ContentSafety
             V2023_10_01 = 1,
             V2024_09_01 = 2,
         }
+    }
+    public partial class ContentSafetyClientSettings : System.ClientModel.Primitives.ClientSettings
+    {
+        public ContentSafetyClientSettings() { }
+        public System.Uri Endpoint { get { throw null; } set { } }
+        public Azure.AI.ContentSafety.ContentSafetyClientOptions Options { get { throw null; } set { } }
+        protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
     }
     public partial class ContentSafetyImageData : System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.ContentSafetyImageData>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.ContentSafetyImageData>
     {

@@ -50,16 +50,12 @@ dotnet add package Azure.AI.Extensions.OpenAI --prerelease
 
 ### Authenticate the client
 
-To be able to create, update and delete Agents, please use `AgentsClient`. It is a good practice to only allow this operation for users with elevated permissions, for example, administrators.
+To be able to create, update and delete Agents, please use `AgentAdministrationClient`. It is a good practice to only allow this operation for users with elevated permissions, for example, administrators.
 
 ```C# Snippet:Sample_Agents_CreateAgentClientCRUD
 var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
-AgentsClientOptions options = new()
-{
-    Endpoint = new Uri(projectEndpoint)
-};
-AgentsClient agentsClient = new(tokenProvider: new DefaultAzureCredential(), options: options);
+AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 ```
 
 ## Key concepts
@@ -70,31 +66,27 @@ When clients send REST requests to the endpoint, one of the query parameters is 
 
 #### Select a service API version
 
-The API version may be set supplying `version` parameter to `AgentClientOptions` constructor as shown in the example code below.
+The API version may be set supplying `version` parameter to `AgentAdministrationClientOptions` constructor as shown in the example code below.
 
 ```C# Snippet:Sample_Agents_API_version
-AgentsClientOptions options = new()
-{
-    Endpoint = new Uri(projectEndpoint),
-    ApiVersion = "2025-11-15-preview"
-};
-AgentsClient agentsClient = new(tokenProvider: new DefaultAzureCredential(), options: options);
+AgentAdministrationClientOptions options = new(version: AgentAdministrationClientOptions.ServiceVersion.V1);
+AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
 ```
 
 ### Additional concepts
-The Azure.AI.Projects.Agents framework organized in a way that for each call, requiring the REST API request, there are synchronous and asynchronous counterparts where the letter has the "Async" suffix. For example, the following code demonstrates the creation of a `AgentVersion` object.
+The Azure.AI.Projects.Agents framework organized in a way that for each call, requiring the REST API request, there are synchronous and asynchronous counterparts where the letter has the "Async" suffix. For example, the following code demonstrates the creation of a `ProjectsAgentVersion` object.
 
 Synchronous call:
 ```C# Snippet:Sample_Agents_CreateAgentVersionCRUD_Sync
-PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a prompt agent."
 };
-AgentVersion agentVersion1 = agentsClient.CreateAgentVersion(
+ProjectsAgentVersion agentVersion1 = agentsClient.CreateAgentVersion(
     agentName: "myAgent1",
     options: new(agentDefinition));
 Console.WriteLine($"Agent created (id: {agentVersion1.Id}, name: {agentVersion1.Name}, version: {agentVersion1.Version})");
-AgentVersion agentVersion2 = agentsClient.CreateAgentVersion(
+ProjectsAgentVersion agentVersion2 = agentsClient.CreateAgentVersion(
     agentName: "myAgent2",
     options: new(agentDefinition));
 Console.WriteLine($"Agent created (id: {agentVersion2.Id}, name: {agentVersion2.Name}, version: {agentVersion2.Version})");
@@ -103,15 +95,15 @@ Console.WriteLine($"Agent created (id: {agentVersion2.Id}, name: {agentVersion2.
 Asynchronous call:
 
 ```C# Snippet:Sample_Agents_CreateAgentVersionCRUD_Async
-PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a prompt agent."
 };
-AgentVersion agentVersion1 = await agentsClient.CreateAgentVersionAsync(
+ProjectsAgentVersion agentVersion1 = await agentsClient.CreateAgentVersionAsync(
     agentName: "myAgent1",
     options: new(agentDefinition));
 Console.WriteLine($"Agent created (id: {agentVersion1.Id}, name: {agentVersion1.Name}, version: {agentVersion1.Version})");
-AgentVersion agentVersion2 = await agentsClient.CreateAgentVersionAsync(
+ProjectsAgentVersion agentVersion2 = await agentsClient.CreateAgentVersionAsync(
     agentName: "myAgent2",
     options: new(agentDefinition));
 Console.WriteLine($"Agent created (id: {agentVersion2.Id}, name: {agentVersion2.Name}, version: {agentVersion2.Version})");
@@ -121,26 +113,26 @@ In the most of code snippets we will show only asynchronous sample for brevity. 
 
 ## Examples
 
-## Prompt Agents
+## Declarative Agents
 
-When creating the Agents we need to supply Agent definitions to its constructor. To create a declarative prompt Agent, use the `PromptAgentDefinition`:
+When creating the Agents we need to supply Agent definitions to its constructor. To create a declarative prompt Agent, use the `DeclarativeAgentDefinition`:
 
 ```C# Snippet:Sample_Agents_CreateAgentVersionCRUD_Async
-PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a prompt agent."
 };
-AgentVersion agentVersion1 = await agentsClient.CreateAgentVersionAsync(
+ProjectsAgentVersion agentVersion1 = await agentsClient.CreateAgentVersionAsync(
     agentName: "myAgent1",
     options: new(agentDefinition));
 Console.WriteLine($"Agent created (id: {agentVersion1.Id}, name: {agentVersion1.Name}, version: {agentVersion1.Version})");
-AgentVersion agentVersion2 = await agentsClient.CreateAgentVersionAsync(
+ProjectsAgentVersion agentVersion2 = await agentsClient.CreateAgentVersionAsync(
     agentName: "myAgent2",
     options: new(agentDefinition));
 Console.WriteLine($"Agent created (id: {agentVersion2.Id}, name: {agentVersion2.Name}, version: {agentVersion2.Version})");
 ```
 
-The code above will result in creation of `AgentVersion` object, which is the data object containing Agent's name and version.
+The code above will result in creation of `ProjectsAgentVersion` object, which is the data object containing Agent's name and version.
 
 ### Hosted Agents
 
@@ -179,7 +171,7 @@ To create the hosted agent, please use the `HostedAgentDefinition` while creatin
 private static  HostedAgentDefinition GetAgentDefinition(string dockerImage, string modelDeploymentName, string accountId, string applicationInsightConnectionString, string projectEndpoint)
 {
     HostedAgentDefinition agentDefinition = new(
-        versions: [new ProtocolVersionRecord(AgentProtocol.ActivityProtocol, "v1")],
+        versions: [new ProtocolVersionRecord(ProjectsAgentProtocol.ActivityProtocol, "v1")],
         cpu: "1",
         memory: "2Gi"
     )
@@ -294,7 +286,7 @@ Any operation that fails will throw a [ClientResultException][ClientResultExcept
 ```C# Snippet:Sample_Agent_ErrorHandling
 try
 {
-    AgentVersion agent = await agentsClient.GetAgentVersionAsync(
+    ProjectsAgentVersion agent = await agentsClient.GetAgentVersionAsync(
         agentName: "agent_which_dies_not_exist", agentVersion: "1");
 }
 catch (ClientResultException e) when (e.Status == 404)

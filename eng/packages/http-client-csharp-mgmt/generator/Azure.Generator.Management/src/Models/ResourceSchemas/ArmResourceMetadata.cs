@@ -20,6 +20,7 @@ namespace Azure.Generator.Management.Models;
 /// <param name="ChildResourceIds"> The list of child resource ID patterns. </param>
 /// <param name="NameConstraints"> The name constraints for the resource. </param>
 /// <param name="ApiVersions"> The API versions that this resource is available in. </param>
+/// <param name="RbacRoles"> The RBAC roles defined for this resource. </param>
 public record ArmResourceMetadata(
     string ResourceIdPattern,
     string ResourceName,
@@ -31,7 +32,8 @@ public record ArmResourceMetadata(
     string? ParentResourceId,
     IReadOnlyList<string> ChildResourceIds,
     ArmResourceNameConstraints NameConstraints,
-    IReadOnlyList<string> ApiVersions)
+    IReadOnlyList<string> ApiVersions,
+    IReadOnlyList<ArmResourceRbacRole> RbacRoles)
 {
     // ChildResourceIds is currently unpopulated and passed in as an empty array
     internal static ArmResourceMetadata DeserializeResourceMetadata(JsonElement element, InputModelType inputModel, IReadOnlyList<string> childResourceIds)
@@ -105,6 +107,15 @@ public record ArmResourceMetadata(
             }
         }
 
+        var rbacRoles = new List<ArmResourceRbacRole>();
+        if (element.TryGetProperty("rbacRoles", out var rbacRolesElement))
+        {
+            foreach (var item in rbacRolesElement.EnumerateArray())
+            {
+                rbacRoles.Add(ArmResourceRbacRole.DeserializeRbacRole(item));
+            }
+        }
+
         return new(
             resourceIdPattern ?? throw new InvalidOperationException("resourceIdPattern cannot be null"),
             resourceName ?? throw new InvalidOperationException("resourceName cannot be null"),
@@ -116,6 +127,7 @@ public record ArmResourceMetadata(
             parentResource,
             childResourceIds,
             nameConstraints,
-            apiVersions);
+            apiVersions,
+            rbacRoles);
     }
 }

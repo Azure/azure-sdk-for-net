@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Purview
 {
-    internal class PurviewPrivateEndpointConnectionOperationSource : IOperationSource<PurviewPrivateEndpointConnectionResource>
+    /// <summary></summary>
+    internal partial class PurviewPrivateEndpointConnectionOperationSource : IOperationSource<PurviewPrivateEndpointConnectionResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal PurviewPrivateEndpointConnectionOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         PurviewPrivateEndpointConnectionResource IOperationSource<PurviewPrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<PurviewPrivateEndpointConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPurviewContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            PurviewPrivateEndpointConnectionData data = PurviewPrivateEndpointConnectionData.DeserializePurviewPrivateEndpointConnectionData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new PurviewPrivateEndpointConnectionResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<PurviewPrivateEndpointConnectionResource> IOperationSource<PurviewPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<PurviewPrivateEndpointConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPurviewContext.Default);
-            return await Task.FromResult(new PurviewPrivateEndpointConnectionResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            PurviewPrivateEndpointConnectionData data = PurviewPrivateEndpointConnectionData.DeserializePurviewPrivateEndpointConnectionData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new PurviewPrivateEndpointConnectionResource(_client, data);
         }
     }
 }
