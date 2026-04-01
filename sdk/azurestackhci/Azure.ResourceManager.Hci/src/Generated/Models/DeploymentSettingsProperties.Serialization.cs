@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
@@ -86,7 +87,7 @@ namespace Azure.ResourceManager.Hci.Models
             }
             writer.WritePropertyName("arcNodeResourceIds"u8);
             writer.WriteStartArray();
-            foreach (string item in ArcNodeResourceIds)
+            foreach (ResourceIdentifier item in ArcNodeResourceIds)
             {
                 if (item == null)
                 {
@@ -153,7 +154,7 @@ namespace Azure.ResourceManager.Hci.Models
                 return null;
             }
             HciProvisioningState? provisioningState = default;
-            IList<string> arcNodeResourceIds = default;
+            IList<ResourceIdentifier> arcNodeResourceIds = default;
             EceDeploymentMode deploymentMode = default;
             HciClusterOperationType? operationType = default;
             HciClusterDeploymentConfiguration deploymentConfiguration = default;
@@ -172,7 +173,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
                 if (prop.NameEquals("arcNodeResourceIds"u8))
                 {
-                    List<string> array = new List<string>();
+                    List<ResourceIdentifier> array = new List<ResourceIdentifier>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
                         if (item.ValueKind == JsonValueKind.Null)
@@ -181,7 +182,7 @@ namespace Azure.ResourceManager.Hci.Models
                         }
                         else
                         {
-                            array.Add(item.GetString());
+                            array.Add(new ResourceIdentifier(item.GetString()));
                         }
                     }
                     arcNodeResourceIds = array;

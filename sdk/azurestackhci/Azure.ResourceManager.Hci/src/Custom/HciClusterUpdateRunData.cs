@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.Hci
         [WirePath("properties.progress.startTimeUtc")]
         public DateTimeOffset? StartOn
         {
-            get => Properties is null ? default : Properties.StartOn;
+            get => Properties is null ? default : Properties.StartTimeUtc;
             set
             {
                 if (Properties == null)
                 { Properties = new Models.UpdateRunProperties(); }
                 if (value.HasValue)
-                { Properties.StartOn = value.Value; }
+                { Properties.StartTimeUtc = value.Value; }
             }
         }
 
@@ -33,13 +33,13 @@ namespace Azure.ResourceManager.Hci
         [WirePath("properties.progress.endTimeUtc")]
         public DateTimeOffset? EndOn
         {
-            get => Properties is null ? default : Properties.EndOn;
+            get => Properties is null ? default : Properties.EndTimeUtc;
             set
             {
                 if (Properties == null)
                 { Properties = new Models.UpdateRunProperties(); }
                 if (value.HasValue)
-                { Properties.EndOn = value.Value; }
+                { Properties.EndTimeUtc = value.Value; }
             }
         }
 
@@ -47,13 +47,13 @@ namespace Azure.ResourceManager.Hci
         [WirePath("properties.progress.lastUpdatedTimeUtc")]
         public DateTimeOffset? LastUpdatedOn
         {
-            get => Properties is null ? default : Properties.LastUpdatedOn;
+            get => Properties is null ? default : Properties.LastUpdatedTimeUtc;
             set
             {
                 if (Properties == null)
                 { Properties = new Models.UpdateRunProperties(); }
                 if (value.HasValue)
-                { Properties.LastUpdatedOn = value.Value; }
+                { Properties.LastUpdatedTimeUtc = value.Value; }
             }
         }
     }

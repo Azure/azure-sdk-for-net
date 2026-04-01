@@ -137,38 +137,6 @@ namespace Azure.ResourceManager.Hci.Models
             }
         }
 
-        /// <summary> Expected execution time of a given step. This is optionally authored in the update action plan and can be empty. </summary>
-        [WirePath("progress.expectedExecutionTime")]
-        public string ExpectedExecutionTime
-        {
-            get
-            {
-                return Progress is null ? default : Progress.ExpectedExecutionTime;
-            }
-            set
-            {
-                if (Progress is null)
-                {
-                    Progress = new HciUpdateStep();
-                }
-                Progress.ExpectedExecutionTime = value;
-            }
-        }
-
-        /// <summary> Recursive model for child steps of this step. </summary>
-        [WirePath("progress.steps")]
-        public IList<HciUpdateStep> Steps
-        {
-            get
-            {
-                if (Progress is null)
-                {
-                    Progress = new HciUpdateStep();
-                }
-                return Progress.Steps;
-            }
-        }
-
         /// <summary> When the step started, or empty if it has not started executing. </summary>
         [WirePath("progress.startTimeUtc")]
         public DateTimeOffset? StartTimeUtc
@@ -223,12 +191,13 @@ namespace Azure.ResourceManager.Hci.Models
             }
         }
 
-        /// <summary> Gets or sets the StartOn. </summary>
-        public DateTimeOffset? StartOn
+        /// <summary> Expected execution time of a given step. This is optionally authored in the update action plan and can be empty. </summary>
+        [WirePath("progress.expectedExecutionTime")]
+        public string ExpectedExecutionTime
         {
             get
             {
-                return Progress is null ? default : Progress.StartOn;
+                return Progress is null ? default : Progress.ExpectedExecutionTime;
             }
             set
             {
@@ -236,41 +205,21 @@ namespace Azure.ResourceManager.Hci.Models
                 {
                     Progress = new HciUpdateStep();
                 }
-                Progress.StartOn = value.Value;
+                Progress.ExpectedExecutionTime = value;
             }
         }
 
-        /// <summary> Gets or sets the EndOn. </summary>
-        public DateTimeOffset? EndOn
+        /// <summary> Recursive model for child steps of this step. </summary>
+        [WirePath("progress.steps")]
+        public IList<HciUpdateStep> Steps
         {
             get
-            {
-                return Progress is null ? default : Progress.EndOn;
-            }
-            set
             {
                 if (Progress is null)
                 {
                     Progress = new HciUpdateStep();
                 }
-                Progress.EndOn = value.Value;
-            }
-        }
-
-        /// <summary> Gets or sets the LastUpdatedOn. </summary>
-        public DateTimeOffset? LastUpdatedOn
-        {
-            get
-            {
-                return Progress is null ? default : Progress.LastUpdatedOn;
-            }
-            set
-            {
-                if (Progress is null)
-                {
-                    Progress = new HciUpdateStep();
-                }
-                Progress.LastUpdatedOn = value.Value;
+                return Progress.Steps;
             }
         }
     }
