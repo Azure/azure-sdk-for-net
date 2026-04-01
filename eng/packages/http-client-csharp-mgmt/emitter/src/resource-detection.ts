@@ -307,7 +307,10 @@ export function buildArmProviderSchema(
         methodId: method.crossLanguageDefinitionId,
         kind,
         operationPath: method.operation.path,
-        operationScope: getOperationScopeFromPath(method.operation.path)
+        operationScope: getOperationScopeFromPath(
+          method.operation.path,
+          kind === ResourceOperationKind.List
+        )
       });
       if (!entry.resourceType) {
         entry.resourceType = calculateResourceTypeFromPath(

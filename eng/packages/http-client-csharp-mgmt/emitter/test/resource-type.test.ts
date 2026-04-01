@@ -131,6 +131,36 @@ describe("Operation Scope Detection", () => {
     strictEqual(scope, ResourceScope.Extension);
   });
 
+  it("tenant scope for cross-RP action path (no resource instance)", async () => {
+    const path =
+      "/providers/microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.CostManagement/generateReservationDetailsReport";
+    const scope = getOperationScopeFromPath(path);
+    strictEqual(scope, ResourceScope.Tenant);
+  });
+
+  it("tenant scope for cross-RP list action path", async () => {
+    const path =
+      "/providers/microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.CostManagement/benefitUtilizationSummaries";
+    const scope = getOperationScopeFromPath(path);
+    strictEqual(scope, ResourceScope.Tenant);
+  });
+
+  it("tenant scope for cross-RP nested action path", async () => {
+    const path =
+      "/providers/microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoices/{invoiceName}/providers/Microsoft.CostManagement/pricesheets/default/download";
+    const scope = getOperationScopeFromPath(path);
+    strictEqual(scope, ResourceScope.Tenant);
+  });
+
+  it("extension scope for cross-RP list operation (serviceGroups sites)", async () => {
+    const path =
+      "/providers/Microsoft.Management/serviceGroups/{servicegroupName}/providers/Microsoft.Edge/sites";
+    const scope = getOperationScopeFromPath(path, true);
+    strictEqual(scope, ResourceScope.Extension);
+  });
+
+
+
   it("extension scope from generic variable prefix with {resourceId}", async () => {
     const path =
       "/{resourceId}/providers/Microsoft.DataProtection/backupInstances";

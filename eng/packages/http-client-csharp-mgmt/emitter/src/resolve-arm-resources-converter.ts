@@ -561,7 +561,10 @@ function convertScopeToResourceScope(
 /**
  * Determine operation scope from path
  */
-export function getOperationScopeFromPath(path: string): ResourceScope {
+export function getOperationScopeFromPath(
+  path: string,
+  isListOperation: boolean = false
+): ResourceScope {
   // Match any path starting with a variable segment followed by /providers/
   // This covers scope-based operations like /{resourceUri}/providers/..., /{scope}/providers/..., /{resourceId}/providers/..., etc.
   if (/^\/\{[^}]+\}\/providers\//.test(path)) {
@@ -579,20 +582,35 @@ export function getOperationScopeFromPath(path: string): ResourceScope {
   ) {
     return ResourceScope.ManagementGroup;
   } else if (hasMultipleProviderSegments(path)) {
-    // Paths with multiple /providers/ segments indicate extension resources
-    // e.g., /providers/Microsoft.Management/serviceGroups/{name}/providers/Microsoft.Edge/sites/{siteName}
+    // Paths with multiple /providers/ segments indicate cross-RP paths.
+    // For non-list operations whose path ends with a constant segment (no {param}),
+    // this is a cross-RP action (e.g., .../providers/Microsoft.CostManagement/generateReport)
+    // and should be Tenant scope.
+    // Otherwise (list operations, or paths ending with {param}), this is a true
+    // extension resource and should be Extension scope.
+    if (!isListOperation && !isVariableSegment(lastSegment(path))) {
+      return ResourceScope.Tenant;
+    }
     return ResourceScope.Extension;
   }
   return ResourceScope.Tenant; // all the templates work as if there is a tenant decorator when there is no such decorator
 }
 
 /**
- * Check if a path has multiple /providers/ segments, indicating an extension resource
+ * Check if a path has multiple /providers/ segments, indicating a cross-RP path
  * that extends another ARM resource.
  */
 function hasMultipleProviderSegments(path: string): boolean {
   const providerMatches = path.match(/\/providers\//gi);
   return providerMatches !== null && providerMatches.length > 1;
+}
+
+/**
+ * Get the last segment of a path.
+ */
+function lastSegment(path: string): string {
+  const segments = path.split("/").filter((s) => s.length > 0);
+  return segments[segments.length - 1];
 }
 
 /**
@@ -777,7 +795,7 @@ function assignListOperationsToResources(
         methodId,
         kind: ResourceOperationKind.List,
         operationPath: listOp.path,
-        operationScope: getOperationScopeFromPath(listOp.path),
+        operationScope: getOperationScopeFromPath(listOp.path, true),
         resourceScope: undefined
       });
     }
