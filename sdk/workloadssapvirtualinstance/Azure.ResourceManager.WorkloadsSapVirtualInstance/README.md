@@ -1,6 +1,6 @@
 # Microsoft Azure Workloads SapVirtualInstance management client library for .NET
 
-Azure Workloads refers to a suite of features and services designed to optimize the deployment and management of SAP Application Server Instances.
+Azure Workloads SAP Virtual Instance (ACSS) is a service that simplifies the deployment, registration, and management of SAP workloads on Azure. It provides end-to-end lifecycle management for SAP systems—including SAP Virtual Instances, Central Server Instances, Application Server Instances, and Database Instances—allowing you to deploy, start, stop, and monitor your SAP landscape from a single control plane.
 
 This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
@@ -23,14 +23,31 @@ dotnet add package Azure.ResourceManager.WorkloadsSapVirtualInstance --prereleas
 ### Prerequisites
 
 * You must have an [Microsoft Azure subscription](https://azure.microsoft.com/free/dotnet/).
+* You must have an existing Azure resource group to deploy the SAP Virtual Instance into.
 
-### Authenticate the Client
+### Authenticate the client
 
 To create an authenticated client and start interacting with Microsoft Azure resources, see the [quickstart guide here](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/dev/mgmt_quickstart.md).
 
+```dotnetcli
+dotnet add package Azure.Identity
+```
+
+```csharp
+ArmClient client = new ArmClient(new DefaultAzureCredential());
+```
+
 ## Key concepts
 
-Key concepts of the Microsoft Azure SDK for .NET can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html)
+**SAP Virtual Instance (SVI)** — The top-level resource representing a complete SAP system registered with Azure Center for SAP Solutions (ACSS). It acts as a logical container that groups all components of an SAP deployment.
+
+**SAP Central Server Instance** — Manages the ABAP message server and enqueue server within an SAP landscape.
+
+**SAP Application Server Instance** — Represents individual SAP application servers (dialog instances) that handle user workloads.
+
+**SAP Database Instance** — Represents the database tier (for example, SAP HANA) backing the SAP system.
+
+For broader Azure SDK concepts, see [here](https://azure.github.io/azure-sdk/dotnet_introduction.html).
 
 ## Documentation
 
@@ -42,7 +59,83 @@ Documentation is available to help you learn how to use this package:
 
 ## Examples
 
-Code samples for using the management library for .NET can be found in the following locations
+### Create a SAP Virtual Instance
+
+```C# Snippet:WorkloadsSapVirtualInstance_CreateSapVirtualInstance
+SapVirtualInstanceCollection collection = _resourceGroup.GetSapVirtualInstances();
+
+string sapVirtualInstanceName = "X00";
+SapVirtualInstanceData data = new SapVirtualInstanceData(new AzureLocation("eastus2"))
+{
+    Tags = { ["environment"] = "production" },
+};
+ArmOperation<SapVirtualInstanceResource> lro = await collection.CreateOrUpdateAsync(
+    WaitUntil.Completed, sapVirtualInstanceName, data);
+
+SapVirtualInstanceResource sapVirtualInstance = lro.Value;
+Console.WriteLine($"Created SAP Virtual Instance: {sapVirtualInstance.Data.Id}");
+```
+
+### Get a SAP Virtual Instance
+
+```C# Snippet:WorkloadsSapVirtualInstance_GetSapVirtualInstance
+SapVirtualInstanceCollection collection = _resourceGroup.GetSapVirtualInstances();
+
+string sapVirtualInstanceName = "X00";
+SapVirtualInstanceResource sapVirtualInstance = await collection.GetAsync(sapVirtualInstanceName);
+
+Console.WriteLine($"SAP Virtual Instance name: {sapVirtualInstance.Data.Name}");
+Console.WriteLine($"SAP Virtual Instance status: {sapVirtualInstance.Data.Status}");
+```
+
+### List SAP Virtual Instances
+
+```C# Snippet:WorkloadsSapVirtualInstance_ListSapVirtualInstances
+SapVirtualInstanceCollection collection = _resourceGroup.GetSapVirtualInstances();
+
+await foreach (SapVirtualInstanceResource item in collection.GetAllAsync())
+{
+    Console.WriteLine($"SAP Virtual Instance: {item.Data.Name} - Status: {item.Data.Status}");
+}
+```
+
+### Start a SAP Virtual Instance
+
+```C# Snippet:WorkloadsSapVirtualInstance_StartSapVirtualInstance
+SapVirtualInstanceCollection collection = _resourceGroup.GetSapVirtualInstances();
+
+string sapVirtualInstanceName = "X00";
+SapVirtualInstanceResource sapVirtualInstance = await collection.GetAsync(sapVirtualInstanceName);
+
+ArmOperation<OperationStatusResult> lro = await sapVirtualInstance.StartAsync(WaitUntil.Completed);
+Console.WriteLine($"SAP Virtual Instance started. Status: {lro.Value.Status}");
+```
+
+### Stop a SAP Virtual Instance
+
+```C# Snippet:WorkloadsSapVirtualInstance_StopSapVirtualInstance
+SapVirtualInstanceCollection collection = _resourceGroup.GetSapVirtualInstances();
+
+string sapVirtualInstanceName = "X00";
+SapVirtualInstanceResource sapVirtualInstance = await collection.GetAsync(sapVirtualInstanceName);
+
+ArmOperation<OperationStatusResult> lro = await sapVirtualInstance.StopAsync(WaitUntil.Completed);
+Console.WriteLine($"SAP Virtual Instance stopped. Status: {lro.Value.Status}");
+```
+
+### Delete a SAP Virtual Instance
+
+```C# Snippet:WorkloadsSapVirtualInstance_DeleteSapVirtualInstance
+SapVirtualInstanceCollection collection = _resourceGroup.GetSapVirtualInstances();
+
+string sapVirtualInstanceName = "X00";
+SapVirtualInstanceResource sapVirtualInstance = await collection.GetAsync(sapVirtualInstanceName);
+
+await sapVirtualInstance.DeleteAsync(WaitUntil.Completed);
+Console.WriteLine("SAP Virtual Instance deleted successfully.");
+```
+
+For additional code samples, see:
 - [.NET Management Library Code Samples](https://aka.ms/azuresdk-net-mgmt-samples)
 
 ## Troubleshooting
