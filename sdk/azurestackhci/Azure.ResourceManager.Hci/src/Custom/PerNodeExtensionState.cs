@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Hci.Models
         public ArcExtensionInstanceView ExtensionInstanceView { get; }
 
         /// <summary> The extension instance view. </summary>
-        [Obsolete("This property is now deprecated. Please use ExtensionInstanceView with type ArcExtensionInstanceView instead.")]
+        [Obsolete("This property is now deprecated. Please use the new property `StartOn` moving forward.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         [WirePath("instanceView")]
         public HciExtensionInstanceView InstanceView
