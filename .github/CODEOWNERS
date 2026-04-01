@@ -89,13 +89,13 @@
 /sdk/ai/    @dargilco @glharper @nick863 @trangevi @trrwilson
 
 # PRLabel: %AI Model Inference
-/sdk/ai/Azure.AI.Inference    @dargilco @glharper @trangevi
+/sdk/ai/Azure.AI.Inference/    @dargilco @glharper @trangevi
 
 # ServiceLabel: %AI Model Inference
 # ServiceOwners: @dargilco @glharper @trangevi
 
 # PRLabel: %AI Projects
-/sdk/ai/Azure.AI.Projects    @dargilco @nick863 @trangevi @trrwilson
+/sdk/ai/Azure.AI.Projects/    @dargilco @nick863 @trangevi @trrwilson
 
 # ServiceLabel: %AI Projects
 # ServiceOwners: @dargilco @nick863 @trangevi
@@ -107,7 +107,7 @@
 # ServiceOwners: @avanigupta @linglingye001 @zhiyuanliang-ms
 
 # PRLabel: %Attestation
-/sdk/attestation/Azure.Security.Attestation    @anilba06 @Azure/azure-sdk-write-attestation @gkostal
+/sdk/attestation/Azure.Security.Attestation/    @anilba06 @Azure/azure-sdk-write-attestation @gkostal
 
 # ServiceLabel: %Attestation
 # ServiceOwners: @anilba06 @gkostal
@@ -182,10 +182,10 @@
 /sdk/cognitivelanguage/    @ahmedaashour @bidisha-c @mikaelsitruk @quentinRobinson @sarkar-rajarshi
 
 # PRLabel: %Cognitive - Language
-/sdk/cognitivelanguage/*.QuestionAnswering.Authoring/    @ahmedaashour @Amichelangelo @bidisha-c @mikaelsitruk @quentinRobinson @sarkar-rajarshi
+/sdk/cognitivelanguage/Azure.AI.Language.QuestionAnswering.Authoring/    @ahmedaashour @Amichelangelo @bidisha-c @mikaelsitruk @quentinRobinson @sarkar-rajarshi
 
 # PRLabel: %Cognitive - Language
-/sdk/cognitivelanguage/*.QuestionAnswering.Inference/    @ahmedaashour @Amichelangelo @bidisha-c @mikaelsitruk @quentinRobinson @sarkar-rajarshi
+/sdk/cognitivelanguage/Azure.AI.Language.QuestionAnswering.Inference/    @ahmedaashour @Amichelangelo @bidisha-c @mikaelsitruk @quentinRobinson @sarkar-rajarshi
 
 # ServiceLabel: %Cognitive - Language
 # ServiceOwners: @quentinRobinson
@@ -267,12 +267,6 @@
 
 # ServiceLabel: %Container Registry
 # ServiceOwners: @Azure/azure-sdk-write-acr
-
-# PRLabel: %Datadog
-/sdk/datadog/Azure.ResourceManager.*/    @ArcturusZhang @ArthurMa1978 @jbhanuchand
-
-# ServiceLabel: %Datadog %Mgmt
-# ServiceOwners: @jbhanuchand
 
 # PRLabel: %Defender EASM
 /sdk/easm/Azure.Analytics.Defender.Easm/    @thang-bit
@@ -364,7 +358,7 @@
 # ServiceOwners: @dubiety
 
 # PRLabel: %Monitor
-/sdk/monitor/*    @Azure/azure-sdk-write-monitor-data-plane
+/sdk/monitor/    @Azure/azure-sdk-write-monitor-data-plane
 
 # PRLabel: %Monitor
 /sdk/monitor/Azure.Monitor.Ingestion/    @Azure/azure-sdk-write-monitor-data-plane
@@ -376,7 +370,7 @@
 /sdk/monitor/Azure.Monitor.OpenTelemetry.AspNetCore/    @harsimar @mattsains-msft @rajkumar-rangaraj @xiang17
 
 # PRLabel: %Monitor - Distro
-/sdk/monitor/Azure.Monitor.OpenTelemetry.sln    @harsimar @mattsains-msft @rajkumar-rangaraj @xiang17
+/sdk/monitor/Azure.Monitor.OpenTelemetry.sln/    @harsimar @mattsains-msft @rajkumar-rangaraj @xiang17
 
 # ServiceLabel: %Monitor - Distro
 # ServiceOwners: @harsimar @mattsains-msft @rajkumar-rangaraj @xiang17
@@ -482,7 +476,40 @@
 /sdk/storage/Azure.Storage.*/    @amnguye @jalauzon-msft @jaschrep-msft @nickliu-msft @seanmcc-msft
 
 # PRLabel: %Storage
+/sdk/storage/Azure.Storage.Blobs.Batch/    @amnguye @jalauzon-msft @jaschrep-msft @nickliu-msft @seanmcc-msft
+
+# PRLabel: %Storage
+/sdk/storage/Azure.Storage.Blobs.ChangeFeed/    @amnguye @jalauzon-msft @jaschrep-msft @nickliu-msft @seanmcc-msft
+
+# PRLabel: %Storage
+/sdk/storage/Azure.Storage.Blobs/    @amnguye @jalauzon-msft @jaschrep-msft @nickliu-msft @seanmcc-msft
+
+# PRLabel: %Storage
+/sdk/storage/Azure.Storage.Common/    @amnguye @jalauzon-msft @jaschrep-msft @nickliu-msft @seanmcc-msft
+
+# PRLabel: %Storage
+/sdk/storage/Azure.Storage.DataMovement.Blobs/    @amnguye @jalauzon-msft @jaschrep-msft @nickliu-msft @seanmcc-msft
+
+# PRLabel: %Storage
+/sdk/storage/Azure.Storage.DataMovement.Files.Shares/    @amnguye @jalauzon-msft @jaschrep-msft @nickliu-msft @seanmcc-msft
+
+# PRLabel: %Storage
+/sdk/storage/Azure.Storage.DataMovement/    @amnguye @jalauzon-msft @jaschrep-msft @nickliu-msft @seanmcc-msft
+
+# PRLabel: %Storage
+/sdk/storage/Azure.Storage.Files.DataLake/    @amnguye @jalauzon-msft @jaschrep-msft @nickliu-msft @seanmcc-msft
+
+# PRLabel: %Storage
+/sdk/storage/Azure.Storage.Files.Shares/    @amnguye @jalauzon-msft @jaschrep-msft @nickliu-msft @seanmcc-msft
+
+# PRLabel: %Storage
+/sdk/storage/Azure.Storage.Queues/    @amnguye @jalauzon-msft @jaschrep-msft @nickliu-msft @seanmcc-msft
+
+# PRLabel: %Storage
 /sdk/storage/Microsoft.Azure.WebJobs.*/    @amnguye @fabiocav @jalauzon-msft @jaschrep-msft @mathewc @nickliu-msft @seanmcc-msft @tg-msft
+
+# PRLabel: %Storage
+/sdk/storage/Microsoft.Azure.WebJobs.Extensions.Storage/    @amnguye @fabiocav @jalauzon-msft @jaschrep-msft @mathewc @nickliu-msft @seanmcc-msft @tg-msft
 
 # PRLabel: %Storage
 /sdk/storagesync/    @ankushbindlish2 @anpint
@@ -503,10 +530,10 @@
 # ServiceLabel: %Tables
 # ServiceOwners: @PaulCheng @sakash279 @sivethe @ThomasWeiss
 
-# PRLabel: %TimeSeriesInsights
+# PRLabel: %TimeseriesInsights
 /sdk/timeseriesinsights/    @dmdenmsft @rasidhan @yeskarthik
 
-# ServiceLabel: %TimeSeriesInsights
+# ServiceLabel: %TimeseriesInsights
 # ServiceOwners: @dmdenmsft @rasidhan @Shipra1Mishra @yeskarthik
 
 # PRLabel: %VideoAnalyzer
@@ -578,26 +605,14 @@
 # ServiceLabel: %Blueprint
 # ServiceOwners: @alex-frankel @filizt
 
-# ServiceLabel: %Cognitive - Bing
-# ServiceOwners: @arwong @jaggerbodas-ms
-
-# ServiceLabel: %Cognitive - Computer Vision
-# ServiceOwners: @areddish @ryogok @tburns10 @TFR258 @toothache
-
 # ServiceLabel: %Cognitive - Content Moderator
 # ServiceOwners: @swiftarrow11
-
-# ServiceLabel: %Cognitive - Custom Vision
-# ServiceOwners: @areddish @tburns10
 
 # ServiceLabel: %Cognitive - Immersive Reader
 # ServiceOwners: @metanMSFT
 
 # ServiceLabel: %Cognitive - Ink Recognizer
 # ServiceOwners: @olduroja
-
-# ServiceLabel: %Cognitive - LUIS
-# ServiceOwners: @cahann @kayousef
 
 # ServiceLabel: %Cognitive - Mgmt
 # ServiceOwners: @yangyuan
@@ -788,7 +803,7 @@
 # ServiceLabel: %Network - Bastion
 # ServiceOwners: @bastionsuppgithub
 
-# ServiceLabel: %Network - DDOS Protection
+# ServiceLabel: %Network - DDoS Protection
 # ServiceOwners: @ddossuppgithub
 
 # ServiceLabel: %Network - ExpressRoute
@@ -971,6 +986,12 @@
 
 # ServiceLabel: %Database Watcher %Mgmt
 # ServiceOwners:                                                   @ArthurMa1978
+
+# PRLabel: %Datadog
+/sdk/datadog/Azure.ResourceManager.*/    @ArcturusZhang @ArthurMa1978 @jbhanuchand
+
+# ServiceLabel: %Datadog %Mgmt
+# ServiceOwners: @jbhanuchand
 
 # PRLabel: %Device Registry
 /sdk/deviceregistry/Azure.ResourceManager.DeviceRegistry/          @atastrophic @rohankhandelwal
