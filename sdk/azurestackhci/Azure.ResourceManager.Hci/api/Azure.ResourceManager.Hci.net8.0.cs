@@ -3235,6 +3235,8 @@ namespace Azure.ResourceManager.Hci.Models
         public string SecretsLocation { get { throw null; } set { } }
         public Azure.ResourceManager.Hci.Models.HciClusterDeploymentSecuritySettings SecuritySettings { get { throw null; } set { } }
         public Azure.ResourceManager.Hci.Models.DeploymentSettingStorage Storage { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This property is no longer supported in the current API version.")]
+        public string StorageConfigurationMode { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Hci.Models.HciClusterDeploymentInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Hci.Models.HciClusterDeploymentInfo PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3885,13 +3887,18 @@ namespace Azure.ResourceManager.Hci.Models
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Models.HciEdgeSwitchExtension>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.ObsoleteAttribute("This class is now deprecated. Please use the new class `ArcExtensionInstanceView` moving forward.")]
-    public partial class HciExtensionInstanceView
+    public partial class HciExtensionInstanceView : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Models.HciExtensionInstanceView>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Models.HciExtensionInstanceView>
     {
         internal HciExtensionInstanceView() { }
         public string ExtensionInstanceViewType { get { throw null; } }
         public string Name { get { throw null; } }
         public Azure.ResourceManager.Hci.Models.ExtensionInstanceViewStatus Status { get { throw null; } }
         public string TypeHandlerVersion { get { throw null; } }
+        Azure.ResourceManager.Hci.Models.HciExtensionInstanceView System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Models.HciExtensionInstanceView>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Hci.Models.HciExtensionInstanceView>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Hci.Models.HciExtensionInstanceView System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Models.HciExtensionInstanceView>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Models.HciExtensionInstanceView>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.Models.HciExtensionInstanceView>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct HciHealthState : System.IEquatable<Azure.ResourceManager.Hci.Models.HciHealthState>
@@ -4973,7 +4980,7 @@ namespace Azure.ResourceManager.Hci.Models
         internal PerNodeExtensionState() { }
         public string Extension { get { throw null; } }
         public Azure.ResourceManager.Hci.Models.ArcExtensionInstanceView ExtensionInstanceView { get { throw null; } }
-        [System.ObsoleteAttribute("This property is now deprecated. Please use ExtensionInstanceView with type ArcExtensionInstanceView instead.")]
+        [System.ObsoleteAttribute("This property is now deprecated. Please use the new property `StartOn` moving forward.")]
         public Azure.ResourceManager.Hci.Models.HciExtensionInstanceView InstanceView { get { throw null; } }
         public string Name { get { throw null; } }
         public Azure.ResourceManager.Hci.Models.NodeExtensionState? State { get { throw null; } }
