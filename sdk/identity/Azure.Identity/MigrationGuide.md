@@ -10,8 +10,8 @@ This guide covers the scenarios where you may need to take action.
 |---|---|---|
 | Azure.Core only (no Azure.Identity reference) | ✅ Builds | No action needed. Identity types are available directly through Azure.Core. |
 | Azure.Core 1.53+ with Azure.Identity 1.53+ | ✅ Builds | No action needed. The facade forwards all types correctly. |
-| Azure.Core 1.53+ with a **direct** Azure.Identity 1.19–1.20 reference | ❌ CS0433 | [Remove the Azure.Identity PackageReference](#direct-reference-to-an-older-azureidentity) |
-| Azure.Core 1.53+ with a **transitive** Azure.Identity 1.19–1.20 reference (via a third-party library) | ❌ CS0433 | [Add a direct Azure.Identity 1.53+ PackageReference](#transitive-reference-to-an-older-azureidentity) |
+| Azure.Core 1.53+ with a **direct** Azure.Identity 1.19 or later reference | ❌ CS0433 | [Remove the Azure.Identity PackageReference](#direct-reference-to-an-older-azureidentity) |
+| Azure.Core 1.53+ with a **transitive** Azure.Identity 1.19 or later reference (via a third-party library) | ❌ CS0433 | [Add a direct Azure.Identity 1.53+ PackageReference](#transitive-reference-to-an-older-azureidentity) |
 
 ## Understanding CS0433
 
