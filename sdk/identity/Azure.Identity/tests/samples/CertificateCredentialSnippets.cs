@@ -50,12 +50,14 @@ namespace Azure.Identity.Tests.samples
             #endregion
         }
 
+        public sealed class CertificateNotFoundException(string message) : Exception(message) { }
+
         public void CreateFromStore()
         {
             string tenantId = "00000000-0000-0000-0000-00000000";
             string clientId = "00000000-0000-0000-0000-00000000";
             string friendlyName = "";
-            
+
             #region Snippet:Identity_CertificateCredential_CreateFromStore
             using var store = new X509Store(StoreName.My, StoreLocation.LocalMachine);
 
