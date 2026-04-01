@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -25,65 +27,72 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="profileName"> The name of the profile which holds the domain. </param>
         /// <param name="tlsSettings"> The configuration specifying how to enable HTTPS for the domain - using AzureFrontDoor managed certificate or user's own certificate. If not specified, enabling ssl uses AzureFrontDoor managed certificate by default. </param>
         /// <param name="mtlsSettings"> The configuration specifying how to enable mutual TLS for the domain, including specifying allowed FQDNs and which server certificate(s) to use. </param>
-        /// <param name="azureDnsZone"> Resource reference to the Azure DNS zone. </param>
-        /// <param name="preValidatedCustomDomainResourceId"> Resource reference to the Azure resource where custom domain ownership was prevalidated. </param>
+        /// <param name="dnsZone"> Resource reference to the Azure DNS zone. </param>
+        /// <param name="preValidatedCustomDomainResource"> Resource reference to the Azure resource where custom domain ownership was prevalidated. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FrontDoorCustomDomainUpdatePropertiesParameters(string profileName, FrontDoorCustomDomainHttpsContent tlsSettings, FrontDoorCustomDomainMtlsParameters mtlsSettings, ResourceReference azureDnsZone, ResourceReference preValidatedCustomDomainResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FrontDoorCustomDomainUpdatePropertiesParameters(string profileName, FrontDoorCustomDomainHttpsContent tlsSettings, FrontDoorCustomDomainMtlsParameters mtlsSettings, ResourceReference dnsZone, ResourceReference preValidatedCustomDomainResource, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProfileName = profileName;
             TlsSettings = tlsSettings;
             MtlsSettings = mtlsSettings;
-            AzureDnsZone = azureDnsZone;
-            PreValidatedCustomDomainResourceId = preValidatedCustomDomainResourceId;
+            DnsZone = dnsZone;
+            PreValidatedCustomDomainResource = preValidatedCustomDomainResource;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The name of the profile which holds the domain. </summary>
+        [WirePath("profileName")]
         public string ProfileName { get; }
 
         /// <summary> The configuration specifying how to enable HTTPS for the domain - using AzureFrontDoor managed certificate or user's own certificate. If not specified, enabling ssl uses AzureFrontDoor managed certificate by default. </summary>
+        [WirePath("tlsSettings")]
         public FrontDoorCustomDomainHttpsContent TlsSettings { get; set; }
 
         /// <summary> The configuration specifying how to enable mutual TLS for the domain, including specifying allowed FQDNs and which server certificate(s) to use. </summary>
+        [WirePath("mtlsSettings")]
         public FrontDoorCustomDomainMtlsParameters MtlsSettings { get; set; }
 
         /// <summary> Resource reference to the Azure DNS zone. </summary>
-        internal ResourceReference AzureDnsZone { get; set; }
+        [WirePath("azureDnsZone")]
+        internal ResourceReference DnsZone { get; set; }
 
         /// <summary> Resource reference to the Azure resource where custom domain ownership was prevalidated. </summary>
-        internal ResourceReference PreValidatedCustomDomainResourceId { get; set; }
+        [WirePath("preValidatedCustomDomainResourceId")]
+        internal ResourceReference PreValidatedCustomDomainResource { get; set; }
 
         /// <summary> Resource ID. </summary>
-        public string AzureDnsZoneId
+        [WirePath("azureDnsZone.id")]
+        public ResourceIdentifier DnsZoneId
         {
             get
             {
-                return AzureDnsZone is null ? default : AzureDnsZone.Id;
+                return DnsZone is null ? default : DnsZone.Id;
             }
             set
             {
-                if (AzureDnsZone is null)
+                if (DnsZone is null)
                 {
-                    AzureDnsZone = new ResourceReference();
+                    DnsZone = new ResourceReference();
                 }
-                AzureDnsZone.Id = value;
+                DnsZone.Id = value;
             }
         }
 
         /// <summary> Resource ID. </summary>
-        public string PreValidatedCustomDomainResourceIdId
+        [WirePath("preValidatedCustomDomainResourceId.id")]
+        public ResourceIdentifier PreValidatedCustomDomainResourceId
         {
             get
             {
-                return PreValidatedCustomDomainResourceId is null ? default : PreValidatedCustomDomainResourceId.Id;
+                return PreValidatedCustomDomainResource is null ? default : PreValidatedCustomDomainResource.Id;
             }
             set
             {
-                if (PreValidatedCustomDomainResourceId is null)
+                if (PreValidatedCustomDomainResource is null)
                 {
-                    PreValidatedCustomDomainResourceId = new ResourceReference();
+                    PreValidatedCustomDomainResource = new ResourceReference();
                 }
-                PreValidatedCustomDomainResourceId.Id = value;
+                PreValidatedCustomDomainResource.Id = value;
             }
         }
     }

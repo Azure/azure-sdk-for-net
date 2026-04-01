@@ -37,12 +37,15 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Flag that says if the profile can be migrated. </summary>
+        [WirePath("canMigrate")]
         public bool? CanMigrate { get; }
 
         /// <summary> Recommended sku for the migration. </summary>
+        [WirePath("defaultSku")]
         public CanMigrateDefaultSku? DefaultSku { get; }
 
         /// <summary> Gets the Errors. </summary>
+        [WirePath("errors")]
         public IList<MigrationErrorType> Errors { get; } = new ChangeTrackingList<MigrationErrorType>();
     }
 }

@@ -38,9 +38,11 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> The JSON object that contains the properties of the deployment version. </summary>
+        [WirePath("properties")]
         internal DeploymentVersionProperties Properties { get; }
 
         /// <summary> Gets the Description. </summary>
+        [WirePath("properties.description")]
         public string Description
         {
             get
@@ -50,6 +52,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Provisioning status. </summary>
+        [WirePath("properties.provisioningState")]
         public FrontDoorProvisioningState? ProvisioningState
         {
             get
@@ -59,6 +62,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Gets the DeploymentStatus. </summary>
+        [WirePath("properties.deploymentStatus")]
         public FrontDoorDeploymentStatus? DeploymentStatus
         {
             get
@@ -68,6 +72,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> The timestamp of deployment version creation (UTC). </summary>
+        [WirePath("properties.createdAt")]
         public DateTimeOffset? CreatedOn
         {
             get
@@ -77,6 +82,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> The timestamp of deployment version approval (UTC). </summary>
+        [WirePath("properties.approvedAt")]
         public DateTimeOffset? ApprovedOn
         {
             get
@@ -86,6 +92,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Gets the ApprovalStatus. </summary>
+        [WirePath("properties.approvalStatus")]
         public ApprovalStatus? ApprovalStatus
         {
             get
@@ -95,6 +102,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> The preview and production deployment status of the deployment version under the profile. </summary>
+        [WirePath("properties.stages")]
         public DeploymentStages Stages
         {
             get

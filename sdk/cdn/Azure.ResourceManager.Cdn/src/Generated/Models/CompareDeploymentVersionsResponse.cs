@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -34,6 +35,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> The difference between two deployment versions. </summary>
+        [WirePath("value")]
         public IList<DeploymentVersionChange> Value { get; }
     }
 }

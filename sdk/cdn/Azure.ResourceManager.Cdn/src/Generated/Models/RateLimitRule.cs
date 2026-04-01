@@ -47,9 +47,11 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Defines rate limit threshold. </summary>
+        [WirePath("rateLimitThreshold")]
         public int RateLimitThreshold { get; set; }
 
         /// <summary> Defines rate limit duration. Default is 1 minute. </summary>
+        [WirePath("rateLimitDurationInMinutes")]
         public int RateLimitDurationInMinutes { get; set; }
     }
 }

@@ -91,15 +91,15 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WritePropertyName("customHttpsProvisioningState"u8);
                 writer.WriteStringValue(CustomHttpsProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(CustomHttpsProvisioningSubstate))
+            if (options.Format != "W" && Optional.IsDefined(CustomHttpsAvailabilityState))
             {
                 writer.WritePropertyName("customHttpsProvisioningSubstate"u8);
-                writer.WriteStringValue(CustomHttpsProvisioningSubstate.Value.ToString());
+                writer.WriteStringValue(CustomHttpsAvailabilityState.Value.ToString());
             }
-            if (Optional.IsDefined(CustomHttpsParameters))
+            if (Optional.IsDefined(CustomDomainHttpsContent))
             {
                 writer.WritePropertyName("customHttpsParameters"u8);
-                writer.WriteObjectValue(CustomHttpsParameters, options);
+                writer.WriteObjectValue(CustomDomainHttpsContent, options);
             }
             if (Optional.IsDefined(ValidationData))
             {
@@ -156,8 +156,8 @@ namespace Azure.ResourceManager.Cdn.Models
             string hostName = default;
             CustomDomainResourceState? resourceState = default;
             CustomHttpsProvisioningState? customHttpsProvisioningState = default;
-            CustomHttpsAvailabilityState? customHttpsProvisioningSubstate = default;
-            CustomDomainHttpsContent customHttpsParameters = default;
+            CustomHttpsAvailabilityState? customHttpsAvailabilityState = default;
+            CustomDomainHttpsContent customDomainHttpsContent = default;
             string validationData = default;
             CustomHttpsProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     {
                         continue;
                     }
-                    customHttpsProvisioningSubstate = new CustomHttpsAvailabilityState(prop.Value.GetString());
+                    customHttpsAvailabilityState = new CustomHttpsAvailabilityState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("customHttpsParameters"u8))
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     {
                         continue;
                     }
-                    customHttpsParameters = CustomDomainHttpsContent.DeserializeCustomDomainHttpsContent(prop.Value, options);
+                    customDomainHttpsContent = CustomDomainHttpsContent.DeserializeCustomDomainHttpsContent(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("validationData"u8))
@@ -227,8 +227,8 @@ namespace Azure.ResourceManager.Cdn.Models
                 hostName,
                 resourceState,
                 customHttpsProvisioningState,
-                customHttpsProvisioningSubstate,
-                customHttpsParameters,
+                customHttpsAvailabilityState,
+                customDomainHttpsContent,
                 validationData,
                 provisioningState,
                 additionalBinaryDataProperties);

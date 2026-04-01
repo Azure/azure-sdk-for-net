@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -37,15 +38,19 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Error code. </summary>
+        [WirePath("code")]
         public string Code { get; }
 
         /// <summary> Resource which has the problem. </summary>
+        [WirePath("resourceName")]
         public string ResourceName { get; }
 
         /// <summary> Error message indicating why the operation failed. </summary>
+        [WirePath("errorMessage")]
         public string ErrorMessage { get; }
 
         /// <summary> Describes what needs to be done to fix the problem. </summary>
+        [WirePath("nextSteps")]
         public string NextSteps { get; }
     }
 }

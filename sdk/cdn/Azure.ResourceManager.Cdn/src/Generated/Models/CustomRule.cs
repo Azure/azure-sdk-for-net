@@ -53,18 +53,23 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Defines the name of the custom rule. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
 
         /// <summary> Describes if the custom rule is in enabled or disabled state. Defaults to Enabled if not specified. </summary>
+        [WirePath("enabledState")]
         public CustomRuleEnabledState? EnabledState { get; set; }
 
         /// <summary> Defines in what order this rule be evaluated in the overall list of custom rules. </summary>
+        [WirePath("priority")]
         public int Priority { get; set; }
 
         /// <summary> List of match conditions. </summary>
+        [WirePath("matchConditions")]
         public IList<CustomRuleMatchCondition> MatchConditions { get; }
 
         /// <summary> Describes what action to be applied when rule matches. </summary>
+        [WirePath("action")]
         public OverrideActionType Action { get; set; }
     }
 }

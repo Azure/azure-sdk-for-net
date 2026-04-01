@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -33,6 +34,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Describes the supported variable for group by. </summary>
+        [WirePath("variableName")]
         public VariableName VariableName { get; set; }
     }
 }

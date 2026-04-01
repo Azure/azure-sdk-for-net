@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
@@ -40,25 +41,32 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Resource reference to the Azure Key Vault certificate. Expected to be in format of /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}/secrets/{certificateName}. </summary>
+        [WirePath("secretSource")]
         internal ResourceReference SecretSource { get; }
 
         /// <summary> Subject name in the certificate. </summary>
+        [WirePath("subject")]
         public string Subject { get; }
 
         /// <summary> Certificate expiration date. </summary>
+        [WirePath("expirationDate")]
         public string ExpirationDate { get; }
 
         /// <summary> Certificate issuing authority. </summary>
+        [WirePath("certificateAuthority")]
         public string CertificateAuthority { get; }
 
         /// <summary> The list of SANs. </summary>
+        [WirePath("subjectAlternativeNames")]
         public IList<string> SubjectAlternativeNames { get; }
 
         /// <summary> Certificate thumbprint. </summary>
+        [WirePath("thumbprint")]
         public string Thumbprint { get; }
 
         /// <summary> Resource ID. </summary>
-        public string SecretSourceId
+        [WirePath("secretSource.id")]
+        public ResourceIdentifier SecretSourceId
         {
             get
             {

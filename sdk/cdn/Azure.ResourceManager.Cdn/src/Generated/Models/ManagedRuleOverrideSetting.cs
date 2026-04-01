@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Identifier for the managed rule. </summary>
+        [WirePath("ruleId")]
         public string RuleId { get; set; }
 
         /// <summary> Describes if the managed rule is in enabled or disabled state. Defaults to Disabled if not specified. </summary>
+        [WirePath("enabledState")]
         public ManagedRuleSetupState? EnabledState { get; set; }
 
         /// <summary> Describes the override action to be applied when rule matches. </summary>
+        [WirePath("action")]
         public OverrideActionType? Action { get; set; }
     }
 }

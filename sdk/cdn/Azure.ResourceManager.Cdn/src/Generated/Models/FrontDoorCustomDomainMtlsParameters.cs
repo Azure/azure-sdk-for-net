@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -36,6 +37,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Supported scenarios for establishing mTLS connection. </summary>
+        [WirePath("scenario")]
         internal MtlsScenarioType Scenario { get; set; }
     }
 }

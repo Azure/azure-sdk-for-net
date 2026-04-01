@@ -47,15 +47,19 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Name of the rule. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
 
         /// <summary> The order in which the rules are applied for the endpoint. Possible values {0,1,2,3,………}. A rule with a lesser order will be applied before a rule with a greater order. Rule with order 0 is a special rule. It does not require any condition and actions listed in it will always be applied. </summary>
+        [WirePath("order")]
         public int Order { get; set; }
 
         /// <summary> A list of conditions that must be matched for the actions to be executed. </summary>
+        [WirePath("conditions")]
         public IList<DeliveryRuleCondition> Conditions { get; }
 
         /// <summary> A list of actions that are executed when all the conditions of a rule are satisfied. </summary>
+        [WirePath("actions")]
         public IList<DeliveryRuleAction> Actions { get; }
     }
 }

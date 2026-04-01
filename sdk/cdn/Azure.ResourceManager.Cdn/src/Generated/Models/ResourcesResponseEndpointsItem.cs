@@ -39,15 +39,19 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Gets the Id. </summary>
+        [WirePath("id")]
         public string Id { get; }
 
         /// <summary> Gets the Name. </summary>
+        [WirePath("name")]
         public string Name { get; }
 
         /// <summary> Gets the History. </summary>
+        [WirePath("history")]
         public bool? History { get; }
 
         /// <summary> Gets the CustomDomains. </summary>
+        [WirePath("customDomains")]
         public IReadOnlyList<ResourcesResponseEndpointsPropertiesItemsItem> CustomDomains { get; }
     }
 }

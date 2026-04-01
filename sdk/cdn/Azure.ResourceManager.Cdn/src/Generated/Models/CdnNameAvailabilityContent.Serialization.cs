@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToString());
+            writer.WriteStringValue(ResourceType.ToString());
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 return null;
             }
             string name = default;
-            CdnResourceType @type = default;
+            CdnResourceType resourceType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new CdnResourceType(prop.Value.GetString());
+                    resourceType = new CdnResourceType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CdnNameAvailabilityContent(name, @type, additionalBinaryDataProperties);
+            return new CdnNameAvailabilityContent(name, resourceType, additionalBinaryDataProperties);
         }
     }
 }

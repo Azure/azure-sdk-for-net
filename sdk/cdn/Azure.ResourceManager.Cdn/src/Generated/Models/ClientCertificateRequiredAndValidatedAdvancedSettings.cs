@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> List of one or two of Resource References (ie. subs/rg/profile/secret) to Secrets of type MtlsCertificateChain to use in mutual TLS handshake as the trusted issuer certificate chain. </summary>
+        [WirePath("secrets")]
         public IList<ResourceReference> Secrets { get; }
 
         /// <summary> List of FQDNs that will be accepted for mutual TLS validation. </summary>
+        [WirePath("allowedFqdns")]
         public IList<string> AllowedFqdns { get; }
 
         /// <summary> Set to Enabled by default. If set to Disabled, revocation status of client certificate chain will be checked before establishing mutual TLS connection. </summary>
+        [WirePath("certificateRevocationCheck")]
         public CertificateRevocationCheckEnabledState? CertificateRevocationCheck { get; set; }
     }
 }

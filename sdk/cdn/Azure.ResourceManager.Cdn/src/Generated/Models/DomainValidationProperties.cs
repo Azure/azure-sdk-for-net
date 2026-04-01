@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Challenge used for DNS TXT record or file based validation. </summary>
+        [WirePath("validationToken")]
         public string ValidationToken { get; }
 
         /// <summary> The date time that the token expires. </summary>
+        [WirePath("expirationDate")]
         public string ExpirationDate { get; }
     }
 }

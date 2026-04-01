@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Deployment status of preview stage. </summary>
+        [WirePath("preview")]
         public DeploymentRolloutStatus? Preview { get; }
 
         /// <summary> Deployment status of production stage. </summary>
+        [WirePath("production")]
         public DeploymentRolloutStatus? Production { get; }
     }
 }

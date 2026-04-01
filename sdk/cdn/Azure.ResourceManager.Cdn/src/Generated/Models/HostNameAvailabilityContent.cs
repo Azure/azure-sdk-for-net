@@ -37,6 +37,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> The host name to validate. </summary>
+        [WirePath("hostName")]
         public string HostName { get; }
     }
 }

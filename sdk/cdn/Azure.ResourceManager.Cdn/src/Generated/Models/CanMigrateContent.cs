@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -15,6 +17,12 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
+        /// <summary> Initializes a new instance of <see cref="CanMigrateContent"/>. </summary>
+        public CanMigrateContent()
+        {
+
+        }
 
         /// <summary> Initializes a new instance of <see cref="CanMigrateContent"/>. </summary>
         /// <param name="classicResourceReference"> Resource reference of the classic cdn profile or classic frontdoor that need to be migrated. </param>
@@ -26,10 +34,12 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Resource reference of the classic cdn profile or classic frontdoor that need to be migrated. </summary>
+        [WirePath("classicResourceReference")]
         internal ResourceReference ClassicResourceReference { get; }
 
         /// <summary> Resource ID. </summary>
-        public string ClassicResourceReferenceId
+        [WirePath("classicResourceReference.id")]
+        public ResourceIdentifier ClassicResourceReferenceId
         {
             get
             {

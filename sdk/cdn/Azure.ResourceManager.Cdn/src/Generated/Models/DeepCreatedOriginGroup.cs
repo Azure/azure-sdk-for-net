@@ -39,12 +39,15 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Origin group name which must be unique within the endpoint. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
 
         /// <summary> Properties of the origin group created on the CDN endpoint. </summary>
+        [WirePath("properties")]
         internal DeepCreatedOriginGroupProperties Properties { get; set; }
 
         /// <summary> Health probe settings to the origin that is used to determine the health of the origin. </summary>
+        [WirePath("properties.healthProbeSettings")]
         public HealthProbeSettings HealthProbeSettings
         {
             get
@@ -62,6 +65,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> The source of the content being delivered via CDN within given origin group. </summary>
+        [WirePath("properties.origins")]
         public IList<ResourceReference> Origins
         {
             get
@@ -75,6 +79,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Time in minutes to shift the traffic to the endpoint gradually when an unhealthy endpoint comes healthy or a new endpoint is added. Default is 10 mins. This property is currently not supported. </summary>
+        [WirePath("properties.trafficRestorationTimeToHealedOrNewEndpointsInMinutes")]
         public int? TrafficRestorationTimeToHealedOrNewEndpointsInMinutes
         {
             get
@@ -92,6 +97,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> The JSON object that contains the properties to determine origin health using real requests/responses.This property is currently not supported. </summary>
+        [WirePath("properties.responseBasedOriginErrorDetectionSettings")]
         public ResponseBasedOriginErrorDetectionSettings ResponseBasedOriginErrorDetectionSettings
         {
             get

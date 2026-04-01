@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Cdn.Models
             if (options.Format != "W" && Optional.IsDefined(FrontDoorId))
             {
                 writer.WritePropertyName("frontDoorId"u8);
-                writer.WriteStringValue(FrontDoorId);
+                writer.WriteStringValue(FrontDoorId.Value);
             }
             if (Optional.IsDefined(OriginResponseTimeoutSeconds))
             {
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Cdn.Models
             ProfileResourceState? resourceState = default;
             ProfileProvisioningState? provisioningState = default;
             IReadOnlyDictionary<string, string> extendedProperties = default;
-            string frontDoorId = default;
+            Guid? frontDoorId = default;
             int? originResponseTimeoutSeconds = default;
             ProfileLogScrubbing logScrubbing = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -207,7 +207,11 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (prop.NameEquals("frontDoorId"u8))
                 {
-                    frontDoorId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    frontDoorId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("originResponseTimeoutSeconds"u8))

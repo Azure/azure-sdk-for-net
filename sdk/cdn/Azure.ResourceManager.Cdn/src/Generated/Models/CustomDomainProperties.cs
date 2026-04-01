@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -27,42 +28,49 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="hostName"> The host name of the custom domain. Must be a domain name. </param>
         /// <param name="resourceState"> Resource status of the custom domain. </param>
         /// <param name="customHttpsProvisioningState"> Provisioning status of the custom domain. </param>
-        /// <param name="customHttpsProvisioningSubstate"> Provisioning substate shows the progress of custom HTTPS enabling/disabling process step by step. </param>
-        /// <param name="customHttpsParameters"> Certificate parameters for securing custom HTTPS. </param>
+        /// <param name="customHttpsAvailabilityState"> Provisioning substate shows the progress of custom HTTPS enabling/disabling process step by step. </param>
+        /// <param name="customDomainHttpsContent"> Certificate parameters for securing custom HTTPS. </param>
         /// <param name="validationData"> Special validation or data may be required when delivering CDN to some regions due to local compliance reasons. E.g. ICP license number of a custom domain is required to deliver content in China. </param>
         /// <param name="provisioningState"> Provisioning status of Custom Https of the custom domain. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CustomDomainProperties(string hostName, CustomDomainResourceState? resourceState, CustomHttpsProvisioningState? customHttpsProvisioningState, CustomHttpsAvailabilityState? customHttpsProvisioningSubstate, CustomDomainHttpsContent customHttpsParameters, string validationData, CustomHttpsProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CustomDomainProperties(string hostName, CustomDomainResourceState? resourceState, CustomHttpsProvisioningState? customHttpsProvisioningState, CustomHttpsAvailabilityState? customHttpsAvailabilityState, CustomDomainHttpsContent customDomainHttpsContent, string validationData, CustomHttpsProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             HostName = hostName;
             ResourceState = resourceState;
             CustomHttpsProvisioningState = customHttpsProvisioningState;
-            CustomHttpsProvisioningSubstate = customHttpsProvisioningSubstate;
-            CustomHttpsParameters = customHttpsParameters;
+            CustomHttpsAvailabilityState = customHttpsAvailabilityState;
+            CustomDomainHttpsContent = customDomainHttpsContent;
             ValidationData = validationData;
             ProvisioningState = provisioningState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The host name of the custom domain. Must be a domain name. </summary>
+        [WirePath("hostName")]
         public string HostName { get; }
 
         /// <summary> Resource status of the custom domain. </summary>
+        [WirePath("resourceState")]
         public CustomDomainResourceState? ResourceState { get; }
 
         /// <summary> Provisioning status of the custom domain. </summary>
+        [WirePath("customHttpsProvisioningState")]
         public CustomHttpsProvisioningState? CustomHttpsProvisioningState { get; }
 
         /// <summary> Provisioning substate shows the progress of custom HTTPS enabling/disabling process step by step. </summary>
-        public CustomHttpsAvailabilityState? CustomHttpsProvisioningSubstate { get; }
+        [WirePath("customHttpsProvisioningSubstate")]
+        public CustomHttpsAvailabilityState? CustomHttpsAvailabilityState { get; }
 
         /// <summary> Certificate parameters for securing custom HTTPS. </summary>
-        public CustomDomainHttpsContent CustomHttpsParameters { get; }
+        [WirePath("customHttpsParameters")]
+        public CustomDomainHttpsContent CustomDomainHttpsContent { get; }
 
         /// <summary> Special validation or data may be required when delivering CDN to some regions due to local compliance reasons. E.g. ICP license number of a custom domain is required to deliver content in China. </summary>
+        [WirePath("validationData")]
         public string ValidationData { get; }
 
         /// <summary> Provisioning status of Custom Https of the custom domain. </summary>
+        [WirePath("provisioningState")]
         public CustomHttpsProvisioningState? ProvisioningState { get; }
     }
 }

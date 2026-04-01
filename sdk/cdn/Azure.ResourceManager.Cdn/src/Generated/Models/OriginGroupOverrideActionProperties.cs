@@ -7,12 +7,20 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Defines the parameters for the origin group override action. </summary>
     public partial class OriginGroupOverrideActionProperties : DeliveryRuleActionProperties
     {
+        /// <summary> Initializes a new instance of <see cref="OriginGroupOverrideActionProperties"/>. </summary>
+        public OriginGroupOverrideActionProperties() : base(DeliveryRuleActionParametersType.DeliveryRuleOriginGroupOverrideActionParameters)
+        {
+
+        }
+
         /// <summary> Initializes a new instance of <see cref="OriginGroupOverrideActionProperties"/>. </summary>
         /// <param name="typeName"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
@@ -23,10 +31,12 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> defines the OriginGroup that would override the DefaultOriginGroup. </summary>
+        [WirePath("originGroup")]
         internal ResourceReference OriginGroup { get; set; }
 
         /// <summary> Resource ID. </summary>
-        public string OriginGroupId
+        [WirePath("originGroup.id")]
+        public ResourceIdentifier OriginGroupId
         {
             get
             {

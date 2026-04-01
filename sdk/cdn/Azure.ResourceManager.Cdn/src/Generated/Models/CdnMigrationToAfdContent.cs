@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -15,6 +16,13 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
+        /// <summary> Initializes a new instance of <see cref="CdnMigrationToAfdContent"/>. </summary>
+        public CdnMigrationToAfdContent()
+        {
+
+            MigrationEndpointMappings = new ChangeTrackingList<MigrationEndpointMapping>();
+        }
 
         /// <summary> Initializes a new instance of <see cref="CdnMigrationToAfdContent"/>. </summary>
         /// <param name="sku"> Sku for the migration. </param>
@@ -28,12 +36,15 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Sku for the migration. </summary>
+        [WirePath("sku")]
         internal CdnSku Sku { get; }
 
         /// <summary> A name map between classic CDN endpoints and AFD Premium/Standard endpoints. </summary>
+        [WirePath("migrationEndpointMappings")]
         public IList<MigrationEndpointMapping> MigrationEndpointMappings { get; }
 
         /// <summary> Name of the pricing tier. </summary>
+        [WirePath("sku.name")]
         public CdnSkuName? SkuName
         {
             get

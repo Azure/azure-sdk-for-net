@@ -38,9 +38,11 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> The json object that contains properties required to create a security policy. </summary>
+        [WirePath("properties")]
         internal SecurityPolicyDetails Properties { get; set; }
 
         /// <summary> Provisioning status. </summary>
+        [WirePath("properties.provisioningState")]
         public FrontDoorProvisioningState? ProvisioningState
         {
             get
@@ -50,6 +52,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Gets the DeploymentStatus. </summary>
+        [WirePath("properties.deploymentStatus")]
         public FrontDoorDeploymentStatus? DeploymentStatus
         {
             get
@@ -59,6 +62,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> The name of the profile which holds the security policy. </summary>
+        [WirePath("properties.profileName")]
         public string ProfileName
         {
             get
@@ -68,11 +72,12 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> object which contains security policy parameters. </summary>
-        public SecurityPolicyProperties Parameters
+        [WirePath("properties.parameters")]
+        public SecurityPolicyProperties SecurityPolicyParameters
         {
             get
             {
-                return Properties is null ? default : Properties.Parameters;
+                return Properties is null ? default : Properties.SecurityPolicyParameters;
             }
             set
             {
@@ -80,7 +85,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     Properties = new SecurityPolicyDetails();
                 }
-                Properties.Parameters = value;
+                Properties.SecurityPolicyParameters = value;
             }
         }
     }

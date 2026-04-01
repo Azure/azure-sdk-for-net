@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -43,24 +44,31 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Gets the Description. </summary>
+        [WirePath("description")]
         public string Description { get; }
 
         /// <summary> Provisioning status. </summary>
+        [WirePath("provisioningState")]
         public FrontDoorProvisioningState? ProvisioningState { get; }
 
         /// <summary> Gets the DeploymentStatus. </summary>
+        [WirePath("deploymentStatus")]
         public FrontDoorDeploymentStatus? DeploymentStatus { get; }
 
         /// <summary> The timestamp of deployment version creation (UTC). </summary>
+        [WirePath("createdAt")]
         public DateTimeOffset? CreatedOn { get; }
 
         /// <summary> The timestamp of deployment version approval (UTC). </summary>
+        [WirePath("approvedAt")]
         public DateTimeOffset? ApprovedOn { get; }
 
         /// <summary> Gets the ApprovalStatus. </summary>
+        [WirePath("approvalStatus")]
         public ApprovalStatus? ApprovalStatus { get; }
 
         /// <summary> The preview and production deployment status of the deployment version under the profile. </summary>
+        [WirePath("stages")]
         public DeploymentStages Stages { get; }
     }
 }

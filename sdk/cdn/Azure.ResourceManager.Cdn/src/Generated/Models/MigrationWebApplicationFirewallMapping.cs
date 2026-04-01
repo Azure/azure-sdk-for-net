@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -33,13 +35,16 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Migration From Waf policy. </summary>
+        [WirePath("migratedFrom")]
         internal ResourceReference MigratedFrom { get; set; }
 
         /// <summary> Migration to Waf policy. </summary>
+        [WirePath("migratedTo")]
         internal ResourceReference MigratedTo { get; set; }
 
         /// <summary> Resource ID. </summary>
-        public string MigratedFromId
+        [WirePath("migratedFrom.id")]
+        public ResourceIdentifier MigratedFromId
         {
             get
             {
@@ -56,7 +61,8 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Resource ID. </summary>
-        public string MigratedToId
+        [WirePath("migratedTo.id")]
+        public ResourceIdentifier MigratedToId
         {
             get
             {

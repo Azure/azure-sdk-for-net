@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -31,10 +33,12 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Arm resource id of the migrated profile. </summary>
+        [WirePath("migratedProfileResourceId")]
         internal ResourceReference MigratedProfileResourceId { get; }
 
         /// <summary> Resource ID. </summary>
-        public string MigratedProfileResourceIdId
+        [WirePath("migratedProfileResourceId.id")]
+        public ResourceIdentifier MigratedProfileResourceIdId
         {
             get
             {

@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("operator"u8);
-            writer.WriteStringValue(Operator.ToString());
+            writer.WriteStringValue(UriFileExtensionOperator.ToString());
             if (Optional.IsDefined(NegateCondition))
             {
                 writer.WritePropertyName("negateCondition"u8);
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             DeliveryRuleConditionParametersType typeName = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            UriFileExtensionOperator @operator = default;
+            UriFileExtensionOperator uriFileExtensionOperator = default;
             bool? negateCondition = default;
             IList<string> matchValues = default;
             IList<PreTransformCategory> transforms = default;
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (prop.NameEquals("operator"u8))
                 {
-                    @operator = new UriFileExtensionOperator(prop.Value.GetString());
+                    uriFileExtensionOperator = new UriFileExtensionOperator(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("negateCondition"u8))
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Cdn.Models
             return new UriFileExtensionMatchCondition(
                 typeName,
                 additionalBinaryDataProperties,
-                @operator,
+                uriFileExtensionOperator,
                 negateCondition,
                 matchValues ?? new ChangeTrackingList<string>(),
                 transforms ?? new ChangeTrackingList<PreTransformCategory>());

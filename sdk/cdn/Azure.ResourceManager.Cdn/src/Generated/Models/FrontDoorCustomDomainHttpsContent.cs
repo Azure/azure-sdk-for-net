@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -41,22 +43,28 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Defines the source of the SSL certificate. </summary>
+        [WirePath("certificateType")]
         public FrontDoorCertificateType CertificateType { get; set; }
 
         /// <summary> cipher suite set type that will be used for Https. </summary>
+        [WirePath("cipherSuiteSetType")]
         public AfdCipherSuiteSetType? CipherSuiteSetType { get; set; }
 
         /// <summary> TLS protocol version that will be used for Https when cipherSuiteSetType is Customized. </summary>
+        [WirePath("minimumTlsVersion")]
         public FrontDoorMinimumTlsVersion? MinimumTlsVersion { get; set; }
 
         /// <summary> Customized cipher suites object that will be used for Https when cipherSuiteSetType is Customized. </summary>
+        [WirePath("customizedCipherSuiteSet")]
         public FrontDoorCustomDomainHttpsCustomizedCipherSuiteSet CustomizedCipherSuiteSet { get; set; }
 
         /// <summary> Resource reference to the secret. ie. subs/rg/profile/secret. </summary>
+        [WirePath("secret")]
         internal ResourceReference Secret { get; set; }
 
         /// <summary> Resource ID. </summary>
-        public string SecretId
+        [WirePath("secret.id")]
+        public ResourceIdentifier SecretId
         {
             get
             {

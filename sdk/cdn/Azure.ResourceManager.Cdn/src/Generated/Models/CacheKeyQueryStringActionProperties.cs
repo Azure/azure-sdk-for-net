@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -32,9 +33,11 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Caching behavior for the requests. </summary>
+        [WirePath("queryStringBehavior")]
         public QueryStringBehavior QueryStringBehavior { get; set; }
 
         /// <summary> query parameters to include or exclude (comma separated). </summary>
+        [WirePath("queryParameters")]
         public string QueryParameters { get; set; }
     }
 }

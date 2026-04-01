@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class ServerPortMatchCondition : DeliveryRuleConditionProperties
     {
         /// <summary> Initializes a new instance of <see cref="ServerPortMatchCondition"/>. </summary>
-        /// <param name="operator"> Describes operator to be matched. </param>
-        public ServerPortMatchCondition(ServerPortOperator @operator) : base(DeliveryRuleConditionParametersType.DeliveryRuleServerPortConditionParameters)
+        /// <param name="serverPortOperator"> Describes operator to be matched. </param>
+        public ServerPortMatchCondition(ServerPortOperator serverPortOperator) : base(DeliveryRuleConditionParametersType.DeliveryRuleServerPortConditionParameters)
         {
-            Operator = @operator;
+            ServerPortOperator = serverPortOperator;
             MatchValues = new ChangeTrackingList<string>();
             Transforms = new ChangeTrackingList<PreTransformCategory>();
         }
@@ -26,28 +26,32 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of <see cref="ServerPortMatchCondition"/>. </summary>
         /// <param name="typeName"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="operator"> Describes operator to be matched. </param>
+        /// <param name="serverPortOperator"> Describes operator to be matched. </param>
         /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
         /// <param name="matchValues"> The match value for the condition of the delivery rule. </param>
         /// <param name="transforms"> List of transforms. </param>
-        internal ServerPortMatchCondition(DeliveryRuleConditionParametersType typeName, IDictionary<string, BinaryData> additionalBinaryDataProperties, ServerPortOperator @operator, bool? negateCondition, IList<string> matchValues, IList<PreTransformCategory> transforms) : base(typeName, additionalBinaryDataProperties)
+        internal ServerPortMatchCondition(DeliveryRuleConditionParametersType typeName, IDictionary<string, BinaryData> additionalBinaryDataProperties, ServerPortOperator serverPortOperator, bool? negateCondition, IList<string> matchValues, IList<PreTransformCategory> transforms) : base(typeName, additionalBinaryDataProperties)
         {
-            Operator = @operator;
+            ServerPortOperator = serverPortOperator;
             NegateCondition = negateCondition;
             MatchValues = matchValues;
             Transforms = transforms;
         }
 
         /// <summary> Describes operator to be matched. </summary>
-        public ServerPortOperator Operator { get; set; }
+        [WirePath("operator")]
+        public ServerPortOperator ServerPortOperator { get; set; }
 
         /// <summary> Describes if this is negate condition or not. </summary>
+        [WirePath("negateCondition")]
         public bool? NegateCondition { get; set; }
 
         /// <summary> The match value for the condition of the delivery rule. </summary>
+        [WirePath("matchValues")]
         public IList<string> MatchValues { get; }
 
         /// <summary> List of transforms. </summary>
+        [WirePath("transforms")]
         public IList<PreTransformCategory> Transforms { get; }
     }
 }

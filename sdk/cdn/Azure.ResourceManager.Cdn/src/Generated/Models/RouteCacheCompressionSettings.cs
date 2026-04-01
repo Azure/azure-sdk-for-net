@@ -35,9 +35,11 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> List of content types on which compression applies. The value should be a valid MIME type. </summary>
+        [WirePath("contentTypesToCompress")]
         public IList<string> ContentTypesToCompress { get; }
 
         /// <summary> Indicates whether content compression is enabled on AzureFrontDoor. Default value is false. If compression is enabled, content will be served as compressed if user requests for a compressed version. Content won't be compressed on AzureFrontDoor when requested content is smaller than 1 byte or larger than 1 MB. </summary>
+        [WirePath("isCompressionEnabled")]
         public bool? IsCompressionEnabled { get; set; }
     }
 }

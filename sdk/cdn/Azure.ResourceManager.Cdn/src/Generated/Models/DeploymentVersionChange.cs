@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -41,12 +42,15 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Resource type supported by preview. </summary>
+        [WirePath("resourceType")]
         internal PreviewSupportedResourceType ResourceType { get; set; }
 
         /// <summary> Gets the ResourceId. </summary>
+        [WirePath("resourceId")]
         public ResourceIdentifier ResourceId { get; }
 
         /// <summary> Gets the ResourceName. </summary>
+        [WirePath("resourceName")]
         public string ResourceName { get; }
     }
 }

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> The JSON object that contains the properties of the Routes to create. </summary>
+        [WirePath("previousProperties")]
         public RouteProperties PreviousProperties { get; }
 
         /// <summary> The JSON object that contains the properties of the Routes to create. </summary>
+        [WirePath("currentProperties")]
         public RouteProperties CurrentProperties { get; }
     }
 }

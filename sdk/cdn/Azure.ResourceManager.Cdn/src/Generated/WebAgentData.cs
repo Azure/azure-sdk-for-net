@@ -41,9 +41,11 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Properties of the web agent. </summary>
+        [WirePath("properties")]
         internal WebAgentProperties Properties { get; set; }
 
         /// <summary> Optional textual description of the agent. </summary>
+        [WirePath("properties.description")]
         public string Description
         {
             get
@@ -61,6 +63,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> System prompt for the web agent. </summary>
+        [WirePath("properties.systemPrompt")]
         public string SystemPrompt
         {
             get
@@ -78,6 +81,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> List of paths associated with the web agent. </summary>
+        [WirePath("properties.paths")]
         public IList<AgentPath> Paths
         {
             get
@@ -91,6 +95,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> References to agent links in CDN profiles. </summary>
+        [WirePath("properties.profileAgentLinks")]
         public IReadOnlyList<ResourceReference> ProfileAgentLinks
         {
             get
@@ -104,6 +109,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Provisioning status of the web agent. </summary>
+        [WirePath("properties.provisioningState")]
         public WebAgentProvisioningState? ProvisioningState
         {
             get

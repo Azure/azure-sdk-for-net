@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class RequestMethodMatchCondition : DeliveryRuleConditionProperties
     {
         /// <summary> Initializes a new instance of <see cref="RequestMethodMatchCondition"/>. </summary>
-        /// <param name="operator"> Describes operator to be matched. </param>
-        public RequestMethodMatchCondition(RequestMethodOperator @operator) : base(DeliveryRuleConditionParametersType.DeliveryRuleRequestMethodConditionParameters)
+        /// <param name="requestMethodOperator"> Describes operator to be matched. </param>
+        public RequestMethodMatchCondition(RequestMethodOperator requestMethodOperator) : base(DeliveryRuleConditionParametersType.DeliveryRuleRequestMethodConditionParameters)
         {
-            Operator = @operator;
+            RequestMethodOperator = requestMethodOperator;
             Transforms = new ChangeTrackingList<PreTransformCategory>();
             MatchValues = new ChangeTrackingList<RequestMethodMatchConditionMatchValue>();
         }
@@ -26,28 +26,32 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of <see cref="RequestMethodMatchCondition"/>. </summary>
         /// <param name="typeName"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="operator"> Describes operator to be matched. </param>
+        /// <param name="requestMethodOperator"> Describes operator to be matched. </param>
         /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
         /// <param name="transforms"> List of transforms. </param>
         /// <param name="matchValues"> The match value for the condition of the delivery rule. </param>
-        internal RequestMethodMatchCondition(DeliveryRuleConditionParametersType typeName, IDictionary<string, BinaryData> additionalBinaryDataProperties, RequestMethodOperator @operator, bool? negateCondition, IList<PreTransformCategory> transforms, IList<RequestMethodMatchConditionMatchValue> matchValues) : base(typeName, additionalBinaryDataProperties)
+        internal RequestMethodMatchCondition(DeliveryRuleConditionParametersType typeName, IDictionary<string, BinaryData> additionalBinaryDataProperties, RequestMethodOperator requestMethodOperator, bool? negateCondition, IList<PreTransformCategory> transforms, IList<RequestMethodMatchConditionMatchValue> matchValues) : base(typeName, additionalBinaryDataProperties)
         {
-            Operator = @operator;
+            RequestMethodOperator = requestMethodOperator;
             NegateCondition = negateCondition;
             Transforms = transforms;
             MatchValues = matchValues;
         }
 
         /// <summary> Describes operator to be matched. </summary>
-        public RequestMethodOperator Operator { get; set; }
+        [WirePath("operator")]
+        public RequestMethodOperator RequestMethodOperator { get; set; }
 
         /// <summary> Describes if this is negate condition or not. </summary>
+        [WirePath("negateCondition")]
         public bool? NegateCondition { get; set; }
 
         /// <summary> List of transforms. </summary>
+        [WirePath("transforms")]
         public IList<PreTransformCategory> Transforms { get; }
 
         /// <summary> The match value for the condition of the delivery rule. </summary>
+        [WirePath("matchValues")]
         public IList<RequestMethodMatchConditionMatchValue> MatchValues { get; }
     }
 }

@@ -35,6 +35,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> List of ip address groups. </summary>
+        [WirePath("ipAddressGroups")]
         public IList<IPAddressGroup> IpAddressGroups { get; } = new ChangeTrackingList<IPAddressGroup>();
     }
 }

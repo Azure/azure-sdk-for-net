@@ -35,9 +35,11 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> State of the log scrubbing config. Default value is Enabled. </summary>
+        [WirePath("state")]
         public WebApplicationFirewallScrubbingState? State { get; set; }
 
         /// <summary> List of log scrubbing rules applied to the Web Application Firewall logs. </summary>
+        [WirePath("scrubbingRules")]
         public IList<WebApplicationFirewallScrubbingRules> ScrubbingRules { get; } = new ChangeTrackingList<WebApplicationFirewallScrubbingRules>();
     }
 }

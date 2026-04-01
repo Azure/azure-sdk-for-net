@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
@@ -35,12 +36,15 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Endpoint tags. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> The JSON object containing endpoint update parameters. </summary>
+        [WirePath("properties")]
         internal EndpointPropertiesUpdateParameters Properties { get; set; }
 
         /// <summary> A directory path on the origin that CDN can use to retrieve content from, e.g. contoso.cloudapp.net/originpath. </summary>
+        [WirePath("properties.originPath")]
         public string OriginPath
         {
             get
@@ -58,6 +62,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> List of content types on which compression applies. The value should be a valid MIME type. </summary>
+        [WirePath("properties.contentTypesToCompress")]
         public IList<string> ContentTypesToCompress
         {
             get
@@ -71,6 +76,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> The host header value sent to the origin with each request. This property at Endpoint is only allowed when endpoint uses single origin and can be overridden by the same property specified at origin.If you leave this blank, the request hostname determines this value. Azure CDN origins, such as Web Apps, Blob Storage, and Cloud Services require this host header value to match the origin hostname by default. </summary>
+        [WirePath("properties.originHostHeader")]
         public string OriginHostHeader
         {
             get
@@ -88,6 +94,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Indicates whether content compression is enabled on CDN. Default value is false. If compression is enabled, content will be served as compressed if user requests for a compressed version. Content won't be compressed on CDN when requested content is smaller than 1 byte or larger than 1 MB. </summary>
+        [WirePath("properties.isCompressionEnabled")]
         public bool? IsCompressionEnabled
         {
             get
@@ -105,6 +112,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Indicates whether HTTP traffic is allowed on the endpoint. Default value is true. At least one protocol (HTTP or HTTPS) must be allowed. </summary>
+        [WirePath("properties.isHttpAllowed")]
         public bool? IsHttpAllowed
         {
             get
@@ -122,6 +130,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Indicates whether HTTPS traffic is allowed on the endpoint. Default value is true. At least one protocol (HTTP or HTTPS) must be allowed. </summary>
+        [WirePath("properties.isHttpsAllowed")]
         public bool? IsHttpsAllowed
         {
             get
@@ -139,6 +148,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Defines how CDN caches requests that include query strings. You can ignore any query strings when caching, bypass caching to prevent requests that contain query strings from being cached, or cache every request with a unique URL. </summary>
+        [WirePath("properties.queryStringCachingBehavior")]
         public QueryStringCachingBehavior? QueryStringCachingBehavior
         {
             get
@@ -156,6 +166,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Specifies what scenario the customer wants this CDN endpoint to optimize for, e.g. Download, Media services. With this information, CDN can apply scenario driven optimization. </summary>
+        [WirePath("properties.optimizationType")]
         public OptimizationType? OptimizationType
         {
             get
@@ -173,6 +184,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Path to a file hosted on the origin which helps accelerate delivery of the dynamic content and calculate the most optimal routes for the CDN. This is relative to the origin path. This property is only relevant when using a single origin. </summary>
+        [WirePath("properties.probePath")]
         public string ProbePath
         {
             get
@@ -190,6 +202,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> List of rules defining the user's geo access within a CDN endpoint. Each geo filter defines an access rule to a specified path or content, e.g. block APAC for path /pictures/. </summary>
+        [WirePath("properties.geoFilters")]
         public IList<GeoFilter> GeoFilters
         {
             get
@@ -203,6 +216,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> List of keys used to validate the signed URL hashes. </summary>
+        [WirePath("properties.urlSigningKeys")]
         public IList<UriSigningKey> UrlSigningKeys
         {
             get
@@ -216,6 +230,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> A policy that specifies the delivery rules to be used for an endpoint. </summary>
+        [WirePath("properties.deliveryPolicy")]
         public EndpointDeliveryPolicy DeliveryPolicy
         {
             get
@@ -233,7 +248,8 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Resource ID. </summary>
-        public string DefaultOriginGroupId
+        [WirePath("properties.defaultOriginGroup.id")]
+        public ResourceIdentifier DefaultOriginGroupId
         {
             get
             {
@@ -250,7 +266,8 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Resource ID. </summary>
-        public string WebApplicationFirewallPolicyLinkId
+        [WirePath("properties.webApplicationFirewallPolicyLink.id")]
+        public ResourceIdentifier WebApplicationFirewallPolicyLinkId
         {
             get
             {

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
@@ -38,16 +39,20 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Resource reference to the Azure Key Vault secret. Expected to be in format of /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}/secrets/{secretName}. </summary>
+        [WirePath("secretSource")]
         internal ResourceReference SecretSource { get; set; }
 
         /// <summary> Version of the secret to be used. </summary>
+        [WirePath("secretVersion")]
         public string SecretVersion { get; set; }
 
         /// <summary> Soonest expiration date among certificates in customer's certificate chain in ISO 8601 compliant format yyyy-MM-ddTHH:mm:ss.fffffffK in UTC. </summary>
+        [WirePath("expirationDate")]
         public DateTimeOffset? ExpireOn { get; }
 
         /// <summary> Resource ID. </summary>
-        public string SecretSourceId
+        [WirePath("secretSource.id")]
+        public ResourceIdentifier SecretSourceId
         {
             get
             {

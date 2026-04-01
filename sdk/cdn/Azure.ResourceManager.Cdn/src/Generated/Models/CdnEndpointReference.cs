@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -24,13 +26,14 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of <see cref="CdnEndpointReference"/>. </summary>
         /// <param name="id"> ARM Resource ID string. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CdnEndpointReference(string id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CdnEndpointReference(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> ARM Resource ID string. </summary>
-        public string Id { get; }
+        [WirePath("id")]
+        public ResourceIdentifier Id { get; }
     }
 }

@@ -16,11 +16,6 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Defines the parameters for the origin group override action. </summary>
     public partial class OriginGroupOverrideActionProperties : DeliveryRuleActionProperties, IJsonModel<OriginGroupOverrideActionProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="OriginGroupOverrideActionProperties"/> for deserialization. </summary>
-        internal OriginGroupOverrideActionProperties()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override DeliveryRuleActionProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

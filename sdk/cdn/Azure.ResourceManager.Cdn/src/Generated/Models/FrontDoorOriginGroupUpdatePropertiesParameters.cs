@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -41,21 +42,27 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> The name of the profile which holds the origin group. </summary>
+        [WirePath("profileName")]
         public string ProfileName { get; }
 
         /// <summary> Load balancing settings for a backend pool. </summary>
+        [WirePath("loadBalancingSettings")]
         public LoadBalancingSettings LoadBalancingSettings { get; set; }
 
         /// <summary> Health probe settings to the origin that is used to determine the health of the origin. </summary>
+        [WirePath("healthProbeSettings")]
         public HealthProbeSettings HealthProbeSettings { get; set; }
 
         /// <summary> Time in minutes to shift the traffic to the endpoint gradually when an unhealthy endpoint comes healthy or a new endpoint is added. Default is 10 mins. This property is currently not supported. </summary>
+        [WirePath("trafficRestorationTimeToHealedOrNewEndpointsInMinutes")]
         public int? TrafficRestorationTimeToHealedOrNewEndpointsInMinutes { get; set; }
 
         /// <summary> Whether to allow session affinity on this host. Valid options are 'Enabled' or 'Disabled'. </summary>
+        [WirePath("sessionAffinityState")]
         public EnabledState? SessionAffinityState { get; set; }
 
         /// <summary> Authentication settings for origin in origin group. </summary>
+        [WirePath("authentication")]
         public OriginAuthenticationProperties Authentication { get; set; }
     }
 }

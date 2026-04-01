@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Action to perform. </summary>
+        [WirePath("headerAction")]
         public HeaderAction HeaderAction { get; set; }
 
         /// <summary> Name of the header to modify. </summary>
+        [WirePath("headerName")]
         public string HeaderName { get; set; }
 
         /// <summary> Value for the specified action. </summary>
+        [WirePath("value")]
         public string Value { get; set; }
     }
 }

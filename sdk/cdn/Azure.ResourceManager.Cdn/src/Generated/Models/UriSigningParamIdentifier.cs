@@ -41,9 +41,11 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Indicates the purpose of the parameter. </summary>
+        [WirePath("paramIndicator")]
         public ParamIndicator ParamIndicator { get; set; }
 
         /// <summary> Parameter name. </summary>
+        [WirePath("paramName")]
         public string ParamName { get; set; }
     }
 }

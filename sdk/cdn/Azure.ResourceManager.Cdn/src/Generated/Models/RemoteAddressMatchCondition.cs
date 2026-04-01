@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class RemoteAddressMatchCondition : DeliveryRuleConditionProperties
     {
         /// <summary> Initializes a new instance of <see cref="RemoteAddressMatchCondition"/>. </summary>
-        /// <param name="operator"> Describes operator to be matched. </param>
-        public RemoteAddressMatchCondition(RemoteAddressOperator @operator) : base(DeliveryRuleConditionParametersType.DeliveryRuleRemoteAddressConditionParameters)
+        /// <param name="remoteAddressOperator"> Describes operator to be matched. </param>
+        public RemoteAddressMatchCondition(RemoteAddressOperator remoteAddressOperator) : base(DeliveryRuleConditionParametersType.DeliveryRuleRemoteAddressConditionParameters)
         {
-            Operator = @operator;
+            RemoteAddressOperator = remoteAddressOperator;
             MatchValues = new ChangeTrackingList<string>();
             Transforms = new ChangeTrackingList<PreTransformCategory>();
         }
@@ -26,28 +26,32 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of <see cref="RemoteAddressMatchCondition"/>. </summary>
         /// <param name="typeName"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="operator"> Describes operator to be matched. </param>
+        /// <param name="remoteAddressOperator"> Describes operator to be matched. </param>
         /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
         /// <param name="matchValues"> Match values to match against. The operator will apply to each value in here with OR semantics. If any of them match the variable with the given operator this match condition is considered a match. </param>
         /// <param name="transforms"> List of transforms. </param>
-        internal RemoteAddressMatchCondition(DeliveryRuleConditionParametersType typeName, IDictionary<string, BinaryData> additionalBinaryDataProperties, RemoteAddressOperator @operator, bool? negateCondition, IList<string> matchValues, IList<PreTransformCategory> transforms) : base(typeName, additionalBinaryDataProperties)
+        internal RemoteAddressMatchCondition(DeliveryRuleConditionParametersType typeName, IDictionary<string, BinaryData> additionalBinaryDataProperties, RemoteAddressOperator remoteAddressOperator, bool? negateCondition, IList<string> matchValues, IList<PreTransformCategory> transforms) : base(typeName, additionalBinaryDataProperties)
         {
-            Operator = @operator;
+            RemoteAddressOperator = remoteAddressOperator;
             NegateCondition = negateCondition;
             MatchValues = matchValues;
             Transforms = transforms;
         }
 
         /// <summary> Describes operator to be matched. </summary>
-        public RemoteAddressOperator Operator { get; set; }
+        [WirePath("operator")]
+        public RemoteAddressOperator RemoteAddressOperator { get; set; }
 
         /// <summary> Describes if this is negate condition or not. </summary>
+        [WirePath("negateCondition")]
         public bool? NegateCondition { get; set; }
 
         /// <summary> Match values to match against. The operator will apply to each value in here with OR semantics. If any of them match the variable with the given operator this match condition is considered a match. </summary>
+        [WirePath("matchValues")]
         public IList<string> MatchValues { get; }
 
         /// <summary> List of transforms. </summary>
+        [WirePath("transforms")]
         public IList<PreTransformCategory> Transforms { get; }
     }
 }

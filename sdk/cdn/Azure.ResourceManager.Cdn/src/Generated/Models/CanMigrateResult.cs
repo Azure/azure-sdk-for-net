@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -36,15 +37,19 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Resource ID. </summary>
+        [WirePath("id")]
         public ResourceIdentifier Id { get; }
 
         /// <summary> Resource type. </summary>
+        [WirePath("type")]
         public string Type { get; }
 
         /// <summary> Gets the Properties. </summary>
+        [WirePath("properties")]
         internal CanMigrateProperties Properties { get; }
 
         /// <summary> Flag that says if the profile can be migrated. </summary>
+        [WirePath("properties.canMigrate")]
         public bool? CanMigrate
         {
             get
@@ -54,6 +59,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Recommended sku for the migration. </summary>
+        [WirePath("properties.defaultSku")]
         public CanMigrateDefaultSku? DefaultSku
         {
             get
@@ -63,6 +69,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Gets the Errors. </summary>
+        [WirePath("properties.errors")]
         public IList<MigrationErrorType> Errors
         {
             get

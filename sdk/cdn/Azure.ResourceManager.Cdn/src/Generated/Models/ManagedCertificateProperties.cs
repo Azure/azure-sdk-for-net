@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -30,9 +31,11 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Subject name in the certificate. </summary>
+        [WirePath("subject")]
         public string Subject { get; }
 
         /// <summary> Certificate expiration date. </summary>
+        [WirePath("expirationDate")]
         public string ExpirationDate { get; }
     }
 }

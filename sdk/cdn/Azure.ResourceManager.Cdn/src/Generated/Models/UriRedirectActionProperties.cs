@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -40,21 +41,27 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> The redirect type the rule will use when redirecting traffic. </summary>
+        [WirePath("redirectType")]
         public RedirectType RedirectType { get; set; }
 
         /// <summary> Protocol to use for the redirect. The default value is MatchRequest. </summary>
+        [WirePath("destinationProtocol")]
         public DestinationProtocol? DestinationProtocol { get; set; }
 
         /// <summary> The full path to redirect. Path cannot be empty and must start with /. Leave empty to use the incoming path as destination path. </summary>
+        [WirePath("customPath")]
         public string CustomPath { get; set; }
 
         /// <summary> Host to redirect. Leave empty to use the incoming host as the destination host. </summary>
+        [WirePath("customHostname")]
         public string CustomHostname { get; set; }
 
         /// <summary> The set of query strings to be placed in the redirect URL. Setting this value would replace any existing query string; leave empty to preserve the incoming query string. Query string must be in &lt;key&gt;=&lt;value&gt; format. ? and &amp; will be added automatically so do not include them. </summary>
+        [WirePath("customQueryString")]
         public string CustomQueryString { get; set; }
 
         /// <summary> Fragment to add to the redirect URL. Fragment is the part of the URL that comes after #. Do not include the #. </summary>
+        [WirePath("customFragment")]
         public string CustomFragment { get; set; }
     }
 }

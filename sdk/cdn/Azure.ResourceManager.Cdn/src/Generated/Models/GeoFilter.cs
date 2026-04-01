@@ -47,12 +47,15 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Relative path applicable to geo filter. (e.g. '/mypictures', '/mypicture/kitty.jpg', and etc.). </summary>
+        [WirePath("relativePath")]
         public string RelativePath { get; set; }
 
         /// <summary> Action of the geo filter, i.e. allow or block access. </summary>
+        [WirePath("action")]
         public GeoFilterAction Action { get; set; }
 
         /// <summary> Two letter country or region codes defining user country or region access in a geo filter, e.g. AU, MX, US. </summary>
+        [WirePath("countryCodes")]
         public IList<string> CountryCodes { get; }
     }
 }

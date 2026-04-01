@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -35,12 +36,15 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> The number of samples to consider for load balancing decisions. </summary>
+        [WirePath("sampleSize")]
         public int? SampleSize { get; set; }
 
         /// <summary> The number of samples within the sample period that must succeed. </summary>
+        [WirePath("successfulSamplesRequired")]
         public int? SuccessfulSamplesRequired { get; set; }
 
         /// <summary> The additional latency in milliseconds for probes to fall into the lowest latency bucket. </summary>
+        [WirePath("additionalLatencyInMilliseconds")]
         public int? AdditionalLatencyInMilliseconds { get; set; }
     }
 }

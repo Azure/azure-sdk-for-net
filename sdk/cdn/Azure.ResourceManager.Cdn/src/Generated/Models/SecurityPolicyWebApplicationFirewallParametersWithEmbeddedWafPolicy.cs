@@ -32,9 +32,11 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Properties of the web application firewall policy. </summary>
+        [WirePath("wafPolicy")]
         public WebApplicationFirewallPolicy WafPolicy { get; set; }
 
         /// <summary> Waf associations. </summary>
+        [WirePath("associations")]
         public IList<SecurityPolicyWebApplicationFirewallAssociation> Associations { get; }
     }
 }

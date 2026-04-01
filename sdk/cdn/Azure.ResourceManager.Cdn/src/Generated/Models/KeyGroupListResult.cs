@@ -37,9 +37,11 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> The KeyGroup items on this page. </summary>
+        [WirePath("value")]
         public IList<KeyGroupData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
+        [WirePath("nextLink")]
         public Uri NextLink { get; }
     }
 }

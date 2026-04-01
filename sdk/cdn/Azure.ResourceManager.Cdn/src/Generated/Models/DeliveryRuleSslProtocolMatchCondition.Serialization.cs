@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("operator"u8);
-            writer.WriteStringValue(Operator.ToString());
+            writer.WriteStringValue(SslProtocolOperator.ToString());
             if (Optional.IsDefined(NegateCondition))
             {
                 writer.WritePropertyName("negateCondition"u8);
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             DeliveryRuleConditionParametersType typeName = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            SslProtocolOperator @operator = default;
+            SslProtocolOperator sslProtocolOperator = default;
             bool? negateCondition = default;
             IList<DeliveryRuleSslProtocol> matchValues = default;
             IList<PreTransformCategory> transforms = default;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (prop.NameEquals("operator"u8))
                 {
-                    @operator = new SslProtocolOperator(prop.Value.GetString());
+                    sslProtocolOperator = new SslProtocolOperator(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("negateCondition"u8))
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Cdn.Models
             return new DeliveryRuleSslProtocolMatchCondition(
                 typeName,
                 additionalBinaryDataProperties,
-                @operator,
+                sslProtocolOperator,
                 negateCondition,
                 matchValues ?? new ChangeTrackingList<DeliveryRuleSslProtocol>(),
                 transforms ?? new ChangeTrackingList<PreTransformCategory>());

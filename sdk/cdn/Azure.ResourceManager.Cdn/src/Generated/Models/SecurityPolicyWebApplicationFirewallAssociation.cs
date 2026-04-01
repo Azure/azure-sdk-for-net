@@ -36,9 +36,11 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> List of domains. </summary>
+        [WirePath("domains")]
         public IList<FrontDoorActivatedResourceInfo> Domains { get; }
 
         /// <summary> List of paths. </summary>
+        [WirePath("patternsToMatch")]
         public IList<string> PatternsToMatch { get; }
     }
 }

@@ -41,9 +41,11 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> The type of the path. </summary>
+        [WirePath("type")]
         public AgentPathType Type { get; set; }
 
         /// <summary> The actual path value. </summary>
+        [WirePath("path")]
         public string Path { get; set; }
     }
 }

@@ -38,9 +38,11 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Properties of the knowledge source. </summary>
+        [WirePath("properties")]
         internal KnowledgeSourceProperties Properties { get; set; }
 
         /// <summary> Description of the knowledge source. </summary>
+        [WirePath("properties.description")]
         public string Description
         {
             get
@@ -58,6 +60,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Format or origin of the knowledge source. </summary>
+        [WirePath("properties.sourceType")]
         public KnowledgeSourceType SourceType
         {
             get
@@ -75,6 +78,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Endpoint or location of the knowledge source. </summary>
+        [WirePath("properties.url")]
         public string Uri
         {
             get
@@ -92,6 +96,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Specifies the units of time for scheduling update intervals for the knowledge source. </summary>
+        [WirePath("properties.updateFrequency")]
         public KnowledgeSourceUpdateFrequency? UpdateFrequency
         {
             get
@@ -109,6 +114,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> The last time the knowledge source was updated. </summary>
+        [WirePath("properties.lastRefreshedTime")]
         public DateTimeOffset? LastRefreshedOn
         {
             get
@@ -118,6 +124,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Provisioning status of the knowledge source. </summary>
+        [WirePath("properties.provisioningState")]
         public KnowledgeSourceProvisioningState? ProvisioningState
         {
             get

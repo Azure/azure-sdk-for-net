@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -35,12 +36,15 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Gets the Metric. </summary>
+        [WirePath("metric")]
         public string Metric { get; }
 
         /// <summary> Gets the Value. </summary>
+        [WirePath("value")]
         public long? Value { get; }
 
         /// <summary> Gets the Percentage. </summary>
+        [WirePath("percentage")]
         public double? Percentage { get; }
     }
 }

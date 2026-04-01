@@ -44,15 +44,19 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Health probe settings to the origin that is used to determine the health of the origin. </summary>
+        [WirePath("healthProbeSettings")]
         public HealthProbeSettings HealthProbeSettings { get; set; }
 
         /// <summary> The source of the content being delivered via CDN within given origin group. </summary>
+        [WirePath("origins")]
         public IList<ResourceReference> Origins { get; } = new ChangeTrackingList<ResourceReference>();
 
         /// <summary> Time in minutes to shift the traffic to the endpoint gradually when an unhealthy endpoint comes healthy or a new endpoint is added. Default is 10 mins. This property is currently not supported. </summary>
+        [WirePath("trafficRestorationTimeToHealedOrNewEndpointsInMinutes")]
         public int? TrafficRestorationTimeToHealedOrNewEndpointsInMinutes { get; set; }
 
         /// <summary> The JSON object that contains the properties to determine origin health using real requests/responses.This property is currently not supported. </summary>
+        [WirePath("responseBasedOriginErrorDetectionSettings")]
         public ResponseBasedOriginErrorDetectionSettings ResponseBasedOriginErrorDetectionSettings { get; set; }
     }
 }

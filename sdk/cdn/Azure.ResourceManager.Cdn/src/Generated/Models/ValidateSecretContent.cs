@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -38,16 +40,20 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> The secret type. </summary>
+        [WirePath("secretType")]
         public SecretType SecretType { get; }
 
         /// <summary> Resource reference to the Azure Key Vault secret. Expected to be in format of /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}/secrets/{secretName}. </summary>
+        [WirePath("secretSource")]
         internal ResourceReference SecretSource { get; }
 
         /// <summary> Secret version, if customer is using a specific version. </summary>
+        [WirePath("secretVersion")]
         public string SecretVersion { get; set; }
 
         /// <summary> Resource ID. </summary>
-        public string SecretSourceId
+        [WirePath("secretSource.id")]
+        public ResourceIdentifier SecretSourceId
         {
             get
             {

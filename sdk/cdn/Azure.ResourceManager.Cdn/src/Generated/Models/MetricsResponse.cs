@@ -39,15 +39,19 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Gets the DateTimeBegin. </summary>
+        [WirePath("dateTimeBegin")]
         public DateTimeOffset? DateTimeBegin { get; }
 
         /// <summary> Gets the DateTimeEnd. </summary>
+        [WirePath("dateTimeEnd")]
         public DateTimeOffset? DateTimeEnd { get; }
 
         /// <summary> Gets the Granularity. </summary>
+        [WirePath("granularity")]
         public MetricsResponseGranularity? Granularity { get; }
 
         /// <summary> Gets the Series. </summary>
+        [WirePath("series")]
         public IReadOnlyList<MetricsResponseSeriesItem> Series { get; }
     }
 }

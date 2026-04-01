@@ -42,18 +42,23 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Optional textual description of the agent. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
 
         /// <summary> System prompt for the web agent. </summary>
+        [WirePath("systemPrompt")]
         public string SystemPrompt { get; set; }
 
         /// <summary> List of paths associated with the web agent. </summary>
+        [WirePath("paths")]
         public IList<AgentPath> Paths { get; } = new ChangeTrackingList<AgentPath>();
 
         /// <summary> References to agent links in CDN profiles. </summary>
+        [WirePath("profileAgentLinks")]
         public IReadOnlyList<ResourceReference> ProfileAgentLinks { get; } = new ChangeTrackingList<ResourceReference>();
 
         /// <summary> Provisioning status of the web agent. </summary>
+        [WirePath("provisioningState")]
         public WebAgentProvisioningState? ProvisioningState { get; }
     }
 }

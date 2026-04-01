@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="defaultCustomBlockResponseStatusCode"> If the action type is block, this field defines the default customer overridable http response status code. </param>
         /// <param name="defaultCustomBlockResponseBody"> If the action type is block, customer can override the response body. The body must be specified in base64 encoding. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WafPolicySettings(PolicyEnabledState? enabledState, PolicyMode? mode, string defaultRedirectUri, PolicySettingsDefaultCustomBlockResponseStatusCode? defaultCustomBlockResponseStatusCode, string defaultCustomBlockResponseBody, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WafPolicySettings(PolicyEnabledState? enabledState, PolicyMode? mode, Uri defaultRedirectUri, PolicySettingsDefaultCustomBlockResponseStatusCode? defaultCustomBlockResponseStatusCode, BinaryData defaultCustomBlockResponseBody, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EnabledState = enabledState;
             Mode = mode;
@@ -39,18 +40,38 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> describes if the policy is in enabled state or disabled state. </summary>
+        [WirePath("enabledState")]
         public PolicyEnabledState? EnabledState { get; set; }
 
         /// <summary> Describes if it is in detection mode or prevention mode at policy level. </summary>
+        [WirePath("mode")]
         public PolicyMode? Mode { get; set; }
 
         /// <summary> If action type is redirect, this field represents the default redirect URL for the client. </summary>
-        public string DefaultRedirectUri { get; set; }
+        [WirePath("defaultRedirectUrl")]
+        public Uri DefaultRedirectUri { get; set; }
 
         /// <summary> If the action type is block, this field defines the default customer overridable http response status code. </summary>
+        [WirePath("defaultCustomBlockResponseStatusCode")]
         public PolicySettingsDefaultCustomBlockResponseStatusCode? DefaultCustomBlockResponseStatusCode { get; set; }
 
-        /// <summary> If the action type is block, customer can override the response body. The body must be specified in base64 encoding. </summary>
-        public string DefaultCustomBlockResponseBody { get; set; }
+        /// <summary>
+        /// If the action type is block, customer can override the response body. The body must be specified in base64 encoding.
+        /// <para>
+        /// To assign a byte[] to this property use <see cref="BinaryData.FromBytes(byte[])"/>.
+        /// The byte[] will be serialized to a Base64 encoded string.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term> BinaryData.FromBytes(new byte[] { 1, 2, 3 }). </term>
+        /// <description> Creates a payload of "AQID". </description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        [WirePath("defaultCustomBlockResponseBody")]
+        public BinaryData DefaultCustomBlockResponseBody { get; set; }
     }
 }

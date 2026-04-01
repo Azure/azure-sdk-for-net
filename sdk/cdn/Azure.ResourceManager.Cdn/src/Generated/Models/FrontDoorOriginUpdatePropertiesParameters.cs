@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -23,7 +25,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Initializes a new instance of <see cref="FrontDoorOriginUpdatePropertiesParameters"/>. </summary>
         /// <param name="originGroupName"> The name of the origin group which contains this origin. </param>
-        /// <param name="azureOrigin"> Resource reference to the Azure origin resource. </param>
+        /// <param name="origin"> Resource reference to the Azure origin resource. </param>
         /// <param name="hostName"> The address of the origin. Domain names, IPv4 addresses, and IPv6 addresses are supported.This should be unique across all origins in an endpoint. </param>
         /// <param name="httpPort"> The value of the HTTP port. Must be between 1 and 65535. </param>
         /// <param name="httpsPort"> The value of the HTTPS port. Must be between 1 and 65535. </param>
@@ -35,10 +37,10 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="enabledState"> Whether to enable health probes to be made against backends defined under backendPools. Health probes can only be disabled if there is a single enabled backend in single enabled backend pool. </param>
         /// <param name="enforceCertificateNameCheck"> Whether to enable certificate name check at origin level. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FrontDoorOriginUpdatePropertiesParameters(string originGroupName, ResourceReference azureOrigin, string hostName, int? httpPort, int? httpsPort, string originHostHeader, int? priority, int? weight, SharedPrivateLinkResourceProperties sharedPrivateLinkResource, OriginCapacityResourceProperties originCapacityResource, EnabledState? enabledState, bool? enforceCertificateNameCheck, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FrontDoorOriginUpdatePropertiesParameters(string originGroupName, ResourceReference origin, string hostName, int? httpPort, int? httpsPort, string originHostHeader, int? priority, int? weight, SharedPrivateLinkResourceProperties sharedPrivateLinkResource, OriginCapacityResourceProperties originCapacityResource, EnabledState? enabledState, bool? enforceCertificateNameCheck, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OriginGroupName = originGroupName;
-            AzureOrigin = azureOrigin;
+            Origin = origin;
             HostName = hostName;
             HttpPort = httpPort;
             HttpsPort = httpsPort;
@@ -53,55 +55,68 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> The name of the origin group which contains this origin. </summary>
+        [WirePath("originGroupName")]
         public string OriginGroupName { get; }
 
         /// <summary> Resource reference to the Azure origin resource. </summary>
-        internal ResourceReference AzureOrigin { get; set; }
+        [WirePath("azureOrigin")]
+        internal ResourceReference Origin { get; set; }
 
         /// <summary> The address of the origin. Domain names, IPv4 addresses, and IPv6 addresses are supported.This should be unique across all origins in an endpoint. </summary>
+        [WirePath("hostName")]
         public string HostName { get; set; }
 
         /// <summary> The value of the HTTP port. Must be between 1 and 65535. </summary>
+        [WirePath("httpPort")]
         public int? HttpPort { get; set; }
 
         /// <summary> The value of the HTTPS port. Must be between 1 and 65535. </summary>
+        [WirePath("httpsPort")]
         public int? HttpsPort { get; set; }
 
         /// <summary> The host header value sent to the origin with each request. If you leave this blank, the request hostname determines this value. Azure Front Door origins, such as Web Apps, Blob Storage, and Cloud Services require this host header value to match the origin hostname by default. This overrides the host header defined at Endpoint. </summary>
+        [WirePath("originHostHeader")]
         public string OriginHostHeader { get; set; }
 
         /// <summary> Priority of origin in given origin group for load balancing. Higher priorities will not be used for load balancing if any lower priority origin is healthy.Must be between 1 and 5. </summary>
+        [WirePath("priority")]
         public int? Priority { get; set; }
 
         /// <summary> Weight of the origin in given origin group for load balancing. Must be between 1 and 1000. </summary>
+        [WirePath("weight")]
         public int? Weight { get; set; }
 
         /// <summary> The properties of the private link resource for private origin. </summary>
+        [WirePath("sharedPrivateLinkResource")]
         public SharedPrivateLinkResourceProperties SharedPrivateLinkResource { get; set; }
 
         /// <summary> Origin capacity settings for an origin. </summary>
+        [WirePath("originCapacityResource")]
         public OriginCapacityResourceProperties OriginCapacityResource { get; set; }
 
         /// <summary> Whether to enable health probes to be made against backends defined under backendPools. Health probes can only be disabled if there is a single enabled backend in single enabled backend pool. </summary>
+        [WirePath("enabledState")]
         public EnabledState? EnabledState { get; set; }
 
         /// <summary> Whether to enable certificate name check at origin level. </summary>
+        [WirePath("enforceCertificateNameCheck")]
         public bool? EnforceCertificateNameCheck { get; set; }
 
         /// <summary> Resource ID. </summary>
-        public string AzureOriginId
+        [WirePath("azureOrigin.id")]
+        public ResourceIdentifier OriginId
         {
             get
             {
-                return AzureOrigin is null ? default : AzureOrigin.Id;
+                return Origin is null ? default : Origin.Id;
             }
             set
             {
-                if (AzureOrigin is null)
+                if (Origin is null)
                 {
-                    AzureOrigin = new ResourceReference();
+                    Origin = new ResourceReference();
                 }
-                AzureOrigin.Id = value;
+                Origin.Id = value;
             }
         }
     }

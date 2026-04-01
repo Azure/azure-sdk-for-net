@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="originResponseTimeoutSeconds"> Send and receive timeout on forwarding request to the origin. When timeout is reached, the request fails and returns. </param>
         /// <param name="logScrubbing"> Defines rules that scrub sensitive fields in the Azure Front Door profile logs. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProfileProperties(ProfileResourceState? resourceState, ProfileProvisioningState? provisioningState, IReadOnlyDictionary<string, string> extendedProperties, string frontDoorId, int? originResponseTimeoutSeconds, ProfileLogScrubbing logScrubbing, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProfileProperties(ProfileResourceState? resourceState, ProfileProvisioningState? provisioningState, IReadOnlyDictionary<string, string> extendedProperties, Guid? frontDoorId, int? originResponseTimeoutSeconds, ProfileLogScrubbing logScrubbing, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceState = resourceState;
             ProvisioningState = provisioningState;
@@ -43,21 +43,27 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Resource status of the profile. </summary>
+        [WirePath("resourceState")]
         public ProfileResourceState? ResourceState { get; }
 
         /// <summary> Provisioning status of the profile. </summary>
+        [WirePath("provisioningState")]
         public ProfileProvisioningState? ProvisioningState { get; }
 
         /// <summary> Key-Value pair representing additional properties for profiles. </summary>
+        [WirePath("extendedProperties")]
         public IReadOnlyDictionary<string, string> ExtendedProperties { get; } = new ChangeTrackingDictionary<string, string>();
 
         /// <summary> The Id of the frontdoor. </summary>
-        public string FrontDoorId { get; }
+        [WirePath("frontDoorId")]
+        public Guid? FrontDoorId { get; }
 
         /// <summary> Send and receive timeout on forwarding request to the origin. When timeout is reached, the request fails and returns. </summary>
+        [WirePath("originResponseTimeoutSeconds")]
         public int? OriginResponseTimeoutSeconds { get; set; }
 
         /// <summary> Defines rules that scrub sensitive fields in the Azure Front Door profile logs. </summary>
+        [WirePath("logScrubbing")]
         public ProfileLogScrubbing LogScrubbing { get; set; }
     }
 }

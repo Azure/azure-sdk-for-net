@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("operator"u8);
-            writer.WriteStringValue(Operator.ToString());
+            writer.WriteStringValue(IsDeviceOperator.ToString());
             if (Optional.IsDefined(NegateCondition))
             {
                 writer.WritePropertyName("negateCondition"u8);
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             DeliveryRuleConditionParametersType typeName = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            IsDeviceOperator @operator = default;
+            IsDeviceOperator isDeviceOperator = default;
             bool? negateCondition = default;
             IList<IsDeviceMatchConditionMatchValue> matchValues = default;
             IList<PreTransformCategory> transforms = default;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (prop.NameEquals("operator"u8))
                 {
-                    @operator = new IsDeviceOperator(prop.Value.GetString());
+                    isDeviceOperator = new IsDeviceOperator(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("negateCondition"u8))
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Cdn.Models
             return new IsDeviceMatchCondition(
                 typeName,
                 additionalBinaryDataProperties,
-                @operator,
+                isDeviceOperator,
                 negateCondition,
                 matchValues ?? new ChangeTrackingList<IsDeviceMatchConditionMatchValue>(),
                 transforms ?? new ChangeTrackingList<PreTransformCategory>());

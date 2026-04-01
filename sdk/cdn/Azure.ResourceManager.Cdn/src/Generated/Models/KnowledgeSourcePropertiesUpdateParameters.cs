@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -35,12 +36,15 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Description of the knowledge source. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
 
         /// <summary> Endpoint or location of the knowledge source. </summary>
+        [WirePath("url")]
         public string Uri { get; set; }
 
         /// <summary> Specifies the units of time for scheduling update intervals for the knowledge source. </summary>
+        [WirePath("updateFrequency")]
         public KnowledgeSourceUpdateFrequency? UpdateFrequency { get; set; }
     }
 }

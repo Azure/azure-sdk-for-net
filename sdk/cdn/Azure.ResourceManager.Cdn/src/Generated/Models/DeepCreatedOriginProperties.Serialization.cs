@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
@@ -186,7 +187,7 @@ namespace Azure.ResourceManager.Cdn.Models
             int? weight = default;
             bool? enabled = default;
             string privateLinkAlias = default;
-            string privateLinkResourceId = default;
+            ResourceIdentifier privateLinkResourceId = default;
             string privateLinkLocation = default;
             string privateLinkApprovalMessage = default;
             PrivateEndpointStatus? privateEndpointStatus = default;
@@ -255,7 +256,11 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (prop.NameEquals("privateLinkResourceId"u8))
                 {
-                    privateLinkResourceId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    privateLinkResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("privateLinkLocation"u8))

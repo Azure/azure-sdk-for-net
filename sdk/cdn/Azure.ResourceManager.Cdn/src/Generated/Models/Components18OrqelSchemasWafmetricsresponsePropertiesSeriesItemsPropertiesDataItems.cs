@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Gets the DateOn. </summary>
+        [WirePath("dateTime")]
         public DateTimeOffset? DateOn { get; }
 
         /// <summary> Gets the Value. </summary>
+        [WirePath("value")]
         public float? Value { get; }
     }
 }

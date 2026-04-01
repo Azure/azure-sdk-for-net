@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -30,6 +31,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Type of certificate used. </summary>
+        [WirePath("certificateType")]
         public CdnManagedCertificateType CertificateType { get; set; }
     }
 }

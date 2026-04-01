@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
@@ -42,19 +43,24 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Gets or sets the TypeName. </summary>
+        [WirePath("typeName")]
         public TypeName TypeName { get; set; }
 
         /// <summary> Resource reference to the Azure Key Vault secret. Expected to be in format of /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/keyGroups/{keyGroupName}. </summary>
+        [WirePath("keyGroupReference")]
         internal ResourceReference KeyGroupReference { get; set; }
 
         /// <summary> Algorithm to use for URL signing. </summary>
+        [WirePath("algorithm")]
         public UriSigningAlgorithm? Algorithm { get; set; }
 
         /// <summary> Defines which query string parameters in the url to be considered for expires, key id etc. </summary>
+        [WirePath("parameterNameOverride")]
         public IList<UriSigningParamIdentifier> ParameterNameOverride { get; }
 
         /// <summary> Resource ID. </summary>
-        public string KeyGroupReferenceId
+        [WirePath("keyGroupReference.id")]
+        public ResourceIdentifier KeyGroupReferenceId
         {
             get
             {

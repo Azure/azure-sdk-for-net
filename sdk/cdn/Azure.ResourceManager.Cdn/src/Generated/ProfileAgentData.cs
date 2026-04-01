@@ -38,9 +38,11 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> The properties of a profile agent association. </summary>
+        [WirePath("properties")]
         internal ProfileAgentProperties Properties { get; set; }
 
         /// <summary> List of custom domains associated with this agent link. </summary>
+        [WirePath("properties.customDomains")]
         public IList<ResourceReference> CustomDomains
         {
             get
@@ -54,6 +56,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Provisioning status of the profile agent association. </summary>
+        [WirePath("properties.provisioningState")]
         public ProfileAgentProvisioningState? ProvisioningState
         {
             get
@@ -63,7 +66,8 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Resource ID. </summary>
-        public string WebAgentId
+        [WirePath("properties.webAgent.id")]
+        public ResourceIdentifier WebAgentId
         {
             get
             {

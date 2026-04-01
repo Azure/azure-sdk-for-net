@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -34,7 +36,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="resourceState"> Resource status of the origin. </param>
         /// <param name="provisioningState"> Provisioning status of the origin. </param>
         /// <param name="privateEndpointStatus"> The approval status for the connection to the Private Link. </param>
-        internal OriginProperties(string hostName, int? httpPort, int? httpsPort, string originHostHeader, int? priority, int? weight, bool? enabled, string privateLinkAlias, string privateLinkResourceId, string privateLinkLocation, string privateLinkApprovalMessage, IDictionary<string, BinaryData> additionalBinaryDataProperties, OriginResourceState? resourceState, OriginProvisioningState? provisioningState, PrivateEndpointStatus? privateEndpointStatus) : base(hostName, httpPort, httpsPort, originHostHeader, priority, weight, enabled, privateLinkAlias, privateLinkResourceId, privateLinkLocation, privateLinkApprovalMessage, additionalBinaryDataProperties)
+        internal OriginProperties(string hostName, int? httpPort, int? httpsPort, string originHostHeader, int? priority, int? weight, bool? enabled, string privateLinkAlias, ResourceIdentifier privateLinkResourceId, string privateLinkLocation, string privateLinkApprovalMessage, IDictionary<string, BinaryData> additionalBinaryDataProperties, OriginResourceState? resourceState, OriginProvisioningState? provisioningState, PrivateEndpointStatus? privateEndpointStatus) : base(hostName, httpPort, httpsPort, originHostHeader, priority, weight, enabled, privateLinkAlias, privateLinkResourceId, privateLinkLocation, privateLinkApprovalMessage, additionalBinaryDataProperties)
         {
             ResourceState = resourceState;
             ProvisioningState = provisioningState;
@@ -42,12 +44,15 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Resource status of the origin. </summary>
+        [WirePath("resourceState")]
         public OriginResourceState? ResourceState { get; }
 
         /// <summary> Provisioning status of the origin. </summary>
+        [WirePath("provisioningState")]
         public OriginProvisioningState? ProvisioningState { get; }
 
         /// <summary> The approval status for the connection to the Private Link. </summary>
+        [WirePath("privateEndpointStatus")]
         public PrivateEndpointStatus? PrivateEndpointStatus { get; }
     }
 }

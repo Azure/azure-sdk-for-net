@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -35,12 +36,15 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Defines how Frontdoor caches requests that include query strings. You can ignore any query strings when caching, ignore specific query strings, cache every request with a unique URL, or cache specific query strings. </summary>
+        [WirePath("queryStringCachingBehavior")]
         public FrontDoorQueryStringCachingBehavior? QueryStringCachingBehavior { get; set; }
 
         /// <summary> query parameters to include or exclude (comma separated). </summary>
+        [WirePath("queryParameters")]
         public string QueryParameters { get; set; }
 
         /// <summary> compression settings. </summary>
+        [WirePath("compressionSettings")]
         public RouteCacheCompressionSettings CompressionSettings { get; set; }
     }
 }

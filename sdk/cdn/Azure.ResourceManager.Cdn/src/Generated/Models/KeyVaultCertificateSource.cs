@@ -59,24 +59,31 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Subscription Id of the user's Key Vault containing the SSL certificate. </summary>
+        [WirePath("subscriptionId")]
         public string SubscriptionId { get; set; }
 
         /// <summary> Resource group of the user's Key Vault containing the SSL certificate. </summary>
+        [WirePath("resourceGroupName")]
         public string ResourceGroupName { get; set; }
 
         /// <summary> The name of the user's Key Vault containing the SSL certificate. </summary>
+        [WirePath("vaultName")]
         public string VaultName { get; set; }
 
         /// <summary> The name of Key Vault Secret (representing the full certificate PFX) in Key Vault. </summary>
+        [WirePath("secretName")]
         public string SecretName { get; set; }
 
         /// <summary> The version(GUID) of Key Vault Secret in Key Vault. </summary>
+        [WirePath("secretVersion")]
         public string SecretVersion { get; set; }
 
         /// <summary> Describes the action that shall be taken when the certificate is updated in Key Vault. </summary>
+        [WirePath("updateRule")]
         public CertificateUpdateAction UpdateRule { get; set; }
 
         /// <summary> Describes the action that shall be taken when the certificate is removed from Key Vault. </summary>
+        [WirePath("deleteRule")]
         public CertificateDeleteAction DeleteRule { get; set; }
     }
 }

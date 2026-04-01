@@ -17,11 +17,6 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Request body for CanMigrate operation. </summary>
     public partial class CanMigrateContent : IJsonModel<CanMigrateContent>
     {
-        /// <summary> Initializes a new instance of <see cref="CanMigrateContent"/> for deserialization. </summary>
-        internal CanMigrateContent()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual CanMigrateContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

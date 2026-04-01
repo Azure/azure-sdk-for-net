@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -31,6 +32,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> The URI used to login to the supplemental portal. </summary>
+        [WirePath("ssoUriValue")]
         public string SsoUriValue { get; }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -35,12 +36,15 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> The name of the profile which holds the endpoint. </summary>
+        [WirePath("profileName")]
         public string ProfileName { get; }
 
         /// <summary> Whether to enable use of this rule. Permitted values are 'Enabled' or 'Disabled'. </summary>
+        [WirePath("enabledState")]
         public EnabledState? EnabledState { get; set; }
 
         /// <summary> Set to Disabled by default. If set to Enabled, only custom domains with mTLS enabled can be added to child Route resources. </summary>
+        [WirePath("enforceMtls")]
         public EnforceMtlsEnabledState? EnforceMtls { get; set; }
     }
 }

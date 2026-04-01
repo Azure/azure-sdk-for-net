@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class IsDeviceMatchCondition : DeliveryRuleConditionProperties
     {
         /// <summary> Initializes a new instance of <see cref="IsDeviceMatchCondition"/>. </summary>
-        /// <param name="operator"> Describes operator to be matched. </param>
-        public IsDeviceMatchCondition(IsDeviceOperator @operator) : base(DeliveryRuleConditionParametersType.DeliveryRuleIsDeviceConditionParameters)
+        /// <param name="isDeviceOperator"> Describes operator to be matched. </param>
+        public IsDeviceMatchCondition(IsDeviceOperator isDeviceOperator) : base(DeliveryRuleConditionParametersType.DeliveryRuleIsDeviceConditionParameters)
         {
-            Operator = @operator;
+            IsDeviceOperator = isDeviceOperator;
             MatchValues = new ChangeTrackingList<IsDeviceMatchConditionMatchValue>();
             Transforms = new ChangeTrackingList<PreTransformCategory>();
         }
@@ -26,28 +26,32 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of <see cref="IsDeviceMatchCondition"/>. </summary>
         /// <param name="typeName"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="operator"> Describes operator to be matched. </param>
+        /// <param name="isDeviceOperator"> Describes operator to be matched. </param>
         /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
         /// <param name="matchValues"> The match value for the condition of the delivery rule. </param>
         /// <param name="transforms"> List of transforms. </param>
-        internal IsDeviceMatchCondition(DeliveryRuleConditionParametersType typeName, IDictionary<string, BinaryData> additionalBinaryDataProperties, IsDeviceOperator @operator, bool? negateCondition, IList<IsDeviceMatchConditionMatchValue> matchValues, IList<PreTransformCategory> transforms) : base(typeName, additionalBinaryDataProperties)
+        internal IsDeviceMatchCondition(DeliveryRuleConditionParametersType typeName, IDictionary<string, BinaryData> additionalBinaryDataProperties, IsDeviceOperator isDeviceOperator, bool? negateCondition, IList<IsDeviceMatchConditionMatchValue> matchValues, IList<PreTransformCategory> transforms) : base(typeName, additionalBinaryDataProperties)
         {
-            Operator = @operator;
+            IsDeviceOperator = isDeviceOperator;
             NegateCondition = negateCondition;
             MatchValues = matchValues;
             Transforms = transforms;
         }
 
         /// <summary> Describes operator to be matched. </summary>
-        public IsDeviceOperator Operator { get; set; }
+        [WirePath("operator")]
+        public IsDeviceOperator IsDeviceOperator { get; set; }
 
         /// <summary> Describes if this is negate condition or not. </summary>
+        [WirePath("negateCondition")]
         public bool? NegateCondition { get; set; }
 
         /// <summary> The match value for the condition of the delivery rule. </summary>
+        [WirePath("matchValues")]
         public IList<IsDeviceMatchConditionMatchValue> MatchValues { get; }
 
         /// <summary> List of transforms. </summary>
+        [WirePath("transforms")]
         public IList<PreTransformCategory> Transforms { get; }
     }
 }

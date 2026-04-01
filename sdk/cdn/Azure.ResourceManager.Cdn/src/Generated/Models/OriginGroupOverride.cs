@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -33,13 +35,16 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> defines the OriginGroup that would override the DefaultOriginGroup on route. </summary>
+        [WirePath("originGroup")]
         internal ResourceReference OriginGroup { get; set; }
 
         /// <summary> Protocol this rule will use when forwarding traffic to backends. </summary>
+        [WirePath("forwardingProtocol")]
         public ForwardingProtocol? ForwardingProtocol { get; set; }
 
         /// <summary> Resource ID. </summary>
-        public string OriginGroupId
+        [WirePath("originGroup.id")]
+        public ResourceIdentifier OriginGroupId
         {
             get
             {

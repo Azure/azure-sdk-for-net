@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -35,16 +37,20 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> The type of the authentication for the origin. </summary>
+        [WirePath("type")]
         public OriginAuthenticationType? Type { get; set; }
 
         /// <summary> The user assigned managed identity to use for the origin authentication if type is UserAssignedIdentity. </summary>
+        [WirePath("userAssignedIdentity")]
         internal ResourceReference UserAssignedIdentity { get; set; }
 
         /// <summary> The scope used when requesting token from Microsoft Entra. For example, for Azure Blob Storage, scope could be "https://storage.azure.com/.default". </summary>
+        [WirePath("scope")]
         public Uri Scope { get; set; }
 
         /// <summary> Resource ID. </summary>
-        public string UserAssignedIdentityId
+        [WirePath("userAssignedIdentity.id")]
+        public ResourceIdentifier UserAssignedIdentityId
         {
             get
             {

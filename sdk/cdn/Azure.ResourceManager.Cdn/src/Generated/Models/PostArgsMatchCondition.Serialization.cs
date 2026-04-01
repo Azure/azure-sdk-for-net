@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WriteStringValue(Selector);
             }
             writer.WritePropertyName("operator"u8);
-            writer.WriteStringValue(Operator.ToString());
+            writer.WriteStringValue(PostArgsOperator.ToString());
             if (Optional.IsDefined(NegateCondition))
             {
                 writer.WritePropertyName("negateCondition"u8);
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Cdn.Models
             DeliveryRuleConditionParametersType typeName = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string selector = default;
-            PostArgsOperator @operator = default;
+            PostArgsOperator postArgsOperator = default;
             bool? negateCondition = default;
             IList<string> matchValues = default;
             IList<PreTransformCategory> transforms = default;
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (prop.NameEquals("operator"u8))
                 {
-                    @operator = new PostArgsOperator(prop.Value.GetString());
+                    postArgsOperator = new PostArgsOperator(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("negateCondition"u8))
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 typeName,
                 additionalBinaryDataProperties,
                 selector,
-                @operator,
+                postArgsOperator,
                 negateCondition,
                 matchValues ?? new ChangeTrackingList<string>(),
                 transforms ?? new ChangeTrackingList<PreTransformCategory>());

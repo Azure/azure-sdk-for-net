@@ -94,15 +94,15 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WritePropertyName("mtlsSettings"u8);
                 writer.WriteObjectValue(MtlsSettings, options);
             }
-            if (Optional.IsDefined(AzureDnsZone))
+            if (Optional.IsDefined(DnsZone))
             {
                 writer.WritePropertyName("azureDnsZone"u8);
-                writer.WriteObjectValue(AzureDnsZone, options);
+                writer.WriteObjectValue(DnsZone, options);
             }
-            if (Optional.IsDefined(PreValidatedCustomDomainResourceId))
+            if (Optional.IsDefined(PreValidatedCustomDomainResource))
             {
                 writer.WritePropertyName("preValidatedCustomDomainResourceId"u8);
-                writer.WriteObjectValue(PreValidatedCustomDomainResourceId, options);
+                writer.WriteObjectValue(PreValidatedCustomDomainResource, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -187,8 +187,8 @@ namespace Azure.ResourceManager.Cdn.Models
             string profileName = default;
             FrontDoorCustomDomainHttpsContent tlsSettings = default;
             FrontDoorCustomDomainMtlsParameters mtlsSettings = default;
-            ResourceReference azureDnsZone = default;
-            ResourceReference preValidatedCustomDomainResourceId = default;
+            ResourceReference dnsZone = default;
+            ResourceReference preValidatedCustomDomainResource = default;
             FrontDoorProvisioningState? provisioningState = default;
             FrontDoorDeploymentStatus? deploymentStatus = default;
             DomainValidationState? domainValidationState = default;
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     {
                         continue;
                     }
-                    azureDnsZone = ResourceReference.DeserializeResourceReference(prop.Value, options);
+                    dnsZone = ResourceReference.DeserializeResourceReference(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("preValidatedCustomDomainResourceId"u8))
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     {
                         continue;
                     }
-                    preValidatedCustomDomainResourceId = ResourceReference.DeserializeResourceReference(prop.Value, options);
+                    preValidatedCustomDomainResource = ResourceReference.DeserializeResourceReference(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -310,8 +310,8 @@ namespace Azure.ResourceManager.Cdn.Models
                 profileName,
                 tlsSettings,
                 mtlsSettings,
-                azureDnsZone,
-                preValidatedCustomDomainResourceId,
+                dnsZone,
+                preValidatedCustomDomainResource,
                 provisioningState,
                 deploymentStatus,
                 domainValidationState,

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
@@ -39,12 +40,15 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Origin name which must be unique within the endpoint. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
 
         /// <summary> Properties of the origin created on the CDN endpoint. </summary>
+        [WirePath("properties")]
         internal DeepCreatedOriginProperties Properties { get; set; }
 
         /// <summary> The address of the origin. It can be a domain name, IPv4 address, or IPv6 address. This should be unique across all origins in an endpoint. </summary>
+        [WirePath("properties.hostName")]
         public string HostName
         {
             get
@@ -62,6 +66,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> The value of the HTTP port. Must be between 1 and 65535. </summary>
+        [WirePath("properties.httpPort")]
         public int? HttpPort
         {
             get
@@ -79,6 +84,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> The value of the HTTPS port. Must be between 1 and 65535. </summary>
+        [WirePath("properties.httpsPort")]
         public int? HttpsPort
         {
             get
@@ -96,6 +102,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> The host header value sent to the origin with each request. If you leave this blank, the request hostname determines this value. Azure CDN origins, such as Web Apps, Blob Storage, and Cloud Services require this host header value to match the origin hostname by default. </summary>
+        [WirePath("properties.originHostHeader")]
         public string OriginHostHeader
         {
             get
@@ -113,6 +120,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Priority of origin in given origin group for load balancing. Higher priorities will not be used for load balancing if any lower priority origin is healthy.Must be between 1 and 5. </summary>
+        [WirePath("properties.priority")]
         public int? Priority
         {
             get
@@ -130,6 +138,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Weight of the origin in given origin group for load balancing. Must be between 1 and 1000. </summary>
+        [WirePath("properties.weight")]
         public int? Weight
         {
             get
@@ -147,6 +156,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Origin is enabled for load balancing or not. By default, origin is always enabled. </summary>
+        [WirePath("properties.enabled")]
         public bool? Enabled
         {
             get
@@ -164,6 +174,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> The Alias of the Private Link resource. Populating this optional field indicates that this origin is 'Private'. </summary>
+        [WirePath("properties.privateLinkAlias")]
         public string PrivateLinkAlias
         {
             get
@@ -181,7 +192,8 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> The Resource Id of the Private Link resource. Populating this optional field indicates that this backend is 'Private'. </summary>
-        public string PrivateLinkResourceId
+        [WirePath("properties.privateLinkResourceId")]
+        public ResourceIdentifier PrivateLinkResourceId
         {
             get
             {
@@ -198,6 +210,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> The location of the Private Link resource. Required only if 'privateLinkResourceId' is populated. </summary>
+        [WirePath("properties.privateLinkLocation")]
         public string PrivateLinkLocation
         {
             get
@@ -215,6 +228,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> A custom message to be included in the approval request to connect to the Private Link. </summary>
+        [WirePath("properties.privateLinkApprovalMessage")]
         public string PrivateLinkApprovalMessage
         {
             get
@@ -232,6 +246,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> The approval status for the connection to the Private Link. </summary>
+        [WirePath("properties.privateEndpointStatus")]
         public PrivateEndpointStatus? PrivateEndpointStatus
         {
             get

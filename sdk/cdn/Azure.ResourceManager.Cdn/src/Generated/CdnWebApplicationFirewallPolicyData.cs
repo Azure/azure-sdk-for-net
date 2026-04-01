@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Cdn.Models;
 using Azure.ResourceManager.Models;
@@ -37,7 +38,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="properties"> Properties of the web application firewall policy. </param>
         /// <param name="eTag"> Gets a unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="sku"> The pricing tier (defines a CDN provider, feature list and rate) of the CdnWebApplicationFirewallPolicy. </param>
-        internal CdnWebApplicationFirewallPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, CdnWebApplicationFirewallPolicyProperties properties, string eTag, CdnSku sku) : base(id, name, resourceType, systemData, tags, location)
+        internal CdnWebApplicationFirewallPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, CdnWebApplicationFirewallPolicyProperties properties, ETag? eTag, CdnSku sku) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -46,15 +47,19 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Properties of the web application firewall policy. </summary>
+        [WirePath("properties")]
         internal CdnWebApplicationFirewallPolicyProperties Properties { get; set; }
 
         /// <summary> Gets a unique read-only string that changes whenever the resource is updated. </summary>
-        public string ETag { get; set; }
+        [WirePath("etag")]
+        public ETag? ETag { get; set; }
 
         /// <summary> The pricing tier (defines a CDN provider, feature list and rate) of the CdnWebApplicationFirewallPolicy. </summary>
+        [WirePath("sku")]
         internal CdnSku Sku { get; set; }
 
         /// <summary> Describes  policySettings for policy. </summary>
+        [WirePath("properties.policySettings")]
         public WafPolicySettings PolicySettings
         {
             get
@@ -72,6 +77,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Describes Azure CDN endpoints associated with this Web Application Firewall policy. </summary>
+        [WirePath("properties.endpointLinks")]
         public IReadOnlyList<CdnEndpointReference> EndpointLinks
         {
             get
@@ -85,6 +91,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Key-Value pair representing additional properties for Web Application Firewall policy. </summary>
+        [WirePath("properties.extendedProperties")]
         public IDictionary<string, string> ExtendedProperties
         {
             get
@@ -98,6 +105,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Provisioning state of the WebApplicationFirewallPolicy. </summary>
+        [WirePath("properties.provisioningState")]
         public WebApplicationFirewallPolicyProvisioningState? ProvisioningState
         {
             get
@@ -107,6 +115,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Resource status of the policy. </summary>
+        [WirePath("properties.resourceState")]
         public PolicyResourceState? ResourceState
         {
             get
@@ -116,6 +125,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> List of rules. </summary>
+        [WirePath("properties.rateLimitRules.rules")]
         public IList<RateLimitRule> RateLimitRules
         {
             get
@@ -129,6 +139,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> List of rules. </summary>
+        [WirePath("properties.customRules.rules")]
         public IList<CustomRule> CustomRules
         {
             get
@@ -142,6 +153,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> List of rule sets. </summary>
+        [WirePath("properties.managedRules.managedRuleSets")]
         public IList<WafPolicyManagedRuleSet> ManagedRuleSets
         {
             get
@@ -155,6 +167,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Name of the pricing tier. </summary>
+        [WirePath("sku.name")]
         public CdnSkuName? SkuName
         {
             get

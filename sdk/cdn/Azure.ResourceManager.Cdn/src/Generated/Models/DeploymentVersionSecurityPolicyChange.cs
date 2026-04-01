@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Contains properties required to create a security policy. </summary>
+        [WirePath("previousProperties")]
         public SecurityPolicyPropertiesWithEmbeddedWafPolicy PreviousProperties { get; }
 
         /// <summary> Contains properties required to create a security policy. </summary>
+        [WirePath("currentProperties")]
         public SecurityPolicyPropertiesWithEmbeddedWafPolicy CurrentProperties { get; }
     }
 }

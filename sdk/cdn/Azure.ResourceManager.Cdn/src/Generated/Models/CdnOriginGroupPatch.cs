@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -31,9 +32,11 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> The JSON object that contains the properties of the origin group. </summary>
+        [WirePath("properties")]
         internal OriginGroupUpdatePropertiesParameters Properties { get; set; }
 
         /// <summary> Health probe settings to the origin that is used to determine the health of the origin. </summary>
+        [WirePath("properties.healthProbeSettings")]
         public HealthProbeSettings HealthProbeSettings
         {
             get
@@ -51,6 +54,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> The source of the content being delivered via CDN within given origin group. </summary>
+        [WirePath("properties.origins")]
         public IList<ResourceReference> Origins
         {
             get
@@ -64,11 +68,12 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Time in minutes to shift the traffic to the endpoint gradually when an unhealthy endpoint comes healthy or a new endpoint is added. Default is 10 mins. This property is currently not supported. </summary>
-        public int? TrafficRestorationTimeToHealedOrNewEndpointsInMinutes
+        [WirePath("properties.trafficRestorationTimeToHealedOrNewEndpointsInMinutes")]
+        public int? TrafficRestorationTimeInMinutes
         {
             get
             {
-                return Properties is null ? default : Properties.TrafficRestorationTimeToHealedOrNewEndpointsInMinutes;
+                return Properties is null ? default : Properties.TrafficRestorationTimeInMinutes;
             }
             set
             {
@@ -76,11 +81,12 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     Properties = new OriginGroupUpdatePropertiesParameters();
                 }
-                Properties.TrafficRestorationTimeToHealedOrNewEndpointsInMinutes = value.Value;
+                Properties.TrafficRestorationTimeInMinutes = value.Value;
             }
         }
 
         /// <summary> The JSON object that contains the properties to determine origin health using real requests/responses. This property is currently not supported. </summary>
+        [WirePath("properties.responseBasedOriginErrorDetectionSettings")]
         public ResponseBasedOriginErrorDetectionSettings ResponseBasedOriginErrorDetectionSettings
         {
             get

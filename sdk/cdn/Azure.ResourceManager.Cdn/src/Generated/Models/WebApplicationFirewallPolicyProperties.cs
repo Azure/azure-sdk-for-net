@@ -49,30 +49,39 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Describes settings for the policy. </summary>
+        [WirePath("policySettings")]
         public PolicySettingsAfd PolicySettings { get; set; }
 
         /// <summary> Describes custom rules inside the policy. </summary>
+        [WirePath("customRules")]
         internal CustomRuleListAfd CustomSettings { get; set; }
 
         /// <summary> Describes managed rules inside the policy. </summary>
+        [WirePath("managedRules")]
         internal ManagedRuleSetListAfd ManagedRules { get; set; }
 
         /// <summary> Describes Frontend Endpoints associated with this Web Application Firewall policy. </summary>
+        [WirePath("frontendEndpointLinks")]
         public IReadOnlyList<FrontendEndpointLink> FrontendEndpointLinks { get; } = new ChangeTrackingList<FrontendEndpointLink>();
 
         /// <summary> Describes Routing Rules associated with this Web Application Firewall policy. </summary>
+        [WirePath("routingRuleLinks")]
         public IReadOnlyList<RoutingRuleLink> RoutingRuleLinks { get; } = new ChangeTrackingList<RoutingRuleLink>();
 
         /// <summary> Describes Security Policy associated with this Web Application Firewall policy. </summary>
+        [WirePath("securityPolicyLinks")]
         public IReadOnlyList<SecurityPolicyLink> SecurityPolicyLinks { get; } = new ChangeTrackingList<SecurityPolicyLink>();
 
         /// <summary> Provisioning state of the policy. </summary>
+        [WirePath("provisioningState")]
         public string ProvisioningState { get; }
 
         /// <summary> Gets the ResourceState. </summary>
+        [WirePath("resourceState")]
         public PolicyResourceState? ResourceState { get; }
 
         /// <summary> List of rules. </summary>
+        [WirePath("customRules.rules")]
         public IList<CustomRuleAfd> CustomRules
         {
             get
@@ -86,6 +95,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> List of rule sets. </summary>
+        [WirePath("managedRules.managedRuleSets")]
         public IList<ManagedRuleSetAfd> ManagedRuleSets
         {
             get

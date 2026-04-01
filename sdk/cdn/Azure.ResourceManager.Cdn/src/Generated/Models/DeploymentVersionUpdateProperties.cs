@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -31,6 +32,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Gets or sets the Description. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
     }
 }

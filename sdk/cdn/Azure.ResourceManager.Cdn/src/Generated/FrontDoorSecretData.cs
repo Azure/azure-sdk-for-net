@@ -38,9 +38,11 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> The JSON object that contains the properties of the Secret to create. </summary>
+        [WirePath("properties")]
         internal SecretDetails Properties { get; set; }
 
         /// <summary> Provisioning status. </summary>
+        [WirePath("properties.provisioningState")]
         public FrontDoorProvisioningState? ProvisioningState
         {
             get
@@ -50,6 +52,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Gets the DeploymentStatus. </summary>
+        [WirePath("properties.deploymentStatus")]
         public FrontDoorDeploymentStatus? DeploymentStatus
         {
             get
@@ -59,6 +62,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> The name of the profile which holds the secret. </summary>
+        [WirePath("properties.profileName")]
         public string ProfileName
         {
             get
@@ -68,6 +72,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> object which contains secret parameters. </summary>
+        [WirePath("properties.parameters")]
         public FrontDoorSecretProperties Parameters
         {
             get

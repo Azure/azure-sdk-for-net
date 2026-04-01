@@ -37,6 +37,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> the deployment version name to be compared to. </summary>
+        [WirePath("compareTo")]
         public string CompareTo { get; }
     }
 }

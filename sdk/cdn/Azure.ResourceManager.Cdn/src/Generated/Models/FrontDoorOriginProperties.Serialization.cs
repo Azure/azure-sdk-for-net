@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WritePropertyName("originGroupName"u8);
                 writer.WriteStringValue(OriginGroupName);
             }
-            if (Optional.IsDefined(AzureOrigin))
+            if (Optional.IsDefined(Origin))
             {
                 writer.WritePropertyName("azureOrigin"u8);
-                writer.WriteObjectValue(AzureOrigin, options);
+                writer.WriteObjectValue(Origin, options);
             }
             if (Optional.IsDefined(HostName))
             {
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 return null;
             }
             string originGroupName = default;
-            ResourceReference azureOrigin = default;
+            ResourceReference origin = default;
             string hostName = default;
             int? httpPort = default;
             int? httpsPort = default;
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     {
                         continue;
                     }
-                    azureOrigin = ResourceReference.DeserializeResourceReference(prop.Value, options);
+                    origin = ResourceReference.DeserializeResourceReference(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("hostName"u8))
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             return new FrontDoorOriginProperties(
                 originGroupName,
-                azureOrigin,
+                origin,
                 hostName,
                 httpPort,
                 httpsPort,

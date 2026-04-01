@@ -36,9 +36,11 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Cipher suites for TLS 1.2. Required at least one in minimumTlsVersion TLS 1.2. </summary>
+        [WirePath("cipherSuiteSetForTls12")]
         public IList<AfdCustomizedCipherSuiteForTls12> CipherSuiteSetForTls12 { get; }
 
         /// <summary> Cipher suites for TLS 1.3. Required at least one in minimumTlsVersion TLS 1.2, TLS 1.3. </summary>
+        [WirePath("cipherSuiteSetForTls13")]
         public IList<AfdCustomizedCipherSuiteForTls13> CipherSuiteSetForTls13 { get; }
     }
 }

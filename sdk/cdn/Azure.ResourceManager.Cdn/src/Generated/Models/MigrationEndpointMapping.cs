@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Name of the classic CDN profile endpoint. </summary>
+        [WirePath("migratedFrom")]
         public string MigratedFrom { get; set; }
 
         /// <summary> Name of the newly created migrated Azure Frontdoor Standard/Premium profile endpoint. This name will replace the name of the classic CDN endpoint resource. </summary>
+        [WirePath("migratedTo")]
         public string MigratedTo { get; set; }
     }
 }

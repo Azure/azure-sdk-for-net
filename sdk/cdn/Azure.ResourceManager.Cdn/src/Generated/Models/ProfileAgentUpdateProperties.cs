@@ -33,6 +33,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> List of custom domains associated with this agent link. </summary>
+        [WirePath("customDomains")]
         public IList<ResourceReference> CustomDomains { get; } = new ChangeTrackingList<ResourceReference>();
     }
 }

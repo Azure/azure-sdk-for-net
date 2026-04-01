@@ -38,9 +38,11 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> The JSON object that contains the properties of the origin. </summary>
+        [WirePath("properties")]
         internal FrontDoorOriginProperties Properties { get; set; }
 
         /// <summary> The name of the origin group which contains this origin. </summary>
+        [WirePath("properties.originGroupName")]
         public string OriginGroupName
         {
             get
@@ -50,6 +52,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> The address of the origin. Domain names, IPv4 addresses, and IPv6 addresses are supported.This should be unique across all origins in an endpoint. </summary>
+        [WirePath("properties.hostName")]
         public string HostName
         {
             get
@@ -67,6 +70,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> The value of the HTTP port. Must be between 1 and 65535. </summary>
+        [WirePath("properties.httpPort")]
         public int? HttpPort
         {
             get
@@ -84,6 +88,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> The value of the HTTPS port. Must be between 1 and 65535. </summary>
+        [WirePath("properties.httpsPort")]
         public int? HttpsPort
         {
             get
@@ -101,6 +106,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> The host header value sent to the origin with each request. If you leave this blank, the request hostname determines this value. Azure Front Door origins, such as Web Apps, Blob Storage, and Cloud Services require this host header value to match the origin hostname by default. This overrides the host header defined at Endpoint. </summary>
+        [WirePath("properties.originHostHeader")]
         public string OriginHostHeader
         {
             get
@@ -118,6 +124,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Priority of origin in given origin group for load balancing. Higher priorities will not be used for load balancing if any lower priority origin is healthy.Must be between 1 and 5. </summary>
+        [WirePath("properties.priority")]
         public int? Priority
         {
             get
@@ -135,6 +142,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Weight of the origin in given origin group for load balancing. Must be between 1 and 1000. </summary>
+        [WirePath("properties.weight")]
         public int? Weight
         {
             get
@@ -152,6 +160,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> The properties of the private link resource for private origin. </summary>
+        [WirePath("properties.sharedPrivateLinkResource")]
         public SharedPrivateLinkResourceProperties SharedPrivateLinkResource
         {
             get
@@ -169,6 +178,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Origin capacity settings for an origin. </summary>
+        [WirePath("properties.originCapacityResource")]
         public OriginCapacityResourceProperties OriginCapacityResource
         {
             get
@@ -186,6 +196,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Whether to enable health probes to be made against backends defined under backendPools. Health probes can only be disabled if there is a single enabled backend in single enabled backend pool. </summary>
+        [WirePath("properties.enabledState")]
         public EnabledState? EnabledState
         {
             get
@@ -203,6 +214,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Whether to enable certificate name check at origin level. </summary>
+        [WirePath("properties.enforceCertificateNameCheck")]
         public bool? EnforceCertificateNameCheck
         {
             get
@@ -220,6 +232,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Provisioning status. </summary>
+        [WirePath("properties.provisioningState")]
         public FrontDoorProvisioningState? ProvisioningState
         {
             get
@@ -229,6 +242,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Gets the DeploymentStatus. </summary>
+        [WirePath("properties.deploymentStatus")]
         public FrontDoorDeploymentStatus? DeploymentStatus
         {
             get
@@ -238,11 +252,12 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Resource ID. </summary>
-        public string AzureOriginId
+        [WirePath("properties.azureOrigin.id")]
+        public ResourceIdentifier OriginId
         {
             get
             {
-                return Properties is null ? default : Properties.AzureOriginId;
+                return Properties is null ? default : Properties.OriginId;
             }
             set
             {
@@ -250,7 +265,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     Properties = new FrontDoorOriginProperties();
                 }
-                Properties.AzureOriginId = value;
+                Properties.OriginId = value;
             }
         }
     }

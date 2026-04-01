@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WritePropertyName("profileName"u8);
                 writer.WriteStringValue(ProfileName);
             }
-            if (Optional.IsDefined(Parameters))
+            if (Optional.IsDefined(SecurityPolicyParameters))
             {
                 writer.WritePropertyName("parameters"u8);
-                writer.WriteObjectValue(Parameters, options);
+                writer.WriteObjectValue(SecurityPolicyParameters, options);
             }
         }
 
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Cdn.Models
             FrontDoorDeploymentStatus? deploymentStatus = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string profileName = default;
-            SecurityPolicyProperties parameters = default;
+            SecurityPolicyProperties securityPolicyParameters = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("provisioningState"u8))
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     {
                         continue;
                     }
-                    parameters = SecurityPolicyProperties.DeserializeSecurityPolicyProperties(prop.Value, options);
+                    securityPolicyParameters = SecurityPolicyProperties.DeserializeSecurityPolicyProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SecurityPolicyDetails(provisioningState, deploymentStatus, additionalBinaryDataProperties, profileName, parameters);
+            return new SecurityPolicyDetails(provisioningState, deploymentStatus, additionalBinaryDataProperties, profileName, securityPolicyParameters);
         }
     }
 }

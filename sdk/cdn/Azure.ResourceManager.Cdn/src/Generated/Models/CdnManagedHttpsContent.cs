@@ -37,6 +37,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Defines the certificate source parameters using CDN managed certificate for enabling SSL. </summary>
+        [WirePath("certificateSourceParameters")]
         public CdnCertificateSource CertificateSourceParameters { get; set; }
     }
 }

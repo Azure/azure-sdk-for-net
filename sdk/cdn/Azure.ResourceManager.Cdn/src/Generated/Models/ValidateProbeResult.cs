@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -35,12 +36,15 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Indicates whether the probe URL is accepted or not. </summary>
+        [WirePath("isValid")]
         public bool? IsValid { get; }
 
         /// <summary> Specifies the error code when the probe url is not accepted. </summary>
+        [WirePath("errorCode")]
         public string ErrorCode { get; }
 
         /// <summary> The detailed error message describing why the probe URL is not accepted. </summary>
+        [WirePath("message")]
         public string Message { get; }
     }
 }

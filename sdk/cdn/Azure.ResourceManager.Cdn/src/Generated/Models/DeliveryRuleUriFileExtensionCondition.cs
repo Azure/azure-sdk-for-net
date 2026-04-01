@@ -34,6 +34,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Defines the parameters for the condition. </summary>
+        [WirePath("parameters")]
         public UriFileExtensionMatchCondition Parameters { get; set; }
     }
 }

@@ -47,15 +47,19 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Defines the rule set type to use. </summary>
+        [WirePath("ruleSetType")]
         public string RuleSetType { get; set; }
 
         /// <summary> Defines the version of the rule set to use. </summary>
+        [WirePath("ruleSetVersion")]
         public string RuleSetVersion { get; set; }
 
         /// <summary> Verizon only : If the rule set supports anomaly detection mode, this describes the threshold for blocking requests. </summary>
+        [WirePath("anomalyScore")]
         public int? AnomalyScore { get; set; }
 
         /// <summary> Defines the rule overrides to apply to the rule set. </summary>
+        [WirePath("ruleGroupOverrides")]
         public IList<ManagedRuleGroupOverrideSetting> RuleGroupOverrides { get; }
     }
 }

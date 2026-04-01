@@ -60,21 +60,27 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> The host name of the endpoint structured as {endpointName}.{DNSZone}, e.g. contoso.azureedge.net. </summary>
+        [WirePath("hostName")]
         public string HostName { get; }
 
         /// <summary> The source of the content being delivered via CDN. </summary>
+        [WirePath("origins")]
         public IList<DeepCreatedOrigin> Origins { get; } = new ChangeTrackingList<DeepCreatedOrigin>();
 
         /// <summary> The origin groups comprising of origins that are used for load balancing the traffic based on availability. </summary>
+        [WirePath("originGroups")]
         public IList<DeepCreatedOriginGroup> OriginGroups { get; } = new ChangeTrackingList<DeepCreatedOriginGroup>();
 
         /// <summary> The custom domains under the endpoint. </summary>
+        [WirePath("customDomains")]
         public IList<DeepCreatedCustomDomain> CustomDomains { get; } = new ChangeTrackingList<DeepCreatedCustomDomain>();
 
         /// <summary> Resource status of the endpoint. </summary>
+        [WirePath("resourceState")]
         public EndpointResourceState? ResourceState { get; }
 
         /// <summary> Provisioning status of the endpoint. </summary>
+        [WirePath("provisioningState")]
         public CdnEndpointProvisioningState? ProvisioningState { get; }
     }
 }

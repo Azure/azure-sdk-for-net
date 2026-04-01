@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -31,9 +32,11 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> The JSON object that contains the properties of the rule to update. </summary>
+        [WirePath("properties")]
         internal RuleUpdatePropertiesParameters Properties { get; set; }
 
         /// <summary> The name of the rule set containing the rule. </summary>
+        [WirePath("properties.ruleSetName")]
         public string RuleSetName
         {
             get
@@ -43,6 +46,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> The order in which the rules are applied for the endpoint. Possible values {0,1,2,3,………}. A rule with a lesser order will be applied before a rule with a greater order. Rule with order 0 is a special rule. It does not require any condition and actions listed in it will always be applied. </summary>
+        [WirePath("properties.order")]
         public int? Order
         {
             get
@@ -60,6 +64,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> A list of conditions that must be matched for the actions to be executed. </summary>
+        [WirePath("properties.conditions")]
         public IList<DeliveryRuleCondition> Conditions
         {
             get
@@ -73,6 +78,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> A list of actions that are executed when all the conditions of a rule are satisfied. </summary>
+        [WirePath("properties.actions")]
         public IList<DeliveryRuleAction> Actions
         {
             get
@@ -86,6 +92,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> If this rule is a match should the rules engine continue running the remaining rules or stop. If not present, defaults to Continue. </summary>
+        [WirePath("properties.matchProcessingBehavior")]
         public MatchProcessingBehavior? MatchProcessingBehavior
         {
             get

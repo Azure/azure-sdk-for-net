@@ -38,9 +38,11 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> The JSON object that contains the properties of the custom domain to create. </summary>
+        [WirePath("properties")]
         internal CustomDomainProperties Properties { get; }
 
         /// <summary> The host name of the custom domain. Must be a domain name. </summary>
+        [WirePath("properties.hostName")]
         public string HostName
         {
             get
@@ -50,6 +52,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Resource status of the custom domain. </summary>
+        [WirePath("properties.resourceState")]
         public CustomDomainResourceState? ResourceState
         {
             get
@@ -59,6 +62,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Provisioning status of the custom domain. </summary>
+        [WirePath("properties.customHttpsProvisioningState")]
         public CustomHttpsProvisioningState? CustomHttpsProvisioningState
         {
             get
@@ -68,24 +72,27 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Provisioning substate shows the progress of custom HTTPS enabling/disabling process step by step. </summary>
-        public CustomHttpsAvailabilityState? CustomHttpsProvisioningSubstate
+        [WirePath("properties.customHttpsProvisioningSubstate")]
+        public CustomHttpsAvailabilityState? CustomHttpsAvailabilityState
         {
             get
             {
-                return Properties.CustomHttpsProvisioningSubstate;
+                return Properties.CustomHttpsAvailabilityState;
             }
         }
 
         /// <summary> Certificate parameters for securing custom HTTPS. </summary>
-        public CustomDomainHttpsContent CustomHttpsParameters
+        [WirePath("properties.customHttpsParameters")]
+        public CustomDomainHttpsContent CustomDomainHttpsContent
         {
             get
             {
-                return Properties.CustomHttpsParameters;
+                return Properties.CustomDomainHttpsContent;
             }
         }
 
         /// <summary> Special validation or data may be required when delivering CDN to some regions due to local compliance reasons. E.g. ICP license number of a custom domain is required to deliver content in China. </summary>
+        [WirePath("properties.validationData")]
         public string ValidationData
         {
             get
@@ -95,6 +102,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Provisioning status of Custom Https of the custom domain. </summary>
+        [WirePath("properties.provisioningState")]
         public CustomHttpsProvisioningState? ProvisioningState
         {
             get

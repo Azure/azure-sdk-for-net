@@ -35,9 +35,11 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> State of the log scrubbing config. Default value is Enabled. </summary>
+        [WirePath("state")]
         public ProfileScrubbingState? State { get; set; }
 
         /// <summary> List of log scrubbing rules applied to the Azure Front Door profile logs. </summary>
+        [WirePath("scrubbingRules")]
         public IList<ProfileScrubbingRules> ScrubbingRules { get; }
     }
 }

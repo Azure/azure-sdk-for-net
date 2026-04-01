@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
@@ -39,13 +40,16 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> The security policy name. </summary>
+        [WirePath("securityPolicyName")]
         public string SecurityPolicyName { get; }
 
         /// <summary> The new waf resource for the security policy to use. </summary>
+        [WirePath("changeToWafPolicy")]
         internal ResourceReference ChangeToWafPolicy { get; }
 
         /// <summary> Resource ID. </summary>
-        public string ChangeToWafPolicyId
+        [WirePath("changeToWafPolicy.id")]
+        public ResourceIdentifier ChangeToWafPolicyId
         {
             get
             {

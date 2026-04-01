@@ -40,15 +40,19 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Gets the Metric. </summary>
+        [WirePath("metric")]
         public string Metric { get; }
 
         /// <summary> Gets the Unit. </summary>
+        [WirePath("unit")]
         public MetricsResponseSeriesItemUnit? Unit { get; }
 
         /// <summary> Gets the Groups. </summary>
+        [WirePath("groups")]
         public IReadOnlyList<MetricsResponseSeriesPropertiesItemsItem> Groups { get; }
 
         /// <summary> Gets the Data. </summary>
+        [WirePath("data")]
         public IReadOnlyList<Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems> Data { get; }
     }
 }

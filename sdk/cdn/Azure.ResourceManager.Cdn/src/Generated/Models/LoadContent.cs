@@ -38,6 +38,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> The path to the content to be loaded. Path should be a relative file URL of the origin. </summary>
+        [WirePath("contentPaths")]
         public IList<string> ContentPaths { get; }
     }
 }

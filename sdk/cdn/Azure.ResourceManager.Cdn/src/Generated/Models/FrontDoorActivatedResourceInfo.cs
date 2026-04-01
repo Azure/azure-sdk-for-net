@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -25,7 +27,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="id"> Resource ID. </param>
         /// <param name="isActive"> Whether the resource is active or inactive. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FrontDoorActivatedResourceInfo(string id, bool? isActive, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FrontDoorActivatedResourceInfo(ResourceIdentifier id, bool? isActive, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             IsActive = isActive;
@@ -33,9 +35,11 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Resource ID. </summary>
-        public string Id { get; set; }
+        [WirePath("id")]
+        public ResourceIdentifier Id { get; set; }
 
         /// <summary> Whether the resource is active or inactive. </summary>
+        [WirePath("isActive")]
         public bool? IsActive { get; }
     }
 }

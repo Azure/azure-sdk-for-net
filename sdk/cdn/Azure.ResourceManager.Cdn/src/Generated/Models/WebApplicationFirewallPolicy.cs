@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Cdn;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
@@ -41,15 +42,19 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Properties of the web application firewall policy. </summary>
+        [WirePath("properties")]
         internal WebApplicationFirewallPolicyProperties Properties { get; set; }
 
         /// <summary> Gets a unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public string ETag { get; set; }
 
         /// <summary> The pricing tier of web application firewall policy. Defaults to Classic_AzureFrontDoor if not specified. </summary>
+        [WirePath("sku")]
         internal CdnSku Sku { get; set; }
 
         /// <summary> Describes settings for the policy. </summary>
+        [WirePath("properties.policySettings")]
         public PolicySettingsAfd PolicySettings
         {
             get
@@ -67,6 +72,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Describes Frontend Endpoints associated with this Web Application Firewall policy. </summary>
+        [WirePath("properties.frontendEndpointLinks")]
         public IReadOnlyList<FrontendEndpointLink> FrontendEndpointLinks
         {
             get
@@ -80,6 +86,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Describes Routing Rules associated with this Web Application Firewall policy. </summary>
+        [WirePath("properties.routingRuleLinks")]
         public IReadOnlyList<RoutingRuleLink> RoutingRuleLinks
         {
             get
@@ -93,6 +100,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Describes Security Policy associated with this Web Application Firewall policy. </summary>
+        [WirePath("properties.securityPolicyLinks")]
         public IReadOnlyList<SecurityPolicyLink> SecurityPolicyLinks
         {
             get
@@ -106,6 +114,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Provisioning state of the policy. </summary>
+        [WirePath("properties.provisioningState")]
         public string ProvisioningState
         {
             get
@@ -115,6 +124,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Gets the ResourceState. </summary>
+        [WirePath("properties.resourceState")]
         public PolicyResourceState? ResourceState
         {
             get
@@ -124,6 +134,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> List of rules. </summary>
+        [WirePath("properties.customRules.rules")]
         public IList<CustomRuleAfd> CustomRules
         {
             get
@@ -137,6 +148,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> List of rule sets. </summary>
+        [WirePath("properties.managedRules.managedRuleSets")]
         public IList<ManagedRuleSetAfd> ManagedRuleSets
         {
             get
@@ -150,6 +162,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Name of the pricing tier. </summary>
+        [WirePath("sku.name")]
         public CdnSkuName? SkuName
         {
             get

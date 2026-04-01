@@ -38,15 +38,19 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Profile tags. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> Managed service identity (system assigned and/or user assigned identities). </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> The JSON object containing profile update parameters. </summary>
+        [WirePath("properties")]
         internal ProfilePropertiesUpdateParameters Properties { get; set; }
 
         /// <summary> Send and receive timeout on forwarding request to the origin. When timeout is reached, the request fails and returns. </summary>
+        [WirePath("properties.originResponseTimeoutSeconds")]
         public int? OriginResponseTimeoutSeconds
         {
             get
@@ -64,6 +68,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Defines rules to scrub sensitive fields in logs. </summary>
+        [WirePath("properties.logScrubbing")]
         public ProfileLogScrubbing LogScrubbing
         {
             get

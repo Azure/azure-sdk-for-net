@@ -40,9 +40,11 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> User-friendly description of the policy. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
 
         /// <summary> A list of the delivery rules. </summary>
+        [WirePath("rules")]
         public IList<DeliveryRule> Rules { get; }
     }
 }

@@ -16,11 +16,6 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Customer Certificate used for https. </summary>
     public partial class CustomerCertificateProperties : FrontDoorSecretProperties, IJsonModel<CustomerCertificateProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="CustomerCertificateProperties"/> for deserialization. </summary>
-        internal CustomerCertificateProperties()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override FrontDoorSecretProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

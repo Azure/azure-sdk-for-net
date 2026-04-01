@@ -35,12 +35,15 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Web agent tags. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> Properties of the web agent to be updated. </summary>
+        [WirePath("properties")]
         internal WebAgentPropertiesUpdateParameters Properties { get; set; }
 
         /// <summary> Optional textual description of the agent. </summary>
+        [WirePath("properties.description")]
         public string Description
         {
             get
@@ -58,6 +61,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> System prompt for the web agent. </summary>
+        [WirePath("properties.systemPrompt")]
         public string SystemPrompt
         {
             get
@@ -75,6 +79,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> List of paths associated with the web agent. </summary>
+        [WirePath("properties.paths")]
         public IList<AgentPath> Paths
         {
             get

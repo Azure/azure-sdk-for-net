@@ -33,6 +33,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> CdnWebApplicationFirewallPolicy tags. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
     }
 }

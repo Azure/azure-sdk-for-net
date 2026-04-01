@@ -37,12 +37,15 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Names of UrlSigningKey type secret objects. </summary>
+        [WirePath("keyReferences")]
         public IList<ResourceReference> KeyReferences { get; } = new ChangeTrackingList<ResourceReference>();
 
         /// <summary> Provisioning status. </summary>
+        [WirePath("provisioningState")]
         public FrontDoorProvisioningState? ProvisioningState { get; }
 
         /// <summary> Gets the DeploymentStatus. </summary>
+        [WirePath("deploymentStatus")]
         public FrontDoorDeploymentStatus? DeploymentStatus { get; }
     }
 }

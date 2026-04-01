@@ -36,9 +36,11 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Gets the Continents. </summary>
+        [WirePath("continents")]
         public IReadOnlyList<ContinentsResponseContinentsItem> Continents { get; }
 
         /// <summary> Gets the CountryOrRegions. </summary>
+        [WirePath("countryOrRegions")]
         public IReadOnlyList<ContinentsResponseCountryOrRegionsItem> CountryOrRegions { get; }
     }
 }

@@ -33,6 +33,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Supported optimization types for a profile. </summary>
+        [WirePath("supportedOptimizationTypes")]
         public IReadOnlyList<OptimizationType> SupportedOptimizationTypes { get; }
     }
 }

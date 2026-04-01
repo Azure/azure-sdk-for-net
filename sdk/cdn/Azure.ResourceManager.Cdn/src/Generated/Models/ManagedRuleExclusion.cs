@@ -45,12 +45,15 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> The variable type to be excluded. </summary>
+        [WirePath("matchVariable")]
         public ManagedRuleExclusionMatchVariable MatchVariable { get; set; }
 
         /// <summary> Comparison operator to apply to the selector when specifying which elements in the collection this exclusion applies to. </summary>
+        [WirePath("selectorMatchOperator")]
         public ManagedRuleExclusionSelectorMatchOperator SelectorMatchOperator { get; set; }
 
         /// <summary> Selector value for which elements in the collection this exclusion applies to. </summary>
+        [WirePath("selector")]
         public string Selector { get; set; }
     }
 }

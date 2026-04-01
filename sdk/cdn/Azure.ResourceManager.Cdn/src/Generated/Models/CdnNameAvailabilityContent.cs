@@ -19,31 +19,33 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Initializes a new instance of <see cref="CdnNameAvailabilityContent"/>. </summary>
         /// <param name="name"> The resource name to validate. </param>
-        /// <param name="type"> The type of the resource whose name is to be validated. </param>
+        /// <param name="resourceType"> The type of the resource whose name is to be validated. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public CdnNameAvailabilityContent(string name, CdnResourceType @type)
+        public CdnNameAvailabilityContent(string name, CdnResourceType resourceType)
         {
             Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
-            Type = @type;
+            ResourceType = resourceType;
         }
 
         /// <summary> Initializes a new instance of <see cref="CdnNameAvailabilityContent"/>. </summary>
         /// <param name="name"> The resource name to validate. </param>
-        /// <param name="type"> The type of the resource whose name is to be validated. </param>
+        /// <param name="resourceType"> The type of the resource whose name is to be validated. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CdnNameAvailabilityContent(string name, CdnResourceType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CdnNameAvailabilityContent(string name, CdnResourceType resourceType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
-            Type = @type;
+            ResourceType = resourceType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The resource name to validate. </summary>
+        [WirePath("name")]
         public string Name { get; }
 
         /// <summary> The type of the resource whose name is to be validated. </summary>
-        public CdnResourceType Type { get; }
+        [WirePath("type")]
+        public CdnResourceType ResourceType { get; }
     }
 }

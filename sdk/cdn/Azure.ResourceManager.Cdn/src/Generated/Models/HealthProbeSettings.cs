@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -37,15 +38,19 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> The path relative to the origin that is used to determine the health of the origin. </summary>
+        [WirePath("probePath")]
         public string ProbePath { get; set; }
 
         /// <summary> The type of health probe request that is made. </summary>
+        [WirePath("probeRequestType")]
         public HealthProbeRequestType? ProbeRequestType { get; set; }
 
         /// <summary> Protocol to use for health probe. </summary>
+        [WirePath("probeProtocol")]
         public HealthProbeProtocol? ProbeProtocol { get; set; }
 
         /// <summary> The number of seconds between health probes.Default is 240sec. </summary>
+        [WirePath("probeIntervalInSeconds")]
         public int? ProbeIntervalInSeconds { get; set; }
     }
 }

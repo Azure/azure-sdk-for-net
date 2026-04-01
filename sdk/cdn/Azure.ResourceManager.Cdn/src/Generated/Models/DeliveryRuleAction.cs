@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -36,6 +37,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> The name of the action for the delivery rule. </summary>
+        [WirePath("name")]
         internal DeliveryRuleActionName Name { get; set; }
     }
 }

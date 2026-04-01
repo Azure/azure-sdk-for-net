@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -37,15 +38,19 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Resource type for which the usage is provided. </summary>
+        [WirePath("resourceType")]
         public string ResourceType { get; }
 
         /// <summary> Unit of the usage. e.g. count. </summary>
+        [WirePath("unit")]
         public CdnUsageUnit? Unit { get; }
 
         /// <summary> Actual value of usage on the specified resource type. </summary>
+        [WirePath("currentValue")]
         public int? CurrentValue { get; }
 
         /// <summary> Quota of the specified resource type. </summary>
+        [WirePath("limit")]
         public int? Limit { get; }
     }
 }

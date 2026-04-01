@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -45,6 +46,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Name of the pricing tier. </summary>
+        [WirePath("name")]
         public CdnSkuName? Name { get; set; }
     }
 }

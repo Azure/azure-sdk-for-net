@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -36,9 +37,11 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> The EdgeNode items on this page. </summary>
+        [WirePath("value")]
         public IList<EdgeNode> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
+        [WirePath("nextLink")]
         public Uri NextLink { get; }
     }
 }

@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.Cdn
             return message;
         }
 
-        internal HttpMessage CreateGetResourceUsageRequest(Guid subscriptionId, string resourceGroupName, string profileName, string endpointName, RequestContext context)
+        internal HttpMessage CreateGetResourceUsagesRequest(Guid subscriptionId, string resourceGroupName, string profileName, string endpointName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.Cdn
             return message;
         }
 
-        internal HttpMessage CreateNextGetResourceUsageRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string profileName, string endpointName, RequestContext context)
+        internal HttpMessage CreateNextGetResourceUsagesRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string profileName, string endpointName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

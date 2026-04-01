@@ -61,21 +61,27 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Gets or sets the TypeName. </summary>
+        [WirePath("typeName")]
         public KeyVaultSigningKeyType TypeName { get; set; }
 
         /// <summary> Subscription Id of the user's Key Vault containing the secret. </summary>
+        [WirePath("subscriptionId")]
         public string SubscriptionId { get; set; }
 
         /// <summary> Resource group of the user's Key Vault containing the secret. </summary>
+        [WirePath("resourceGroupName")]
         public string ResourceGroupName { get; set; }
 
         /// <summary> The name of the user's Key Vault containing the secret. </summary>
+        [WirePath("vaultName")]
         public string VaultName { get; set; }
 
         /// <summary> The name of secret in Key Vault. </summary>
+        [WirePath("secretName")]
         public string SecretName { get; set; }
 
         /// <summary> The version(GUID) of secret in Key Vault. </summary>
+        [WirePath("secretVersion")]
         public string SecretVersion { get; set; }
     }
 }

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -36,16 +37,20 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Resource ID. </summary>
+        [WirePath("id")]
         public ResourceIdentifier Id { get; }
 
         /// <summary> Resource type. </summary>
+        [WirePath("type")]
         public string Type { get; }
 
         /// <summary> Gets the Properties. </summary>
+        [WirePath("properties")]
         internal MigrateResultProperties Properties { get; }
 
         /// <summary> Resource ID. </summary>
-        public string MigratedProfileResourceIdId
+        [WirePath("properties.migratedProfileResourceId.id")]
+        public ResourceIdentifier MigratedProfileResourceIdId
         {
             get
             {

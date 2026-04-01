@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> A string describing the resource name. </summary>
+        [WirePath("value")]
         public string Value { get; }
 
         /// <summary> A localized string describing the resource name. </summary>
+        [WirePath("localizedValue")]
         public string LocalizedValue { get; }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Send and receive timeout on forwarding request to the origin. When timeout is reached, the request fails and returns. </summary>
+        [WirePath("originResponseTimeoutSeconds")]
         public int? OriginResponseTimeoutSeconds { get; set; }
 
         /// <summary> Defines rules to scrub sensitive fields in logs. </summary>
+        [WirePath("logScrubbing")]
         public ProfileLogScrubbing LogScrubbing { get; set; }
     }
 }

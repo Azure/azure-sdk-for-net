@@ -37,9 +37,11 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> The SecurityPolicy items on this page. </summary>
+        [WirePath("value")]
         public IList<FrontDoorSecurityPolicyData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
+        [WirePath("nextLink")]
         public Uri NextLink { get; }
     }
 }

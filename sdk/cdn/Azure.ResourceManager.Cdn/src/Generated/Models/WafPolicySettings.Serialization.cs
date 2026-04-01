@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Cdn.Models
             if (Optional.IsDefined(DefaultRedirectUri))
             {
                 writer.WritePropertyName("defaultRedirectUrl"u8);
-                writer.WriteStringValue(DefaultRedirectUri);
+                writer.WriteStringValue(DefaultRedirectUri.AbsoluteUri);
             }
             if (Optional.IsDefined(DefaultCustomBlockResponseStatusCode))
             {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Cdn.Models
             if (Optional.IsDefined(DefaultCustomBlockResponseBody))
             {
                 writer.WritePropertyName("defaultCustomBlockResponseBody"u8);
-                writer.WriteStringValue(DefaultCustomBlockResponseBody);
+                writer.WriteBase64StringValue(DefaultCustomBlockResponseBody.ToArray(), "D");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -143,9 +143,9 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             PolicyEnabledState? enabledState = default;
             PolicyMode? mode = default;
-            string defaultRedirectUri = default;
+            Uri defaultRedirectUri = default;
             PolicySettingsDefaultCustomBlockResponseStatusCode? defaultCustomBlockResponseStatusCode = default;
-            string defaultCustomBlockResponseBody = default;
+            BinaryData defaultCustomBlockResponseBody = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -169,7 +169,11 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (prop.NameEquals("defaultRedirectUrl"u8))
                 {
-                    defaultRedirectUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    defaultRedirectUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("defaultCustomBlockResponseStatusCode"u8))
@@ -183,7 +187,11 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (prop.NameEquals("defaultCustomBlockResponseBody"u8))
                 {
-                    defaultCustomBlockResponseBody = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    defaultCustomBlockResponseBody = BinaryData.FromBytes(prop.Value.GetBytesFromBase64("D"));
                     continue;
                 }
                 if (options.Format != "W")

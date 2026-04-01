@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 throw new FormatException($"The model {nameof(ResponseBasedOriginErrorDetectionSettings)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(ResponseBasedDetectedErrorTypes))
+            if (Optional.IsDefined(ResponseBasedDetectedErrorType))
             {
                 writer.WritePropertyName("responseBasedDetectedErrorTypes"u8);
-                writer.WriteStringValue(ResponseBasedDetectedErrorTypes.Value.ToSerialString());
+                writer.WriteStringValue(ResponseBasedDetectedErrorType.Value.ToSerialString());
             }
             if (Optional.IsDefined(ResponseBasedFailoverThresholdPercentage))
             {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            ResponseBasedDetectedErrorType? responseBasedDetectedErrorTypes = default;
+            ResponseBasedDetectedErrorType? responseBasedDetectedErrorType = default;
             int? responseBasedFailoverThresholdPercentage = default;
             IList<HttpErrorRange> httpErrorRanges = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     {
                         continue;
                     }
-                    responseBasedDetectedErrorTypes = prop.Value.GetString().ToResponseBasedDetectedErrorType();
+                    responseBasedDetectedErrorType = prop.Value.GetString().ToResponseBasedDetectedErrorType();
                     continue;
                 }
                 if (prop.NameEquals("responseBasedFailoverThresholdPercentage"u8))
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ResponseBasedOriginErrorDetectionSettings(responseBasedDetectedErrorTypes, responseBasedFailoverThresholdPercentage, httpErrorRanges ?? new ChangeTrackingList<HttpErrorRange>(), additionalBinaryDataProperties);
+            return new ResponseBasedOriginErrorDetectionSettings(responseBasedDetectedErrorType, responseBasedFailoverThresholdPercentage, httpErrorRanges ?? new ChangeTrackingList<HttpErrorRange>(), additionalBinaryDataProperties);
         }
     }
 }

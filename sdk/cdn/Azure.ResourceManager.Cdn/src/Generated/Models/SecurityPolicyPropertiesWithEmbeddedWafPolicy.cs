@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -31,9 +32,11 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> The name of the profile which holds the security policy. </summary>
+        [WirePath("profileName")]
         public string ProfileName { get; }
 
         /// <summary> object which contains security policy parameters. </summary>
+        [WirePath("parameters")]
         public SecurityPolicyWebApplicationFirewallParametersWithEmbeddedWafPolicy Parameters { get; }
     }
 }

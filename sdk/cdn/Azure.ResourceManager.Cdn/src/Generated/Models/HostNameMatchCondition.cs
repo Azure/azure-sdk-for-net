@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class HostNameMatchCondition : DeliveryRuleConditionProperties
     {
         /// <summary> Initializes a new instance of <see cref="HostNameMatchCondition"/>. </summary>
-        /// <param name="operator"> Describes operator to be matched. </param>
-        public HostNameMatchCondition(HostNameOperator @operator) : base(DeliveryRuleConditionParametersType.DeliveryRuleHostNameConditionParameters)
+        /// <param name="hostNameOperator"> Describes operator to be matched. </param>
+        public HostNameMatchCondition(HostNameOperator hostNameOperator) : base(DeliveryRuleConditionParametersType.DeliveryRuleHostNameConditionParameters)
         {
-            Operator = @operator;
+            HostNameOperator = hostNameOperator;
             MatchValues = new ChangeTrackingList<string>();
             Transforms = new ChangeTrackingList<PreTransformCategory>();
         }
@@ -26,28 +26,32 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of <see cref="HostNameMatchCondition"/>. </summary>
         /// <param name="typeName"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="operator"> Describes operator to be matched. </param>
+        /// <param name="hostNameOperator"> Describes operator to be matched. </param>
         /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
         /// <param name="matchValues"> The match value for the condition of the delivery rule. </param>
         /// <param name="transforms"> List of transforms. </param>
-        internal HostNameMatchCondition(DeliveryRuleConditionParametersType typeName, IDictionary<string, BinaryData> additionalBinaryDataProperties, HostNameOperator @operator, bool? negateCondition, IList<string> matchValues, IList<PreTransformCategory> transforms) : base(typeName, additionalBinaryDataProperties)
+        internal HostNameMatchCondition(DeliveryRuleConditionParametersType typeName, IDictionary<string, BinaryData> additionalBinaryDataProperties, HostNameOperator hostNameOperator, bool? negateCondition, IList<string> matchValues, IList<PreTransformCategory> transforms) : base(typeName, additionalBinaryDataProperties)
         {
-            Operator = @operator;
+            HostNameOperator = hostNameOperator;
             NegateCondition = negateCondition;
             MatchValues = matchValues;
             Transforms = transforms;
         }
 
         /// <summary> Describes operator to be matched. </summary>
-        public HostNameOperator Operator { get; set; }
+        [WirePath("operator")]
+        public HostNameOperator HostNameOperator { get; set; }
 
         /// <summary> Describes if this is negate condition or not. </summary>
+        [WirePath("negateCondition")]
         public bool? NegateCondition { get; set; }
 
         /// <summary> The match value for the condition of the delivery rule. </summary>
+        [WirePath("matchValues")]
         public IList<string> MatchValues { get; }
 
         /// <summary> List of transforms. </summary>
+        [WirePath("transforms")]
         public IList<PreTransformCategory> Transforms { get; }
     }
 }

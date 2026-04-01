@@ -49,21 +49,27 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Description of the knowledge source. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
 
         /// <summary> Format or origin of the knowledge source. </summary>
+        [WirePath("sourceType")]
         public KnowledgeSourceType SourceType { get; set; }
 
         /// <summary> Endpoint or location of the knowledge source. </summary>
+        [WirePath("url")]
         public string Uri { get; set; }
 
         /// <summary> Specifies the units of time for scheduling update intervals for the knowledge source. </summary>
+        [WirePath("updateFrequency")]
         public KnowledgeSourceUpdateFrequency? UpdateFrequency { get; set; }
 
         /// <summary> The last time the knowledge source was updated. </summary>
+        [WirePath("lastRefreshedTime")]
         public DateTimeOffset? LastRefreshedOn { get; }
 
         /// <summary> Provisioning status of the knowledge source. </summary>
+        [WirePath("provisioningState")]
         public KnowledgeSourceProvisioningState? ProvisioningState { get; }
     }
 }

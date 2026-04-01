@@ -37,6 +37,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Defines the certificate source parameters using user's keyvault certificate for enabling SSL. </summary>
+        [WirePath("certificateSourceParameters")]
         public KeyVaultCertificateSource CertificateSourceParameters { get; set; }
     }
 }

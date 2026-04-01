@@ -82,10 +82,10 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 throw new FormatException($"The model {nameof(ValidateCustomDomainResult)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(CustomDomainValidated))
+            if (options.Format != "W" && Optional.IsDefined(IsCustomDomainValid))
             {
                 writer.WritePropertyName("customDomainValidated"u8);
-                writer.WriteBooleanValue(CustomDomainValidated.Value);
+                writer.WriteBooleanValue(IsCustomDomainValid.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(Reason))
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            bool? customDomainValidated = default;
+            bool? isCustomDomainValid = default;
             string reason = default;
             string message = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     {
                         continue;
                     }
-                    customDomainValidated = prop.Value.GetBoolean();
+                    isCustomDomainValid = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("reason"u8))
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ValidateCustomDomainResult(customDomainValidated, reason, message, additionalBinaryDataProperties);
+            return new ValidateCustomDomainResult(isCustomDomainValid, reason, message, additionalBinaryDataProperties);
         }
     }
 }

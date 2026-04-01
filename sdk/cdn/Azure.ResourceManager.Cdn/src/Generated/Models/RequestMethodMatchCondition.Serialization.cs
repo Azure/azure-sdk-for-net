@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("operator"u8);
-            writer.WriteStringValue(Operator.ToString());
+            writer.WriteStringValue(RequestMethodOperator.ToString());
             if (Optional.IsDefined(NegateCondition))
             {
                 writer.WritePropertyName("negateCondition"u8);
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             DeliveryRuleConditionParametersType typeName = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            RequestMethodOperator @operator = default;
+            RequestMethodOperator requestMethodOperator = default;
             bool? negateCondition = default;
             IList<PreTransformCategory> transforms = default;
             IList<RequestMethodMatchConditionMatchValue> matchValues = default;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (prop.NameEquals("operator"u8))
                 {
-                    @operator = new RequestMethodOperator(prop.Value.GetString());
+                    requestMethodOperator = new RequestMethodOperator(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("negateCondition"u8))
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Cdn.Models
             return new RequestMethodMatchCondition(
                 typeName,
                 additionalBinaryDataProperties,
-                @operator,
+                requestMethodOperator,
                 negateCondition,
                 transforms ?? new ChangeTrackingList<PreTransformCategory>(),
                 matchValues ?? new ChangeTrackingList<RequestMethodMatchConditionMatchValue>());

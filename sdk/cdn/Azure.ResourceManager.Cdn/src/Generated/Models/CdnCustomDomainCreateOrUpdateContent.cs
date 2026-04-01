@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -31,9 +32,11 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> The JSON object that contains the properties of the custom domain to create. </summary>
+        [WirePath("properties")]
         internal CustomDomainPropertiesParameters Properties { get; set; }
 
         /// <summary> The host name of the custom domain. Must be a domain name. </summary>
+        [WirePath("properties.hostName")]
         public string HostName
         {
             get

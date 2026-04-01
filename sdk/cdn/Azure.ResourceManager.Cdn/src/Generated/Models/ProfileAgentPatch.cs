@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -31,9 +32,11 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> The properties for updating a profile agent association. </summary>
+        [WirePath("properties")]
         internal ProfileAgentUpdateProperties Properties { get; set; }
 
         /// <summary> List of custom domains associated with this agent link. </summary>
+        [WirePath("properties.customDomains")]
         public IList<ResourceReference> CustomDomains
         {
             get

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -36,12 +37,15 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Caching behavior for the requests. </summary>
+        [WirePath("cacheBehavior")]
         public CacheBehaviorSetting CacheBehavior { get; set; }
 
         /// <summary> The level at which the content needs to be cached. </summary>
+        [WirePath("cacheType")]
         public CdnCacheLevel CacheType { get; set; }
 
         /// <summary> The duration for which the content needs to be cached. Allowed format is [d.]hh:mm:ss. </summary>
+        [WirePath("cacheDuration")]
         public string CacheDuration { get; set; }
     }
 }

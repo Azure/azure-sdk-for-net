@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class RequestHeaderMatchCondition : DeliveryRuleConditionProperties
     {
         /// <summary> Initializes a new instance of <see cref="RequestHeaderMatchCondition"/>. </summary>
-        /// <param name="operator"> Describes operator to be matched. </param>
-        public RequestHeaderMatchCondition(RequestHeaderOperator @operator) : base(DeliveryRuleConditionParametersType.DeliveryRuleRequestHeaderConditionParameters)
+        /// <param name="requestHeaderOperator"> Describes operator to be matched. </param>
+        public RequestHeaderMatchCondition(RequestHeaderOperator requestHeaderOperator) : base(DeliveryRuleConditionParametersType.DeliveryRuleRequestHeaderConditionParameters)
         {
-            Operator = @operator;
+            RequestHeaderOperator = requestHeaderOperator;
             MatchValues = new ChangeTrackingList<string>();
             Transforms = new ChangeTrackingList<PreTransformCategory>();
         }
@@ -27,32 +27,37 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="typeName"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="selector"> Name of Header to be matched. </param>
-        /// <param name="operator"> Describes operator to be matched. </param>
+        /// <param name="requestHeaderOperator"> Describes operator to be matched. </param>
         /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
         /// <param name="matchValues"> The match value for the condition of the delivery rule. </param>
         /// <param name="transforms"> List of transforms. </param>
-        internal RequestHeaderMatchCondition(DeliveryRuleConditionParametersType typeName, IDictionary<string, BinaryData> additionalBinaryDataProperties, string selector, RequestHeaderOperator @operator, bool? negateCondition, IList<string> matchValues, IList<PreTransformCategory> transforms) : base(typeName, additionalBinaryDataProperties)
+        internal RequestHeaderMatchCondition(DeliveryRuleConditionParametersType typeName, IDictionary<string, BinaryData> additionalBinaryDataProperties, string selector, RequestHeaderOperator requestHeaderOperator, bool? negateCondition, IList<string> matchValues, IList<PreTransformCategory> transforms) : base(typeName, additionalBinaryDataProperties)
         {
             Selector = selector;
-            Operator = @operator;
+            RequestHeaderOperator = requestHeaderOperator;
             NegateCondition = negateCondition;
             MatchValues = matchValues;
             Transforms = transforms;
         }
 
         /// <summary> Name of Header to be matched. </summary>
+        [WirePath("selector")]
         public string Selector { get; set; }
 
         /// <summary> Describes operator to be matched. </summary>
-        public RequestHeaderOperator Operator { get; set; }
+        [WirePath("operator")]
+        public RequestHeaderOperator RequestHeaderOperator { get; set; }
 
         /// <summary> Describes if this is negate condition or not. </summary>
+        [WirePath("negateCondition")]
         public bool? NegateCondition { get; set; }
 
         /// <summary> The match value for the condition of the delivery rule. </summary>
+        [WirePath("matchValues")]
         public IList<string> MatchValues { get; }
 
         /// <summary> List of transforms. </summary>
+        [WirePath("transforms")]
         public IList<PreTransformCategory> Transforms { get; }
     }
 }

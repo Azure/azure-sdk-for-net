@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Provisioning status. </summary>
+        [WirePath("provisioningState")]
         public FrontDoorProvisioningState? ProvisioningState { get; }
 
         /// <summary> Gets the DeploymentStatus. </summary>
+        [WirePath("deploymentStatus")]
         public FrontDoorDeploymentStatus? DeploymentStatus { get; }
     }
 }

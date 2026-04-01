@@ -38,9 +38,11 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> The JSON object that contains the properties of the origin group. </summary>
+        [WirePath("properties")]
         internal FrontDoorOriginGroupProperties Properties { get; set; }
 
         /// <summary> The name of the profile which holds the origin group. </summary>
+        [WirePath("properties.profileName")]
         public string ProfileName
         {
             get
@@ -50,6 +52,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Load balancing settings for a backend pool. </summary>
+        [WirePath("properties.loadBalancingSettings")]
         public LoadBalancingSettings LoadBalancingSettings
         {
             get
@@ -67,6 +70,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Health probe settings to the origin that is used to determine the health of the origin. </summary>
+        [WirePath("properties.healthProbeSettings")]
         public HealthProbeSettings HealthProbeSettings
         {
             get
@@ -84,6 +88,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Time in minutes to shift the traffic to the endpoint gradually when an unhealthy endpoint comes healthy or a new endpoint is added. Default is 10 mins. This property is currently not supported. </summary>
+        [WirePath("properties.trafficRestorationTimeToHealedOrNewEndpointsInMinutes")]
         public int? TrafficRestorationTimeToHealedOrNewEndpointsInMinutes
         {
             get
@@ -101,6 +106,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Whether to allow session affinity on this host. Valid options are 'Enabled' or 'Disabled'. </summary>
+        [WirePath("properties.sessionAffinityState")]
         public EnabledState? SessionAffinityState
         {
             get
@@ -118,6 +124,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Authentication settings for origin in origin group. </summary>
+        [WirePath("properties.authentication")]
         public OriginAuthenticationProperties Authentication
         {
             get
@@ -135,6 +142,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Provisioning status. </summary>
+        [WirePath("properties.provisioningState")]
         public FrontDoorProvisioningState? ProvisioningState
         {
             get
@@ -144,6 +152,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Gets the DeploymentStatus. </summary>
+        [WirePath("properties.deploymentStatus")]
         public FrontDoorDeploymentStatus? DeploymentStatus
         {
             get

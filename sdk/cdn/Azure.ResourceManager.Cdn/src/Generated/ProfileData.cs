@@ -48,18 +48,23 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> The JSON object that contains the properties required to create a profile. </summary>
+        [WirePath("properties")]
         internal ProfileProperties Properties { get; set; }
 
         /// <summary> The pricing tier (defines Azure Front Door Standard or Premium or a CDN provider, feature list and rate) of the profile. </summary>
+        [WirePath("sku")]
         internal CdnSku Sku { get; set; }
 
         /// <summary> Kind of the profile. Used by portal to differentiate traditional CDN profile and new AFD profile. </summary>
+        [WirePath("kind")]
         public string Kind { get; }
 
         /// <summary> The managed service identities assigned to this resource. </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> Resource status of the profile. </summary>
+        [WirePath("properties.resourceState")]
         public ProfileResourceState? ResourceState
         {
             get
@@ -69,6 +74,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Provisioning status of the profile. </summary>
+        [WirePath("properties.provisioningState")]
         public ProfileProvisioningState? ProvisioningState
         {
             get
@@ -78,6 +84,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Key-Value pair representing additional properties for profiles. </summary>
+        [WirePath("properties.extendedProperties")]
         public IReadOnlyDictionary<string, string> ExtendedProperties
         {
             get
@@ -91,7 +98,8 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> The Id of the frontdoor. </summary>
-        public string FrontDoorId
+        [WirePath("properties.frontDoorId")]
+        public Guid? FrontDoorId
         {
             get
             {
@@ -100,6 +108,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Send and receive timeout on forwarding request to the origin. When timeout is reached, the request fails and returns. </summary>
+        [WirePath("properties.originResponseTimeoutSeconds")]
         public int? OriginResponseTimeoutSeconds
         {
             get
@@ -117,6 +126,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Defines rules that scrub sensitive fields in the Azure Front Door profile logs. </summary>
+        [WirePath("properties.logScrubbing")]
         public ProfileLogScrubbing LogScrubbing
         {
             get
@@ -134,6 +144,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Name of the pricing tier. </summary>
+        [WirePath("sku.name")]
         public CdnSkuName? SkuName
         {
             get

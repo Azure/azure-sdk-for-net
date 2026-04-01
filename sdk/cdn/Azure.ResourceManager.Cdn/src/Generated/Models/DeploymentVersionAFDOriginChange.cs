@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> The JSON object that contains the properties of the origin. </summary>
+        [WirePath("previousProperties")]
         public FrontDoorOriginProperties PreviousProperties { get; }
 
         /// <summary> The JSON object that contains the properties of the origin. </summary>
+        [WirePath("currentProperties")]
         public FrontDoorOriginProperties CurrentProperties { get; }
     }
 }

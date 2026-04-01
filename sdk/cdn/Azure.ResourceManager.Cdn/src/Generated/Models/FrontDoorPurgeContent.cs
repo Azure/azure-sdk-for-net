@@ -41,9 +41,11 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> The path to the content to be purged. Can describe a file path or a wild card directory. </summary>
+        [WirePath("contentPaths")]
         public IList<string> ContentPaths { get; }
 
         /// <summary> List of domains. </summary>
+        [WirePath("domains")]
         public IList<string> Domains { get; }
     }
 }

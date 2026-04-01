@@ -7,12 +7,21 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Customer Certificate used for https. </summary>
     public partial class CustomerCertificateProperties : FrontDoorSecretProperties
     {
+        /// <summary> Initializes a new instance of <see cref="CustomerCertificateProperties"/>. </summary>
+        public CustomerCertificateProperties() : base(SecretType.CustomerCertificate)
+        {
+
+            SubjectAlternativeNames = new ChangeTrackingList<string>();
+        }
+
         /// <summary> Initializes a new instance of <see cref="CustomerCertificateProperties"/>. </summary>
         /// <param name="type"> The type of the secret resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
@@ -37,31 +46,40 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Resource reference to the Azure Key Vault certificate. Expected to be in format of /subscriptions/{​​​​​​​​​subscriptionId}​​​​​​​​​/resourceGroups/{​​​​​​​​​resourceGroupName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/providers/Microsoft.KeyVault/vaults/{vaultName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/secrets/{certificateName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​. </summary>
+        [WirePath("secretSource")]
         internal ResourceReference SecretSource { get; set; }
 
         /// <summary> Version of the secret to be used. </summary>
+        [WirePath("secretVersion")]
         public string SecretVersion { get; set; }
 
         /// <summary> Whether to use the latest version for the certificate. </summary>
+        [WirePath("useLatestVersion")]
         public bool? UseLatestVersion { get; set; }
 
         /// <summary> Subject name in the certificate. </summary>
+        [WirePath("subject")]
         public string Subject { get; }
 
         /// <summary> Certificate expiration date. </summary>
+        [WirePath("expirationDate")]
         public string ExpirationDate { get; }
 
         /// <summary> Certificate issuing authority. </summary>
+        [WirePath("certificateAuthority")]
         public string CertificateAuthority { get; }
 
         /// <summary> The list of SANs. </summary>
+        [WirePath("subjectAlternativeNames")]
         public IReadOnlyList<string> SubjectAlternativeNames { get; }
 
         /// <summary> Certificate thumbprint. </summary>
+        [WirePath("thumbprint")]
         public string Thumbprint { get; }
 
         /// <summary> Resource ID. </summary>
-        public string SecretSourceId
+        [WirePath("secretSource.id")]
+        public ResourceIdentifier SecretSourceId
         {
             get
             {

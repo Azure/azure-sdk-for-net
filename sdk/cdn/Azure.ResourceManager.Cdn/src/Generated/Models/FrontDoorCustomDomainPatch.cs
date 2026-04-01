@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -31,9 +33,11 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> The JSON object that contains the properties of the domain to create. </summary>
+        [WirePath("properties")]
         internal FrontDoorCustomDomainUpdatePropertiesParameters Properties { get; set; }
 
         /// <summary> The name of the profile which holds the domain. </summary>
+        [WirePath("properties.profileName")]
         public string ProfileName
         {
             get
@@ -43,6 +47,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> The configuration specifying how to enable HTTPS for the domain - using AzureFrontDoor managed certificate or user's own certificate. If not specified, enabling ssl uses AzureFrontDoor managed certificate by default. </summary>
+        [WirePath("properties.tlsSettings")]
         public FrontDoorCustomDomainHttpsContent TlsSettings
         {
             get
@@ -60,6 +65,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> The configuration specifying how to enable mutual TLS for the domain, including specifying allowed FQDNs and which server certificate(s) to use. </summary>
+        [WirePath("properties.mtlsSettings")]
         public FrontDoorCustomDomainMtlsParameters MtlsSettings
         {
             get
@@ -77,11 +83,12 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Resource ID. </summary>
-        public string AzureDnsZoneId
+        [WirePath("properties.azureDnsZone.id")]
+        public ResourceIdentifier DnsZoneId
         {
             get
             {
-                return Properties is null ? default : Properties.AzureDnsZoneId;
+                return Properties is null ? default : Properties.DnsZoneId;
             }
             set
             {
@@ -89,16 +96,17 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     Properties = new FrontDoorCustomDomainUpdatePropertiesParameters();
                 }
-                Properties.AzureDnsZoneId = value;
+                Properties.DnsZoneId = value;
             }
         }
 
         /// <summary> Resource ID. </summary>
-        public string PreValidatedCustomDomainResourceIdId
+        [WirePath("properties.preValidatedCustomDomainResourceId.id")]
+        public ResourceIdentifier PreValidatedCustomDomainResourceId
         {
             get
             {
-                return Properties is null ? default : Properties.PreValidatedCustomDomainResourceIdId;
+                return Properties is null ? default : Properties.PreValidatedCustomDomainResourceId;
             }
             set
             {
@@ -106,7 +114,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     Properties = new FrontDoorCustomDomainUpdatePropertiesParameters();
                 }
-                Properties.PreValidatedCustomDomainResourceIdId = value;
+                Properties.PreValidatedCustomDomainResourceId = value;
             }
         }
     }

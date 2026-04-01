@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -36,6 +37,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Gets or sets the TypeName. </summary>
+        [WirePath("typeName")]
         internal DeliveryRuleConditionParametersType TypeName { get; set; }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -37,15 +38,19 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Whether to enable origin capacity for a specific origin. </summary>
+        [WirePath("enabled")]
         public EnabledState? Enabled { get; set; }
 
         /// <summary> The nearest origin capacity pop region for an origin. </summary>
+        [WirePath("region")]
         public string Region { get; set; }
 
         /// <summary> The request rate limit threshold for an origin per minute. </summary>
+        [WirePath("originRequestRateThreshold")]
         public long? OriginRequestRateThreshold { get; set; }
 
         /// <summary> The ingress rate limit threshold for an origin per minute in bytes. </summary>
+        [WirePath("originIngressRateThreshold")]
         public long? OriginIngressRateThreshold { get; set; }
     }
 }

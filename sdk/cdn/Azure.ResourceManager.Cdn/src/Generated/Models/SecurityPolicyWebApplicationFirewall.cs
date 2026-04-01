@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
@@ -32,13 +33,16 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Resource ID. </summary>
+        [WirePath("wafPolicy")]
         internal ResourceReference WafPolicy { get; set; }
 
         /// <summary> Waf associations. </summary>
+        [WirePath("associations")]
         public IList<SecurityPolicyWebApplicationFirewallAssociation> Associations { get; }
 
         /// <summary> Resource ID. </summary>
-        public string WafPolicyId
+        [WirePath("wafPolicy.id")]
+        public ResourceIdentifier WafPolicyId
         {
             get
             {

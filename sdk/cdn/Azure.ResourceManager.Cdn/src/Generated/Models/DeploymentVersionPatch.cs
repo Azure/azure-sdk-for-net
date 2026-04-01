@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -31,9 +32,11 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Contains the properties of the deployment version. </summary>
+        [WirePath("properties")]
         internal DeploymentVersionUpdateProperties Properties { get; set; }
 
         /// <summary> Gets or sets the Description. </summary>
+        [WirePath("properties.description")]
         public string Description
         {
             get

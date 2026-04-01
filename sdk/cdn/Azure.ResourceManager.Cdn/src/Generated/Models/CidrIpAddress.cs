@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Ip address itself. </summary>
+        [WirePath("baseIpAddress")]
         public string BaseIpAddress { get; }
 
         /// <summary> The length of the prefix of the ip address. </summary>
+        [WirePath("prefixLength")]
         public int? PrefixLength { get; }
     }
 }

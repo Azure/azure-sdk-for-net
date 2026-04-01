@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
@@ -60,46 +61,60 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> The name of the endpoint which holds the route. </summary>
+        [WirePath("endpointName")]
         public string EndpointName { get; }
 
         /// <summary> Domains referenced by this endpoint. </summary>
+        [WirePath("customDomains")]
         public IList<FrontDoorActivatedResourceInfo> CustomDomains { get; } = new ChangeTrackingList<FrontDoorActivatedResourceInfo>();
 
         /// <summary> A reference to the origin group. </summary>
+        [WirePath("originGroup")]
         internal ResourceReference OriginGroup { get; set; }
 
         /// <summary> A directory path on the origin that AzureFrontDoor can use to retrieve content from, e.g. contoso.cloudapp.net/originpath. </summary>
+        [WirePath("originPath")]
         public string OriginPath { get; set; }
 
         /// <summary> rule sets referenced by this endpoint. </summary>
+        [WirePath("ruleSets")]
         public IList<ResourceReference> RuleSets { get; } = new ChangeTrackingList<ResourceReference>();
 
         /// <summary> List of supported protocols for this route. </summary>
+        [WirePath("supportedProtocols")]
         public IList<FrontDoorEndpointProtocol> SupportedProtocols { get; } = new ChangeTrackingList<FrontDoorEndpointProtocol>();
 
         /// <summary> The route patterns of the rule. </summary>
+        [WirePath("patternsToMatch")]
         public IList<string> PatternsToMatch { get; } = new ChangeTrackingList<string>();
 
         /// <summary> The caching configuration for this route. To disable caching, do not provide a cacheConfiguration object. </summary>
+        [WirePath("cacheConfiguration")]
         public FrontDoorRouteCacheConfiguration CacheConfiguration { get; set; }
 
         /// <summary> Protocol this rule will use when forwarding traffic to backends. </summary>
+        [WirePath("forwardingProtocol")]
         public ForwardingProtocol? ForwardingProtocol { get; set; }
 
         /// <summary> whether this route will be linked to the default endpoint domain. </summary>
+        [WirePath("linkToDefaultDomain")]
         public LinkToDefaultDomain? LinkToDefaultDomain { get; set; }
 
         /// <summary> Whether to automatically redirect HTTP traffic to HTTPS traffic. Note that this is a easy way to set up this rule and it will be the first rule that gets executed. </summary>
+        [WirePath("httpsRedirect")]
         public HttpsRedirect? HttpsRedirect { get; set; }
 
         /// <summary> Whether to enable use of this rule. Permitted values are 'Enabled' or 'Disabled'. </summary>
+        [WirePath("enabledState")]
         public EnabledState? EnabledState { get; set; }
 
         /// <summary> Whether or not gRPC is enabled on this route. Permitted values are 'Enabled' or 'Disabled'. </summary>
+        [WirePath("grpcState")]
         public FrontDoorRouteGrpcState? GrpcState { get; set; }
 
         /// <summary> Resource ID. </summary>
-        public string OriginGroupId
+        [WirePath("originGroup.id")]
+        public ResourceIdentifier OriginGroupId
         {
             get
             {

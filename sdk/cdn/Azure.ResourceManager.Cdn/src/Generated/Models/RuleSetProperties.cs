@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -29,6 +30,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> The name of the profile which holds the rule set. </summary>
+        [WirePath("profileName")]
         public string ProfileName { get; }
     }
 }

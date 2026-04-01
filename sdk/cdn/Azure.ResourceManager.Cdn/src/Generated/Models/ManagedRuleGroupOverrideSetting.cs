@@ -40,9 +40,11 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Describes the managed rule group within the rule set to override. </summary>
+        [WirePath("ruleGroupName")]
         public string RuleGroupName { get; set; }
 
         /// <summary> List of rules that will be enabled. If none specified, all rules in the group will be disabled. </summary>
+        [WirePath("rules")]
         public IList<ManagedRuleOverrideSetting> Rules { get; }
     }
 }

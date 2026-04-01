@@ -35,12 +35,15 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Endpoint tags. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> The JSON object containing endpoint update parameters. </summary>
+        [WirePath("properties")]
         internal FrontDoorEndpointPropertiesUpdateParameters Properties { get; set; }
 
         /// <summary> The name of the profile which holds the endpoint. </summary>
+        [WirePath("properties.profileName")]
         public string ProfileName
         {
             get
@@ -50,6 +53,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Whether to enable use of this rule. Permitted values are 'Enabled' or 'Disabled'. </summary>
+        [WirePath("properties.enabledState")]
         public EnabledState? EnabledState
         {
             get
@@ -67,6 +71,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Set to Disabled by default. If set to Enabled, only custom domains with mTLS enabled can be added to child Route resources. </summary>
+        [WirePath("properties.enforceMtls")]
         public EnforceMtlsEnabledState? EnforceMtls
         {
             get

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -42,12 +43,15 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Defines the source of the SSL certificate. </summary>
+        [WirePath("certificateSource")]
         internal CertificateSource CertificateSource { get; set; }
 
         /// <summary> Defines the TLS extension protocol that is used for secure delivery. </summary>
+        [WirePath("protocolType")]
         public SecureDeliveryProtocolType ProtocolType { get; set; }
 
         /// <summary> TLS protocol version that will be used for Https. </summary>
+        [WirePath("minimumTlsVersion")]
         public CdnMinimumTlsVersion? MinimumTlsVersion { get; set; }
     }
 }

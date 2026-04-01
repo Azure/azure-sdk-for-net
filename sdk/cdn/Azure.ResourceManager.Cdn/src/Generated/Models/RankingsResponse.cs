@@ -37,12 +37,15 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Gets the DateTimeBegin. </summary>
+        [WirePath("dateTimeBegin")]
         public DateTimeOffset? DateTimeBegin { get; }
 
         /// <summary> Gets the DateTimeEnd. </summary>
+        [WirePath("dateTimeEnd")]
         public DateTimeOffset? DateTimeEnd { get; }
 
         /// <summary> Gets the Tables. </summary>
+        [WirePath("tables")]
         public IReadOnlyList<RankingsResponseTablesItem> Tables { get; }
     }
 }

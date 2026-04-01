@@ -38,9 +38,11 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> The JSON object that contains the properties of the key group to create. </summary>
+        [WirePath("properties")]
         internal KeyGroupProperties Properties { get; set; }
 
         /// <summary> Names of UrlSigningKey type secret objects. </summary>
+        [WirePath("properties.keyReferences")]
         public IList<ResourceReference> KeyReferences
         {
             get
@@ -54,6 +56,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Provisioning status. </summary>
+        [WirePath("properties.provisioningState")]
         public FrontDoorProvisioningState? ProvisioningState
         {
             get
@@ -63,6 +66,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Gets the DeploymentStatus. </summary>
+        [WirePath("properties.deploymentStatus")]
         public FrontDoorDeploymentStatus? DeploymentStatus
         {
             get

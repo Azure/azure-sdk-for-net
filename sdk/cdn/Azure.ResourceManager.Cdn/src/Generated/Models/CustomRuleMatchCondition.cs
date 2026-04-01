@@ -53,21 +53,27 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Match variable to compare against. </summary>
+        [WirePath("matchVariable")]
         public WafMatchVariable MatchVariable { get; set; }
 
         /// <summary> Selector can used to match a specific key for QueryString, Cookies, RequestHeader or PostArgs. </summary>
+        [WirePath("selector")]
         public string Selector { get; set; }
 
         /// <summary> Describes operator to be matched. </summary>
+        [WirePath("operator")]
         public MatchOperator MatchOperator { get; set; }
 
         /// <summary> Describes if the result of this condition should be negated. </summary>
+        [WirePath("negateCondition")]
         public bool? NegateCondition { get; set; }
 
         /// <summary> List of possible match values. </summary>
+        [WirePath("matchValue")]
         public IList<string> MatchValue { get; }
 
         /// <summary> List of transforms. </summary>
+        [WirePath("transforms")]
         public IList<TransformType> Transforms { get; }
     }
 }

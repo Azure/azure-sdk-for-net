@@ -35,9 +35,11 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Gets the Name. </summary>
+        [WirePath("name")]
         public string Name { get; }
 
         /// <summary> Gets the Metrics. </summary>
+        [WirePath("metrics")]
         public IReadOnlyList<RankingsResponseTablesPropertiesItemsMetricsItem> Metrics { get; }
     }
 }

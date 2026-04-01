@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
@@ -42,16 +43,20 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Reference to the web agent resource. </summary>
+        [WirePath("webAgent")]
         internal ResourceReference WebAgent { get; set; }
 
         /// <summary> List of custom domains associated with this agent link. </summary>
+        [WirePath("customDomains")]
         public IList<ResourceReference> CustomDomains { get; } = new ChangeTrackingList<ResourceReference>();
 
         /// <summary> Provisioning status of the profile agent association. </summary>
+        [WirePath("provisioningState")]
         public ProfileAgentProvisioningState? ProvisioningState { get; }
 
         /// <summary> Resource ID. </summary>
-        public string WebAgentId
+        [WirePath("webAgent.id")]
+        public ResourceIdentifier WebAgentId
         {
             get
             {

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -31,9 +32,11 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> The json object that contains properties required to update a security policy. </summary>
+        [WirePath("properties")]
         internal SecurityPolicyUpdateProperties Properties { get; set; }
 
         /// <summary> object which contains security policy parameters. </summary>
+        [WirePath("properties.parameters")]
         public SecurityPolicyProperties Parameters
         {
             get

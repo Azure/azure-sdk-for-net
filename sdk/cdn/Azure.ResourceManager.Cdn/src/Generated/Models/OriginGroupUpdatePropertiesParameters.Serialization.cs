@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(TrafficRestorationTimeToHealedOrNewEndpointsInMinutes))
+            if (Optional.IsDefined(TrafficRestorationTimeInMinutes))
             {
                 writer.WritePropertyName("trafficRestorationTimeToHealedOrNewEndpointsInMinutes"u8);
-                writer.WriteNumberValue(TrafficRestorationTimeToHealedOrNewEndpointsInMinutes.Value);
+                writer.WriteNumberValue(TrafficRestorationTimeInMinutes.Value);
             }
             if (Optional.IsDefined(ResponseBasedOriginErrorDetectionSettings))
             {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             HealthProbeSettings healthProbeSettings = default;
             IList<ResourceReference> origins = default;
-            int? trafficRestorationTimeToHealedOrNewEndpointsInMinutes = default;
+            int? trafficRestorationTimeInMinutes = default;
             ResponseBasedOriginErrorDetectionSettings responseBasedOriginErrorDetectionSettings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     {
                         continue;
                     }
-                    trafficRestorationTimeToHealedOrNewEndpointsInMinutes = prop.Value.GetInt32();
+                    trafficRestorationTimeInMinutes = prop.Value.GetInt32();
                     continue;
                 }
                 if (prop.NameEquals("responseBasedOriginErrorDetectionSettings"u8))
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new OriginGroupUpdatePropertiesParameters(healthProbeSettings, origins ?? new ChangeTrackingList<ResourceReference>(), trafficRestorationTimeToHealedOrNewEndpointsInMinutes, responseBasedOriginErrorDetectionSettings, additionalBinaryDataProperties);
+            return new OriginGroupUpdatePropertiesParameters(healthProbeSettings, origins ?? new ChangeTrackingList<ResourceReference>(), trafficRestorationTimeInMinutes, responseBasedOriginErrorDetectionSettings, additionalBinaryDataProperties);
         }
     }
 }

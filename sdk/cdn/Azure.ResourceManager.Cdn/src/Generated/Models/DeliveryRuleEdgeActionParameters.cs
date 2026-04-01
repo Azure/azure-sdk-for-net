@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -33,13 +35,16 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> defines the edge action that will be invoked. </summary>
+        [WirePath("edgeActionReference")]
         internal ResourceReference EdgeActionReference { get; set; }
 
         /// <summary> Defines at which point in the request processing pipeline the edge action will be invoked. </summary>
+        [WirePath("invocationPoint")]
         public InvocationPoint InvocationPoint { get; set; }
 
         /// <summary> Resource ID. </summary>
-        public string EdgeActionReferenceId
+        [WirePath("edgeActionReference.id")]
+        public ResourceIdentifier EdgeActionReferenceId
         {
             get
             {

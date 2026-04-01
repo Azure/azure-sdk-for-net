@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -31,9 +33,11 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> The JSON object that contains the properties of the domain to create. </summary>
+        [WirePath("properties")]
         internal RouteUpdatePropertiesParameters Properties { get; set; }
 
         /// <summary> The name of the endpoint which holds the route. </summary>
+        [WirePath("properties.endpointName")]
         public string EndpointName
         {
             get
@@ -43,6 +47,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Domains referenced by this endpoint. </summary>
+        [WirePath("properties.customDomains")]
         public IList<FrontDoorActivatedResourceInfo> CustomDomains
         {
             get
@@ -56,6 +61,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> A directory path on the origin that AzureFrontDoor can use to retrieve content from, e.g. contoso.cloudapp.net/originpath. </summary>
+        [WirePath("properties.originPath")]
         public string OriginPath
         {
             get
@@ -73,6 +79,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> rule sets referenced by this endpoint. </summary>
+        [WirePath("properties.ruleSets")]
         public IList<ResourceReference> RuleSets
         {
             get
@@ -86,6 +93,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> List of supported protocols for this route. </summary>
+        [WirePath("properties.supportedProtocols")]
         public IList<FrontDoorEndpointProtocol> SupportedProtocols
         {
             get
@@ -99,6 +107,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> The route patterns of the rule. </summary>
+        [WirePath("properties.patternsToMatch")]
         public IList<string> PatternsToMatch
         {
             get
@@ -112,6 +121,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> The caching configuration for this route. To disable caching, do not provide a cacheConfiguration object. </summary>
+        [WirePath("properties.cacheConfiguration")]
         public FrontDoorRouteCacheConfiguration CacheConfiguration
         {
             get
@@ -129,6 +139,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Protocol this rule will use when forwarding traffic to backends. </summary>
+        [WirePath("properties.forwardingProtocol")]
         public ForwardingProtocol? ForwardingProtocol
         {
             get
@@ -146,6 +157,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> whether this route will be linked to the default endpoint domain. </summary>
+        [WirePath("properties.linkToDefaultDomain")]
         public LinkToDefaultDomain? LinkToDefaultDomain
         {
             get
@@ -163,6 +175,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Whether to automatically redirect HTTP traffic to HTTPS traffic. Note that this is a easy way to set up this rule and it will be the first rule that gets executed. </summary>
+        [WirePath("properties.httpsRedirect")]
         public HttpsRedirect? HttpsRedirect
         {
             get
@@ -180,6 +193,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Whether to enable use of this rule. Permitted values are 'Enabled' or 'Disabled'. </summary>
+        [WirePath("properties.enabledState")]
         public EnabledState? EnabledState
         {
             get
@@ -197,6 +211,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Whether or not gRPC is enabled on this route. Permitted values are 'Enabled' or 'Disabled'. </summary>
+        [WirePath("properties.grpcState")]
         public FrontDoorRouteGrpcState? GrpcState
         {
             get
@@ -214,7 +229,8 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Resource ID. </summary>
-        public string OriginGroupId
+        [WirePath("properties.originGroup.id")]
+        public ResourceIdentifier OriginGroupId
         {
             get
             {

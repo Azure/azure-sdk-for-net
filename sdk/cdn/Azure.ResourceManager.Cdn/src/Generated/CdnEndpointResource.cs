@@ -557,13 +557,13 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CdnUsage"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CdnUsage> GetResourceUsageAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<CdnUsage> GetResourceUsagesAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new EndpointsGetResourceUsageAsyncCollectionResultOfT(
+            return new EndpointsGetResourceUsagesAsyncCollectionResultOfT(
                 _endpointsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -595,13 +595,13 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CdnUsage"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CdnUsage> GetResourceUsage(CancellationToken cancellationToken = default)
+        public virtual Pageable<CdnUsage> GetResourceUsages(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new EndpointsGetResourceUsageCollectionResultOfT(
+            return new EndpointsGetResourceUsagesCollectionResultOfT(
                 _endpointsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

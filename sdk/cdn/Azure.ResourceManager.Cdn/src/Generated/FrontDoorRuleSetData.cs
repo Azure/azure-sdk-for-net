@@ -38,9 +38,11 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> The JSON object that contains the properties of the Rule Set to create. </summary>
+        [WirePath("properties")]
         internal RuleSetProperties Properties { get; }
 
         /// <summary> Provisioning status. </summary>
+        [WirePath("properties.provisioningState")]
         public FrontDoorProvisioningState? ProvisioningState
         {
             get
@@ -50,6 +52,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Gets the DeploymentStatus. </summary>
+        [WirePath("properties.deploymentStatus")]
         public FrontDoorDeploymentStatus? DeploymentStatus
         {
             get
@@ -59,6 +62,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> The name of the profile which holds the rule set. </summary>
+        [WirePath("properties.profileName")]
         public string ProfileName
         {
             get

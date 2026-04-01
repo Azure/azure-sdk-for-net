@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -23,17 +24,19 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="deploymentStatus"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="profileName"> The name of the profile which holds the security policy. </param>
-        /// <param name="parameters"> object which contains security policy parameters. </param>
-        internal SecurityPolicyDetails(FrontDoorProvisioningState? provisioningState, FrontDoorDeploymentStatus? deploymentStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties, string profileName, SecurityPolicyProperties parameters) : base(provisioningState, deploymentStatus, additionalBinaryDataProperties)
+        /// <param name="securityPolicyParameters"> object which contains security policy parameters. </param>
+        internal SecurityPolicyDetails(FrontDoorProvisioningState? provisioningState, FrontDoorDeploymentStatus? deploymentStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties, string profileName, SecurityPolicyProperties securityPolicyParameters) : base(provisioningState, deploymentStatus, additionalBinaryDataProperties)
         {
             ProfileName = profileName;
-            Parameters = parameters;
+            SecurityPolicyParameters = securityPolicyParameters;
         }
 
         /// <summary> The name of the profile which holds the security policy. </summary>
+        [WirePath("profileName")]
         public string ProfileName { get; }
 
         /// <summary> object which contains security policy parameters. </summary>
-        public SecurityPolicyProperties Parameters { get; set; }
+        [WirePath("parameters")]
+        public SecurityPolicyProperties SecurityPolicyParameters { get; set; }
     }
 }

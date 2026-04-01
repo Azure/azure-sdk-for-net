@@ -48,30 +48,39 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Describes  policySettings for policy. </summary>
+        [WirePath("policySettings")]
         public WafPolicySettings PolicySettings { get; set; }
 
         /// <summary> Describes rate limit rules inside the policy. </summary>
+        [WirePath("rateLimitRules")]
         internal RateLimitRuleList RateLimitSettings { get; set; }
 
         /// <summary> Describes custom rules inside the policy. </summary>
+        [WirePath("customRules")]
         internal CustomRuleList CustomSettings { get; set; }
 
         /// <summary> Describes managed rules inside the policy. </summary>
+        [WirePath("managedRules")]
         internal ManagedRuleSetList ManagedRules { get; set; }
 
         /// <summary> Describes Azure CDN endpoints associated with this Web Application Firewall policy. </summary>
+        [WirePath("endpointLinks")]
         public IReadOnlyList<CdnEndpointReference> EndpointLinks { get; } = new ChangeTrackingList<CdnEndpointReference>();
 
         /// <summary> Key-Value pair representing additional properties for Web Application Firewall policy. </summary>
+        [WirePath("extendedProperties")]
         public IDictionary<string, string> ExtendedProperties { get; } = new ChangeTrackingDictionary<string, string>();
 
         /// <summary> Provisioning state of the WebApplicationFirewallPolicy. </summary>
+        [WirePath("provisioningState")]
         public WebApplicationFirewallPolicyProvisioningState? ProvisioningState { get; }
 
         /// <summary> Resource status of the policy. </summary>
+        [WirePath("resourceState")]
         public PolicyResourceState? ResourceState { get; }
 
         /// <summary> List of rules. </summary>
+        [WirePath("rateLimitRules.rules")]
         public IList<RateLimitRule> RateLimitRules
         {
             get
@@ -85,6 +94,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> List of rules. </summary>
+        [WirePath("customRules.rules")]
         public IList<CustomRule> CustomRules
         {
             get
@@ -98,6 +108,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> List of rule sets. </summary>
+        [WirePath("managedRules.managedRuleSets")]
         public IList<WafPolicyManagedRuleSet> ManagedRuleSets
         {
             get
