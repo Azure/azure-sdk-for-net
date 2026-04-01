@@ -1172,6 +1172,20 @@ Console.WriteLine($"Continuous Evaluation Rule created (id: {continuousEvalRule.
 #pragma warning disable AAIP001
 ```
 Red teams allow to check how models behave in response to attack attempts.
+Full samples can be found under the "RedTeam" folder in the [package samples][samples].
+
+First, create an `AIProjectClient` and read the required environment variables:
+
+```C# Snippet:Sample_CreateClient_RedTeam
+// Sample : https://<account_name>.services.ai.azure.com/api/projects/<project_name>
+var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+// Sample : https://<account_name>.services.ai.azure.com
+var modelEndpoint = System.Environment.GetEnvironmentVariable("MODEL_ENDPOINT");
+var modelApiKey = System.Environment.GetEnvironmentVariable("MODEL_API_KEY");
+var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
+AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
+```
+
 To test the model using Base64-encoded strings, with the prompts asking it to generate violent content, we can use the next code.
 
 ```C# Snippet:Sample_CreateRedTeam_RedTeam
@@ -1199,6 +1213,15 @@ Get Red Teaming task and output its status.
 ```C# Snippet:Sample_GetScanDetails_RedTeam_Async
 redTeam = await projectClient.RedTeams.GetAsync(name: redTeam.Name);
 Console.WriteLine($"Red Team scan status: {redTeam.Status}");
+```
+
+List all Red Teaming tasks and their status.
+
+```C# Snippet:Sample_ListRedTeams_RedTeam_Async
+await foreach (RedTeam scan in projectClient.RedTeams.GetAllAsync())
+{
+    Console.WriteLine($"Found scan: {scan.Name}, Status: {scan.Status}");
+}
 ```
 
 To get the results of the red teaming experiment, open Microsoft Foundry used for the experiments, on the left panel select **Evaluation** and choose **AI red teaming** tab.
