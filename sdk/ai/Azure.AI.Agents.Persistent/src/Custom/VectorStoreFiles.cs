@@ -1,12 +1,12 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure.Core;
 
+using System.ClientModel.Primitives;
 namespace Azure.AI.Agents.Persistent
 {
     internal partial class VectorStoreFiles
@@ -36,8 +36,8 @@ namespace Azure.AI.Agents.Persistent
                 context: context);
             return new ContinuationTokenPageableAsync<VectorStoreFile>(
                 createPageRequest: PageRequest,
-                valueFactory: e => VectorStoreFile.DeserializeVectorStoreFile(e),
-                pipeline: _pipeline,
+                valueFactory: e => VectorStoreFile.DeserializeVectorStoreFile(e, new ModelReaderWriterOptions("W")),
+                pipeline: Pipeline,
                 clientDiagnostics: ClientDiagnostics,
                 scopeName: "ThreadMessagesClient.GetMessages",
                 requestContext: context,
@@ -70,8 +70,8 @@ namespace Azure.AI.Agents.Persistent
                 context: context);
             return new ContinuationTokenPageable<VectorStoreFile>(
                 createPageRequest: PageRequest,
-                valueFactory: e => VectorStoreFile.DeserializeVectorStoreFile(e),
-                pipeline: _pipeline,
+                valueFactory: e => VectorStoreFile.DeserializeVectorStoreFile(e, new ModelReaderWriterOptions("W")),
+                pipeline: Pipeline,
                 clientDiagnostics: ClientDiagnostics,
                 scopeName: "ThreadMessagesClient.GetMessages",
                 requestContext: context,
@@ -111,9 +111,8 @@ namespace Azure.AI.Agents.Persistent
             // which is currently do not support next token.
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetVectorStoreFilesRequest(vectorStoreId, filter, limit, order, after, before, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "VectorStoreFilesClient.GetVectorStoreFiles", "data", null, context);
-        }
+            throw new NotSupportedException("Protocol paging is not yet supported.");
+}
 
         /// <summary>
         /// [Protocol Method] Returns a list of vector store files.
@@ -147,9 +146,8 @@ namespace Azure.AI.Agents.Persistent
             // which is currently do not support next token.
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetVectorStoreFilesRequest(vectorStoreId, filter, limit, order, after, before, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "VectorStoreFilesClient.GetVectorStoreFiles", "data", null, context);
-        }
+            throw new NotSupportedException("Protocol paging is not yet supported.");
+}
 
         /// <summary> Deletes a vector store file. This removes the file‐to‐store link (does not delete the file itself). </summary>
         /// <param name="vectorStoreId"> Identifier of the vector store. </param>

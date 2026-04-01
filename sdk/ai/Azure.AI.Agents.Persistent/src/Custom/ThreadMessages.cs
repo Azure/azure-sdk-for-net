@@ -1,21 +1,23 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure.AI.Agents.Persistent.Telemetry;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
+using Microsoft.TypeSpec.Generator.Customizations;
+using System.Linq;
 namespace Azure.AI.Agents.Persistent
 {
-    [CodeGenModel("Messages")]
+    [CodeGenType("Messages")]
     public partial class ThreadMessages
     {
         /*
@@ -37,7 +39,7 @@ namespace Azure.AI.Agents.Persistent
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CreateMessageAsync(string,MessageRole,BinaryData,IEnumerable{MessageAttachment},IReadOnlyDictionary{string,string},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="CreateMessageAsync(string,MessageRole,BinaryData,IEnumerable{MessageAttachment},IDictionary{string,string},CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -58,7 +60,7 @@ namespace Azure.AI.Agents.Persistent
             try
             {
                 using HttpMessage message = CreateCreateMessageRequest(threadId, content, context);
-                var response = await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                var response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 otelScope?.RecordCreateMessageResponse(response);
                 return response;
             }
@@ -79,7 +81,7 @@ namespace Azure.AI.Agents.Persistent
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CreateMessage(string,MessageRole,BinaryData,IEnumerable{MessageAttachment},IReadOnlyDictionary{string,string},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="CreateMessage(string,MessageRole,BinaryData,IEnumerable{MessageAttachment},IDictionary{string,string},CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -100,7 +102,7 @@ namespace Azure.AI.Agents.Persistent
             try
             {
                 using HttpMessage message = CreateCreateMessageRequest(threadId, content, context);
-                var response = _pipeline.ProcessMessage(message, context);
+                var response = Pipeline.ProcessMessage(message, context);
                 otelScope?.RecordCreateMessageResponse(response);
                 return response;
             }
@@ -149,7 +151,7 @@ namespace Azure.AI.Agents.Persistent
                 role,
                 contentJson,
                 attachments,
-                metadata,
+                metadata?.ToDictionary(kvp => kvp.Key, kvp => kvp.Value),
                 cancellationToken
             ).ConfigureAwait(false);
         }
@@ -192,7 +194,7 @@ namespace Azure.AI.Agents.Persistent
                 role,
                 contentJson,
                 attachments,
-                metadata,
+                metadata?.ToDictionary(kvp => kvp.Key, kvp => kvp.Value),
                 cancellationToken
             );
         }
@@ -238,7 +240,7 @@ namespace Azure.AI.Agents.Persistent
                 role,
                 serializedBlocks,
                 attachments,
-                metadata,
+                metadata?.ToDictionary(kvp => kvp.Key, kvp => kvp.Value),
                 cancellationToken
             ).ConfigureAwait(false);
         }
@@ -284,7 +286,7 @@ namespace Azure.AI.Agents.Persistent
                 role,
                 serializedBlocks,
                 attachments,
-                metadata,
+                metadata?.ToDictionary(kvp => kvp.Key, kvp => kvp.Value),
                 cancellationToken
             );
         }
@@ -295,17 +297,8 @@ namespace Azure.AI.Agents.Persistent
             var jsonElements = new List<JsonElement>();
             foreach (MessageInputContentBlock block in contentBlocks)
             {
-                // Write the content into a MemoryStream.
-                using var memStream = new MemoryStream();
-
-                // Write the RequestContent into the MemoryStream
-                block.ToRequestContent().WriteTo(memStream, default);
-
-                // Reset stream position to the beginning
-                memStream.Position = 0;
-
-                // Parse to a JsonDocument, then clone the root element so we can reuse it
-                using var tempDoc = JsonDocument.Parse(memStream);
+                BinaryData blockData = ((IPersistableModel<MessageInputContentBlock>)block).Write(new ModelReaderWriterOptions("W"));
+                using var tempDoc = JsonDocument.Parse(blockData);
                 jsonElements.Add(tempDoc.RootElement.Clone());
             }
 
@@ -339,8 +332,8 @@ namespace Azure.AI.Agents.Persistent
                 context: context);
             var asyncPageable = new ContinuationTokenPageableAsync<PersistentThreadMessage>(
                 createPageRequest: PageRequest,
-                valueFactory: e => PersistentThreadMessage.DeserializePersistentThreadMessage(e),
-                pipeline: _pipeline,
+                valueFactory: e => PersistentThreadMessage.DeserializePersistentThreadMessage(e, new ModelReaderWriterOptions("W")),
+                pipeline: Pipeline,
                 clientDiagnostics: ClientDiagnostics,
                 scopeName: "ThreadMessagesClient.GetMessages",
                 requestContext: context,
@@ -379,8 +372,8 @@ namespace Azure.AI.Agents.Persistent
                 context: context);
             var pageable = new ContinuationTokenPageable<PersistentThreadMessage>(
                 createPageRequest: PageRequest,
-                valueFactory: e => PersistentThreadMessage.DeserializePersistentThreadMessage(e),
-                pipeline: _pipeline,
+                valueFactory: e => PersistentThreadMessage.DeserializePersistentThreadMessage(e, new ModelReaderWriterOptions("W")),
+                pipeline: Pipeline,
                 clientDiagnostics: ClientDiagnostics,
                 scopeName: "ThreadMessagesClient.GetMessages",
                 requestContext: context,
@@ -426,16 +419,8 @@ namespace Azure.AI.Agents.Persistent
             // which is currently do not support next token.
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetMessagesRequest(
-                threadId: threadId,
-                runId: runId,
-                limit: limit,
-                order: order,
-                after: after,
-                before: before,
-                context: context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ThreadMessagesClient.GetMessages", "data", null, context);
-        }
+            throw new NotSupportedException("Protocol paging is not yet supported.");
+}
 
         /// <summary>
         /// [Protocol Method] Gets a list of messages that exist on a thread.
@@ -469,16 +454,8 @@ namespace Azure.AI.Agents.Persistent
             // which is currently do not support next token.
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetMessagesRequest(
-                threadId: threadId,
-                runId: runId,
-                limit: limit,
-                order: order,
-                after: after,
-                before: before,
-                context: context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ThreadMessagesClient.GetMessages", "data", null, context);
-        }
+            throw new NotSupportedException("Protocol paging is not yet supported.");
+}
 
         /// <summary> Deletes a thread message. </summary>
         /// <param name="threadId"> The ID of the thread to delete. </param>
