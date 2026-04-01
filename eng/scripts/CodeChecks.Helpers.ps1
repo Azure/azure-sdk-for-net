@@ -187,7 +187,8 @@ function Add-TestDependsOnDependency {
         $content = "$trimmed`n$newLine`n"
     }
 
-    Set-Content -Path $CiFilePath -Value $content -NoNewline
+    $utf8NoBom = New-Object System.Text.UTF8Encoding($false)
+    [System.IO.File]::WriteAllText($CiFilePath, $content, $utf8NoBom)
 }
 
 # Determines the action to take when a git diff is detected after code checks.
