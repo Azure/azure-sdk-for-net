@@ -7,7 +7,7 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Microsoft.Extensions.Azure
 {
-    /// <summary> Extension methods to add <see cref="AuthoringClient"/> to client builder. </summary>
+    /// <summary> Extension methods to add <see cref="ConversationAnalysisAuthoring"/> to client builder. </summary>
     [CodeGenType("LanguageConversationsAuthoringClientBuilderExtensions")]
     public static partial class ConversationsAuthoringClientBuilderExtensions
     {

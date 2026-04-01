@@ -12,12 +12,12 @@ using Microsoft.Extensions.Configuration;
 
 namespace Azure.AI.Language.Conversations.Authoring
 {
-    /// <summary> Client options for <see cref="AuthoringClient"/>. </summary>
+    /// <summary> Client options for <see cref="ConversationAnalysisAuthoring"/>. </summary>
     public partial class ConversationAnalysisAuthoringClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V2025_11_15_Preview;
 
-        /// <summary> Initializes a new instance of AuthoringClientOptions. </summary>
+        /// <summary> Initializes a new instance of ConversationAnalysisAuthoringOptions. </summary>
         /// <param name="version"> The service version. </param>
         public ConversationAnalysisAuthoringClientOptions(ServiceVersion version = LatestVersion)
         {
@@ -32,7 +32,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             ConfigureLogging();
         }
 
-        /// <summary> Initializes a new instance of AuthoringClientOptions from configuration. </summary>
+        /// <summary> Initializes a new instance of ConversationAnalysisAuthoringOptions from configuration. </summary>
         /// <param name="section"> The configuration section. </param>
         [Experimental("SCME0002")]
         internal ConversationAnalysisAuthoringClientOptions(IConfigurationSection section) : base(section, null)

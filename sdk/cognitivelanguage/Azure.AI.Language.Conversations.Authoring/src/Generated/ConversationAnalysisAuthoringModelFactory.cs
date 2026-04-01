@@ -969,10 +969,10 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="expectedEntities"> Represents the expected entity labels. </param>
         /// <param name="predictedEntities"> Represents the predicted entity labels. </param>
         /// <returns> A new <see cref="Authoring.AnalyzeConversationAuthoringUtteranceEntitiesEvaluationResult"/> instance for mocking. </returns>
-        public static AnalyzeConversationAuthoringUtteranceEntitiesEvaluationResult AnalyzeConversationAuthoringUtteranceEntitiesEvaluationResult(IEnumerable<AnalyzeConversationAuthoringUtteranceEntityEvaluationResult> expectedEntities = default, IEnumerable<AnalyzeConversationAuthoringUtteranceEntityEvaluationResult> predictedEntities = default)
+        public static AnalyzeConversationAuthoringUtteranceEntitiesEvaluationResult AnalyzeConversationAuthoringUtteranceEntitiesEvaluationResult(IEnumerable<UtteranceEntityEvaluationResult> expectedEntities = default, IEnumerable<UtteranceEntityEvaluationResult> predictedEntities = default)
         {
-            expectedEntities ??= new ChangeTrackingList<AnalyzeConversationAuthoringUtteranceEntityEvaluationResult>();
-            predictedEntities ??= new ChangeTrackingList<AnalyzeConversationAuthoringUtteranceEntityEvaluationResult>();
+            expectedEntities ??= new ChangeTrackingList<UtteranceEntityEvaluationResult>();
+            predictedEntities ??= new ChangeTrackingList<UtteranceEntityEvaluationResult>();
 
             return new AnalyzeConversationAuthoringUtteranceEntitiesEvaluationResult(expectedEntities.ToList(), predictedEntities.ToList(), additionalBinaryDataProperties: null);
         }
@@ -981,10 +981,10 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="category"> Represents the entity category. </param>
         /// <param name="offset"> Represents the entity offset index relative to the original text. </param>
         /// <param name="length"> Represents the entity length. </param>
-        /// <returns> A new <see cref="Authoring.AnalyzeConversationAuthoringUtteranceEntityEvaluationResult"/> instance for mocking. </returns>
-        public static AnalyzeConversationAuthoringUtteranceEntityEvaluationResult AnalyzeConversationAuthoringUtteranceEntityEvaluationResult(string category = default, int offset = default, int length = default)
+        /// <returns> A new <see cref="Authoring.UtteranceEntityEvaluationResult"/> instance for mocking. </returns>
+        public static UtteranceEntityEvaluationResult UtteranceEntityEvaluationResult(string category = default, int offset = default, int length = default)
         {
-            return new AnalyzeConversationAuthoringUtteranceEntityEvaluationResult(category, offset, length, additionalBinaryDataProperties: null);
+            return new UtteranceEntityEvaluationResult(category, offset, length, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Represents the comparison between the expected and the predicted intent for an utterance. </summary>

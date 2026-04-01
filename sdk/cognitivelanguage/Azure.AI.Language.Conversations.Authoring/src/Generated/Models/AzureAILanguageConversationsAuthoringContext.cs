@@ -19,7 +19,6 @@ namespace Azure.AI.Language.Conversations.Authoring
     [ModelReaderWriterBuildable(typeof(AnalyzeConversationAuthoringDataGenerationSettings))]
     [ModelReaderWriterBuildable(typeof(AnalyzeConversationAuthoringEntityEvaluationSummary))]
     [ModelReaderWriterBuildable(typeof(AnalyzeConversationAuthoringUtteranceEntitiesEvaluationResult))]
-    [ModelReaderWriterBuildable(typeof(AnalyzeConversationAuthoringUtteranceEntityEvaluationResult))]
     [ModelReaderWriterBuildable(typeof(AnalyzeConversationAuthoringUtteranceEvaluationResult))]
     [ModelReaderWriterBuildable(typeof(AnalyzeConversationAuthoringUtteranceIntentsEvaluationResult))]
     [ModelReaderWriterBuildable(typeof(ConversationAuthoringAssignDeploymentResourcesDetails))]
@@ -102,6 +101,7 @@ namespace Azure.AI.Language.Conversations.Authoring
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(UnknownConversationAuthoringExportedProjectAsset))]
     [ModelReaderWriterBuildable(typeof(UnknownExportedOrchestrationDetails))]
+    [ModelReaderWriterBuildable(typeof(UtteranceEntityEvaluationResult))]
     public partial class AzureAILanguageConversationsAuthoringContext : ModelReaderWriterContext
     {
     }
