@@ -22,7 +22,7 @@ var credential = new ClientCertificateCredential(tenantId, clientId, certificate
 
 ## Loading certificates from an X509Store
 
-Applications running on platforms which provide a secure certificate store, such as the Windows Certificate Store on Windows, and the KeyChain on MacOS, might prefer to store and retrieve certificates from there.
+Applications running on platforms which provide a secure certificate store, such as the Windows Certificate Store on Windows, and the KeyChain on macOS, might prefer to store and retrieve certificates from there.
 
 `ClientCertificateCredential` supports locating certificates by thumbrprint via a certificate path:
 ```C# Snippet:Identity_CertificateCredential_CreateWithPath_Store
