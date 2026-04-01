@@ -68,20 +68,6 @@ function Get-MissingTestDependsOnDependency {
         'Microsoft.ClientModel.TestFramework'
     )
 
-    # Build mapping: package name -> service directory (from src csprojs across repo)
-    $pkgToSvc = @{}
-    Get-ChildItem $sdkDir -Directory | ForEach-Object {
-        $svc = $_.Name
-        Get-ChildItem $_.FullName -Directory | ForEach-Object {
-            $srcDir = Join-Path $_.FullName "src"
-            if (Test-Path $srcDir) {
-                Get-ChildItem $srcDir -Filter "*.csproj" -File | ForEach-Object {
-                    $pkgToSvc[$_.BaseName] = $svc
-                }
-            }
-        }
-    }
-
     # Find all packages in THIS service directory
     $localPackages = @{}
     Get-ChildItem $svcDir -Directory | ForEach-Object {
