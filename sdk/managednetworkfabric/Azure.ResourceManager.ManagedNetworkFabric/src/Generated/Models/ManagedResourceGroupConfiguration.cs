@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -55,7 +54,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="name"> The NFC service will be hosted in a Managed resource group. </param>
         /// <param name="location"> Managed resource group location. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedResourceGroupConfiguration(string name, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ManagedResourceGroupConfiguration(string name, string location, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Location = location;
@@ -65,6 +64,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> The NFC service will be hosted in a Managed resource group. </summary>
         public string Name { get; set; }
         /// <summary> Managed resource group location. </summary>
-        public AzureLocation? Location { get; set; }
+        public string Location { get; set; }
     }
 }

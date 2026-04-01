@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             string version = default;
             string vendorOSVersion = default;
             string vendorFirmwareVersion = default;
-            NetworkFabricBooleanValue? isDefault = default;
+            BooleanEnumProperty? isDefault = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    isDefault = new NetworkFabricBooleanValue(property.Value.GetString());
+                    isDefault = new BooleanEnumProperty(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> IP Community ID list properties. </summary>
-    public partial class IPCommunityIdList
+    internal partial class IPCommunityIdList
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -44,24 +43,24 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// </list>
         /// </para>
         /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="IPCommunityIdList"/>. </summary>
         public IPCommunityIdList()
         {
-            IPCommunityIds = new ChangeTrackingList<ResourceIdentifier>();
+            IPCommunityIds = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="IPCommunityIdList"/>. </summary>
         /// <param name="ipCommunityIds"> List of IP Community resource IDs. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal IPCommunityIdList(IList<ResourceIdentifier> ipCommunityIds, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal IPCommunityIdList(IList<string> ipCommunityIds, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IPCommunityIds = ipCommunityIds;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of IP Community resource IDs. </summary>
-        public IList<ResourceIdentifier> IPCommunityIds { get; }
+        public IList<string> IPCommunityIds { get; }
     }
 }

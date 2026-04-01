@@ -35,13 +35,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity"u8);
+                writer.WriteObjectValue(Identity, options);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Annotation))
-            {
-                writer.WritePropertyName("annotation"u8);
-                writer.WriteStringValue(Annotation);
-            }
             if (Optional.IsDefined(PollingType))
             {
                 writer.WritePropertyName("pollingType"u8);
@@ -80,14 +80,23 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
+            ManagedServiceIdentityPatch identity = default;
             IDictionary<string, string> tags = default;
-            string annotation = default;
-            NetworkTapPollingType? pollingType = default;
-            IList<NetworkTapPatchableParametersDestinationsItem> destinations = default;
+            PollingType? pollingType = default;
+            IList<DestinationPatchProperties> destinations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("identity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identity = ManagedServiceIdentityPatch.DeserializeManagedServiceIdentityPatch(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -111,18 +120,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("annotation"u8))
-                        {
-                            annotation = property0.Value.GetString();
-                            continue;
-                        }
                         if (property0.NameEquals("pollingType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            pollingType = new NetworkTapPollingType(property0.Value.GetString());
+                            pollingType = new PollingType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("destinations"u8))
@@ -131,10 +135,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             {
                                 continue;
                             }
-                            List<NetworkTapPatchableParametersDestinationsItem> array = new List<NetworkTapPatchableParametersDestinationsItem>();
+                            List<DestinationPatchProperties> array = new List<DestinationPatchProperties>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NetworkTapPatchableParametersDestinationsItem.DeserializeNetworkTapPatchableParametersDestinationsItem(item, options));
+                                array.Add(DestinationPatchProperties.DeserializeDestinationPatchProperties(item, options));
                             }
                             destinations = array;
                             continue;
@@ -148,7 +152,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new NetworkTapPatch(tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, annotation, pollingType, destinations ?? new ChangeTrackingList<NetworkTapPatchableParametersDestinationsItem>());
+            return new NetworkTapPatch(tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, pollingType, destinations ?? new ChangeTrackingList<DestinationPatchProperties>(), identity);
         }
 
         BinaryData IPersistableModel<NetworkTapPatch>.Write(ModelReaderWriterOptions options)

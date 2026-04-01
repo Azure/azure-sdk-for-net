@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Net;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -49,7 +48,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of <see cref="NeighborGroupDestination"/>. </summary>
         public NeighborGroupDestination()
         {
-            IPv4Addresses = new ChangeTrackingList<IPAddress>();
+            IPv4Addresses = new ChangeTrackingList<string>();
             IPv6Addresses = new ChangeTrackingList<string>();
         }
 
@@ -57,7 +56,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="ipv4Addresses"> Array of IPv4 Addresses. </param>
         /// <param name="ipv6Addresses"> Array of IPv6 Addresses. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NeighborGroupDestination(IList<IPAddress> ipv4Addresses, IList<string> ipv6Addresses, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NeighborGroupDestination(IList<string> ipv4Addresses, IList<string> ipv6Addresses, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IPv4Addresses = ipv4Addresses;
             IPv6Addresses = ipv6Addresses;
@@ -65,7 +64,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> Array of IPv4 Addresses. </summary>
-        public IList<IPAddress> IPv4Addresses { get; }
+        public IList<string> IPv4Addresses { get; }
         /// <summary> Array of IPv6 Addresses. </summary>
         public IList<string> IPv6Addresses { get; }
     }

@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.ManagedNetworkFabric.Models;
+using Azure.ResourceManager.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
@@ -20,8 +21,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_NetworkPacketBrokersGetMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkPacketBrokers_Get_MaximumSet_Gen.json
-            // this example is just showing the usage of "NetworkPacketBrokers_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-07-15/NetworkPacketBrokers_Get.json
+            // this example is just showing the usage of "NetworkPacketBroker_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkPacketBrokerResource created on azure
             // for more information of creating NetworkPacketBrokerResource, please refer to the document of NetworkPacketBrokerResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
             string resourceGroupName = "example-rg";
             string networkPacketBrokerName = "example-networkPacketBroker";
             ResourceIdentifier networkPacketBrokerResourceId = NetworkPacketBrokerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkPacketBrokerName);
@@ -50,8 +51,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_NetworkPacketBrokersDeleteMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkPacketBrokers_Delete_MaximumSet_Gen.json
-            // this example is just showing the usage of "NetworkPacketBrokers_Delete" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-07-15/NetworkPacketBrokers_Delete.json
+            // this example is just showing the usage of "NetworkPacketBroker_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -60,7 +61,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkPacketBrokerResource created on azure
             // for more information of creating NetworkPacketBrokerResource, please refer to the document of NetworkPacketBrokerResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
             string resourceGroupName = "example-rg";
             string networkPacketBrokerName = "example-networkPacketBroker";
             ResourceIdentifier networkPacketBrokerResourceId = NetworkPacketBrokerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkPacketBrokerName);
@@ -76,8 +77,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_NetworkPacketBrokersUpdateMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkPacketBrokers_Update_MaximumSet_Gen.json
-            // this example is just showing the usage of "NetworkPacketBrokers_Update" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-07-15/NetworkPacketBrokers_Update.json
+            // this example is just showing the usage of "NetworkPacketBroker_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -86,7 +87,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkPacketBrokerResource created on azure
             // for more information of creating NetworkPacketBrokerResource, please refer to the document of NetworkPacketBrokerResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
             string resourceGroupName = "example-rg";
             string networkPacketBrokerName = "example-networkPacketBroker";
             ResourceIdentifier networkPacketBrokerResourceId = NetworkPacketBrokerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkPacketBrokerName);
@@ -95,9 +96,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
             // invoke the operation
             NetworkPacketBrokerPatch patch = new NetworkPacketBrokerPatch
             {
+                Identity = new ManagedServiceIdentityPatch
+                {
+                    Type = Models.ManagedServiceIdentityType.None,
+                    UserAssignedIdentities =
+{
+["key8793"] = new UserAssignedIdentity()
+},
+                },
                 Tags =
 {
-["key8772"] = "1234"
+["keyId"] = "keyValue"
 },
             };
             ArmOperation<NetworkPacketBrokerResource> lro = await networkPacketBroker.UpdateAsync(WaitUntil.Completed, patch);

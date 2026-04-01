@@ -34,10 +34,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 throw new FormatException($"The model {nameof(IPMatchCondition)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(SourceDestinationType))
+            if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(SourceDestinationType.Value.ToString());
+                writer.WriteStringValue(Type.Value.ToString());
             }
             if (Optional.IsDefined(PrefixType))
             {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 return null;
             }
             SourceDestinationType? type = default;
-            IPMatchConditionPrefixType? prefixType = default;
+            PrefixType? prefixType = default;
             IList<string> ipPrefixValues = default;
             IList<string> ipGroupNames = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    prefixType = new IPMatchConditionPrefixType(property.Value.GetString());
+                    prefixType = new PrefixType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("ipPrefixValues"u8))

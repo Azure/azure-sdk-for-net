@@ -34,10 +34,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 throw new FormatException($"The model {nameof(NetworkTapRuleAction)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(TapRuleActionType))
+            if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(TapRuleActionType.Value.ToString());
+                writer.WriteStringValue(Type.Value.ToString());
             }
             if (Optional.IsDefined(Truncate))
             {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
             TapRuleActionType? type = default;
             string truncate = default;
-            NetworkFabricBooleanValue? isTimestampEnabled = default;
+            BooleanEnumProperty? isTimestampEnabled = default;
             ResourceIdentifier destinationId = default;
             string matchConfigurationName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    isTimestampEnabled = new NetworkFabricBooleanValue(property.Value.GetString());
+                    isTimestampEnabled = new BooleanEnumProperty(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("destinationId"u8))

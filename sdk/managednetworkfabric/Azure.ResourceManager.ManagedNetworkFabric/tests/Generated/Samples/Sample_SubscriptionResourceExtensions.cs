@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetNetworkFabricAccessControlLists_AccessControlListsListBySubscriptionMaximumSetGen()
+        public async Task GetAccessControlLists_AccessControlListsListBySubscriptionMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/AccessControlLists_ListBySubscription_MaximumSet_Gen.json
-            // this example is just showing the usage of "AccessControlLists_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-07-15/AccessControlLists_ListBySubscription.json
+            // this example is just showing the usage of "AccessControlList_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -30,16 +30,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (NetworkFabricAccessControlListResource item in subscriptionResource.GetNetworkFabricAccessControlListsAsync())
+            await foreach (AccessControlListResource item in subscriptionResource.GetAccessControlListsAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                NetworkFabricAccessControlListData resourceData = item.Data;
+                AccessControlListData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -49,10 +49,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetNetworkFabricInternetGateways_InternetGatewaysListBySubscriptionMaximumSetGen()
+        public async Task GetInternetGatewayRules_InternetGatewayRulesListBySubscriptionMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/InternetGateways_ListBySubscription_MaximumSet_Gen.json
-            // this example is just showing the usage of "InternetGateways_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-07-15/InternetGatewayRules_ListBySubscription.json
+            // this example is just showing the usage of "InternetGatewayRule_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -61,16 +61,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (NetworkFabricInternetGatewayResource item in subscriptionResource.GetNetworkFabricInternetGatewaysAsync())
+            await foreach (InternetGatewayRuleResource item in subscriptionResource.GetInternetGatewayRulesAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                NetworkFabricInternetGatewayData resourceData = item.Data;
+                InternetGatewayRuleData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetNetworkFabricInternetGatewayRules_InternetGatewayRulesListBySubscriptionMaximumSetGen()
+        public async Task GetInternetGateways_InternetGatewaysListBySubscriptionMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/InternetGatewayRules_ListBySubscription_MaximumSet_Gen.json
-            // this example is just showing the usage of "InternetGatewayRules_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-07-15/InternetGateways_ListBySubscription.json
+            // this example is just showing the usage of "InternetGateway_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -92,16 +92,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (NetworkFabricInternetGatewayRuleResource item in subscriptionResource.GetNetworkFabricInternetGatewayRulesAsync())
+            await foreach (InternetGatewayResource item in subscriptionResource.GetInternetGatewaysAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                NetworkFabricInternetGatewayRuleData resourceData = item.Data;
+                InternetGatewayData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -111,10 +111,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetNetworkFabricIPCommunities_IpCommunitiesListBySubscriptionMaximumSetGen()
+        public async Task GetIPCommunities_IpCommunitiesListBySubscriptionMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/IpCommunities_ListBySubscription_MaximumSet_Gen.json
-            // this example is just showing the usage of "IpCommunities_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-07-15/IpCommunities_ListBySubscription.json
+            // this example is just showing the usage of "IpCommunity_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -123,16 +123,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (NetworkFabricIPCommunityResource item in subscriptionResource.GetNetworkFabricIPCommunitiesAsync())
+            await foreach (IPCommunityResource item in subscriptionResource.GetIPCommunitiesAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                NetworkFabricIPCommunityData resourceData = item.Data;
+                IPCommunityData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -142,10 +142,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetNetworkFabricIPExtendedCommunities_IpExtendedCommunitiesListBySubscriptionMaximumSetGen()
+        public async Task GetIPExtendedCommunities_IpExtendedCommunitiesListBySubscriptionMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/IpExtendedCommunities_ListBySubscription_MaximumSet_Gen.json
-            // this example is just showing the usage of "IpExtendedCommunities_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-07-15/IpExtendedCommunities_ListBySubscription.json
+            // this example is just showing the usage of "IpExtendedCommunity_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -154,16 +154,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (NetworkFabricIPExtendedCommunityResource item in subscriptionResource.GetNetworkFabricIPExtendedCommunitiesAsync())
+            await foreach (IPExtendedCommunityResource item in subscriptionResource.GetIPExtendedCommunitiesAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                NetworkFabricIPExtendedCommunityData resourceData = item.Data;
+                IPExtendedCommunityData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -173,10 +173,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetNetworkFabricIPPrefixes_IpPrefixesListBySubscriptionMaximumSetGen()
+        public async Task GetIPPrefixes_IpPrefixesListBySubscriptionMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/IpPrefixes_ListBySubscription_MaximumSet_Gen.json
-            // this example is just showing the usage of "IpPrefixes_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-07-15/IpPrefixes_ListBySubscription.json
+            // this example is just showing the usage of "IpPrefix_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -185,16 +185,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (NetworkFabricIPPrefixResource item in subscriptionResource.GetNetworkFabricIPPrefixesAsync())
+            await foreach (IPPrefixResource item in subscriptionResource.GetIPPrefixesAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                NetworkFabricIPPrefixData resourceData = item.Data;
+                IPPrefixData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -204,10 +204,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetNetworkFabricL2IsolationDomains_L2IsolationDomainsListBySubscriptionMaximumSetGen()
+        public async Task GetL2IsolationDomains_L2IsolationDomainsListBySubscriptionMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/L2IsolationDomains_ListBySubscription_MaximumSet_Gen.json
-            // this example is just showing the usage of "L2IsolationDomains_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-07-15/L2IsolationDomains_ListBySubscription.json
+            // this example is just showing the usage of "L2IsolationDomain_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -216,16 +216,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (NetworkFabricL2IsolationDomainResource item in subscriptionResource.GetNetworkFabricL2IsolationDomainsAsync())
+            await foreach (L2IsolationDomainResource item in subscriptionResource.GetL2IsolationDomainsAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                NetworkFabricL2IsolationDomainData resourceData = item.Data;
+                L2IsolationDomainData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -235,10 +235,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetNetworkFabricL3IsolationDomains_L3IsolationDomainsListBySubscriptionMaximumSetGen()
+        public async Task GetL3IsolationDomains_L3IsolationDomainsListBySubscriptionMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/L3IsolationDomains_ListBySubscription_MaximumSet_Gen.json
-            // this example is just showing the usage of "L3IsolationDomains_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-07-15/L3IsolationDomains_ListBySubscription.json
+            // this example is just showing the usage of "L3IsolationDomain_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -247,16 +247,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (NetworkFabricL3IsolationDomainResource item in subscriptionResource.GetNetworkFabricL3IsolationDomainsAsync())
+            await foreach (L3IsolationDomainResource item in subscriptionResource.GetL3IsolationDomainsAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                NetworkFabricL3IsolationDomainData resourceData = item.Data;
+                L3IsolationDomainData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -266,10 +266,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetNetworkFabricNeighborGroups_NeighborGroupsListBySubscriptionMaximumSetGen()
+        public async Task GetNeighborGroups_NeighborGroupsListBySubscriptionMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NeighborGroups_ListBySubscription_MaximumSet_Gen.json
-            // this example is just showing the usage of "NeighborGroups_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-07-15/NeighborGroups_ListBySubscription.json
+            // this example is just showing the usage of "NeighborGroup_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -278,16 +278,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (NetworkFabricNeighborGroupResource item in subscriptionResource.GetNetworkFabricNeighborGroupsAsync())
+            await foreach (NeighborGroupResource item in subscriptionResource.GetNeighborGroupsAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                NetworkFabricNeighborGroupData resourceData = item.Data;
+                NeighborGroupData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -299,8 +299,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetNetworkDevices_NetworkDevicesListBySubscriptionMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkDevices_ListBySubscription_MaximumSet_Gen.json
-            // this example is just showing the usage of "NetworkDevices_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-07-15/NetworkDevices_ListBySubscription.json
+            // this example is just showing the usage of "NetworkDevice_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -330,8 +330,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetNetworkFabricControllers_NetworkFabricControllersListBySubscriptionMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkFabricControllers_ListBySubscription_MaximumSet_Gen.json
-            // this example is just showing the usage of "NetworkFabricControllers_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-07-15/NetworkFabricControllers_ListBySubscription.json
+            // this example is just showing the usage of "NetworkFabricController_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -361,8 +361,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetNetworkFabrics_NetworkFabricsListBySubscriptionMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkFabrics_ListBySubscription_MaximumSet_Gen.json
-            // this example is just showing the usage of "NetworkFabrics_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-07-15/NetworkFabrics_ListBySubscription.json
+            // this example is just showing the usage of "NetworkFabric_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -392,8 +392,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetNetworkPacketBrokers_NetworkPacketBrokersListBySubscriptionMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkPacketBrokers_ListBySubscription_MaximumSet_Gen.json
-            // this example is just showing the usage of "NetworkPacketBrokers_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-07-15/NetworkPacketBrokers_ListBySubscription.json
+            // this example is just showing the usage of "NetworkPacketBroker_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -423,8 +423,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetNetworkRacks_NetworkRacksListBySubscriptionMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkRacks_ListBySubscription_MaximumSet_Gen.json
-            // this example is just showing the usage of "NetworkRacks_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-07-15/NetworkRacks_ListBySubscription.json
+            // this example is just showing the usage of "NetworkRack_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -433,7 +433,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -454,8 +454,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetNetworkTapRules_NetworkTapRulesListBySubscriptionMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkTapRules_ListBySubscription_MaximumSet_Gen.json
-            // this example is just showing the usage of "NetworkTapRules_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-07-15/NetworkTapRules_ListBySubscription.json
+            // this example is just showing the usage of "NetworkTapRule_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -464,7 +464,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -485,8 +485,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetNetworkTaps_NetworkTapsListBySubscriptionMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkTaps_ListBySubscription_MaximumSet_Gen.json
-            // this example is just showing the usage of "NetworkTaps_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-07-15/NetworkTaps_ListBySubscription.json
+            // this example is just showing the usage of "NetworkTap_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -495,7 +495,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -514,10 +514,41 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetNetworkFabricRoutePolicies_RoutePoliciesListBySubscriptionMaximumSetGen()
+        public async Task GetRoutePolicies_RoutePoliciesListBySubscriptionMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/RoutePolicies_ListBySubscription_MaximumSet_Gen.json
-            // this example is just showing the usage of "RoutePolicies_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-07-15/RoutePolicies_ListBySubscription.json
+            // this example is just showing the usage of "RoutePolicy_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // invoke the operation and iterate over the result
+            await foreach (RoutePolicyResource item in subscriptionResource.GetRoutePoliciesAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                RoutePolicyData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetNetworkMonitors_NetworkMonitorsListBySubscription()
+        {
+            // Generated from example definition: 2025-07-15/NetworkMonitors_ListBySubscription.json
+            // this example is just showing the usage of "NetworkMonitor_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -531,11 +562,42 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (NetworkFabricRoutePolicyResource item in subscriptionResource.GetNetworkFabricRoutePoliciesAsync())
+            await foreach (NetworkMonitorResource item in subscriptionResource.GetNetworkMonitorsAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                NetworkFabricRoutePolicyData resourceData = item.Data;
+                NetworkMonitorData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetNetworkBootstrapDevices_NetworkBootstrapDevicesListBySubscription()
+        {
+            // Generated from example definition: 2025-07-15/NetworkBootstrapDevices_ListBySubscription.json
+            // this example is just showing the usage of "NetworkBootstrapDevice_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // invoke the operation and iterate over the result
+            await foreach (NetworkBootstrapDeviceResource item in subscriptionResource.GetNetworkBootstrapDevicesAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                NetworkBootstrapDeviceData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

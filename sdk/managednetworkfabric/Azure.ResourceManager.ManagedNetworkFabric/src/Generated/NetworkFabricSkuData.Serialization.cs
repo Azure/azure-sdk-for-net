@@ -40,10 +40,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(TypePropertiesType))
+            if (options.Format != "W" && Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(TypePropertiesType.Value.ToString());
+                writer.WriteStringValue(Type.Value.ToString());
             }
             if (Optional.IsDefined(MaxComputeRacks))
             {
@@ -102,12 +102,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            NetworkFabricSkuType? type0 = default;
+            FabricSkuType? type0 = default;
             int? maxComputeRacks = default;
             int? maximumServerCount = default;
             IReadOnlyList<string> supportedVersions = default;
             string details = default;
-            NetworkFabricProvisioningState? provisioningState = default;
+            ProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            type0 = new NetworkFabricSkuType(property0.Value.GetString());
+                            type0 = new FabricSkuType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("maxComputeRacks"u8))
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            provisioningState = new NetworkFabricProvisioningState(property0.Value.GetString());
+                            provisioningState = new ProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }

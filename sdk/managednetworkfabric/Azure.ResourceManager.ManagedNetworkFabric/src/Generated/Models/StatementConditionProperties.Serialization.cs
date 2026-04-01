@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<StatementConditionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -34,16 +34,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 throw new FormatException($"The model {nameof(StatementConditionProperties)} does not support writing '{format}' format.");
             }
 
-            base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(RoutePolicyConditionType))
+            if (Optional.IsCollectionDefined(IPCommunityIds))
             {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(RoutePolicyConditionType.Value.ToString());
-            }
-            if (Optional.IsDefined(IPPrefixId))
-            {
-                writer.WritePropertyName("ipPrefixId"u8);
-                writer.WriteStringValue(IPPrefixId);
+                writer.WritePropertyName("ipCommunityIds"u8);
+                writer.WriteStartArray();
+                foreach (var item in IPCommunityIds)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
             }
             if (Optional.IsCollectionDefined(IPExtendedCommunityIds))
             {
@@ -51,14 +50,34 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WriteStartArray();
                 foreach (var item in IPExtendedCommunityIds)
                 {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(Type))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(Type.Value.ToString());
+            }
+            if (Optional.IsDefined(IPPrefixId))
+            {
+                writer.WritePropertyName("ipPrefixId"u8);
+                writer.WriteStringValue(IPPrefixId);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
         }
 
@@ -82,14 +101,42 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
+            IList<string> ipCommunityIds = default;
+            IList<string> ipExtendedCommunityIds = default;
             RoutePolicyConditionType? type = default;
-            ResourceIdentifier ipPrefixId = default;
-            IList<ResourceIdentifier> ipExtendedCommunityIds = default;
-            IList<ResourceIdentifier> ipCommunityIds = default;
+            string ipPrefixId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("ipCommunityIds"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    ipCommunityIds = array;
+                    continue;
+                }
+                if (property.NameEquals("ipExtendedCommunityIds"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    ipExtendedCommunityIds = array;
+                    continue;
+                }
                 if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -101,53 +148,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 if (property.NameEquals("ipPrefixId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    ipPrefixId = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("ipExtendedCommunityIds"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<ResourceIdentifier> array = new List<ResourceIdentifier>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(new ResourceIdentifier(item.GetString()));
-                        }
-                    }
-                    ipExtendedCommunityIds = array;
-                    continue;
-                }
-                if (property.NameEquals("ipCommunityIds"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<ResourceIdentifier> array = new List<ResourceIdentifier>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(new ResourceIdentifier(item.GetString()));
-                        }
-                    }
-                    ipCommunityIds = array;
+                    ipPrefixId = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -156,7 +157,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new StatementConditionProperties(ipCommunityIds ?? new ChangeTrackingList<ResourceIdentifier>(), serializedAdditionalRawData, type, ipPrefixId, ipExtendedCommunityIds ?? new ChangeTrackingList<ResourceIdentifier>());
+            return new StatementConditionProperties(ipCommunityIds ?? new ChangeTrackingList<string>(), ipExtendedCommunityIds ?? new ChangeTrackingList<string>(), type, ipPrefixId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StatementConditionProperties>.Write(ModelReaderWriterOptions options)

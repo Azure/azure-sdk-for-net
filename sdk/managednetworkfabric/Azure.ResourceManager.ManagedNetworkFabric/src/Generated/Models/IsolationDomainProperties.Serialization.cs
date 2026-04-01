@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            IsolationDomainEncapsulationType? encapsulation = default;
+            Encapsulation? encapsulation = default;
             IList<ResourceIdentifier> neighborGroupIds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    encapsulation = new IsolationDomainEncapsulationType(property.Value.GetString());
+                    encapsulation = new Encapsulation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("neighborGroupIds"u8))

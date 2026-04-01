@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> Route Policy Statement properties. </summary>
-    public partial class RoutePolicyStatementProperties : AnnotationResourceProperties
+    public partial class RoutePolicyStatementProperties : AnnotationResource
     {
         /// <summary> Initializes a new instance of <see cref="RoutePolicyStatementProperties"/>. </summary>
         /// <param name="sequenceNumber"> Sequence to insert to/delete from existing route. </param>

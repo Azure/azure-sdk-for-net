@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_NetworkToNetworkInterconnectsCreateMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkToNetworkInterconnects_Create_MaximumSet_Gen.json
-            // this example is just showing the usage of "NetworkToNetworkInterconnects_Create" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-07-15/NetworkToNetworkInterconnects_Create.json
+            // this example is just showing the usage of "NetworkToNetworkInterconnect_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -30,9 +30,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkFabricResource created on azure
             // for more information of creating NetworkFabricResource, please refer to the document of NetworkFabricResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
             string resourceGroupName = "example-rg";
-            string networkFabricName = "example-fabric";
+            string networkFabricName = "example-nf";
             ResourceIdentifier networkFabricResourceId = NetworkFabricResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkFabricName);
             NetworkFabricResource networkFabric = client.GetNetworkFabricResource(networkFabricResourceId);
 
@@ -41,47 +41,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // invoke the operation
             string networkToNetworkInterconnectName = "example-nni";
-            NetworkToNetworkInterconnectData data = new NetworkToNetworkInterconnectData(NetworkFabricBooleanValue.True)
-            {
-                NniType = NniType.CE,
-                IsManagementType = IsManagementType.True,
-                Layer2Configuration = new Layer2Configuration
-                {
-                    Mtu = 1500,
-                    Interfaces = { new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/networkDevices/example-networkDevice/networkInterfaces/example-networkInterface") },
-                },
-                OptionBLayer3Configuration = new NetworkToNetworkInterconnectOptionBLayer3Configuration
-                {
-                    PeerAsn = 61234L,
-                    VlanId = 1234,
-                    PrimaryIPv4Prefix = "10.0.0.12/30",
-                    PrimaryIPv6Prefix = "4FFE:FFFF:0:CD30::a8/127",
-                    SecondaryIPv4Prefix = "40.0.0.14/30",
-                    SecondaryIPv6Prefix = "6FFE:FFFF:0:CD30::ac/127",
-                },
-                NpbStaticRouteConfiguration = new NpbStaticRouteConfiguration
-                {
-                    BfdConfiguration = new BfdConfiguration
-                    {
-                        IntervalInMilliSeconds = 300,
-                        Multiplier = 25,
-                    },
-                    IPv4Routes = { new StaticRouteProperties("20.0.0.12/30", new string[] { "21.20.20.20" }) },
-                    IPv6Routes = { new StaticRouteProperties("3FFE:FFFF:0:CD30::ac/127", new string[] { "4FFE:FFFF:0:CD30::ac" }) },
-                },
-                ImportRoutePolicy = new ImportRoutePolicyInformation
-                {
-                    ImportIPv4RoutePolicyId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/routePolicies/example-routePolicy"),
-                    ImportIPv6RoutePolicyId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/routePolicies/example-routePolicy"),
-                },
-                ExportRoutePolicy = new ExportRoutePolicyInformation
-                {
-                    ExportIPv4RoutePolicyId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/routePolicies/example-routePolicy"),
-                    ExportIPv6RoutePolicyId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/routePolicies/example-routePolicy"),
-                },
-                EgressAclId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/accessControlLists/example-acl"),
-                IngressAclId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/accessControlLists/example-acl"),
-            };
+            NetworkToNetworkInterconnectData data = new NetworkToNetworkInterconnectData(default);
             ArmOperation<NetworkToNetworkInterconnectResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, networkToNetworkInterconnectName, data);
             NetworkToNetworkInterconnectResource result = lro.Value;
 
@@ -96,8 +56,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_NetworkToNetworkInterconnectsGetMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkToNetworkInterconnects_Get_MaximumSet_Gen.json
-            // this example is just showing the usage of "NetworkToNetworkInterconnects_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-07-15/NetworkToNetworkInterconnects_Get.json
+            // this example is just showing the usage of "NetworkToNetworkInterconnect_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -106,9 +66,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkFabricResource created on azure
             // for more information of creating NetworkFabricResource, please refer to the document of NetworkFabricResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
             string resourceGroupName = "example-rg";
-            string networkFabricName = "example-fabric";
+            string networkFabricName = "example-nf";
             ResourceIdentifier networkFabricResourceId = NetworkFabricResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkFabricName);
             NetworkFabricResource networkFabric = client.GetNetworkFabricResource(networkFabricResourceId);
 
@@ -130,8 +90,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_NetworkToNetworkInterconnectsListByNetworkFabricMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkToNetworkInterconnects_ListByNetworkFabric_MaximumSet_Gen.json
-            // this example is just showing the usage of "NetworkToNetworkInterconnects_ListByNetworkFabric" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-07-15/NetworkToNetworkInterconnects_ListByNetworkFabric.json
+            // this example is just showing the usage of "NetworkToNetworkInterconnect_ListByNetworkFabric" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -140,9 +100,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkFabricResource created on azure
             // for more information of creating NetworkFabricResource, please refer to the document of NetworkFabricResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
             string resourceGroupName = "example-rg";
-            string networkFabricName = "example-fabric";
+            string networkFabricName = "example-nf";
             ResourceIdentifier networkFabricResourceId = NetworkFabricResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkFabricName);
             NetworkFabricResource networkFabric = client.GetNetworkFabricResource(networkFabricResourceId);
 
@@ -166,8 +126,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_NetworkToNetworkInterconnectsGetMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkToNetworkInterconnects_Get_MaximumSet_Gen.json
-            // this example is just showing the usage of "NetworkToNetworkInterconnects_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-07-15/NetworkToNetworkInterconnects_Get.json
+            // this example is just showing the usage of "NetworkToNetworkInterconnect_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -176,9 +136,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkFabricResource created on azure
             // for more information of creating NetworkFabricResource, please refer to the document of NetworkFabricResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
             string resourceGroupName = "example-rg";
-            string networkFabricName = "example-fabric";
+            string networkFabricName = "example-nf";
             ResourceIdentifier networkFabricResourceId = NetworkFabricResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkFabricName);
             NetworkFabricResource networkFabric = client.GetNetworkFabricResource(networkFabricResourceId);
 
@@ -196,8 +156,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_NetworkToNetworkInterconnectsGetMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkToNetworkInterconnects_Get_MaximumSet_Gen.json
-            // this example is just showing the usage of "NetworkToNetworkInterconnects_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-07-15/NetworkToNetworkInterconnects_Get.json
+            // this example is just showing the usage of "NetworkToNetworkInterconnect_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -206,9 +166,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkFabricResource created on azure
             // for more information of creating NetworkFabricResource, please refer to the document of NetworkFabricResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
             string resourceGroupName = "example-rg";
-            string networkFabricName = "example-fabric";
+            string networkFabricName = "example-nf";
             ResourceIdentifier networkFabricResourceId = NetworkFabricResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkFabricName);
             NetworkFabricResource networkFabric = client.GetNetworkFabricResource(networkFabricResourceId);
 

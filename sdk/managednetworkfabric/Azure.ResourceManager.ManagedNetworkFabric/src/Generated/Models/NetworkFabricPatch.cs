@@ -7,15 +7,19 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> The Network Fabric resource definition. </summary>
-    public partial class NetworkFabricPatch : NetworkRackPatch
+    public partial class NetworkFabricPatch : TagsUpdate
     {
         /// <summary> Initializes a new instance of <see cref="NetworkFabricPatch"/>. </summary>
         public NetworkFabricPatch()
         {
+            ControlPlaneAcls = new ChangeTrackingList<ResourceIdentifier>();
+            TrustedIPPrefixes = new ChangeTrackingList<ResourceIdentifier>();
+            FeatureFlags = new ChangeTrackingList<FeatureFlagProperties>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricPatch"/>. </summary>
@@ -26,19 +30,37 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="serverCountPerRack"> Number of servers.Possible values are from 1-16. </param>
         /// <param name="ipv4Prefix"> IPv4Prefix for Management Network. Example: 10.1.0.0/19. </param>
         /// <param name="ipv6Prefix"> IPv6Prefix for Management Network. Example: 3FFE:FFFF:0:CD40::/59. </param>
-        /// <param name="fabricAsn"> ASN of CE devices for CE/PE connectivity. </param>
+        /// <param name="fabricASN"> ASN of CE devices for CE/PE connectivity. </param>
         /// <param name="terminalServerConfiguration"> Network and credentials configuration already applied to terminal server. </param>
         /// <param name="managementNetworkConfiguration"> Configuration to be used to setup the management network. </param>
-        internal NetworkFabricPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, string annotation, int? rackCount, int? serverCountPerRack, string ipv4Prefix, string ipv6Prefix, long? fabricAsn, NetworkFabricPatchablePropertiesTerminalServerConfiguration terminalServerConfiguration, ManagementNetworkConfigurationPatchableProperties managementNetworkConfiguration) : base(tags, serializedAdditionalRawData)
+        /// <param name="storageAccountConfiguration"> Bring your own storage account configurations for Network Fabric. </param>
+        /// <param name="hardwareAlertThreshold"> Hardware alert threshold percentage. Possible values are from 20 to 100. </param>
+        /// <param name="controlPlaneAcls"> Control Plane Access Control List ARM resource IDs. </param>
+        /// <param name="trustedIPPrefixes"> Trusted IP Prefix ARM resource IDs. </param>
+        /// <param name="uniqueRdConfiguration"> Unique Route Distinguisher configuration. </param>
+        /// <param name="qosConfiguration"> NetworkFabric QoS Configuration. </param>
+        /// <param name="featureFlags"> NetworkFabric feature flag configuration information. </param>
+        /// <param name="authorizedTransceiver"> Authorized transciever configuration for NetworkFabric. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        internal NetworkFabricPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, string annotation, int? rackCount, int? serverCountPerRack, string ipv4Prefix, string ipv6Prefix, long? fabricASN, TerminalServerPatchConfiguration terminalServerConfiguration, ManagementNetworkPatchConfiguration managementNetworkConfiguration, StorageAccountPatchConfiguration storageAccountConfiguration, int? hardwareAlertThreshold, IList<ResourceIdentifier> controlPlaneAcls, IList<ResourceIdentifier> trustedIPPrefixes, UniqueRouteDistinguisherPatchProperties uniqueRdConfiguration, QosPatchProperties qosConfiguration, IList<FeatureFlagProperties> featureFlags, AuthorizedTransceiverPatchProperties authorizedTransceiver, ManagedServiceIdentityPatch identity) : base(tags, serializedAdditionalRawData)
         {
             Annotation = annotation;
             RackCount = rackCount;
             ServerCountPerRack = serverCountPerRack;
             IPv4Prefix = ipv4Prefix;
             IPv6Prefix = ipv6Prefix;
-            FabricAsn = fabricAsn;
+            FabricASN = fabricASN;
             TerminalServerConfiguration = terminalServerConfiguration;
             ManagementNetworkConfiguration = managementNetworkConfiguration;
+            StorageAccountConfiguration = storageAccountConfiguration;
+            HardwareAlertThreshold = hardwareAlertThreshold;
+            ControlPlaneAcls = controlPlaneAcls;
+            TrustedIPPrefixes = trustedIPPrefixes;
+            UniqueRdConfiguration = uniqueRdConfiguration;
+            QosConfiguration = qosConfiguration;
+            FeatureFlags = featureFlags;
+            AuthorizedTransceiver = authorizedTransceiver;
+            Identity = identity;
         }
 
         /// <summary> Switch configuration description. </summary>
@@ -52,10 +74,40 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> IPv6Prefix for Management Network. Example: 3FFE:FFFF:0:CD40::/59. </summary>
         public string IPv6Prefix { get; set; }
         /// <summary> ASN of CE devices for CE/PE connectivity. </summary>
-        public long? FabricAsn { get; set; }
+        public long? FabricASN { get; set; }
         /// <summary> Network and credentials configuration already applied to terminal server. </summary>
-        public NetworkFabricPatchablePropertiesTerminalServerConfiguration TerminalServerConfiguration { get; set; }
+        public TerminalServerPatchConfiguration TerminalServerConfiguration { get; set; }
         /// <summary> Configuration to be used to setup the management network. </summary>
-        public ManagementNetworkConfigurationPatchableProperties ManagementNetworkConfiguration { get; set; }
+        public ManagementNetworkPatchConfiguration ManagementNetworkConfiguration { get; set; }
+        /// <summary> Bring your own storage account configurations for Network Fabric. </summary>
+        public StorageAccountPatchConfiguration StorageAccountConfiguration { get; set; }
+        /// <summary> Hardware alert threshold percentage. Possible values are from 20 to 100. </summary>
+        public int? HardwareAlertThreshold { get; set; }
+        /// <summary> Control Plane Access Control List ARM resource IDs. </summary>
+        public IList<ResourceIdentifier> ControlPlaneAcls { get; }
+        /// <summary> Trusted IP Prefix ARM resource IDs. </summary>
+        public IList<ResourceIdentifier> TrustedIPPrefixes { get; }
+        /// <summary> Unique Route Distinguisher configuration. </summary>
+        public UniqueRouteDistinguisherPatchProperties UniqueRdConfiguration { get; set; }
+        /// <summary> NetworkFabric QoS Configuration. </summary>
+        internal QosPatchProperties QosConfiguration { get; set; }
+        /// <summary> QoS configuration state. Default is Disabled. </summary>
+        public QosConfigurationState? QosConfigurationState
+        {
+            get => QosConfiguration is null ? default : QosConfiguration.QosConfigurationState;
+            set
+            {
+                if (QosConfiguration is null)
+                    QosConfiguration = new QosPatchProperties();
+                QosConfiguration.QosConfigurationState = value;
+            }
+        }
+
+        /// <summary> NetworkFabric feature flag configuration information. </summary>
+        public IList<FeatureFlagProperties> FeatureFlags { get; }
+        /// <summary> Authorized transciever configuration for NetworkFabric. </summary>
+        public AuthorizedTransceiverPatchProperties AuthorizedTransceiver { get; set; }
+        /// <summary> The managed service identities assigned to this resource. </summary>
+        public ManagedServiceIdentityPatch Identity { get; set; }
     }
 }

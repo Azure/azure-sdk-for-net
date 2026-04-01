@@ -38,19 +38,34 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
 
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity"u8);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, ModelSerializationExtensions.WireV3Options);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Annotation))
-            {
-                writer.WritePropertyName("annotation"u8);
-                writer.WriteStringValue(Annotation);
-            }
             writer.WritePropertyName("networkPacketBrokerId"u8);
             writer.WriteStringValue(NetworkPacketBrokerId);
             if (options.Format != "W" && Optional.IsDefined(SourceTapRuleId))
             {
                 writer.WritePropertyName("sourceTapRuleId"u8);
                 writer.WriteStringValue(SourceTapRuleId);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(NetworkFabricIds))
+            {
+                writer.WritePropertyName("networkFabricIds"u8);
+                writer.WriteStartArray();
+                foreach (var item in NetworkFabricIds)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
             }
             writer.WritePropertyName("destinations"u8);
             writer.WriteStartArray();
@@ -63,6 +78,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 writer.WritePropertyName("pollingType"u8);
                 writer.WriteStringValue(PollingType.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(LastOperation))
+            {
+                writer.WritePropertyName("lastOperation"u8);
+                writer.WriteObjectValue(LastOperation, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ConfigurationState))
             {
@@ -102,24 +122,35 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 return null;
             }
+            ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            string annotation = default;
             ResourceIdentifier networkPacketBrokerId = default;
             ResourceIdentifier sourceTapRuleId = default;
-            IList<NetworkTapPropertiesDestinationsItem> destinations = default;
-            NetworkTapPollingType? pollingType = default;
-            NetworkFabricConfigurationState? configurationState = default;
-            NetworkFabricProvisioningState? provisioningState = default;
-            NetworkFabricAdministrativeState? administrativeState = default;
+            IReadOnlyList<ResourceIdentifier> networkFabricIds = default;
+            IList<DestinationProperties> destinations = default;
+            PollingType? pollingType = default;
+            LastOperationProperties lastOperation = default;
+            ConfigurationState? configurationState = default;
+            ProvisioningState? provisioningState = default;
+            AdministrativeState? administrativeState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("identity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireV3Options, AzureResourceManagerManagedNetworkFabricContext.Default);
+                    continue;
+                }
                 if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -172,11 +203,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("annotation"u8))
-                        {
-                            annotation = property0.Value.GetString();
-                            continue;
-                        }
                         if (property0.NameEquals("networkPacketBrokerId"u8))
                         {
                             networkPacketBrokerId = new ResourceIdentifier(property0.Value.GetString());
@@ -191,12 +217,33 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             sourceTapRuleId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("destinations"u8))
+                        if (property0.NameEquals("networkFabricIds"u8))
                         {
-                            List<NetworkTapPropertiesDestinationsItem> array = new List<NetworkTapPropertiesDestinationsItem>();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<ResourceIdentifier> array = new List<ResourceIdentifier>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NetworkTapPropertiesDestinationsItem.DeserializeNetworkTapPropertiesDestinationsItem(item, options));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(new ResourceIdentifier(item.GetString()));
+                                }
+                            }
+                            networkFabricIds = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("destinations"u8))
+                        {
+                            List<DestinationProperties> array = new List<DestinationProperties>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(DestinationProperties.DeserializeDestinationProperties(item, options));
                             }
                             destinations = array;
                             continue;
@@ -207,7 +254,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            pollingType = new NetworkTapPollingType(property0.Value.GetString());
+                            pollingType = new PollingType(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("lastOperation"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            lastOperation = LastOperationProperties.DeserializeLastOperationProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("configurationState"u8))
@@ -216,7 +272,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            configurationState = new NetworkFabricConfigurationState(property0.Value.GetString());
+                            configurationState = new ConfigurationState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -225,7 +281,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            provisioningState = new NetworkFabricProvisioningState(property0.Value.GetString());
+                            provisioningState = new ProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("administrativeState"u8))
@@ -234,7 +290,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            administrativeState = new NetworkFabricAdministrativeState(property0.Value.GetString());
+                            administrativeState = new AdministrativeState(property0.Value.GetString());
                             continue;
                         }
                     }
@@ -253,14 +309,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                annotation,
                 networkPacketBrokerId,
                 sourceTapRuleId,
+                networkFabricIds ?? new ChangeTrackingList<ResourceIdentifier>(),
                 destinations,
                 pollingType,
+                lastOperation,
                 configurationState,
                 provisioningState,
                 administrativeState,
+                identity,
                 serializedAdditionalRawData);
         }
 

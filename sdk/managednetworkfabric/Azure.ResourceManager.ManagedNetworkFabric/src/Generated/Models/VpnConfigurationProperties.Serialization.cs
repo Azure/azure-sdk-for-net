@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 return null;
             }
             ResourceIdentifier networkToNetworkInterconnectId = default;
-            NetworkFabricAdministrativeState? administrativeState = default;
+            AdministrativeState? administrativeState = default;
             PeeringOption peeringOption = default;
-            OptionBProperties optionBProperties = default;
-            VpnConfigurationOptionAProperties optionAProperties = default;
+            VpnOptionBProperties optionBProperties = default;
+            VpnOptionAProperties optionAProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    administrativeState = new NetworkFabricAdministrativeState(property.Value.GetString());
+                    administrativeState = new AdministrativeState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("peeringOption"u8))
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    optionBProperties = OptionBProperties.DeserializeOptionBProperties(property.Value, options);
+                    optionBProperties = VpnOptionBProperties.DeserializeVpnOptionBProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("optionAProperties"u8))
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    optionAProperties = VpnConfigurationOptionAProperties.DeserializeVpnConfigurationOptionAProperties(property.Value, options);
+                    optionAProperties = VpnOptionAProperties.DeserializeVpnOptionAProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

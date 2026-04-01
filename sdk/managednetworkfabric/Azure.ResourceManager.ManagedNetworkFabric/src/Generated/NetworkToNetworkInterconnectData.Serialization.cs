@@ -67,6 +67,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 writer.WritePropertyName("npbStaticRouteConfiguration"u8);
                 writer.WriteObjectValue(NpbStaticRouteConfiguration, options);
             }
+            if (Optional.IsDefined(StaticRouteConfiguration))
+            {
+                writer.WritePropertyName("staticRouteConfiguration"u8);
+                writer.WriteObjectValue(StaticRouteConfiguration, options);
+            }
             if (Optional.IsDefined(ImportRoutePolicy))
             {
                 writer.WritePropertyName("importRoutePolicy"u8);
@@ -86,6 +91,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 writer.WritePropertyName("ingressAclId"u8);
                 writer.WriteStringValue(IngressAclId);
+            }
+            if (Optional.IsDefined(MicroBfdState))
+            {
+                writer.WritePropertyName("microBfdState"u8);
+                writer.WriteStringValue(MicroBfdState.Value.ToString());
+            }
+            if (Optional.IsDefined(ConditionalDefaultRouteConfiguration))
+            {
+                writer.WritePropertyName("conditionalDefaultRouteConfiguration"u8);
+                writer.WriteObjectValue(ConditionalDefaultRouteConfiguration, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(LastOperation))
+            {
+                writer.WritePropertyName("lastOperation"u8);
+                writer.WriteObjectValue(LastOperation, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ConfigurationState))
             {
@@ -131,17 +151,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             SystemData systemData = default;
             NniType? nniType = default;
             IsManagementType? isManagementType = default;
-            NetworkFabricBooleanValue useOptionB = default;
+            BooleanEnumProperty useOptionB = default;
             Layer2Configuration layer2Configuration = default;
-            NetworkToNetworkInterconnectOptionBLayer3Configuration optionBLayer3Configuration = default;
+            OptionBLayer3Configuration optionBLayer3Configuration = default;
             NpbStaticRouteConfiguration npbStaticRouteConfiguration = default;
+            NniStaticRouteConfiguration staticRouteConfiguration = default;
             ImportRoutePolicyInformation importRoutePolicy = default;
             ExportRoutePolicyInformation exportRoutePolicy = default;
             ResourceIdentifier egressAclId = default;
             ResourceIdentifier ingressAclId = default;
-            NetworkFabricConfigurationState? configurationState = default;
-            NetworkFabricProvisioningState? provisioningState = default;
-            NetworkFabricAdministrativeState? administrativeState = default;
+            MicroBfdState? microBfdState = default;
+            ConditionalDefaultRouteProperties conditionalDefaultRouteConfiguration = default;
+            LastOperationProperties lastOperation = default;
+            ConfigurationState? configurationState = default;
+            ProvisioningState? provisioningState = default;
+            AdministrativeState? administrativeState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -199,7 +223,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                         }
                         if (property0.NameEquals("useOptionB"u8))
                         {
-                            useOptionB = new NetworkFabricBooleanValue(property0.Value.GetString());
+                            useOptionB = new BooleanEnumProperty(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("layer2Configuration"u8))
@@ -217,7 +241,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            optionBLayer3Configuration = NetworkToNetworkInterconnectOptionBLayer3Configuration.DeserializeNetworkToNetworkInterconnectOptionBLayer3Configuration(property0.Value, options);
+                            optionBLayer3Configuration = OptionBLayer3Configuration.DeserializeOptionBLayer3Configuration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("npbStaticRouteConfiguration"u8))
@@ -227,6 +251,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                                 continue;
                             }
                             npbStaticRouteConfiguration = NpbStaticRouteConfiguration.DeserializeNpbStaticRouteConfiguration(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("staticRouteConfiguration"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            staticRouteConfiguration = NniStaticRouteConfiguration.DeserializeNniStaticRouteConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("importRoutePolicy"u8))
@@ -265,13 +298,40 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             ingressAclId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("microBfdState"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            microBfdState = new MicroBfdState(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("conditionalDefaultRouteConfiguration"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            conditionalDefaultRouteConfiguration = ConditionalDefaultRouteProperties.DeserializeConditionalDefaultRouteProperties(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("lastOperation"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            lastOperation = LastOperationProperties.DeserializeLastOperationProperties(property0.Value, options);
+                            continue;
+                        }
                         if (property0.NameEquals("configurationState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            configurationState = new NetworkFabricConfigurationState(property0.Value.GetString());
+                            configurationState = new ConfigurationState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -280,7 +340,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            provisioningState = new NetworkFabricProvisioningState(property0.Value.GetString());
+                            provisioningState = new ProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("administrativeState"u8))
@@ -289,7 +349,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            administrativeState = new NetworkFabricAdministrativeState(property0.Value.GetString());
+                            administrativeState = new AdministrativeState(property0.Value.GetString());
                             continue;
                         }
                     }
@@ -312,10 +372,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 layer2Configuration,
                 optionBLayer3Configuration,
                 npbStaticRouteConfiguration,
+                staticRouteConfiguration,
                 importRoutePolicy,
                 exportRoutePolicy,
                 egressAclId,
                 ingressAclId,
+                microBfdState,
+                conditionalDefaultRouteConfiguration,
+                lastOperation,
                 configurationState,
                 provisioningState,
                 administrativeState,

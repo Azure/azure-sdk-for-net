@@ -39,6 +39,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("address"u8);
                 writer.WriteStringValue(Address);
             }
+            if (options.Format != "W" && Optional.IsDefined(BfdAdministrativeState))
+            {
+                writer.WritePropertyName("bfdAdministrativeState"u8);
+                writer.WriteStringValue(BfdAdministrativeState.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(BgpAdministrativeState))
+            {
+                writer.WritePropertyName("bgpAdministrativeState"u8);
+                writer.WriteStringValue(BgpAdministrativeState.Value.ToString());
+            }
             if (options.Format != "W" && Optional.IsDefined(ConfigurationState))
             {
                 writer.WritePropertyName("configurationState"u8);
@@ -82,7 +92,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 return null;
             }
             string address = default;
-            NetworkFabricConfigurationState? configurationState = default;
+            BfdAdministrativeState? bfdAdministrativeState = default;
+            BgpAdministrativeState? bgpAdministrativeState = default;
+            ConfigurationState? configurationState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -92,13 +104,31 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     address = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("bfdAdministrativeState"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    bfdAdministrativeState = new BfdAdministrativeState(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("bgpAdministrativeState"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    bgpAdministrativeState = new BgpAdministrativeState(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("configurationState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    configurationState = new NetworkFabricConfigurationState(property.Value.GetString());
+                    configurationState = new ConfigurationState(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -107,7 +137,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new NeighborAddress(address, configurationState, serializedAdditionalRawData);
+            return new NeighborAddress(address, bfdAdministrativeState, bgpAdministrativeState, configurationState, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NeighborAddress>.Write(ModelReaderWriterOptions options)

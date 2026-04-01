@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 return null;
             }
             IList<string> flags = default;
-            NetworkFabricPortType? portType = default;
+            PortType? portType = default;
             Layer4Protocol layer4Protocol = default;
             IList<string> ports = default;
             IList<string> portGroupNames = default;
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    portType = new NetworkFabricPortType(property.Value.GetString());
+                    portType = new PortType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("layer4Protocol"u8))
