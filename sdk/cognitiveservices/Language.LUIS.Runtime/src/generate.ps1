@@ -1,1 +1,0 @@
-Start-AutoRestCodeGeneration -ResourceProvider  "cognitiveservices/data-plane/LUIS/Runtime" -AutoRestVersion "latest"

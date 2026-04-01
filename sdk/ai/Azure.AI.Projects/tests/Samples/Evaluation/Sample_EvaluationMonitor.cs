@@ -297,7 +297,7 @@ public class Sample_EvaluationsMonitor : SamplesBase
 #endif
         DateTimeOffset endTime = DateTimeOffset.Now;
         AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
-        EvaluationClient evaluationClient = projectClient.OpenAI.GetEvaluationClient();
+        EvaluationClient evaluationClient = projectClient.ProjectOpenAIClient.GetEvaluationClient();
         #endregion
         #region Snippet:Sample_GetTraceIDs_EvaluationsMonitor_Async
         List<string> traceIDs = await GetOperationIdsAsync(applicationInsightsResourceId, agentId, lookbackHours, endTime);
@@ -394,7 +394,7 @@ public class Sample_EvaluationsMonitor : SamplesBase
 #endif
         DateTimeOffset endTime = DateTimeOffset.Now;
         AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
-        EvaluationClient evaluationClient = projectClient.OpenAI.GetEvaluationClient();
+        EvaluationClient evaluationClient = projectClient.ProjectOpenAIClient.GetEvaluationClient();
         #region Snippet:Sample_GetTraceIDs_EvaluationsMonitor_Sync
         List<string> traceIDs = GetOperationIds(applicationInsightsResourceId, agentId, lookbackHours, endTime);
         Console.WriteLine($"Found {traceIDs.Count} operation IDs:");

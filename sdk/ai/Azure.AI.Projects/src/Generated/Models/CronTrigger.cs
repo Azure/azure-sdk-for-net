@@ -28,7 +28,7 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="timeZone"> Time zone for the cron schedule. </param>
         /// <param name="startTime"> Start time for the cron schedule in ISO 8601 format. </param>
         /// <param name="endTime"> End time for the cron schedule in ISO 8601 format. </param>
-        internal CronTrigger(TriggerType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string expression, string timeZone, string startTime, string endTime) : base(@type, additionalBinaryDataProperties)
+        internal CronTrigger(TriggerType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string expression, string timeZone, DateTimeOffset? startTime, DateTimeOffset? endTime) : base(@type, additionalBinaryDataProperties)
         {
             Expression = expression;
             TimeZone = timeZone;
@@ -43,9 +43,9 @@ namespace Azure.AI.Projects.Evaluation
         public string TimeZone { get; set; }
 
         /// <summary> Start time for the cron schedule in ISO 8601 format. </summary>
-        public string StartTime { get; set; }
+        public DateTimeOffset? StartTime { get; set; }
 
         /// <summary> End time for the cron schedule in ISO 8601 format. </summary>
-        public string EndTime { get; set; }
+        public DateTimeOffset? EndTime { get; set; }
     }
 }

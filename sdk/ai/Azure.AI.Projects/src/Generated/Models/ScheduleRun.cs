@@ -30,7 +30,7 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="error"> Error information for the schedule run. </param>
         /// <param name="properties"> Properties of the schedule run. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ScheduleRun(string runId, string scheduleId, bool success, string triggerTime, string error, IReadOnlyDictionary<string, string> properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ScheduleRun(string runId, string scheduleId, bool success, DateTimeOffset? triggerTime, string error, IReadOnlyDictionary<string, string> properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RunId = runId;
             ScheduleId = scheduleId;
@@ -51,7 +51,7 @@ namespace Azure.AI.Projects.Evaluation
         public bool Success { get; }
 
         /// <summary> Trigger time of the schedule run. </summary>
-        public string TriggerTime { get; }
+        public DateTimeOffset? TriggerTime { get; }
 
         /// <summary> Error information for the schedule run. </summary>
         public string Error { get; }

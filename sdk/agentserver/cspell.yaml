@@ -5,3 +5,4 @@ overrides:
     words:
       - Includable
       - Logprobs
+      - Xhigh

@@ -1,0 +1,130 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using Azure.AI.AgentServer.Responses.Models;
+
+namespace Azure.AI.AgentServer.Responses.Internal;
+
+/// <summary>
+/// Lightweight pipeline context for a single in-flight or recently-completed response execution.
+/// <para>
+/// <see cref="Response"/> is <c>null</c> until the handler yields <c>response.created</c>
+/// and the orchestrator calls <see cref="ResponseMutations.ReplaceResponse"/>. Code that
+/// needs to distinguish pre-created from post-created state should null-check
+/// <see cref="Response"/> instead of maintaining a separate boolean flag.
+/// </para>
+/// State persistence, event streaming, and sequence numbering are delegated to
+/// <see cref="ResponsesProvider"/> and <see cref="SeekableReplaySubject"/>.
+/// </summary>
+internal sealed class ResponseExecution : IDisposable
+{
+    /// <summary>
+    /// Initializes a new instance of <see cref="ResponseExecution"/>.
+    /// </summary>
+    /// <param name="responseId">The unique response identifier.</param>
+    /// <param name="isBackground">Whether the response was created with <c>background=true</c>.</param>
+    /// <param name="isStreaming">Whether the response was created with <c>stream=true</c>.</param>
+    /// <param name="store">Whether the response should be stored for later retrieval.</param>
+    public ResponseExecution(string responseId,
+        bool isBackground = false, bool isStreaming = false, bool store = true)
+    {
+        ResponseId = responseId;
+        IsBackground = isBackground;
+        IsStreaming = isStreaming;
+        Store = store;
+        CancellationTokenSource = new CancellationTokenSource();
+    }
+
+    /// <summary>Gets the unique response identifier.</summary>
+    public string ResponseId { get; }
+
+    /// <summary>Gets whether the response was created with <c>background=true</c>.</summary>
+    public bool IsBackground { get; }
+
+    /// <summary>Gets whether the response was created with <c>stream=true</c>.</summary>
+    public bool IsStreaming { get; }
+
+    /// <summary>Gets whether the response should be stored for later retrieval.</summary>
+    public bool Store { get; }
+
+    /// <summary>
+    /// Gets or sets the mutable response object (accumulator for the current pipeline).
+    /// <c>null</c> until the handler yields <c>response.created</c> and
+    /// <see cref="ResponseMutations.ReplaceResponse"/> sets it.
+    /// </summary>
+    public Models.ResponseObject? Response { get; set; }
+
+    /// <summary>Gets the cancellation token source for this execution (used by StopAsync for shutdown).</summary>
+    public CancellationTokenSource CancellationTokenSource { get; }
+
+    /// <summary>Gets or sets the background task running the handler (if applicable).</summary>
+    public Task? ExecutionTask { get; set; }
+
+    /// <summary>
+    /// Gets or sets whether an explicit cancel request has been issued for this response.
+    /// Used by handler code to distinguish cancellation from timeout/disconnect.
+    /// Written from cancel endpoint thread, read from handler thread — uses Volatile for visibility.
+    /// </summary>
+    public bool CancelRequested
+    {
+        get => Volatile.Read(ref _cancelRequested);
+        set => Volatile.Write(ref _cancelRequested, value);
+    }
+
+    /// <summary>
+    /// Gets or sets whether a graceful shutdown has been requested for this response.
+    /// Set by <see cref="ResponseExecutionTracker.StopAsync"/> before cancelling the CTS.
+    /// Handlers can check <see cref="ResponseContext.IsShutdownRequested"/> to distinguish
+    /// shutdown from explicit cancel or client disconnect.
+    /// Written from shutdown thread, read from handler thread — uses Volatile for visibility.
+    /// </summary>
+    public bool ShutdownRequested
+    {
+        get => Volatile.Read(ref _shutdownRequested);
+        set => Volatile.Write(ref _shutdownRequested, value);
+    }
+
+    /// <summary>
+    /// Gets or sets whether the HTTP client has disconnected.
+    /// Set by <see cref="ResponseEndpointHandler"/> when <c>httpContext.RequestAborted</c> fires
+    /// for non-background modes. Used by the orchestrator to distinguish client disconnect
+    /// (→ cancelled) from unknown cancellation (→ failed).
+    /// Written from RequestAborted callback thread, read from handler thread — uses Volatile for visibility.
+    /// </summary>
+    public bool ClientDisconnected
+    {
+        get => Volatile.Read(ref _clientDisconnected);
+        set => Volatile.Write(ref _clientDisconnected, value);
+    }
+
+    private bool _cancelRequested;
+    private bool _shutdownRequested;
+    private bool _clientDisconnected;
+
+    /// <summary>
+    /// Gets or sets the response context associated with this execution.
+    /// Used by <see cref="ResponseExecutionTracker.StopAsync"/> to propagate
+    /// <see cref="ResponseContext.IsShutdownRequested"/> to the handler.
+    /// </summary>
+    public ResponseContext? Context { get; set; }
+
+    /// <summary>
+    /// Gets or sets the completion timestamp. Null when in-flight; set on completion for TTL eviction.
+    /// </summary>
+    public DateTimeOffset? CompletedAt { get; set; }
+
+    /// <summary>
+    /// Signal that completes when the handler yields <c>response.created</c> (with the
+    /// handler-provided <see cref="Response"/>), or faults if the handler fails before
+    /// emitting it. Used by the background non-streaming path to wait for the handler's
+    /// response before returning to the client.
+    /// </summary>
+    public TaskCompletionSource<Models.ResponseObject> ResponseCreatedSignal { get; } = new(TaskCreationOptions.RunContinuationsAsynchronously);
+
+    /// <inheritdoc />
+    public void Dispose()
+    {
+        CancellationTokenSource.Cancel();
+        CancellationTokenSource.Dispose();
+    }
+}

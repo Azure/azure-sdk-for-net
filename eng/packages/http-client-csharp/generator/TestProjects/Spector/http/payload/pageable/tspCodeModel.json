@@ -54,7 +54,7 @@
     {
       "$id": "7",
       "kind": "constant",
-      "name": "requestQueryResponseBodyContentType",
+      "name": "postContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -70,7 +70,7 @@
     {
       "$id": "9",
       "kind": "constant",
-      "name": "requestHeaderResponseBodyContentType",
+      "name": "postContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -86,7 +86,7 @@
     {
       "$id": "11",
       "kind": "constant",
-      "name": "requestQueryResponseHeaderContentType",
+      "name": "requestQueryResponseBodyContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -102,7 +102,7 @@
     {
       "$id": "13",
       "kind": "constant",
-      "name": "requestHeaderResponseHeaderContentType",
+      "name": "requestHeaderResponseBodyContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -118,7 +118,7 @@
     {
       "$id": "15",
       "kind": "constant",
-      "name": "requestQueryNestedResponseBodyContentType",
+      "name": "requestQueryResponseHeaderContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -134,7 +134,7 @@
     {
       "$id": "17",
       "kind": "constant",
-      "name": "requestHeaderNestedResponseBodyContentType",
+      "name": "requestHeaderResponseHeaderContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -150,7 +150,7 @@
     {
       "$id": "19",
       "kind": "constant",
-      "name": "listWithoutContinuationContentType",
+      "name": "requestQueryNestedResponseBodyContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -166,7 +166,7 @@
     {
       "$id": "21",
       "kind": "constant",
-      "name": "listWithPageSizeContentType",
+      "name": "requestHeaderNestedResponseBodyContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -182,7 +182,7 @@
     {
       "$id": "23",
       "kind": "constant",
-      "name": "listWithContinuationContentType",
+      "name": "listWithoutContinuationContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -192,13 +192,13 @@
         "crossLanguageDefinitionId": "TypeSpec.string",
         "decorators": []
       },
-      "value": "application/xml",
+      "value": "application/json",
       "decorators": []
     },
     {
       "$id": "25",
       "kind": "constant",
-      "name": "ListWithContinuationResponseContentType",
+      "name": "listWithPageSizeContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -208,13 +208,13 @@
         "crossLanguageDefinitionId": "TypeSpec.string",
         "decorators": []
       },
-      "value": "application/xml",
+      "value": "application/json",
       "decorators": []
     },
     {
       "$id": "27",
       "kind": "constant",
-      "name": "listWithNextLinkContentType",
+      "name": "listWithContinuationContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -230,7 +230,7 @@
     {
       "$id": "29",
       "kind": "constant",
-      "name": "ListWithContinuationResponseContentType1",
+      "name": "ListWithContinuationResponseContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -242,11 +242,43 @@
       },
       "value": "application/xml",
       "decorators": []
+    },
+    {
+      "$id": "31",
+      "kind": "constant",
+      "name": "listWithNextLinkContentType",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "32",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/xml",
+      "decorators": []
+    },
+    {
+      "$id": "33",
+      "kind": "constant",
+      "name": "ListWithContinuationResponseContentType1",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "34",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/xml",
+      "decorators": []
     }
   ],
   "models": [
     {
-      "$id": "31",
+      "$id": "35",
       "kind": "model",
       "name": "LinkResponse",
       "namespace": "Payload.Pageable.ServerDrivenPagination",
@@ -260,16 +292,16 @@
       },
       "properties": [
         {
-          "$id": "32",
+          "$id": "36",
           "kind": "property",
           "name": "pets",
           "serializedName": "pets",
           "type": {
-            "$id": "33",
+            "$id": "37",
             "kind": "array",
             "name": "ArrayPet",
             "valueType": {
-              "$id": "34",
+              "$id": "38",
               "kind": "model",
               "name": "Pet",
               "namespace": "Payload.Pageable",
@@ -283,12 +315,12 @@
               },
               "properties": [
                 {
-                  "$id": "35",
+                  "$id": "39",
                   "kind": "property",
                   "name": "id",
                   "serializedName": "id",
                   "type": {
-                    "$id": "36",
+                    "$id": "40",
                     "kind": "string",
                     "name": "string",
                     "crossLanguageDefinitionId": "TypeSpec.string",
@@ -308,12 +340,12 @@
                   "isHttpMetadata": false
                 },
                 {
-                  "$id": "37",
+                  "$id": "41",
                   "kind": "property",
                   "name": "name",
                   "serializedName": "name",
                   "type": {
-                    "$id": "38",
+                    "$id": "42",
                     "kind": "string",
                     "name": "string",
                     "crossLanguageDefinitionId": "TypeSpec.string",
@@ -351,12 +383,12 @@
           "isHttpMetadata": false
         },
         {
-          "$id": "39",
+          "$id": "43",
           "kind": "property",
           "name": "next",
           "serializedName": "next",
           "type": {
-            "$id": "40",
+            "$id": "44",
             "kind": "url",
             "name": "url",
             "crossLanguageDefinitionId": "TypeSpec.url",
@@ -378,10 +410,10 @@
       ]
     },
     {
-      "$ref": "34"
+      "$ref": "38"
     },
     {
-      "$id": "41",
+      "$id": "45",
       "kind": "model",
       "name": "LinkStringResponse",
       "namespace": "Payload.Pageable.ServerDrivenPagination",
@@ -395,12 +427,12 @@
       },
       "properties": [
         {
-          "$id": "42",
+          "$id": "46",
           "kind": "property",
           "name": "pets",
           "serializedName": "pets",
           "type": {
-            "$ref": "33"
+            "$ref": "37"
           },
           "optional": false,
           "readOnly": false,
@@ -416,12 +448,12 @@
           "isHttpMetadata": false
         },
         {
-          "$id": "43",
+          "$id": "47",
           "kind": "property",
           "name": "next",
           "serializedName": "next",
           "type": {
-            "$id": "44",
+            "$id": "48",
             "kind": "string",
             "name": "string",
             "crossLanguageDefinitionId": "TypeSpec.string",
@@ -443,7 +475,7 @@
       ]
     },
     {
-      "$id": "45",
+      "$id": "49",
       "kind": "model",
       "name": "NestedLinkResponse",
       "namespace": "Payload.Pageable.ServerDrivenPagination",
@@ -457,12 +489,12 @@
       },
       "properties": [
         {
-          "$id": "46",
+          "$id": "50",
           "kind": "property",
           "name": "nestedItems",
           "serializedName": "nestedItems",
           "type": {
-            "$id": "47",
+            "$id": "51",
             "kind": "model",
             "name": "NestedLinkResponseNestedItems",
             "namespace": "Payload.Pageable.ServerDrivenPagination",
@@ -476,12 +508,12 @@
             },
             "properties": [
               {
-                "$id": "48",
+                "$id": "52",
                 "kind": "property",
                 "name": "pets",
                 "serializedName": "pets",
                 "type": {
-                  "$ref": "33"
+                  "$ref": "37"
                 },
                 "optional": false,
                 "readOnly": false,
@@ -512,12 +544,12 @@
           "isHttpMetadata": false
         },
         {
-          "$id": "49",
+          "$id": "53",
           "kind": "property",
           "name": "nestedNext",
           "serializedName": "nestedNext",
           "type": {
-            "$id": "50",
+            "$id": "54",
             "kind": "model",
             "name": "NestedLinkResponseNestedNext",
             "namespace": "Payload.Pageable.ServerDrivenPagination",
@@ -531,12 +563,12 @@
             },
             "properties": [
               {
-                "$id": "51",
+                "$id": "55",
                 "kind": "property",
                 "name": "next",
                 "serializedName": "next",
                 "type": {
-                  "$id": "52",
+                  "$id": "56",
                   "kind": "url",
                   "name": "url",
                   "crossLanguageDefinitionId": "TypeSpec.url",
@@ -573,13 +605,13 @@
       ]
     },
     {
-      "$ref": "47"
+      "$ref": "51"
     },
     {
-      "$ref": "50"
+      "$ref": "54"
     },
     {
-      "$id": "53",
+      "$id": "57",
       "kind": "model",
       "name": "ListWithoutContinuationResponse",
       "namespace": "Payload.Pageable.PageSize",
@@ -593,12 +625,12 @@
       },
       "properties": [
         {
-          "$id": "54",
+          "$id": "58",
           "kind": "property",
           "name": "pets",
           "serializedName": "pets",
           "type": {
-            "$ref": "33"
+            "$ref": "37"
           },
           "optional": false,
           "readOnly": false,
@@ -616,7 +648,7 @@
       ]
     },
     {
-      "$id": "55",
+      "$id": "59",
       "kind": "model",
       "name": "ListWithPageSizeResponse",
       "namespace": "Payload.Pageable.PageSize",
@@ -630,12 +662,12 @@
       },
       "properties": [
         {
-          "$id": "56",
+          "$id": "60",
           "kind": "property",
           "name": "pets",
           "serializedName": "pets",
           "type": {
-            "$ref": "33"
+            "$ref": "37"
           },
           "optional": false,
           "readOnly": false,
@@ -653,7 +685,7 @@
       ]
     },
     {
-      "$id": "57",
+      "$id": "61",
       "kind": "model",
       "name": "XmlPetListResult",
       "namespace": "Payload.Pageable",
@@ -677,16 +709,16 @@
       },
       "properties": [
         {
-          "$id": "58",
+          "$id": "62",
           "kind": "property",
           "name": "pets",
           "serializedName": "Pets",
           "type": {
-            "$id": "59",
+            "$id": "63",
             "kind": "array",
             "name": "ArrayXmlPet",
             "valueType": {
-              "$id": "60",
+              "$id": "64",
               "kind": "model",
               "name": "XmlPet",
               "namespace": "Payload.Pageable",
@@ -710,12 +742,12 @@
               },
               "properties": [
                 {
-                  "$id": "61",
+                  "$id": "65",
                   "kind": "property",
                   "name": "id",
                   "serializedName": "Id",
                   "type": {
-                    "$id": "62",
+                    "$id": "66",
                     "kind": "string",
                     "name": "string",
                     "crossLanguageDefinitionId": "TypeSpec.string",
@@ -744,12 +776,12 @@
                   "isHttpMetadata": false
                 },
                 {
-                  "$id": "63",
+                  "$id": "67",
                   "kind": "property",
                   "name": "name",
                   "serializedName": "Name",
                   "type": {
-                    "$id": "64",
+                    "$id": "68",
                     "kind": "string",
                     "name": "string",
                     "crossLanguageDefinitionId": "TypeSpec.string",
@@ -806,12 +838,12 @@
           "isHttpMetadata": false
         },
         {
-          "$id": "65",
+          "$id": "69",
           "kind": "property",
           "name": "nextMarker",
           "serializedName": "NextMarker",
           "type": {
-            "$id": "66",
+            "$id": "70",
             "kind": "string",
             "name": "string",
             "crossLanguageDefinitionId": "TypeSpec.string",
@@ -842,10 +874,10 @@
       ]
     },
     {
-      "$ref": "60"
+      "$ref": "64"
     },
     {
-      "$id": "67",
+      "$id": "71",
       "kind": "model",
       "name": "XmlPetListResultWithNextLink",
       "namespace": "Payload.Pageable",
@@ -869,12 +901,12 @@
       },
       "properties": [
         {
-          "$id": "68",
+          "$id": "72",
           "kind": "property",
           "name": "pets",
           "serializedName": "Pets",
           "type": {
-            "$ref": "59"
+            "$ref": "63"
           },
           "optional": false,
           "readOnly": false,
@@ -900,12 +932,12 @@
           "isHttpMetadata": false
         },
         {
-          "$id": "69",
+          "$id": "73",
           "kind": "property",
           "name": "nextLink",
           "serializedName": "NextLink",
           "type": {
-            "$id": "70",
+            "$id": "74",
             "kind": "url",
             "name": "url",
             "crossLanguageDefinitionId": "TypeSpec.url",
@@ -936,7 +968,110 @@
       ]
     },
     {
-      "$id": "71",
+      "$id": "75",
+      "kind": "model",
+      "name": "Filter",
+      "namespace": "Payload.Pageable.ServerDrivenPagination.AlternateInitialVerb",
+      "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.AlternateInitialVerb.Filter",
+      "usage": "Input,Json",
+      "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "Filter"
+        }
+      },
+      "properties": [
+        {
+          "$id": "76",
+          "kind": "property",
+          "name": "filter",
+          "serializedName": "filter",
+          "type": {
+            "$id": "77",
+            "kind": "string",
+            "name": "string",
+            "crossLanguageDefinitionId": "TypeSpec.string",
+            "decorators": []
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.AlternateInitialVerb.Filter.filter",
+          "serializationOptions": {
+            "json": {
+              "name": "filter"
+            }
+          },
+          "isHttpMetadata": false
+        }
+      ]
+    },
+    {
+      "$id": "78",
+      "kind": "model",
+      "name": "PostResponse",
+      "namespace": "Payload.Pageable.ServerDrivenPagination.AlternateInitialVerb",
+      "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.AlternateInitialVerb.post.Response.anonymous",
+      "usage": "Output,Json",
+      "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": ""
+        }
+      },
+      "properties": [
+        {
+          "$id": "79",
+          "kind": "property",
+          "name": "pets",
+          "serializedName": "pets",
+          "type": {
+            "$ref": "37"
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.AlternateInitialVerb.post.Response.anonymous.pets",
+          "serializationOptions": {
+            "json": {
+              "name": "pets"
+            }
+          },
+          "isHttpMetadata": false
+        },
+        {
+          "$id": "80",
+          "kind": "property",
+          "name": "next",
+          "serializedName": "next",
+          "type": {
+            "$id": "81",
+            "kind": "url",
+            "name": "url",
+            "crossLanguageDefinitionId": "TypeSpec.url",
+            "decorators": []
+          },
+          "optional": true,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.AlternateInitialVerb.post.Response.anonymous.next",
+          "serializationOptions": {
+            "json": {
+              "name": "next"
+            }
+          },
+          "isHttpMetadata": false
+        }
+      ]
+    },
+    {
+      "$id": "82",
       "kind": "model",
       "name": "RequestQueryResponseBodyResponse",
       "namespace": "Payload.Pageable.ServerDrivenPagination.ContinuationToken",
@@ -950,12 +1085,12 @@
       },
       "properties": [
         {
-          "$id": "72",
+          "$id": "83",
           "kind": "property",
           "name": "pets",
           "serializedName": "pets",
           "type": {
-            "$ref": "33"
+            "$ref": "37"
           },
           "optional": false,
           "readOnly": false,
@@ -971,12 +1106,12 @@
           "isHttpMetadata": false
         },
         {
-          "$id": "73",
+          "$id": "84",
           "kind": "property",
           "name": "nextToken",
           "serializedName": "nextToken",
           "type": {
-            "$id": "74",
+            "$id": "85",
             "kind": "string",
             "name": "string",
             "crossLanguageDefinitionId": "TypeSpec.string",
@@ -998,7 +1133,7 @@
       ]
     },
     {
-      "$id": "75",
+      "$id": "86",
       "kind": "model",
       "name": "RequestHeaderResponseBodyResponse",
       "namespace": "Payload.Pageable.ServerDrivenPagination.ContinuationToken",
@@ -1012,12 +1147,12 @@
       },
       "properties": [
         {
-          "$id": "76",
+          "$id": "87",
           "kind": "property",
           "name": "pets",
           "serializedName": "pets",
           "type": {
-            "$ref": "33"
+            "$ref": "37"
           },
           "optional": false,
           "readOnly": false,
@@ -1033,12 +1168,12 @@
           "isHttpMetadata": false
         },
         {
-          "$id": "77",
+          "$id": "88",
           "kind": "property",
           "name": "nextToken",
           "serializedName": "nextToken",
           "type": {
-            "$id": "78",
+            "$id": "89",
             "kind": "string",
             "name": "string",
             "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1060,7 +1195,7 @@
       ]
     },
     {
-      "$id": "79",
+      "$id": "90",
       "kind": "model",
       "name": "RequestQueryResponseHeaderResponse",
       "namespace": "",
@@ -1074,12 +1209,12 @@
       },
       "properties": [
         {
-          "$id": "80",
+          "$id": "91",
           "kind": "property",
           "name": "pets",
           "serializedName": "pets",
           "type": {
-            "$ref": "33"
+            "$ref": "37"
           },
           "optional": false,
           "readOnly": false,
@@ -1097,7 +1232,7 @@
       ]
     },
     {
-      "$id": "81",
+      "$id": "92",
       "kind": "model",
       "name": "RequestHeaderResponseHeaderResponse",
       "namespace": "",
@@ -1111,12 +1246,12 @@
       },
       "properties": [
         {
-          "$id": "82",
+          "$id": "93",
           "kind": "property",
           "name": "pets",
           "serializedName": "pets",
           "type": {
-            "$ref": "33"
+            "$ref": "37"
           },
           "optional": false,
           "readOnly": false,
@@ -1134,7 +1269,7 @@
       ]
     },
     {
-      "$id": "83",
+      "$id": "94",
       "kind": "model",
       "name": "RequestQueryNestedResponseBodyResponse",
       "namespace": "Payload.Pageable.ServerDrivenPagination.ContinuationToken",
@@ -1148,12 +1283,12 @@
       },
       "properties": [
         {
-          "$id": "84",
+          "$id": "95",
           "kind": "property",
           "name": "nestedItems",
           "serializedName": "nestedItems",
           "type": {
-            "$id": "85",
+            "$id": "96",
             "kind": "model",
             "name": "RequestQueryNestedResponseBodyResponseNestedItems",
             "namespace": "Payload.Pageable.ServerDrivenPagination.ContinuationToken",
@@ -1167,12 +1302,12 @@
             },
             "properties": [
               {
-                "$id": "86",
+                "$id": "97",
                 "kind": "property",
                 "name": "pets",
                 "serializedName": "pets",
                 "type": {
-                  "$ref": "33"
+                  "$ref": "37"
                 },
                 "optional": false,
                 "readOnly": false,
@@ -1203,12 +1338,12 @@
           "isHttpMetadata": false
         },
         {
-          "$id": "87",
+          "$id": "98",
           "kind": "property",
           "name": "nestedNext",
           "serializedName": "nestedNext",
           "type": {
-            "$id": "88",
+            "$id": "99",
             "kind": "model",
             "name": "RequestQueryNestedResponseBodyResponseNestedNext",
             "namespace": "Payload.Pageable.ServerDrivenPagination.ContinuationToken",
@@ -1222,12 +1357,12 @@
             },
             "properties": [
               {
-                "$id": "89",
+                "$id": "100",
                 "kind": "property",
                 "name": "nextToken",
                 "serializedName": "nextToken",
                 "type": {
-                  "$id": "90",
+                  "$id": "101",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1264,13 +1399,13 @@
       ]
     },
     {
-      "$ref": "85"
+      "$ref": "96"
     },
     {
-      "$ref": "88"
+      "$ref": "99"
     },
     {
-      "$id": "91",
+      "$id": "102",
       "kind": "model",
       "name": "RequestHeaderNestedResponseBodyResponse",
       "namespace": "Payload.Pageable.ServerDrivenPagination.ContinuationToken",
@@ -1284,12 +1419,12 @@
       },
       "properties": [
         {
-          "$id": "92",
+          "$id": "103",
           "kind": "property",
           "name": "nestedItems",
           "serializedName": "nestedItems",
           "type": {
-            "$id": "93",
+            "$id": "104",
             "kind": "model",
             "name": "RequestHeaderNestedResponseBodyResponseNestedItems",
             "namespace": "Payload.Pageable.ServerDrivenPagination.ContinuationToken",
@@ -1303,12 +1438,12 @@
             },
             "properties": [
               {
-                "$id": "94",
+                "$id": "105",
                 "kind": "property",
                 "name": "pets",
                 "serializedName": "pets",
                 "type": {
-                  "$ref": "33"
+                  "$ref": "37"
                 },
                 "optional": false,
                 "readOnly": false,
@@ -1339,12 +1474,12 @@
           "isHttpMetadata": false
         },
         {
-          "$id": "95",
+          "$id": "106",
           "kind": "property",
           "name": "nestedNext",
           "serializedName": "nestedNext",
           "type": {
-            "$id": "96",
+            "$id": "107",
             "kind": "model",
             "name": "RequestHeaderNestedResponseBodyResponseNestedNext",
             "namespace": "Payload.Pageable.ServerDrivenPagination.ContinuationToken",
@@ -1358,12 +1493,12 @@
             },
             "properties": [
               {
-                "$id": "97",
+                "$id": "108",
                 "kind": "property",
                 "name": "nextToken",
                 "serializedName": "nextToken",
                 "type": {
-                  "$id": "98",
+                  "$id": "109",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1400,15 +1535,15 @@
       ]
     },
     {
-      "$ref": "93"
+      "$ref": "104"
     },
     {
-      "$ref": "96"
+      "$ref": "107"
     }
   ],
   "clients": [
     {
-      "$id": "99",
+      "$id": "110",
       "kind": "client",
       "name": "PageableClient",
       "namespace": "Payload.Pageable",
@@ -1416,13 +1551,13 @@
       "methods": [],
       "parameters": [
         {
-          "$id": "100",
+          "$id": "111",
           "kind": "endpoint",
           "name": "endpoint",
           "serializedName": "endpoint",
           "doc": "Service host",
           "type": {
-            "$id": "101",
+            "$id": "112",
             "kind": "url",
             "name": "endpoint",
             "crossLanguageDefinitionId": "TypeSpec.url"
@@ -1433,7 +1568,7 @@
           "isEndpoint": true,
           "defaultValue": {
             "type": {
-              "$id": "102",
+              "$id": "113",
               "kind": "string",
               "name": "string",
               "crossLanguageDefinitionId": "TypeSpec.string"
@@ -1452,25 +1587,25 @@
       "apiVersions": [],
       "children": [
         {
-          "$id": "103",
+          "$id": "114",
           "kind": "client",
           "name": "ServerDrivenPagination",
           "namespace": "Payload.Pageable.ServerDrivenPagination",
           "methods": [
             {
-              "$id": "104",
+              "$id": "115",
               "kind": "paging",
               "name": "link",
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
-                "$id": "105",
+                "$id": "116",
                 "name": "link",
                 "resourceName": "ServerDrivenPagination",
                 "accessibility": "public",
                 "parameters": [
                   {
-                    "$id": "106",
+                    "$id": "117",
                     "kind": "header",
                     "name": "accept",
                     "serializedName": "Accept",
@@ -1486,7 +1621,7 @@
                     "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.link.accept",
                     "methodParameterSegments": [
                       {
-                        "$id": "107",
+                        "$id": "118",
                         "kind": "method",
                         "name": "accept",
                         "serializedName": "Accept",
@@ -1511,7 +1646,7 @@
                       200
                     ],
                     "bodyType": {
-                      "$ref": "31"
+                      "$ref": "35"
                     },
                     "headers": [],
                     "isErrorResponse": false,
@@ -1532,12 +1667,12 @@
               },
               "parameters": [
                 {
-                  "$ref": "107"
+                  "$ref": "118"
                 }
               ],
               "response": {
                 "type": {
-                  "$ref": "33"
+                  "$ref": "37"
                 },
                 "resultSegments": [
                   "pets"
@@ -1561,19 +1696,19 @@
               }
             },
             {
-              "$id": "108",
+              "$id": "119",
               "kind": "paging",
               "name": "linkString",
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
-                "$id": "109",
+                "$id": "120",
                 "name": "linkString",
                 "resourceName": "ServerDrivenPagination",
                 "accessibility": "public",
                 "parameters": [
                   {
-                    "$id": "110",
+                    "$id": "121",
                     "kind": "header",
                     "name": "accept",
                     "serializedName": "Accept",
@@ -1589,7 +1724,7 @@
                     "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.linkString.accept",
                     "methodParameterSegments": [
                       {
-                        "$id": "111",
+                        "$id": "122",
                         "kind": "method",
                         "name": "accept",
                         "serializedName": "Accept",
@@ -1614,7 +1749,7 @@
                       200
                     ],
                     "bodyType": {
-                      "$ref": "41"
+                      "$ref": "45"
                     },
                     "headers": [],
                     "isErrorResponse": false,
@@ -1635,12 +1770,12 @@
               },
               "parameters": [
                 {
-                  "$ref": "111"
+                  "$ref": "122"
                 }
               ],
               "response": {
                 "type": {
-                  "$ref": "33"
+                  "$ref": "37"
                 },
                 "resultSegments": [
                   "pets"
@@ -1664,19 +1799,19 @@
               }
             },
             {
-              "$id": "112",
+              "$id": "123",
               "kind": "paging",
               "name": "nestedLink",
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
-                "$id": "113",
+                "$id": "124",
                 "name": "nestedLink",
                 "resourceName": "ServerDrivenPagination",
                 "accessibility": "public",
                 "parameters": [
                   {
-                    "$id": "114",
+                    "$id": "125",
                     "kind": "header",
                     "name": "accept",
                     "serializedName": "Accept",
@@ -1692,7 +1827,7 @@
                     "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.nestedLink.accept",
                     "methodParameterSegments": [
                       {
-                        "$id": "115",
+                        "$id": "126",
                         "kind": "method",
                         "name": "accept",
                         "serializedName": "Accept",
@@ -1717,7 +1852,7 @@
                       200
                     ],
                     "bodyType": {
-                      "$ref": "45"
+                      "$ref": "49"
                     },
                     "headers": [],
                     "isErrorResponse": false,
@@ -1738,12 +1873,12 @@
               },
               "parameters": [
                 {
-                  "$ref": "115"
+                  "$ref": "126"
                 }
               ],
               "response": {
                 "type": {
-                  "$ref": "33"
+                  "$ref": "37"
                 },
                 "resultSegments": [
                   "nestedItems",
@@ -1772,13 +1907,13 @@
           ],
           "parameters": [
             {
-              "$id": "116",
+              "$id": "127",
               "kind": "endpoint",
               "name": "endpoint",
               "serializedName": "endpoint",
               "doc": "Service host",
               "type": {
-                "$id": "117",
+                "$id": "128",
                 "kind": "url",
                 "name": "endpoint",
                 "crossLanguageDefinitionId": "TypeSpec.url"
@@ -1789,7 +1924,7 @@
               "isEndpoint": true,
               "defaultValue": {
                 "type": {
-                  "$id": "118",
+                  "$id": "129",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string"
@@ -1807,34 +1942,270 @@
           "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination",
           "apiVersions": [],
           "parent": {
-            "$ref": "99"
+            "$ref": "110"
           },
           "children": [
             {
-              "$id": "119",
+              "$id": "130",
+              "kind": "client",
+              "name": "AlternateInitialVerb",
+              "namespace": "Payload.Pageable.ServerDrivenPagination.AlternateInitialVerb",
+              "doc": "Scenario where the initial request is not a GET request. However following the next link always result in a GET request.",
+              "methods": [
+                {
+                  "$id": "131",
+                  "kind": "paging",
+                  "name": "post",
+                  "accessibility": "public",
+                  "apiVersions": [],
+                  "operation": {
+                    "$id": "132",
+                    "name": "post",
+                    "resourceName": "AlternateInitialVerb",
+                    "accessibility": "public",
+                    "parameters": [
+                      {
+                        "$id": "133",
+                        "kind": "header",
+                        "name": "contentType",
+                        "serializedName": "Content-Type",
+                        "doc": "Body parameter's content type. Known values are application/json",
+                        "type": {
+                          "$ref": "7"
+                        },
+                        "isApiVersion": false,
+                        "optional": false,
+                        "isContentType": true,
+                        "scope": "Constant",
+                        "readOnly": false,
+                        "decorators": [],
+                        "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.AlternateInitialVerb.post.contentType",
+                        "methodParameterSegments": [
+                          {
+                            "$id": "134",
+                            "kind": "method",
+                            "name": "contentType",
+                            "serializedName": "Content-Type",
+                            "doc": "Body parameter's content type. Known values are application/json",
+                            "type": {
+                              "$ref": "7"
+                            },
+                            "location": "Header",
+                            "isApiVersion": false,
+                            "optional": false,
+                            "scope": "Constant",
+                            "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.AlternateInitialVerb.post.contentType",
+                            "readOnly": false,
+                            "access": "public",
+                            "decorators": []
+                          }
+                        ]
+                      },
+                      {
+                        "$id": "135",
+                        "kind": "header",
+                        "name": "accept",
+                        "serializedName": "Accept",
+                        "type": {
+                          "$ref": "9"
+                        },
+                        "isApiVersion": false,
+                        "optional": false,
+                        "isContentType": false,
+                        "scope": "Constant",
+                        "readOnly": false,
+                        "decorators": [],
+                        "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.AlternateInitialVerb.post.accept",
+                        "methodParameterSegments": [
+                          {
+                            "$id": "136",
+                            "kind": "method",
+                            "name": "accept",
+                            "serializedName": "Accept",
+                            "type": {
+                              "$ref": "9"
+                            },
+                            "location": "Header",
+                            "isApiVersion": false,
+                            "optional": false,
+                            "scope": "Constant",
+                            "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.AlternateInitialVerb.post.accept",
+                            "readOnly": false,
+                            "access": "public",
+                            "decorators": []
+                          }
+                        ]
+                      },
+                      {
+                        "$id": "137",
+                        "kind": "body",
+                        "name": "body",
+                        "serializedName": "body",
+                        "type": {
+                          "$ref": "75"
+                        },
+                        "isApiVersion": false,
+                        "contentTypes": [
+                          "application/json"
+                        ],
+                        "defaultContentType": "application/json",
+                        "optional": false,
+                        "scope": "Method",
+                        "decorators": [],
+                        "readOnly": false,
+                        "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.AlternateInitialVerb.post.body",
+                        "methodParameterSegments": [
+                          {
+                            "$id": "138",
+                            "kind": "method",
+                            "name": "body",
+                            "serializedName": "body",
+                            "type": {
+                              "$ref": "75"
+                            },
+                            "location": "Body",
+                            "isApiVersion": false,
+                            "optional": false,
+                            "scope": "Method",
+                            "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.AlternateInitialVerb.post.body",
+                            "readOnly": false,
+                            "access": "public",
+                            "decorators": []
+                          }
+                        ]
+                      }
+                    ],
+                    "responses": [
+                      {
+                        "statusCodes": [
+                          200
+                        ],
+                        "bodyType": {
+                          "$ref": "78"
+                        },
+                        "headers": [],
+                        "isErrorResponse": false,
+                        "contentTypes": [
+                          "application/json"
+                        ]
+                      }
+                    ],
+                    "httpMethod": "POST",
+                    "uri": "{endpoint}",
+                    "path": "/payload/pageable/server-driven-pagination/link/initial-post",
+                    "requestMediaTypes": [
+                      "application/json"
+                    ],
+                    "bufferResponse": true,
+                    "generateProtocolMethod": true,
+                    "generateConvenienceMethod": true,
+                    "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.AlternateInitialVerb.post",
+                    "decorators": [],
+                    "namespace": "Payload.Pageable.ServerDrivenPagination.AlternateInitialVerb"
+                  },
+                  "parameters": [
+                    {
+                      "$ref": "138"
+                    },
+                    {
+                      "$ref": "134"
+                    },
+                    {
+                      "$ref": "136"
+                    }
+                  ],
+                  "response": {
+                    "type": {
+                      "$ref": "37"
+                    },
+                    "resultSegments": [
+                      "pets"
+                    ]
+                  },
+                  "isOverride": false,
+                  "generateConvenient": true,
+                  "generateProtocol": true,
+                  "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.AlternateInitialVerb.post",
+                  "pagingMetadata": {
+                    "itemPropertySegments": [
+                      "pets"
+                    ],
+                    "nextLink": {
+                      "responseSegments": [
+                        "next"
+                      ],
+                      "responseLocation": "Body"
+                    },
+                    "pageSizeParameterSegments": []
+                  }
+                }
+              ],
+              "parameters": [
+                {
+                  "$id": "139",
+                  "kind": "endpoint",
+                  "name": "endpoint",
+                  "serializedName": "endpoint",
+                  "doc": "Service host",
+                  "type": {
+                    "$id": "140",
+                    "kind": "url",
+                    "name": "endpoint",
+                    "crossLanguageDefinitionId": "TypeSpec.url"
+                  },
+                  "isApiVersion": false,
+                  "optional": false,
+                  "scope": "Client",
+                  "isEndpoint": true,
+                  "defaultValue": {
+                    "type": {
+                      "$id": "141",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string"
+                    },
+                    "value": "http://localhost:3000"
+                  },
+                  "serverUrlTemplate": "{endpoint}",
+                  "skipUrlEncoding": false,
+                  "readOnly": false,
+                  "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.AlternateInitialVerb.endpoint"
+                }
+              ],
+              "initializedBy": 0,
+              "decorators": [],
+              "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.AlternateInitialVerb",
+              "apiVersions": [],
+              "parent": {
+                "$ref": "114"
+              },
+              "isMultiServiceClient": false
+            },
+            {
+              "$id": "142",
               "kind": "client",
               "name": "ContinuationToken",
               "namespace": "Payload.Pageable.ServerDrivenPagination.ContinuationToken",
               "methods": [
                 {
-                  "$id": "120",
+                  "$id": "143",
                   "kind": "paging",
                   "name": "requestQueryResponseBody",
                   "accessibility": "public",
                   "apiVersions": [],
                   "operation": {
-                    "$id": "121",
+                    "$id": "144",
                     "name": "requestQueryResponseBody",
                     "resourceName": "ContinuationToken",
                     "accessibility": "public",
                     "parameters": [
                       {
-                        "$id": "122",
+                        "$id": "145",
                         "kind": "query",
                         "name": "token",
                         "serializedName": "token",
                         "type": {
-                          "$id": "123",
+                          "$id": "146",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1849,12 +2220,12 @@
                         "readOnly": false,
                         "methodParameterSegments": [
                           {
-                            "$id": "124",
+                            "$id": "147",
                             "kind": "method",
                             "name": "token",
                             "serializedName": "token",
                             "type": {
-                              "$id": "125",
+                              "$id": "148",
                               "kind": "string",
                               "name": "string",
                               "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1872,12 +2243,12 @@
                         ]
                       },
                       {
-                        "$id": "126",
+                        "$id": "149",
                         "kind": "header",
                         "name": "foo",
                         "serializedName": "foo",
                         "type": {
-                          "$id": "127",
+                          "$id": "150",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1892,12 +2263,12 @@
                         "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.ContinuationToken.requestQueryResponseBody.foo",
                         "methodParameterSegments": [
                           {
-                            "$id": "128",
+                            "$id": "151",
                             "kind": "method",
                             "name": "foo",
                             "serializedName": "foo",
                             "type": {
-                              "$id": "129",
+                              "$id": "152",
                               "kind": "string",
                               "name": "string",
                               "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1915,12 +2286,12 @@
                         ]
                       },
                       {
-                        "$id": "130",
+                        "$id": "153",
                         "kind": "query",
                         "name": "bar",
                         "serializedName": "bar",
                         "type": {
-                          "$id": "131",
+                          "$id": "154",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1935,12 +2306,12 @@
                         "readOnly": false,
                         "methodParameterSegments": [
                           {
-                            "$id": "132",
+                            "$id": "155",
                             "kind": "method",
                             "name": "bar",
                             "serializedName": "bar",
                             "type": {
-                              "$id": "133",
+                              "$id": "156",
                               "kind": "string",
                               "name": "string",
                               "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1958,12 +2329,12 @@
                         ]
                       },
                       {
-                        "$id": "134",
+                        "$id": "157",
                         "kind": "header",
                         "name": "accept",
                         "serializedName": "Accept",
                         "type": {
-                          "$ref": "7"
+                          "$ref": "11"
                         },
                         "isApiVersion": false,
                         "optional": false,
@@ -1974,12 +2345,12 @@
                         "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.ContinuationToken.requestQueryResponseBody.accept",
                         "methodParameterSegments": [
                           {
-                            "$id": "135",
+                            "$id": "158",
                             "kind": "method",
                             "name": "accept",
                             "serializedName": "Accept",
                             "type": {
-                              "$ref": "7"
+                              "$ref": "11"
                             },
                             "location": "Header",
                             "isApiVersion": false,
@@ -1999,7 +2370,7 @@
                           200
                         ],
                         "bodyType": {
-                          "$ref": "71"
+                          "$ref": "82"
                         },
                         "headers": [],
                         "isErrorResponse": false,
@@ -2020,21 +2391,21 @@
                   },
                   "parameters": [
                     {
-                      "$ref": "124"
+                      "$ref": "147"
                     },
                     {
-                      "$ref": "128"
+                      "$ref": "151"
                     },
                     {
-                      "$ref": "132"
+                      "$ref": "155"
                     },
                     {
-                      "$ref": "135"
+                      "$ref": "158"
                     }
                   ],
                   "response": {
                     "type": {
-                      "$ref": "33"
+                      "$ref": "37"
                     },
                     "resultSegments": [
                       "pets"
@@ -2050,7 +2421,7 @@
                     ],
                     "continuationToken": {
                       "parameter": {
-                        "$ref": "122"
+                        "$ref": "145"
                       },
                       "responseSegments": [
                         "nextToken"
@@ -2061,24 +2432,24 @@
                   }
                 },
                 {
-                  "$id": "136",
+                  "$id": "159",
                   "kind": "paging",
                   "name": "requestHeaderResponseBody",
                   "accessibility": "public",
                   "apiVersions": [],
                   "operation": {
-                    "$id": "137",
+                    "$id": "160",
                     "name": "requestHeaderResponseBody",
                     "resourceName": "ContinuationToken",
                     "accessibility": "public",
                     "parameters": [
                       {
-                        "$id": "138",
+                        "$id": "161",
                         "kind": "header",
                         "name": "token",
                         "serializedName": "token",
                         "type": {
-                          "$id": "139",
+                          "$id": "162",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2093,12 +2464,12 @@
                         "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.ContinuationToken.requestHeaderResponseBody.token",
                         "methodParameterSegments": [
                           {
-                            "$id": "140",
+                            "$id": "163",
                             "kind": "method",
                             "name": "token",
                             "serializedName": "token",
                             "type": {
-                              "$id": "141",
+                              "$id": "164",
                               "kind": "string",
                               "name": "string",
                               "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2116,12 +2487,12 @@
                         ]
                       },
                       {
-                        "$id": "142",
+                        "$id": "165",
                         "kind": "header",
                         "name": "foo",
                         "serializedName": "foo",
                         "type": {
-                          "$id": "143",
+                          "$id": "166",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2136,12 +2507,12 @@
                         "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.ContinuationToken.requestHeaderResponseBody.foo",
                         "methodParameterSegments": [
                           {
-                            "$id": "144",
+                            "$id": "167",
                             "kind": "method",
                             "name": "foo",
                             "serializedName": "foo",
                             "type": {
-                              "$id": "145",
+                              "$id": "168",
                               "kind": "string",
                               "name": "string",
                               "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2159,12 +2530,12 @@
                         ]
                       },
                       {
-                        "$id": "146",
+                        "$id": "169",
                         "kind": "query",
                         "name": "bar",
                         "serializedName": "bar",
                         "type": {
-                          "$id": "147",
+                          "$id": "170",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2179,12 +2550,12 @@
                         "readOnly": false,
                         "methodParameterSegments": [
                           {
-                            "$id": "148",
+                            "$id": "171",
                             "kind": "method",
                             "name": "bar",
                             "serializedName": "bar",
                             "type": {
-                              "$id": "149",
+                              "$id": "172",
                               "kind": "string",
                               "name": "string",
                               "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2202,12 +2573,12 @@
                         ]
                       },
                       {
-                        "$id": "150",
+                        "$id": "173",
                         "kind": "header",
                         "name": "accept",
                         "serializedName": "Accept",
                         "type": {
-                          "$ref": "9"
+                          "$ref": "13"
                         },
                         "isApiVersion": false,
                         "optional": false,
@@ -2218,12 +2589,12 @@
                         "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.ContinuationToken.requestHeaderResponseBody.accept",
                         "methodParameterSegments": [
                           {
-                            "$id": "151",
+                            "$id": "174",
                             "kind": "method",
                             "name": "accept",
                             "serializedName": "Accept",
                             "type": {
-                              "$ref": "9"
+                              "$ref": "13"
                             },
                             "location": "Header",
                             "isApiVersion": false,
@@ -2243,7 +2614,7 @@
                           200
                         ],
                         "bodyType": {
-                          "$ref": "75"
+                          "$ref": "86"
                         },
                         "headers": [],
                         "isErrorResponse": false,
@@ -2264,21 +2635,21 @@
                   },
                   "parameters": [
                     {
-                      "$ref": "140"
+                      "$ref": "163"
                     },
                     {
-                      "$ref": "144"
+                      "$ref": "167"
                     },
                     {
-                      "$ref": "148"
+                      "$ref": "171"
                     },
                     {
-                      "$ref": "151"
+                      "$ref": "174"
                     }
                   ],
                   "response": {
                     "type": {
-                      "$ref": "33"
+                      "$ref": "37"
                     },
                     "resultSegments": [
                       "pets"
@@ -2294,7 +2665,7 @@
                     ],
                     "continuationToken": {
                       "parameter": {
-                        "$ref": "138"
+                        "$ref": "161"
                       },
                       "responseSegments": [
                         "nextToken"
@@ -2305,24 +2676,24 @@
                   }
                 },
                 {
-                  "$id": "152",
+                  "$id": "175",
                   "kind": "paging",
                   "name": "requestQueryResponseHeader",
                   "accessibility": "public",
                   "apiVersions": [],
                   "operation": {
-                    "$id": "153",
+                    "$id": "176",
                     "name": "requestQueryResponseHeader",
                     "resourceName": "ContinuationToken",
                     "accessibility": "public",
                     "parameters": [
                       {
-                        "$id": "154",
+                        "$id": "177",
                         "kind": "query",
                         "name": "token",
                         "serializedName": "token",
                         "type": {
-                          "$id": "155",
+                          "$id": "178",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2337,12 +2708,12 @@
                         "readOnly": false,
                         "methodParameterSegments": [
                           {
-                            "$id": "156",
+                            "$id": "179",
                             "kind": "method",
                             "name": "token",
                             "serializedName": "token",
                             "type": {
-                              "$id": "157",
+                              "$id": "180",
                               "kind": "string",
                               "name": "string",
                               "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2360,12 +2731,12 @@
                         ]
                       },
                       {
-                        "$id": "158",
+                        "$id": "181",
                         "kind": "header",
                         "name": "foo",
                         "serializedName": "foo",
                         "type": {
-                          "$id": "159",
+                          "$id": "182",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2380,12 +2751,12 @@
                         "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.ContinuationToken.requestQueryResponseHeader.foo",
                         "methodParameterSegments": [
                           {
-                            "$id": "160",
+                            "$id": "183",
                             "kind": "method",
                             "name": "foo",
                             "serializedName": "foo",
                             "type": {
-                              "$id": "161",
+                              "$id": "184",
                               "kind": "string",
                               "name": "string",
                               "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2403,12 +2774,12 @@
                         ]
                       },
                       {
-                        "$id": "162",
+                        "$id": "185",
                         "kind": "query",
                         "name": "bar",
                         "serializedName": "bar",
                         "type": {
-                          "$id": "163",
+                          "$id": "186",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2423,12 +2794,12 @@
                         "readOnly": false,
                         "methodParameterSegments": [
                           {
-                            "$id": "164",
+                            "$id": "187",
                             "kind": "method",
                             "name": "bar",
                             "serializedName": "bar",
                             "type": {
-                              "$id": "165",
+                              "$id": "188",
                               "kind": "string",
                               "name": "string",
                               "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2446,12 +2817,12 @@
                         ]
                       },
                       {
-                        "$id": "166",
+                        "$id": "189",
                         "kind": "header",
                         "name": "accept",
                         "serializedName": "Accept",
                         "type": {
-                          "$ref": "11"
+                          "$ref": "15"
                         },
                         "isApiVersion": false,
                         "optional": false,
@@ -2462,12 +2833,12 @@
                         "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.ContinuationToken.requestQueryResponseHeader.accept",
                         "methodParameterSegments": [
                           {
-                            "$id": "167",
+                            "$id": "190",
                             "kind": "method",
                             "name": "accept",
                             "serializedName": "Accept",
                             "type": {
-                              "$ref": "11"
+                              "$ref": "15"
                             },
                             "location": "Header",
                             "isApiVersion": false,
@@ -2487,14 +2858,14 @@
                           200
                         ],
                         "bodyType": {
-                          "$ref": "79"
+                          "$ref": "90"
                         },
                         "headers": [
                           {
                             "name": "nextToken",
                             "nameInResponse": "next-token",
                             "type": {
-                              "$id": "168",
+                              "$id": "191",
                               "kind": "string",
                               "name": "string",
                               "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2520,21 +2891,21 @@
                   },
                   "parameters": [
                     {
-                      "$ref": "156"
+                      "$ref": "179"
                     },
                     {
-                      "$ref": "160"
+                      "$ref": "183"
                     },
                     {
-                      "$ref": "164"
+                      "$ref": "187"
                     },
                     {
-                      "$ref": "167"
+                      "$ref": "190"
                     }
                   ],
                   "response": {
                     "type": {
-                      "$ref": "33"
+                      "$ref": "37"
                     },
                     "resultSegments": [
                       "pets"
@@ -2550,7 +2921,7 @@
                     ],
                     "continuationToken": {
                       "parameter": {
-                        "$ref": "154"
+                        "$ref": "177"
                       },
                       "responseSegments": [
                         "next-token"
@@ -2561,24 +2932,24 @@
                   }
                 },
                 {
-                  "$id": "169",
+                  "$id": "192",
                   "kind": "paging",
                   "name": "requestHeaderResponseHeader",
                   "accessibility": "public",
                   "apiVersions": [],
                   "operation": {
-                    "$id": "170",
+                    "$id": "193",
                     "name": "requestHeaderResponseHeader",
                     "resourceName": "ContinuationToken",
                     "accessibility": "public",
                     "parameters": [
                       {
-                        "$id": "171",
+                        "$id": "194",
                         "kind": "header",
                         "name": "token",
                         "serializedName": "token",
                         "type": {
-                          "$id": "172",
+                          "$id": "195",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2593,12 +2964,12 @@
                         "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.ContinuationToken.requestHeaderResponseHeader.token",
                         "methodParameterSegments": [
                           {
-                            "$id": "173",
+                            "$id": "196",
                             "kind": "method",
                             "name": "token",
                             "serializedName": "token",
                             "type": {
-                              "$id": "174",
+                              "$id": "197",
                               "kind": "string",
                               "name": "string",
                               "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2616,12 +2987,12 @@
                         ]
                       },
                       {
-                        "$id": "175",
+                        "$id": "198",
                         "kind": "header",
                         "name": "foo",
                         "serializedName": "foo",
                         "type": {
-                          "$id": "176",
+                          "$id": "199",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2636,12 +3007,12 @@
                         "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.ContinuationToken.requestHeaderResponseHeader.foo",
                         "methodParameterSegments": [
                           {
-                            "$id": "177",
+                            "$id": "200",
                             "kind": "method",
                             "name": "foo",
                             "serializedName": "foo",
                             "type": {
-                              "$id": "178",
+                              "$id": "201",
                               "kind": "string",
                               "name": "string",
                               "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2659,12 +3030,12 @@
                         ]
                       },
                       {
-                        "$id": "179",
+                        "$id": "202",
                         "kind": "query",
                         "name": "bar",
                         "serializedName": "bar",
                         "type": {
-                          "$id": "180",
+                          "$id": "203",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2679,12 +3050,12 @@
                         "readOnly": false,
                         "methodParameterSegments": [
                           {
-                            "$id": "181",
+                            "$id": "204",
                             "kind": "method",
                             "name": "bar",
                             "serializedName": "bar",
                             "type": {
-                              "$id": "182",
+                              "$id": "205",
                               "kind": "string",
                               "name": "string",
                               "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2702,12 +3073,12 @@
                         ]
                       },
                       {
-                        "$id": "183",
+                        "$id": "206",
                         "kind": "header",
                         "name": "accept",
                         "serializedName": "Accept",
                         "type": {
-                          "$ref": "13"
+                          "$ref": "17"
                         },
                         "isApiVersion": false,
                         "optional": false,
@@ -2718,12 +3089,12 @@
                         "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.ContinuationToken.requestHeaderResponseHeader.accept",
                         "methodParameterSegments": [
                           {
-                            "$id": "184",
+                            "$id": "207",
                             "kind": "method",
                             "name": "accept",
                             "serializedName": "Accept",
                             "type": {
-                              "$ref": "13"
+                              "$ref": "17"
                             },
                             "location": "Header",
                             "isApiVersion": false,
@@ -2743,14 +3114,14 @@
                           200
                         ],
                         "bodyType": {
-                          "$ref": "81"
+                          "$ref": "92"
                         },
                         "headers": [
                           {
                             "name": "nextToken",
                             "nameInResponse": "next-token",
                             "type": {
-                              "$id": "185",
+                              "$id": "208",
                               "kind": "string",
                               "name": "string",
                               "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2776,21 +3147,21 @@
                   },
                   "parameters": [
                     {
-                      "$ref": "173"
+                      "$ref": "196"
                     },
                     {
-                      "$ref": "177"
+                      "$ref": "200"
                     },
                     {
-                      "$ref": "181"
+                      "$ref": "204"
                     },
                     {
-                      "$ref": "184"
+                      "$ref": "207"
                     }
                   ],
                   "response": {
                     "type": {
-                      "$ref": "33"
+                      "$ref": "37"
                     },
                     "resultSegments": [
                       "pets"
@@ -2806,7 +3177,7 @@
                     ],
                     "continuationToken": {
                       "parameter": {
-                        "$ref": "171"
+                        "$ref": "194"
                       },
                       "responseSegments": [
                         "next-token"
@@ -2817,24 +3188,24 @@
                   }
                 },
                 {
-                  "$id": "186",
+                  "$id": "209",
                   "kind": "paging",
                   "name": "requestQueryNestedResponseBody",
                   "accessibility": "public",
                   "apiVersions": [],
                   "operation": {
-                    "$id": "187",
+                    "$id": "210",
                     "name": "requestQueryNestedResponseBody",
                     "resourceName": "ContinuationToken",
                     "accessibility": "public",
                     "parameters": [
                       {
-                        "$id": "188",
+                        "$id": "211",
                         "kind": "query",
                         "name": "token",
                         "serializedName": "token",
                         "type": {
-                          "$id": "189",
+                          "$id": "212",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2849,12 +3220,12 @@
                         "readOnly": false,
                         "methodParameterSegments": [
                           {
-                            "$id": "190",
+                            "$id": "213",
                             "kind": "method",
                             "name": "token",
                             "serializedName": "token",
                             "type": {
-                              "$id": "191",
+                              "$id": "214",
                               "kind": "string",
                               "name": "string",
                               "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2872,12 +3243,12 @@
                         ]
                       },
                       {
-                        "$id": "192",
+                        "$id": "215",
                         "kind": "header",
                         "name": "foo",
                         "serializedName": "foo",
                         "type": {
-                          "$id": "193",
+                          "$id": "216",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2892,12 +3263,12 @@
                         "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.ContinuationToken.requestQueryNestedResponseBody.foo",
                         "methodParameterSegments": [
                           {
-                            "$id": "194",
+                            "$id": "217",
                             "kind": "method",
                             "name": "foo",
                             "serializedName": "foo",
                             "type": {
-                              "$id": "195",
+                              "$id": "218",
                               "kind": "string",
                               "name": "string",
                               "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2915,12 +3286,12 @@
                         ]
                       },
                       {
-                        "$id": "196",
+                        "$id": "219",
                         "kind": "query",
                         "name": "bar",
                         "serializedName": "bar",
                         "type": {
-                          "$id": "197",
+                          "$id": "220",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2935,12 +3306,12 @@
                         "readOnly": false,
                         "methodParameterSegments": [
                           {
-                            "$id": "198",
+                            "$id": "221",
                             "kind": "method",
                             "name": "bar",
                             "serializedName": "bar",
                             "type": {
-                              "$id": "199",
+                              "$id": "222",
                               "kind": "string",
                               "name": "string",
                               "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2958,12 +3329,12 @@
                         ]
                       },
                       {
-                        "$id": "200",
+                        "$id": "223",
                         "kind": "header",
                         "name": "accept",
                         "serializedName": "Accept",
                         "type": {
-                          "$ref": "15"
+                          "$ref": "19"
                         },
                         "isApiVersion": false,
                         "optional": false,
@@ -2974,12 +3345,12 @@
                         "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.ContinuationToken.requestQueryNestedResponseBody.accept",
                         "methodParameterSegments": [
                           {
-                            "$id": "201",
+                            "$id": "224",
                             "kind": "method",
                             "name": "accept",
                             "serializedName": "Accept",
                             "type": {
-                              "$ref": "15"
+                              "$ref": "19"
                             },
                             "location": "Header",
                             "isApiVersion": false,
@@ -2999,7 +3370,7 @@
                           200
                         ],
                         "bodyType": {
-                          "$ref": "83"
+                          "$ref": "94"
                         },
                         "headers": [],
                         "isErrorResponse": false,
@@ -3020,21 +3391,21 @@
                   },
                   "parameters": [
                     {
-                      "$ref": "190"
+                      "$ref": "213"
                     },
                     {
-                      "$ref": "194"
+                      "$ref": "217"
                     },
                     {
-                      "$ref": "198"
+                      "$ref": "221"
                     },
                     {
-                      "$ref": "201"
+                      "$ref": "224"
                     }
                   ],
                   "response": {
                     "type": {
-                      "$ref": "33"
+                      "$ref": "37"
                     },
                     "resultSegments": [
                       "nestedItems",
@@ -3052,7 +3423,7 @@
                     ],
                     "continuationToken": {
                       "parameter": {
-                        "$ref": "188"
+                        "$ref": "211"
                       },
                       "responseSegments": [
                         "nestedNext",
@@ -3064,24 +3435,24 @@
                   }
                 },
                 {
-                  "$id": "202",
+                  "$id": "225",
                   "kind": "paging",
                   "name": "requestHeaderNestedResponseBody",
                   "accessibility": "public",
                   "apiVersions": [],
                   "operation": {
-                    "$id": "203",
+                    "$id": "226",
                     "name": "requestHeaderNestedResponseBody",
                     "resourceName": "ContinuationToken",
                     "accessibility": "public",
                     "parameters": [
                       {
-                        "$id": "204",
+                        "$id": "227",
                         "kind": "header",
                         "name": "token",
                         "serializedName": "token",
                         "type": {
-                          "$id": "205",
+                          "$id": "228",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -3096,12 +3467,12 @@
                         "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.ContinuationToken.requestHeaderNestedResponseBody.token",
                         "methodParameterSegments": [
                           {
-                            "$id": "206",
+                            "$id": "229",
                             "kind": "method",
                             "name": "token",
                             "serializedName": "token",
                             "type": {
-                              "$id": "207",
+                              "$id": "230",
                               "kind": "string",
                               "name": "string",
                               "crossLanguageDefinitionId": "TypeSpec.string",
@@ -3119,12 +3490,12 @@
                         ]
                       },
                       {
-                        "$id": "208",
+                        "$id": "231",
                         "kind": "header",
                         "name": "foo",
                         "serializedName": "foo",
                         "type": {
-                          "$id": "209",
+                          "$id": "232",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -3139,12 +3510,12 @@
                         "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.ContinuationToken.requestHeaderNestedResponseBody.foo",
                         "methodParameterSegments": [
                           {
-                            "$id": "210",
+                            "$id": "233",
                             "kind": "method",
                             "name": "foo",
                             "serializedName": "foo",
                             "type": {
-                              "$id": "211",
+                              "$id": "234",
                               "kind": "string",
                               "name": "string",
                               "crossLanguageDefinitionId": "TypeSpec.string",
@@ -3162,12 +3533,12 @@
                         ]
                       },
                       {
-                        "$id": "212",
+                        "$id": "235",
                         "kind": "query",
                         "name": "bar",
                         "serializedName": "bar",
                         "type": {
-                          "$id": "213",
+                          "$id": "236",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -3182,12 +3553,12 @@
                         "readOnly": false,
                         "methodParameterSegments": [
                           {
-                            "$id": "214",
+                            "$id": "237",
                             "kind": "method",
                             "name": "bar",
                             "serializedName": "bar",
                             "type": {
-                              "$id": "215",
+                              "$id": "238",
                               "kind": "string",
                               "name": "string",
                               "crossLanguageDefinitionId": "TypeSpec.string",
@@ -3205,12 +3576,12 @@
                         ]
                       },
                       {
-                        "$id": "216",
+                        "$id": "239",
                         "kind": "header",
                         "name": "accept",
                         "serializedName": "Accept",
                         "type": {
-                          "$ref": "17"
+                          "$ref": "21"
                         },
                         "isApiVersion": false,
                         "optional": false,
@@ -3221,12 +3592,12 @@
                         "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.ContinuationToken.requestHeaderNestedResponseBody.accept",
                         "methodParameterSegments": [
                           {
-                            "$id": "217",
+                            "$id": "240",
                             "kind": "method",
                             "name": "accept",
                             "serializedName": "Accept",
                             "type": {
-                              "$ref": "17"
+                              "$ref": "21"
                             },
                             "location": "Header",
                             "isApiVersion": false,
@@ -3246,7 +3617,7 @@
                           200
                         ],
                         "bodyType": {
-                          "$ref": "91"
+                          "$ref": "102"
                         },
                         "headers": [],
                         "isErrorResponse": false,
@@ -3267,21 +3638,21 @@
                   },
                   "parameters": [
                     {
-                      "$ref": "206"
+                      "$ref": "229"
                     },
                     {
-                      "$ref": "210"
+                      "$ref": "233"
                     },
                     {
-                      "$ref": "214"
+                      "$ref": "237"
                     },
                     {
-                      "$ref": "217"
+                      "$ref": "240"
                     }
                   ],
                   "response": {
                     "type": {
-                      "$ref": "33"
+                      "$ref": "37"
                     },
                     "resultSegments": [
                       "nestedItems",
@@ -3299,7 +3670,7 @@
                     ],
                     "continuationToken": {
                       "parameter": {
-                        "$ref": "204"
+                        "$ref": "227"
                       },
                       "responseSegments": [
                         "nestedNext",
@@ -3313,13 +3684,13 @@
               ],
               "parameters": [
                 {
-                  "$id": "218",
+                  "$id": "241",
                   "kind": "endpoint",
                   "name": "endpoint",
                   "serializedName": "endpoint",
                   "doc": "Service host",
                   "type": {
-                    "$id": "219",
+                    "$id": "242",
                     "kind": "url",
                     "name": "endpoint",
                     "crossLanguageDefinitionId": "TypeSpec.url"
@@ -3330,7 +3701,7 @@
                   "isEndpoint": true,
                   "defaultValue": {
                     "type": {
-                      "$id": "220",
+                      "$id": "243",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string"
@@ -3348,7 +3719,7 @@
               "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.ContinuationToken",
               "apiVersions": [],
               "parent": {
-                "$ref": "103"
+                "$ref": "114"
               },
               "isMultiServiceClient": false
             }
@@ -3356,30 +3727,30 @@
           "isMultiServiceClient": false
         },
         {
-          "$id": "221",
+          "$id": "244",
           "kind": "client",
           "name": "PageSize",
           "namespace": "Payload.Pageable.PageSize",
           "methods": [
             {
-              "$id": "222",
+              "$id": "245",
               "kind": "paging",
               "name": "listWithoutContinuation",
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
-                "$id": "223",
+                "$id": "246",
                 "name": "listWithoutContinuation",
                 "resourceName": "PageSize",
                 "accessibility": "public",
                 "parameters": [
                   {
-                    "$id": "224",
+                    "$id": "247",
                     "kind": "header",
                     "name": "accept",
                     "serializedName": "Accept",
                     "type": {
-                      "$ref": "19"
+                      "$ref": "23"
                     },
                     "isApiVersion": false,
                     "optional": false,
@@ -3390,12 +3761,12 @@
                     "crossLanguageDefinitionId": "Payload.Pageable.PageSize.listWithoutContinuation.accept",
                     "methodParameterSegments": [
                       {
-                        "$id": "225",
+                        "$id": "248",
                         "kind": "method",
                         "name": "accept",
                         "serializedName": "Accept",
                         "type": {
-                          "$ref": "19"
+                          "$ref": "23"
                         },
                         "location": "Header",
                         "isApiVersion": false,
@@ -3415,7 +3786,7 @@
                       200
                     ],
                     "bodyType": {
-                      "$ref": "53"
+                      "$ref": "57"
                     },
                     "headers": [],
                     "isErrorResponse": false,
@@ -3436,12 +3807,12 @@
               },
               "parameters": [
                 {
-                  "$ref": "225"
+                  "$ref": "248"
                 }
               ],
               "response": {
                 "type": {
-                  "$ref": "33"
+                  "$ref": "37"
                 },
                 "resultSegments": [
                   "pets"
@@ -3459,24 +3830,24 @@
               }
             },
             {
-              "$id": "226",
+              "$id": "249",
               "kind": "paging",
               "name": "listWithPageSize",
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
-                "$id": "227",
+                "$id": "250",
                 "name": "listWithPageSize",
                 "resourceName": "PageSize",
                 "accessibility": "public",
                 "parameters": [
                   {
-                    "$id": "228",
+                    "$id": "251",
                     "kind": "query",
                     "name": "pageSize",
                     "serializedName": "pageSize",
                     "type": {
-                      "$id": "229",
+                      "$id": "252",
                       "kind": "int32",
                       "name": "int32",
                       "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -3491,12 +3862,12 @@
                     "readOnly": false,
                     "methodParameterSegments": [
                       {
-                        "$id": "230",
+                        "$id": "253",
                         "kind": "method",
                         "name": "pageSize",
                         "serializedName": "pageSize",
                         "type": {
-                          "$id": "231",
+                          "$id": "254",
                           "kind": "int32",
                           "name": "int32",
                           "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -3514,12 +3885,12 @@
                     ]
                   },
                   {
-                    "$id": "232",
+                    "$id": "255",
                     "kind": "header",
                     "name": "accept",
                     "serializedName": "Accept",
                     "type": {
-                      "$ref": "21"
+                      "$ref": "25"
                     },
                     "isApiVersion": false,
                     "optional": false,
@@ -3530,12 +3901,12 @@
                     "crossLanguageDefinitionId": "Payload.Pageable.PageSize.listWithPageSize.accept",
                     "methodParameterSegments": [
                       {
-                        "$id": "233",
+                        "$id": "256",
                         "kind": "method",
                         "name": "accept",
                         "serializedName": "Accept",
                         "type": {
-                          "$ref": "21"
+                          "$ref": "25"
                         },
                         "location": "Header",
                         "isApiVersion": false,
@@ -3555,7 +3926,7 @@
                       200
                     ],
                     "bodyType": {
-                      "$ref": "55"
+                      "$ref": "59"
                     },
                     "headers": [],
                     "isErrorResponse": false,
@@ -3576,15 +3947,15 @@
               },
               "parameters": [
                 {
-                  "$ref": "230"
+                  "$ref": "253"
                 },
                 {
-                  "$ref": "233"
+                  "$ref": "256"
                 }
               ],
               "response": {
                 "type": {
-                  "$ref": "33"
+                  "$ref": "37"
                 },
                 "resultSegments": [
                   "pets"
@@ -3606,13 +3977,13 @@
           ],
           "parameters": [
             {
-              "$id": "234",
+              "$id": "257",
               "kind": "endpoint",
               "name": "endpoint",
               "serializedName": "endpoint",
               "doc": "Service host",
               "type": {
-                "$id": "235",
+                "$id": "258",
                 "kind": "url",
                 "name": "endpoint",
                 "crossLanguageDefinitionId": "TypeSpec.url"
@@ -3623,7 +3994,7 @@
               "isEndpoint": true,
               "defaultValue": {
                 "type": {
-                  "$id": "236",
+                  "$id": "259",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string"
@@ -3641,35 +4012,35 @@
           "crossLanguageDefinitionId": "Payload.Pageable.PageSize",
           "apiVersions": [],
           "parent": {
-            "$ref": "99"
+            "$ref": "110"
           },
           "isMultiServiceClient": false
         },
         {
-          "$id": "237",
+          "$id": "260",
           "kind": "client",
           "name": "XmlPagination",
           "namespace": "Payload.Pageable.XmlPagination",
           "methods": [
             {
-              "$id": "238",
+              "$id": "261",
               "kind": "paging",
               "name": "listWithContinuation",
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
-                "$id": "239",
+                "$id": "262",
                 "name": "listWithContinuation",
                 "resourceName": "XmlPagination",
                 "accessibility": "public",
                 "parameters": [
                   {
-                    "$id": "240",
+                    "$id": "263",
                     "kind": "query",
                     "name": "marker",
                     "serializedName": "marker",
                     "type": {
-                      "$id": "241",
+                      "$id": "264",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -3684,12 +4055,12 @@
                     "readOnly": false,
                     "methodParameterSegments": [
                       {
-                        "$id": "242",
+                        "$id": "265",
                         "kind": "method",
                         "name": "marker",
                         "serializedName": "marker",
                         "type": {
-                          "$id": "243",
+                          "$id": "266",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -3707,12 +4078,12 @@
                     ]
                   },
                   {
-                    "$id": "244",
+                    "$id": "267",
                     "kind": "header",
                     "name": "accept",
                     "serializedName": "Accept",
                     "type": {
-                      "$ref": "23"
+                      "$ref": "27"
                     },
                     "isApiVersion": false,
                     "optional": false,
@@ -3723,12 +4094,12 @@
                     "crossLanguageDefinitionId": "Payload.Pageable.XmlPagination.listWithContinuation.accept",
                     "methodParameterSegments": [
                       {
-                        "$id": "245",
+                        "$id": "268",
                         "kind": "method",
                         "name": "accept",
                         "serializedName": "Accept",
                         "type": {
-                          "$ref": "23"
+                          "$ref": "27"
                         },
                         "location": "Header",
                         "isApiVersion": false,
@@ -3748,14 +4119,14 @@
                       200
                     ],
                     "bodyType": {
-                      "$ref": "57"
+                      "$ref": "61"
                     },
                     "headers": [
                       {
                         "name": "contentType",
                         "nameInResponse": "content-type",
                         "type": {
-                          "$ref": "25"
+                          "$ref": "29"
                         }
                       }
                     ],
@@ -3777,15 +4148,15 @@
               },
               "parameters": [
                 {
-                  "$ref": "242"
+                  "$ref": "265"
                 },
                 {
-                  "$ref": "245"
+                  "$ref": "268"
                 }
               ],
               "response": {
                 "type": {
-                  "$ref": "59"
+                  "$ref": "63"
                 },
                 "resultSegments": [
                   "Pets"
@@ -3801,7 +4172,7 @@
                 ],
                 "continuationToken": {
                   "parameter": {
-                    "$ref": "240"
+                    "$ref": "263"
                   },
                   "responseSegments": [
                     "NextMarker"
@@ -3812,24 +4183,24 @@
               }
             },
             {
-              "$id": "246",
+              "$id": "269",
               "kind": "paging",
               "name": "listWithNextLink",
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
-                "$id": "247",
+                "$id": "270",
                 "name": "listWithNextLink",
                 "resourceName": "XmlPagination",
                 "accessibility": "public",
                 "parameters": [
                   {
-                    "$id": "248",
+                    "$id": "271",
                     "kind": "header",
                     "name": "accept",
                     "serializedName": "Accept",
                     "type": {
-                      "$ref": "27"
+                      "$ref": "31"
                     },
                     "isApiVersion": false,
                     "optional": false,
@@ -3840,12 +4211,12 @@
                     "crossLanguageDefinitionId": "Payload.Pageable.XmlPagination.listWithNextLink.accept",
                     "methodParameterSegments": [
                       {
-                        "$id": "249",
+                        "$id": "272",
                         "kind": "method",
                         "name": "accept",
                         "serializedName": "Accept",
                         "type": {
-                          "$ref": "27"
+                          "$ref": "31"
                         },
                         "location": "Header",
                         "isApiVersion": false,
@@ -3865,14 +4236,14 @@
                       200
                     ],
                     "bodyType": {
-                      "$ref": "67"
+                      "$ref": "71"
                     },
                     "headers": [
                       {
                         "name": "contentType",
                         "nameInResponse": "content-type",
                         "type": {
-                          "$ref": "29"
+                          "$ref": "33"
                         }
                       }
                     ],
@@ -3894,12 +4265,12 @@
               },
               "parameters": [
                 {
-                  "$ref": "249"
+                  "$ref": "272"
                 }
               ],
               "response": {
                 "type": {
-                  "$ref": "59"
+                  "$ref": "63"
                 },
                 "resultSegments": [
                   "Pets"
@@ -3925,13 +4296,13 @@
           ],
           "parameters": [
             {
-              "$id": "250",
+              "$id": "273",
               "kind": "endpoint",
               "name": "endpoint",
               "serializedName": "endpoint",
               "doc": "Service host",
               "type": {
-                "$id": "251",
+                "$id": "274",
                 "kind": "url",
                 "name": "endpoint",
                 "crossLanguageDefinitionId": "TypeSpec.url"
@@ -3942,7 +4313,7 @@
               "isEndpoint": true,
               "defaultValue": {
                 "type": {
-                  "$id": "252",
+                  "$id": "275",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string"
@@ -3960,7 +4331,7 @@
           "crossLanguageDefinitionId": "Payload.Pageable.XmlPagination",
           "apiVersions": [],
           "parent": {
-            "$ref": "99"
+            "$ref": "110"
           },
           "isMultiServiceClient": false
         }
