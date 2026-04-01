@@ -12,12 +12,4 @@
          CS0618: Backward-compat custom code intentionally references [Obsolete] types/members it wraps. -->
     <NoWarn>$(NoWarn);AZC0032;AZC0030;CS0108;CS0618</NoWarn>
   </PropertyGroup>
-  <ItemGroup>
-    <!-- Exclude generated ExtensionProfile; replaced by custom version in Custom/ folder.
-         The generator's usage analysis overrides the @@access(Access.public) decorator on read-only models,
-         producing incomplete code. The model factory exposes ExtensionProfile in a public method, causing CS0051.
-         Tracked in https://github.com/Azure/azure-sdk-for-net/issues/56961 — remove when fixed. -->
-    <Compile Remove="Generated\Models\ExtensionProfile.cs" />
-    <Compile Remove="Generated\Models\ExtensionProfile.Serialization.cs" />
-  </ItemGroup>
 </Project>
