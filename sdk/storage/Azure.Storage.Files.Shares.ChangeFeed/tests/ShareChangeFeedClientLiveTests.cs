@@ -139,17 +139,19 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
 
         /// <summary>
         /// Verifies that pagination works correctly by reading one page at a time
-        /// and resuming with a continuation token.
+        /// and resuming with a continuation token. The page size hint is not guaranteed
+        /// to be respected exactly (event-level time filtering may reduce the count),
+        /// so we only assert that pages are non-empty and non-overlapping.
         /// </summary>
         [RecordedTest]
         [Ignore("Requires a storage account with Files Change Feed enabled and pre-existing events")]
         public async Task GetChanges_WithContinuationToken_ResumesCorrectly()
         {
             // Arrange
-            ShareChangeFeedClient client = GetChangeFeedClient();
+            ShareChangeFeedClient client = GetChangeFeedClient("fileschangefeedshare");
 
             // Act - read the first page
-            HashSet<string> firstPageIds = new HashSet<string>();
+            HashSet<DateTimeOffset> firstPageEventTimes = new HashSet<DateTimeOffset>();
             string continuationToken = null;
 
             if (IsAsync)
@@ -158,10 +160,10 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
                 {
                     foreach (ShareChangeFeedEvent e in page.Values)
                     {
-                        firstPageIds.Add(e.Id);
+                        firstPageEventTimes.Add(e.EventTime);
                     }
                     continuationToken = page.ContinuationToken;
-                    break; // Only read the first page
+                    if (firstPageEventTimes.Count >= 10) break;
                 }
             }
             else
@@ -170,15 +172,17 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
                 {
                     foreach (ShareChangeFeedEvent e in page.Values)
                     {
-                        firstPageIds.Add(e.Id);
+                        firstPageEventTimes.Add(e.EventTime);
                     }
                     continuationToken = page.ContinuationToken;
-                    break;
+                    if (firstPageEventTimes.Count >= 10) break;
                 }
             }
 
+            CollectionAssert.IsNotEmpty(firstPageEventTimes, "First page should contain at least one event");
+
             // Act - resume from continuation token and read the next page
-            HashSet<string> secondPageIds = new HashSet<string>();
+            HashSet<DateTimeOffset> secondPageEventTimes = new HashSet<DateTimeOffset>();
             if (continuationToken != null)
             {
                 if (IsAsync)
@@ -187,9 +191,9 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
                     {
                         foreach (ShareChangeFeedEvent e in page.Values)
                         {
-                            secondPageIds.Add(e.Id);
+                            secondPageEventTimes.Add(e.EventTime);
                         }
-                        break;
+                        if (secondPageEventTimes.Count >= 10) break;
                     }
                 }
                 else
@@ -198,15 +202,15 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
                     {
                         foreach (ShareChangeFeedEvent e in page.Values)
                         {
-                            secondPageIds.Add(e.Id);
+                            secondPageEventTimes.Add(e.EventTime);
                         }
-                        break;
+                        if (secondPageEventTimes.Count >= 10) break;
                     }
                 }
 
                 // Assert - no overlap between first and second page
                 CollectionAssert.IsEmpty(
-                    firstPageIds.Intersect(secondPageIds),
+                    firstPageEventTimes.Intersect(secondPageEventTimes),
                     "Resumed page should not contain events from the first page");
             }
         }
@@ -219,7 +223,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
         public async Task GetLastConsumable_ReturnsTimestamp()
         {
             // Arrange
-            ShareChangeFeedClient client = GetChangeFeedClient();
+            ShareChangeFeedClient client = GetChangeFeedClient("fileschangefeedshare");
 
             // Act
             DateTimeOffset? lastConsumable = IsAsync
