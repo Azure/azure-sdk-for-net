@@ -341,7 +341,7 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
                 // model type (e.g., (PolyDeviceData)JsonModelCreateCore(ref reader, options)).
                 if (returnTypeChanged)
                 {
-                    FixExplicitInterfaceCreateMethods(serializationTypeDefinition, model);
+                    FixExplicitInterfaceCreateMethods(serializationTypeDefinition);
                 }
             }
         }
@@ -352,7 +352,7 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
     /// IPersistableModel&lt;T&gt;.Create) when their body expressions return the system base
     /// type (e.g., ResourceData) instead of the expected model type (e.g., PolyDeviceData).
     /// </summary>
-    private static void FixExplicitInterfaceCreateMethods(MrwSerializationTypeDefinition serializationTypeDefinition, ModelProvider model)
+    private static void FixExplicitInterfaceCreateMethods(MrwSerializationTypeDefinition serializationTypeDefinition)
     {
         foreach (var method in serializationTypeDefinition.Methods.Where(
             m => m.Signature.Name == "Create"

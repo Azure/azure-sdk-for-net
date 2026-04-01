@@ -18,17 +18,17 @@ namespace Azure.Generator.Management.Providers
     {
         private readonly FieldProvider _dataField;
         private readonly CSharpType _resourceDataType;
-        private readonly ResourceClientProvider _resoruce;
+        private readonly ResourceClientProvider _resource;
         private readonly CSharpType _jsonModelInterfaceType;
         public ResourceSerializationProvider(ResourceClientProvider resource)
         {
-            _resoruce = resource;
+            _resource = resource;
             _resourceDataType = resource.ResourceData.Type;
             _jsonModelInterfaceType = new CSharpType(typeof(IJsonModel<>), _resourceDataType);
             _dataField = new FieldProvider(FieldModifiers.Private | FieldModifiers.Static, _jsonModelInterfaceType, "s_dataDeserializationInstance", this);
         }
 
-        protected override string BuildName() => _resoruce.Name;
+        protected override string BuildName() => _resource.Name;
 
         protected override string BuildRelativeFilePath()
             => Path.Combine("src", "Generated", $"{Name}.Serialization.cs");
@@ -51,7 +51,7 @@ namespace Azure.Generator.Management.Providers
         /// </summary>
         private CSharpType GetInstantiableDataType()
         {
-            var resourceData = _resoruce.ResourceData;
+            var resourceData = _resource.ResourceData;
             if (resourceData.DeclarationModifiers.HasFlag(TypeSignatureModifiers.Abstract))
             {
                 var unknownDerivedModel = resourceData.DerivedModels
