@@ -2,7 +2,7 @@
 
 Applications which execute in a protected environment can authenticate using a client assertion signed by a private key whose public key or root certificate is registered with Microsoft Entra ID. The Azure.Identity library provides the [`ClientCertificateCredential`](https://learn.microsoft.com/dotnet/api/azure.identity.clientcertificatecredential) for applications choosing to authenticate this way. Below are some examples of how applications can utilize `ClientCertificateCredential` to authenticate clients.
 
-`ClientCertificateCredential` can also be used via [`EnvironmentCredential`](https://learn.microsoft.com/dotnet/api/azure.identity.environmentcredential), or [`DefaultAzureCredential`](https://learn.microsoft.com/dotnet/api/azure.identity.defaultazurecredential) - see [README#credential-classes]([../README.md#credential-classe](https://github.com/azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md#credential-classes)).
+`ClientCertificateCredential` can also be used via [`EnvironmentCredential`](https://learn.microsoft.com/dotnet/api/azure.identity.environmentcredential), or [`DefaultAzureCredential`](https://learn.microsoft.com/dotnet/api/azure.identity.defaultazurecredential) - see [README#credential-classes](https://github.com/azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md#credential-classes).
 
 ## Loading certificates from disk
 
