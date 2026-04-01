@@ -216,7 +216,6 @@ public class SnapshotConsistencyTests : ProtocolTestBase
         foreach (var item in items)
             completedResponse.Output.Add(item);
         completedResponse.CompletedAt = DateTimeOffset.UtcNow;
-        completedResponse.OutputText = completedResponse.ComputeOutputText();
         yield return new ResponseCompletedEvent(0, completedResponse);
     }
 
@@ -245,7 +244,6 @@ public class SnapshotConsistencyTests : ProtocolTestBase
         completedResponse.Output.Add(msg1);
         completedResponse.Output.Add(msg2);
         completedResponse.CompletedAt = DateTimeOffset.UtcNow;
-        completedResponse.OutputText = completedResponse.ComputeOutputText();
         yield return new ResponseCompletedEvent(0, completedResponse);
     }
 
@@ -262,7 +260,6 @@ public class SnapshotConsistencyTests : ProtocolTestBase
 
         var completedResponse = new Models.ResponseObject(ctx.ResponseId, "test-model") { Status = ResponseStatus.Completed };
         completedResponse.CompletedAt = DateTimeOffset.UtcNow;
-        completedResponse.OutputText = completedResponse.ComputeOutputText();
         yield return new ResponseCompletedEvent(0, completedResponse);
     }
 }
