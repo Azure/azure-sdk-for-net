@@ -8,7 +8,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    internal partial class AppServiceApiDefinitionInfo
+    public partial class AppServiceApiDefinitionInfo
     {
         // Add this property back to avoid breaking change with the fix for issue #56828
         /// <summary>
