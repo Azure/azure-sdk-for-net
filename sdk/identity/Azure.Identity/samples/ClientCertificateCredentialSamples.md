@@ -48,7 +48,7 @@ var certificate = store.Certificates
 var credential = new ClientCertificateCredential(tenantId, clientId, certificate);
 ```
 
-See the [X509Store section in Cross-platform cryptography in .NET](https://learn.microsoft.com/dotnet/standard/security/cross-platform-cryptography#x509store]).
+See the [X509Store section in Cross-platform cryptography in .NET](https://learn.microsoft.com/dotnet/standard/security/cross-platform-cryptography#x509store).
 
 ## Rolling Certificates
 
