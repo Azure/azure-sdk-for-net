@@ -1297,5 +1297,38 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
 
             return GetMultiFlattenTests().Get(multiFlattenTestName, cancellationToken);
         }
+
+        /// <summary> Gets a collection of InternalPropertyModels in the <see cref="FooResource"/>. </summary>
+        /// <returns> An object representing collection of InternalPropertyModels and their operations over a InternalPropertyModelResource. </returns>
+        public virtual InternalPropertyModelCollection GetInternalPropertyModels()
+        {
+            return GetCachedClient(client => new InternalPropertyModelCollection(client, Id));
+        }
+
+        /// <summary> Gets the internal property model. </summary>
+        /// <param name="internalPropertyModelName"> The name of the InternalPropertyModel. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="internalPropertyModelName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="internalPropertyModelName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<InternalPropertyModelResource>> GetInternalPropertyModelAsync(string internalPropertyModelName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(internalPropertyModelName, nameof(internalPropertyModelName));
+
+            return await GetInternalPropertyModels().GetAsync(internalPropertyModelName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets the internal property model. </summary>
+        /// <param name="internalPropertyModelName"> The name of the InternalPropertyModel. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="internalPropertyModelName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="internalPropertyModelName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<InternalPropertyModelResource> GetInternalPropertyModel(string internalPropertyModelName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(internalPropertyModelName, nameof(internalPropertyModelName));
+
+            return GetInternalPropertyModels().Get(internalPropertyModelName, cancellationToken);
+        }
     }
 }
