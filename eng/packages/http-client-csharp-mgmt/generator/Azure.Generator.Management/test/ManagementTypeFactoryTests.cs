@@ -3,6 +3,7 @@
 
 using Azure.Generator.Management.Tests.TestHelpers;
 using Azure.Generator.Management.Tests.Common;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 using Microsoft.TypeSpec.Generator.Input;
 using NUnit.Framework;
