@@ -26,6 +26,23 @@ public static class BuildAndClassifyTool
             // Cap returned errors to avoid overwhelming the LLM — total count is still reported
             var returnedErrors = classified.Take(20).ToList();
 
+            // Auto-verify Generated/ integrity when a snapshot exists
+            object? generatedGuardResult = null;
+            var normalizedPath = Path.GetFullPath(projectPath);
+            if (GeneratedSnapshotTool.HasSnapshot(normalizedPath))
+            {
+                var verification = GeneratedSnapshotTool.VerifyInProcess(normalizedPath, autoRevert: true);
+                if (verification.HasViolations)
+                {
+                    generatedGuardResult = new
+                    {
+                        violated = true,
+                        verification.Message,
+                        violations = verification.Violations.Select(v => new { v.RelativePath, type = v.Type.ToString() })
+                    };
+                }
+            }
+
             return JsonSerializer.Serialize(new
             {
                 success = buildResult.Success,
@@ -38,7 +55,8 @@ public static class BuildAndClassifyTool
                 rawOutput = CSharpPatterns.Truncate(buildResult.RawOutput, 5000),
                 buildFailureHint = !buildResult.Success && buildResult.Errors.Count == 0
                     ? GetBuildFailureHint(buildResult.RawOutput)
-                    : (string?)null
+                    : (string?)null,
+                generatedGuard = generatedGuardResult
             });
         }
         catch (Exception ex)

@@ -43,6 +43,13 @@ public static class NullableAnnotationFixTool
         try
         {
             var normalizedPath = Path.GetFullPath(filePath);
+
+            var guardError = GeneratedPathGuard.ValidateNotGenerated(normalizedPath);
+            if (guardError is not null)
+            {
+                return (false, false, guardError);
+            }
+
             if (!File.Exists(normalizedPath))
             {
                 return (false, false, $"File not found: {normalizedPath}");

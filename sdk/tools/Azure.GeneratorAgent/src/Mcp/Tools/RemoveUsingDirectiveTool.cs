@@ -35,6 +35,13 @@ public static class RemoveUsingDirectiveTool
         try
         {
             var normalizedPath = Path.GetFullPath(filePath);
+
+            var guardError = GeneratedPathGuard.ValidateNotGenerated(normalizedPath);
+            if (guardError is not null)
+            {
+                return (false, 0, guardError);
+            }
+
             if (!File.Exists(normalizedPath))
             {
                 return (false, 0, $"File not found: {normalizedPath}");

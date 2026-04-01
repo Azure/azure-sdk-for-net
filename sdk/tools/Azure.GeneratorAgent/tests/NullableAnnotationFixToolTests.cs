@@ -145,4 +145,30 @@ public class NullableAnnotationFixToolTests
         File.WriteAllText(path, content);
         return path;
     }
+
+    private string CreateGeneratedFile(string content)
+    {
+        var genDir = Path.Combine(_tempDir, "Generated");
+        Directory.CreateDirectory(genDir);
+        var path = Path.Combine(genDir, $"{Guid.NewGuid():N}.cs");
+        File.WriteAllText(path, content);
+        return path;
+    }
+
+    [Test]
+    public void ExecuteInProcess_GeneratedFile_Blocked()
+    {
+        var file = CreateGeneratedFile("    string value = null;");
+        var originalContent = File.ReadAllText(file);
+
+        var (success, modified, error) = NullableAnnotationFixTool.ExecuteInProcess(file, "1");
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(success, Is.False);
+            Assert.That(modified, Is.False);
+            Assert.That(error, Does.Contain("Refusing to modify"));
+            Assert.That(File.ReadAllText(file), Is.EqualTo(originalContent), "File must remain unmodified");
+        });
+    }
 }

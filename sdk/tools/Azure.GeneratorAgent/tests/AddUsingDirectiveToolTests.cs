@@ -131,4 +131,34 @@ public class AddUsingDirectiveToolTests
         File.WriteAllText(path, content);
         return path;
     }
+
+    private string CreateGeneratedFile(string content)
+    {
+        var genDir = Path.Combine(_tempDir, "Generated");
+        Directory.CreateDirectory(genDir);
+        var path = Path.Combine(genDir, $"{Guid.NewGuid():N}.cs");
+        File.WriteAllText(path, content);
+        return path;
+    }
+
+    [Test]
+    public void ExecuteInProcess_GeneratedFile_Blocked()
+    {
+        var file = CreateGeneratedFile("""
+            using System;
+
+            namespace MyNamespace;
+            """);
+        var originalContent = File.ReadAllText(file);
+
+        var (success, added, error) = AddUsingDirectiveTool.ExecuteInProcess(file, "Azure.Core.Pipeline");
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(success, Is.False);
+            Assert.That(added, Is.False);
+            Assert.That(error, Does.Contain("Refusing to modify"));
+            Assert.That(File.ReadAllText(file), Is.EqualTo(originalContent), "File must remain unmodified");
+        });
+    }
 }

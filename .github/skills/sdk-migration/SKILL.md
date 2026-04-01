@@ -56,6 +56,8 @@ The MCP server provides deterministic fix tools for the build-fix cycle. Configu
 | `validate_tsp_config` | Before code generation (if not already validated by `commit_iteration`) | Validates `tspconfig.yaml` emitter section: checks `@azure-typespec/http-client-csharp` key exists, required fields present (`emitter-output-dir`, `namespace`, `model-namespace`), and no invalid properties. Works on file path or string content. |
 | `commit_iteration` | At migration start and whenever code generation fails with a spec-level error. | Finds a valid spec commit remotely. Supports strict (`commitOverride`), auto-resolve (iterates forward), and fallback (fixes `tspconfig.yaml` locally when `localSpecsPath` is provided — no git commit needed). Returns `useLocalSpecs=true` when tspconfig was fixed locally. See Phase 2 for details. |
 | `pregen_cleanup` | Before first code generation | Removes `IncludeAutorestDependency` from `.csproj` |
+| `snapshot_generated` | After code generation, before build-fix cycle | Takes SHA-256 snapshot of all Generated/ files. Enables auto-verification in `build_and_classify`. |
+| `verify_generated_unchanged` | After build-fix cycle completes | Compares Generated/ files against snapshot. Reports violations (modified/deleted/added). Set `autoRevert=true` to auto-restore via git checkout. |
 | `migrate_test_samples` | After src builds, before test build | Moves `Generated/Samples/` to `Samples/` |
 | `finalize_migration` | After ALL builds succeed | Runs `Export-API.ps1` and `Update-Snippets.ps1` |
 | `run_tests` | After build succeeds, to verify tests pass | Runs `dotnet test --no-build` with configurable filter (defaults to excluding live tests) |
@@ -397,6 +399,7 @@ After generation:
 
 1. Check `src/Generated/` for output files — verify file contents changed, not just file names.
 2. Use `git diff --stat` to confirm the scope of changes. A typical migration touches hundreds of files with significant content changes.
+3. **MANDATORY**: Call `snapshot_generated` with the project path to lock down the Generated/ directory. This enables auto-verification in every subsequent `build_and_classify` call — any accidental modification to Generated/ files will be detected and reverted automatically.
 
 Build errors, ApiCompat, tests, and API export are handled in their dedicated phases (Phase 6, 8, 9, 10).
 
@@ -451,6 +454,8 @@ LOOP:
 ```
 
 Max 10 iterations. If still failing, escalate to user.
+
+> **Generated/ Auto-Guard**: When a snapshot exists (taken in Phase 5), every `build_and_classify` call automatically verifies that no Generated/ files were modified. If violations are detected, they are auto-reverted via `git checkout` and reported in the build result under `generatedGuard`. Additionally, `regex_replacement`, `add_using_directive`, `remove_using_directive`, and `nullable_annotation_fix` will refuse to modify files inside Generated/ directories.
 
 **Key decision points for regeneration:**
 - After editing `[CodeGenType]`, `[CodeGenSuppress]`, `[CodeGenMember]`, or `[CodeGenSerialization]` attributes → [GENERATE] before rebuilding
@@ -947,7 +952,10 @@ After presenting the bug details, **ask the user how they want to proceed**:
 
 ### Hard Rules (Never Violate)
 
-1. **Never edit files under `Generated/`** — they are overwritten by codegen.
+1. **Never edit files under `Generated/`** — they are overwritten by codegen. This rule is enforced deterministically at three levels:
+   - **MCP tool guards**: `regex_replacement`, `add_using_directive`, `remove_using_directive`, and `nullable_annotation_fix` refuse to write to Generated/ paths.
+   - **Snapshot verification**: `build_and_classify` auto-verifies Generated/ file integrity every build when a snapshot exists (taken via `snapshot_generated` in Phase 5).
+   - **Post-cycle check**: Call `verify_generated_unchanged` with `autoRevert=true` after the build-fix cycle to catch any modifications made outside MCP tools (e.g., via `edit`, `create`, or `powershell`).
 2. **Never hand-edit `metadata.json`** — it is auto-generated.
 3. **Never use `tsp-client update`** — use `dotnet build /t:GenerateCode`.
 4. **Never create or add entries to `ApiCompatBaseline.txt`** — this file must never be used to bypass breaking changes. Always mitigate ApiCompat errors through spec-side fixes (`@@clientName`) or SDK custom code shims in `Custom/BackwardCompat/` (see ApiCompat Error Handling in Phase 6 and error-reference.md). Do NOT suppress them via baseline files.

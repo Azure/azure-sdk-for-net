@@ -181,4 +181,28 @@ public class RegexReplacementToolTests
         File.WriteAllText(path, content);
         return path;
     }
+
+    private string CreateGeneratedFile(string content)
+    {
+        var genDir = Path.Combine(_tempDir, "Generated");
+        Directory.CreateDirectory(genDir);
+        var path = Path.Combine(genDir, $"{Guid.NewGuid():N}.cs");
+        File.WriteAllText(path, content);
+        return path;
+    }
+
+    [Test]
+    public void ExecuteInProcess_GeneratedFile_Blocked()
+    {
+        var file = CreateGeneratedFile("var x = _pipeline.Send(request);");
+        var (success, count, error) = RegexReplacementTool.ExecuteInProcess(file, @"\b_pipeline\b", "Pipeline");
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(success, Is.False);
+            Assert.That(count, Is.EqualTo(0));
+            Assert.That(error, Does.Contain("Refusing to modify"));
+            Assert.That(File.ReadAllText(file), Does.Contain("_pipeline"), "File must remain unmodified");
+        });
+    }
 }
