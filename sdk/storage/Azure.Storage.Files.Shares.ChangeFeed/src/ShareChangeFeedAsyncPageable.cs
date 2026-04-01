@@ -37,14 +37,30 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
             if (continuationToken != null)
                 throw new ArgumentException("Continuation not supported. Use ShareChangeFeedClient.GetChangesAsync(string) instead.");
 
-            (BlobContainerClient containerClient, ChangeFeedConfiguration<ShareChangeFeedEvent> config) = await _client.ResolveContainerAsync(async: true, cancellationToken: default).ConfigureAwait(false);
+            (BlobContainerClient containerClient, ChangeFeedConfiguration<ShareChangeFeedEvent> config) = await _client.ResolveContainerAsync(
+                async: true,
+                cancellationToken: default)
+                .ConfigureAwait(false);
 
-            ChangeFeedFactoryBase<ShareChangeFeedEvent> factory = new ChangeFeedFactoryBase<ShareChangeFeedEvent>(containerClient, _maxTransferSize, config);
-            ChangeFeedBase<ShareChangeFeedEvent> changeFeed = await factory.BuildChangeFeed(_startTime, _endTime, _continuation, async: true, cancellationToken: default).ConfigureAwait(false);
+            ChangeFeedFactoryBase<ShareChangeFeedEvent> factory = new ChangeFeedFactoryBase<ShareChangeFeedEvent>(
+                containerClient,
+                _maxTransferSize,
+                config);
+
+            ChangeFeedBase<ShareChangeFeedEvent> changeFeed = await factory.BuildChangeFeed(
+                _startTime,
+                _endTime,
+                _continuation,
+                async: true,
+                cancellationToken: default)
+                .ConfigureAwait(false);
 
             while (changeFeed.HasNext())
             {
-                yield return await changeFeed.GetPage(async: true, pageSize: pageSizeHint ?? Constants.FilesChangeFeed.DefaultPageSize).ConfigureAwait(false);
+                yield return await changeFeed.GetPage(
+                    async: true,
+                    pageSize: pageSizeHint ?? Constants.FilesChangeFeed.DefaultPageSize)
+                    .ConfigureAwait(false);
             }
         }
     }

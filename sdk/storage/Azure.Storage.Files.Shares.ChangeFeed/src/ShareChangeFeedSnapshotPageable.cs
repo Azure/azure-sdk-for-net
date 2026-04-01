@@ -35,12 +35,24 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
             if (continuationToken != null)
                 throw new ArgumentException("Continuation not supported for snapshot queries.");
 
-            (BlobContainerClient containerClient, ChangeFeedConfiguration<ShareChangeFeedEvent> config) = _client.ResolveContainerAsync(async: false, cancellationToken: default).EnsureCompleted();
+            (BlobContainerClient containerClient, ChangeFeedConfiguration<ShareChangeFeedEvent> config) = _client.ResolveContainerAsync(
+                async: false,
+                cancellationToken: default)
+                .EnsureCompleted();
 
             SnapshotMetadata beginMeta = SnapshotQueryHelper.ReadSnapshotMetadataAsync(
-                containerClient, _beginSnapshot, async: false, cancellationToken: default).EnsureCompleted();
+                containerClient,
+                _beginSnapshot,
+                async: false,
+                cancellationToken: default)
+                .EnsureCompleted();
+
             SnapshotMetadata endMeta = SnapshotQueryHelper.ReadSnapshotMetadataAsync(
-                containerClient, _endSnapshot, async: false, cancellationToken: default).EnsureCompleted();
+                containerClient,
+                _endSnapshot,
+                async: false,
+                cancellationToken: default)
+                .EnsureCompleted();
 
             if (endMeta.Status != null && !endMeta.Status.Equals("Finalized", StringComparison.OrdinalIgnoreCase))
             {
@@ -54,9 +66,18 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
             DateTimeOffset startTime = beginMeta.MinLogWindowForNextSnapshot;
             DateTimeOffset endTime = endMeta.MaxLogWindowForCurrentSnapshot;
 
-            ChangeFeedFactoryBase<ShareChangeFeedEvent> factory = new ChangeFeedFactoryBase<ShareChangeFeedEvent>(containerClient, _maxTransferSize, config);
+            ChangeFeedFactoryBase<ShareChangeFeedEvent> factory = new ChangeFeedFactoryBase<ShareChangeFeedEvent>(
+                containerClient,
+                _maxTransferSize,
+                config);
+
             ChangeFeedBase<ShareChangeFeedEvent> changeFeed = factory.BuildChangeFeed(
-                startTime, endTime, continuation: null, async: false, cancellationToken: default).EnsureCompleted();
+                startTime,
+                endTime,
+                continuation: null,
+                async: false,
+                cancellationToken: default)
+                .EnsureCompleted();
 
             int pageSize = pageSizeHint ?? Constants.FilesChangeFeed.DefaultPageSize;
             while (changeFeed.HasNext())

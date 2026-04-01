@@ -78,8 +78,11 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
             TokenCredential credential,
             ShareChangeFeedClientOptions changeFeedOptions = default)
         {
-            if (fileServiceUri == null) throw new ArgumentNullException(nameof(fileServiceUri));
-            if (string.IsNullOrEmpty(shareName)) throw new ArgumentNullException(nameof(shareName));
+            if (fileServiceUri == null)
+                throw new ArgumentNullException(nameof(fileServiceUri));
+            if (string.IsNullOrEmpty(shareName))
+                throw new ArgumentNullException(nameof(shareName));
+
             _maxTransferSize = changeFeedOptions?.MaximumTransferSize;
 
             ShareServiceClient shareServiceClient = new ShareServiceClient(fileServiceUri, credential);
@@ -98,8 +101,11 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
             string shareName,
             ShareChangeFeedClientOptions changeFeedOptions = default)
         {
-            if (fileServiceUri == null) throw new ArgumentNullException(nameof(fileServiceUri));
-            if (string.IsNullOrEmpty(shareName)) throw new ArgumentNullException(nameof(shareName));
+            if (fileServiceUri == null)
+                throw new ArgumentNullException(nameof(fileServiceUri));
+            if (string.IsNullOrEmpty(shareName))
+                throw new ArgumentNullException(nameof(shareName));
+
             _maxTransferSize = changeFeedOptions?.MaximumTransferSize;
 
             ShareServiceClient shareServiceClient = new ShareServiceClient(fileServiceUri);
@@ -168,7 +174,11 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         public virtual Pageable<ShareChangeFeedEvent> GetChanges(
             DateTimeOffset? start,
             DateTimeOffset? end)
-            => new ShareChangeFeedPageable(this, _maxTransferSize, startTime: start, endTime: end);
+            => new ShareChangeFeedPageable(
+                this,
+                _maxTransferSize,
+                startTime: start,
+                endTime: end);
 
         /// <summary>
         /// Returns change feed events within the specified time range.
@@ -176,21 +186,31 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         public virtual AsyncPageable<ShareChangeFeedEvent> GetChangesAsync(
             DateTimeOffset? start,
             DateTimeOffset? end)
-            => new ShareChangeFeedAsyncPageable(this, _maxTransferSize, startTime: start, endTime: end);
+            => new ShareChangeFeedAsyncPageable(
+                this,
+                _maxTransferSize,
+                startTime: start,
+                endTime: end);
 
         /// <summary>
         /// Resumes reading change feed events from a continuation token.
         /// </summary>
         public virtual Pageable<ShareChangeFeedEvent> GetChanges(
             string continuationToken)
-            => new ShareChangeFeedPageable(this, _maxTransferSize, continuation: continuationToken);
+            => new ShareChangeFeedPageable(
+                this,
+                _maxTransferSize,
+                continuation: continuationToken);
 
         /// <summary>
         /// Resumes reading change feed events from a continuation token.
         /// </summary>
         public virtual AsyncPageable<ShareChangeFeedEvent> GetChangesAsync(
             string continuationToken)
-            => new ShareChangeFeedAsyncPageable(this, _maxTransferSize, continuation: continuationToken);
+            => new ShareChangeFeedAsyncPageable(
+                this,
+                _maxTransferSize,
+                continuation: continuationToken);
         #endregion GetChanges
 
         #region GetChangesBetweenSnapshots
@@ -200,7 +220,11 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         public virtual Pageable<ShareChangeFeedEvent> GetChangesBetweenSnapshots(
             string beginSnapshot,
             string endSnapshot)
-            => new ShareChangeFeedSnapshotPageable(this, _maxTransferSize, beginSnapshot, endSnapshot);
+            => new ShareChangeFeedSnapshotPageable(
+                this,
+                _maxTransferSize,
+                beginSnapshot,
+                endSnapshot);
 
         /// <summary>
         /// Returns change feed events between two snapshots, filtered by container version ID.
@@ -208,7 +232,11 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         public virtual AsyncPageable<ShareChangeFeedEvent> GetChangesBetweenSnapshotsAsync(
             string beginSnapshot,
             string endSnapshot)
-            => new ShareChangeFeedSnapshotAsyncPageable(this, _maxTransferSize, beginSnapshot, endSnapshot);
+            => new ShareChangeFeedSnapshotAsyncPageable(
+                this,
+                _maxTransferSize,
+                beginSnapshot,
+                endSnapshot);
         #endregion GetChangesBetweenSnapshots
 
         #region GetLastConsumable
@@ -217,14 +245,20 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         /// </summary>
         public virtual DateTimeOffset? GetLastConsumable(
             CancellationToken cancellationToken = default)
-            => GetLastConsumableInternal(async: false, cancellationToken).EnsureCompleted();
+            => GetLastConsumableInternal(
+                async: false,
+                cancellationToken)
+                .EnsureCompleted();
 
         /// <summary>
         /// Gets the last consumable timestamp from the change feed.
         /// </summary>
         public virtual async Task<DateTimeOffset?> GetLastConsumableAsync(
             CancellationToken cancellationToken = default)
-            => await GetLastConsumableInternal(async: true, cancellationToken).ConfigureAwait(false);
+            => await GetLastConsumableInternal(
+                async: true,
+                cancellationToken)
+                .ConfigureAwait(false);
 
         private async Task<DateTimeOffset?> GetLastConsumableInternal(
             bool async,
@@ -236,7 +270,8 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
                 containerClient,
                 Constants.FilesChangeFeed.MetaSegmentsPath,
                 async,
-                cancellationToken).ConfigureAwait(false);
+                cancellationToken)
+                .ConfigureAwait(false);
         }
         #endregion GetLastConsumable
 

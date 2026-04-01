@@ -40,12 +40,25 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
 
             (BlobContainerClient containerClient, ChangeFeedConfiguration<ShareChangeFeedEvent> config) = _client.ResolveContainerAsync(async: false, cancellationToken: default).EnsureCompleted();
 
-            ChangeFeedFactoryBase<ShareChangeFeedEvent> factory = new ChangeFeedFactoryBase<ShareChangeFeedEvent>(containerClient, _maxTransferSize, config);
-            ChangeFeedBase<ShareChangeFeedEvent> changeFeed = factory.BuildChangeFeed(_startTime, _endTime, _continuation, async: false, cancellationToken: default).EnsureCompleted();
+            ChangeFeedFactoryBase<ShareChangeFeedEvent> factory = new ChangeFeedFactoryBase<ShareChangeFeedEvent>(
+                containerClient,
+                _maxTransferSize,
+                config);
+
+            ChangeFeedBase<ShareChangeFeedEvent> changeFeed = factory.BuildChangeFeed(
+                _startTime,
+                _endTime,
+                _continuation,
+                async: false,
+                cancellationToken: default)
+                .EnsureCompleted();
 
             while (changeFeed.HasNext())
             {
-                yield return changeFeed.GetPage(async: false, pageSize: pageSizeHint ?? Constants.FilesChangeFeed.DefaultPageSize).EnsureCompleted();
+                yield return changeFeed.GetPage(
+                    async: false,
+                    pageSize: pageSizeHint ?? Constants.FilesChangeFeed.DefaultPageSize)
+                    .EnsureCompleted();
             }
         }
     }
