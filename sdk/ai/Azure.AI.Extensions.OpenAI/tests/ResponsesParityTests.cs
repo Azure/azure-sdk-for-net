@@ -493,7 +493,7 @@ public class ResponsesParityTests : ProjectsOpenAITestBase
         if (clientInitializationType == TestResponseClientInitializationType.FromProjectsClient)
         {
             AIProjectClient projectClient = GetTestProjectClient();
-            responseClient = projectClient.OpenAI.GetProjectResponsesClient();
+            responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClient();
         }
         else if (clientInitializationType == TestResponseClientInitializationType.FromProjectsOpenAIClientWithConstructorEndpoint)
         {

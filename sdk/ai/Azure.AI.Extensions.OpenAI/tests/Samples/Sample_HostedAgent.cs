@@ -69,7 +69,7 @@ public class Sample_HostedAgent : ProjectsOpenAITestBase
             applicationInsightConnectionString: projectName,
             projectEndpoint: projectEndpoint
         );
-        ProjectsAgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+        ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             agentName: "myHostedAgent",
             options: new(agentDefinition));
         #endregion
@@ -101,11 +101,11 @@ public class Sample_HostedAgent : ProjectsOpenAITestBase
         string accountId = uriEndpoint.Authority.Substring(0, uriEndpoint.Authority.IndexOf('.'));
         AIProjectClient projectClient = new(endpoint: uriEndpoint, tokenProvider: new DefaultAzureCredential());
         #region Snippet:Sample_GetAgent_HostedAgent_Async
-        ProjectsAgentVersion agentVersion = await projectClient.Agents.GetAgentVersionAsync(
+        ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.GetAgentVersionAsync(
             agentName: "myHostedAgent", agentVersion: "1");
         #endregion
         #region Snippet:Sample_CreateResponse_HostedAgent_Async
-        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
+        ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(agentVersion.Name);
         ResponseResult response = await responseClient.CreateResponseAsync("Describe the of Contoso VR glasses release process.");
         #endregion
 
@@ -152,7 +152,7 @@ public class Sample_HostedAgent : ProjectsOpenAITestBase
             applicationInsightConnectionString: projectName,
             projectEndpoint: projectEndpoint
         );
-        ProjectsAgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
+        ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.CreateAgentVersion(
             agentName: "myHostedAgent",
             options: new(agentDefinition));
         #endregion
@@ -182,11 +182,11 @@ public class Sample_HostedAgent : ProjectsOpenAITestBase
         string accountId = uriEndpoint.Authority.Substring(0, uriEndpoint.Authority.IndexOf('.'));
         AIProjectClient projectClient = new(endpoint: uriEndpoint, tokenProvider: new DefaultAzureCredential());
         #region Snippet:Sample_GetAgent_HostedAgent_Sync
-        ProjectsAgentVersion agentVersion = projectClient.Agents.GetAgentVersion(
+        ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.GetAgentVersion(
             agentName: "myHostedAgent", agentVersion: "1");
         #endregion
         #region Snippet:Sample_CreateResponse_HostedAgent_Sync
-        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
+        ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(agentVersion.Name);
         ResponseResult response = responseClient.CreateResponse("Describe the of Contoso VR glasses release process.");
         #endregion
 

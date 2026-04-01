@@ -4,11 +4,19 @@
 using Azure.Generator.Management;
 using Azure.Generator.Management.Tests.Common;
 using Azure.Generator.Management.Tests.TestHelpers;
+using Azure.Generator.Management.Visitors;
 using Microsoft.TypeSpec.Generator;
+using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
+using Microsoft.TypeSpec.Generator.Providers;
+using Microsoft.TypeSpec.Generator.Snippets;
+using Microsoft.TypeSpec.Generator.Statements;
+using Moq;
 using NUnit.Framework;
+using System.ComponentModel;
 using System.Reflection;
+using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Mgmt.Tests
 {
@@ -74,6 +82,147 @@ namespace Azure.Generator.Mgmt.Tests
                     visitTypeCore!.Invoke(visitor, [model]);
                 }
             });
+        }
+
+        /// <summary>
+        /// Verifies that IsBackwardCompatMethod correctly identifies methods with the
+        /// [EditorBrowsable(EditorBrowsableState.Never)] attribute.
+        /// </summary>
+        [Test]
+        public void TestIsBackwardCompatMethod()
+        {
+            // Set up the mock plugin (required for ManagementClientGenerator.Instance)
+            var propertiesModel = InputFactory.Model(
+                "TestProperties",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [InputFactory.Property("displayName", InputPrimitiveType.String, serializedName: "displayName")]);
+            ManagementMockHelpers.LoadMockPlugin(inputModels: () => [propertiesModel]);
+
+            var enclosingType = ManagementClientGenerator.Instance.TypeFactory.CreateModel(propertiesModel)!;
+
+            // Create a method WITHOUT the EditorBrowsable attribute
+            var primarySignature = new MethodSignature(
+                "TestMethod",
+                null,
+                MethodSignatureModifiers.Public | MethodSignatureModifiers.Static,
+                null,
+                null,
+                []);
+            var primaryMethod = new MethodProvider(primarySignature, MethodBodyStatement.Empty, enclosingType);
+            Assert.IsFalse(FlattenPropertyVisitor.IsBackwardCompatMethod(primaryMethod));
+
+            // Create a method WITH the EditorBrowsable(Never) attribute
+            var backCompatSignature = new MethodSignature(
+                "TestMethod",
+                null,
+                MethodSignatureModifiers.Public | MethodSignatureModifiers.Static,
+                null,
+                null,
+                [],
+                Attributes: [new AttributeStatement(typeof(EditorBrowsableAttribute), Snippet.FrameworkEnumValue(EditorBrowsableState.Never))]);
+            var backCompatMethod = new MethodProvider(backCompatSignature, MethodBodyStatement.Empty, enclosingType);
+            Assert.IsTrue(FlattenPropertyVisitor.IsBackwardCompatMethod(backCompatMethod));
+        }
+
+        /// <summary>
+        /// Verifies that FixBackwardCompatOverloads correctly reorders arguments in
+        /// backward-compat overloads when the primary method's parameter order has changed
+        /// after property flattening.
+        /// </summary>
+        [Test]
+        public void TestFixBackwardCompatOverloadsReordersArguments()
+        {
+            // Set up the mock plugin (required for ManagementClientGenerator.Instance)
+            var propertiesModel = InputFactory.Model(
+                "TestProperties",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [InputFactory.Property("displayName", InputPrimitiveType.String, serializedName: "displayName")]);
+            ManagementMockHelpers.LoadMockPlugin(inputModels: () => [propertiesModel]);
+
+            var enclosingType = ManagementClientGenerator.Instance.TypeFactory.CreateModel(propertiesModel)!;
+
+            // Create the primary method signature with params in the FLATTENED order:
+            // (id, name, displayName, provisioningState, etag)
+            var paramId = new ParameterProvider("id", $"", typeof(string)) { DefaultValue = Default };
+            var paramName = new ParameterProvider("name", $"", typeof(string)) { DefaultValue = Default };
+            var paramDisplayName = new ParameterProvider("displayName", $"", typeof(string)) { DefaultValue = Default };
+            var paramProvState = new ParameterProvider("provisioningState", $"", typeof(string)) { DefaultValue = Default };
+            var paramEtag = new ParameterProvider("etag", $"", typeof(string)) { DefaultValue = Default };
+
+            var primarySignature = new MethodSignature(
+                "TestData",
+                null,
+                MethodSignatureModifiers.Public | MethodSignatureModifiers.Static,
+                typeof(object),
+                null,
+                [paramId, paramName, paramDisplayName, paramProvState, paramEtag]);
+            var primaryMethod = new MethodProvider(primarySignature, MethodBodyStatement.Empty, enclosingType);
+
+            // Create the backward-compat overload that calls the primary method.
+            // The OLD param order was: (id, name, etag, displayName, provisioningState)
+            var oldParamId = new ParameterProvider("id", $"", typeof(string));
+            var oldParamName = new ParameterProvider("name", $"", typeof(string));
+            var oldParamEtag = new ParameterProvider("etag", $"", typeof(string));
+            var oldParamDisplayName = new ParameterProvider("displayName", $"", typeof(string));
+            var oldParamProvState = new ParameterProvider("provisioningState", $"", typeof(string));
+
+            var oldSignature = new MethodSignature(
+                "TestData",
+                null,
+                MethodSignatureModifiers.Public | MethodSignatureModifiers.Static,
+                typeof(object),
+                null,
+                [oldParamId, oldParamName, oldParamEtag, oldParamDisplayName, oldParamProvState],
+                Attributes: [new AttributeStatement(typeof(EditorBrowsableAttribute), Snippet.FrameworkEnumValue(EditorBrowsableState.Never))]);
+
+            // The old invoke signature (what the base generator used to build the call)
+            // has params in the PRE-FLATTEN order: (id, name, etag, displayName, provisioningState)
+            var preFlattenSignature = new MethodSignature(
+                "TestData",
+                null,
+                MethodSignatureModifiers.Public | MethodSignatureModifiers.Static,
+                typeof(object),
+                null,
+                [paramId, paramName, paramEtag, paramDisplayName, paramProvState]);
+
+            // Build the invoke call with positional args in the OLD (pre-flatten) order
+            var invokeExpression = new InvokeMethodExpression(null, preFlattenSignature,
+                [oldParamId, oldParamName, oldParamEtag, oldParamDisplayName, oldParamProvState]);
+
+            var backCompatBody = Return(invokeExpression);
+            var backCompatMethod = new MethodProvider(oldSignature, backCompatBody, enclosingType);
+
+            // Act: Run the fix
+            FlattenPropertyVisitor.FixBackwardCompatOverloads([primaryMethod, backCompatMethod]);
+
+            // Assert: The backward-compat overload's body should now have arguments
+            // in the PRIMARY method's current parameter order
+            Assert.IsNotNull(backCompatMethod.BodyStatements);
+            var statements = backCompatMethod.BodyStatements!.ToArray();
+            Assert.AreEqual(1, statements.Length);
+
+            var returnStatement = statements[0] as ExpressionStatement;
+            Assert.IsNotNull(returnStatement);
+            var keywordExpr = returnStatement!.Expression as KeywordExpression;
+            Assert.IsNotNull(keywordExpr);
+            var newInvoke = keywordExpr!.Expression as InvokeMethodExpression;
+            Assert.IsNotNull(newInvoke);
+
+            // The arguments should now be in the PRIMARY method's order:
+            // (id, name, displayName, provisioningState, etag)
+            var args = newInvoke!.Arguments;
+            Assert.AreEqual(5, args.Count);
+            AssertArgIsParameter(args[0], "id", "position 0");
+            AssertArgIsParameter(args[1], "name", "position 1");
+            AssertArgIsParameter(args[2], "displayName", "position 2");
+            AssertArgIsParameter(args[3], "provisioningState", "position 3");
+            AssertArgIsParameter(args[4], "etag", "position 4");
+        }
+
+        private static void AssertArgIsParameter(ValueExpression arg, string expectedName, string context)
+        {
+            string? actualName = arg is VariableExpression v ? v.Declaration.RequestedName : null;
+            Assert.AreEqual(expectedName, actualName, $"Expected parameter '{expectedName}' at {context}, but got '{actualName ?? arg.GetType().Name}'");
         }
 
         private static void ApplyFlattenDecorator(InputModelProperty property)

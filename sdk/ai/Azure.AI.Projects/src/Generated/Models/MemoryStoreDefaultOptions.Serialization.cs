@@ -77,14 +77,14 @@ namespace Azure.AI.Projects.Memory
                 throw new FormatException($"The model {nameof(MemoryStoreDefaultOptions)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("user_profile_enabled"u8);
-            writer.WriteBooleanValue(UserProfileEnabled);
+            writer.WriteBooleanValue(IsUserProfileEnabled);
             if (Optional.IsDefined(UserProfileDetails))
             {
                 writer.WritePropertyName("user_profile_details"u8);
                 writer.WriteStringValue(UserProfileDetails);
             }
             writer.WritePropertyName("chat_summary_enabled"u8);
-            writer.WriteBooleanValue(ChatSummaryEnabled);
+            writer.WriteBooleanValue(IsChatSummaryEnabled);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -127,15 +127,15 @@ namespace Azure.AI.Projects.Memory
             {
                 return null;
             }
-            bool userProfileEnabled = default;
+            bool isUserProfileEnabled = default;
             string userProfileDetails = default;
-            bool chatSummaryEnabled = default;
+            bool isChatSummaryEnabled = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("user_profile_enabled"u8))
                 {
-                    userProfileEnabled = prop.Value.GetBoolean();
+                    isUserProfileEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("user_profile_details"u8))
@@ -145,7 +145,7 @@ namespace Azure.AI.Projects.Memory
                 }
                 if (prop.NameEquals("chat_summary_enabled"u8))
                 {
-                    chatSummaryEnabled = prop.Value.GetBoolean();
+                    isChatSummaryEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -153,7 +153,7 @@ namespace Azure.AI.Projects.Memory
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MemoryStoreDefaultOptions(userProfileEnabled, userProfileDetails, chatSummaryEnabled, additionalBinaryDataProperties);
+            return new MemoryStoreDefaultOptions(isUserProfileEnabled, userProfileDetails, isChatSummaryEnabled, additionalBinaryDataProperties);
         }
     }
 }

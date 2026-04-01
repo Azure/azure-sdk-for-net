@@ -43,13 +43,13 @@ public class EvaluationsTest : ProjectsClientTestBase
     public async Task SearchIndexesTest()
     {
         AIProjectClient projectClient = GetTestProjectClient();
-        EvaluationClient evaluationClient = projectClient.OpenAI.GetEvaluationClient();
+        EvaluationClient evaluationClient = projectClient.ProjectOpenAIClient.GetEvaluationClient();
 
         DeclarativeAgentDefinition agentDefinition = new(model: TestEnvironment.FOUNDRY_MODEL_NAME)
         {
             Instructions = "You are a prompt agent."
         };
-        ProjectsAgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+        ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             agentName: AGENT_NAME,
             options: new(agentDefinition));
 
@@ -145,7 +145,7 @@ public class EvaluationsTest : ProjectsClientTestBase
         Assert.That(evaluationResults.Count, Is.GreaterThan(0));
         ClientResult deletionResult = await evaluationClient.DeleteEvaluationAsync(evaluationId, new System.ClientModel.Primitives.RequestOptions());
         // Assert.That(ParseClientResult<bool>(deletionResult, ["deleted"])["deleted"], Is.True);
-        await projectClient.Agents.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+        await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
     }
 
     [Ignore("Evaluators list results in 404 error; see ADO Item 5063246")]
@@ -249,7 +249,7 @@ public class EvaluationsTest : ProjectsClientTestBase
     public async Task TestCustomEvaluators(CustomEvaluatorType type)
     {
         AIProjectClient projectClient = GetTestProjectClient();
-        EvaluationClient evaluationClient = projectClient.OpenAI.GetEvaluationClient();
+        EvaluationClient evaluationClient = projectClient.ProjectOpenAIClient.GetEvaluationClient();
         EvaluatorVersion eval = GetCustomEvaluatorVersion(type);
         EvaluatorVersion promptEvaluator = await projectClient.Evaluators.CreateVersionAsync(
             name: EVALUATOR_NAME,
@@ -370,13 +370,13 @@ public class EvaluationsTest : ProjectsClientTestBase
     public async Task TestEvaluationRule()
     {
         AIProjectClient projectClient = GetTestProjectClient();
-        EvaluationClient evaluationClient = projectClient.OpenAI.GetEvaluationClient();
+        EvaluationClient evaluationClient = projectClient.ProjectOpenAIClient.GetEvaluationClient();
 
         DeclarativeAgentDefinition agentDefinition = new(model: TestEnvironment.FOUNDRY_MODEL_NAME)
         {
             Instructions = "You are a prompt agent."
         };
-        ProjectsAgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+        ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             agentName: AGENT_NAME,
             options: new(agentDefinition));
         object[] testingCriteria = [
@@ -447,7 +447,7 @@ public class EvaluationsTest : ProjectsClientTestBase
         HashSet<string> ruleIds = [.. await projectClient.EvaluationRules.GetAllAsync().Select(x => x.Id).ToArrayAsync()];
         Assert.That(ruleIds, Contains.Item("my-continuous-eval-rule"));
         // Run the evaluation
-        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(new(name: agentVersion.Name, version: agentVersion.Version));
+        ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(new(name: agentVersion.Name, version: agentVersion.Version));
         string[] countries = ["France", "Italy"];
         HashSet<string> allRuns = [];
         foreach (string country in countries)
@@ -799,12 +799,12 @@ public class EvaluationsTest : ProjectsClientTestBase
         Uri connectionString = new(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT);
         AIProjectClient projectClient = new(connectionString, TestEnvironment.Credential);
         // Remove Agents.
-        foreach (ProjectsAgentVersion ag in projectClient.Agents.GetAgentVersions(agentName: AGENT_NAME))
+        foreach (ProjectsAgentVersion ag in projectClient.AgentAdministrationClient.GetAgentVersions(agentName: AGENT_NAME))
         {
-            await projectClient.Agents.DeleteAgentVersionAsync(agentName: ag.Name, agentVersion: ag.Version);
+            await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: ag.Name, agentVersion: ag.Version);
         }
         // Remove evaluations
-        EvaluationClient evalClient = projectClient.OpenAI.GetEvaluationClient();
+        EvaluationClient evalClient = projectClient.ProjectOpenAIClient.GetEvaluationClient();
         bool hasMore = false;
         do
         {

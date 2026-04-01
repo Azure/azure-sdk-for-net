@@ -201,7 +201,7 @@ public class AgentsTestBase : ProjectsClientTestBase
     private readonly List<string> _conversationIDs = [];
     private readonly List<string> _memoryStoreNames = [];
     private ProjectConversationsClient _conversations = null;
-    private AIProjectMemoryStoresOperations _stores = null;
+    private AIProjectMemoryStores _stores = null;
     protected readonly string MEMORY_STORE_SCOPE = "user_123";
 
     public AgentsTestBase(bool isAsync, RecordedTestMode? testMode = null) : base(isAsync, testMode)
@@ -467,7 +467,7 @@ public class AgentsTestBase : ProjectsClientTestBase
                         )
                     )
                 ),
-            ToolType.FileSearch => ResponseTool.CreateFileSearchTool(vectorStoreIds: [(await GetVectorStore(projectClient.OpenAI)).Id]),
+            ToolType.FileSearch => ResponseTool.CreateFileSearchTool(vectorStoreIds: [(await GetVectorStore(projectClient.ProjectOpenAIClient)).Id]),
             ToolType.FunctionCall => ResponseTool.CreateFunctionTool(
                 functionName: "GetCityNicknameForTest",
                 functionDescription: "Gets the nickname of a city, e.g. 'LA' for 'Los Angeles, CA'.",
@@ -595,13 +595,13 @@ public class AgentsTestBase : ProjectsClientTestBase
         //    oaiVctStoreClient.DeleteVectorStore(vectorStoreId: vct.Id);
         //}
         // Remove Agents.
-        foreach (ProjectsAgentVersion ag in projectClient.Agents.GetAgentVersions(agentName: AGENT_NAME))
+        foreach (ProjectsAgentVersion ag in projectClient.AgentAdministrationClient.GetAgentVersions(agentName: AGENT_NAME))
         {
-            projectClient.Agents.DeleteAgentVersion(agentName: ag.Name, agentVersion: ag.Version);
+            projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: ag.Name, agentVersion: ag.Version);
         }
-        foreach (ProjectsAgentVersion ag in projectClient.Agents.GetAgentVersions(agentName: AGENT_NAME2))
+        foreach (ProjectsAgentVersion ag in projectClient.AgentAdministrationClient.GetAgentVersions(agentName: AGENT_NAME2))
         {
-            projectClient.Agents.DeleteAgentVersion(agentName: ag.Name, agentVersion: ag.Version);
+            projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: ag.Name, agentVersion: ag.Version);
         }
     }
     #endregion

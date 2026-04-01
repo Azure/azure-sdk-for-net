@@ -2,7 +2,7 @@
   "main": "dist/src/index.js",
   "dependencies": {
     "client-plugin": "file:../../../../eng/packages/plugins/client",
-    "@typespec/http-client-csharp": "1.0.0-alpha.20260327.2"
+    "@typespec/http-client-csharp": "1.0.0-alpha.20260330.3"
   },
   "devDependencies": {
     "@azure-tools/typespec-client-generator-core": "0.66.3",
@@ -15,7 +15,7 @@
     "@typespec/versioning": "0.80.0",
     "@azure-tools/typespec-azure-core": "0.66.1",
     "@azure-tools/typespec-azure-rulesets": "0.66.0",
-    "@azure-tools/typespec-azure-resource-manager": "0.66.0",
+    "@azure-tools/typespec-azure-resource-manager": "0.66.1",
     "@azure-tools/typespec-autorest": "0.66.0",
     "@azure-tools/openai-typespec": "1.11.0",
     "@typespec/sse": "0.80.0"
