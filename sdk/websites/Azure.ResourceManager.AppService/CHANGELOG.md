@@ -8,8 +8,8 @@
 
 ### Bugs Fixed
 
-- Fix property `Uri` value could not be `Uri` type in `AppServiceApiDefinitionInfo` cause deserialization issue.
-- Fix property `Value` alue could not be `Uri` type in `FunctionAppStorage` cause deserialization issue.
+- Fix deserialization when `AppServiceApiDefinitionInfo.Uri` is not a valid URI.
+- Fix deserialization when `FunctionAppStorage.Value` is not a valid URI.
 
 ### Other Changes
 
