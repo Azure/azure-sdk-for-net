@@ -59,7 +59,7 @@ namespace Azure.Generator.Management.Visitors
             // Second pass: fix backward-compat overloads whose bodies call primary methods
             // via InvokeMethodExpression. The primary methods' parameter order may have changed
             // after flattening, so positional arguments in overloads can be wrong.
-            FixBackwardCompatOverloads(modelFactory);
+            FixBackwardCompatOverloads(modelFactory.Methods);
         }
 
         /// <summary>
@@ -67,14 +67,13 @@ namespace Azure.Generator.Management.Visitors
         /// After flattening reorders the primary method's parameters, the positional arguments
         /// in these overloads may be in the wrong order. This method converts them to named arguments.
         /// </summary>
-        private static void FixBackwardCompatOverloads(ModelFactoryProvider modelFactory)
+        internal static void FixBackwardCompatOverloads(IReadOnlyList<MethodProvider> methods)
         {
-            // Build a lookup of primary method signatures by name+returnType
+            // Build a lookup of primary method signatures by name
             var primaryMethods = new Dictionary<string, MethodProvider>();
-            foreach (var method in modelFactory.Methods)
+            foreach (var method in methods)
             {
-                // Primary methods have default parameter values; backward-compat ones don't
-                if (method.Signature.Parameters.Count > 0 && method.Signature.Parameters[0].DefaultValue is not null)
+                if (!IsBackwardCompatMethod(method))
                 {
                     var key = method.Signature.Name;
                     // Use the one with the most parameters as the primary (latest) method
@@ -85,10 +84,9 @@ namespace Azure.Generator.Management.Visitors
                 }
             }
 
-            foreach (var method in modelFactory.Methods)
+            foreach (var method in methods)
             {
-                // Skip primary methods (they have default values on parameters)
-                if (method.Signature.Parameters.Count > 0 && method.Signature.Parameters[0].DefaultValue is not null)
+                if (!IsBackwardCompatMethod(method))
                 {
                     continue;
                 }
@@ -185,6 +183,16 @@ namespace Azure.Generator.Management.Visitors
                     method.Update(signature: method.Signature, bodyStatements: updatedBodyStatements);
                 }
             }
+        }
+
+        /// <summary>
+        /// Checks if a method is a backward-compatibility overload by looking for the
+        /// [EditorBrowsable(EditorBrowsableState.Never)] attribute on its signature.
+        /// </summary>
+        internal static bool IsBackwardCompatMethod(MethodProvider method)
+        {
+            return method.Signature.Attributes.Any(a =>
+                a.Type?.FrameworkType == typeof(System.ComponentModel.EditorBrowsableAttribute));
         }
 
         private bool TryGetFlattenPropertyInfo(CSharpType returnType, [NotNullWhen(true)] out Dictionary<string, List<FlattenPropertyInfo>>? propertyNameMap)
