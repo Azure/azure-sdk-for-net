@@ -1,8 +1,6 @@
 # Release History
 
-## 2.0.0-beta.2 (Unreleased)
-
-### Features Added
+## 2.0.0 (2026-03-31)
 
 ### Breaking Changes
 - `AgentVersion` was renamed to `ProjectsAgentVersion`.
@@ -13,10 +11,6 @@
 - `PromptAgentDefinition` was renamed to `DeclarativeAgentDefinition`.
 - `AgentClient` was renamed to `AgentAdministrationClient`.
 - `AgentClientOptions` were renamed to `AgentAdministrationClientOptions`.
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 2.0.0-beta.1 (2026-03-12)
 

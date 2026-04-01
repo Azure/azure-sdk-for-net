@@ -31,7 +31,6 @@ namespace Azure.AI.Projects.Evaluation;
 [CodeGenType("EvaluationRunClusterInsightRequest")] public partial class EvaluationRunClusterInsightRequest { }
 [CodeGenType("EvaluationRunClusterInsightResult")] public partial class EvaluationRunClusterInsightResult { }
 [CodeGenType("EvaluationScheduleTask")] public partial class EvaluationScheduleTask { }
-[CodeGenType("EvaluationScheduleTaskEvalRun")] public partial class EvaluationScheduleTaskEvalRun { }
 [CodeGenType("EvaluationTarget")] public abstract partial class EvaluationTarget { }
 [CodeGenType("EvaluationTaxonomies")] public partial class EvaluationTaxonomies { }
 [CodeGenType("EvaluationTaxonomy")] public partial class EvaluationTaxonomy { }

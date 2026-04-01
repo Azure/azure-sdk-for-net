@@ -55,12 +55,12 @@ public class Sample_OpenAPI : ProjectsOpenAITestBase
             Instructions = "You are a helpful assistant.",
             Tools = {openapiTool}
         };
-        ProjectsAgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+        ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             agentName: "myAgent",
             options: new(agentDefinition));
         #endregion
         #region Snippet:Sample_CreateResponse_OpenAPI_Async
-        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
+        ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(agentVersion.Name);
         ResponseResult response = await responseClient.CreateResponseAsync(
                 userInputText: "Use the OpenAPI tool to print out, what is the weather in Seattle, WA today."
             );
@@ -68,7 +68,7 @@ public class Sample_OpenAPI : ProjectsOpenAITestBase
         #endregion
 
         #region Snippet:Sample_Cleanup_OpenAPI_Async
-        await projectClient.Agents.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+        await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         #endregion
     }
 
@@ -100,12 +100,12 @@ public class Sample_OpenAPI : ProjectsOpenAITestBase
             Instructions = "You are a helpful assistant.",
             Tools = { openapiTool }
         };
-        ProjectsAgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
+        ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.CreateAgentVersion(
             agentName: "myAgent",
             options: new(agentDefinition));
         #endregion
         #region Snippet:Sample_CreateResponse_OpenAPI_Sync
-        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
+        ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(agentVersion.Name);
         ResponseResult response = responseClient.CreateResponse(
                 userInputText: "Use the OpenAPI tool to print out, what is the weather in Seattle, WA today."
             );
@@ -113,7 +113,7 @@ public class Sample_OpenAPI : ProjectsOpenAITestBase
         #endregion
 
         #region Snippet:Sample_Cleanup_OpenAPI_Sync
-        projectClient.Agents.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+        projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         #endregion
     }
 

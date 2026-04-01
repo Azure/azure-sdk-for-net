@@ -8,6 +8,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using Azure.Core.Pipeline;
+using SpecialWords._ExtensibleStrings;
 using SpecialWords._ModelProperties;
 using SpecialWords._Models;
 
@@ -30,10 +31,10 @@ namespace SpecialWords
 
         public virtual ModelProperties GetModelPropertiesClient() => throw null;
 
+        public virtual ExtensibleStrings GetExtensibleStringsClient() => throw null;
+
         public virtual Operations GetOperationsClient() => throw null;
 
         public virtual Parameters GetParametersClient() => throw null;
-
-        public virtual ExtensibleStrings GetExtensibleStringsClient() => throw null;
     }
 }

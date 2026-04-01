@@ -105,10 +105,10 @@ namespace Azure.AI.Projects.Evaluation
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(NumTurns))
+            if (Optional.IsDefined(TurnCount))
             {
                 writer.WritePropertyName("numTurns"u8);
-                writer.WriteNumberValue(NumTurns.Value);
+                writer.WriteNumberValue(TurnCount.Value);
             }
             if (Optional.IsCollectionDefined(AttackStrategies))
             {
@@ -120,10 +120,10 @@ namespace Azure.AI.Projects.Evaluation
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(SimulationOnly))
+            if (Optional.IsDefined(IsSimulationOnly))
             {
                 writer.WritePropertyName("simulationOnly"u8);
-                writer.WriteBooleanValue(SimulationOnly.Value);
+                writer.WriteBooleanValue(IsSimulationOnly.Value);
             }
             if (Optional.IsCollectionDefined(RiskCategories))
             {
@@ -223,9 +223,9 @@ namespace Azure.AI.Projects.Evaluation
             }
             string name = default;
             string displayName = default;
-            int? numTurns = default;
+            int? turnCount = default;
             IList<AttackStrategy> attackStrategies = default;
-            bool? simulationOnly = default;
+            bool? isSimulationOnly = default;
             IList<RiskCategory> riskCategories = default;
             string applicationScenario = default;
             IDictionary<string, string> tags = default;
@@ -251,7 +251,7 @@ namespace Azure.AI.Projects.Evaluation
                     {
                         continue;
                     }
-                    numTurns = prop.Value.GetInt32();
+                    turnCount = prop.Value.GetInt32();
                     continue;
                 }
                 if (prop.NameEquals("attackStrategies"u8))
@@ -274,7 +274,7 @@ namespace Azure.AI.Projects.Evaluation
                     {
                         continue;
                     }
-                    simulationOnly = prop.Value.GetBoolean();
+                    isSimulationOnly = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("riskCategories"u8))
@@ -356,9 +356,9 @@ namespace Azure.AI.Projects.Evaluation
             return new RedTeam(
                 name,
                 displayName,
-                numTurns,
+                turnCount,
                 attackStrategies ?? new ChangeTrackingList<AttackStrategy>(),
-                simulationOnly,
+                isSimulationOnly,
                 riskCategories ?? new ChangeTrackingList<RiskCategory>(),
                 applicationScenario,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
