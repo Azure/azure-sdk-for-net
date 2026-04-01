@@ -15,10 +15,10 @@ namespace Azure.Provisioning.ContainerService
     /// <summary> The list of available upgrades for compute pools. </summary>
     public partial class ManagedClusterUpgradeProfile : ProvisionableResource
     {
-        private ManagedClusterUpgradeProfileProperties _properties;
-        private BicepValue<string> _name;
         private BicepValue<ResourceIdentifier> _id;
+        private BicepValue<string> _name;
         private SystemData _systemData;
+        private ManagedClusterUpgradeProfileProperties _properties;
         private ResourceReference<ContainerServiceManagedCluster> _parent;
 
         /// <summary> Creates a new ManagedClusterUpgradeProfile. </summary>
@@ -26,6 +26,41 @@ namespace Azure.Provisioning.ContainerService
         /// <param name="resourceVersion"> The resource API version. </param>
         public ManagedClusterUpgradeProfile(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.ContainerService/managedClusters/upgradeProfiles", resourceVersion ?? "2026-01-01")
         {
+        }
+
+        /// <summary> Gets the Id. </summary>
+        public BicepValue<ResourceIdentifier> Id
+        {
+            get
+            {
+                Initialize();
+                return _id;
+            }
+        }
+
+        /// <summary> Gets or sets the Name. </summary>
+        public BicepValue<string> Name
+        {
+            get
+            {
+                Initialize();
+                return _name;
+            }
+            set
+            {
+                Initialize();
+                _name.Assign(value);
+            }
+        }
+
+        /// <summary> Gets the SystemData. </summary>
+        public SystemData SystemData
+        {
+            get
+            {
+                Initialize();
+                return _systemData;
+            }
         }
 
         /// <summary> Gets or sets the Properties. </summary>
@@ -40,36 +75,6 @@ namespace Azure.Provisioning.ContainerService
             {
                 Initialize();
                 AssignOrReplace(ref _properties, value);
-            }
-        }
-
-        /// <summary> Gets the Name. </summary>
-        public BicepValue<string> Name
-        {
-            get
-            {
-                Initialize();
-                return _name;
-            }
-        }
-
-        /// <summary> Gets the Id. </summary>
-        public BicepValue<ResourceIdentifier> Id
-        {
-            get
-            {
-                Initialize();
-                return _id;
-            }
-        }
-
-        /// <summary> Gets the SystemData. </summary>
-        public SystemData SystemData
-        {
-            get
-            {
-                Initialize();
-                return _systemData;
             }
         }
 
@@ -126,10 +131,10 @@ namespace Azure.Provisioning.ContainerService
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _properties = DefineModelProperty<ManagedClusterUpgradeProfileProperties>(nameof(Properties), new string[] { "properties" }, isRequired: true);
-            _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isOutput: true, isRequired: true, defaultValue: "default");
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
+            _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
+            _properties = DefineModelProperty<ManagedClusterUpgradeProfileProperties>(nameof(Properties), new string[] { "properties" }, isRequired: true);
             _parent = DefineResource<ContainerServiceManagedCluster>("Parent", new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }

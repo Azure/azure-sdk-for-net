@@ -16,10 +16,10 @@ namespace Azure.Provisioning.ContainerService
     /// <summary> Defines binding between a resource and role. </summary>
     public partial class ContainerServiceTrustedAccessRoleBinding : ProvisionableResource
     {
-        private TrustedAccessRoleBindingProperties _properties;
-        private BicepValue<string> _name;
         private BicepValue<ResourceIdentifier> _id;
+        private BicepValue<string> _name;
         private SystemData _systemData;
+        private TrustedAccessRoleBindingProperties _properties;
         private ResourceReference<ContainerServiceManagedCluster> _parent;
 
         /// <summary> Creates a new ContainerServiceTrustedAccessRoleBinding. </summary>
@@ -29,18 +29,13 @@ namespace Azure.Provisioning.ContainerService
         {
         }
 
-        /// <summary> Gets or sets the Properties. </summary>
-        internal TrustedAccessRoleBindingProperties Properties
+        /// <summary> Gets the Id. </summary>
+        public BicepValue<ResourceIdentifier> Id
         {
             get
             {
                 Initialize();
-                return _properties;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _properties, value);
+                return _id;
             }
         }
 
@@ -59,16 +54,6 @@ namespace Azure.Provisioning.ContainerService
             }
         }
 
-        /// <summary> Gets the Id. </summary>
-        public BicepValue<ResourceIdentifier> Id
-        {
-            get
-            {
-                Initialize();
-                return _id;
-            }
-        }
-
         /// <summary> Gets the SystemData. </summary>
         public SystemData SystemData
         {
@@ -76,6 +61,21 @@ namespace Azure.Provisioning.ContainerService
             {
                 Initialize();
                 return _systemData;
+            }
+        }
+
+        /// <summary> Gets or sets the Properties. </summary>
+        internal TrustedAccessRoleBindingProperties Properties
+        {
+            get
+            {
+                Initialize();
+                return _properties;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _properties, value);
             }
         }
 
@@ -145,10 +145,10 @@ namespace Azure.Provisioning.ContainerService
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _properties = DefineModelProperty<TrustedAccessRoleBindingProperties>(nameof(Properties), new string[] { "properties" }, isRequired: true);
-            _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
+            _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
+            _properties = DefineModelProperty<TrustedAccessRoleBindingProperties>(nameof(Properties), new string[] { "properties" }, isRequired: true);
             _parent = DefineResource<ContainerServiceManagedCluster>("Parent", new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }

@@ -16,12 +16,12 @@ namespace Azure.Provisioning.ContainerService
     /// <summary> A node pool snapshot resource. </summary>
     public partial class AgentPoolSnapshot : ProvisionableResource
     {
-        private SnapshotProperties _properties;
+        private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
+        private SystemData _systemData;
         private BicepDictionary<string> _tags;
         private BicepValue<AzureLocation> _location;
-        private BicepValue<ResourceIdentifier> _id;
-        private SystemData _systemData;
+        private SnapshotProperties _properties;
 
         /// <summary> Creates a new AgentPoolSnapshot. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -30,18 +30,13 @@ namespace Azure.Provisioning.ContainerService
         {
         }
 
-        /// <summary> Gets or sets the Properties. </summary>
-        internal SnapshotProperties Properties
+        /// <summary> Gets the Id. </summary>
+        public BicepValue<ResourceIdentifier> Id
         {
             get
             {
                 Initialize();
-                return _properties;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _properties, value);
+                return _id;
             }
         }
 
@@ -57,6 +52,16 @@ namespace Azure.Provisioning.ContainerService
             {
                 Initialize();
                 _name.Assign(value);
+            }
+        }
+
+        /// <summary> Gets the SystemData. </summary>
+        public SystemData SystemData
+        {
+            get
+            {
+                Initialize();
+                return _systemData;
             }
         }
 
@@ -90,23 +95,18 @@ namespace Azure.Provisioning.ContainerService
             }
         }
 
-        /// <summary> Gets the Id. </summary>
-        public BicepValue<ResourceIdentifier> Id
+        /// <summary> Gets or sets the Properties. </summary>
+        internal SnapshotProperties Properties
         {
             get
             {
                 Initialize();
-                return _id;
+                return _properties;
             }
-        }
-
-        /// <summary> Gets the SystemData. </summary>
-        public SystemData SystemData
-        {
-            get
+            set
             {
                 Initialize();
-                return _systemData;
+                AssignOrReplace(ref _properties, value);
             }
         }
 
@@ -226,12 +226,12 @@ namespace Azure.Provisioning.ContainerService
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _properties = DefineModelProperty<SnapshotProperties>(nameof(Properties), new string[] { "properties" });
+            _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
+            _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
-            _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
-            _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
+            _properties = DefineModelProperty<SnapshotProperties>(nameof(Properties), new string[] { "properties" });
             DefineAdditionalProperties();
         }
 

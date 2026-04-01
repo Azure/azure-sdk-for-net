@@ -84,7 +84,7 @@ namespace Azure.Provisioning.ContainerService
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> KubernetesVersion { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> LatestNodeImageVersion { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerService.ContainerServiceOSType> OSType { get { throw null; } set { } }
         public Azure.Provisioning.ContainerService.ContainerServiceAgentPool Parent { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
@@ -1274,7 +1274,7 @@ namespace Azure.Provisioning.ContainerService
         public Azure.Provisioning.BicepList<Azure.Provisioning.ContainerService.ManagedClusterPoolUpgradeProfile> AgentPoolProfiles { get { throw null; } set { } }
         public Azure.Provisioning.ContainerService.ManagedClusterPoolUpgradeProfile ControlPlaneProfile { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.ContainerService.ContainerServiceManagedCluster Parent { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }

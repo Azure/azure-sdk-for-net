@@ -17,13 +17,13 @@ namespace Azure.Provisioning.ContainerService
     /// <summary> Namespace managed by ARM. </summary>
     public partial class ManagedClusterNamespace : ProvisionableResource
     {
-        private ManagedClusterNamespaceProperties _properties;
+        private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
-        private BicepValue<ETag> _eTag;
+        private SystemData _systemData;
         private BicepDictionary<string> _tags;
         private BicepValue<AzureLocation> _location;
-        private BicepValue<ResourceIdentifier> _id;
-        private SystemData _systemData;
+        private ManagedClusterNamespaceProperties _properties;
+        private BicepValue<ETag> _eTag;
         private ResourceReference<ContainerServiceManagedCluster> _parent;
 
         /// <summary> Creates a new ManagedClusterNamespace. </summary>
@@ -33,18 +33,13 @@ namespace Azure.Provisioning.ContainerService
         {
         }
 
-        /// <summary> Gets or sets the Properties. </summary>
-        public ManagedClusterNamespaceProperties Properties
+        /// <summary> Gets the Id. </summary>
+        public BicepValue<ResourceIdentifier> Id
         {
             get
             {
                 Initialize();
-                return _properties;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _properties, value);
+                return _id;
             }
         }
 
@@ -63,13 +58,13 @@ namespace Azure.Provisioning.ContainerService
             }
         }
 
-        /// <summary> Gets the ETag. </summary>
-        public BicepValue<ETag> ETag
+        /// <summary> Gets the SystemData. </summary>
+        public SystemData SystemData
         {
             get
             {
                 Initialize();
-                return _eTag;
+                return _systemData;
             }
         }
 
@@ -103,23 +98,28 @@ namespace Azure.Provisioning.ContainerService
             }
         }
 
-        /// <summary> Gets the Id. </summary>
-        public BicepValue<ResourceIdentifier> Id
+        /// <summary> Gets or sets the Properties. </summary>
+        public ManagedClusterNamespaceProperties Properties
         {
             get
             {
                 Initialize();
-                return _id;
+                return _properties;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _properties, value);
             }
         }
 
-        /// <summary> Gets the SystemData. </summary>
-        public SystemData SystemData
+        /// <summary> Gets the ETag. </summary>
+        public BicepValue<ETag> ETag
         {
             get
             {
                 Initialize();
-                return _systemData;
+                return _eTag;
             }
         }
 
@@ -142,13 +142,13 @@ namespace Azure.Provisioning.ContainerService
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _properties = DefineModelProperty<ManagedClusterNamespaceProperties>(nameof(Properties), new string[] { "properties" });
+            _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
-            _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "eTag" }, isOutput: true);
+            _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
-            _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
-            _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
+            _properties = DefineModelProperty<ManagedClusterNamespaceProperties>(nameof(Properties), new string[] { "properties" });
+            _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "eTag" }, isOutput: true);
             _parent = DefineResource<ContainerServiceManagedCluster>("Parent", new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }

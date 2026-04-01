@@ -21,17 +21,17 @@ namespace Azure.Provisioning.ContainerService
     /// <summary> Managed cluster. </summary>
     public partial class ContainerServiceManagedCluster : ProvisionableResource
     {
-        private ManagedClusterProperties _properties;
+        private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
+        private SystemData _systemData;
+        private BicepDictionary<string> _tags;
+        private BicepValue<AzureLocation> _location;
+        private ManagedClusterProperties _properties;
         private BicepValue<ETag> _eTag;
         private ManagedClusterSku _sku;
         private ExtendedAzureLocation _extendedLocation;
         private ManagedClusterIdentity _clusterIdentity;
         private BicepValue<string> _kind;
-        private BicepDictionary<string> _tags;
-        private BicepValue<AzureLocation> _location;
-        private BicepValue<ResourceIdentifier> _id;
-        private SystemData _systemData;
 
         /// <summary> Creates a new ContainerServiceManagedCluster. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -40,18 +40,13 @@ namespace Azure.Provisioning.ContainerService
         {
         }
 
-        /// <summary> Gets or sets the Properties. </summary>
-        internal ManagedClusterProperties Properties
+        /// <summary> Gets the Id. </summary>
+        public BicepValue<ResourceIdentifier> Id
         {
             get
             {
                 Initialize();
-                return _properties;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _properties, value);
+                return _id;
             }
         }
 
@@ -67,6 +62,61 @@ namespace Azure.Provisioning.ContainerService
             {
                 Initialize();
                 _name.Assign(value);
+            }
+        }
+
+        /// <summary> Gets the SystemData. </summary>
+        public SystemData SystemData
+        {
+            get
+            {
+                Initialize();
+                return _systemData;
+            }
+        }
+
+        /// <summary> Gets or sets the Tags. </summary>
+        public BicepDictionary<string> Tags
+        {
+            get
+            {
+                Initialize();
+                return _tags;
+            }
+            set
+            {
+                Initialize();
+                _tags.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the Location. </summary>
+        public BicepValue<AzureLocation> Location
+        {
+            get
+            {
+                Initialize();
+                return _location;
+            }
+            set
+            {
+                Initialize();
+                _location.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the Properties. </summary>
+        internal ManagedClusterProperties Properties
+        {
+            get
+            {
+                Initialize();
+                return _properties;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _properties, value);
             }
         }
 
@@ -137,56 +187,6 @@ namespace Azure.Provisioning.ContainerService
             {
                 Initialize();
                 _kind.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the Tags. </summary>
-        public BicepDictionary<string> Tags
-        {
-            get
-            {
-                Initialize();
-                return _tags;
-            }
-            set
-            {
-                Initialize();
-                _tags.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the Location. </summary>
-        public BicepValue<AzureLocation> Location
-        {
-            get
-            {
-                Initialize();
-                return _location;
-            }
-            set
-            {
-                Initialize();
-                _location.Assign(value);
-            }
-        }
-
-        /// <summary> Gets the Id. </summary>
-        public BicepValue<ResourceIdentifier> Id
-        {
-            get
-            {
-                Initialize();
-                return _id;
-            }
-        }
-
-        /// <summary> Gets the SystemData. </summary>
-        public SystemData SystemData
-        {
-            get
-            {
-                Initialize();
-                return _systemData;
             }
         }
 
@@ -923,17 +923,17 @@ namespace Azure.Provisioning.ContainerService
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _properties = DefineModelProperty<ManagedClusterProperties>(nameof(Properties), new string[] { "properties" });
+            _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
+            _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
+            _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
+            _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
+            _properties = DefineModelProperty<ManagedClusterProperties>(nameof(Properties), new string[] { "properties" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "eTag" }, isOutput: true);
             _sku = DefineModelProperty<ManagedClusterSku>(nameof(Sku), new string[] { "sku" });
             _extendedLocation = DefineModelProperty<ExtendedAzureLocation>(nameof(ExtendedLocation), new string[] { "extendedLocation" });
             _clusterIdentity = DefineModelProperty<ManagedClusterIdentity>(nameof(ClusterIdentity), new string[] { "identity" });
             _kind = DefineProperty<string>(nameof(Kind), new string[] { "kind" });
-            _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
-            _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
-            _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
-            _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             DefineAdditionalProperties();
         }
 

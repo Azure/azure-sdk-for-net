@@ -16,10 +16,10 @@ namespace Azure.Provisioning.ContainerService
     /// <summary> Mesh revision profile for a mesh. </summary>
     public partial class MeshRevisionProfile : ProvisionableResource
     {
-        private MeshRevisionProfileProperties _properties;
-        private BicepValue<string> _name;
         private BicepValue<ResourceIdentifier> _id;
+        private BicepValue<string> _name;
         private SystemData _systemData;
+        private MeshRevisionProfileProperties _properties;
 
         /// <summary> Creates a new MeshRevisionProfile. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -28,18 +28,13 @@ namespace Azure.Provisioning.ContainerService
         {
         }
 
-        /// <summary> Gets or sets the Properties. </summary>
-        internal MeshRevisionProfileProperties Properties
+        /// <summary> Gets the Id. </summary>
+        public BicepValue<ResourceIdentifier> Id
         {
             get
             {
                 Initialize();
-                return _properties;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _properties, value);
+                return _id;
             }
         }
 
@@ -58,16 +53,6 @@ namespace Azure.Provisioning.ContainerService
             }
         }
 
-        /// <summary> Gets the Id. </summary>
-        public BicepValue<ResourceIdentifier> Id
-        {
-            get
-            {
-                Initialize();
-                return _id;
-            }
-        }
-
         /// <summary> Gets the SystemData. </summary>
         public SystemData SystemData
         {
@@ -75,6 +60,21 @@ namespace Azure.Provisioning.ContainerService
             {
                 Initialize();
                 return _systemData;
+            }
+        }
+
+        /// <summary> Gets or sets the Properties. </summary>
+        internal MeshRevisionProfileProperties Properties
+        {
+            get
+            {
+                Initialize();
+                return _properties;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _properties, value);
             }
         }
 
@@ -99,10 +99,10 @@ namespace Azure.Provisioning.ContainerService
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _properties = DefineModelProperty<MeshRevisionProfileProperties>(nameof(Properties), new string[] { "properties" });
-            _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
+            _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
+            _properties = DefineModelProperty<MeshRevisionProfileProperties>(nameof(Properties), new string[] { "properties" });
             DefineAdditionalProperties();
         }
 
