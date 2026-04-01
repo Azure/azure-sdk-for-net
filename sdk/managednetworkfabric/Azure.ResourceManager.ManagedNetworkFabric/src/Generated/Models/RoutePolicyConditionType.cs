@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         private const string OrValue = "Or";
         private const string AndValue = "And";
 
-        /// <summary> Or. </summary>
+        /// <summary> RoutePolicyConditionType-Or. </summary>
         public static RoutePolicyConditionType Or { get; } = new RoutePolicyConditionType(OrValue);
-        /// <summary> And. </summary>
+        /// <summary> RoutePolicyConditionType-And. </summary>
         public static RoutePolicyConditionType And { get; } = new RoutePolicyConditionType(AndValue);
         /// <summary> Determines if two <see cref="RoutePolicyConditionType"/> values are the same. </summary>
         public static bool operator ==(RoutePolicyConditionType left, RoutePolicyConditionType right) => left.Equals(right);

@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="SupportedVersionProperties"/>. </summary>
-        public SupportedVersionProperties()
+        internal SupportedVersionProperties()
         {
         }
 
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="vendorFirmwareVersion"> Firmware version. </param>
         /// <param name="isDefault"> If true newly provisioned Fabric will use this device version by default to bootstrap the network devices for the first time. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SupportedVersionProperties(string version, string vendorOSVersion, string vendorFirmwareVersion, NetworkFabricBooleanValue? isDefault, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SupportedVersionProperties(string version, string vendorOSVersion, string vendorFirmwareVersion, BooleanEnumProperty? isDefault, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Version = version;
             VendorOSVersion = vendorOSVersion;
@@ -66,12 +66,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> Operating system and firmware combined versions. </summary>
-        public string Version { get; set; }
+        public string Version { get; }
         /// <summary> Operating system version. </summary>
-        public string VendorOSVersion { get; set; }
+        public string VendorOSVersion { get; }
         /// <summary> Firmware version. </summary>
-        public string VendorFirmwareVersion { get; set; }
+        public string VendorFirmwareVersion { get; }
         /// <summary> If true newly provisioned Fabric will use this device version by default to bootstrap the network devices for the first time. </summary>
-        public NetworkFabricBooleanValue? IsDefault { get; set; }
+        public BooleanEnumProperty? IsDefault { get; }
     }
 }

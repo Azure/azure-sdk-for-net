@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> List of NetworkTapRules. </summary>
+    /// <summary> Paged collection of NetworkTapRule items. </summary>
     internal partial class NetworkTapRulesListResult
     {
         /// <summary>
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="NetworkTapRulesListResult"/>. </summary>
-        internal NetworkTapRulesListResult()
+        /// <param name="value"> The NetworkTapRule items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal NetworkTapRulesListResult(IEnumerable<NetworkTapRuleData> value)
         {
-            Value = new ChangeTrackingList<NetworkTapRuleData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkTapRulesListResult"/>. </summary>
-        /// <param name="value"> List of NetworkTapRule resources. </param>
-        /// <param name="nextLink"> Url to follow for getting next page of resources. </param>
+        /// <param name="value"> The NetworkTapRule items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkTapRulesListResult(IReadOnlyList<NetworkTapRuleData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetworkTapRulesListResult(IReadOnlyList<NetworkTapRuleData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of NetworkTapRule resources. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkTapRulesListResult"/> for deserialization. </summary>
+        internal NetworkTapRulesListResult()
+        {
+        }
+
+        /// <summary> The NetworkTapRule items on this page. </summary>
         public IReadOnlyList<NetworkTapRuleData> Value { get; }
-        /// <summary> Url to follow for getting next page of resources. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> List of L3 Isolation Domains. </summary>
+    /// <summary> Paged collection of L3IsolationDomain items. </summary>
     internal partial class L3IsolationDomainsListResult
     {
         /// <summary>
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="L3IsolationDomainsListResult"/>. </summary>
-        internal L3IsolationDomainsListResult()
+        /// <param name="value"> The L3IsolationDomain items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal L3IsolationDomainsListResult(IEnumerable<L3IsolationDomainData> value)
         {
-            Value = new ChangeTrackingList<NetworkFabricL3IsolationDomainData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="L3IsolationDomainsListResult"/>. </summary>
-        /// <param name="value"> List of L3 Isolation Domain resources. </param>
-        /// <param name="nextLink"> Url to follow for getting next page of resources. </param>
+        /// <param name="value"> The L3IsolationDomain items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal L3IsolationDomainsListResult(IReadOnlyList<NetworkFabricL3IsolationDomainData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal L3IsolationDomainsListResult(IReadOnlyList<L3IsolationDomainData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of L3 Isolation Domain resources. </summary>
-        public IReadOnlyList<NetworkFabricL3IsolationDomainData> Value { get; }
-        /// <summary> Url to follow for getting next page of resources. </summary>
-        public string NextLink { get; }
+        /// <summary> Initializes a new instance of <see cref="L3IsolationDomainsListResult"/> for deserialization. </summary>
+        internal L3IsolationDomainsListResult()
+        {
+        }
+
+        /// <summary> The L3IsolationDomain items on this page. </summary>
+        public IReadOnlyList<L3IsolationDomainData> Value { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

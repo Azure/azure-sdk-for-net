@@ -33,212 +33,212 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="NetworkFabricAccessControlListResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NetworkFabricAccessControlListResource.CreateResourceIdentifier" /> to create a <see cref="NetworkFabricAccessControlListResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AccessControlListResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AccessControlListResource.CreateResourceIdentifier" /> to create an <see cref="AccessControlListResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricArmClient.GetNetworkFabricAccessControlListResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricArmClient.GetAccessControlListResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="NetworkFabricAccessControlListResource"/> object. </returns>
-        public static NetworkFabricAccessControlListResource GetNetworkFabricAccessControlListResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AccessControlListResource"/> object. </returns>
+        public static AccessControlListResource GetAccessControlListResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableManagedNetworkFabricArmClient(client).GetNetworkFabricAccessControlListResource(id);
+            return GetMockableManagedNetworkFabricArmClient(client).GetAccessControlListResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="NetworkFabricInternetGatewayResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NetworkFabricInternetGatewayResource.CreateResourceIdentifier" /> to create a <see cref="NetworkFabricInternetGatewayResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="InternetGatewayRuleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="InternetGatewayRuleResource.CreateResourceIdentifier" /> to create an <see cref="InternetGatewayRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricArmClient.GetNetworkFabricInternetGatewayResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricArmClient.GetInternetGatewayRuleResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="NetworkFabricInternetGatewayResource"/> object. </returns>
-        public static NetworkFabricInternetGatewayResource GetNetworkFabricInternetGatewayResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="InternetGatewayRuleResource"/> object. </returns>
+        public static InternetGatewayRuleResource GetInternetGatewayRuleResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableManagedNetworkFabricArmClient(client).GetNetworkFabricInternetGatewayResource(id);
+            return GetMockableManagedNetworkFabricArmClient(client).GetInternetGatewayRuleResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="NetworkFabricInternetGatewayRuleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NetworkFabricInternetGatewayRuleResource.CreateResourceIdentifier" /> to create a <see cref="NetworkFabricInternetGatewayRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="InternetGatewayResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="InternetGatewayResource.CreateResourceIdentifier" /> to create an <see cref="InternetGatewayResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricArmClient.GetNetworkFabricInternetGatewayRuleResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricArmClient.GetInternetGatewayResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="NetworkFabricInternetGatewayRuleResource"/> object. </returns>
-        public static NetworkFabricInternetGatewayRuleResource GetNetworkFabricInternetGatewayRuleResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="InternetGatewayResource"/> object. </returns>
+        public static InternetGatewayResource GetInternetGatewayResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableManagedNetworkFabricArmClient(client).GetNetworkFabricInternetGatewayRuleResource(id);
+            return GetMockableManagedNetworkFabricArmClient(client).GetInternetGatewayResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="NetworkFabricIPCommunityResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NetworkFabricIPCommunityResource.CreateResourceIdentifier" /> to create a <see cref="NetworkFabricIPCommunityResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="IPCommunityResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="IPCommunityResource.CreateResourceIdentifier" /> to create an <see cref="IPCommunityResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricArmClient.GetNetworkFabricIPCommunityResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricArmClient.GetIPCommunityResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="NetworkFabricIPCommunityResource"/> object. </returns>
-        public static NetworkFabricIPCommunityResource GetNetworkFabricIPCommunityResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="IPCommunityResource"/> object. </returns>
+        public static IPCommunityResource GetIPCommunityResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableManagedNetworkFabricArmClient(client).GetNetworkFabricIPCommunityResource(id);
+            return GetMockableManagedNetworkFabricArmClient(client).GetIPCommunityResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="NetworkFabricIPExtendedCommunityResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NetworkFabricIPExtendedCommunityResource.CreateResourceIdentifier" /> to create a <see cref="NetworkFabricIPExtendedCommunityResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="IPExtendedCommunityResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="IPExtendedCommunityResource.CreateResourceIdentifier" /> to create an <see cref="IPExtendedCommunityResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricArmClient.GetNetworkFabricIPExtendedCommunityResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricArmClient.GetIPExtendedCommunityResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="NetworkFabricIPExtendedCommunityResource"/> object. </returns>
-        public static NetworkFabricIPExtendedCommunityResource GetNetworkFabricIPExtendedCommunityResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="IPExtendedCommunityResource"/> object. </returns>
+        public static IPExtendedCommunityResource GetIPExtendedCommunityResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableManagedNetworkFabricArmClient(client).GetNetworkFabricIPExtendedCommunityResource(id);
+            return GetMockableManagedNetworkFabricArmClient(client).GetIPExtendedCommunityResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="NetworkFabricIPPrefixResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NetworkFabricIPPrefixResource.CreateResourceIdentifier" /> to create a <see cref="NetworkFabricIPPrefixResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="IPPrefixResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="IPPrefixResource.CreateResourceIdentifier" /> to create an <see cref="IPPrefixResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricArmClient.GetNetworkFabricIPPrefixResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricArmClient.GetIPPrefixResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="NetworkFabricIPPrefixResource"/> object. </returns>
-        public static NetworkFabricIPPrefixResource GetNetworkFabricIPPrefixResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="IPPrefixResource"/> object. </returns>
+        public static IPPrefixResource GetIPPrefixResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableManagedNetworkFabricArmClient(client).GetNetworkFabricIPPrefixResource(id);
+            return GetMockableManagedNetworkFabricArmClient(client).GetIPPrefixResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="NetworkFabricL2IsolationDomainResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NetworkFabricL2IsolationDomainResource.CreateResourceIdentifier" /> to create a <see cref="NetworkFabricL2IsolationDomainResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="L2IsolationDomainResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="L2IsolationDomainResource.CreateResourceIdentifier" /> to create a <see cref="L2IsolationDomainResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricArmClient.GetNetworkFabricL2IsolationDomainResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricArmClient.GetL2IsolationDomainResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="NetworkFabricL2IsolationDomainResource"/> object. </returns>
-        public static NetworkFabricL2IsolationDomainResource GetNetworkFabricL2IsolationDomainResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="L2IsolationDomainResource"/> object. </returns>
+        public static L2IsolationDomainResource GetL2IsolationDomainResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableManagedNetworkFabricArmClient(client).GetNetworkFabricL2IsolationDomainResource(id);
+            return GetMockableManagedNetworkFabricArmClient(client).GetL2IsolationDomainResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="NetworkFabricL3IsolationDomainResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NetworkFabricL3IsolationDomainResource.CreateResourceIdentifier" /> to create a <see cref="NetworkFabricL3IsolationDomainResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="L3IsolationDomainResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="L3IsolationDomainResource.CreateResourceIdentifier" /> to create a <see cref="L3IsolationDomainResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricArmClient.GetNetworkFabricL3IsolationDomainResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricArmClient.GetL3IsolationDomainResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="NetworkFabricL3IsolationDomainResource"/> object. </returns>
-        public static NetworkFabricL3IsolationDomainResource GetNetworkFabricL3IsolationDomainResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="L3IsolationDomainResource"/> object. </returns>
+        public static L3IsolationDomainResource GetL3IsolationDomainResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableManagedNetworkFabricArmClient(client).GetNetworkFabricL3IsolationDomainResource(id);
+            return GetMockableManagedNetworkFabricArmClient(client).GetL3IsolationDomainResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="NetworkFabricInternalNetworkResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NetworkFabricInternalNetworkResource.CreateResourceIdentifier" /> to create a <see cref="NetworkFabricInternalNetworkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="InternalNetworkResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="InternalNetworkResource.CreateResourceIdentifier" /> to create an <see cref="InternalNetworkResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricArmClient.GetNetworkFabricInternalNetworkResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricArmClient.GetInternalNetworkResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="NetworkFabricInternalNetworkResource"/> object. </returns>
-        public static NetworkFabricInternalNetworkResource GetNetworkFabricInternalNetworkResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="InternalNetworkResource"/> object. </returns>
+        public static InternalNetworkResource GetInternalNetworkResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableManagedNetworkFabricArmClient(client).GetNetworkFabricInternalNetworkResource(id);
+            return GetMockableManagedNetworkFabricArmClient(client).GetInternalNetworkResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="NetworkFabricExternalNetworkResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NetworkFabricExternalNetworkResource.CreateResourceIdentifier" /> to create a <see cref="NetworkFabricExternalNetworkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ExternalNetworkResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ExternalNetworkResource.CreateResourceIdentifier" /> to create an <see cref="ExternalNetworkResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricArmClient.GetNetworkFabricExternalNetworkResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricArmClient.GetExternalNetworkResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="NetworkFabricExternalNetworkResource"/> object. </returns>
-        public static NetworkFabricExternalNetworkResource GetNetworkFabricExternalNetworkResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ExternalNetworkResource"/> object. </returns>
+        public static ExternalNetworkResource GetExternalNetworkResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableManagedNetworkFabricArmClient(client).GetNetworkFabricExternalNetworkResource(id);
+            return GetMockableManagedNetworkFabricArmClient(client).GetExternalNetworkResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="NetworkFabricNeighborGroupResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NetworkFabricNeighborGroupResource.CreateResourceIdentifier" /> to create a <see cref="NetworkFabricNeighborGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="NeighborGroupResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NeighborGroupResource.CreateResourceIdentifier" /> to create a <see cref="NeighborGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricArmClient.GetNetworkFabricNeighborGroupResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricArmClient.GetNeighborGroupResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="NetworkFabricNeighborGroupResource"/> object. </returns>
-        public static NetworkFabricNeighborGroupResource GetNetworkFabricNeighborGroupResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NeighborGroupResource"/> object. </returns>
+        public static NeighborGroupResource GetNeighborGroupResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableManagedNetworkFabricArmClient(client).GetNetworkFabricNeighborGroupResource(id);
+            return GetMockableManagedNetworkFabricArmClient(client).GetNeighborGroupResource(id);
         }
 
         /// <summary>
@@ -280,22 +280,22 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="NetworkDeviceInterfaceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NetworkDeviceInterfaceResource.CreateResourceIdentifier" /> to create a <see cref="NetworkDeviceInterfaceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="NetworkInterfaceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkInterfaceResource.CreateResourceIdentifier" /> to create a <see cref="NetworkInterfaceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricArmClient.GetNetworkDeviceInterfaceResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricArmClient.GetNetworkInterfaceResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="NetworkDeviceInterfaceResource"/> object. </returns>
-        public static NetworkDeviceInterfaceResource GetNetworkDeviceInterfaceResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetworkInterfaceResource"/> object. </returns>
+        public static NetworkInterfaceResource GetNetworkInterfaceResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableManagedNetworkFabricArmClient(client).GetNetworkDeviceInterfaceResource(id);
+            return GetMockableManagedNetworkFabricArmClient(client).GetNetworkInterfaceResource(id);
         }
 
         /// <summary>
@@ -451,39 +451,96 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="NetworkFabricRoutePolicyResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NetworkFabricRoutePolicyResource.CreateResourceIdentifier" /> to create a <see cref="NetworkFabricRoutePolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="RoutePolicyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RoutePolicyResource.CreateResourceIdentifier" /> to create a <see cref="RoutePolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricArmClient.GetNetworkFabricRoutePolicyResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricArmClient.GetRoutePolicyResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="NetworkFabricRoutePolicyResource"/> object. </returns>
-        public static NetworkFabricRoutePolicyResource GetNetworkFabricRoutePolicyResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="RoutePolicyResource"/> object. </returns>
+        public static RoutePolicyResource GetRoutePolicyResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableManagedNetworkFabricArmClient(client).GetNetworkFabricRoutePolicyResource(id);
+            return GetMockableManagedNetworkFabricArmClient(client).GetRoutePolicyResource(id);
         }
 
         /// <summary>
-        /// Gets a collection of NetworkFabricAccessControlListResources in the ResourceGroupResource.
+        /// Gets an object representing a <see cref="NetworkMonitorResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkMonitorResource.CreateResourceIdentifier" /> to create a <see cref="NetworkMonitorResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricResourceGroupResource.GetNetworkFabricAccessControlLists()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricArmClient.GetNetworkMonitorResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="NetworkMonitorResource"/> object. </returns>
+        public static NetworkMonitorResource GetNetworkMonitorResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableManagedNetworkFabricArmClient(client).GetNetworkMonitorResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="NetworkBootstrapDeviceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkBootstrapDeviceResource.CreateResourceIdentifier" /> to create a <see cref="NetworkBootstrapDeviceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricArmClient.GetNetworkBootstrapDeviceResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="NetworkBootstrapDeviceResource"/> object. </returns>
+        public static NetworkBootstrapDeviceResource GetNetworkBootstrapDeviceResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableManagedNetworkFabricArmClient(client).GetNetworkBootstrapDeviceResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="NetworkBootstrapInterfaceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkBootstrapInterfaceResource.CreateResourceIdentifier" /> to create a <see cref="NetworkBootstrapInterfaceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricArmClient.GetNetworkBootstrapInterfaceResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="NetworkBootstrapInterfaceResource"/> object. </returns>
+        public static NetworkBootstrapInterfaceResource GetNetworkBootstrapInterfaceResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableManagedNetworkFabricArmClient(client).GetNetworkBootstrapInterfaceResource(id);
+        }
+
+        /// <summary>
+        /// Gets a collection of AccessControlListResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricResourceGroupResource.GetAccessControlLists()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of NetworkFabricAccessControlListResources and their operations over a NetworkFabricAccessControlListResource. </returns>
-        public static NetworkFabricAccessControlListCollection GetNetworkFabricAccessControlLists(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of AccessControlListResources and their operations over a AccessControlListResource. </returns>
+        public static AccessControlListCollection GetAccessControlLists(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetNetworkFabricAccessControlLists();
+            return GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetAccessControlLists();
         }
 
         /// <summary>
@@ -495,20 +552,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AccessControlLists_Get</description>
+        /// <description>AccessControlList_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
+        /// <description>2025-07-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NetworkFabricAccessControlListResource"/></description>
+        /// <description><see cref="AccessControlListResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricResourceGroupResource.GetNetworkFabricAccessControlListAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricResourceGroupResource.GetAccessControlListAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -517,11 +574,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="accessControlListName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="accessControlListName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<NetworkFabricAccessControlListResource>> GetNetworkFabricAccessControlListAsync(this ResourceGroupResource resourceGroupResource, string accessControlListName, CancellationToken cancellationToken = default)
+        public static async Task<Response<AccessControlListResource>> GetAccessControlListAsync(this ResourceGroupResource resourceGroupResource, string accessControlListName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetNetworkFabricAccessControlListAsync(accessControlListName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetAccessControlListAsync(accessControlListName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -533,20 +590,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AccessControlLists_Get</description>
+        /// <description>AccessControlList_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
+        /// <description>2025-07-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NetworkFabricAccessControlListResource"/></description>
+        /// <description><see cref="AccessControlListResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricResourceGroupResource.GetNetworkFabricAccessControlList(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricResourceGroupResource.GetAccessControlList(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -555,121 +612,28 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="accessControlListName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="accessControlListName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static Response<NetworkFabricAccessControlListResource> GetNetworkFabricAccessControlList(this ResourceGroupResource resourceGroupResource, string accessControlListName, CancellationToken cancellationToken = default)
+        public static Response<AccessControlListResource> GetAccessControlList(this ResourceGroupResource resourceGroupResource, string accessControlListName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetNetworkFabricAccessControlList(accessControlListName, cancellationToken);
+            return GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetAccessControlList(accessControlListName, cancellationToken);
         }
 
         /// <summary>
-        /// Gets a collection of NetworkFabricInternetGatewayResources in the ResourceGroupResource.
+        /// Gets a collection of InternetGatewayRuleResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricResourceGroupResource.GetNetworkFabricInternetGateways()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricResourceGroupResource.GetInternetGatewayRules()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of NetworkFabricInternetGatewayResources and their operations over a NetworkFabricInternetGatewayResource. </returns>
-        public static NetworkFabricInternetGatewayCollection GetNetworkFabricInternetGateways(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of InternetGatewayRuleResources and their operations over a InternetGatewayRuleResource. </returns>
+        public static InternetGatewayRuleCollection GetInternetGatewayRules(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetNetworkFabricInternetGateways();
-        }
-
-        /// <summary>
-        /// Implements Gateway GET method.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/internetGateways/{internetGatewayName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>InternetGateways_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkFabricInternetGatewayResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricResourceGroupResource.GetNetworkFabricInternetGatewayAsync(string,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="internetGatewayName"> Name of the Internet Gateway. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="internetGatewayName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="internetGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<NetworkFabricInternetGatewayResource>> GetNetworkFabricInternetGatewayAsync(this ResourceGroupResource resourceGroupResource, string internetGatewayName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return await GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetNetworkFabricInternetGatewayAsync(internetGatewayName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Implements Gateway GET method.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/internetGateways/{internetGatewayName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>InternetGateways_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkFabricInternetGatewayResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricResourceGroupResource.GetNetworkFabricInternetGateway(string,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="internetGatewayName"> Name of the Internet Gateway. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="internetGatewayName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="internetGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public static Response<NetworkFabricInternetGatewayResource> GetNetworkFabricInternetGateway(this ResourceGroupResource resourceGroupResource, string internetGatewayName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetNetworkFabricInternetGateway(internetGatewayName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a collection of NetworkFabricInternetGatewayRuleResources in the ResourceGroupResource.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricResourceGroupResource.GetNetworkFabricInternetGatewayRules()"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of NetworkFabricInternetGatewayRuleResources and their operations over a NetworkFabricInternetGatewayRuleResource. </returns>
-        public static NetworkFabricInternetGatewayRuleCollection GetNetworkFabricInternetGatewayRules(this ResourceGroupResource resourceGroupResource)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetNetworkFabricInternetGatewayRules();
+            return GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetInternetGatewayRules();
         }
 
         /// <summary>
@@ -681,20 +645,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>InternetGatewayRules_Get</description>
+        /// <description>InternetGatewayRule_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
+        /// <description>2025-07-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NetworkFabricInternetGatewayRuleResource"/></description>
+        /// <description><see cref="InternetGatewayRuleResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricResourceGroupResource.GetNetworkFabricInternetGatewayRuleAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricResourceGroupResource.GetInternetGatewayRuleAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -703,11 +667,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="internetGatewayRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="internetGatewayRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<NetworkFabricInternetGatewayRuleResource>> GetNetworkFabricInternetGatewayRuleAsync(this ResourceGroupResource resourceGroupResource, string internetGatewayRuleName, CancellationToken cancellationToken = default)
+        public static async Task<Response<InternetGatewayRuleResource>> GetInternetGatewayRuleAsync(this ResourceGroupResource resourceGroupResource, string internetGatewayRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetNetworkFabricInternetGatewayRuleAsync(internetGatewayRuleName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetInternetGatewayRuleAsync(internetGatewayRuleName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -719,20 +683,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>InternetGatewayRules_Get</description>
+        /// <description>InternetGatewayRule_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
+        /// <description>2025-07-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NetworkFabricInternetGatewayRuleResource"/></description>
+        /// <description><see cref="InternetGatewayRuleResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricResourceGroupResource.GetNetworkFabricInternetGatewayRule(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricResourceGroupResource.GetInternetGatewayRule(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -741,28 +705,121 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="internetGatewayRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="internetGatewayRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static Response<NetworkFabricInternetGatewayRuleResource> GetNetworkFabricInternetGatewayRule(this ResourceGroupResource resourceGroupResource, string internetGatewayRuleName, CancellationToken cancellationToken = default)
+        public static Response<InternetGatewayRuleResource> GetInternetGatewayRule(this ResourceGroupResource resourceGroupResource, string internetGatewayRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetNetworkFabricInternetGatewayRule(internetGatewayRuleName, cancellationToken);
+            return GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetInternetGatewayRule(internetGatewayRuleName, cancellationToken);
         }
 
         /// <summary>
-        /// Gets a collection of NetworkFabricIPCommunityResources in the ResourceGroupResource.
+        /// Gets a collection of InternetGatewayResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricResourceGroupResource.GetNetworkFabricIPCommunities()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricResourceGroupResource.GetInternetGateways()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of NetworkFabricIPCommunityResources and their operations over a NetworkFabricIPCommunityResource. </returns>
-        public static NetworkFabricIPCommunityCollection GetNetworkFabricIPCommunities(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of InternetGatewayResources and their operations over a InternetGatewayResource. </returns>
+        public static InternetGatewayCollection GetInternetGateways(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetNetworkFabricIPCommunities();
+            return GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetInternetGateways();
+        }
+
+        /// <summary>
+        /// Implements Gateway GET method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/internetGateways/{internetGatewayName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>InternetGateway_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="InternetGatewayResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricResourceGroupResource.GetInternetGatewayAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="internetGatewayName"> Name of the Internet Gateway. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="internetGatewayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="internetGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<InternetGatewayResource>> GetInternetGatewayAsync(this ResourceGroupResource resourceGroupResource, string internetGatewayName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetInternetGatewayAsync(internetGatewayName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Implements Gateway GET method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/internetGateways/{internetGatewayName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>InternetGateway_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="InternetGatewayResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricResourceGroupResource.GetInternetGateway(string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="internetGatewayName"> Name of the Internet Gateway. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="internetGatewayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="internetGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static Response<InternetGatewayResource> GetInternetGateway(this ResourceGroupResource resourceGroupResource, string internetGatewayName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetInternetGateway(internetGatewayName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of IPCommunityResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricResourceGroupResource.GetIPCommunities()"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> An object representing collection of IPCommunityResources and their operations over a IPCommunityResource. </returns>
+        public static IPCommunityCollection GetIPCommunities(this ResourceGroupResource resourceGroupResource)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetIPCommunities();
         }
 
         /// <summary>
@@ -774,20 +831,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IpCommunities_Get</description>
+        /// <description>IpCommunity_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
+        /// <description>2025-07-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NetworkFabricIPCommunityResource"/></description>
+        /// <description><see cref="IPCommunityResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricResourceGroupResource.GetNetworkFabricIPCommunityAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricResourceGroupResource.GetIPCommunityAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -796,11 +853,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="ipCommunityName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ipCommunityName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<NetworkFabricIPCommunityResource>> GetNetworkFabricIPCommunityAsync(this ResourceGroupResource resourceGroupResource, string ipCommunityName, CancellationToken cancellationToken = default)
+        public static async Task<Response<IPCommunityResource>> GetIPCommunityAsync(this ResourceGroupResource resourceGroupResource, string ipCommunityName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetNetworkFabricIPCommunityAsync(ipCommunityName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetIPCommunityAsync(ipCommunityName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -812,20 +869,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IpCommunities_Get</description>
+        /// <description>IpCommunity_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
+        /// <description>2025-07-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NetworkFabricIPCommunityResource"/></description>
+        /// <description><see cref="IPCommunityResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricResourceGroupResource.GetNetworkFabricIPCommunity(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricResourceGroupResource.GetIPCommunity(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -834,28 +891,28 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="ipCommunityName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ipCommunityName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static Response<NetworkFabricIPCommunityResource> GetNetworkFabricIPCommunity(this ResourceGroupResource resourceGroupResource, string ipCommunityName, CancellationToken cancellationToken = default)
+        public static Response<IPCommunityResource> GetIPCommunity(this ResourceGroupResource resourceGroupResource, string ipCommunityName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetNetworkFabricIPCommunity(ipCommunityName, cancellationToken);
+            return GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetIPCommunity(ipCommunityName, cancellationToken);
         }
 
         /// <summary>
-        /// Gets a collection of NetworkFabricIPExtendedCommunityResources in the ResourceGroupResource.
+        /// Gets a collection of IPExtendedCommunityResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricResourceGroupResource.GetNetworkFabricIPExtendedCommunities()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricResourceGroupResource.GetIPExtendedCommunities()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of NetworkFabricIPExtendedCommunityResources and their operations over a NetworkFabricIPExtendedCommunityResource. </returns>
-        public static NetworkFabricIPExtendedCommunityCollection GetNetworkFabricIPExtendedCommunities(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of IPExtendedCommunityResources and their operations over a IPExtendedCommunityResource. </returns>
+        public static IPExtendedCommunityCollection GetIPExtendedCommunities(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetNetworkFabricIPExtendedCommunities();
+            return GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetIPExtendedCommunities();
         }
 
         /// <summary>
@@ -867,20 +924,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IpExtendedCommunities_Get</description>
+        /// <description>IpExtendedCommunity_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
+        /// <description>2025-07-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NetworkFabricIPExtendedCommunityResource"/></description>
+        /// <description><see cref="IPExtendedCommunityResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricResourceGroupResource.GetNetworkFabricIPExtendedCommunityAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricResourceGroupResource.GetIPExtendedCommunityAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -889,11 +946,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="ipExtendedCommunityName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ipExtendedCommunityName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<NetworkFabricIPExtendedCommunityResource>> GetNetworkFabricIPExtendedCommunityAsync(this ResourceGroupResource resourceGroupResource, string ipExtendedCommunityName, CancellationToken cancellationToken = default)
+        public static async Task<Response<IPExtendedCommunityResource>> GetIPExtendedCommunityAsync(this ResourceGroupResource resourceGroupResource, string ipExtendedCommunityName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetNetworkFabricIPExtendedCommunityAsync(ipExtendedCommunityName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetIPExtendedCommunityAsync(ipExtendedCommunityName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -905,20 +962,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IpExtendedCommunities_Get</description>
+        /// <description>IpExtendedCommunity_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
+        /// <description>2025-07-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NetworkFabricIPExtendedCommunityResource"/></description>
+        /// <description><see cref="IPExtendedCommunityResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricResourceGroupResource.GetNetworkFabricIPExtendedCommunity(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricResourceGroupResource.GetIPExtendedCommunity(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -927,28 +984,28 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="ipExtendedCommunityName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ipExtendedCommunityName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static Response<NetworkFabricIPExtendedCommunityResource> GetNetworkFabricIPExtendedCommunity(this ResourceGroupResource resourceGroupResource, string ipExtendedCommunityName, CancellationToken cancellationToken = default)
+        public static Response<IPExtendedCommunityResource> GetIPExtendedCommunity(this ResourceGroupResource resourceGroupResource, string ipExtendedCommunityName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetNetworkFabricIPExtendedCommunity(ipExtendedCommunityName, cancellationToken);
+            return GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetIPExtendedCommunity(ipExtendedCommunityName, cancellationToken);
         }
 
         /// <summary>
-        /// Gets a collection of NetworkFabricIPPrefixResources in the ResourceGroupResource.
+        /// Gets a collection of IPPrefixResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricResourceGroupResource.GetNetworkFabricIPPrefixes()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricResourceGroupResource.GetIPPrefixes()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of NetworkFabricIPPrefixResources and their operations over a NetworkFabricIPPrefixResource. </returns>
-        public static NetworkFabricIPPrefixCollection GetNetworkFabricIPPrefixes(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of IPPrefixResources and their operations over a IPPrefixResource. </returns>
+        public static IPPrefixCollection GetIPPrefixes(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetNetworkFabricIPPrefixes();
+            return GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetIPPrefixes();
         }
 
         /// <summary>
@@ -960,20 +1017,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IpPrefixes_Get</description>
+        /// <description>IpPrefix_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
+        /// <description>2025-07-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NetworkFabricIPPrefixResource"/></description>
+        /// <description><see cref="IPPrefixResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricResourceGroupResource.GetNetworkFabricIPPrefixAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricResourceGroupResource.GetIPPrefixAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -982,11 +1039,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="ipPrefixName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ipPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<NetworkFabricIPPrefixResource>> GetNetworkFabricIPPrefixAsync(this ResourceGroupResource resourceGroupResource, string ipPrefixName, CancellationToken cancellationToken = default)
+        public static async Task<Response<IPPrefixResource>> GetIPPrefixAsync(this ResourceGroupResource resourceGroupResource, string ipPrefixName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetNetworkFabricIPPrefixAsync(ipPrefixName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetIPPrefixAsync(ipPrefixName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -998,20 +1055,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IpPrefixes_Get</description>
+        /// <description>IpPrefix_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
+        /// <description>2025-07-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NetworkFabricIPPrefixResource"/></description>
+        /// <description><see cref="IPPrefixResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricResourceGroupResource.GetNetworkFabricIPPrefix(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricResourceGroupResource.GetIPPrefix(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -1020,28 +1077,28 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="ipPrefixName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ipPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static Response<NetworkFabricIPPrefixResource> GetNetworkFabricIPPrefix(this ResourceGroupResource resourceGroupResource, string ipPrefixName, CancellationToken cancellationToken = default)
+        public static Response<IPPrefixResource> GetIPPrefix(this ResourceGroupResource resourceGroupResource, string ipPrefixName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetNetworkFabricIPPrefix(ipPrefixName, cancellationToken);
+            return GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetIPPrefix(ipPrefixName, cancellationToken);
         }
 
         /// <summary>
-        /// Gets a collection of NetworkFabricL2IsolationDomainResources in the ResourceGroupResource.
+        /// Gets a collection of L2IsolationDomainResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricResourceGroupResource.GetNetworkFabricL2IsolationDomains()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricResourceGroupResource.GetL2IsolationDomains()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of NetworkFabricL2IsolationDomainResources and their operations over a NetworkFabricL2IsolationDomainResource. </returns>
-        public static NetworkFabricL2IsolationDomainCollection GetNetworkFabricL2IsolationDomains(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of L2IsolationDomainResources and their operations over a L2IsolationDomainResource. </returns>
+        public static L2IsolationDomainCollection GetL2IsolationDomains(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetNetworkFabricL2IsolationDomains();
+            return GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetL2IsolationDomains();
         }
 
         /// <summary>
@@ -1053,20 +1110,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>L2IsolationDomains_Get</description>
+        /// <description>L2IsolationDomain_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
+        /// <description>2025-07-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NetworkFabricL2IsolationDomainResource"/></description>
+        /// <description><see cref="L2IsolationDomainResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricResourceGroupResource.GetNetworkFabricL2IsolationDomainAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricResourceGroupResource.GetL2IsolationDomainAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -1075,11 +1132,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="l2IsolationDomainName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="l2IsolationDomainName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<NetworkFabricL2IsolationDomainResource>> GetNetworkFabricL2IsolationDomainAsync(this ResourceGroupResource resourceGroupResource, string l2IsolationDomainName, CancellationToken cancellationToken = default)
+        public static async Task<Response<L2IsolationDomainResource>> GetL2IsolationDomainAsync(this ResourceGroupResource resourceGroupResource, string l2IsolationDomainName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetNetworkFabricL2IsolationDomainAsync(l2IsolationDomainName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetL2IsolationDomainAsync(l2IsolationDomainName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1091,20 +1148,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>L2IsolationDomains_Get</description>
+        /// <description>L2IsolationDomain_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
+        /// <description>2025-07-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NetworkFabricL2IsolationDomainResource"/></description>
+        /// <description><see cref="L2IsolationDomainResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricResourceGroupResource.GetNetworkFabricL2IsolationDomain(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricResourceGroupResource.GetL2IsolationDomain(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -1113,28 +1170,28 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="l2IsolationDomainName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="l2IsolationDomainName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static Response<NetworkFabricL2IsolationDomainResource> GetNetworkFabricL2IsolationDomain(this ResourceGroupResource resourceGroupResource, string l2IsolationDomainName, CancellationToken cancellationToken = default)
+        public static Response<L2IsolationDomainResource> GetL2IsolationDomain(this ResourceGroupResource resourceGroupResource, string l2IsolationDomainName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetNetworkFabricL2IsolationDomain(l2IsolationDomainName, cancellationToken);
+            return GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetL2IsolationDomain(l2IsolationDomainName, cancellationToken);
         }
 
         /// <summary>
-        /// Gets a collection of NetworkFabricL3IsolationDomainResources in the ResourceGroupResource.
+        /// Gets a collection of L3IsolationDomainResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricResourceGroupResource.GetNetworkFabricL3IsolationDomains()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricResourceGroupResource.GetL3IsolationDomains()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of NetworkFabricL3IsolationDomainResources and their operations over a NetworkFabricL3IsolationDomainResource. </returns>
-        public static NetworkFabricL3IsolationDomainCollection GetNetworkFabricL3IsolationDomains(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of L3IsolationDomainResources and their operations over a L3IsolationDomainResource. </returns>
+        public static L3IsolationDomainCollection GetL3IsolationDomains(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetNetworkFabricL3IsolationDomains();
+            return GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetL3IsolationDomains();
         }
 
         /// <summary>
@@ -1146,20 +1203,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>L3IsolationDomains_Get</description>
+        /// <description>L3IsolationDomain_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
+        /// <description>2025-07-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NetworkFabricL3IsolationDomainResource"/></description>
+        /// <description><see cref="L3IsolationDomainResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricResourceGroupResource.GetNetworkFabricL3IsolationDomainAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricResourceGroupResource.GetL3IsolationDomainAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -1168,11 +1225,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="l3IsolationDomainName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="l3IsolationDomainName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<NetworkFabricL3IsolationDomainResource>> GetNetworkFabricL3IsolationDomainAsync(this ResourceGroupResource resourceGroupResource, string l3IsolationDomainName, CancellationToken cancellationToken = default)
+        public static async Task<Response<L3IsolationDomainResource>> GetL3IsolationDomainAsync(this ResourceGroupResource resourceGroupResource, string l3IsolationDomainName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetNetworkFabricL3IsolationDomainAsync(l3IsolationDomainName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetL3IsolationDomainAsync(l3IsolationDomainName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1184,20 +1241,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>L3IsolationDomains_Get</description>
+        /// <description>L3IsolationDomain_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
+        /// <description>2025-07-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NetworkFabricL3IsolationDomainResource"/></description>
+        /// <description><see cref="L3IsolationDomainResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricResourceGroupResource.GetNetworkFabricL3IsolationDomain(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricResourceGroupResource.GetL3IsolationDomain(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -1206,28 +1263,28 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="l3IsolationDomainName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="l3IsolationDomainName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static Response<NetworkFabricL3IsolationDomainResource> GetNetworkFabricL3IsolationDomain(this ResourceGroupResource resourceGroupResource, string l3IsolationDomainName, CancellationToken cancellationToken = default)
+        public static Response<L3IsolationDomainResource> GetL3IsolationDomain(this ResourceGroupResource resourceGroupResource, string l3IsolationDomainName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetNetworkFabricL3IsolationDomain(l3IsolationDomainName, cancellationToken);
+            return GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetL3IsolationDomain(l3IsolationDomainName, cancellationToken);
         }
 
         /// <summary>
-        /// Gets a collection of NetworkFabricNeighborGroupResources in the ResourceGroupResource.
+        /// Gets a collection of NeighborGroupResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricResourceGroupResource.GetNetworkFabricNeighborGroups()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricResourceGroupResource.GetNeighborGroups()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of NetworkFabricNeighborGroupResources and their operations over a NetworkFabricNeighborGroupResource. </returns>
-        public static NetworkFabricNeighborGroupCollection GetNetworkFabricNeighborGroups(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of NeighborGroupResources and their operations over a NeighborGroupResource. </returns>
+        public static NeighborGroupCollection GetNeighborGroups(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetNetworkFabricNeighborGroups();
+            return GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetNeighborGroups();
         }
 
         /// <summary>
@@ -1239,20 +1296,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NeighborGroups_Get</description>
+        /// <description>NeighborGroup_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
+        /// <description>2025-07-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NetworkFabricNeighborGroupResource"/></description>
+        /// <description><see cref="NeighborGroupResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricResourceGroupResource.GetNetworkFabricNeighborGroupAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricResourceGroupResource.GetNeighborGroupAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -1261,11 +1318,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="neighborGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="neighborGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<NetworkFabricNeighborGroupResource>> GetNetworkFabricNeighborGroupAsync(this ResourceGroupResource resourceGroupResource, string neighborGroupName, CancellationToken cancellationToken = default)
+        public static async Task<Response<NeighborGroupResource>> GetNeighborGroupAsync(this ResourceGroupResource resourceGroupResource, string neighborGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetNetworkFabricNeighborGroupAsync(neighborGroupName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetNeighborGroupAsync(neighborGroupName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1277,20 +1334,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NeighborGroups_Get</description>
+        /// <description>NeighborGroup_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
+        /// <description>2025-07-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NetworkFabricNeighborGroupResource"/></description>
+        /// <description><see cref="NeighborGroupResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricResourceGroupResource.GetNetworkFabricNeighborGroup(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricResourceGroupResource.GetNeighborGroup(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -1299,11 +1356,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="neighborGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="neighborGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static Response<NetworkFabricNeighborGroupResource> GetNetworkFabricNeighborGroup(this ResourceGroupResource resourceGroupResource, string neighborGroupName, CancellationToken cancellationToken = default)
+        public static Response<NeighborGroupResource> GetNeighborGroup(this ResourceGroupResource resourceGroupResource, string neighborGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetNetworkFabricNeighborGroup(neighborGroupName, cancellationToken);
+            return GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetNeighborGroup(neighborGroupName, cancellationToken);
         }
 
         /// <summary>
@@ -1332,11 +1389,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkDevices_Get</description>
+        /// <description>NetworkDevice_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
+        /// <description>2025-07-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1370,11 +1427,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkDevices_Get</description>
+        /// <description>NetworkDevice_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
+        /// <description>2025-07-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1425,11 +1482,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkFabricControllers_Get</description>
+        /// <description>NetworkFabricController_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
+        /// <description>2025-07-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1463,11 +1520,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkFabricControllers_Get</description>
+        /// <description>NetworkFabricController_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
+        /// <description>2025-07-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1518,11 +1575,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkFabrics_Get</description>
+        /// <description>NetworkFabric_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
+        /// <description>2025-07-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1556,11 +1613,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkFabrics_Get</description>
+        /// <description>NetworkFabric_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
+        /// <description>2025-07-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1611,11 +1668,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkPacketBrokers_Get</description>
+        /// <description>NetworkPacketBroker_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
+        /// <description>2025-07-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1649,11 +1706,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkPacketBrokers_Get</description>
+        /// <description>NetworkPacketBroker_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
+        /// <description>2025-07-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1704,11 +1761,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkRacks_Get</description>
+        /// <description>NetworkRack_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
+        /// <description>2025-07-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1742,11 +1799,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkRacks_Get</description>
+        /// <description>NetworkRack_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
+        /// <description>2025-07-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1797,11 +1854,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkTapRules_Get</description>
+        /// <description>NetworkTapRule_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
+        /// <description>2025-07-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1835,11 +1892,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkTapRules_Get</description>
+        /// <description>NetworkTapRule_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
+        /// <description>2025-07-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1890,11 +1947,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkTaps_Get</description>
+        /// <description>NetworkTap_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
+        /// <description>2025-07-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1928,11 +1985,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkTaps_Get</description>
+        /// <description>NetworkTap_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
+        /// <description>2025-07-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1958,20 +2015,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary>
-        /// Gets a collection of NetworkFabricRoutePolicyResources in the ResourceGroupResource.
+        /// Gets a collection of RoutePolicyResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricResourceGroupResource.GetNetworkFabricRoutePolicies()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricResourceGroupResource.GetRoutePolicies()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of NetworkFabricRoutePolicyResources and their operations over a NetworkFabricRoutePolicyResource. </returns>
-        public static NetworkFabricRoutePolicyCollection GetNetworkFabricRoutePolicies(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of RoutePolicyResources and their operations over a RoutePolicyResource. </returns>
+        public static RoutePolicyCollection GetRoutePolicies(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetNetworkFabricRoutePolicies();
+            return GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetRoutePolicies();
         }
 
         /// <summary>
@@ -1983,20 +2040,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>RoutePolicies_Get</description>
+        /// <description>RoutePolicy_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
+        /// <description>2025-07-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NetworkFabricRoutePolicyResource"/></description>
+        /// <description><see cref="RoutePolicyResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricResourceGroupResource.GetNetworkFabricRoutePolicyAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricResourceGroupResource.GetRoutePolicyAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -2005,11 +2062,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="routePolicyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="routePolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<NetworkFabricRoutePolicyResource>> GetNetworkFabricRoutePolicyAsync(this ResourceGroupResource resourceGroupResource, string routePolicyName, CancellationToken cancellationToken = default)
+        public static async Task<Response<RoutePolicyResource>> GetRoutePolicyAsync(this ResourceGroupResource resourceGroupResource, string routePolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetNetworkFabricRoutePolicyAsync(routePolicyName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetRoutePolicyAsync(routePolicyName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2021,20 +2078,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>RoutePolicies_Get</description>
+        /// <description>RoutePolicy_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
+        /// <description>2025-07-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NetworkFabricRoutePolicyResource"/></description>
+        /// <description><see cref="RoutePolicyResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricResourceGroupResource.GetNetworkFabricRoutePolicy(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricResourceGroupResource.GetRoutePolicy(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -2043,11 +2100,197 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="routePolicyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="routePolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static Response<NetworkFabricRoutePolicyResource> GetNetworkFabricRoutePolicy(this ResourceGroupResource resourceGroupResource, string routePolicyName, CancellationToken cancellationToken = default)
+        public static Response<RoutePolicyResource> GetRoutePolicy(this ResourceGroupResource resourceGroupResource, string routePolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetNetworkFabricRoutePolicy(routePolicyName, cancellationToken);
+            return GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetRoutePolicy(routePolicyName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of NetworkMonitorResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricResourceGroupResource.GetNetworkMonitors()"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> An object representing collection of NetworkMonitorResources and their operations over a NetworkMonitorResource. </returns>
+        public static NetworkMonitorCollection GetNetworkMonitors(this ResourceGroupResource resourceGroupResource)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetNetworkMonitors();
+        }
+
+        /// <summary>
+        /// Implements NetworkMonitor GET method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkMonitors/{networkMonitorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkMonitor_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkMonitorResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricResourceGroupResource.GetNetworkMonitorAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="networkMonitorName"> Name of the Network Monitor. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="networkMonitorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkMonitorName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<NetworkMonitorResource>> GetNetworkMonitorAsync(this ResourceGroupResource resourceGroupResource, string networkMonitorName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetNetworkMonitorAsync(networkMonitorName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Implements NetworkMonitor GET method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkMonitors/{networkMonitorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkMonitor_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkMonitorResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricResourceGroupResource.GetNetworkMonitor(string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="networkMonitorName"> Name of the Network Monitor. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="networkMonitorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkMonitorName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static Response<NetworkMonitorResource> GetNetworkMonitor(this ResourceGroupResource resourceGroupResource, string networkMonitorName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetNetworkMonitor(networkMonitorName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of NetworkBootstrapDeviceResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricResourceGroupResource.GetNetworkBootstrapDevices()"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> An object representing collection of NetworkBootstrapDeviceResources and their operations over a NetworkBootstrapDeviceResource. </returns>
+        public static NetworkBootstrapDeviceCollection GetNetworkBootstrapDevices(this ResourceGroupResource resourceGroupResource)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetNetworkBootstrapDevices();
+        }
+
+        /// <summary>
+        /// Gets a Network Bootstrap Device resource details.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkBootstrapDevices/{networkBootstrapDeviceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkBootstrapDevice_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkBootstrapDeviceResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricResourceGroupResource.GetNetworkBootstrapDeviceAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="networkBootstrapDeviceName"> Name of the Network Bootstrap Device. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="networkBootstrapDeviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkBootstrapDeviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<NetworkBootstrapDeviceResource>> GetNetworkBootstrapDeviceAsync(this ResourceGroupResource resourceGroupResource, string networkBootstrapDeviceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetNetworkBootstrapDeviceAsync(networkBootstrapDeviceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a Network Bootstrap Device resource details.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkBootstrapDevices/{networkBootstrapDeviceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkBootstrapDevice_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkBootstrapDeviceResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricResourceGroupResource.GetNetworkBootstrapDevice(string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="networkBootstrapDeviceName"> Name of the Network Bootstrap Device. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="networkBootstrapDeviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkBootstrapDeviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static Response<NetworkBootstrapDeviceResource> GetNetworkBootstrapDevice(this ResourceGroupResource resourceGroupResource, string networkBootstrapDeviceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetNetworkBootstrapDevice(networkBootstrapDeviceName, cancellationToken);
         }
 
         /// <summary>
@@ -2076,11 +2319,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkDeviceSkus_Get</description>
+        /// <description>NetworkDeviceSku_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
+        /// <description>2025-07-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2114,11 +2357,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkDeviceSkus_Get</description>
+        /// <description>NetworkDeviceSku_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
+        /// <description>2025-07-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2169,11 +2412,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkFabricSkus_Get</description>
+        /// <description>NetworkFabricSku_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
+        /// <description>2025-07-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2207,11 +2450,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkFabricSkus_Get</description>
+        /// <description>NetworkFabricSku_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
+        /// <description>2025-07-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2245,31 +2488,31 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AccessControlLists_ListBySubscription</description>
+        /// <description>AccessControlList_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
+        /// <description>2025-07-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NetworkFabricAccessControlListResource"/></description>
+        /// <description><see cref="AccessControlListResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricSubscriptionResource.GetNetworkFabricAccessControlLists(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricSubscriptionResource.GetAccessControlLists(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="NetworkFabricAccessControlListResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<NetworkFabricAccessControlListResource> GetNetworkFabricAccessControlListsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AccessControlListResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<AccessControlListResource> GetAccessControlListsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableManagedNetworkFabricSubscriptionResource(subscriptionResource).GetNetworkFabricAccessControlListsAsync(cancellationToken);
+            return GetMockableManagedNetworkFabricSubscriptionResource(subscriptionResource).GetAccessControlListsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -2281,103 +2524,31 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AccessControlLists_ListBySubscription</description>
+        /// <description>AccessControlList_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
+        /// <description>2025-07-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NetworkFabricAccessControlListResource"/></description>
+        /// <description><see cref="AccessControlListResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricSubscriptionResource.GetNetworkFabricAccessControlLists(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricSubscriptionResource.GetAccessControlLists(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="NetworkFabricAccessControlListResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<NetworkFabricAccessControlListResource> GetNetworkFabricAccessControlLists(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AccessControlListResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<AccessControlListResource> GetAccessControlLists(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableManagedNetworkFabricSubscriptionResource(subscriptionResource).GetNetworkFabricAccessControlLists(cancellationToken);
-        }
-
-        /// <summary>
-        /// Displays Internet Gateways list by subscription GET method.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetworkFabric/internetGateways</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>InternetGateways_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkFabricInternetGatewayResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricSubscriptionResource.GetNetworkFabricInternetGateways(CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="NetworkFabricInternetGatewayResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<NetworkFabricInternetGatewayResource> GetNetworkFabricInternetGatewaysAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableManagedNetworkFabricSubscriptionResource(subscriptionResource).GetNetworkFabricInternetGatewaysAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Displays Internet Gateways list by subscription GET method.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetworkFabric/internetGateways</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>InternetGateways_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkFabricInternetGatewayResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricSubscriptionResource.GetNetworkFabricInternetGateways(CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="NetworkFabricInternetGatewayResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<NetworkFabricInternetGatewayResource> GetNetworkFabricInternetGateways(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableManagedNetworkFabricSubscriptionResource(subscriptionResource).GetNetworkFabricInternetGateways(cancellationToken);
+            return GetMockableManagedNetworkFabricSubscriptionResource(subscriptionResource).GetAccessControlLists(cancellationToken);
         }
 
         /// <summary>
@@ -2389,31 +2560,31 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>InternetGatewayRules_ListBySubscription</description>
+        /// <description>InternetGatewayRule_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
+        /// <description>2025-07-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NetworkFabricInternetGatewayRuleResource"/></description>
+        /// <description><see cref="InternetGatewayRuleResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricSubscriptionResource.GetNetworkFabricInternetGatewayRules(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricSubscriptionResource.GetInternetGatewayRules(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="NetworkFabricInternetGatewayRuleResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<NetworkFabricInternetGatewayRuleResource> GetNetworkFabricInternetGatewayRulesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="InternetGatewayRuleResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<InternetGatewayRuleResource> GetInternetGatewayRulesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableManagedNetworkFabricSubscriptionResource(subscriptionResource).GetNetworkFabricInternetGatewayRulesAsync(cancellationToken);
+            return GetMockableManagedNetworkFabricSubscriptionResource(subscriptionResource).GetInternetGatewayRulesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -2425,31 +2596,103 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>InternetGatewayRules_ListBySubscription</description>
+        /// <description>InternetGatewayRule_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
+        /// <description>2025-07-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NetworkFabricInternetGatewayRuleResource"/></description>
+        /// <description><see cref="InternetGatewayRuleResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricSubscriptionResource.GetNetworkFabricInternetGatewayRules(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricSubscriptionResource.GetInternetGatewayRules(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="NetworkFabricInternetGatewayRuleResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<NetworkFabricInternetGatewayRuleResource> GetNetworkFabricInternetGatewayRules(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="InternetGatewayRuleResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<InternetGatewayRuleResource> GetInternetGatewayRules(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableManagedNetworkFabricSubscriptionResource(subscriptionResource).GetNetworkFabricInternetGatewayRules(cancellationToken);
+            return GetMockableManagedNetworkFabricSubscriptionResource(subscriptionResource).GetInternetGatewayRules(cancellationToken);
+        }
+
+        /// <summary>
+        /// Displays Internet Gateways list by subscription GET method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetworkFabric/internetGateways</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>InternetGateway_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="InternetGatewayResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricSubscriptionResource.GetInternetGateways(CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="InternetGatewayResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<InternetGatewayResource> GetInternetGatewaysAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableManagedNetworkFabricSubscriptionResource(subscriptionResource).GetInternetGatewaysAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Displays Internet Gateways list by subscription GET method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetworkFabric/internetGateways</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>InternetGateway_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="InternetGatewayResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricSubscriptionResource.GetInternetGateways(CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="InternetGatewayResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<InternetGatewayResource> GetInternetGateways(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableManagedNetworkFabricSubscriptionResource(subscriptionResource).GetInternetGateways(cancellationToken);
         }
 
         /// <summary>
@@ -2461,31 +2704,31 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IpCommunities_ListBySubscription</description>
+        /// <description>IpCommunity_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
+        /// <description>2025-07-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NetworkFabricIPCommunityResource"/></description>
+        /// <description><see cref="IPCommunityResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricSubscriptionResource.GetNetworkFabricIPCommunities(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricSubscriptionResource.GetIPCommunities(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="NetworkFabricIPCommunityResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<NetworkFabricIPCommunityResource> GetNetworkFabricIPCommunitiesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="IPCommunityResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<IPCommunityResource> GetIPCommunitiesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableManagedNetworkFabricSubscriptionResource(subscriptionResource).GetNetworkFabricIPCommunitiesAsync(cancellationToken);
+            return GetMockableManagedNetworkFabricSubscriptionResource(subscriptionResource).GetIPCommunitiesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -2497,31 +2740,31 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IpCommunities_ListBySubscription</description>
+        /// <description>IpCommunity_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
+        /// <description>2025-07-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NetworkFabricIPCommunityResource"/></description>
+        /// <description><see cref="IPCommunityResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricSubscriptionResource.GetNetworkFabricIPCommunities(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricSubscriptionResource.GetIPCommunities(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="NetworkFabricIPCommunityResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<NetworkFabricIPCommunityResource> GetNetworkFabricIPCommunities(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="IPCommunityResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<IPCommunityResource> GetIPCommunities(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableManagedNetworkFabricSubscriptionResource(subscriptionResource).GetNetworkFabricIPCommunities(cancellationToken);
+            return GetMockableManagedNetworkFabricSubscriptionResource(subscriptionResource).GetIPCommunities(cancellationToken);
         }
 
         /// <summary>
@@ -2533,31 +2776,31 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IpExtendedCommunities_ListBySubscription</description>
+        /// <description>IpExtendedCommunity_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
+        /// <description>2025-07-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NetworkFabricIPExtendedCommunityResource"/></description>
+        /// <description><see cref="IPExtendedCommunityResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricSubscriptionResource.GetNetworkFabricIPExtendedCommunities(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricSubscriptionResource.GetIPExtendedCommunities(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="NetworkFabricIPExtendedCommunityResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<NetworkFabricIPExtendedCommunityResource> GetNetworkFabricIPExtendedCommunitiesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="IPExtendedCommunityResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<IPExtendedCommunityResource> GetIPExtendedCommunitiesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableManagedNetworkFabricSubscriptionResource(subscriptionResource).GetNetworkFabricIPExtendedCommunitiesAsync(cancellationToken);
+            return GetMockableManagedNetworkFabricSubscriptionResource(subscriptionResource).GetIPExtendedCommunitiesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -2569,31 +2812,31 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IpExtendedCommunities_ListBySubscription</description>
+        /// <description>IpExtendedCommunity_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
+        /// <description>2025-07-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NetworkFabricIPExtendedCommunityResource"/></description>
+        /// <description><see cref="IPExtendedCommunityResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricSubscriptionResource.GetNetworkFabricIPExtendedCommunities(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricSubscriptionResource.GetIPExtendedCommunities(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="NetworkFabricIPExtendedCommunityResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<NetworkFabricIPExtendedCommunityResource> GetNetworkFabricIPExtendedCommunities(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="IPExtendedCommunityResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<IPExtendedCommunityResource> GetIPExtendedCommunities(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableManagedNetworkFabricSubscriptionResource(subscriptionResource).GetNetworkFabricIPExtendedCommunities(cancellationToken);
+            return GetMockableManagedNetworkFabricSubscriptionResource(subscriptionResource).GetIPExtendedCommunities(cancellationToken);
         }
 
         /// <summary>
@@ -2605,31 +2848,31 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IpPrefixes_ListBySubscription</description>
+        /// <description>IpPrefix_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
+        /// <description>2025-07-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NetworkFabricIPPrefixResource"/></description>
+        /// <description><see cref="IPPrefixResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricSubscriptionResource.GetNetworkFabricIPPrefixes(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricSubscriptionResource.GetIPPrefixes(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="NetworkFabricIPPrefixResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<NetworkFabricIPPrefixResource> GetNetworkFabricIPPrefixesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="IPPrefixResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<IPPrefixResource> GetIPPrefixesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableManagedNetworkFabricSubscriptionResource(subscriptionResource).GetNetworkFabricIPPrefixesAsync(cancellationToken);
+            return GetMockableManagedNetworkFabricSubscriptionResource(subscriptionResource).GetIPPrefixesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -2641,31 +2884,31 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IpPrefixes_ListBySubscription</description>
+        /// <description>IpPrefix_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
+        /// <description>2025-07-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NetworkFabricIPPrefixResource"/></description>
+        /// <description><see cref="IPPrefixResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricSubscriptionResource.GetNetworkFabricIPPrefixes(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricSubscriptionResource.GetIPPrefixes(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="NetworkFabricIPPrefixResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<NetworkFabricIPPrefixResource> GetNetworkFabricIPPrefixes(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="IPPrefixResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<IPPrefixResource> GetIPPrefixes(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableManagedNetworkFabricSubscriptionResource(subscriptionResource).GetNetworkFabricIPPrefixes(cancellationToken);
+            return GetMockableManagedNetworkFabricSubscriptionResource(subscriptionResource).GetIPPrefixes(cancellationToken);
         }
 
         /// <summary>
@@ -2677,31 +2920,31 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>L2IsolationDomains_ListBySubscription</description>
+        /// <description>L2IsolationDomain_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
+        /// <description>2025-07-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NetworkFabricL2IsolationDomainResource"/></description>
+        /// <description><see cref="L2IsolationDomainResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricSubscriptionResource.GetNetworkFabricL2IsolationDomains(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricSubscriptionResource.GetL2IsolationDomains(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="NetworkFabricL2IsolationDomainResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<NetworkFabricL2IsolationDomainResource> GetNetworkFabricL2IsolationDomainsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="L2IsolationDomainResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<L2IsolationDomainResource> GetL2IsolationDomainsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableManagedNetworkFabricSubscriptionResource(subscriptionResource).GetNetworkFabricL2IsolationDomainsAsync(cancellationToken);
+            return GetMockableManagedNetworkFabricSubscriptionResource(subscriptionResource).GetL2IsolationDomainsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -2713,31 +2956,31 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>L2IsolationDomains_ListBySubscription</description>
+        /// <description>L2IsolationDomain_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
+        /// <description>2025-07-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NetworkFabricL2IsolationDomainResource"/></description>
+        /// <description><see cref="L2IsolationDomainResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricSubscriptionResource.GetNetworkFabricL2IsolationDomains(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricSubscriptionResource.GetL2IsolationDomains(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="NetworkFabricL2IsolationDomainResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<NetworkFabricL2IsolationDomainResource> GetNetworkFabricL2IsolationDomains(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="L2IsolationDomainResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<L2IsolationDomainResource> GetL2IsolationDomains(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableManagedNetworkFabricSubscriptionResource(subscriptionResource).GetNetworkFabricL2IsolationDomains(cancellationToken);
+            return GetMockableManagedNetworkFabricSubscriptionResource(subscriptionResource).GetL2IsolationDomains(cancellationToken);
         }
 
         /// <summary>
@@ -2749,31 +2992,31 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>L3IsolationDomains_ListBySubscription</description>
+        /// <description>L3IsolationDomain_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
+        /// <description>2025-07-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NetworkFabricL3IsolationDomainResource"/></description>
+        /// <description><see cref="L3IsolationDomainResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricSubscriptionResource.GetNetworkFabricL3IsolationDomains(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricSubscriptionResource.GetL3IsolationDomains(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="NetworkFabricL3IsolationDomainResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<NetworkFabricL3IsolationDomainResource> GetNetworkFabricL3IsolationDomainsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="L3IsolationDomainResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<L3IsolationDomainResource> GetL3IsolationDomainsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableManagedNetworkFabricSubscriptionResource(subscriptionResource).GetNetworkFabricL3IsolationDomainsAsync(cancellationToken);
+            return GetMockableManagedNetworkFabricSubscriptionResource(subscriptionResource).GetL3IsolationDomainsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -2785,31 +3028,31 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>L3IsolationDomains_ListBySubscription</description>
+        /// <description>L3IsolationDomain_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
+        /// <description>2025-07-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NetworkFabricL3IsolationDomainResource"/></description>
+        /// <description><see cref="L3IsolationDomainResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricSubscriptionResource.GetNetworkFabricL3IsolationDomains(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricSubscriptionResource.GetL3IsolationDomains(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="NetworkFabricL3IsolationDomainResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<NetworkFabricL3IsolationDomainResource> GetNetworkFabricL3IsolationDomains(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="L3IsolationDomainResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<L3IsolationDomainResource> GetL3IsolationDomains(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableManagedNetworkFabricSubscriptionResource(subscriptionResource).GetNetworkFabricL3IsolationDomains(cancellationToken);
+            return GetMockableManagedNetworkFabricSubscriptionResource(subscriptionResource).GetL3IsolationDomains(cancellationToken);
         }
 
         /// <summary>
@@ -2821,31 +3064,31 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NeighborGroups_ListBySubscription</description>
+        /// <description>NeighborGroup_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
+        /// <description>2025-07-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NetworkFabricNeighborGroupResource"/></description>
+        /// <description><see cref="NeighborGroupResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricSubscriptionResource.GetNetworkFabricNeighborGroups(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricSubscriptionResource.GetNeighborGroups(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="NetworkFabricNeighborGroupResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<NetworkFabricNeighborGroupResource> GetNetworkFabricNeighborGroupsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="NeighborGroupResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<NeighborGroupResource> GetNeighborGroupsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableManagedNetworkFabricSubscriptionResource(subscriptionResource).GetNetworkFabricNeighborGroupsAsync(cancellationToken);
+            return GetMockableManagedNetworkFabricSubscriptionResource(subscriptionResource).GetNeighborGroupsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -2857,31 +3100,31 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NeighborGroups_ListBySubscription</description>
+        /// <description>NeighborGroup_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
+        /// <description>2025-07-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NetworkFabricNeighborGroupResource"/></description>
+        /// <description><see cref="NeighborGroupResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricSubscriptionResource.GetNetworkFabricNeighborGroups(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricSubscriptionResource.GetNeighborGroups(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="NetworkFabricNeighborGroupResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<NetworkFabricNeighborGroupResource> GetNetworkFabricNeighborGroups(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NeighborGroupResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<NeighborGroupResource> GetNeighborGroups(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableManagedNetworkFabricSubscriptionResource(subscriptionResource).GetNetworkFabricNeighborGroups(cancellationToken);
+            return GetMockableManagedNetworkFabricSubscriptionResource(subscriptionResource).GetNeighborGroups(cancellationToken);
         }
 
         /// <summary>
@@ -2893,11 +3136,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkDevices_ListBySubscription</description>
+        /// <description>NetworkDevice_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
+        /// <description>2025-07-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2929,11 +3172,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkDevices_ListBySubscription</description>
+        /// <description>NetworkDevice_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
+        /// <description>2025-07-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2965,11 +3208,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkFabricControllers_ListBySubscription</description>
+        /// <description>NetworkFabricController_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
+        /// <description>2025-07-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3001,11 +3244,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkFabricControllers_ListBySubscription</description>
+        /// <description>NetworkFabricController_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
+        /// <description>2025-07-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3037,11 +3280,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkFabrics_ListBySubscription</description>
+        /// <description>NetworkFabric_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
+        /// <description>2025-07-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3073,11 +3316,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkFabrics_ListBySubscription</description>
+        /// <description>NetworkFabric_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
+        /// <description>2025-07-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3109,11 +3352,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkPacketBrokers_ListBySubscription</description>
+        /// <description>NetworkPacketBroker_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
+        /// <description>2025-07-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3145,11 +3388,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkPacketBrokers_ListBySubscription</description>
+        /// <description>NetworkPacketBroker_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
+        /// <description>2025-07-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3181,11 +3424,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkRacks_ListBySubscription</description>
+        /// <description>NetworkRack_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
+        /// <description>2025-07-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3217,11 +3460,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkRacks_ListBySubscription</description>
+        /// <description>NetworkRack_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
+        /// <description>2025-07-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3253,11 +3496,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkTapRules_ListBySubscription</description>
+        /// <description>NetworkTapRule_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
+        /// <description>2025-07-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3289,11 +3532,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkTapRules_ListBySubscription</description>
+        /// <description>NetworkTapRule_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
+        /// <description>2025-07-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3325,11 +3568,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkTaps_ListBySubscription</description>
+        /// <description>NetworkTap_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
+        /// <description>2025-07-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3361,11 +3604,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkTaps_ListBySubscription</description>
+        /// <description>NetworkTap_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
+        /// <description>2025-07-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3397,31 +3640,31 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>RoutePolicies_ListBySubscription</description>
+        /// <description>RoutePolicy_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
+        /// <description>2025-07-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NetworkFabricRoutePolicyResource"/></description>
+        /// <description><see cref="RoutePolicyResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricSubscriptionResource.GetNetworkFabricRoutePolicies(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricSubscriptionResource.GetRoutePolicies(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="NetworkFabricRoutePolicyResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<NetworkFabricRoutePolicyResource> GetNetworkFabricRoutePoliciesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="RoutePolicyResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<RoutePolicyResource> GetRoutePoliciesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableManagedNetworkFabricSubscriptionResource(subscriptionResource).GetNetworkFabricRoutePoliciesAsync(cancellationToken);
+            return GetMockableManagedNetworkFabricSubscriptionResource(subscriptionResource).GetRoutePoliciesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -3433,31 +3676,175 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>RoutePolicies_ListBySubscription</description>
+        /// <description>RoutePolicy_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
+        /// <description>2025-07-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NetworkFabricRoutePolicyResource"/></description>
+        /// <description><see cref="RoutePolicyResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricSubscriptionResource.GetNetworkFabricRoutePolicies(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricSubscriptionResource.GetRoutePolicies(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="NetworkFabricRoutePolicyResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<NetworkFabricRoutePolicyResource> GetNetworkFabricRoutePolicies(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="RoutePolicyResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<RoutePolicyResource> GetRoutePolicies(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableManagedNetworkFabricSubscriptionResource(subscriptionResource).GetNetworkFabricRoutePolicies(cancellationToken);
+            return GetMockableManagedNetworkFabricSubscriptionResource(subscriptionResource).GetRoutePolicies(cancellationToken);
+        }
+
+        /// <summary>
+        /// Displays NetworkMonitors list by subscription GET method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetworkFabric/networkMonitors</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkMonitor_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkMonitorResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricSubscriptionResource.GetNetworkMonitors(CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="NetworkMonitorResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<NetworkMonitorResource> GetNetworkMonitorsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableManagedNetworkFabricSubscriptionResource(subscriptionResource).GetNetworkMonitorsAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Displays NetworkMonitors list by subscription GET method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetworkFabric/networkMonitors</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkMonitor_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkMonitorResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricSubscriptionResource.GetNetworkMonitors(CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="NetworkMonitorResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<NetworkMonitorResource> GetNetworkMonitors(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableManagedNetworkFabricSubscriptionResource(subscriptionResource).GetNetworkMonitors(cancellationToken);
+        }
+
+        /// <summary>
+        /// List all the Network Bootstrap Device resources in a given subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetworkFabric/networkBootstrapDevices</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkBootstrapDevice_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkBootstrapDeviceResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricSubscriptionResource.GetNetworkBootstrapDevices(CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="NetworkBootstrapDeviceResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<NetworkBootstrapDeviceResource> GetNetworkBootstrapDevicesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableManagedNetworkFabricSubscriptionResource(subscriptionResource).GetNetworkBootstrapDevicesAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// List all the Network Bootstrap Device resources in a given subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetworkFabric/networkBootstrapDevices</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkBootstrapDevice_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkBootstrapDeviceResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkFabricSubscriptionResource.GetNetworkBootstrapDevices(CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="NetworkBootstrapDeviceResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<NetworkBootstrapDeviceResource> GetNetworkBootstrapDevices(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableManagedNetworkFabricSubscriptionResource(subscriptionResource).GetNetworkBootstrapDevices(cancellationToken);
         }
     }
 }

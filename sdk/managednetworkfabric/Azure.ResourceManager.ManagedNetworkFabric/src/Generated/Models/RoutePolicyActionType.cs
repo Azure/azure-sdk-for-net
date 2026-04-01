@@ -26,11 +26,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         private const string DenyValue = "Deny";
         private const string ContinueValue = "Continue";
 
-        /// <summary> Permit. </summary>
+        /// <summary> RoutePolicyActionType-Permit. </summary>
         public static RoutePolicyActionType Permit { get; } = new RoutePolicyActionType(PermitValue);
-        /// <summary> Deny. </summary>
+        /// <summary> RoutePolicyActionType-Deny. </summary>
         public static RoutePolicyActionType Deny { get; } = new RoutePolicyActionType(DenyValue);
-        /// <summary> Continue. </summary>
+        /// <summary> RoutePolicyActionType-Continue. </summary>
         public static RoutePolicyActionType Continue { get; } = new RoutePolicyActionType(ContinueValue);
         /// <summary> Determines if two <see cref="RoutePolicyActionType"/> values are the same. </summary>
         public static bool operator ==(RoutePolicyActionType left, RoutePolicyActionType right) => left.Equals(right);

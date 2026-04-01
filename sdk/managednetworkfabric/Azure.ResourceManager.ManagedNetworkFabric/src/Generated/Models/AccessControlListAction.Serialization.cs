@@ -34,15 +34,25 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 throw new FormatException($"The model {nameof(AccessControlListAction)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(AclActionType))
+            if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(AclActionType.Value.ToString());
+                writer.WriteStringValue(Type.Value.ToString());
             }
             if (Optional.IsDefined(CounterName))
             {
                 writer.WritePropertyName("counterName"u8);
                 writer.WriteStringValue(CounterName);
+            }
+            if (Optional.IsDefined(RemarkComment))
+            {
+                writer.WritePropertyName("remarkComment"u8);
+                writer.WriteStringValue(RemarkComment);
+            }
+            if (Optional.IsDefined(PoliceRateConfiguration))
+            {
+                writer.WritePropertyName("policeRateConfiguration"u8);
+                writer.WriteObjectValue(PoliceRateConfiguration, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -83,6 +93,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
             AclActionType? type = default;
             string counterName = default;
+            string remarkComment = default;
+            PoliceRateConfigurationProperties policeRateConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -101,13 +113,27 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     counterName = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("remarkComment"u8))
+                {
+                    remarkComment = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("policeRateConfiguration"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    policeRateConfiguration = PoliceRateConfigurationProperties.DeserializePoliceRateConfigurationProperties(property.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AccessControlListAction(type, counterName, serializedAdditionalRawData);
+            return new AccessControlListAction(type, counterName, remarkComment, policeRateConfiguration, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AccessControlListAction>.Write(ModelReaderWriterOptions options)

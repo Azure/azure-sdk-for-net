@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> The Network Device Patch Parameters defines the patch parameters of the resource. </summary>
-    public partial class NetworkDevicePatch : NetworkRackPatch
+    public partial class NetworkDevicePatch : TagsUpdate
     {
         /// <summary> Initializes a new instance of <see cref="NetworkDevicePatch"/>. </summary>
         public NetworkDevicePatch()
@@ -24,11 +24,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="annotation"> Switch configuration description. </param>
         /// <param name="hostName"> The host name of the device. </param>
         /// <param name="serialNumber"> Serial number of the device. Format of serial Number - Make;Model;HardwareRevisionId;SerialNumber. </param>
-        internal NetworkDevicePatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, string annotation, string hostName, string serialNumber) : base(tags, serializedAdditionalRawData)
+        /// <param name="identitySelector"> The selection of the managed identity to use with this storage account. The identity type must be either system assigned or user assigned. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        internal NetworkDevicePatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, string annotation, string hostName, string serialNumber, IdentitySelectorPatch identitySelector, ManagedServiceIdentityPatch identity) : base(tags, serializedAdditionalRawData)
         {
             Annotation = annotation;
             HostName = hostName;
             SerialNumber = serialNumber;
+            IdentitySelector = identitySelector;
+            Identity = identity;
         }
 
         /// <summary> Switch configuration description. </summary>
@@ -37,5 +41,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public string HostName { get; set; }
         /// <summary> Serial number of the device. Format of serial Number - Make;Model;HardwareRevisionId;SerialNumber. </summary>
         public string SerialNumber { get; set; }
+        /// <summary> The selection of the managed identity to use with this storage account. The identity type must be either system assigned or user assigned. </summary>
+        public IdentitySelectorPatch IdentitySelector { get; set; }
+        /// <summary> The managed service identities assigned to this resource. </summary>
+        public ManagedServiceIdentityPatch Identity { get; set; }
     }
 }

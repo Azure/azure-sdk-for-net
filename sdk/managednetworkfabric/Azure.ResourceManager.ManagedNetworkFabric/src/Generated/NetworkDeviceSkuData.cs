@@ -54,14 +54,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <summary> Initializes a new instance of <see cref="NetworkDeviceSkuData"/>. </summary>
         /// <param name="model"> Model of the network device. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="model"/> is null. </exception>
-        public NetworkDeviceSkuData(string model)
+        internal NetworkDeviceSkuData(string model)
         {
             Argument.AssertNotNull(model, nameof(model));
 
             Model = model;
             SupportedVersions = new ChangeTrackingList<SupportedVersionProperties>();
             SupportedRoleTypes = new ChangeTrackingList<NetworkDeviceRoleName>();
-            Interfaces = new ChangeTrackingList<NetworkDeviceInterfaceProperties>();
+            Interfaces = new ChangeTrackingList<DeviceInterfaceProperties>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkDeviceSkuData"/>. </summary>
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="interfaces"> List of network device interfaces. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkDeviceSkuData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string model, string manufacturer, IList<SupportedVersionProperties> supportedVersions, IList<NetworkDeviceRoleName> supportedRoleTypes, IList<NetworkDeviceInterfaceProperties> interfaces, NetworkFabricProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal NetworkDeviceSkuData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string model, string manufacturer, IReadOnlyList<SupportedVersionProperties> supportedVersions, IReadOnlyList<NetworkDeviceRoleName> supportedRoleTypes, IReadOnlyList<DeviceInterfaceProperties> interfaces, ProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Model = model;
             Manufacturer = manufacturer;
@@ -93,16 +93,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary> Model of the network device. </summary>
-        public string Model { get; set; }
+        public string Model { get; }
         /// <summary> Manufacturer of the network device. </summary>
-        public string Manufacturer { get; set; }
+        public string Manufacturer { get; }
         /// <summary> List of supported version details of network device. </summary>
-        public IList<SupportedVersionProperties> SupportedVersions { get; }
+        public IReadOnlyList<SupportedVersionProperties> SupportedVersions { get; }
         /// <summary> Available roles for the network device. </summary>
-        public IList<NetworkDeviceRoleName> SupportedRoleTypes { get; }
+        public IReadOnlyList<NetworkDeviceRoleName> SupportedRoleTypes { get; }
         /// <summary> List of network device interfaces. </summary>
-        public IList<NetworkDeviceInterfaceProperties> Interfaces { get; }
+        public IReadOnlyList<DeviceInterfaceProperties> Interfaces { get; }
         /// <summary> Provisioning state of the resource. </summary>
-        public NetworkFabricProvisioningState? ProvisioningState { get; }
+        public ProvisioningState? ProvisioningState { get; }
     }
 }

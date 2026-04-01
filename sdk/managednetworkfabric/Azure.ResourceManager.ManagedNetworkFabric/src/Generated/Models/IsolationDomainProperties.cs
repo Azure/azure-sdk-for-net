@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="encapsulation"> Type of encapsulation. </param>
         /// <param name="neighborGroupIds"> List of Neighbor Group IDs. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal IsolationDomainProperties(IsolationDomainEncapsulationType? encapsulation, IList<ResourceIdentifier> neighborGroupIds, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal IsolationDomainProperties(Encapsulation? encapsulation, IList<ResourceIdentifier> neighborGroupIds, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Encapsulation = encapsulation;
             NeighborGroupIds = neighborGroupIds;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> Type of encapsulation. </summary>
-        public IsolationDomainEncapsulationType? Encapsulation { get; set; }
+        public Encapsulation? Encapsulation { get; set; }
         /// <summary> List of Neighbor Group IDs. </summary>
         public IList<ResourceIdentifier> NeighborGroupIds { get; }
     }

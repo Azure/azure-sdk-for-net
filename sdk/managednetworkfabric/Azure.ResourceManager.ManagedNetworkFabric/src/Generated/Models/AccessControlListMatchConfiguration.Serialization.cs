@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
             string matchConfigurationName = default;
             long? sequenceNumber = default;
-            NetworkFabricIPAddressType? ipAddressType = default;
+            IPAddressType? ipAddressType = default;
             IList<AccessControlListMatchCondition> matchConditions = default;
             IList<AccessControlListAction> actions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    ipAddressType = new NetworkFabricIPAddressType(property.Value.GetString());
+                    ipAddressType = new IPAddressType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("matchConditions"u8))

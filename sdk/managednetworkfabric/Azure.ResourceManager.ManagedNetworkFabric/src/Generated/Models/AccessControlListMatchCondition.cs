@@ -21,6 +21,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             IPLengths = new ChangeTrackingList<string>();
             TtlValues = new ChangeTrackingList<string>();
             DscpMarkings = new ChangeTrackingList<string>();
+            ProtocolNeighbors = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AccessControlListMatchCondition"/>. </summary>
@@ -33,15 +34,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="ipLengths"> List of IP Lengths that need to be matched. </param>
         /// <param name="ttlValues"> List of TTL [Time To Live] values that need to be matched. </param>
         /// <param name="dscpMarkings"> List of DSCP Markings that need to be matched. </param>
+        /// <param name="protocolNeighbors"> Protocol neighbors that need to be matched. </param>
         /// <param name="portCondition"> Defines the port condition that needs to be matched. </param>
-        internal AccessControlListMatchCondition(IList<string> protocolTypes, VlanMatchCondition vlanMatchCondition, IPMatchCondition ipCondition, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<string> etherTypes, IList<string> fragments, IList<string> ipLengths, IList<string> ttlValues, IList<string> dscpMarkings, AccessControlListPortCondition portCondition) : base(protocolTypes, vlanMatchCondition, ipCondition, serializedAdditionalRawData)
+        /// <param name="icmpConfiguration"> Internet Control Message Protocol (ICMP) configuration. </param>
+        internal AccessControlListMatchCondition(IList<string> protocolTypes, VlanMatchCondition vlanMatchCondition, IPMatchCondition ipCondition, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<string> etherTypes, IList<string> fragments, IList<string> ipLengths, IList<string> ttlValues, IList<string> dscpMarkings, IList<string> protocolNeighbors, AccessControlListPortCondition portCondition, IcmpConfigurationProperties icmpConfiguration) : base(protocolTypes, vlanMatchCondition, ipCondition, serializedAdditionalRawData)
         {
             EtherTypes = etherTypes;
             Fragments = fragments;
             IPLengths = ipLengths;
             TtlValues = ttlValues;
             DscpMarkings = dscpMarkings;
+            ProtocolNeighbors = protocolNeighbors;
             PortCondition = portCondition;
+            IcmpConfiguration = icmpConfiguration;
         }
 
         /// <summary> List of ether type values that need to be matched. </summary>
@@ -54,7 +59,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public IList<string> TtlValues { get; }
         /// <summary> List of DSCP Markings that need to be matched. </summary>
         public IList<string> DscpMarkings { get; }
+        /// <summary> Protocol neighbors that need to be matched. </summary>
+        public IList<string> ProtocolNeighbors { get; }
         /// <summary> Defines the port condition that needs to be matched. </summary>
         public AccessControlListPortCondition PortCondition { get; set; }
+        /// <summary> Internet Control Message Protocol (ICMP) configuration. </summary>
+        internal IcmpConfigurationProperties IcmpConfiguration { get; set; }
+        /// <summary> Internet Control Message Protocol (ICMP) types. </summary>
+        public IList<string> IcmpTypes
+        {
+            get
+            {
+                if (IcmpConfiguration is null)
+                    IcmpConfiguration = new IcmpConfigurationProperties();
+                return IcmpConfiguration.IcmpTypes;
+            }
+        }
     }
 }

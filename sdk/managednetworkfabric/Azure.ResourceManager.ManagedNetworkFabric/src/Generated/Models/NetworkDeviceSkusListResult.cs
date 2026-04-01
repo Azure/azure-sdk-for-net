@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> List of Network Device SKUs. </summary>
+    /// <summary> Paged collection of NetworkDeviceSku items. </summary>
     internal partial class NetworkDeviceSkusListResult
     {
         /// <summary>
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="NetworkDeviceSkusListResult"/>. </summary>
-        internal NetworkDeviceSkusListResult()
+        /// <param name="value"> The NetworkDeviceSku items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal NetworkDeviceSkusListResult(IEnumerable<NetworkDeviceSkuData> value)
         {
-            Value = new ChangeTrackingList<NetworkDeviceSkuData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkDeviceSkusListResult"/>. </summary>
-        /// <param name="value"> List of Network Device SKU resources. </param>
-        /// <param name="nextLink"> Url to follow for getting next page of resources. </param>
+        /// <param name="value"> The NetworkDeviceSku items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkDeviceSkusListResult(IReadOnlyList<NetworkDeviceSkuData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetworkDeviceSkusListResult(IReadOnlyList<NetworkDeviceSkuData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of Network Device SKU resources. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkDeviceSkusListResult"/> for deserialization. </summary>
+        internal NetworkDeviceSkusListResult()
+        {
+        }
+
+        /// <summary> The NetworkDeviceSku items on this page. </summary>
         public IReadOnlyList<NetworkDeviceSkuData> Value { get; }
-        /// <summary> Url to follow for getting next page of resources. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

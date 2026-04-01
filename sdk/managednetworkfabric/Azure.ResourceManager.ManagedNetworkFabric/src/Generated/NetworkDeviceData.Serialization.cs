@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Net;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
@@ -39,6 +38,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
 
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity"u8);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, ModelSerializationExtensions.WireV3Options);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Annotation))
@@ -51,10 +55,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 writer.WritePropertyName("hostName"u8);
                 writer.WriteStringValue(HostName);
             }
-            if (Optional.IsDefined(SerialNumber))
+            writer.WritePropertyName("serialNumber"u8);
+            writer.WriteStringValue(SerialNumber);
+            if (Optional.IsDefined(IdentitySelector))
             {
-                writer.WritePropertyName("serialNumber"u8);
-                writer.WriteStringValue(SerialNumber);
+                writer.WritePropertyName("identitySelector"u8);
+                writer.WriteObjectValue(IdentitySelector, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Version))
             {
@@ -79,12 +85,22 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             if (options.Format != "W" && Optional.IsDefined(ManagementIPv4Address))
             {
                 writer.WritePropertyName("managementIpv4Address"u8);
-                writer.WriteStringValue(ManagementIPv4Address.ToString());
+                writer.WriteStringValue(ManagementIPv4Address);
             }
             if (options.Format != "W" && Optional.IsDefined(ManagementIPv6Address))
             {
                 writer.WritePropertyName("managementIpv6Address"u8);
                 writer.WriteStringValue(ManagementIPv6Address);
+            }
+            if (options.Format != "W" && Optional.IsDefined(RwDeviceConfig))
+            {
+                writer.WritePropertyName("rwDeviceConfig"u8);
+                writer.WriteStringValue(RwDeviceConfig);
+            }
+            if (options.Format != "W" && Optional.IsDefined(LastOperation))
+            {
+                writer.WritePropertyName("lastOperation"u8);
+                writer.WriteObjectValue(LastOperation, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ConfigurationState))
             {
@@ -100,6 +116,31 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 writer.WritePropertyName("administrativeState"u8);
                 writer.WriteStringValue(AdministrativeState.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(SecretRotationStatus))
+            {
+                writer.WritePropertyName("secretRotationStatus"u8);
+                writer.WriteStartArray();
+                foreach (var item in SecretRotationStatus)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(CertificateRotationStatus))
+            {
+                writer.WritePropertyName("certificateRotationStatus"u8);
+                writer.WriteStartArray();
+                foreach (var item in CertificateRotationStatus)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(NetworkFabricId))
+            {
+                writer.WritePropertyName("networkFabricId"u8);
+                writer.WriteStringValue(NetworkFabricId);
             }
             writer.WriteEndObject();
         }
@@ -124,6 +165,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 return null;
             }
+            ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -133,19 +175,34 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             string annotation = default;
             string hostName = default;
             string serialNumber = default;
+            IdentitySelector identitySelector = default;
             string version = default;
             string networkDeviceSku = default;
             NetworkDeviceRole? networkDeviceRole = default;
-            ResourceIdentifier networkRackId = default;
-            IPAddress managementIPv4Address = default;
+            string networkRackId = default;
+            string managementIPv4Address = default;
             string managementIPv6Address = default;
-            NetworkFabricConfigurationState? configurationState = default;
-            NetworkFabricProvisioningState? provisioningState = default;
-            NetworkFabricAdministrativeState? administrativeState = default;
+            string rwDeviceConfig = default;
+            LastOperationProperties lastOperation = default;
+            ConfigurationState? configurationState = default;
+            ProvisioningState? provisioningState = default;
+            AdministrativeState? administrativeState = default;
+            IReadOnlyList<SecretRotationStatus> secretRotationStatus = default;
+            IReadOnlyList<CertificateRotationStatus> certificateRotationStatus = default;
+            ResourceIdentifier networkFabricId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("identity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireV3Options, AzureResourceManagerManagedNetworkFabricContext.Default);
+                    continue;
+                }
                 if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -213,6 +270,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             serialNumber = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("identitySelector"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            identitySelector = IdentitySelector.DeserializeIdentitySelector(property0.Value, options);
+                            continue;
+                        }
                         if (property0.NameEquals("version"u8))
                         {
                             version = property0.Value.GetString();
@@ -234,25 +300,31 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                         }
                         if (property0.NameEquals("networkRackId"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            networkRackId = new ResourceIdentifier(property0.Value.GetString());
+                            networkRackId = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("managementIpv4Address"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            managementIPv4Address = IPAddress.Parse(property0.Value.GetString());
+                            managementIPv4Address = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("managementIpv6Address"u8))
                         {
                             managementIPv6Address = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("rwDeviceConfig"u8))
+                        {
+                            rwDeviceConfig = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("lastOperation"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            lastOperation = LastOperationProperties.DeserializeLastOperationProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("configurationState"u8))
@@ -261,7 +333,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            configurationState = new NetworkFabricConfigurationState(property0.Value.GetString());
+                            configurationState = new ConfigurationState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -270,7 +342,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            provisioningState = new NetworkFabricProvisioningState(property0.Value.GetString());
+                            provisioningState = new ProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("administrativeState"u8))
@@ -279,7 +351,44 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            administrativeState = new NetworkFabricAdministrativeState(property0.Value.GetString());
+                            administrativeState = new AdministrativeState(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("secretRotationStatus"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<SecretRotationStatus> array = new List<SecretRotationStatus>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(Models.SecretRotationStatus.DeserializeSecretRotationStatus(item, options));
+                            }
+                            secretRotationStatus = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("certificateRotationStatus"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<CertificateRotationStatus> array = new List<CertificateRotationStatus>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(Models.CertificateRotationStatus.DeserializeCertificateRotationStatus(item, options));
+                            }
+                            certificateRotationStatus = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("networkFabricId"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            networkFabricId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                     }
@@ -301,15 +410,22 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 annotation,
                 hostName,
                 serialNumber,
+                identitySelector,
                 version,
                 networkDeviceSku,
                 networkDeviceRole,
                 networkRackId,
                 managementIPv4Address,
                 managementIPv6Address,
+                rwDeviceConfig,
+                lastOperation,
                 configurationState,
                 provisioningState,
                 administrativeState,
+                secretRotationStatus ?? new ChangeTrackingList<SecretRotationStatus>(),
+                certificateRotationStatus ?? new ChangeTrackingList<CertificateRotationStatus>(),
+                networkFabricId,
+                identity,
                 serializedAdditionalRawData);
         }
 

@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="SupportedConnectorProperties"/>. </summary>
-        public SupportedConnectorProperties()
+        internal SupportedConnectorProperties()
         {
         }
 
@@ -62,8 +62,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> Type of connector used. Example: Optical. </summary>
-        public string ConnectorType { get; set; }
+        public string ConnectorType { get; }
         /// <summary> Maximum speed of the connector in Mbps. </summary>
-        public int? MaxSpeedInMbps { get; set; }
+        public int? MaxSpeedInMbps { get; }
     }
 }

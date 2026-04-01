@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> List of Neighbor Group. </summary>
+    /// <summary> Paged collection of NeighborGroup items. </summary>
     internal partial class NeighborGroupsListResult
     {
         /// <summary>
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="NeighborGroupsListResult"/>. </summary>
-        internal NeighborGroupsListResult()
+        /// <param name="value"> The NeighborGroup items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal NeighborGroupsListResult(IEnumerable<NeighborGroupData> value)
         {
-            Value = new ChangeTrackingList<NetworkFabricNeighborGroupData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="NeighborGroupsListResult"/>. </summary>
-        /// <param name="value"> List of Neighbor Group resources. </param>
-        /// <param name="nextLink"> Url to follow for getting next page of resources. </param>
+        /// <param name="value"> The NeighborGroup items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NeighborGroupsListResult(IReadOnlyList<NetworkFabricNeighborGroupData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NeighborGroupsListResult(IReadOnlyList<NeighborGroupData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of Neighbor Group resources. </summary>
-        public IReadOnlyList<NetworkFabricNeighborGroupData> Value { get; }
-        /// <summary> Url to follow for getting next page of resources. </summary>
-        public string NextLink { get; }
+        /// <summary> Initializes a new instance of <see cref="NeighborGroupsListResult"/> for deserialization. </summary>
+        internal NeighborGroupsListResult()
+        {
+        }
+
+        /// <summary> The NeighborGroup items on this page. </summary>
+        public IReadOnlyList<NeighborGroupData> Value { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

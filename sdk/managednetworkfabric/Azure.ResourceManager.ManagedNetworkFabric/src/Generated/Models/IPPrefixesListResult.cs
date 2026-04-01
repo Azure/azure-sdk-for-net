@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> List of IP Prefixes. </summary>
+    /// <summary> Paged collection of IpPrefix items. </summary>
     internal partial class IPPrefixesListResult
     {
         /// <summary>
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="IPPrefixesListResult"/>. </summary>
-        internal IPPrefixesListResult()
+        /// <param name="value"> The IpPrefix items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal IPPrefixesListResult(IEnumerable<IPPrefixData> value)
         {
-            Value = new ChangeTrackingList<NetworkFabricIPPrefixData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="IPPrefixesListResult"/>. </summary>
-        /// <param name="value"> List of IP Prefix resources. </param>
-        /// <param name="nextLink"> Url to follow for getting next page of resources. </param>
+        /// <param name="value"> The IpPrefix items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal IPPrefixesListResult(IReadOnlyList<NetworkFabricIPPrefixData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal IPPrefixesListResult(IReadOnlyList<IPPrefixData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of IP Prefix resources. </summary>
-        public IReadOnlyList<NetworkFabricIPPrefixData> Value { get; }
-        /// <summary> Url to follow for getting next page of resources. </summary>
-        public string NextLink { get; }
+        /// <summary> Initializes a new instance of <see cref="IPPrefixesListResult"/> for deserialization. </summary>
+        internal IPPrefixesListResult()
+        {
+        }
+
+        /// <summary> The IpPrefix items on this page. </summary>
+        public IReadOnlyList<IPPrefixData> Value { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

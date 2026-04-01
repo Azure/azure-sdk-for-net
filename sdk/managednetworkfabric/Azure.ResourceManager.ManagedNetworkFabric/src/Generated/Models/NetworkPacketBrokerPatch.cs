@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> The NetworkPacketBroker patch resource definition. </summary>
-    public partial class NetworkPacketBrokerPatch : NetworkRackPatch
+    public partial class NetworkPacketBrokerPatch : TagsUpdate
     {
         /// <summary> Initializes a new instance of <see cref="NetworkPacketBrokerPatch"/>. </summary>
         public NetworkPacketBrokerPatch()
@@ -21,8 +21,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of <see cref="NetworkPacketBrokerPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkPacketBrokerPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(tags, serializedAdditionalRawData)
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        internal NetworkPacketBrokerPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ManagedServiceIdentityPatch identity) : base(tags, serializedAdditionalRawData)
         {
+            Identity = identity;
         }
+
+        /// <summary> The managed service identities assigned to this resource. </summary>
+        public ManagedServiceIdentityPatch Identity { get; set; }
     }
 }

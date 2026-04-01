@@ -35,6 +35,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity"u8);
+                writer.WriteObjectValue(Identity, options);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Annotation))
@@ -62,10 +67,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("ipv6Prefix"u8);
                 writer.WriteStringValue(IPv6Prefix);
             }
-            if (Optional.IsDefined(FabricAsn))
+            if (Optional.IsDefined(FabricASN))
             {
                 writer.WritePropertyName("fabricASN"u8);
-                writer.WriteNumberValue(FabricAsn.Value);
+                writer.WriteNumberValue(FabricASN.Value);
             }
             if (Optional.IsDefined(TerminalServerConfiguration))
             {
@@ -76,6 +81,71 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 writer.WritePropertyName("managementNetworkConfiguration"u8);
                 writer.WriteObjectValue(ManagementNetworkConfiguration, options);
+            }
+            if (Optional.IsDefined(StorageAccountConfiguration))
+            {
+                writer.WritePropertyName("storageAccountConfiguration"u8);
+                writer.WriteObjectValue(StorageAccountConfiguration, options);
+            }
+            if (Optional.IsDefined(HardwareAlertThreshold))
+            {
+                writer.WritePropertyName("hardwareAlertThreshold"u8);
+                writer.WriteNumberValue(HardwareAlertThreshold.Value);
+            }
+            if (Optional.IsCollectionDefined(ControlPlaneAcls))
+            {
+                writer.WritePropertyName("controlPlaneAcls"u8);
+                writer.WriteStartArray();
+                foreach (var item in ControlPlaneAcls)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(TrustedIPPrefixes))
+            {
+                writer.WritePropertyName("trustedIpPrefixes"u8);
+                writer.WriteStartArray();
+                foreach (var item in TrustedIPPrefixes)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(UniqueRdConfiguration))
+            {
+                writer.WritePropertyName("uniqueRdConfiguration"u8);
+                writer.WriteObjectValue(UniqueRdConfiguration, options);
+            }
+            if (Optional.IsDefined(QosConfiguration))
+            {
+                writer.WritePropertyName("qosConfiguration"u8);
+                writer.WriteObjectValue(QosConfiguration, options);
+            }
+            if (Optional.IsCollectionDefined(FeatureFlags))
+            {
+                writer.WritePropertyName("featureFlags"u8);
+                writer.WriteStartArray();
+                foreach (var item in FeatureFlags)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(AuthorizedTransceiver))
+            {
+                writer.WritePropertyName("authorizedTransceiver"u8);
+                writer.WriteObjectValue(AuthorizedTransceiver, options);
             }
             writer.WriteEndObject();
         }
@@ -100,19 +170,37 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
+            ManagedServiceIdentityPatch identity = default;
             IDictionary<string, string> tags = default;
             string annotation = default;
             int? rackCount = default;
             int? serverCountPerRack = default;
             string ipv4Prefix = default;
             string ipv6Prefix = default;
-            long? fabricAsn = default;
-            NetworkFabricPatchablePropertiesTerminalServerConfiguration terminalServerConfiguration = default;
-            ManagementNetworkConfigurationPatchableProperties managementNetworkConfiguration = default;
+            long? fabricASN = default;
+            TerminalServerPatchConfiguration terminalServerConfiguration = default;
+            ManagementNetworkPatchConfiguration managementNetworkConfiguration = default;
+            StorageAccountPatchConfiguration storageAccountConfiguration = default;
+            int? hardwareAlertThreshold = default;
+            IList<ResourceIdentifier> controlPlaneAcls = default;
+            IList<ResourceIdentifier> trustedIPPrefixes = default;
+            UniqueRouteDistinguisherPatchProperties uniqueRdConfiguration = default;
+            QosPatchProperties qosConfiguration = default;
+            IList<FeatureFlagProperties> featureFlags = default;
+            AuthorizedTransceiverPatchProperties authorizedTransceiver = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("identity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identity = ManagedServiceIdentityPatch.DeserializeManagedServiceIdentityPatch(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -175,7 +263,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             {
                                 continue;
                             }
-                            fabricAsn = property0.Value.GetInt64();
+                            fabricASN = property0.Value.GetInt64();
                             continue;
                         }
                         if (property0.NameEquals("terminalServerConfiguration"u8))
@@ -184,7 +272,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             {
                                 continue;
                             }
-                            terminalServerConfiguration = NetworkFabricPatchablePropertiesTerminalServerConfiguration.DeserializeNetworkFabricPatchablePropertiesTerminalServerConfiguration(property0.Value, options);
+                            terminalServerConfiguration = TerminalServerPatchConfiguration.DeserializeTerminalServerPatchConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("managementNetworkConfiguration"u8))
@@ -193,7 +281,108 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             {
                                 continue;
                             }
-                            managementNetworkConfiguration = ManagementNetworkConfigurationPatchableProperties.DeserializeManagementNetworkConfigurationPatchableProperties(property0.Value, options);
+                            managementNetworkConfiguration = ManagementNetworkPatchConfiguration.DeserializeManagementNetworkPatchConfiguration(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("storageAccountConfiguration"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            storageAccountConfiguration = StorageAccountPatchConfiguration.DeserializeStorageAccountPatchConfiguration(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("hardwareAlertThreshold"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            hardwareAlertThreshold = property0.Value.GetInt32();
+                            continue;
+                        }
+                        if (property0.NameEquals("controlPlaneAcls"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<ResourceIdentifier> array = new List<ResourceIdentifier>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(new ResourceIdentifier(item.GetString()));
+                                }
+                            }
+                            controlPlaneAcls = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("trustedIpPrefixes"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<ResourceIdentifier> array = new List<ResourceIdentifier>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(new ResourceIdentifier(item.GetString()));
+                                }
+                            }
+                            trustedIPPrefixes = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("uniqueRdConfiguration"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            uniqueRdConfiguration = UniqueRouteDistinguisherPatchProperties.DeserializeUniqueRouteDistinguisherPatchProperties(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("qosConfiguration"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            qosConfiguration = QosPatchProperties.DeserializeQosPatchProperties(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("featureFlags"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<FeatureFlagProperties> array = new List<FeatureFlagProperties>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(FeatureFlagProperties.DeserializeFeatureFlagProperties(item, options));
+                            }
+                            featureFlags = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("authorizedTransceiver"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            authorizedTransceiver = AuthorizedTransceiverPatchProperties.DeserializeAuthorizedTransceiverPatchProperties(property0.Value, options);
                             continue;
                         }
                     }
@@ -213,9 +402,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 serverCountPerRack,
                 ipv4Prefix,
                 ipv6Prefix,
-                fabricAsn,
+                fabricASN,
                 terminalServerConfiguration,
-                managementNetworkConfiguration);
+                managementNetworkConfiguration,
+                storageAccountConfiguration,
+                hardwareAlertThreshold,
+                controlPlaneAcls ?? new ChangeTrackingList<ResourceIdentifier>(),
+                trustedIPPrefixes ?? new ChangeTrackingList<ResourceIdentifier>(),
+                uniqueRdConfiguration,
+                qosConfiguration,
+                featureFlags ?? new ChangeTrackingList<FeatureFlagProperties>(),
+                authorizedTransceiver,
+                identity);
         }
 
         BinaryData IPersistableModel<NetworkFabricPatch>.Write(ModelReaderWriterOptions options)

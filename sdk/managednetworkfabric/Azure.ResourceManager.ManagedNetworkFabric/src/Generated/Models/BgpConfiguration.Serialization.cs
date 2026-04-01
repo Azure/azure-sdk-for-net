@@ -55,16 +55,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("allowASOverride"u8);
                 writer.WriteStringValue(AllowASOverride.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(FabricAsn))
+            if (options.Format != "W" && Optional.IsDefined(FabricASN))
             {
                 writer.WritePropertyName("fabricASN"u8);
-                writer.WriteNumberValue(FabricAsn.Value);
+                writer.WriteNumberValue(FabricASN.Value);
             }
-            if (Optional.IsDefined(PeerAsn))
-            {
-                writer.WritePropertyName("peerASN"u8);
-                writer.WriteNumberValue(PeerAsn.Value);
-            }
+            writer.WritePropertyName("peerASN"u8);
+            writer.WriteNumberValue(PeerASN);
             if (Optional.IsCollectionDefined(IPv4ListenRangePrefixes))
             {
                 writer.WritePropertyName("ipv4ListenRangePrefixes"u8);
@@ -105,6 +102,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(BmpConfiguration))
+            {
+                writer.WritePropertyName("bmpConfiguration"u8);
+                writer.WriteObjectValue(BmpConfiguration, options);
+            }
+            if (Optional.IsDefined(V4OverV6BgpSession))
+            {
+                writer.WritePropertyName("v4OverV6BgpSession"u8);
+                writer.WriteStringValue(V4OverV6BgpSession.Value.ToString());
+            }
+            if (Optional.IsDefined(V6OverV4BgpSession))
+            {
+                writer.WritePropertyName("v6OverV4BgpSession"u8);
+                writer.WriteStringValue(V6OverV4BgpSession.Value.ToString());
+            }
         }
 
         BgpConfiguration IJsonModel<BgpConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -128,15 +140,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 return null;
             }
             BfdConfiguration bfdConfiguration = default;
-            NetworkFabricBooleanValue? defaultRouteOriginate = default;
+            BooleanEnumProperty? defaultRouteOriginate = default;
             int? allowAS = default;
             AllowASOverride? allowASOverride = default;
-            long? fabricAsn = default;
-            long? peerAsn = default;
+            long? fabricASN = default;
+            long peerASN = default;
             IList<string> ipv4ListenRangePrefixes = default;
             IList<string> ipv6ListenRangePrefixes = default;
             IList<NeighborAddress> ipv4NeighborAddress = default;
             IList<NeighborAddress> ipv6NeighborAddress = default;
+            InternalNetworkBmpProperties bmpConfiguration = default;
+            V4OverV6BgpSessionState? v4OverV6BgpSession = default;
+            V6OverV4BgpSessionState? v6OverV4BgpSession = default;
             string annotation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -157,7 +172,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    defaultRouteOriginate = new NetworkFabricBooleanValue(property.Value.GetString());
+                    defaultRouteOriginate = new BooleanEnumProperty(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("allowAS"u8))
@@ -184,16 +199,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    fabricAsn = property.Value.GetInt64();
+                    fabricASN = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("peerASN"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    peerAsn = property.Value.GetInt64();
+                    peerASN = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("ipv4ListenRangePrefixes"u8))
@@ -252,6 +263,33 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     ipv6NeighborAddress = array;
                     continue;
                 }
+                if (property.NameEquals("bmpConfiguration"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    bmpConfiguration = InternalNetworkBmpProperties.DeserializeInternalNetworkBmpProperties(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("v4OverV6BgpSession"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    v4OverV6BgpSession = new V4OverV6BgpSessionState(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("v6OverV4BgpSession"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    v6OverV4BgpSession = new V6OverV4BgpSessionState(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("annotation"u8))
                 {
                     annotation = property.Value.GetString();
@@ -270,12 +308,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 defaultRouteOriginate,
                 allowAS,
                 allowASOverride,
-                fabricAsn,
-                peerAsn,
+                fabricASN,
+                peerASN,
                 ipv4ListenRangePrefixes ?? new ChangeTrackingList<string>(),
                 ipv6ListenRangePrefixes ?? new ChangeTrackingList<string>(),
                 ipv4NeighborAddress ?? new ChangeTrackingList<NeighborAddress>(),
-                ipv6NeighborAddress ?? new ChangeTrackingList<NeighborAddress>());
+                ipv6NeighborAddress ?? new ChangeTrackingList<NeighborAddress>(),
+                bmpConfiguration,
+                v4OverV6BgpSession,
+                v6OverV4BgpSession);
         }
 
         BinaryData IPersistableModel<BgpConfiguration>.Write(ModelReaderWriterOptions options)

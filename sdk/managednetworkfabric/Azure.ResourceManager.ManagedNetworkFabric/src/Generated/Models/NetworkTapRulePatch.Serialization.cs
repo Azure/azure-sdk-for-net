@@ -35,6 +35,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity"u8);
+                writer.WriteObjectValue(Identity, options);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Annotation))
@@ -72,6 +77,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(IdentitySelector))
+            {
+                writer.WritePropertyName("identitySelector"u8);
+                writer.WriteObjectValue(IdentitySelector, options);
+            }
+            if (Optional.IsDefined(GlobalNetworkTapRuleActions))
+            {
+                writer.WritePropertyName("globalNetworkTapRuleActions"u8);
+                writer.WriteObjectValue(GlobalNetworkTapRuleActions, options);
+            }
             writer.WriteEndObject();
         }
 
@@ -95,16 +110,28 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
+            ManagedServiceIdentityPatch identity = default;
             IDictionary<string, string> tags = default;
             string annotation = default;
-            NetworkFabricConfigurationType? configurationType = default;
+            ConfigurationType? configurationType = default;
             Uri tapRulesUrl = default;
-            IList<NetworkTapRuleMatchConfiguration> matchConfigurations = default;
-            IList<CommonDynamicMatchConfiguration> dynamicMatchConfigurations = default;
+            IList<NetworkTapRuleMatchConfigurationPatch> matchConfigurations = default;
+            IList<CommonDynamicMatchConfigurationPatch> dynamicMatchConfigurations = default;
+            IdentitySelectorPatch identitySelector = default;
+            GlobalNetworkTapRuleActionPatchProperties globalNetworkTapRuleActions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("identity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identity = ManagedServiceIdentityPatch.DeserializeManagedServiceIdentityPatch(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -139,7 +166,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             {
                                 continue;
                             }
-                            configurationType = new NetworkFabricConfigurationType(property0.Value.GetString());
+                            configurationType = new ConfigurationType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("tapRulesUrl"u8))
@@ -157,10 +184,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             {
                                 continue;
                             }
-                            List<NetworkTapRuleMatchConfiguration> array = new List<NetworkTapRuleMatchConfiguration>();
+                            List<NetworkTapRuleMatchConfigurationPatch> array = new List<NetworkTapRuleMatchConfigurationPatch>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NetworkTapRuleMatchConfiguration.DeserializeNetworkTapRuleMatchConfiguration(item, options));
+                                array.Add(NetworkTapRuleMatchConfigurationPatch.DeserializeNetworkTapRuleMatchConfigurationPatch(item, options));
                             }
                             matchConfigurations = array;
                             continue;
@@ -171,12 +198,30 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             {
                                 continue;
                             }
-                            List<CommonDynamicMatchConfiguration> array = new List<CommonDynamicMatchConfiguration>();
+                            List<CommonDynamicMatchConfigurationPatch> array = new List<CommonDynamicMatchConfigurationPatch>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(CommonDynamicMatchConfiguration.DeserializeCommonDynamicMatchConfiguration(item, options));
+                                array.Add(CommonDynamicMatchConfigurationPatch.DeserializeCommonDynamicMatchConfigurationPatch(item, options));
                             }
                             dynamicMatchConfigurations = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("identitySelector"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            identitySelector = IdentitySelectorPatch.DeserializeIdentitySelectorPatch(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("globalNetworkTapRuleActions"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            globalNetworkTapRuleActions = GlobalNetworkTapRuleActionPatchProperties.DeserializeGlobalNetworkTapRuleActionPatchProperties(property0.Value, options);
                             continue;
                         }
                     }
@@ -194,8 +239,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 annotation,
                 configurationType,
                 tapRulesUrl,
-                matchConfigurations ?? new ChangeTrackingList<NetworkTapRuleMatchConfiguration>(),
-                dynamicMatchConfigurations ?? new ChangeTrackingList<CommonDynamicMatchConfiguration>());
+                matchConfigurations ?? new ChangeTrackingList<NetworkTapRuleMatchConfigurationPatch>(),
+                dynamicMatchConfigurations ?? new ChangeTrackingList<CommonDynamicMatchConfigurationPatch>(),
+                identitySelector,
+                globalNetworkTapRuleActions,
+                identity);
         }
 
         BinaryData IPersistableModel<NetworkTapRulePatch>.Write(ModelReaderWriterOptions options)
