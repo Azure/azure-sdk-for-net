@@ -13,6 +13,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 {
+    [Ignore("Recordings incompatible with TypeSpec-migrated Storage client. https://github.com/Azure/azure-sdk-for-net/issues/57679")]
     internal class DataFactoryDatasetResourceTests : DataFactoryManagementTestBase
     {
         public DataFactoryDatasetResourceTests(bool isAsync) : base(isAsync)//,RecordedTestMode.Record)
