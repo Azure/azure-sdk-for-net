@@ -437,9 +437,9 @@
 
   <Target Name="ValidateNoLocalApiCompatBaseline" BeforeTargets="ValidateApiCompatForSrc" Condition="'$(ApiCompatVersion)' != ''">
     <Error Condition="Exists('$(MSBuildProjectDirectory)\ApiCompatBaseline.txt')"
-           Text="Local ApiCompatBaseline.txt files are no longer supported. Move suppressions to eng\apicompatbaselines\$(PackageId).txt instead." />
+           Text="Local ApiCompatBaseline.txt files are no longer supported. Move suppressions to eng\apicompatbaselines\$(MSBuildProjectName).txt instead. See https://github.com/Azure/azure-sdk-for-net/issues/55311" />
     <Error Condition="Exists('$(MSBuildProjectDirectory)\ApiCompatBaseline.$(TargetFramework).txt')"
-           Text="Local ApiCompatBaseline.$(TargetFramework).txt files are no longer supported. Move suppressions to eng\apicompatbaselines\$(PackageId).txt instead." />
+           Text="Local ApiCompatBaseline.$(TargetFramework).txt files are no longer supported. Move suppressions to eng\apicompatbaselines\$(MSBuildProjectName).txt instead. See https://github.com/Azure/azure-sdk-for-net/issues/55311" />
   </Target>
 
   <Target Name="ApiCompatFinishedMessage" AfterTargets="ValidateApiCompatForSrc" Condition="'$(ApiCompatVersion)' != ''">

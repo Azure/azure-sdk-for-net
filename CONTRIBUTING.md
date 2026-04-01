@@ -257,10 +257,10 @@ Each library needs to provide a `ApiCompatVersion` property which is set to the 
 ### API Compat Baseline Suppressions
 In rare cases, an intentional breaking change may be acceptable (e.g., removing an experimental API, fixing an attribute that was incorrectly applied). When ApiCompat reports errors for such changes, they can be suppressed using baseline files.
 
-**All baseline suppression files are centrally managed** in `eng/apicompatbaselines/` and named by package ID (e.g., `eng/apicompatbaselines/Azure.Core.txt`). Local `ApiCompatBaseline.txt` files in package `src/` directories are no longer supported and will produce a build error.
+**All baseline suppression files are centrally managed** in `eng/apicompatbaselines/` and named after the project (e.g., `eng/apicompatbaselines/Azure.Core.txt`). Local `ApiCompatBaseline.txt` files in package `src/` directories are no longer supported and will produce a build error.
 
 To add or modify baseline suppressions:
-1. Create or edit `eng/apicompatbaselines/<PackageId>.txt`
+1. Create or edit `eng/apicompatbaselines/<ProjectName>.txt` (the project name matches your `.csproj` filename)
 2. Add suppression entries with a comment explaining why the breaking change is acceptable
 3. Changes to this directory require review from the SDK team (enforced via CODEOWNERS)
 
