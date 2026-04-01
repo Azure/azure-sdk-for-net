@@ -42,11 +42,9 @@ To use Azure AI Agents capabilities, you must have an [Azure subscription](https
 
 Install the client library for .NET with [NuGet](https://www.nuget.org/ ):
 
-```shell
-dotnet add package Azure.AI.Extensions.OpenAI --prerelease
+```dotnetcli
+dotnet add package Azure.AI.Projects.Agents --prerelease
 ```
-
-> You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/) and [Cosmos DB account](https://docs.microsoft.com/azure/cosmos-db/account-overview) (SQL API). In order to take advantage of the C# 8.0 syntax, it is recommended that you compile using the [.NET Core SDK](https://dotnet.microsoft.com/download) 3.0 or higher with a [language version](https://docs.microsoft.com/dotnet/csharp/language-reference/configure-language-version#override-a-default) of `latest`.  It is also possible to compile with the .NET Core SDK 2.1.x using a language version of `preview`.
 
 ### Authenticate the client
 
@@ -113,7 +111,7 @@ In the most of code snippets we will show only asynchronous sample for brevity. 
 
 ## Examples
 
-## Declarative Agents
+## Prompt Agents
 
 When creating the Agents we need to supply Agent definitions to its constructor. To create a declarative prompt Agent, use the `DeclarativeAgentDefinition`:
 
@@ -310,7 +308,7 @@ See the [Azure SDK CONTRIBUTING.md][aiprojects_contrib] for details on building,
 [style-guide-msft]: https://docs.microsoft.com/style-guide/capitalization
 [style-guide-cloud]: https://aka.ms/azsdk/cloud-style-guide
 
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net/sdk/ai/Azure.AI.Extensions.OpenAI/README.png)
+![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net/sdk/ai/Azure.AI.Projects.Agents/README.png)
 
 <!-- LINKS -->
 [ClientResultException]: https://learn.microsoft.com/dotnet/api/system.clientmodel.clientresultexception
