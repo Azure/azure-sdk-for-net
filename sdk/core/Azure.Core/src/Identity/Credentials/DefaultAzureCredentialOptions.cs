@@ -150,6 +150,9 @@ namespace Azure.Identity
                 WorkloadTokenFilePath = tokenFilePath;
             }
 
+            // nameof() is compile-time only and does not invoke any platform-specific API,
+            // so it is safe to reference AzurePipelinesCredential members here.
+#pragma warning disable CA1416
             if (section[nameof(AzurePipelinesCredential.ServiceConnectionId)] is string azurePipelinesServiceConnectionId)
             {
                 AzurePipelinesServiceConnectionId = azurePipelinesServiceConnectionId;
@@ -159,6 +162,7 @@ namespace Azure.Identity
             {
                 AzurePipelinesSystemAccessToken = azurePipelinesSystemAccessToken;
             }
+#pragma warning restore CA1416
 
             if (section[nameof(AzureCloud)] is string azureCloud)
             {
