@@ -46,12 +46,143 @@ namespace Azure.Generator.Management.Visitors
 
         private void UpdateModelFactory(ModelFactoryProvider modelFactory)
         {
+            // First pass: update primary methods (replace 'properties' param with flattened params, fix body)
             foreach (var method in modelFactory.Methods)
             {
                 var returnType = method.Signature.ReturnType;
                 if (returnType is not null && TryGetFlattenPropertyInfo(returnType, out var propertyNameMap))
                 {
                     UpdateModelFactoryMethod(method, propertyNameMap);
+                }
+            }
+
+            // Second pass: fix backward-compat overloads whose bodies call primary methods
+            // via InvokeMethodExpression. The primary methods' parameter order may have changed
+            // after flattening, so positional arguments in overloads can be wrong.
+            FixBackwardCompatOverloads(modelFactory);
+        }
+
+        /// <summary>
+        /// Fixes backward-compat overload methods that call primary model factory methods.
+        /// After flattening reorders the primary method's parameters, the positional arguments
+        /// in these overloads may be in the wrong order. This method converts them to named arguments.
+        /// </summary>
+        private static void FixBackwardCompatOverloads(ModelFactoryProvider modelFactory)
+        {
+            // Build a lookup of primary method signatures by name+returnType
+            var primaryMethods = new Dictionary<string, MethodProvider>();
+            foreach (var method in modelFactory.Methods)
+            {
+                // Primary methods have default parameter values; backward-compat ones don't
+                if (method.Signature.Parameters.Count > 0 && method.Signature.Parameters[0].DefaultValue is not null)
+                {
+                    var key = method.Signature.Name;
+                    // Use the one with the most parameters as the primary (latest) method
+                    if (!primaryMethods.TryGetValue(key, out var existing) || method.Signature.Parameters.Count > existing.Signature.Parameters.Count)
+                    {
+                        primaryMethods[key] = method;
+                    }
+                }
+            }
+
+            foreach (var method in modelFactory.Methods)
+            {
+                // Skip primary methods (they have default values on parameters)
+                if (method.Signature.Parameters.Count > 0 && method.Signature.Parameters[0].DefaultValue is not null)
+                {
+                    continue;
+                }
+
+                if (method.BodyStatements is null)
+                {
+                    continue;
+                }
+
+                // Look for backward-compat overloads that call another method via InvokeMethodExpression
+                var updatedBodyStatements = new List<MethodBodyStatement>();
+                var bodyUpdated = false;
+                foreach (var statement in method.BodyStatements)
+                {
+                    if (statement is ExpressionStatement expressionStatement
+                        && (expressionStatement.Expression as KeywordExpression)?.Expression is InvokeMethodExpression invokeExpression
+                        && (invokeExpression.MethodName ?? invokeExpression.MethodSignature?.Name) is string calledMethodName
+                        && primaryMethods.TryGetValue(calledMethodName, out var primaryMethod))
+                    {
+                        var primaryParams = primaryMethod.Signature.Parameters;
+                        var invokeArgs = invokeExpression.Arguments;
+
+                        // Build a lookup: paramName -> argument expression from the invoke call
+                        // The invoke was built by the base generator to match the PRIMARY method's
+                        // parameter order BEFORE flattening. After flattening, the order changed.
+                        // We need to rebuild arguments using named references to the PRIMARY method's
+                        // CURRENT parameter order.
+
+                        // The invoke's MethodSignature still references the pre-flatten signature.
+                        // We need to match arguments to the updated primary method's parameters.
+                        var invokeSignatureParams = invokeExpression.MethodSignature?.Parameters;
+                        if (invokeSignatureParams is null || invokeSignatureParams.Count != invokeArgs.Count)
+                        {
+                            updatedBodyStatements.Add(statement);
+                            continue;
+                        }
+
+                        // Map: old param name -> argument expression
+                        var argsByName = new Dictionary<string, ValueExpression>(StringComparer.OrdinalIgnoreCase);
+                        for (int i = 0; i < invokeSignatureParams.Count; i++)
+                        {
+                            argsByName[invokeSignatureParams[i].Name] = invokeArgs[i];
+                        }
+
+                        // Rebuild arguments in the current primary method's parameter order
+                        var newArgs = new List<ValueExpression>(primaryParams.Count);
+                        var needsUpdate = false;
+                        foreach (var primaryParam in primaryParams)
+                        {
+                            if (argsByName.TryGetValue(primaryParam.Name, out var arg))
+                            {
+                                newArgs.Add(arg);
+                            }
+                            else
+                            {
+                                // Parameter not in old call, use named default
+                                newArgs.Add(Snippet.PositionalReference(primaryParam, primaryParam.DefaultValue ?? Default));
+                                needsUpdate = true;
+                            }
+                        }
+
+                        // Check if argument order actually changed
+                        if (!needsUpdate)
+                        {
+                            for (int i = 0; i < Math.Min(invokeArgs.Count, newArgs.Count); i++)
+                            {
+                                if (!ReferenceEquals(invokeArgs[i], newArgs[i]))
+                                {
+                                    needsUpdate = true;
+                                    break;
+                                }
+                            }
+                        }
+
+                        if (needsUpdate)
+                        {
+                            var newInvoke = new InvokeMethodExpression(null, primaryMethod.Signature, newArgs);
+                            updatedBodyStatements.Add(Return(newInvoke));
+                            bodyUpdated = true;
+                        }
+                        else
+                        {
+                            updatedBodyStatements.Add(statement);
+                        }
+                    }
+                    else
+                    {
+                        updatedBodyStatements.Add(statement);
+                    }
+                }
+
+                if (bodyUpdated)
+                {
+                    method.Update(signature: method.Signature, bodyStatements: updatedBodyStatements);
                 }
             }
         }
