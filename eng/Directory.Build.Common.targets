@@ -419,7 +419,7 @@
       to ensure all baseline suppressions live in eng/ApiCompatBaselines/ where changes are
       visible and protected by CODEOWNERS. See https://github.com/Azure/azure-sdk-for-net/issues/55311
     -->
-    <ApiCompatBaseline>$(MSBuildThisFileDirectory)ApiCompatBaselines\$(PackageId).txt</ApiCompatBaseline>
+    <ApiCompatBaseline>$(MSBuildThisFileDirectory)ApiCompatBaselines\$(MSBuildProjectName).txt</ApiCompatBaseline>
   </PropertyGroup>
   <ItemGroup Condition="'$(ApiCompatVersion)' != ''">
     <PackageDownload Include="$(PackageId)" Version="[$(ApiCompatVersion)]" />
