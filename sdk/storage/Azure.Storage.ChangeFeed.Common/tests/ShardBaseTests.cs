@@ -30,12 +30,12 @@ namespace Azure.Storage.ChangeFeed.Common.Tests
         [Test]
         public void GetCursor_ReturnsCurrentChunkPosition()
         {
-            var mockChunk = new Mock<ChunkBase<TestEvent>>(MockBehavior.Strict);
+            Mock<ChunkBase<TestEvent>> mockChunk = new Mock<ChunkBase<TestEvent>>(MockBehavior.Strict);
             mockChunk.Setup(c => c.ChunkPath).Returns("log/00/2024/01/15/0800/00000.avro");
             mockChunk.Setup(c => c.BlockOffset).Returns(128);
             mockChunk.Setup(c => c.EventIndex).Returns(3);
 
-            var shard = new ShardBase<TestEvent>(
+            ShardBase<TestEvent> shard = new ShardBase<TestEvent>(
                 new Mock<BlobContainerClient>().Object,
                 new Mock<ChunkFactoryBase<TestEvent>>().Object,
                 new Queue<BlobItem>(),
@@ -57,7 +57,7 @@ namespace Azure.Storage.ChangeFeed.Common.Tests
         [Test]
         public void GetCursor_NullWhenNoCurrentChunk()
         {
-            var shard = new ShardBase<TestEvent>(
+            ShardBase<TestEvent> shard = new ShardBase<TestEvent>(
                 new Mock<BlobContainerClient>().Object,
                 new Mock<ChunkFactoryBase<TestEvent>>().Object,
                 new Queue<BlobItem>(),
@@ -74,10 +74,10 @@ namespace Azure.Storage.ChangeFeed.Common.Tests
         [Test]
         public void HasNext_False_WhenExhausted()
         {
-            var mockChunk = new Mock<ChunkBase<TestEvent>>(MockBehavior.Strict);
+            Mock<ChunkBase<TestEvent>> mockChunk = new Mock<ChunkBase<TestEvent>>(MockBehavior.Strict);
             mockChunk.Setup(c => c.HasNext()).Returns(false);
 
-            var shard = new ShardBase<TestEvent>(
+            ShardBase<TestEvent> shard = new ShardBase<TestEvent>(
                 new Mock<BlobContainerClient>().Object,
                 new Mock<ChunkFactoryBase<TestEvent>>().Object,
                 new Queue<BlobItem>(),
@@ -94,13 +94,13 @@ namespace Azure.Storage.ChangeFeed.Common.Tests
         [Test]
         public void HasNext_True_WhenChunksRemain()
         {
-            var mockChunk = new Mock<ChunkBase<TestEvent>>(MockBehavior.Strict);
+            Mock<ChunkBase<TestEvent>> mockChunk = new Mock<ChunkBase<TestEvent>>(MockBehavior.Strict);
             mockChunk.Setup(c => c.HasNext()).Returns(false);
 
-            var chunks = new Queue<BlobItem>();
+            Queue<BlobItem> chunks = new Queue<BlobItem>();
             chunks.Enqueue(BlobsModelFactory.BlobItem("log/00/2024/01/15/0800/00001.avro"));
 
-            var shard = new ShardBase<TestEvent>(
+            ShardBase<TestEvent> shard = new ShardBase<TestEvent>(
                 new Mock<BlobContainerClient>().Object,
                 new Mock<ChunkFactoryBase<TestEvent>>().Object,
                 chunks,
@@ -117,10 +117,10 @@ namespace Azure.Storage.ChangeFeed.Common.Tests
         [Test]
         public void HasNext_True_WhenCurrentChunkHasNext()
         {
-            var mockChunk = new Mock<ChunkBase<TestEvent>>(MockBehavior.Strict);
+            Mock<ChunkBase<TestEvent>> mockChunk = new Mock<ChunkBase<TestEvent>>(MockBehavior.Strict);
             mockChunk.Setup(c => c.HasNext()).Returns(true);
 
-            var shard = new ShardBase<TestEvent>(
+            ShardBase<TestEvent> shard = new ShardBase<TestEvent>(
                 new Mock<BlobContainerClient>().Object,
                 new Mock<ChunkFactoryBase<TestEvent>>().Object,
                 new Queue<BlobItem>(),
@@ -137,10 +137,10 @@ namespace Azure.Storage.ChangeFeed.Common.Tests
         [Test]
         public void Next_ThrowsWhenExhausted()
         {
-            var mockChunk = new Mock<ChunkBase<TestEvent>>(MockBehavior.Strict);
+            Mock<ChunkBase<TestEvent>> mockChunk = new Mock<ChunkBase<TestEvent>>(MockBehavior.Strict);
             mockChunk.Setup(c => c.HasNext()).Returns(false);
 
-            var shard = new ShardBase<TestEvent>(
+            ShardBase<TestEvent> shard = new ShardBase<TestEvent>(
                 new Mock<BlobContainerClient>().Object,
                 new Mock<ChunkFactoryBase<TestEvent>>().Object,
                 new Queue<BlobItem>(),

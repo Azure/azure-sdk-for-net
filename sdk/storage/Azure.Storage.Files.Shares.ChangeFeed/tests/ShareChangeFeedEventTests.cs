@@ -26,7 +26,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
         public void Deserialization_AllFields()
         {
             // Arrange
-            var dataDict = new Dictionary<string, object>
+            Dictionary<string, object> dataDict = new Dictionary<string, object>
             {
                 { "FileId", "9223442405598953472" },
                 { "ParentFileId", "9223442405598958712" },
@@ -45,7 +45,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
                 }
             };
 
-            var record = new Dictionary<string, object>
+            Dictionary<string, object> record = new Dictionary<string, object>
             {
                 { "SchemaVersion", 1L },
                 { "Reason", "SmbCreate" },
@@ -57,7 +57,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
             };
 
             // Act
-            var evt = new ShareChangeFeedEvent(record);
+            ShareChangeFeedEvent evt = new ShareChangeFeedEvent(record);
 
             // Assert
             Assert.AreEqual(1L, evt.SchemaVersion);
@@ -88,7 +88,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
         [Test]
         public void Deserialization_IsDirectory_True()
         {
-            var record = new Dictionary<string, object>
+            Dictionary<string, object> record = new Dictionary<string, object>
             {
                 { "SchemaVersion", 1L },
                 { "Reason", "RestCreate" },
@@ -105,7 +105,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
                 }
             };
 
-            var evt = new ShareChangeFeedEvent(record);
+            ShareChangeFeedEvent evt = new ShareChangeFeedEvent(record);
 
             Assert.AreEqual(ShareChangeFeedReasonType.RestCreate, evt.Reason);
             Assert.AreEqual(ShareChangeFeedProtocol.Rest, evt.Protocol);

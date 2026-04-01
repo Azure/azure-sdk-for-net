@@ -44,7 +44,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
             long beginCvId = 50;
             long endCvId = 100;
 
-            var events = new List<ShareChangeFeedEvent>
+            List<ShareChangeFeedEvent> events = new List<ShareChangeFeedEvent>
             {
                 ShareChangeFeedModelFactory.ShareChangeFeedEvent(containerVersionNumber: 30, reason: "SmbCreate", id: "evt-30"),
                 ShareChangeFeedModelFactory.ShareChangeFeedEvent(containerVersionNumber: 50, reason: "SmbWrite", id: "evt-50"),
@@ -90,7 +90,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
             long beginCvId = 100;
             long endCvId = 200;
 
-            var evt = ShareChangeFeedModelFactory.ShareChangeFeedEvent(containerVersionNumber: 100);
+            ShareChangeFeedEvent evt = ShareChangeFeedModelFactory.ShareChangeFeedEvent(containerVersionNumber: 100);
 
             bool included = evt.ContainerVersionNumber > beginCvId && evt.ContainerVersionNumber <= endCvId;
             Assert.IsFalse(included, "Events at exactly beginCvId should be excluded (exclusive lower bound)");
@@ -105,7 +105,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
             long beginCvId = 100;
             long endCvId = 200;
 
-            var evt = ShareChangeFeedModelFactory.ShareChangeFeedEvent(containerVersionNumber: 200);
+            ShareChangeFeedEvent evt = ShareChangeFeedModelFactory.ShareChangeFeedEvent(containerVersionNumber: 200);
 
             bool included = evt.ContainerVersionNumber > beginCvId && evt.ContainerVersionNumber <= endCvId;
             Assert.IsTrue(included, "Events at exactly endCvId should be included (inclusive upper bound)");
@@ -120,7 +120,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
             long beginCvId = 100;
             long endCvId = 200;
 
-            var events = new List<ShareChangeFeedEvent>
+            List<ShareChangeFeedEvent> events = new List<ShareChangeFeedEvent>
             {
                 ShareChangeFeedModelFactory.ShareChangeFeedEvent(containerVersionNumber: 50),
                 ShareChangeFeedModelFactory.ShareChangeFeedEvent(containerVersionNumber: 99),
@@ -143,7 +143,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
         public void EndSnapshotNotFinalized_Throws()
         {
             // Arrange - create snapshot metadata where the end snapshot is still Publishing
-            var beginMeta = new SnapshotMetadata
+            SnapshotMetadata beginMeta = new SnapshotMetadata
             {
                 Version = 0,
                 SnapshotTimestamp = new DateTimeOffset(2024, 1, 15, 8, 0, 0, TimeSpan.Zero),
@@ -153,7 +153,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
                 Status = "Finalized",
             };
 
-            var endMeta = new SnapshotMetadata
+            SnapshotMetadata endMeta = new SnapshotMetadata
             {
                 Version = 0,
                 SnapshotTimestamp = new DateTimeOffset(2024, 1, 15, 12, 0, 0, TimeSpan.Zero),
@@ -181,7 +181,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
         [Test]
         public void EndSnapshotFinalized_DoesNotThrow()
         {
-            var endMeta = new SnapshotMetadata
+            SnapshotMetadata endMeta = new SnapshotMetadata
             {
                 Status = "Finalized",
             };
@@ -202,7 +202,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
         [Test]
         public void EndSnapshotNullStatus_DoesNotThrow()
         {
-            var endMeta = new SnapshotMetadata
+            SnapshotMetadata endMeta = new SnapshotMetadata
             {
                 Status = null,
             };
@@ -225,14 +225,14 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
         [Test]
         public void SnapshotTimeWindowDerivation()
         {
-            var beginMeta = new SnapshotMetadata
+            SnapshotMetadata beginMeta = new SnapshotMetadata
             {
                 CvId = 50,
                 MinLogWindowForNextSnapshot = new DateTimeOffset(2024, 1, 15, 8, 0, 0, TimeSpan.Zero),
                 MaxLogWindowForCurrentSnapshot = new DateTimeOffset(2024, 1, 15, 9, 0, 0, TimeSpan.Zero),
             };
 
-            var endMeta = new SnapshotMetadata
+            SnapshotMetadata endMeta = new SnapshotMetadata
             {
                 CvId = 200,
                 MinLogWindowForNextSnapshot = new DateTimeOffset(2024, 1, 15, 12, 0, 0, TimeSpan.Zero),
@@ -259,7 +259,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
         [Test]
         public void ContinuationToken_Throws()
         {
-            var pageable = new ShareChangeFeedSnapshotPageable(
+            ShareChangeFeedSnapshotPageable pageable = new ShareChangeFeedSnapshotPageable(
                 client: null,
                 maxTransferSize: null,
                 beginSnapshot: "2024-01-15T08:00:00.000Z",
@@ -267,7 +267,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
 
             Assert.Throws<ArgumentException>(() =>
             {
-                foreach (var page in pageable.AsPages(continuationToken: "some-token"))
+                foreach (Page<ShareChangeFeedEvent> page in pageable.AsPages(continuationToken: "some-token"))
                 {
                     // Should not reach here
                 }

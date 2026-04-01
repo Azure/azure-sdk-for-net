@@ -154,23 +154,23 @@ namespace Azure.Storage.ChangeFeed.Common.Tests
         [Test]
         public void MinDateTime_EndDateBeforeLastConsumable()
         {
-            var lastConsumable = new DateTimeOffset(2024, 1, 15, 10, 0, 0, TimeSpan.Zero);
-            var endDate = new DateTimeOffset(2024, 1, 15, 9, 0, 0, TimeSpan.Zero);
+            DateTimeOffset lastConsumable = new DateTimeOffset(2024, 1, 15, 10, 0, 0, TimeSpan.Zero);
+            DateTimeOffset endDate = new DateTimeOffset(2024, 1, 15, 9, 0, 0, TimeSpan.Zero);
             Assert.AreEqual(endDate, ChangeFeedExtensionsBase.MinDateTime(lastConsumable, endDate));
         }
 
         [Test]
         public void MinDateTime_EndDateAfterLastConsumable()
         {
-            var lastConsumable = new DateTimeOffset(2024, 1, 15, 10, 0, 0, TimeSpan.Zero);
-            var endDate = new DateTimeOffset(2024, 1, 15, 12, 0, 0, TimeSpan.Zero);
+            DateTimeOffset lastConsumable = new DateTimeOffset(2024, 1, 15, 10, 0, 0, TimeSpan.Zero);
+            DateTimeOffset endDate = new DateTimeOffset(2024, 1, 15, 12, 0, 0, TimeSpan.Zero);
             Assert.AreEqual(lastConsumable, ChangeFeedExtensionsBase.MinDateTime(lastConsumable, endDate));
         }
 
         [Test]
         public void MinDateTime_NoEndDate()
         {
-            var lastConsumable = new DateTimeOffset(2024, 1, 15, 10, 0, 0, TimeSpan.Zero);
+            DateTimeOffset lastConsumable = new DateTimeOffset(2024, 1, 15, 10, 0, 0, TimeSpan.Zero);
             Assert.AreEqual(lastConsumable, ChangeFeedExtensionsBase.MinDateTime(lastConsumable, null));
         }
     }

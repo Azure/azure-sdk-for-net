@@ -35,7 +35,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
             if (continuationToken != null)
                 throw new ArgumentException("Continuation not supported for snapshot queries.");
 
-            var (containerClient, config) = _client.ResolveContainerAsync(async: false, cancellationToken: default).EnsureCompleted();
+            (BlobContainerClient containerClient, ChangeFeedConfiguration<ShareChangeFeedEvent> config) = _client.ResolveContainerAsync(async: false, cancellationToken: default).EnsureCompleted();
 
             SnapshotMetadata beginMeta = SnapshotQueryHelper.ReadSnapshotMetadataAsync(
                 containerClient, _beginSnapshot, async: false, cancellationToken: default).EnsureCompleted();
@@ -54,8 +54,8 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
             DateTimeOffset startTime = beginMeta.MinLogWindowForNextSnapshot;
             DateTimeOffset endTime = endMeta.MaxLogWindowForCurrentSnapshot;
 
-            var factory = new ChangeFeedFactoryBase<ShareChangeFeedEvent>(containerClient, _maxTransferSize, config);
-            var changeFeed = factory.BuildChangeFeed(
+            ChangeFeedFactoryBase<ShareChangeFeedEvent> factory = new ChangeFeedFactoryBase<ShareChangeFeedEvent>(containerClient, _maxTransferSize, config);
+            ChangeFeedBase<ShareChangeFeedEvent> changeFeed = factory.BuildChangeFeed(
                 startTime, endTime, continuation: null, async: false, cancellationToken: default).EnsureCompleted();
 
             int pageSize = pageSizeHint ?? Constants.FilesChangeFeed.DefaultPageSize;

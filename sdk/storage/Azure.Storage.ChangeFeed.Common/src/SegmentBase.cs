@@ -53,7 +53,7 @@ namespace Azure.Storage.ChangeFeed.Common
             List<ShardCursor> shardCursors = new List<ShardCursor>();
             foreach (ShardBase<TEvent> shard in _shards)
             {
-                var shardCursor = shard.GetCursor();
+                ShardCursor shardCursor = shard.GetCursor();
                 if (shardCursor != null) shardCursors.Add(shard.GetCursor());
             }
             return new SegmentCursor(

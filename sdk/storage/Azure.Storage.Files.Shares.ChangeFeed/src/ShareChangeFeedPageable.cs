@@ -38,10 +38,10 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
             if (continuationToken != null)
                 throw new ArgumentException("Continuation not supported. Use ShareChangeFeedClient.GetChanges(string) instead.");
 
-            var (containerClient, config) = _client.ResolveContainerAsync(async: false, cancellationToken: default).EnsureCompleted();
+            (BlobContainerClient containerClient, ChangeFeedConfiguration<ShareChangeFeedEvent> config) = _client.ResolveContainerAsync(async: false, cancellationToken: default).EnsureCompleted();
 
-            var factory = new ChangeFeedFactoryBase<ShareChangeFeedEvent>(containerClient, _maxTransferSize, config);
-            var changeFeed = factory.BuildChangeFeed(_startTime, _endTime, _continuation, async: false, cancellationToken: default).EnsureCompleted();
+            ChangeFeedFactoryBase<ShareChangeFeedEvent> factory = new ChangeFeedFactoryBase<ShareChangeFeedEvent>(containerClient, _maxTransferSize, config);
+            ChangeFeedBase<ShareChangeFeedEvent> changeFeed = factory.BuildChangeFeed(_startTime, _endTime, _continuation, async: false, cancellationToken: default).EnsureCompleted();
 
             while (changeFeed.HasNext())
             {

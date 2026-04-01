@@ -30,7 +30,7 @@ namespace Azure.Storage.ChangeFeed.Common.Tests
         public async Task GetPage_NoMoreEvents_ReturnsEmptyList()
         {
             // Create a segment with no shards
-            var segment = new SegmentBase<TestEvent>(
+            SegmentBase<TestEvent> segment = new SegmentBase<TestEvent>(
                 new List<ShardBase<TestEvent>>(),
                 shardIndex: 0,
                 dateTime: new DateTimeOffset(2024, 1, 15, 8, 0, 0, TimeSpan.Zero),
@@ -49,12 +49,12 @@ namespace Azure.Storage.ChangeFeed.Common.Tests
         [Test]
         public async Task GetPage_RoundRobinAcrossShards()
         {
-            var event1 = new TestEvent { Reason = "SmbCreate", Id = "1" };
-            var event2 = new TestEvent { Reason = "SmbWrite", Id = "2" };
+            TestEvent event1 = new TestEvent { Reason = "SmbCreate", Id = "1" };
+            TestEvent event2 = new TestEvent { Reason = "SmbWrite", Id = "2" };
 
             // Shard 0: returns true for HasNext, then false after one event is read.
             // The segment calls HasNext() before reading and again after to check if shard is exhausted.
-            var shard0 = new Mock<ShardBase<TestEvent>>();
+            Mock<ShardBase<TestEvent>> shard0 = new Mock<ShardBase<TestEvent>>();
             int shard0Count = 0;
             shard0.Setup(s => s.HasNext()).Returns(() => shard0Count < 1);
             shard0.Setup(s => s.Next(It.IsAny<bool>(), It.IsAny<CancellationToken>()))
@@ -63,7 +63,7 @@ namespace Azure.Storage.ChangeFeed.Common.Tests
             shard0.Setup(s => s.GetCursor()).Returns(new ShardCursor("chunk0", 0, 0));
 
             // Shard 1: same pattern, 1 event then exhausted.
-            var shard1 = new Mock<ShardBase<TestEvent>>();
+            Mock<ShardBase<TestEvent>> shard1 = new Mock<ShardBase<TestEvent>>();
             int shard1Count = 0;
             shard1.Setup(s => s.HasNext()).Returns(() => shard1Count < 1);
             shard1.Setup(s => s.Next(It.IsAny<bool>(), It.IsAny<CancellationToken>()))
@@ -71,7 +71,7 @@ namespace Azure.Storage.ChangeFeed.Common.Tests
             shard1.Setup(s => s.ShardPath).Returns("log/01/");
             shard1.Setup(s => s.GetCursor()).Returns(new ShardCursor("chunk1", 0, 0));
 
-            var segment = new SegmentBase<TestEvent>(
+            SegmentBase<TestEvent> segment = new SegmentBase<TestEvent>(
                 new List<ShardBase<TestEvent>> { shard0.Object, shard1.Object },
                 shardIndex: 0,
                 dateTime: new DateTimeOffset(2024, 1, 15, 8, 0, 0, TimeSpan.Zero),
@@ -92,15 +92,15 @@ namespace Azure.Storage.ChangeFeed.Common.Tests
         [Test]
         public void GetCursor_IncludesAllShardCursors()
         {
-            var shard0 = new Mock<ShardBase<TestEvent>>(MockBehavior.Strict);
+            Mock<ShardBase<TestEvent>> shard0 = new Mock<ShardBase<TestEvent>>(MockBehavior.Strict);
             shard0.Setup(s => s.ShardPath).Returns("log/00/");
             shard0.Setup(s => s.GetCursor()).Returns(new ShardCursor("chunk0", 10, 2));
 
-            var shard1 = new Mock<ShardBase<TestEvent>>(MockBehavior.Strict);
+            Mock<ShardBase<TestEvent>> shard1 = new Mock<ShardBase<TestEvent>>(MockBehavior.Strict);
             shard1.Setup(s => s.ShardPath).Returns("log/01/");
             shard1.Setup(s => s.GetCursor()).Returns(new ShardCursor("chunk1", 20, 5));
 
-            var segment = new SegmentBase<TestEvent>(
+            SegmentBase<TestEvent> segment = new SegmentBase<TestEvent>(
                 new List<ShardBase<TestEvent>> { shard0.Object, shard1.Object },
                 shardIndex: 0,
                 dateTime: new DateTimeOffset(2024, 1, 15, 8, 0, 0, TimeSpan.Zero),

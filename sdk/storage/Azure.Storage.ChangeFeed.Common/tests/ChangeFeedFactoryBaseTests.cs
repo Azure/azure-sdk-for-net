@@ -41,7 +41,7 @@ namespace Azure.Storage.ChangeFeed.Common.Tests
             else
                 containerClient.Setup(r => r.Exists(It.IsAny<CancellationToken>())).Returns(Response.FromValue(false, null));
 
-            var factory = new ChangeFeedFactoryBase<TestEvent>(
+            ChangeFeedFactoryBase<TestEvent> factory = new ChangeFeedFactoryBase<TestEvent>(
                 containerClient.Object,
                 new Mock<SegmentFactoryBase<TestEvent>>().Object,
                 CreateTestConfig());
@@ -65,11 +65,11 @@ namespace Azure.Storage.ChangeFeed.Common.Tests
                 containerClient.Setup(r => r.Exists(It.IsAny<CancellationToken>())).Returns(Response.FromValue(true, null));
 
             // Build a continuation token with a different host
-            var cursor = new ChangeFeedCursor("account2.blob.core.windows.net", null,
+            ChangeFeedCursor cursor = new ChangeFeedCursor("account2.blob.core.windows.net", null,
                 new SegmentCursor("idx/segments/2024/01/15/0800/meta.json", new List<ShardCursor>(), null));
             string continuation = System.Text.Json.JsonSerializer.Serialize(cursor);
 
-            var factory = new ChangeFeedFactoryBase<TestEvent>(
+            ChangeFeedFactoryBase<TestEvent> factory = new ChangeFeedFactoryBase<TestEvent>(
                 containerClient.Object,
                 new Mock<SegmentFactoryBase<TestEvent>>().Object,
                 CreateTestConfig());
@@ -92,14 +92,14 @@ namespace Azure.Storage.ChangeFeed.Common.Tests
             else
                 containerClient.Setup(r => r.Exists(It.IsAny<CancellationToken>())).Returns(Response.FromValue(true, null));
 
-            var cursor = new ChangeFeedCursor("account.blob.core.windows.net", null,
+            ChangeFeedCursor cursor = new ChangeFeedCursor("account.blob.core.windows.net", null,
                 new SegmentCursor("idx/segments/2024/01/15/0800/meta.json", new List<ShardCursor>(), null))
             {
                 CursorVersion = 99  // Unsupported version
             };
             string continuation = System.Text.Json.JsonSerializer.Serialize(cursor);
 
-            var factory = new ChangeFeedFactoryBase<TestEvent>(
+            ChangeFeedFactoryBase<TestEvent> factory = new ChangeFeedFactoryBase<TestEvent>(
                 containerClient.Object,
                 new Mock<SegmentFactoryBase<TestEvent>>().Object,
                 CreateTestConfig());

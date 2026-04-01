@@ -62,7 +62,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
             ShareChangeFeedClientOptions options = default)
         {
             // Derive the file service endpoint from the share URI.
-            var builder = new UriBuilder(shareClient.Uri)
+            UriBuilder builder = new UriBuilder(shareClient.Uri)
             {
                 Path = "/",
             };

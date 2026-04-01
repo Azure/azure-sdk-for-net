@@ -46,7 +46,7 @@ namespace Azure.Storage.ChangeFeed.Common.Tests
             avroReader.Setup(r => r.HasNext()).Returns(true);
             avroReader.Setup(r => r.Initalize(It.IsAny<bool>(), It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
 
-            var chunkFactory = new ChunkFactoryBase<TestEvent>(
+            ChunkFactoryBase<TestEvent> chunkFactory = new ChunkFactoryBase<TestEvent>(
                 containerClient.Object, streamFactory.Object, avroReaderFactory.Object, 4 * Constants.MB, CreateTestConfig());
             ChunkBase<TestEvent> chunk = await chunkFactory.BuildChunk(IsAsync, "chunkPath");
 
@@ -74,7 +74,7 @@ namespace Azure.Storage.ChangeFeed.Common.Tests
             avroReader.Setup(r => r.HasNext()).Returns(false);
             avroReader.Setup(r => r.Initalize(It.IsAny<bool>(), It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
 
-            var chunkFactory = new ChunkFactoryBase<TestEvent>(
+            ChunkFactoryBase<TestEvent> chunkFactory = new ChunkFactoryBase<TestEvent>(
                 containerClient.Object, streamFactory.Object, avroReaderFactory.Object, 4 * Constants.MB, CreateTestConfig());
             ChunkBase<TestEvent> chunk = await chunkFactory.BuildChunk(IsAsync, "chunkPath");
 
@@ -91,7 +91,7 @@ namespace Azure.Storage.ChangeFeed.Common.Tests
             long blockOffset = 5;
             long eventIndex = 10;
 
-            var record = new Dictionary<string, object>
+            Dictionary<string, object> record = new Dictionary<string, object>
             {
                 { "Reason", "SmbCreate" },
                 { "Id", "test-event-id" },
@@ -119,7 +119,7 @@ namespace Azure.Storage.ChangeFeed.Common.Tests
             avroReader.Setup(r => r.BlockOffset).Returns(blockOffset);
             avroReader.Setup(r => r.ObjectIndex).Returns(eventIndex);
 
-            var chunkFactory = new ChunkFactoryBase<TestEvent>(
+            ChunkFactoryBase<TestEvent> chunkFactory = new ChunkFactoryBase<TestEvent>(
                 containerClient.Object, streamFactory.Object, avroReaderFactory.Object, 4 * Constants.MB, CreateTestConfig());
             ChunkBase<TestEvent> chunk = await chunkFactory.BuildChunk(IsAsync, "chunkPath", blockOffset, eventIndex);
 
