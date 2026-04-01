@@ -29,7 +29,7 @@ public class Sample_ResponseStreaming : ProjectsOpenAITestBase
         AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
         #endregion
         #region Snippet:Sample_CreateResponseStreaming
-        ProjectResponsesClient responsesClient = projectClient.OpenAI.GetProjectResponsesClientForModel(modelDeploymentName);
+        ProjectResponsesClient responsesClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForModel(modelDeploymentName);
         #endregion
 
         #region Snippet:Sample_WriteOutput_ResponseStreaming_Async
@@ -68,7 +68,7 @@ public class Sample_ResponseStreaming : ProjectsOpenAITestBase
         var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
 #endif
         AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
-        ProjectResponsesClient responsesClient = projectClient.OpenAI.GetProjectResponsesClientForModel(modelDeploymentName);
+        ProjectResponsesClient responsesClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForModel(modelDeploymentName);
 
         #region Snippet:Sample_WriteOutput_ResponseStreaming_Sync
         foreach (StreamingResponseUpdate streamResponse in responsesClient.CreateResponseStreaming("What is the size of France in square miles?"))

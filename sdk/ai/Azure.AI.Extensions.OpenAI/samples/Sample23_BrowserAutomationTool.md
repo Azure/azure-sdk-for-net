@@ -50,7 +50,7 @@ DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
     "related to web browsing using the Browser Automation tool available to you.",
     Tools = { playwrightTool }
 };
-ProjectsAgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
+ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.CreateAgentVersion(
     agentName: "myAgent",
     options: new(agentDefinition));
 ```
@@ -70,7 +70,7 @@ DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
     "related to web browsing using the Browser Automation tool available to you.",
     Tools = {playwrightTool}
 };
-ProjectsAgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
     agentName: "myAgent",
     options: new(agentDefinition));
 ```
@@ -103,7 +103,7 @@ private static void ParseResponse(StreamingResponseUpdate streamResponse)
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateResponse_BrowserAutomotion_Sync
-ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
+ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(agentVersion.Name);
 CreateResponseOptions responseOptions = new()
 {
     ToolChoice = ResponseToolChoice.CreateRequiredChoice(),
@@ -126,7 +126,7 @@ foreach (StreamingResponseUpdate update in responseClient.CreateResponseStreamin
 
 Asynchronous sample:
 ```C# Snippet:Sample_CreateResponse_BrowserAutomotion_Async
-ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
+ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(agentVersion.Name);
 CreateResponseOptions responseOptions = new()
 {
     ToolChoice = ResponseToolChoice.CreateRequiredChoice(),
@@ -151,10 +151,10 @@ await foreach (StreamingResponseUpdate update in responseClient.CreateResponseSt
 
 Synchronous sample:
 ```C# Snippet:Sample_Cleanup_BrowserAutomotion_Sync
-projectClient.Agents.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_Cleanup_BrowserAutomotion_Async
-await projectClient.Agents.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
 ```

@@ -29,7 +29,7 @@ public class Sample_ResponseBasic : ProjectsOpenAITestBase
         AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
         #endregion
         #region Snippet:Sample_CreateResponse_Async
-        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForModel(modelDeploymentName);
+        ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForModel(modelDeploymentName);
         ResponseResult response = await responseClient.CreateResponseAsync("What is the size of France in square miles?");
 
         #endregion
@@ -53,7 +53,7 @@ public class Sample_ResponseBasic : ProjectsOpenAITestBase
 #endif
         AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
         #region Snippet:Sample_CreateResponse_Sync
-        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForModel(modelDeploymentName);
+        ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForModel(modelDeploymentName);
         ResponseResult response = responseClient.CreateResponse("What is the size of France in square miles?");
         #endregion
 
@@ -82,7 +82,7 @@ public class Sample_ResponseBasic : ProjectsOpenAITestBase
 
         #region Snippet:Sample_ListResponses_Async
         await foreach (ResponseResult response
-            in projectClient.OpenAI.GetProjectResponsesClient().GetProjectResponsesAsync(agent: new AgentReference(agentName), conversationId: conversationId))
+            in projectClient.ProjectOpenAIClient.GetProjectResponsesClient().GetProjectResponsesAsync(agent: new AgentReference(agentName), conversationId: conversationId))
         {
             Console.WriteLine($"Matching response: {response.Id}");
         }

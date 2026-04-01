@@ -216,6 +216,125 @@ namespace Azure.Generator.Management.Tests.Common
         }
 
         /// <summary>
+        /// Creates a client with a resource where the PATCH operation has a body parameter whose model
+        /// does NOT include a tags property. Tag methods should NOT be generated because the PATCH body
+        /// cannot carry tag changes.
+        /// </summary>
+        public static (InputClient InputClient, IReadOnlyList<InputModelType> InputModels) ClientWithResourcePatchBodyWithoutTags()
+        {
+            const string TestClientName = "TestClient";
+            const string ResourceModelName = "ResponseType";
+            const string PatchModelName = "PatchType";
+            var responseModel = InputFactory.Model(ResourceModelName,
+                        usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json,
+                        properties:
+                        [
+                            InputFactory.Property("id", InputPrimitiveType.String, isReadOnly: true),
+                            InputFactory.Property("type", InputPrimitiveType.String, isReadOnly: true),
+                            InputFactory.Property("name", InputPrimitiveType.String, isReadOnly: true),
+                            InputFactory.Property("tags", new InputDictionaryType("dict", InputPrimitiveType.String, InputPrimitiveType.String), isReadOnly: false),
+                        ],
+                        decorators: []);
+            // Patch model WITHOUT tags property
+            var patchModel = InputFactory.Model(PatchModelName,
+                        usage: InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                        properties:
+                        [
+                            InputFactory.Property("description", InputPrimitiveType.String, isReadOnly: false),
+                        ],
+                        decorators: []);
+            var responseType = InputFactory.OperationResponse(statusCodes: [200], bodytype: responseModel);
+            var uuidType = new InputPrimitiveType(InputPrimitiveTypeKind.String, "uuid", "Azure.Core.uuid");
+            var subsIdOpParameter = InputFactory.PathParameter("subscriptionId", uuidType, isRequired: true);
+            var rgOpParameter = InputFactory.PathParameter("resourceGroupName", InputPrimitiveType.String, isRequired: true);
+            var testNameOpParameter = InputFactory.PathParameter("testName", InputPrimitiveType.String, isRequired: true);
+            var dataOpParameter = InputFactory.BodyParameter("data", responseModel, isRequired: true);
+            var patchOpParameter = InputFactory.BodyParameter("patch", patchModel, isRequired: true);
+            var getOperation = InputFactory.Operation(name: "get", responses: [responseType], parameters: [subsIdOpParameter, rgOpParameter, testNameOpParameter], path: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/tests/{testName}");
+            var createOperation = InputFactory.Operation(name: "createTest", responses: [responseType], parameters: [subsIdOpParameter, rgOpParameter, testNameOpParameter, dataOpParameter], path: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/tests/{testName}", httpMethod: "PUT");
+            // PATCH operation with body parameter that has NO tags
+            var updateOperation = InputFactory.Operation(name: "update", responses: [responseType], parameters: [subsIdOpParameter, rgOpParameter, testNameOpParameter, patchOpParameter], path: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/tests/{testName}", httpMethod: "PATCH");
+            var subscriptionIdParameter = InputFactory.MethodParameter("subscriptionId", uuidType, location: InputRequestLocation.Path);
+            var resourceGroupParameter = InputFactory.MethodParameter("resourceGroupName", InputPrimitiveType.String, location: InputRequestLocation.Path);
+            var testNameParameter = InputFactory.MethodParameter("testName", InputPrimitiveType.String, location: InputRequestLocation.Path, isRequired: true);
+            var dataParameter = InputFactory.MethodParameter("data", responseModel, location: InputRequestLocation.Body, isRequired: true);
+            var patchParameter = InputFactory.MethodParameter("patch", patchModel, location: InputRequestLocation.Body, isRequired: true);
+            var getMethod = InputFactory.BasicServiceMethod("get", getOperation, parameters: [testNameParameter, subscriptionIdParameter, resourceGroupParameter], crossLanguageDefinitionId: Guid.NewGuid().ToString());
+            var createMethod = InputFactory.BasicServiceMethod("createTest", createOperation, parameters: [testNameParameter, subscriptionIdParameter, resourceGroupParameter, dataParameter], crossLanguageDefinitionId: Guid.NewGuid().ToString());
+            var updateMethod = InputFactory.BasicServiceMethod("update", updateOperation, parameters: [testNameParameter, subscriptionIdParameter, resourceGroupParameter, patchParameter], crossLanguageDefinitionId: Guid.NewGuid().ToString());
+
+            var resourceIdPattern = "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/tests/{testName}";
+            var armProviderDecorator = BuildArmProviderSchema(responseModel, [
+                new ResourceMethod(ResourceOperationKind.Read, getMethod, getMethod.Operation.Path, ResourceScope.ResourceGroup, resourceIdPattern, null!),
+                new ResourceMethod(ResourceOperationKind.Create, createMethod, createMethod.Operation.Path, ResourceScope.ResourceGroup, resourceIdPattern, null!),
+                new ResourceMethod(ResourceOperationKind.Update, updateMethod, updateMethod.Operation.Path, ResourceScope.ResourceGroup, resourceIdPattern, null!)
+            ], resourceIdPattern, "Microsoft.Tests/tests", null, ResourceScope.ResourceGroup, "ResponseType");
+
+            var client = InputFactory.Client(
+                TestClientName,
+                methods: [getMethod, createMethod, updateMethod],
+                decorators: [armProviderDecorator],
+                crossLanguageDefinitionId: $"Test.{TestClientName}");
+
+            return (client, [responseModel, patchModel]);
+        }
+
+        /// <summary>
+        /// Creates a client with a resource where the PATCH operation has a body with tags but
+        /// returns no content (e.g., 204 No Content). Tag methods should NOT be generated because
+        /// the tag update result cannot be obtained from the response.
+        /// </summary>
+        public static (InputClient InputClient, IReadOnlyList<InputModelType> InputModels) ClientWithResourcePatchNoContent()
+        {
+            const string TestClientName = "TestClient";
+            const string ResourceModelName = "ResponseType";
+            var responseModel = InputFactory.Model(ResourceModelName,
+                        usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json,
+                        properties:
+                        [
+                            InputFactory.Property("id", InputPrimitiveType.String, isReadOnly: true),
+                            InputFactory.Property("type", InputPrimitiveType.String, isReadOnly: true),
+                            InputFactory.Property("name", InputPrimitiveType.String, isReadOnly: true),
+                            InputFactory.Property("tags", new InputDictionaryType("dict", InputPrimitiveType.String, InputPrimitiveType.String), isReadOnly: false),
+                        ],
+                        decorators: []);
+            var responseType = InputFactory.OperationResponse(statusCodes: [200], bodytype: responseModel);
+            // No-content response for PATCH (no body type)
+            var noContentResponseType = InputFactory.OperationResponse(statusCodes: [204], bodytype: null);
+            var uuidType = new InputPrimitiveType(InputPrimitiveTypeKind.String, "uuid", "Azure.Core.uuid");
+            var subsIdOpParameter = InputFactory.PathParameter("subscriptionId", uuidType, isRequired: true);
+            var rgOpParameter = InputFactory.PathParameter("resourceGroupName", InputPrimitiveType.String, isRequired: true);
+            var testNameOpParameter = InputFactory.PathParameter("testName", InputPrimitiveType.String, isRequired: true);
+            var dataOpParameter = InputFactory.BodyParameter("data", responseModel, isRequired: true);
+            var getOperation = InputFactory.Operation(name: "get", responses: [responseType], parameters: [subsIdOpParameter, rgOpParameter, testNameOpParameter], path: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/tests/{testName}");
+            var createOperation = InputFactory.Operation(name: "createTest", responses: [responseType], parameters: [subsIdOpParameter, rgOpParameter, testNameOpParameter, dataOpParameter], path: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/tests/{testName}", httpMethod: "PUT");
+            // PATCH operation returns no content
+            var updateOperation = InputFactory.Operation(name: "update", responses: [noContentResponseType], parameters: [subsIdOpParameter, rgOpParameter, testNameOpParameter, dataOpParameter], path: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/tests/{testName}", httpMethod: "PATCH");
+            var subscriptionIdParameter = InputFactory.MethodParameter("subscriptionId", uuidType, location: InputRequestLocation.Path);
+            var resourceGroupParameter = InputFactory.MethodParameter("resourceGroupName", InputPrimitiveType.String, location: InputRequestLocation.Path);
+            var testNameParameter = InputFactory.MethodParameter("testName", InputPrimitiveType.String, location: InputRequestLocation.Path, isRequired: true);
+            var dataParameter = InputFactory.MethodParameter("data", responseModel, location: InputRequestLocation.Body, isRequired: true);
+            var getMethod = InputFactory.BasicServiceMethod("get", getOperation, parameters: [testNameParameter, subscriptionIdParameter, resourceGroupParameter], crossLanguageDefinitionId: Guid.NewGuid().ToString());
+            var createMethod = InputFactory.BasicServiceMethod("createTest", createOperation, parameters: [testNameParameter, subscriptionIdParameter, resourceGroupParameter, dataParameter], crossLanguageDefinitionId: Guid.NewGuid().ToString());
+            var updateMethod = InputFactory.BasicServiceMethod("update", updateOperation, parameters: [testNameParameter, subscriptionIdParameter, resourceGroupParameter, dataParameter], crossLanguageDefinitionId: Guid.NewGuid().ToString());
+
+            var resourceIdPattern = "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/tests/{testName}";
+            var armProviderDecorator = BuildArmProviderSchema(responseModel, [
+                new ResourceMethod(ResourceOperationKind.Read, getMethod, getMethod.Operation.Path, ResourceScope.ResourceGroup, resourceIdPattern, null!),
+                new ResourceMethod(ResourceOperationKind.Create, createMethod, createMethod.Operation.Path, ResourceScope.ResourceGroup, resourceIdPattern, null!),
+                new ResourceMethod(ResourceOperationKind.Update, updateMethod, updateMethod.Operation.Path, ResourceScope.ResourceGroup, resourceIdPattern, null!)
+            ], resourceIdPattern, "Microsoft.Tests/tests", null, ResourceScope.ResourceGroup, "ResponseType");
+
+            var client = InputFactory.Client(
+                TestClientName,
+                methods: [getMethod, createMethod, updateMethod],
+                decorators: [armProviderDecorator],
+                crossLanguageDefinitionId: $"Test.{TestClientName}");
+
+            return (client, [responseModel]);
+        }
+
+        /// <summary>
         /// Creates a parent resource with a nested child resource that has an extra path parameter.
         /// This tests that BuildGetChildResourceMethods correctly forwards path parameters
         /// to the child collection constructor and Get methods.

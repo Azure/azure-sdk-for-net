@@ -7,15 +7,17 @@ using Azure.Generator.Tests.Common;
 using Azure.Generator.Tests.TestHelpers;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
+using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Snippets;
 using NUnit.Framework;
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Text.Json;
+using System.Xml;
+using System.Xml.Linq;
 
 namespace Azure.Generator.Tests
 {
@@ -303,6 +305,37 @@ namespace Azure.Generator.Tests
             Assert.AreEqual(
                 "global::System.ClientModel.Primitives.ModelReaderWriter.Read<global::Azure.Core.Expressions.DataFactory.DataFactoryElement<string>>(data, global::Samples.ModelSerializationExtensions.WireOptions, global::Samples.SamplesContext.Default)",
                 displayString);
+        }
+
+        [TestCase(typeof(ETag), false, ExpectedResult = "writer.WriteValue(value.ToString());\n")]
+        [TestCase(typeof(ETag), true, ExpectedResult = "writer.WriteValue(value.Value.ToString());\n")]
+        public string ValidateXmlSerializationStatement(Type type, bool isNullable)
+        {
+            CSharpType valueType = new CSharpType(type).WithNullable(isNullable);
+            var value = new VariableExpression(valueType, "value");
+            var writer = new ParameterProvider("writer", $"", typeof(XmlWriter)).AsVariable().As<XmlWriter>();
+            var options = new ParameterProvider("options", $"", typeof(ModelReaderWriterOptions)).AsVariable().As<ModelReaderWriterOptions>();
+
+            var statement = AzureClientGenerator.Instance.TypeFactory.SerializeXmlValue(valueType, value, writer, options, SerializationFormat.Default);
+            Assert.IsNotNull(statement);
+
+            return statement.ToDisplayString();
+        }
+
+        [TestCase(typeof(ETag), false, ExpectedResult = "new global::Azure.ETag(element.Value)")]
+        [TestCase(typeof(ETag), true, ExpectedResult = "new global::Azure.ETag(element.Value)")]
+        public string ValidateXmlDeserializationExpression(Type type, bool isNullable)
+        {
+            CSharpType valueType = new CSharpType(type).WithNullable(isNullable);
+            var element = new ParameterProvider("element", $"", typeof(XElement)).AsVariable().As<XElement>();
+            var expression = AzureClientGenerator.Instance.TypeFactory.DeserializeXmlValue(
+                valueType,
+                element,
+                new ScopedApi<ModelReaderWriterOptions>(new VariableExpression(typeof(ModelReaderWriterOptions), "options")),
+                SerializationFormat.Default);
+            Assert.IsNotNull(expression);
+
+            return expression.ToDisplayString();
         }
     }
 }

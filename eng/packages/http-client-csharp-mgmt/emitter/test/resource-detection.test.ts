@@ -3309,4 +3309,314 @@ interface Gadgets {
     ok(resolvedResource);
     deepStrictEqual(resolvedResource.metadata.rbacRoles, []);
   });
+
+  it("action on parent singleton that lists child resources should be reassigned to child resource", async () => {
+    // This test reproduces the Storage SDK pattern where a list operation
+    // (e.g., blobContainersList) is modeled as an ArmResourceActionSync on a
+    // singleton parent (BlobService) rather than as ArmResourceListByParent on
+    // the child interface (BlobContainers).
+    //
+    // The emitter classifies it as kind=Action on the parent resource.
+    // The generator then routes it to the parent's Resource class instead of
+    // the child's Collection class, breaking backward compatibility.
+    //
+    // Expected behavior: the emitter should detect that this Action's operation
+    // path matches a child resource's collection path and reclassify it as a
+    // List on the child resource.
+
+    const program = await typeSpecCompile(
+      `
+/** Storage account resource */
+model StorageAccount is TrackedResource<StorageAccountProperties> {
+  ...ResourceNameParameter<StorageAccount>;
+}
+
+/** Storage account properties */
+model StorageAccountProperties {
+  /** Account description */
+  description?: string;
+}
+
+/** Blob service singleton resource */
+@singleton
+@parentResource(StorageAccount)
+model BlobService is ProxyResource<BlobServiceProperties> {
+  ...ResourceNameParameter<BlobService>;
+}
+
+/** Blob service properties */
+model BlobServiceProperties {
+  /** Whether versioning is enabled */
+  isVersioningEnabled?: boolean;
+}
+
+/** Container child resource */
+@parentResource(BlobService)
+model Container is ProxyResource<ContainerProperties> {
+  ...ResourceNameParameter<Container>;
+}
+
+/** Container properties */
+model ContainerProperties {
+  /** Public access level */
+  publicAccess?: string;
+}
+
+/** List of containers */
+model ListContainerItems {
+  /** The list of containers */
+  @pageItems
+  value?: Container[];
+
+  /** The next link */
+  @nextLink
+  nextLink?: string;
+}
+
+interface Operations extends Azure.ResourceManager.Operations {}
+
+@armResourceOperations
+interface StorageAccounts {
+  get is ArmResourceRead<StorageAccount>;
+  createOrUpdate is ArmResourceCreateOrReplaceAsync<StorageAccount>;
+}
+
+@armResourceOperations
+interface BlobServices {
+  get is ArmResourceRead<BlobService>;
+  setProperties is ArmResourceCreateOrReplaceSync<BlobService>;
+
+  /** Lists all containers in the blob service - modeled as action on parent */
+  @get
+  @list
+  containers is ArmResourceActionSync<
+    BlobService,
+    void,
+    ListContainerItems
+  >;
+}
+
+@armResourceOperations
+interface Containers {
+  get is ArmResourceRead<Container>;
+  createOrUpdate is ArmResourceCreateOrReplaceSync<Container>;
+  delete is ArmResourceDeleteSync<Container>;
+}
+`,
+      runner
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const root = createModel(sdkContext);
+
+    const armProviderSchema = buildArmProviderSchema(sdkContext, root);
+    ok(armProviderSchema);
+
+    // Find the resources
+    const storageAccountResource = armProviderSchema.resources.find(
+      (r) =>
+        r.metadata.resourceType ===
+        "Microsoft.ContosoProviderHub/storageAccounts"
+    );
+    ok(storageAccountResource, "StorageAccount resource should exist");
+
+    const blobServiceResource = armProviderSchema.resources.find(
+      (r) =>
+        r.metadata.resourceType ===
+        "Microsoft.ContosoProviderHub/storageAccounts/blobServices"
+    );
+    ok(blobServiceResource, "BlobService resource should exist");
+
+    const containerResource = armProviderSchema.resources.find(
+      (r) =>
+        r.metadata.resourceType ===
+        "Microsoft.ContosoProviderHub/storageAccounts/blobServices/containers"
+    );
+    ok(containerResource, "Container resource should exist");
+
+    // Verify BlobService is a singleton with correct parent
+    strictEqual(blobServiceResource.metadata.singletonResourceName, "default");
+    strictEqual(
+      blobServiceResource.metadata.parentResourceId,
+      storageAccountResource.metadata.resourceIdPattern
+    );
+
+    // Verify Container's parent is BlobService
+    strictEqual(
+      containerResource.metadata.parentResourceId,
+      blobServiceResource.metadata.resourceIdPattern
+    );
+
+    // After fix: listContainers should have been moved from BlobService to Container
+    const blobServiceMethods = blobServiceResource.metadata.methods;
+    const containerMethods = containerResource.metadata.methods;
+
+    // The listContainers method should be on Container as kind=List
+    const listOnContainer = containerMethods.find(
+      (m: any) => m.kind === "List"
+    );
+    ok(
+      listOnContainer,
+      "listContainers should be on Container as a List method"
+    );
+    strictEqual(listOnContainer!.kind, "List");
+    ok(
+      listOnContainer!.operationPath.includes("/containers"),
+      "The List method should be the relocated containers operation"
+    );
+
+    // BlobService should NOT have the listContainers action anymore
+    const listContainersOnService = blobServiceMethods.find(
+      (m: any) =>
+        m.kind === "Action" && m.operationPath?.includes("/containers")
+    );
+    strictEqual(
+      listContainersOnService,
+      undefined,
+      "listContainers should no longer be on BlobService"
+    );
+
+    // BlobService should still have its own methods (Read + Create)
+    ok(
+      blobServiceMethods.some((m: any) => m.kind === "Read"),
+      "BlobService should still have Read"
+    );
+    ok(
+      blobServiceMethods.some((m: any) => m.kind === "Create"),
+      "BlobService should still have Create"
+    );
+
+    // Validate using resolveArmResources API - use deep equality to ensure schemas match
+    const resolvedSchema = resolveArmResources(program, sdkContext);
+    ok(resolvedSchema);
+
+    deepStrictEqual(
+      normalizeSchemaForComparison(resolvedSchema),
+      normalizeSchemaForComparison(armProviderSchema)
+    );
+  });
+
+  it("ArmResourceListByParent in parent interface routes list to child resource", async () => {
+    // Validates the spec-level fix: using ArmResourceListByParent<Container>
+    // in the BlobServices interface (instead of ArmResourceActionSync) produces
+    // kind=List and correctly assigns it to the Container resource — even though
+    // the operation is defined in the parent's interface.
+
+    const program = await typeSpecCompile(
+      `
+/** Storage account resource */
+model StorageAccount is TrackedResource<StorageAccountProperties> {
+  ...ResourceNameParameter<StorageAccount>;
+}
+
+/** Storage account properties */
+model StorageAccountProperties {
+  /** Account description */
+  description?: string;
+}
+
+/** Blob service singleton resource */
+@singleton
+@parentResource(StorageAccount)
+model BlobService is ProxyResource<BlobServiceProperties> {
+  ...ResourceNameParameter<BlobService>;
+}
+
+/** Blob service properties */
+model BlobServiceProperties {
+  /** Whether versioning is enabled */
+  isVersioningEnabled?: boolean;
+}
+
+/** Container child resource */
+@parentResource(BlobService)
+model Container is ProxyResource<ContainerProperties> {
+  ...ResourceNameParameter<Container>;
+}
+
+/** Container properties */
+model ContainerProperties {
+  /** Public access level */
+  publicAccess?: string;
+}
+
+interface Operations extends Azure.ResourceManager.Operations {}
+
+@armResourceOperations
+interface StorageAccounts {
+  get is ArmResourceRead<StorageAccount>;
+  createOrUpdate is ArmResourceCreateOrReplaceAsync<StorageAccount>;
+}
+
+@armResourceOperations
+interface BlobServices {
+  get is ArmResourceRead<BlobService>;
+  setProperties is ArmResourceCreateOrReplaceSync<BlobService>;
+
+  /** Lists all containers - uses ArmResourceListByParent in parent interface */
+  listContainers is ArmResourceListByParent<Container>;
+}
+
+@armResourceOperations
+interface Containers {
+  get is ArmResourceRead<Container>;
+  createOrUpdate is ArmResourceCreateOrReplaceSync<Container>;
+  delete is ArmResourceDeleteSync<Container>;
+}
+`,
+      runner
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const root = createModel(sdkContext);
+
+    const armProviderSchema = buildArmProviderSchema(sdkContext, root);
+    ok(armProviderSchema);
+
+    const containerResource = armProviderSchema.resources.find(
+      (r) =>
+        r.metadata.resourceType ===
+        "Microsoft.ContosoProviderHub/storageAccounts/blobServices/containers"
+    );
+    ok(containerResource, "Container resource should exist");
+
+    const blobServiceResource = armProviderSchema.resources.find(
+      (r) =>
+        r.metadata.resourceType ===
+        "Microsoft.ContosoProviderHub/storageAccounts/blobServices"
+    );
+    ok(blobServiceResource, "BlobService resource should exist");
+
+    // Container should have the List method (routed from BlobServices interface)
+    const listOnContainer = containerResource.metadata.methods.find(
+      (m: any) => m.kind === "List"
+    );
+    ok(listOnContainer, "Container should have a List method");
+    strictEqual(listOnContainer!.kind, "List");
+
+    // BlobService should NOT have the list operation
+    const listOnService = blobServiceResource.metadata.methods.find(
+      (m: any) =>
+        m.kind === "List" ||
+        (m.kind === "Action" && m.operationPath?.includes("/containers"))
+    );
+    strictEqual(
+      listOnService,
+      undefined,
+      "BlobService should not have the list containers operation"
+    );
+
+    // BlobService should still have its own methods (Read + Create)
+    ok(blobServiceResource.metadata.methods.some((m: any) => m.kind === "Read"));
+    ok(blobServiceResource.metadata.methods.some((m: any) => m.kind === "Create"));
+
+    // Validate using resolveArmResources API - use deep equality to ensure schemas match
+    const resolvedSchema = resolveArmResources(program, sdkContext);
+    ok(resolvedSchema);
+
+    deepStrictEqual(
+      normalizeSchemaForComparison(resolvedSchema),
+      normalizeSchemaForComparison(armProviderSchema)
+    );
+  });
 });

@@ -43,12 +43,12 @@ public class Sample_Sharepoint : ProjectsOpenAITestBase
             Instructions = "You are a helpful assistant.",
             Tools = { new SharepointPreviewTool(sharepointToolOption), }
         };
-        ProjectsAgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+        ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             agentName: "myAgent",
             options: new(agentDefinition));
         #endregion
         #region Snippet:Sample_CreateResponse_Sharepoint_Async
-        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
+        ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(agentVersion.Name);
         CreateResponseOptions responseOptions = new()
         {
             ToolChoice = ResponseToolChoice.CreateRequiredChoice(),
@@ -63,7 +63,7 @@ public class Sample_Sharepoint : ProjectsOpenAITestBase
         #endregion
 
         #region Snippet:Sample_Cleanup_Sharepoint_Async
-        await projectClient.Agents.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+        await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         #endregion
     }
 
@@ -94,12 +94,12 @@ public class Sample_Sharepoint : ProjectsOpenAITestBase
             Instructions = "You are a helpful assistant.",
             Tools = { new SharepointPreviewTool(sharepointToolOption), }
         };
-        ProjectsAgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
+        ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.CreateAgentVersion(
             agentName: "myAgent",
             options: new(agentDefinition));
         #endregion
         #region Snippet:Sample_CreateResponse_Sharepoint_Sync
-        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
+        ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(agentVersion.Name);
         CreateResponseOptions responseOptions = new()
         {
             ToolChoice = ResponseToolChoice.CreateRequiredChoice(),
@@ -115,7 +115,7 @@ public class Sample_Sharepoint : ProjectsOpenAITestBase
         Console.WriteLine($"{response.GetOutputText()}{GetFormattedAnnotation(response)}");
 
         #region Snippet:Sample_Cleanup_Sharepoint_Sync
-        projectClient.Agents.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+        projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         #endregion
     }
 

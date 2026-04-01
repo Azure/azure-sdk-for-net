@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class StorageProtectableContainer : IUtf8JsonSerializable, IJsonModel<StorageProtectableContainer>
+    /// <summary> Azure Storage-specific protectable containers. </summary>
+    public partial class StorageProtectableContainer : ProtectableContainer, IJsonModel<StorageProtectableContainer>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageProtectableContainer>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ProtectableContainer PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<StorageProtectableContainer>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeStorageProtectableContainer(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(StorageProtectableContainer)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<StorageProtectableContainer>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(StorageProtectableContainer)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<StorageProtectableContainer>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        StorageProtectableContainer IPersistableModel<StorageProtectableContainer>.Create(BinaryData data, ModelReaderWriterOptions options) => (StorageProtectableContainer)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<StorageProtectableContainer>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<StorageProtectableContainer>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,31 +69,35 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<StorageProtectableContainer>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StorageProtectableContainer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(StorageProtectableContainer)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
         }
 
-        StorageProtectableContainer IJsonModel<StorageProtectableContainer>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        StorageProtectableContainer IJsonModel<StorageProtectableContainer>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (StorageProtectableContainer)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ProtectableContainer JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<StorageProtectableContainer>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StorageProtectableContainer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(StorageProtectableContainer)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeStorageProtectableContainer(document.RootElement, options);
         }
 
-        internal static StorageProtectableContainer DeserializeStorageProtectableContainer(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static StorageProtectableContainer DeserializeStorageProtectableContainer(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -62,83 +107,50 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             ProtectableContainerType protectableContainerType = default;
             string healthStatus = default;
             string containerId = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("friendlyName"u8))
+                if (prop.NameEquals("friendlyName"u8))
                 {
-                    friendlyName = property.Value.GetString();
+                    friendlyName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("backupManagementType"u8))
+                if (prop.NameEquals("backupManagementType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    backupManagementType = new BackupManagementType(property.Value.GetString());
+                    backupManagementType = new BackupManagementType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("protectableContainerType"u8))
+                if (prop.NameEquals("protectableContainerType"u8))
                 {
-                    protectableContainerType = property.Value.GetString().ToProtectableContainerType();
+                    protectableContainerType = new ProtectableContainerType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("healthStatus"u8))
+                if (prop.NameEquals("healthStatus"u8))
                 {
-                    healthStatus = property.Value.GetString();
+                    healthStatus = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("containerId"u8))
+                if (prop.NameEquals("containerId"u8))
                 {
-                    containerId = property.Value.GetString();
+                    containerId = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new StorageProtectableContainer(
                 friendlyName,
                 backupManagementType,
                 protectableContainerType,
                 healthStatus,
                 containerId,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<StorageProtectableContainer>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<StorageProtectableContainer>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(StorageProtectableContainer)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        StorageProtectableContainer IPersistableModel<StorageProtectableContainer>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<StorageProtectableContainer>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeStorageProtectableContainer(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(StorageProtectableContainer)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<StorageProtectableContainer>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

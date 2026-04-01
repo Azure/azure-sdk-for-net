@@ -16,13 +16,13 @@ namespace Azure.Provisioning.Batch
     /// <summary> Contains information about an Azure Batch account. </summary>
     public partial class BatchAccount : ProvisionableResource
     {
-        private BatchAccountProperties _properties;
+        private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
+        private SystemData _systemData;
+        private BatchAccountProperties _properties;
         private ManagedServiceIdentity _identity;
         private BicepDictionary<string> _tags;
-        private SystemData _systemData;
         private BicepValue<AzureLocation> _location;
-        private BicepValue<ResourceIdentifier> _id;
 
         /// <summary> Creates a new BatchAccount. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -31,18 +31,13 @@ namespace Azure.Provisioning.Batch
         {
         }
 
-        /// <summary> Gets or sets the Properties. </summary>
-        internal BatchAccountProperties Properties
+        /// <summary> Gets the Id. </summary>
+        public BicepValue<ResourceIdentifier> Id
         {
             get
             {
                 Initialize();
-                return _properties;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _properties, value);
+                return _id;
             }
         }
 
@@ -58,6 +53,31 @@ namespace Azure.Provisioning.Batch
             {
                 Initialize();
                 _name.Assign(value);
+            }
+        }
+
+        /// <summary> Gets the SystemData. </summary>
+        public SystemData SystemData
+        {
+            get
+            {
+                Initialize();
+                return _systemData;
+            }
+        }
+
+        /// <summary> Gets or sets the Properties. </summary>
+        internal BatchAccountProperties Properties
+        {
+            get
+            {
+                Initialize();
+                return _properties;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _properties, value);
             }
         }
 
@@ -91,16 +111,6 @@ namespace Azure.Provisioning.Batch
             }
         }
 
-        /// <summary> Gets the SystemData. </summary>
-        public SystemData SystemData
-        {
-            get
-            {
-                Initialize();
-                return _systemData;
-            }
-        }
-
         /// <summary> Gets or sets the Location. </summary>
         public BicepValue<AzureLocation> Location
         {
@@ -113,16 +123,6 @@ namespace Azure.Provisioning.Batch
             {
                 Initialize();
                 _location.Assign(value);
-            }
-        }
-
-        /// <summary> Gets the Id. </summary>
-        public BicepValue<ResourceIdentifier> Id
-        {
-            get
-            {
-                Initialize();
-                return _id;
             }
         }
 
@@ -347,13 +347,13 @@ namespace Azure.Provisioning.Batch
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _properties = DefineModelProperty<BatchAccountProperties>(nameof(Properties), new string[] { "properties" });
+            _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
+            _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
+            _properties = DefineModelProperty<BatchAccountProperties>(nameof(Properties), new string[] { "properties" });
             _identity = DefineModelProperty<ManagedServiceIdentity>(nameof(Identity), new string[] { "identity" });
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
-            _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
-            _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
-            _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
+            _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" });
             DefineAdditionalProperties();
         }
 

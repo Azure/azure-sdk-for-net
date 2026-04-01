@@ -6,8 +6,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Recurrence based trigger. </summary>
     public partial class RecurrenceTrigger : ScheduleTrigger, IJsonModel<RecurrenceTrigger>
@@ -79,12 +80,12 @@ namespace Azure.AI.Projects
             if (Optional.IsDefined(StartTime))
             {
                 writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartTime);
+                writer.WriteStringValue(StartTime.Value, "O");
             }
             if (Optional.IsDefined(EndTime))
             {
                 writer.WritePropertyName("endTime"u8);
-                writer.WriteStringValue(EndTime);
+                writer.WriteStringValue(EndTime.Value, "O");
             }
             if (Optional.IsDefined(TimeZone))
             {
@@ -124,8 +125,8 @@ namespace Azure.AI.Projects
             }
             TriggerType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            string startTime = default;
-            string endTime = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
             string timeZone = default;
             int interval = default;
             RecurrenceSchedule schedule = default;
@@ -138,12 +139,20 @@ namespace Azure.AI.Projects
                 }
                 if (prop.NameEquals("startTime"u8))
                 {
-                    startTime = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    startTime = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("endTime"u8))
                 {
-                    endTime = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    endTime = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("timeZone"u8))
