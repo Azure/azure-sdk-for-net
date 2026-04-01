@@ -222,5 +222,56 @@ namespace Azure.ResourceManager.Hci.Models
                 return Progress.Steps;
             }
         }
+
+        /// <summary> Gets or sets the StartOn. </summary>
+        public DateTimeOffset? StartOn
+        {
+            get
+            {
+                return Progress is null ? default : Progress.StartOn;
+            }
+            set
+            {
+                if (Progress is null)
+                {
+                    Progress = new HciUpdateStep();
+                }
+                Progress.StartOn = value.Value;
+            }
+        }
+
+        /// <summary> Gets or sets the EndOn. </summary>
+        public DateTimeOffset? EndOn
+        {
+            get
+            {
+                return Progress is null ? default : Progress.EndOn;
+            }
+            set
+            {
+                if (Progress is null)
+                {
+                    Progress = new HciUpdateStep();
+                }
+                Progress.EndOn = value.Value;
+            }
+        }
+
+        /// <summary> Gets or sets the LastUpdatedOn. </summary>
+        public DateTimeOffset? LastUpdatedOn
+        {
+            get
+            {
+                return Progress is null ? default : Progress.LastUpdatedOn;
+            }
+            set
+            {
+                if (Progress is null)
+                {
+                    Progress = new HciUpdateStep();
+                }
+                Progress.LastUpdatedOn = value.Value;
+            }
+        }
     }
 }

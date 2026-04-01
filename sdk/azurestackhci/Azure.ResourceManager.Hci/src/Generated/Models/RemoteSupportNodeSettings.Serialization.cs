@@ -66,6 +66,67 @@ namespace Azure.ResourceManager.Hci.Models
             writer.WriteEndObject();
         }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RemoteSupportNodeSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RemoteSupportNodeSettings)} does not support writing '{format}' format.");
+            }
+            if (options.Format != "W" && Optional.IsDefined(ArcResourceId))
+            {
+                writer.WritePropertyName("arcResourceId"u8);
+                writer.WriteStringValue(ArcResourceId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(State))
+            {
+                writer.WritePropertyName("state"u8);
+                writer.WriteStringValue(State);
+            }
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            {
+                writer.WritePropertyName("createdAt"u8);
+                writer.WriteStringValue(CreatedOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(UpdatedOn))
+            {
+                writer.WritePropertyName("updatedAt"u8);
+                writer.WriteStringValue(UpdatedOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(ConnectionStatus))
+            {
+                writer.WritePropertyName("connectionStatus"u8);
+                writer.WriteStringValue(ConnectionStatus);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ConnectionErrorMessage))
+            {
+                writer.WritePropertyName("connectionErrorMessage"u8);
+                writer.WriteStringValue(ConnectionErrorMessage);
+            }
+            if (options.Format != "W" && Optional.IsDefined(TranscriptLocation))
+            {
+                writer.WritePropertyName("transcriptLocation"u8);
+                writer.WriteStringValue(TranscriptLocation);
+            }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         RemoteSupportNodeSettings IJsonModel<RemoteSupportNodeSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);

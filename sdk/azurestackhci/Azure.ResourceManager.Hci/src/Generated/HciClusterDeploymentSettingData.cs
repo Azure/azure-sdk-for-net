@@ -51,6 +51,38 @@ namespace Azure.ResourceManager.Hci
             }
         }
 
+        /// <summary> Azure resource ids of Arc machines to be part of cluster. </summary>
+        [WirePath("properties.arcNodeResourceIds")]
+        public IList<ResourceIdentifier> ArcNodeResourceIds
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new DeploymentSettingsProperties();
+                }
+                return Properties.ArcNodeResourceIds;
+            }
+        }
+
+        /// <summary> The deployment mode for cluster deployment. </summary>
+        [WirePath("properties.deploymentMode")]
+        public EceDeploymentMode DeploymentMode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DeploymentMode;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DeploymentSettingsProperties();
+                }
+                Properties.DeploymentMode = value;
+            }
+        }
+
         /// <summary> The intended operation for a cluster. </summary>
         [WirePath("properties.operationType")]
         public HciClusterOperationType? OperationType
