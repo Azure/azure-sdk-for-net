@@ -26,7 +26,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             credential = new(TestEnvironment.ApiKey);
 #endif
             ConversationAnalysisAuthoringClientOptions options = new ConversationAnalysisAuthoringClientOptions(ConversationAnalysisAuthoringClientOptions.ServiceVersion.V2025_11_15_Preview);
-            AuthoringClient client = new AuthoringClient(endpoint, credential, options);
+            ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential, options);
             #endregion
         }
 
@@ -39,7 +39,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             endpoint = TestEnvironment.Endpoint;
 #endif
             DefaultAzureCredential credential = new DefaultAzureCredential();
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
+            ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential);
             #endregion
         }
 
@@ -48,7 +48,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
+            ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential);
 
             #region Snippet:AuthoringClient_BadRequest
             try

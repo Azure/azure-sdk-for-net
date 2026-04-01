@@ -20,7 +20,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
+            ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential);
 
             #region Snippet:Sample14_ConversationsAuthoring_DeployProject
             string projectName = "{projectName}";
@@ -47,7 +47,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new AzureKeyCredential(TestEnvironment.ApiKey);
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
+            ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential);
 
             #region Snippet:Sample14_ConversationsAuthoring_DeployProjectWithAssignedResources
             string projectName = "{projectName}";
@@ -98,8 +98,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             // Use the 2025-11-01 GA version of the service
             ConversationAnalysisAuthoringClientOptions options = new ConversationAnalysisAuthoringClientOptions(ConversationAnalysisAuthoringClientOptions.ServiceVersion.V2025_11_01);
 
-            AuthoringClient client =
-                new AuthoringClient(endpoint, credential, options);
+            ConversationAnalysisAuthoring client =
+                new ConversationAnalysisAuthoring(endpoint, credential, options);
 
             string projectName = "{projectName}";
             string deploymentName = "{deploymentName}";
@@ -125,7 +125,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
+            ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential);
 
             #region Snippet:Sample14_ConversationsAuthoring_DeployProjectAsync
             string projectName = "{projectName}";
@@ -152,7 +152,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new AzureKeyCredential(TestEnvironment.ApiKey);
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
+            ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential);
 
             #region Snippet:Sample14_ConversationsAuthoring_DeployProjectAsyncWithAssignedResources
             string projectName = "{projectName}";
@@ -201,8 +201,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             // Use the 2025-11-01 GA version of the service
             ConversationAnalysisAuthoringClientOptions options = new ConversationAnalysisAuthoringClientOptions(ConversationAnalysisAuthoringClientOptions.ServiceVersion.V2025_11_01);
 
-            AuthoringClient client =
-                new AuthoringClient(endpoint, credential, options);
+            ConversationAnalysisAuthoring client =
+                new ConversationAnalysisAuthoring(endpoint, credential, options);
 
             string projectName = "{projectName}";
             string deploymentName = "{deploymentName}";

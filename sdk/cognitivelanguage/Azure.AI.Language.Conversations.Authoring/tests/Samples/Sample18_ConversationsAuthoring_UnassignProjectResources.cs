@@ -21,7 +21,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
         {
             Uri sampleEndpoint = TestEnvironment.Endpoint;
             DefaultAzureCredential sampleCredential = new DefaultAzureCredential();
-            AuthoringClient client = new AuthoringClient(sampleEndpoint, sampleCredential);
+            ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(sampleEndpoint, sampleCredential);
 
             #region Snippet:Sample18_ConversationsAuthoring_UnassignProjectResources
             // Set project name and create client for the project
@@ -63,7 +63,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
         {
             Uri sampleEndpoint = TestEnvironment.Endpoint;
             DefaultAzureCredential sampleCredential = new DefaultAzureCredential();
-            AuthoringClient client = new AuthoringClient(sampleEndpoint, sampleCredential);
+            ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(sampleEndpoint, sampleCredential);
 
             #region Snippet:Sample18_ConversationsAuthoring_UnassignProjectResourcesAsync
             // Set project name and create client for the project

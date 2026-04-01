@@ -10,7 +10,7 @@ To create a `ConversationAnalysisAuthoringClient`, you will need the service end
 Uri endpoint = new Uri("{endpoint}");
 AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
 ConversationAnalysisAuthoringClientOptions options = new ConversationAnalysisAuthoringClientOptions(ConversationAnalysisAuthoringClientOptions.ServiceVersion.V2025_11_15_Preview);
-AuthoringClient client = new AuthoringClient(endpoint, credential, options);
+ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential, options);
 ```
 
 The values of the endpoint and apiKey variables can be retrieved from environment variables, configuration settings, or any other secure approach that works for your application.
@@ -39,13 +39,13 @@ foreach (AnalyzeConversationAuthoringUtteranceEvaluationResult result in results
 
     // Print entities result
     Console.WriteLine("Expected Entities:");
-    foreach (AnalyzeConversationAuthoringUtteranceEntityEvaluationResult entity in result.EntitiesResult.ExpectedEntities)
+    foreach (UtteranceEntityEvaluationResult entity in result.EntitiesResult.ExpectedEntities)
     {
         Console.WriteLine($" - Category: {entity.Category}, Offset: {entity.Offset}, Length: {entity.Length}");
     }
 
     Console.WriteLine("Predicted Entities:");
-    foreach (AnalyzeConversationAuthoringUtteranceEntityEvaluationResult entity in result.EntitiesResult.PredictedEntities)
+    foreach (UtteranceEntityEvaluationResult entity in result.EntitiesResult.PredictedEntities)
     {
         Console.WriteLine($" - Category: {entity.Category}, Offset: {entity.Offset}, Length: {entity.Length}");
     }
@@ -76,13 +76,13 @@ await foreach (AnalyzeConversationAuthoringUtteranceEvaluationResult result in r
 
     // Print entities result
     Console.WriteLine("Expected Entities:");
-    foreach (AnalyzeConversationAuthoringUtteranceEntityEvaluationResult entity in result.EntitiesResult.ExpectedEntities)
+    foreach (UtteranceEntityEvaluationResult entity in result.EntitiesResult.ExpectedEntities)
     {
         Console.WriteLine($" - Category: {entity.Category}, Offset: {entity.Offset}, Length: {entity.Length}");
     }
 
     Console.WriteLine("Predicted Entities:");
-    foreach (AnalyzeConversationAuthoringUtteranceEntityEvaluationResult entity in result.EntitiesResult.PredictedEntities)
+    foreach (UtteranceEntityEvaluationResult entity in result.EntitiesResult.PredictedEntities)
     {
         Console.WriteLine($" - Category: {entity.Category}, Offset: {entity.Offset}, Length: {entity.Length}");
     }

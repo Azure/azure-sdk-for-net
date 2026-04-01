@@ -19,8 +19,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new AzureKeyCredential(TestEnvironment.ApiKey);
-            AuthoringClient client =
-                new AuthoringClient(endpoint, credential);
+            ConversationAnalysisAuthoring client =
+                new ConversationAnalysisAuthoring(endpoint, credential);
 
             #region Snippet:Sample23_ConversationsAuthoring_GetDeploymentDeleteFromResourcesStatus
             string projectName = "{projectName}";
@@ -46,8 +46,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new AzureKeyCredential(TestEnvironment.ApiKey);
-            AuthoringClient client =
-                new AuthoringClient(endpoint, credential);
+            ConversationAnalysisAuthoring client =
+                new ConversationAnalysisAuthoring(endpoint, credential);
 
             #region Snippet:Sample23_ConversationsAuthoring_GetDeploymentDeleteFromResourcesStatusAsync
             string projectName = "{projectName}";

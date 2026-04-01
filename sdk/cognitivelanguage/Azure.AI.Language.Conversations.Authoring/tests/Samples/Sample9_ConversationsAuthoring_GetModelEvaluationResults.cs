@@ -19,7 +19,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
+            ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential);
 
             #region Snippet:Sample9_ConversationsAuthoring_GetModelEvaluationResults
             string projectName = "{projectName}";
@@ -38,13 +38,13 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
 
                 // Print entities result
                 Console.WriteLine("Expected Entities:");
-                foreach (AnalyzeConversationAuthoringUtteranceEntityEvaluationResult entity in result.EntitiesResult.ExpectedEntities)
+                foreach (UtteranceEntityEvaluationResult entity in result.EntitiesResult.ExpectedEntities)
                 {
                     Console.WriteLine($" - Category: {entity.Category}, Offset: {entity.Offset}, Length: {entity.Length}");
                 }
 
                 Console.WriteLine("Predicted Entities:");
-                foreach (AnalyzeConversationAuthoringUtteranceEntityEvaluationResult entity in result.EntitiesResult.PredictedEntities)
+                foreach (UtteranceEntityEvaluationResult entity in result.EntitiesResult.PredictedEntities)
                 {
                     Console.WriteLine($" - Category: {entity.Category}, Offset: {entity.Offset}, Length: {entity.Length}");
                 }
@@ -60,7 +60,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
+            ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential);
 
             #region Snippet:Sample9_ConversationsAuthoring_GetModelEvaluationResultsAsync
             string projectName = "{projectName}";
@@ -80,13 +80,13 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
 
                 // Print entities result
                 Console.WriteLine("Expected Entities:");
-                foreach (AnalyzeConversationAuthoringUtteranceEntityEvaluationResult entity in result.EntitiesResult.ExpectedEntities)
+                foreach (UtteranceEntityEvaluationResult entity in result.EntitiesResult.ExpectedEntities)
                 {
                     Console.WriteLine($" - Category: {entity.Category}, Offset: {entity.Offset}, Length: {entity.Length}");
                 }
 
                 Console.WriteLine("Predicted Entities:");
-                foreach (AnalyzeConversationAuthoringUtteranceEntityEvaluationResult entity in result.EntitiesResult.PredictedEntities)
+                foreach (UtteranceEntityEvaluationResult entity in result.EntitiesResult.PredictedEntities)
                 {
                     Console.WriteLine($" - Category: {entity.Category}, Offset: {entity.Offset}, Length: {entity.Length}");
                 }
