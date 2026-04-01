@@ -26,68 +26,17 @@ namespace Azure.ResourceManager.Hci.Models
             : base(updateType, version, packageName, additionalBinaryDataProperties) { }
 
         UpdatePrerequisite IJsonModel<UpdatePrerequisite>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<UpdatePrerequisite>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(UpdatePrerequisite)} does not support reading '{format}' format.");
-            }
-            using var document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUpdatePrerequisite(document.RootElement, options);
-        }
+            => throw new NotSupportedException("This type is obsolete. Please use HciClusterUpdatePrerequisite instead.");
 
         void IJsonModel<UpdatePrerequisite>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-            => ((IJsonModel<HciClusterUpdatePrerequisite>)this).Write(writer, options);
+            => throw new NotSupportedException("This type is obsolete. Please use HciClusterUpdatePrerequisite instead.");
 
         UpdatePrerequisite IPersistableModel<UpdatePrerequisite>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<UpdatePrerequisite>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(UpdatePrerequisite)} does not support reading '{options.Format}' format.");
-            }
-            using var document = JsonDocument.Parse(data);
-            return DeserializeUpdatePrerequisite(document.RootElement, options);
-        }
+            => throw new NotSupportedException("This type is obsolete. Please use HciClusterUpdatePrerequisite instead.");
 
         BinaryData IPersistableModel<UpdatePrerequisite>.Write(ModelReaderWriterOptions options)
-            => ((IPersistableModel<HciClusterUpdatePrerequisite>)this).Write(options);
+            => throw new NotSupportedException("This type is obsolete. Please use HciClusterUpdatePrerequisite instead.");
 
         string IPersistableModel<UpdatePrerequisite>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        internal static UpdatePrerequisite DeserializeUpdatePrerequisite(JsonElement element, ModelReaderWriterOptions options)
-        {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            string updateType = default;
-            string version = default;
-            string packageName = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
-            {
-                if (prop.NameEquals("updateType"u8))
-                {
-                    updateType = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("version"u8))
-                {
-                    version = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("packageName"u8))
-                {
-                    packageName = prop.Value.GetString();
-                    continue;
-                }
-                if (options.Format != "W")
-                {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
-                }
-            }
-            return new UpdatePrerequisite(updateType, version, packageName, additionalBinaryDataProperties);
-        }
     }
 }
