@@ -367,7 +367,7 @@
 # ServiceOwners: @AzmonActionG @AzmonAlerts @AzMonEssential @AzmonLogA @dadunl @SameergMS
 
 # PRLabel: %Monitor - Distro
-/sdk/monitor/Azure.Monitor.OpenTelemetry.*/    @harsimar @mattsains-msft @rajkumar-rangaraj @xiang17
+/sdk/monitor/Azure.Monitor.OpenTelemetry.*    @harsimar @mattsains-msft @rajkumar-rangaraj @xiang17
 
 # PRLabel: %Monitor - Distro
 /sdk/monitor/Azure.Monitor.OpenTelemetry.AspNetCore/    @harsimar @mattsains-msft @rajkumar-rangaraj @xiang17
@@ -470,10 +470,7 @@
 # ServiceOwners: @amber-yujueWang @emilyjiji @pankopon @rhurey @xitzhang
 
 # PRLabel: %Storage
-/sdk/storage*/    @amnguye @jalauzon-msft @jaschrep-msft @nickliu-msft @seanmcc-msft
-
-# PRLabel: %Storage
-/sdk/storage/Azure.Storage.*/    @amnguye @jalauzon-msft @jaschrep-msft @nickliu-msft @seanmcc-msft
+/sdk/storage/    @amnguye @jalauzon-msft @jaschrep-msft @nickliu-msft @seanmcc-msft
 
 # PRLabel: %Storage
 /sdk/storage/Azure.Storage.Blobs.Batch/    @amnguye @jalauzon-msft @jaschrep-msft @nickliu-msft @seanmcc-msft
@@ -504,9 +501,6 @@
 
 # PRLabel: %Storage
 /sdk/storage/Azure.Storage.Queues/    @amnguye @jalauzon-msft @jaschrep-msft @nickliu-msft @seanmcc-msft
-
-# PRLabel: %Storage
-/sdk/storage/Microsoft.Azure.WebJobs.*/    @amnguye @fabiocav @jalauzon-msft @jaschrep-msft @mathewc @nickliu-msft @seanmcc-msft @tg-msft
 
 # PRLabel: %Storage
 /sdk/storage/Microsoft.Azure.WebJobs.Extensions.Storage.Blobs/    @amnguye @fabiocav @jalauzon-msft @jaschrep-msft @mathewc @nickliu-msft @seanmcc-msft @tg-msft
