@@ -48,7 +48,7 @@ namespace Azure.Communication.CallAutomation
             {
                 ".asm.skype.com",
                 ".asyncgw.teams.microsoft.com",
-                ".gov.teams.microsoft.us",
+                ".ams.gov.teams.microsoft.us",
             };
         }
     }
