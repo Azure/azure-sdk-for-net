@@ -65,11 +65,12 @@ namespace Azure.Generator.Management.Visitors
         /// <summary>
         /// Fixes backward-compat overload methods that call primary model factory methods.
         /// After flattening reorders the primary method's parameters, the positional arguments
-        /// in these overloads may be in the wrong order. This method converts them to named arguments.
+        /// in these overloads may be in the wrong order. This method rebuilds the argument list
+        /// to match the primary method's current parameter order.
         /// </summary>
         internal static void FixBackwardCompatOverloads(IReadOnlyList<MethodProvider> methods)
         {
-            // Build a lookup of primary method signatures by name
+            // Build a lookup of primary methods by name
             var primaryMethods = new Dictionary<string, MethodProvider>();
             foreach (var method in methods)
             {
@@ -86,12 +87,7 @@ namespace Azure.Generator.Management.Visitors
 
             foreach (var method in methods)
             {
-                if (!IsBackwardCompatMethod(method))
-                {
-                    continue;
-                }
-
-                if (method.BodyStatements is null)
+                if (!IsBackwardCompatMethod(method) || method.BodyStatements is null)
                 {
                     continue;
                 }
@@ -108,16 +104,8 @@ namespace Azure.Generator.Management.Visitors
                     {
                         var primaryParams = primaryMethod.Signature.Parameters;
                         var invokeArgs = invokeExpression.Arguments;
-
-                        // Build a lookup: paramName -> argument expression from the invoke call
-                        // The invoke was built by the base generator to match the PRIMARY method's
-                        // parameter order BEFORE flattening. After flattening, the order changed.
-                        // We need to rebuild arguments using named references to the PRIMARY method's
-                        // CURRENT parameter order.
-
-                        // The invoke's MethodSignature still references the pre-flatten signature.
-                        // We need to match arguments to the updated primary method's parameters.
                         var invokeSignatureParams = invokeExpression.MethodSignature?.Parameters;
+
                         if (invokeSignatureParams is null || invokeSignatureParams.Count != invokeArgs.Count)
                         {
                             updatedBodyStatements.Add(statement);
@@ -131,40 +119,31 @@ namespace Azure.Generator.Management.Visitors
                             argsByName[invokeSignatureParams[i].Name] = invokeArgs[i];
                         }
 
-                        // Rebuild arguments in the current primary method's parameter order
+                        // Rebuild arguments in the current primary method's parameter order,
+                        // tracking whether any reordering actually occurred.
                         var newArgs = new List<ValueExpression>(primaryParams.Count);
-                        var needsUpdate = false;
-                        foreach (var primaryParam in primaryParams)
+                        var changed = false;
+                        for (int i = 0; i < primaryParams.Count; i++)
                         {
-                            if (argsByName.TryGetValue(primaryParam.Name, out var arg))
+                            if (argsByName.TryGetValue(primaryParams[i].Name, out var arg))
                             {
                                 newArgs.Add(arg);
+                                if (!changed && (i >= invokeArgs.Count || !ReferenceEquals(arg, invokeArgs[i])))
+                                {
+                                    changed = true;
+                                }
                             }
                             else
                             {
                                 // Parameter not in old call, use named default
-                                newArgs.Add(Snippet.PositionalReference(primaryParam, primaryParam.DefaultValue ?? Default));
-                                needsUpdate = true;
+                                newArgs.Add(Snippet.PositionalReference(primaryParams[i], primaryParams[i].DefaultValue ?? Default));
+                                changed = true;
                             }
                         }
 
-                        // Check if argument order actually changed
-                        if (!needsUpdate)
+                        if (changed)
                         {
-                            for (int i = 0; i < Math.Min(invokeArgs.Count, newArgs.Count); i++)
-                            {
-                                if (!ReferenceEquals(invokeArgs[i], newArgs[i]))
-                                {
-                                    needsUpdate = true;
-                                    break;
-                                }
-                            }
-                        }
-
-                        if (needsUpdate)
-                        {
-                            var newInvoke = new InvokeMethodExpression(null, primaryMethod.Signature, newArgs);
-                            updatedBodyStatements.Add(Return(newInvoke));
+                            updatedBodyStatements.Add(Return(new InvokeMethodExpression(null, primaryMethod.Signature, newArgs)));
                             bodyUpdated = true;
                         }
                         else
