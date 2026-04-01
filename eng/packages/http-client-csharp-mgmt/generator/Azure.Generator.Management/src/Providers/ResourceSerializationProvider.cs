@@ -19,12 +19,10 @@ namespace Azure.Generator.Management.Providers
         private readonly CSharpType _resourceDataType;
         private readonly ResourceClientProvider _resoruce;
         private readonly CSharpType _jsonModelInterfaceType;
-        private readonly bool _isResourceDataAbstract;
         public ResourceSerializationProvider(ResourceClientProvider resource)
         {
             _resoruce = resource;
             _resourceDataType = resource.ResourceData.Type;
-            _isResourceDataAbstract = resource.ResourceData.DeclarationModifiers.HasFlag(TypeSignatureModifiers.Abstract);
             _jsonModelInterfaceType = new CSharpType(typeof(IJsonModel<>), _resourceDataType);
             _dataField = new FieldProvider(FieldModifiers.Private | FieldModifiers.Static, _jsonModelInterfaceType, "s_dataDeserializationInstance", this);
         }
@@ -39,10 +37,9 @@ namespace Azure.Generator.Management.Providers
 
         protected override CSharpType[] BuildImplements() => [_jsonModelInterfaceType];
 
-        protected override FieldProvider[] BuildFields() => _isResourceDataAbstract ? [] : [_dataField];
+        protected override FieldProvider[] BuildFields() => [_dataField];
 
         protected override PropertyProvider[] BuildProperties() =>
-            _isResourceDataAbstract ? [] :
             [
                 new PropertyProvider(null, MethodSignatureModifiers.Private | MethodSignatureModifiers.Static, _jsonModelInterfaceType, "DataDeserializationInstance", new ExpressionPropertyBody(new AssignmentExpression(_dataField, New.Instance(_resourceDataType), true)), this)
             ];
@@ -63,27 +60,11 @@ namespace Azure.Generator.Management.Providers
 
             // T IJsonModel<T>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
             var reader = new ParameterProvider("reader", $"The reader for deserializing the model.", typeof(Utf8JsonReader), isRef: true);
-            MethodProvider jsonModelCreatemethod;
-            if (_isResourceDataAbstract)
-            {
-                // For abstract discriminated types, parse the reader and use ModelReaderWriter.Read which handles discriminators.
-                // Generates: => ModelReaderWriter.Read<T>(BinaryData.FromString(JsonDocument.ParseValue(ref reader).RootElement.GetRawText()), options, context)
-                var parseValue = Static(typeof(JsonDocument)).Invoke("ParseValue", [reader.AsArgument()]);
-                var rawText = parseValue.Property("RootElement").Invoke("GetRawText");
-                var binaryData = Static(typeof(BinaryData)).Invoke("FromString", [rawText]);
-                jsonModelCreatemethod = new MethodProvider(
-                    new MethodSignature(nameof(IJsonModel<object>.Create), null, MethodSignatureModifiers.None, _resourceDataType, null, [reader, options], ExplicitInterface: _jsonModelInterfaceType),
-                    Static(typeof(ModelReaderWriter)).Invoke("Read", [binaryData, options, ModelReaderWriterContextSnippets.Default], [_resourceDataType], false),
-                    this);
-            }
-            else
-            {
-                jsonModelCreatemethod = new MethodProvider(
-                    new MethodSignature(nameof(IJsonModel<object>.Create), null, MethodSignatureModifiers.None, _resourceDataType, null, [reader, options], ExplicitInterface: _jsonModelInterfaceType),
-                    // => DataDeserializationInstance.Create(reader, options);
-                    new MemberExpression(null, "DataDeserializationInstance").Invoke(nameof(IJsonModel<object>.Create), reader.AsArgument(), options),
-                    this);
-            }
+            var jsonModelCreatemethod = new MethodProvider(
+                new MethodSignature(nameof(IJsonModel<object>.Create), null, MethodSignatureModifiers.None, _resourceDataType, null, [reader, options], ExplicitInterface: _jsonModelInterfaceType),
+                // => DataDeserializationInstance.Create(reader, options);
+                new MemberExpression(null, "DataDeserializationInstance").Invoke(nameof(IJsonModel<object>.Create), reader.AsArgument(), options),
+                this);
 
             // BinaryData IPersistableModel<T>.Write(ModelReaderWriterOptions options)
             var persistableWriteMethod = new MethodProvider(
@@ -100,22 +81,11 @@ namespace Azure.Generator.Management.Providers
                 this);
 
             // ModelReaderWriterFormat IPersistableModel<T>.GetFormatFromOptions(ModelReaderWriterOptions options)
-            MethodProvider persistableGetFormatMethod;
-            if (_isResourceDataAbstract)
-            {
-                persistableGetFormatMethod = new MethodProvider(
-                    new MethodSignature(nameof(IPersistableModel<object>.GetFormatFromOptions), null, MethodSignatureModifiers.None, typeof(string), null, [options], ExplicitInterface: iModelTInterface),
-                    Literal("J"),
-                    this);
-            }
-            else
-            {
-                persistableGetFormatMethod = new MethodProvider(
-                    new MethodSignature(nameof(IPersistableModel<object>.GetFormatFromOptions), null, MethodSignatureModifiers.None, typeof(string), null, [options], ExplicitInterface: iModelTInterface),
-                    // => DataDeserializationInstance.GetFormatFromOptions(options);
-                    new MemberExpression(null, "DataDeserializationInstance").Invoke(nameof(IPersistableModel<object>.GetFormatFromOptions), options),
-                    this);
-            }
+            var persistableGetFormatMethod = new MethodProvider(
+                new MethodSignature(nameof(IPersistableModel<object>.GetFormatFromOptions), null, MethodSignatureModifiers.None, typeof(string), null, [options], ExplicitInterface: iModelTInterface),
+                // => DataDeserializationInstance.GetFormatFromOptions(options);
+                new MemberExpression(null, "DataDeserializationInstance").Invoke(nameof(IPersistableModel<object>.GetFormatFromOptions), options),
+                this);
 
             return [jsonModelWriteMethod, jsonModelCreatemethod, persistableWriteMethod, persistableCreateMethod, persistableGetFormatMethod];
         }

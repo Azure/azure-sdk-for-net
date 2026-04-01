@@ -377,9 +377,6 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
     }
 
     private const string RawDataParameterName = "additionalBinaryDataProperties";
-    // Use a distinct field name to avoid collision with the base generator's local variable
-    // of the same name in deserialization methods for discriminated model hierarchies.
-    private const string RawDataFieldName = "_additionalBinaryData";
     private static FieldProvider CreateRawDataField(ModelProvider model)
     {
         var modifiers = FieldModifiers.Private;
@@ -393,7 +390,7 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
             modifiers: modifiers,
             type: typeof(IDictionary<string, BinaryData>),
             description: FromString("Keeps track of any properties unknown to the library."),
-            name: RawDataFieldName,
+            name: $"_{RawDataParameterName}",
             enclosingType: model);
 
         return rawDataField;
