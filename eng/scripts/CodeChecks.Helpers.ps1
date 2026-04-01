@@ -97,11 +97,11 @@ function Get-MissingTestDependsOnDependency {
     $dependedOn = @{} # packageName -> Set of dependent service dirs
     $refPattern = '<(?:Package|Project)Reference[^>]*Include\s*=\s*"([^"]+)"'
 
-    Get-ChildItem $sdkDir -Directory | ForEach-Object {
-        $otherSvc = $_.Name
-        if ($otherSvc -eq $ServiceDirectory) { return }
+    foreach ($svcItem in (Get-ChildItem $sdkDir -Directory)) {
+        $otherSvc = $svcItem.Name
+        if ($otherSvc -eq $ServiceDirectory) { continue }
 
-        Get-ChildItem $_.FullName -Recurse -Filter "*.csproj" | Where-Object {
+        Get-ChildItem $svcItem.FullName -Recurse -Filter "*.csproj" | Where-Object {
             $_.FullName -match '[/\\]tests[/\\]'
         } | ForEach-Object {
             $content = Get-Content $_.FullName -Raw
