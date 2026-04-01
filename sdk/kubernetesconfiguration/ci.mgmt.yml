@@ -11,3 +11,4 @@ extends:
       safeName: AzureResourceManagerKubernetesConfiguration
     - name: Azure.Provisioning.KubernetesConfiguration
       safeName: AzureProvisioningKubernetesConfiguration
+    TestDependsOnDependency: Azure.ResourceManager.KubernetesConfiguration

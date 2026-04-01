@@ -216,6 +216,34 @@ try {
             }
         }
 
+    Write-Host "`nValidating TestDependsOnDependency coverage"
+    $missingDeps = Get-MissingTestDependsOnDependency -ServiceDirectory $ServiceDirectory -RepoRoot $RepoRoot
+    if ($missingDeps) {
+        if ($SkipDiffValidation) {
+            # Auto-fix: group by CI file and add the missing entries
+            $grouped = $missingDeps | Group-Object -Property CiFile
+            foreach ($group in $grouped) {
+                $ciFile = $group.Name
+                $pkgs = @($group.Group | ForEach-Object { $_.Package })
+                Write-Host "  Adding TestDependsOnDependency to $(Split-Path -Leaf $ciFile): $($pkgs -join ', ')"
+                Add-TestDependsOnDependency -CiFilePath $ciFile -PackageNames $pkgs
+            }
+        } else {
+            foreach ($dep in $missingDeps) {
+                $relPath = [System.IO.Path]::GetRelativePath($RepoRoot, $dep.CiFile) -replace '\\', '/'
+                $dependentList = $dep.Dependents -join ', '
+                LogError `
+"Package '$($dep.Package)' is depended on by tests in other services ($dependentList) `
+    but is not listed in TestDependsOnDependency in '$relPath'.`
+    Add '$($dep.Package)' to the TestDependsOnDependency parameter in '$relPath'.`
+    Example: TestDependsOnDependency: $($dep.Package)`
+    This ensures that when '$($dep.Package)' changes, downstream dependent tests are run.`
+    `
+To fix this locally, run 'eng\scripts\CodeChecks.ps1 -ServiceDirectory $ServiceDirectory -SkipDiffValidation' and commit the resulting changes."
+            }
+        }
+    }
+
     if (-not $ProjectDirectory)
     {
         Write-Host "git diff"
