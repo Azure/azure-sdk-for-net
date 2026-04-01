@@ -39,8 +39,8 @@ namespace Azure.ResourceManager.Hci.Models
         [WirePath("arcResourceId")]
         public ResourceIdentifier ArcResourceId
         {
-            get => string.IsNullOrEmpty(_arcResourceIdString) ? null : new ResourceIdentifier(_arcResourceIdString);
-            internal set => _arcResourceIdString = value?.ToString();
+            get => throw new NotSupportedException("This property is obsolete. Use the new ArcResourceId property with type string instead.");
+            internal set => throw new NotSupportedException("This property is obsolete.");
         }
 
         /// <param name="writer"> The JSON writer. </param>
