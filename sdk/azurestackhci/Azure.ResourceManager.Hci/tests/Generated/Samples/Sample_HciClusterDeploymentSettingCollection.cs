@@ -80,7 +80,6 @@ WitnessPath = "Cloud",
 CloudAccountName = "myasestoragacct",
 AzureServiceEndpoint = "core.windows.net",
 },
-StorageConfigurationMode = "Express",
 NamingPrefix = "ms169",
 DomainFqdn = "ASZ1PLab8.nttest.microsoft.com",
 InfrastructureNetwork = {new DeploymentSettingInfrastructureNetwork
