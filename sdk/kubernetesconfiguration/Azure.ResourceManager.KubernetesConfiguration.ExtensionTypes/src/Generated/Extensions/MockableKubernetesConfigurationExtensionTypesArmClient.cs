@@ -7,7 +7,6 @@
 
 using Azure.Core;
 using Azure.ResourceManager;
-using Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes.Mocking
 {
@@ -25,7 +24,5 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes.Mocking
         internal MockableKubernetesConfigurationExtensionTypesArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
-
-
     }
 }
