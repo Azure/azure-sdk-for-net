@@ -158,6 +158,20 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             return new AdlsBlobBackupDataSourceSettings("BlobBackupDatasourceParameters", additionalBinaryDataProperties: null, containersList.ToList());
         }
 
+        /// <summary> Parameters to be used for Blob Backup Rule Based Auto Protection settings. </summary>
+        /// <param name="enabled"> Flag to enable whether auto protection. </param>
+        /// <param name="rules">
+        /// Rules are evaluated in the order provided. Inclusion adds candidates; exclusion removes candidates.
+        /// If no rules are present, all containers are considered eligible when enabled = true.
+        /// </param>
+        /// <returns> A new <see cref="Models.BlobBackupRuleBasedAutoProtectionSettings"/> instance for mocking. </returns>
+        public static BlobBackupRuleBasedAutoProtectionSettings BlobBackupRuleBasedAutoProtectionSettings(bool enabled = default, IEnumerable<BlobBackupAutoProtectionRule> rules = default)
+        {
+            rules ??= new ChangeTrackingList<BlobBackupAutoProtectionRule>();
+
+            return new BlobBackupRuleBasedAutoProtectionSettings("BlobBackupRuleBasedAutoProtectionSettings", enabled, additionalBinaryDataProperties: null, rules.ToList());
+        }
+
         /// <summary> Error object used by layers that have access to localized content, and propagate that to user. </summary>
         /// <param name="code"> Unique code for this error. </param>
         /// <param name="details"> Additional related Errors. </param>

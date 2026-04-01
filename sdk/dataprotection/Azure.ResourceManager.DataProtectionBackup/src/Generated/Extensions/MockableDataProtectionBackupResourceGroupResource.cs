@@ -46,23 +46,23 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
 
         private ClientDiagnostics BackupVaultsOperationGroupClientDiagnostics => _backupVaultsOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private BackupVaultsOperationGroup BackupVaultsOperationGroupRestClient => _backupVaultsOperationGroupRestClient ??= new BackupVaultsOperationGroup(BackupVaultsOperationGroupClientDiagnostics, Pipeline, Endpoint, "2025-09-01");
+        private BackupVaultsOperationGroup BackupVaultsOperationGroupRestClient => _backupVaultsOperationGroupRestClient ??= new BackupVaultsOperationGroup(BackupVaultsOperationGroupClientDiagnostics, Pipeline, Endpoint, "2026-03-01");
 
         private ClientDiagnostics BackupInstancesOperationGroupClientDiagnostics => _backupInstancesOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private BackupInstancesOperationGroup BackupInstancesOperationGroupRestClient => _backupInstancesOperationGroupRestClient ??= new BackupInstancesOperationGroup(BackupInstancesOperationGroupClientDiagnostics, Pipeline, Endpoint, "2025-09-01");
+        private BackupInstancesOperationGroup BackupInstancesOperationGroupRestClient => _backupInstancesOperationGroupRestClient ??= new BackupInstancesOperationGroup(BackupInstancesOperationGroupClientDiagnostics, Pipeline, Endpoint, "2026-03-01");
 
         private ClientDiagnostics FetchSecondaryRecoveryPointsOperationGroupClientDiagnostics => _fetchSecondaryRecoveryPointsOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private FetchSecondaryRecoveryPointsOperationGroup FetchSecondaryRecoveryPointsOperationGroupRestClient => _fetchSecondaryRecoveryPointsOperationGroupRestClient ??= new FetchSecondaryRecoveryPointsOperationGroup(FetchSecondaryRecoveryPointsOperationGroupClientDiagnostics, Pipeline, Endpoint, "2025-09-01");
+        private FetchSecondaryRecoveryPointsOperationGroup FetchSecondaryRecoveryPointsOperationGroupRestClient => _fetchSecondaryRecoveryPointsOperationGroupRestClient ??= new FetchSecondaryRecoveryPointsOperationGroup(FetchSecondaryRecoveryPointsOperationGroupClientDiagnostics, Pipeline, Endpoint, "2026-03-01");
 
         private ClientDiagnostics FetchCrossRegionRestoreJobOperationGroupClientDiagnostics => _fetchCrossRegionRestoreJobOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private FetchCrossRegionRestoreJobOperationGroup FetchCrossRegionRestoreJobOperationGroupRestClient => _fetchCrossRegionRestoreJobOperationGroupRestClient ??= new FetchCrossRegionRestoreJobOperationGroup(FetchCrossRegionRestoreJobOperationGroupClientDiagnostics, Pipeline, Endpoint, "2025-09-01");
+        private FetchCrossRegionRestoreJobOperationGroup FetchCrossRegionRestoreJobOperationGroupRestClient => _fetchCrossRegionRestoreJobOperationGroupRestClient ??= new FetchCrossRegionRestoreJobOperationGroup(FetchCrossRegionRestoreJobOperationGroupClientDiagnostics, Pipeline, Endpoint, "2026-03-01");
 
         private ClientDiagnostics FetchCrossRegionRestoreJobsOperationGroupClientDiagnostics => _fetchCrossRegionRestoreJobsOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private FetchCrossRegionRestoreJobsOperationGroup FetchCrossRegionRestoreJobsOperationGroupRestClient => _fetchCrossRegionRestoreJobsOperationGroupRestClient ??= new FetchCrossRegionRestoreJobsOperationGroup(FetchCrossRegionRestoreJobsOperationGroupClientDiagnostics, Pipeline, Endpoint, "2025-09-01");
+        private FetchCrossRegionRestoreJobsOperationGroup FetchCrossRegionRestoreJobsOperationGroupRestClient => _fetchCrossRegionRestoreJobsOperationGroupRestClient ??= new FetchCrossRegionRestoreJobsOperationGroup(FetchCrossRegionRestoreJobsOperationGroupClientDiagnostics, Pipeline, Endpoint, "2026-03-01");
 
         /// <summary> Gets a collection of DataProtectionBackupVaults in the <see cref="ResourceGroupResource"/>. </summary>
         /// <returns> An object representing collection of DataProtectionBackupVaults and their operations over a DataProtectionBackupVaultResource. </returns>
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -473,7 +473,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -529,7 +529,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -572,7 +572,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -615,7 +615,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -664,7 +664,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -713,7 +713,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -754,7 +754,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
