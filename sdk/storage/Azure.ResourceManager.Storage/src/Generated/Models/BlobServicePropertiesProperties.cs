@@ -26,7 +26,6 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="cors"> Specifies CORS rules for the Blob service. You can include up to five CorsRule elements in the request. If no CorsRule elements are included in the request body, all CORS rules will be deleted, and CORS will be disabled for the Blob service. </param>
         /// <param name="defaultServiceVersion"> DefaultServiceVersion indicates the default version to use for requests to the Blob service if an incoming request’s version is not specified. Possible values include version 2008-10-27 and all more recent versions. </param>
         /// <param name="deleteRetentionPolicy"> The blob service properties for blob soft delete. </param>
-        /// <param name="staticWebsite"> The static website properties for blob storage. </param>
         /// <param name="isVersioningEnabled"> Versioning is enabled if set to true. </param>
         /// <param name="isAutomaticSnapshotPolicyEnabled"> Deprecated in favor of isVersioningEnabled property. </param>
         /// <param name="changeFeed"> The blob service properties for change feed events. </param>
@@ -34,12 +33,11 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="containerDeleteRetentionPolicy"> The blob service properties for container soft delete. </param>
         /// <param name="lastAccessTimeTrackingPolicy"> The blob service property to configure last access time based tracking policy. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BlobServicePropertiesProperties(StorageCorsRules cors, string defaultServiceVersion, DeleteRetentionPolicy deleteRetentionPolicy, StaticWebsite staticWebsite, bool? isVersioningEnabled, bool? isAutomaticSnapshotPolicyEnabled, BlobServiceChangeFeed changeFeed, RestorePolicy restorePolicy, DeleteRetentionPolicy containerDeleteRetentionPolicy, LastAccessTimeTrackingPolicy lastAccessTimeTrackingPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BlobServicePropertiesProperties(StorageCorsRules cors, string defaultServiceVersion, DeleteRetentionPolicy deleteRetentionPolicy, bool? isVersioningEnabled, bool? isAutomaticSnapshotPolicyEnabled, BlobServiceChangeFeed changeFeed, RestorePolicy restorePolicy, DeleteRetentionPolicy containerDeleteRetentionPolicy, LastAccessTimeTrackingPolicy lastAccessTimeTrackingPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Cors = cors;
             DefaultServiceVersion = defaultServiceVersion;
             DeleteRetentionPolicy = deleteRetentionPolicy;
-            StaticWebsite = staticWebsite;
             IsVersioningEnabled = isVersioningEnabled;
             IsAutomaticSnapshotPolicyEnabled = isAutomaticSnapshotPolicyEnabled;
             ChangeFeed = changeFeed;
@@ -60,10 +58,6 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> The blob service properties for blob soft delete. </summary>
         [WirePath("deleteRetentionPolicy")]
         public DeleteRetentionPolicy DeleteRetentionPolicy { get; set; }
-
-        /// <summary> The static website properties for blob storage. </summary>
-        [WirePath("staticWebsite")]
-        public StaticWebsite StaticWebsite { get; set; }
 
         /// <summary> Versioning is enabled if set to true. </summary>
         [WirePath("isVersioningEnabled")]
