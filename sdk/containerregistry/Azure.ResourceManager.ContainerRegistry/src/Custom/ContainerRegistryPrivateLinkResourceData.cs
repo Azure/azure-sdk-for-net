@@ -11,7 +11,6 @@ namespace Azure.ResourceManager.ContainerRegistry
     // Backward-compatibility: restores the public parameterless constructor that
     // was present in the AutoRest-generated SDK (≤ 1.4.0), and overrides
     // RequiredZoneNames to return IReadOnlyList<string> for ApiCompat.
-    [CodeGenSuppress("RequiredZoneNames")]
     public partial class ContainerRegistryPrivateLinkResourceData
     {
         /// <summary> Initializes a new instance of <see cref="ContainerRegistryPrivateLinkResourceData"/>. </summary>

@@ -11,7 +11,6 @@ namespace Azure.ResourceManager.ContainerRegistry
     // Backward compatibility: the old API exposed Mode as ConnectedRegistryMode? (nullable).
     // The new TypeSpec spec defines mode as required, generating a non-nullable property.
     // Suppress the generated property and re-expose as nullable.
-    [CodeGenSuppress("Mode")]
     public partial class ConnectedRegistryData
     {
         /// <summary> The mode of the connected registry resource that indicates the permissions of the registry. </summary>

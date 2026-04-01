@@ -10,7 +10,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     // Backward compatibility: make ServiceUri settable so it can be assigned
     // via the ContainerRegistryWebhookCreateOrUpdateContent wrapper.
-    [CodeGenSuppress("ServiceUri")]
     internal partial class WebhookPropertiesCreateParameters
     {
         /// <summary> The service URI for the webhook to post notifications. </summary>

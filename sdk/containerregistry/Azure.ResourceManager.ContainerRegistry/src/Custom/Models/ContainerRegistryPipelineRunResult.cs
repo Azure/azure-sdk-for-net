@@ -12,6 +12,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <summary> The artifacts imported in the pipeline run. </summary>
         [WirePath("importedArtifacts")]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public IReadOnlyList<string> ImportedArtifacts => (IReadOnlyList<string>)ImportedArtifactsList;
+        public IReadOnlyList<string> ImportedArtifacts { get; }
     }
 }
