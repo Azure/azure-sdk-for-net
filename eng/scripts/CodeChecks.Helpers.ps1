@@ -95,7 +95,7 @@ function Get-MissingTestDependsOnDependency {
             foreach ($match in $matches2) {
                 $refName = $match.Groups[1].Value
                 if ($refName -match '[/\\]') {
-                    $refName = [System.IO.Path]::GetFileNameWithoutExtension($refName)
+                    $refName = [System.IO.Path]::GetFileNameWithoutExtension(($refName -replace '\\', '/'))
                 }
                 if ($localPackages.ContainsKey($refName) -and $refName -notin $coreInfra) {
                     if (-not $dependedOn.ContainsKey($refName)) {
