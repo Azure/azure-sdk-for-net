@@ -14,6 +14,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Network.Tests
 {
+    [Ignore("Recordings incompatible with TypeSpec-migrated Storage client. https://github.com/Azure/azure-sdk-for-net/issues/57679")]
     public class IpGroupTests : NetworkServiceClientTestBase
     {
         private ResourceGroupResource _resourceGroup;
