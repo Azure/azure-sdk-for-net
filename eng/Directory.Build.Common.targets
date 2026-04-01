@@ -290,6 +290,14 @@
                  LinkBase="Shared/Management" />
   </ItemGroup>
 
+  <!-- Deduplicate Azure.ResourceManager PackageReference: the generator may emit one in the csproj while
+       Directory.Build.Common.props also injects one for mgmt sub-libraries and generator test projects.
+       Remove+Include here (in targets, evaluated after the project file) ensures exactly one reference. -->
+  <ItemGroup Condition="('$(IsMgmtSubLibrary)' == 'true' or '$(IsGeneratorLibraryGenerationTest)' == 'true') and !$(MSBuildProjectName.Equals('Azure.ResourceManager.Tests'))">
+    <PackageReference Remove="Azure.ResourceManager" />
+    <PackageReference Include="Azure.ResourceManager" />
+  </ItemGroup>
+
   <!--TODO: end-->
 
   <!-- *********** Files needed for LRO ************* -->

@@ -76,7 +76,7 @@ namespace Azure.Generator.Management
 
         /// <inheritdoc/>
         protected override IReadOnlyList<CSharpProjectWriter.CSProjDependencyPackage> AzureDependencyPackages =>
-            [];
+            [new("Azure.ResourceManager")];
 
         /// <inheritdoc/>
         protected override ClientProvider? CreateClientCore(InputClient inputClient)

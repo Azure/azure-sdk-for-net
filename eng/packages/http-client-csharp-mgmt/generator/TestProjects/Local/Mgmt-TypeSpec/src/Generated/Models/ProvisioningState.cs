@@ -5,22 +5,73 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
+using Azure.Generator.MgmtTypeSpec.Tests;
+
 namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
-    /// <summary></summary>
-    public enum ProvisioningState
+    /// <summary> The provisioning state of a resource. </summary>
+    public readonly partial struct ProvisioningState : IEquatable<ProvisioningState>
     {
-        /// <summary> Succeeded. </summary>
-        Succeeded,
-        /// <summary> Failed. </summary>
-        Failed,
-        /// <summary> Canceled. </summary>
-        Canceled,
-        /// <summary> Creating. </summary>
-        Creating,
-        /// <summary> Updating. </summary>
-        Updating,
-        /// <summary> Deleting. </summary>
-        Deleting
+        private readonly string _value;
+        private const string SucceededValue = "Succeeded";
+        private const string FailedValue = "Failed";
+        private const string CancelledValue = "Cancelled";
+        private const string AcceptedValue = "Accepted";
+
+        /// <summary> Initializes a new instance of <see cref="ProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ProvisioningState(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Succeeded. </summary>
+        public static ProvisioningState Succeeded { get; } = new ProvisioningState(SucceededValue);
+
+        /// <summary> Gets the Failed. </summary>
+        public static ProvisioningState Failed { get; } = new ProvisioningState(FailedValue);
+
+        /// <summary> Gets the Cancelled. </summary>
+        public static ProvisioningState Cancelled { get; } = new ProvisioningState(CancelledValue);
+
+        /// <summary> Gets the Accepted. </summary>
+        public static ProvisioningState Accepted { get; } = new ProvisioningState(AcceptedValue);
+
+        /// <summary> Determines if two <see cref="ProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator ==(ProvisioningState left, ProvisioningState right) => left.Equals(right);
+
+        /// <summary> Determines if two <see cref="ProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator !=(ProvisioningState left, ProvisioningState right) => !left.Equals(right);
+
+        /// <summary> Converts a string to a <see cref="ProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ProvisioningState(string value) => new ProvisioningState(value);
+
+        /// <summary> Converts a string to a <see cref="ProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ProvisioningState?(string value) => value == null ? null : new ProvisioningState(value);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is ProvisioningState other && Equals(other);
+
+        /// <inheritdoc/>
+        public bool Equals(ProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+
+        /// <inheritdoc/>
+        public override string ToString() => _value;
     }
 }

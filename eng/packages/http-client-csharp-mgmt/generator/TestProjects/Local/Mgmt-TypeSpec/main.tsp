@@ -1,96 +1,59 @@
+import "@typespec/http";
+import "@typespec/rest";
+import "@typespec/versioning";
+import "@azure-tools/typespec-azure-core";
 import "@azure-tools/typespec-azure-resource-manager";
-import "@azure-tools/typespec-client-generator-core";
-import "./PrivateEndpointConnection.tsp";
-import "./foo.tsp";
-import "./bar.tsp";
-import "./baz.tsp";
-import "./zoo.tsp";
-import "./routes.tsp";
-import "./endpoint.tsp";
-import "./selfhelp.tsp";
-import "./playwright.tsp";
-import "./databox.tsp";
-import "./hcivm.tsp";
-import "./quota.tsp";
-import "./networkaction.tsp";
-import "./joo.tsp";
-import "./workload.tsp";
-import "./multiplepaths.tsp";
-import "./testresourcetype.tsp";
-import "./resourcedata.tsp";
-import "./scheduledaction.tsp";
-import "./vmgroup.tsp";
-import "./chaos.tsp";
-import "./redisenterprise.tsp";
-import "./propertyoverride.tsp";
-import "./sitemanager.tsp";
-import "./trafficmanager.tsp";
-import "./extensionresources.tsp";
-import "./flatten-with-customized-property.tsp";
-import "./extensionresourcename.tsp";
-import "./testcertificate.tsp";
-import "./sharedmodel.tsp";
-import "./entityresource.tsp";
-import "./sharedparamrepro.tsp";
+
+using TypeSpec.Http;
+using TypeSpec.Rest;
 using TypeSpec.Versioning;
-using Azure.ClientGenerator.Core;
+using Azure.Core;
 using Azure.ResourceManager;
 
 @armProviderNamespace
-@service(#{
-  title: "MgmtTestClient",
-})
+@service(#{ title: "Microsoft.BillingTrust" })
 @versioned(Versions)
-@armCommonTypesVersion(Azure.ResourceManager.CommonTypes.Versions.v5)
-namespace MgmtTypeSpec {
+namespace Microsoft.BillingTrust;
 
-  interface Operations extends Azure.ResourceManager.Operations {}
-
-  /** The available API versions. */
-  enum Versions {
-    v2024_04_01: "2024-04-01",
-    v2024_05_01: "2024-05-01",
-  }
-
-  @@clientLocation(Bars.get, "Bar");
-  @@clientLocation(Bars.update, "Bar");
-
-  @@clientName(Joos.createOrUpdate::parameters.resource, "parameters");
-
-  @@clientLocation(WorkloadNetworkVmGroups.get, "WorkloadNetworks");
-  @@clientLocation(WorkloadNetworkVmGroups.delete, "WorkloadNetworks");
-  @@clientLocation(WorkloadNetworkSegments.get, "WorkloadNetworks");
-  @@clientLocation(WorkloadNetworkSegments.delete, "WorkloadNetworks");
-
-  @@clientName(WorkloadNetworkVmGroups.get, "GetVmGroup");
-  @@clientName(WorkloadNetworkVmGroups.update, "UpdateVmGroup");
-  @@clientName(WorkloadNetworkVmGroups.delete, "DeleteVmGroup");
-  @@clientName(WorkloadNetworkSegments.get, "GetSegment");
-  @@clientName(WorkloadNetworkSegments.update, "UpdateSegment");
-  @@clientName(WorkloadNetworkSegments.delete, "DeleteSegment");
-
-  #suppress "deprecated"
-  @@Azure.ClientGenerator.Core.Legacy.flattenProperty(BarSettingsResource.flattenedNestedProperty);
-  @@Azure.ClientGenerator.Core.Legacy.flattenProperty(Foo.properties);
-  #suppress "deprecated"
-  @@Azure.ClientGenerator.Core.Legacy.flattenProperty(MultiFlattenTest.properties);
-
-  @@alternateType(FooProperties.something, Azure.ResourceManager.Foundations.ManagedServiceIdentity, "csharp");
-  @@clientName(Employees.listByParent, "GetEmployees", "csharp");
-  @@alternateType(ZooAddressListListResult.value, Azure.ResourceManager.Models.SubResource[], "csharp");
-  @@alternateType(Azure.ResourceManager.CommonTypes.PrivateEndpointConnectionProperties.privateEndpoint, Azure.ResourceManager.Models.SubResource, "csharp");
-  @@alternateType(FooProperties.writableSubResourceProp, Azure.ResourceManager.Models.WritableSubResource, "csharp");
-
-  // Override client names for legacy ARM types to resolve duplicate-client-name errors
-  // with their CommonTypes counterparts.
-  // ExtendedLocationOptional has @friendlyName("ExtendedLocation") conflicting with CommonTypes.ExtendedLocation.
-  // ManagedServiceIdentityType in Legacy conflicts with CommonTypes.ManagedServiceIdentityType.
-  @@clientName(Azure.ResourceManager.Legacy.ExtendedLocationOptional, "ExtendedLocationOptionalModel", "csharp");
-  @@clientName(Azure.ResourceManager.Legacy.ManagedServiceIdentityType, "ManagedServiceIdentityTypeV4", "csharp");
+enum Versions {
+  @armCommonTypesVersion(Azure.ResourceManager.CommonTypes.Versions.v5)
+  @previewVersion
+  `2026-03-17-preview`,
 }
 
-// We define this model here to test if the generated code would be replaced by Azure.ResourceManager.Models.SubResource and WritableSubResource via alternateType
-namespace Azure.ResourceManager.Models {
-  model SubResource { }
-  model WritableSubResource { }
+@doc("An assessment resource.")
+model Assessment is ExtensionResource<AssessmentProperties> {
+  ...ResourceNameParameter<Assessment>
 }
+
+@doc("The provisioning state of a resource.")
+@lroStatus
+union ProvisioningState {
+  string,
+  Succeeded: "Succeeded",
+  Failed: "Failed",
+  Cancelled: "Cancelled",
+  Accepted: "Accepted",
+}
+
+@doc("The properties of an Assessment resource.")
+model AssessmentProperties {
+  @doc("The provisioning state of the resource")
+  @visibility(Lifecycle.Read)
+  provisioningState?: ProvisioningState;
+
+  @doc("The template from which the rules of this assessment are instantiated.")
+  ruleTemplateId: string;
+}
+
+interface Operations extends Azure.ResourceManager.Operations {}
+
+interface AssessmentsOps<Scope extends Azure.ResourceManager.Foundations.SimpleResource> {
+  get is Extension.Read<Scope, Assessment>;
+  createOrUpdate is Extension.CreateOrReplaceAsync<Scope, Assessment>;
+  delete is Extension.DeleteWithoutOkAsync<Scope, Assessment>;
+  list is Extension.ListByTarget<Scope, Assessment>;
+}
+
+@armResourceOperations
+interface Assessments extends AssessmentsOps<Extension.ScopeParameter> {}

@@ -1,5 +1,5 @@
 {
   "apiVersions": {
-    "MgmtTypeSpec": "2024-05-01"
+    "Microsoft.BillingTrust": "2026-03-17-preview"
   }
 }
