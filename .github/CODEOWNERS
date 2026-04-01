@@ -190,9 +190,6 @@
 # ServiceLabel: %Cognitive - Language
 # ServiceOwners: @quentinRobinson
 
-# PRLabel: %Cognitive - Metrics Advisor
-/sdk/metricsadvisor/    @bowgong
-
 # ServiceLabel: %Cognitive - Metrics Advisor
 # ServiceOwners: @bowgong
 
@@ -223,9 +220,6 @@
 # PRLabel: %Communication - Call Automation
 /sdk/communication/Azure.Communication.CallAutomation/    @fhaghbin-msft @juntuchen-msft @minwoolee-msft @v-dharmarajv
 
-# PRLabel: %Communication - Calling Server
-/sdk/communication/Azure.Communication.CallingServer/    @minwoolee-msft
-
 # PRLabel: %Communication - Chat
 /sdk/communication/Azure.Communication.Chat/    @LuChen-Microsoft
 
@@ -237,9 +231,6 @@
 
 # PRLabel: %Communication - Phone Numbers
 /sdk/communication/Azure.Communication.PhoneNumbers/    @besh2014 @gfeitosa-msft @ihuseynov-msft @ilyapaliakou-msft @kirill-linnik @phermanov-msft
-
-# PRLabel: %Communication - Programmable Connectivity
-/sdk/communication/Azure.Communication.ProgrammableConnectivity/    @Azure/azure-sdk-write-communication
 
 # PRLabel: %Communication - Rooms
 /sdk/communication/Azure.Communication.Rooms/    @alexokun @allchiang-msft @mikehang-msft @minnieliu @Mrayyan @paolamvhz @shwali-msft
@@ -304,9 +295,6 @@
 # AzureSdkOwners: @jsquire
 # ServiceLabel: %Event Hubs
 # ServiceOwners: @axisc @hmlam @j7nw4r @sjkwak
-
-# PRLabel: %Extension - WCF
-/sdk/extension-wcf/    @mconnew
 
 # ServiceLabel: %Extension - WCF
 # ServiceOwners: @mconnew
@@ -381,9 +369,6 @@
 # ServiceLabel: %Monitor - Exporter
 # ServiceOwners: @harsimar @mattsains-msft @rajkumar-rangaraj @xiang17
 
-# PRLabel: %Monitor - LiveMetrics
-/sdk/monitor/Azure.Monitor.OpenTelemetry.LiveMetrics/    @harsimar @mattsains-msft @rajkumar-rangaraj @xiang17
-
 # ServiceLabel: %Monitor - LiveMetrics
 # ServiceOwners: @harsimar @mattsains-msft @rajkumar-rangaraj @xiang17
 
@@ -431,9 +416,6 @@
 
 # AzureSdkOwners: @ArthurMa1978
 # ServiceLabel: %Provisioning
-
-# PRLabel: %Quantum
-/sdk/quantum/Azure.Quantum.Jobs/    @xfield
 
 # ServiceLabel: %Quantum
 # ServiceOwners: @xfield
@@ -535,9 +517,6 @@
 
 # ServiceLabel: %TimeseriesInsights
 # ServiceOwners: @dmdenmsft @rasidhan @Shipra1Mishra @yeskarthik
-
-# PRLabel: %VideoAnalyzer
-/sdk/videoanalyzer/    @giakas
 
 # ServiceLabel: %VideoAnalyzer
 # ServiceOwners: @giakas
@@ -1088,9 +1067,6 @@
 
 # ServiceLabel: %Network - Front Door %Mgmt
 # ServiceOwners:                                                   @ArthurMa1978
-
-# PRLabel: %Network - Mobile
-/sdk/mobilenetwork/Azure.ResourceManager.*/                        @ArcturusZhang @ArthurMa1978
 
 # PRLabel: %New Relic
 /sdk/newrelicobservability/Azure.ResourceManager.*/                @vipray-ms
