@@ -10,6 +10,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     internal partial class AppServiceApiDefinitionInfo
     {
+        // Add this property back to avoid breaking change with the fix for issue #56828
         /// <summary>
         /// The URL of the API definition.
         /// </summary>

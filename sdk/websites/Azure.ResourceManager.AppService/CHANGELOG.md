@@ -8,6 +8,9 @@
 
 ### Bugs Fixed
 
+- Fix property `Uri` value could not be `Uri` type in `AppServiceApiDefinitionInfo` cause deserialization issue.
+- Fix property `Value` alue could not be `Uri` type in `FunctionAppStorage` cause deserialization issue.
+
 ### Other Changes
 
 ## 1.4.1 (2025-08-11)

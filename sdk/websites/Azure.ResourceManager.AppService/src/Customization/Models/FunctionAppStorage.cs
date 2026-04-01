@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     public partial class FunctionAppStorage
     {
+        // Add this property back to avoid breaking change with the fix for issue #52912
         /// <summary>
         /// Property to set the URL for the selected Azure Storage type. Example: For blobContainer, the value could be https://&lt;storageAccountName&gt;.blob.core.windows.net/&lt;containerName&gt;.
         /// </summary>
