@@ -40,14 +40,16 @@ public class SecurityCenterSpecification() :
         RemoveProperties<DataExportSettings>("Id", "Name", "SystemData");
         RemoveProperties<SecurityAlertSyncSettings>("Id", "Name", "SystemData");
 
+        // TODO: Uncomment when Azure.ResourceManager.SecurityCenter is regenerated
+        // from a ProjectReference with enable-bicep-serialization (see note above).
         // ServerVulnerabilityAssessmentsSetting is polymorphic with a 'kind' discriminator.
-        CustomizeResource<AzureServersSetting>(r =>
-        {
-            r.BaseType = GetModel<ServerVulnerabilityAssessmentsSettingResource>() as TypeModel;
-            r.DiscriminatorName = "kind";
-            r.DiscriminatorValue = "AzureServersSetting";
-        });
-        RemoveProperties<AzureServersSetting>("Id", "Name", "SystemData");
+        // CustomizeResource<AzureServersSetting>(r =>
+        // {
+        //     r.BaseType = GetModel<ServerVulnerabilityAssessmentsSettingResource>() as TypeModel;
+        //     r.DiscriminatorName = "kind";
+        //     r.DiscriminatorValue = "AzureServersSetting";
+        // });
+        // RemoveProperties<AzureServersSetting>("Id", "Name", "SystemData");
     }
 
     private protected override Dictionary<Type, MethodInfo> FindConstructibleResources()
@@ -60,8 +62,9 @@ public class SecurityCenterSpecification() :
             typeof(SecurityCenterSpecification).GetMethod(nameof(CreateDataExportSettings), BindingFlags.NonPublic | BindingFlags.Static)!);
         result.Add(typeof(SecurityAlertSyncSettings),
             typeof(SecurityCenterSpecification).GetMethod(nameof(CreateSecurityAlertSyncSettings), BindingFlags.NonPublic | BindingFlags.Static)!);
-        result.Add(typeof(AzureServersSetting),
-            typeof(SecurityCenterSpecification).GetMethod(nameof(CreateAzureServersSetting), BindingFlags.NonPublic | BindingFlags.Static)!);
+        // TODO: Uncomment when Azure.ResourceManager.SecurityCenter is regenerated (see note above).
+        // result.Add(typeof(AzureServersSetting),
+        //     typeof(SecurityCenterSpecification).GetMethod(nameof(CreateAzureServersSetting), BindingFlags.NonPublic | BindingFlags.Static)!);
 
         return result;
     }
@@ -69,5 +72,6 @@ public class SecurityCenterSpecification() :
     // Dummy methods for the reflection-based generator to discover constructible data types.
     private static ArmOperation<SecuritySettingResource> CreateDataExportSettings(DataExportSettings content) => null!;
     private static ArmOperation<SecuritySettingResource> CreateSecurityAlertSyncSettings(SecurityAlertSyncSettings content) => null!;
-    private static ArmOperation<ServerVulnerabilityAssessmentsSettingResource> CreateAzureServersSetting(AzureServersSetting content) => null!;
+    // TODO: Uncomment when Azure.ResourceManager.SecurityCenter is regenerated (see note above).
+    // private static ArmOperation<ServerVulnerabilityAssessmentsSettingResource> CreateAzureServersSetting(AzureServersSetting content) => null!;
 }
