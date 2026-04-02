@@ -1,16 +1,14 @@
 # Release History
 
-## 1.5.0-beta.1 (Unreleased)
+## 1.5.0 (2026-04-01)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
+- Added a JSON schema segment to the NuGet package that provides IntelliSense and validation for Azure.Identity.Broker credential configuration in `appsettings.json`.
 
 ### Other Changes
 
-- Updated `Microsoft.Identity.Client.Broker` dependency to version 4.83.1.
+- Updated `Microsoft.Identity.Client.Broker` dependency to version 4.83.3.
 
 ## 1.4.0 (2026-02-26)
 

@@ -185,7 +185,7 @@
     <PackageVersion Include="Microsoft.Azure.WebPubSub.Common" Version="1.5.0" />
     <PackageVersion Include="Microsoft.Identity.Client" Version="4.83.1" />
     <PackageVersion Include="Microsoft.Identity.Client.Extensions.Msal" Version="4.83.1" />
-    <PackageVersion Include="Microsoft.Identity.Client.Broker" Version="4.83.1" />
+    <PackageVersion Include="Microsoft.Identity.Client.Broker" Version="4.83.3" />
     <PackageVersion Include="Microsoft.IdentityModel.Protocols.OpenIdConnect" Version="8.15.0" />
     <PackageVersion Include="Microsoft.IdentityModel.Tokens" Version="8.15.0" />
     <PackageVersion Include="System.IdentityModel.Tokens.Jwt" Version="8.15.0" />
