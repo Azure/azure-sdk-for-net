@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         ContainerGroupPort IJsonModel<ContainerGroupPort>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <summary> Initializes a new instance of <see cref="ContainerGroupPort"/> for deserialization. </summary>
-        internal ContainerGroupPort()
+        protected ContainerGroupPort()
         {
         }
 

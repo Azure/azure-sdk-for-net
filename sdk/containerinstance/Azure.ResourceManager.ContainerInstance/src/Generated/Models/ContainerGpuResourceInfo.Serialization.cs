@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         ContainerGpuResourceInfo IJsonModel<ContainerGpuResourceInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <summary> Initializes a new instance of <see cref="ContainerGpuResourceInfo"/> for deserialization. </summary>
-        internal ContainerGpuResourceInfo()
+        protected ContainerGpuResourceInfo()
         {
         }
 

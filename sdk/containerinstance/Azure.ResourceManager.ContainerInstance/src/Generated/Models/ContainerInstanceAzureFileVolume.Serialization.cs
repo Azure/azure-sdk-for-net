@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         ContainerInstanceAzureFileVolume IJsonModel<ContainerInstanceAzureFileVolume>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <summary> Initializes a new instance of <see cref="ContainerInstanceAzureFileVolume"/> for deserialization. </summary>
-        internal ContainerInstanceAzureFileVolume()
+        protected ContainerInstanceAzureFileVolume()
         {
         }
 

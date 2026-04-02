@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         ContainerInstanceContainer IJsonModel<ContainerInstanceContainer>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <summary> Initializes a new instance of <see cref="ContainerInstanceContainer"/> for deserialization. </summary>
-        internal ContainerInstanceContainer()
+        protected ContainerInstanceContainer()
         {
         }
 

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ContainerInstance
     public partial class ContainerGroupData : TrackedResourceData, IJsonModel<ContainerGroupData>
     {
         /// <summary> Initializes a new instance of <see cref="ContainerGroupData"/> for deserialization. </summary>
-        internal ContainerGroupData()
+        protected internal ContainerGroupData()
         {
         }
 

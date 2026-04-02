@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         ContainerGroupIPAddress IJsonModel<ContainerGroupIPAddress>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <summary> Initializes a new instance of <see cref="ContainerGroupIPAddress"/> for deserialization. </summary>
-        internal ContainerGroupIPAddress()
+        protected ContainerGroupIPAddress()
         {
         }
 

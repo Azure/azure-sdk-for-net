@@ -65,5 +65,29 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
             CGProfileResource.ValidateResourceId(id);
             return new CGProfileResource(Client, id);
         }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ContainerGroupProfileResource"/> along with the instance operations that can be performed on it but with no data.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ContainerGroupProfileResource"/> object. </returns>
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+        public virtual ContainerGroupProfileResource GetContainerGroupProfileResource(ResourceIdentifier id)
+        {
+            CGProfileResource.ValidateResourceId(id);
+            return new ContainerGroupProfileResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ContainerGroupProfileRevisionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ContainerGroupProfileRevisionResource"/> object. </returns>
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+        public virtual ContainerGroupProfileRevisionResource GetContainerGroupProfileRevisionResource(ResourceIdentifier id)
+        {
+            ContainerGroupProfileRevisionResource.ValidateResourceId(id);
+            return new ContainerGroupProfileRevisionResource(Client, id);
+        }
     }
 }

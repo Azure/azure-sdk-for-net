@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         ContainerGroupImageRegistryCredential IJsonModel<ContainerGroupImageRegistryCredential>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <summary> Initializes a new instance of <see cref="ContainerGroupImageRegistryCredential"/> for deserialization. </summary>
-        internal ContainerGroupImageRegistryCredential()
+        protected ContainerGroupImageRegistryCredential()
         {
         }
 

@@ -5,6 +5,9 @@
 
 #nullable disable
 
+#pragma warning disable IL2026 // RequiresUnreferencedCode
+#pragma warning disable IL3050 // RequiresDynamicCode
+
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;

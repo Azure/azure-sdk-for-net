@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         ContainerInstanceGitRepoVolume IJsonModel<ContainerInstanceGitRepoVolume>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <summary> Initializes a new instance of <see cref="ContainerInstanceGitRepoVolume"/> for deserialization. </summary>
-        internal ContainerInstanceGitRepoVolume()
+        protected ContainerInstanceGitRepoVolume()
         {
         }
 
