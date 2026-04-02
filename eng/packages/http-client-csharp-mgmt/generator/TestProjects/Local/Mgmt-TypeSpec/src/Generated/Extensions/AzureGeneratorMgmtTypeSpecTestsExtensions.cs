@@ -2738,6 +2738,86 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
+        /// Get a GrandparentFlattenResource
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource.GetAsync(AzureLocation, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="grandparentFlattenResourceName"> The name of the GrandparentFlattenResource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        public static async Task<Response<GrandparentFlattenResource>> GetAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string grandparentFlattenResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource(subscriptionResource).GetAsync(location, grandparentFlattenResourceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a GrandparentFlattenResource
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource.Get(AzureLocation, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="grandparentFlattenResourceName"> The name of the GrandparentFlattenResource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        public static Response<GrandparentFlattenResource> Get(this SubscriptionResource subscriptionResource, AzureLocation location, string grandparentFlattenResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource(subscriptionResource).Get(location, grandparentFlattenResourceName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Create a GrandparentFlattenResource
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource.CreateOrUpdateAsync(WaitUntil, AzureLocation, string, GrandparentFlattenResource, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="grandparentFlattenResourceName"> The name of the GrandparentFlattenResource. </param>
+        /// <param name="resource"> Resource create parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        public static async Task<ArmOperation<GrandparentFlattenResource>> CreateOrUpdateAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, string grandparentFlattenResourceName, GrandparentFlattenResource resource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource(subscriptionResource).CreateOrUpdateAsync(waitUntil, location, grandparentFlattenResourceName, resource, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Create a GrandparentFlattenResource
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource.CreateOrUpdate(WaitUntil, AzureLocation, string, GrandparentFlattenResource, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="grandparentFlattenResourceName"> The name of the GrandparentFlattenResource. </param>
+        /// <param name="resource"> Resource create parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        public static ArmOperation<GrandparentFlattenResource> CreateOrUpdate(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, string grandparentFlattenResourceName, GrandparentFlattenResource resource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource(subscriptionResource).CreateOrUpdate(waitUntil, location, grandparentFlattenResourceName, resource, cancellationToken);
+        }
+
+        /// <summary>
         /// Runs the input conditions against input object metadata properties and designates matched objects in response.
         /// <item>
         /// <term> Mocking. </term>

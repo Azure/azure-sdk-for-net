@@ -1633,6 +1633,42 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 typeAPolyDeviceDescription is null ? default : new TypeAPolyDeviceProperties(typeAPolyDeviceDescription, null));
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="uniqueId"> Gets or sets the UniqueId. </param>
+        /// <param name="grandparentFlattenLeafDisclaimer"> Gets or sets the Disclaimer. </param>
+        /// <returns> A new <see cref="Models.GrandparentFlattenResource"/> instance for mocking. </returns>
+        public static GrandparentFlattenResource GrandparentFlattenResource(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string uniqueId = default, string grandparentFlattenLeafDisclaimer = default)
+        {
+            return new GrandparentFlattenResource(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                uniqueId is null ? default : new GrandparentFlattenIdentifier(uniqueId, null),
+                grandparentFlattenLeafDisclaimer is null ? default : new GrandparentFlattenLeafProperties(grandparentFlattenLeafDisclaimer, null));
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="uniqueId"> Gets or sets the UniqueId. </param>
+        /// <returns> A new <see cref="Models.GrandparentFlattenBase"/> instance for mocking. </returns>
+        public static GrandparentFlattenBase GrandparentFlattenBase(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string uniqueId = default)
+        {
+            return new GrandparentFlattenBase(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                uniqueId is null ? default : new GrandparentFlattenIdentifier(uniqueId, null));
+        }
+
         /// <summary> The ZooRecommendation. </summary>
         /// <param name="recommendedValue"> The recommended value. </param>
         /// <param name="reason"> The reason for the recommendation. </param>

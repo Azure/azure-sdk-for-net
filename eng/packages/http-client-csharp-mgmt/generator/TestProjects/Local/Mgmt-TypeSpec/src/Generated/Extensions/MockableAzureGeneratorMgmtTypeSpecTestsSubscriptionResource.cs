@@ -29,6 +29,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         private Zoos _zoosRestClient;
         private ClientDiagnostics _clustersClientDiagnostics;
         private Clusters _clustersRestClient;
+        private ClientDiagnostics _grandparentFlattenResourcesClientDiagnostics;
+        private GrandparentFlattenResources _grandparentFlattenResourcesRestClient;
         private ClientDiagnostics _mgmtTypeSpecClientClientDiagnostics;
         private MgmtTypeSpecClient _mgmtTypeSpecClientRestClient;
         private ClientDiagnostics _sapVirtualInstancesClientDiagnostics;
@@ -61,6 +63,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         private ClientDiagnostics ClustersClientDiagnostics => _clustersClientDiagnostics ??= new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private Clusters ClustersRestClient => _clustersRestClient ??= new Clusters(ClustersClientDiagnostics, Pipeline, Endpoint, "2024-05-01");
+
+        private ClientDiagnostics GrandparentFlattenResourcesClientDiagnostics => _grandparentFlattenResourcesClientDiagnostics ??= new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private GrandparentFlattenResources GrandparentFlattenResourcesRestClient => _grandparentFlattenResourcesRestClient ??= new GrandparentFlattenResources(GrandparentFlattenResourcesClientDiagnostics, Pipeline, Endpoint, "2024-05-01");
 
         private ClientDiagnostics MgmtTypeSpecClientClientDiagnostics => _mgmtTypeSpecClientClientDiagnostics ??= new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -419,6 +425,226 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
                 CancellationToken = cancellationToken
             };
             return new PageableWrapper<ClusterData, ClusterResource>(new ClustersGetBySubscriptionCollectionResultOfT(ClustersRestClient, Guid.Parse(Id.SubscriptionId), context), data => new ClusterResource(Client, data));
+        }
+
+        /// <summary>
+        /// Get a GrandparentFlattenResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/MgmtTypeSpec/locations/{location}/grandparentFlattenResources/{grandparentFlattenResourceName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GrandparentFlattenResources_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="grandparentFlattenResourceName"> The name of the GrandparentFlattenResource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="grandparentFlattenResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="grandparentFlattenResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<GrandparentFlattenResource>> GetAsync(AzureLocation location, string grandparentFlattenResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(grandparentFlattenResourceName, nameof(grandparentFlattenResourceName));
+
+            using DiagnosticScope scope = GrandparentFlattenResourcesClientDiagnostics.CreateScope("MockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource.Get");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = GrandparentFlattenResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), location, grandparentFlattenResourceName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<GrandparentFlattenResource> response = Response.FromValue(GrandparentFlattenResource.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get a GrandparentFlattenResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/MgmtTypeSpec/locations/{location}/grandparentFlattenResources/{grandparentFlattenResourceName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GrandparentFlattenResources_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="grandparentFlattenResourceName"> The name of the GrandparentFlattenResource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="grandparentFlattenResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="grandparentFlattenResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<GrandparentFlattenResource> Get(AzureLocation location, string grandparentFlattenResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(grandparentFlattenResourceName, nameof(grandparentFlattenResourceName));
+
+            using DiagnosticScope scope = GrandparentFlattenResourcesClientDiagnostics.CreateScope("MockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource.Get");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = GrandparentFlattenResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), location, grandparentFlattenResourceName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<GrandparentFlattenResource> response = Response.FromValue(GrandparentFlattenResource.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Create a GrandparentFlattenResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/MgmtTypeSpec/locations/{location}/grandparentFlattenResources/{grandparentFlattenResourceName}/grandparentFlattenResources/{name}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GrandparentFlattenResources_CreateOrUpdate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="grandparentFlattenResourceName"> The name of the GrandparentFlattenResource. </param>
+        /// <param name="resource"> Resource create parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="grandparentFlattenResourceName"/> or <paramref name="resource"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="grandparentFlattenResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<GrandparentFlattenResource>> CreateOrUpdateAsync(WaitUntil waitUntil, AzureLocation location, string grandparentFlattenResourceName, GrandparentFlattenResource resource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(grandparentFlattenResourceName, nameof(grandparentFlattenResourceName));
+            Argument.AssertNotNull(resource, nameof(resource));
+
+            using DiagnosticScope scope = GrandparentFlattenResourcesClientDiagnostics.CreateScope("MockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = GrandparentFlattenResourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), location, grandparentFlattenResourceName, default, GrandparentFlattenResource.ToRequestContent(resource), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                TestsArmOperation<GrandparentFlattenResource> operation = new TestsArmOperation<GrandparentFlattenResource>(
+                    new GrandparentFlattenResourceOperationSource(),
+                    GrandparentFlattenResourcesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation,
+                    true);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Create a GrandparentFlattenResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/MgmtTypeSpec/locations/{location}/grandparentFlattenResources/{grandparentFlattenResourceName}/grandparentFlattenResources/{name}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GrandparentFlattenResources_CreateOrUpdate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="grandparentFlattenResourceName"> The name of the GrandparentFlattenResource. </param>
+        /// <param name="resource"> Resource create parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="grandparentFlattenResourceName"/> or <paramref name="resource"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="grandparentFlattenResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<GrandparentFlattenResource> CreateOrUpdate(WaitUntil waitUntil, AzureLocation location, string grandparentFlattenResourceName, GrandparentFlattenResource resource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(grandparentFlattenResourceName, nameof(grandparentFlattenResourceName));
+            Argument.AssertNotNull(resource, nameof(resource));
+
+            using DiagnosticScope scope = GrandparentFlattenResourcesClientDiagnostics.CreateScope("MockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = GrandparentFlattenResourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), location, grandparentFlattenResourceName, default, GrandparentFlattenResource.ToRequestContent(resource), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                TestsArmOperation<GrandparentFlattenResource> operation = new TestsArmOperation<GrandparentFlattenResource>(
+                    new GrandparentFlattenResourceOperationSource(),
+                    GrandparentFlattenResourcesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation,
+                    true);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
