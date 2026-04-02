@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DataBoxEdgeRoleData IPersistableModel<DataBoxEdgeRoleData>.Create(BinaryData data, ModelReaderWriterOptions options) => (UnknownDataBoxEdgeRole)PersistableModelCreateCore(data, options);
+        DataBoxEdgeRoleData IPersistableModel<DataBoxEdgeRoleData>.Create(BinaryData data, ModelReaderWriterOptions options) => (DataBoxEdgeRoleData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DataBoxEdgeRoleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DataBoxEdgeRoleData IJsonModel<DataBoxEdgeRoleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (UnknownDataBoxEdgeRole)JsonModelCreateCore(ref reader, options);
+        DataBoxEdgeRoleData IJsonModel<DataBoxEdgeRoleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (DataBoxEdgeRoleData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
