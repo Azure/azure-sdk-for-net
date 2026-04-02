@@ -478,6 +478,6 @@ Use the following format exactly:
 
 Rules for the sections:
 - The Summary is always visible; all three detail sections are collapsed by default
-- 📋 Issue Details: extract package, affected API, and scenarios from the issue body; include root ask
-- 🔎 Debugging / Reproduction Notes: include diagnostic observations and numbered investigation steps; note similar open issues found via `search_issues` if any
-- 🏷️ Label Confidence: explain category and service label selection; state confidence as High, Medium, or Low with justification; note other labels considered and why they were rejected
+  - 📋 Issue Details: extract package, affected API, and scenarios from the issue body; include root ask
+  - 🔎 Debugging / Reproduction Notes: include diagnostic observations and numbered investigation steps; note similar open issues found via `search_issues` if any
+  - 🏷️ Label Confidence: explain category and service label selection; state confidence as High, Medium, or Low with justification; note other labels considered and why they were rejected
