@@ -259,14 +259,9 @@ public class InfrastructureJsonRoundTripTests
         using JsonDocument doc = JsonDocument.Parse(json);
         JsonElement root = doc.RootElement;
 
-        Assert.IsTrue(root.TryGetProperty("infras", out JsonElement files));
-        Assert.AreEqual(JsonValueKind.Array, files.ValueKind);
-        Assert.IsTrue(files.GetArrayLength() >= 1);
-
-        JsonElement file = files[0];
-        Assert.IsTrue(file.TryGetProperty("fileName", out _));
-        Assert.IsFalse(file.TryGetProperty("targetScope", out _), "targetScope should be omitted for resourceGroup");
-        Assert.IsTrue(file.TryGetProperty("resources", out JsonElement resources));
+        Assert.IsTrue(root.TryGetProperty("fileName", out _));
+        Assert.IsFalse(root.TryGetProperty("targetScope", out _), "targetScope should be omitted for resourceGroup");
+        Assert.IsTrue(root.TryGetProperty("resources", out JsonElement resources));
 
         Assert.IsTrue(resources.TryGetProperty("myStorage", out JsonElement resource));
         Assert.AreEqual("myStorage", resource.GetProperty("bicepIdentifier").GetString());

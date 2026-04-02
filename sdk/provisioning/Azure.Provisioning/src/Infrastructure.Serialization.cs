@@ -37,11 +37,7 @@ public partial class Infrastructure : IJsonModel<Infrastructure>
         }
 
         using JsonDocument document = JsonDocument.ParseValue(ref reader);
-        var infras = DeserializeInfrastructure(document.RootElement);
-
-        // Select the infra matching this instance's BicepName, or fall back to the first one
-        string targetFile = BicepName + ".bicep";
-        return infras.Find(i => i.BicepName + ".bicep" == targetFile) ?? infras[0];
+        return DeserializeInfrastructure(document.RootElement);
     }
 
     BinaryData IPersistableModel<Infrastructure>.Write(ModelReaderWriterOptions options)
@@ -80,7 +76,7 @@ public partial class Infrastructure : IJsonModel<Infrastructure>
         }
 
         using JsonDocument document = JsonDocument.Parse(data);
-        return DeserializeInfrastructure(document.RootElement)[0];
+        return DeserializeInfrastructure(document.RootElement);
     }
 
     string IPersistableModel<Infrastructure>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -123,213 +119,206 @@ public partial class Infrastructure : IJsonModel<Infrastructure>
         ProvisioningBuildOptions buildOptions = new();
         IDictionary<string, IEnumerable<BicepStatement>> modules = CompileModules(buildOptions);
 
-        writer.WriteStartObject();
-        writer.WritePropertyName("infras");
-        writer.WriteStartArray();
-
-        foreach (KeyValuePair<string, IEnumerable<BicepStatement>> module in modules)
+        // Infrastructure corresponds to a single InfraNode.
+        // If CompileModules produces multiple modules, we serialize only the primary one
+        // (the one matching BicepName). Nested modules are written as module declarations.
+        if (!modules.TryGetValue(BicepName, out IEnumerable<BicepStatement>? statements))
         {
+            // Fall back to the first module if BicepName isn't found
+            statements = modules.Values.First();
+        }
+
+        writer.WriteStartObject();
+        writer.WriteString("fileName", $"{BicepName}.bicep");
+
+        // Categorize statements
+        string? targetScope = null;
+        List<ResourceStatement> resources = new();
+        List<ModuleStatement> moduleStatements = new();
+        List<OutputStatement> outputs = new();
+        List<ParameterStatement> parameters = new();
+        List<VariableStatement> variables = new();
+
+        foreach (BicepStatement statement in statements)
+        {
+            switch (statement)
+            {
+                case TargetScopeStatement ts:
+                    targetScope = ts.Scope.ToString().Trim('\'');
+                    break;
+                case ResourceStatement rs:
+                    resources.Add(rs);
+                    break;
+                case ModuleStatement ms:
+                    moduleStatements.Add(ms);
+                    break;
+                case OutputStatement os:
+                    outputs.Add(os);
+                    break;
+                case ParameterStatement ps:
+                    parameters.Add(ps);
+                    break;
+                case VariableStatement vs:
+                    variables.Add(vs);
+                    break;
+                default:
+                    throw new NotSupportedException(
+                        $"Unsupported BicepStatement type '{statement.GetType().Name}' during JSON serialization.");
+            }
+        }
+
+        if (targetScope != null && targetScope != "resourceGroup")
+        {
+            writer.WriteString("targetScope", targetScope);
+        }
+
+        // Write resources
+        if (resources.Count > 0)
+        {
+            writer.WritePropertyName("resources");
             writer.WriteStartObject();
-            writer.WriteString("fileName", $"{module.Key}.bicep");
-
-            // Categorize statements
-            string? targetScope = null;
-            List<ResourceStatement> resources = new();
-            List<ModuleStatement> moduleStatements = new();
-            List<OutputStatement> outputs = new();
-            List<ParameterStatement> parameters = new();
-            List<VariableStatement> variables = new();
-
-            foreach (BicepStatement statement in module.Value)
+            foreach (ResourceStatement resource in resources)
             {
-                switch (statement)
-                {
-                    case TargetScopeStatement ts:
-                        targetScope = ts.Scope.ToString().Trim('\'');
-                        break;
-                    case ResourceStatement rs:
-                        resources.Add(rs);
-                        break;
-                    case ModuleStatement ms:
-                        moduleStatements.Add(ms);
-                        break;
-                    case OutputStatement os:
-                        outputs.Add(os);
-                        break;
-                    case ParameterStatement ps:
-                        parameters.Add(ps);
-                        break;
-                    case VariableStatement vs:
-                        variables.Add(vs);
-                        break;
-                    default:
-                        throw new NotSupportedException(
-                            $"Unsupported BicepStatement type '{statement.GetType().Name}' during JSON serialization.");
-                }
+                writer.WritePropertyName(resource.Name);
+                ((IJsonModel<BicepStatement>)resource).Write(writer, ModelReaderWriterOptions.Json);
             }
-
-            if (targetScope != null && targetScope != "resourceGroup")
-            {
-                writer.WriteString("targetScope", targetScope);
-            }
-
-            // Write resources
-            if (resources.Count > 0)
-            {
-                writer.WritePropertyName("resources");
-                writer.WriteStartObject();
-                foreach (ResourceStatement resource in resources)
-                {
-                    writer.WritePropertyName(resource.Name);
-                    ((IJsonModel<BicepStatement>)resource).Write(writer, ModelReaderWriterOptions.Json);
-                }
-                writer.WriteEndObject();
-            }
-
-            // Write modules
-            if (moduleStatements.Count > 0)
-            {
-                writer.WritePropertyName("modules");
-                writer.WriteStartObject();
-                foreach (ModuleStatement mod in moduleStatements)
-                {
-                    writer.WritePropertyName(mod.Name);
-                    ((IJsonModel<BicepStatement>)mod).Write(writer, ModelReaderWriterOptions.Json);
-                }
-                writer.WriteEndObject();
-            }
-
-            // Write outputs
-            if (outputs.Count > 0)
-            {
-                writer.WritePropertyName("outputs");
-                writer.WriteStartObject();
-                foreach (OutputStatement output in outputs)
-                {
-                    writer.WritePropertyName(output.Name);
-                    ((IJsonModel<BicepStatement>)output).Write(writer, ModelReaderWriterOptions.Json);
-                }
-                writer.WriteEndObject();
-            }
-
-            // Write parameters
-            if (parameters.Count > 0)
-            {
-                writer.WritePropertyName("parameters");
-                writer.WriteStartObject();
-                foreach (ParameterStatement param in parameters)
-                {
-                    writer.WritePropertyName(param.Name);
-                    ((IJsonModel<BicepStatement>)param).Write(writer, ModelReaderWriterOptions.Json);
-                }
-                writer.WriteEndObject();
-            }
-
-            // Write variables
-            if (variables.Count > 0)
-            {
-                writer.WritePropertyName("variables");
-                writer.WriteStartObject();
-                foreach (VariableStatement variable in variables)
-                {
-                    writer.WritePropertyName(variable.Name);
-                    ((IJsonModel<BicepStatement>)variable).Write(writer, ModelReaderWriterOptions.Json);
-                }
-                writer.WriteEndObject();
-            }
-
             writer.WriteEndObject();
         }
 
-        writer.WriteEndArray();
+        // Write modules
+        if (moduleStatements.Count > 0)
+        {
+            writer.WritePropertyName("modules");
+            writer.WriteStartObject();
+            foreach (ModuleStatement mod in moduleStatements)
+            {
+                writer.WritePropertyName(mod.Name);
+                ((IJsonModel<BicepStatement>)mod).Write(writer, ModelReaderWriterOptions.Json);
+            }
+            writer.WriteEndObject();
+        }
+
+        // Write outputs
+        if (outputs.Count > 0)
+        {
+            writer.WritePropertyName("outputs");
+            writer.WriteStartObject();
+            foreach (OutputStatement output in outputs)
+            {
+                writer.WritePropertyName(output.Name);
+                ((IJsonModel<BicepStatement>)output).Write(writer, ModelReaderWriterOptions.Json);
+            }
+            writer.WriteEndObject();
+        }
+
+        // Write parameters
+        if (parameters.Count > 0)
+        {
+            writer.WritePropertyName("parameters");
+            writer.WriteStartObject();
+            foreach (ParameterStatement param in parameters)
+            {
+                writer.WritePropertyName(param.Name);
+                ((IJsonModel<BicepStatement>)param).Write(writer, ModelReaderWriterOptions.Json);
+            }
+            writer.WriteEndObject();
+        }
+
+        // Write variables
+        if (variables.Count > 0)
+        {
+            writer.WritePropertyName("variables");
+            writer.WriteStartObject();
+            foreach (VariableStatement variable in variables)
+            {
+                writer.WritePropertyName(variable.Name);
+                ((IJsonModel<BicepStatement>)variable).Write(writer, ModelReaderWriterOptions.Json);
+            }
+            writer.WriteEndObject();
+        }
+
         writer.WriteEndObject();
     }
 
-    internal static List<Infrastructure> DeserializeInfrastructure(JsonElement element)
+    internal static Infrastructure DeserializeInfrastructure(JsonElement element)
     {
-        List<Infrastructure> modules = new();
+        string fileName = element.GetProperty("fileName").GetString()
+            ?? throw new FormatException("InfraNode is missing required 'fileName' property.");
+        string moduleName = fileName.EndsWith(".bicep")
+            ? fileName.Substring(0, fileName.Length - 6)
+            : fileName;
 
-        foreach (JsonElement bicepFile in element.GetProperty("infras").EnumerateArray())
+        Infrastructure infra = new(moduleName);
+
+        // Parse targetScope
+        if (element.TryGetProperty("targetScope", out JsonElement scopeElement))
         {
-            string fileName = bicepFile.GetProperty("fileName").GetString()!;
-            string moduleName = fileName.EndsWith(".bicep")
-                ? fileName.Substring(0, fileName.Length - 6)
-                : fileName;
-
-            Infrastructure infra = new(moduleName);
-
-            // Parse targetScope
-            if (bicepFile.TryGetProperty("targetScope", out JsonElement scopeElement))
+            string scope = scopeElement.GetString()!;
+            infra.TargetScope = scope switch
             {
-                string scope = scopeElement.GetString()!;
-                infra.TargetScope = scope switch
-                {
-                    "subscription" => DeploymentScope.Subscription,
-                    "managementGroup" => DeploymentScope.ManagementGroup,
-                    "tenant" => DeploymentScope.Tenant,
-                    _ => null // resourceGroup is the default, no need to set
-                };
-            }
-
-            // Parse parameters first (they may be referenced by resources/outputs)
-            if (bicepFile.TryGetProperty("parameters", out JsonElement parametersElement))
-            {
-                foreach (JsonProperty paramProp in parametersElement.EnumerateObject())
-                {
-                    ParameterStatement stmt = ParameterStatement.DeserializeParameterStatement(paramProp.Value);
-                    DeserializedParameter param = new(stmt);
-                    infra.Add(param);
-                }
-            }
-
-            // Parse resources
-            if (bicepFile.TryGetProperty("resources", out JsonElement resourcesElement))
-            {
-                foreach (JsonProperty resProp in resourcesElement.EnumerateObject())
-                {
-                    ResourceStatement stmt = ResourceStatement.DeserializeResourceStatement(resProp.Value);
-                    DeserializedResource resource = new(stmt);
-                    infra.Add(resource);
-                }
-            }
-
-            // Parse modules
-            if (bicepFile.TryGetProperty("modules", out JsonElement modulesElement))
-            {
-                foreach (JsonProperty modProp in modulesElement.EnumerateObject())
-                {
-                    ModuleStatement stmt = ModuleStatement.DeserializeModuleStatement(modProp.Value);
-                    DeserializedModule mod = new(stmt);
-                    infra.Add(mod);
-                }
-            }
-
-            // Parse outputs
-            if (bicepFile.TryGetProperty("outputs", out JsonElement outputsElement))
-            {
-                foreach (JsonProperty outProp in outputsElement.EnumerateObject())
-                {
-                    OutputStatement stmt = OutputStatement.DeserializeOutputStatement(outProp.Value);
-                    DeserializedOutput output = new(stmt);
-                    infra.Add(output);
-                }
-            }
-
-            // Parse variables
-            if (bicepFile.TryGetProperty("variables", out JsonElement variablesElement))
-            {
-                foreach (JsonProperty varProp in variablesElement.EnumerateObject())
-                {
-                    VariableStatement stmt = VariableStatement.DeserializeVariableStatement(varProp.Value);
-                    DeserializedVariable variable = new(stmt);
-                    infra.Add(variable);
-                }
-            }
-
-            modules.Add(infra);
+                "subscription" => DeploymentScope.Subscription,
+                "managementGroup" => DeploymentScope.ManagementGroup,
+                "tenant" => DeploymentScope.Tenant,
+                _ => null // resourceGroup is the default, no need to set
+            };
         }
 
-        return modules.Count > 0 ? modules : [new Infrastructure()];
+        // Parse parameters first (they may be referenced by resources/outputs)
+        if (element.TryGetProperty("parameters", out JsonElement parametersElement))
+        {
+            foreach (JsonProperty paramProp in parametersElement.EnumerateObject())
+            {
+                ParameterStatement stmt = ParameterStatement.DeserializeParameterStatement(paramProp.Value);
+                DeserializedParameter param = new(stmt);
+                infra.Add(param);
+            }
+        }
+
+        // Parse resources
+        if (element.TryGetProperty("resources", out JsonElement resourcesElement))
+        {
+            foreach (JsonProperty resProp in resourcesElement.EnumerateObject())
+            {
+                ResourceStatement stmt = ResourceStatement.DeserializeResourceStatement(resProp.Value);
+                DeserializedResource resource = new(stmt);
+                infra.Add(resource);
+            }
+        }
+
+        // Parse modules
+        if (element.TryGetProperty("modules", out JsonElement modulesElement))
+        {
+            foreach (JsonProperty modProp in modulesElement.EnumerateObject())
+            {
+                ModuleStatement stmt = ModuleStatement.DeserializeModuleStatement(modProp.Value);
+                DeserializedModule mod = new(stmt);
+                infra.Add(mod);
+            }
+        }
+
+        // Parse outputs
+        if (element.TryGetProperty("outputs", out JsonElement outputsElement))
+        {
+            foreach (JsonProperty outProp in outputsElement.EnumerateObject())
+            {
+                OutputStatement stmt = OutputStatement.DeserializeOutputStatement(outProp.Value);
+                DeserializedOutput output = new(stmt);
+                infra.Add(output);
+            }
+        }
+
+        // Parse variables
+        if (element.TryGetProperty("variables", out JsonElement variablesElement))
+        {
+            foreach (JsonProperty varProp in variablesElement.EnumerateObject())
+            {
+                VariableStatement stmt = VariableStatement.DeserializeVariableStatement(varProp.Value);
+                DeserializedVariable variable = new(stmt);
+                infra.Add(variable);
+            }
+        }
+
+        return infra;
     }
 
     /// <summary>

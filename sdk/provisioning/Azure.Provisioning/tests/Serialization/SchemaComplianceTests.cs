@@ -52,18 +52,13 @@ public class SchemaComplianceTests
         using JsonDocument doc = JsonDocument.Parse(json);
         JsonElement root = doc.RootElement;
 
-        // === Top-level: { "infras": [...] } ===
-        Assert.IsTrue(root.TryGetProperty("infras", out JsonElement infras));
-        Assert.AreEqual(JsonValueKind.Array, infras.ValueKind);
-
-        JsonElement file = infras[0];
-
+        // === Top-level: InfraNode (single object) ===
         // === File-level: fileName, targetScope ===
-        Assert.AreEqual("main.bicep", file.GetProperty("fileName").GetString());
-        Assert.IsFalse(file.TryGetProperty("targetScope", out _), "targetScope should be omitted for resourceGroup (default)");
+        Assert.AreEqual("main.bicep", root.GetProperty("fileName").GetString());
+        Assert.IsFalse(root.TryGetProperty("targetScope", out _), "targetScope should be omitted for resourceGroup (default)");
 
         // === Resources: keyed by bicepIdentifier ===
-        JsonElement resources = file.GetProperty("resources");
+        JsonElement resources = root.GetProperty("resources");
         Assert.IsTrue(resources.TryGetProperty("storageAccount", out JsonElement storageRes));
 
         Assert.AreEqual("storageAccount", storageRes.GetProperty("bicepIdentifier").GetString());
@@ -111,7 +106,7 @@ public class SchemaComplianceTests
         Assert.AreEqual("storageAccount", parentRef.GetProperty("id").GetString());
 
         // === Outputs: { bicepIdentifier, valueType, value } ===
-        Assert.IsTrue(file.TryGetProperty("outputs", out JsonElement outputs));
+        Assert.IsTrue(root.TryGetProperty("outputs", out JsonElement outputs));
         Assert.IsTrue(outputs.TryGetProperty("storageAccountName", out JsonElement output));
         Assert.AreEqual("storageAccountName", output.GetProperty("bicepIdentifier").GetString());
 
@@ -131,7 +126,7 @@ public class SchemaComplianceTests
         Assert.AreEqual("storageAccount", outputBase.GetProperty("id").GetString());
 
         // === Parameters (auto-generated location param) ===
-        if (file.TryGetProperty("parameters", out JsonElement parameters))
+        if (root.TryGetProperty("parameters", out JsonElement parameters))
         {
             foreach (JsonProperty param in parameters.EnumerateObject())
             {
@@ -196,7 +191,7 @@ public class SchemaComplianceTests
         infra.Add(storage);
         string json = SerializationTestHelpers.SerializeToJson(infra);
         using var doc = JsonDocument.Parse(json);
-        var file = doc.RootElement.GetProperty("infras")[0];
+        var file = doc.RootElement;
         Assert.IsFalse(file.TryGetProperty("targetScope", out _), "targetScope should be omitted for resourceGroup (default)");
     }
 
@@ -206,7 +201,7 @@ public class SchemaComplianceTests
         Infrastructure infra = new() { TargetScope = DeploymentScope.Subscription };
         string json = SerializationTestHelpers.SerializeToJson(infra);
         using var doc = JsonDocument.Parse(json);
-        var file = doc.RootElement.GetProperty("infras")[0];
+        var file = doc.RootElement;
         Assert.AreEqual("subscription", file.GetProperty("targetScope").GetString());
     }
 
@@ -222,7 +217,7 @@ public class SchemaComplianceTests
         infra.Add(param);
         string json = SerializationTestHelpers.SerializeToJson(infra);
         using var doc = JsonDocument.Parse(json);
-        var file = doc.RootElement.GetProperty("infras")[0];
+        var file = doc.RootElement;
         var paramNode = file.GetProperty("parameters").GetProperty("myParam");
         if (paramNode.TryGetProperty("decorators", out JsonElement decs))
         {
@@ -287,13 +282,8 @@ public class SchemaComplianceTests
         using JsonDocument doc = JsonDocument.Parse(json);
         JsonElement root = doc.RootElement;
 
-        Assert.IsTrue(root.TryGetProperty("infras", out JsonElement files), "Missing 'infras'");
-        Assert.AreEqual(JsonValueKind.Array, files.ValueKind);
-
-        foreach (JsonElement file in files.EnumerateArray())
-        {
-            AssertBicepFileNode(file);
-        }
+        // Infrastructure now serializes as a single InfraNode (not wrapped in SerializationDocument)
+        AssertBicepFileNode(root);
     }
 
     private static void AssertBicepFileNode(JsonElement file)
