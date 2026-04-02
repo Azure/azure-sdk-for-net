@@ -19,7 +19,7 @@
 - Removed `IPFamily` enum (consolidated into `ContainerServiceIPFamily`).
 - Changed `UserAssignedIdentities` type from `BicepDictionary<UserAssignedIdentityDetails>` to `BicepDictionary<ManagedServiceIdentityUserAssignedIdentitiesValue>`.
 - `EffectiveOutboundIPs` on load balancer/NAT gateway profiles changed from read-write to read-only.
-- `ResourceVersions` trimmed from ~40 historical versions to `V2026_01_01` only.
+- `ResourceVersions` trimmed from ~40 historical versions to `V2025_10_01` and `V2026_01_01` only.
 
 ## 1.0.0-beta.5 (2026-03-03)
 
