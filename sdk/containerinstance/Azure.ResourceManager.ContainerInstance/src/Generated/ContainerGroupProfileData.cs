@@ -14,13 +14,13 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.ContainerInstance
 {
     /// <summary> A container group profile object. </summary>
-    public partial class ContainerGroupProfileData : ResourceData
+    public partial class ContainerGroupProfileData : TrackedResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerGroupProfileData"/>. </summary>
-        public ContainerGroupProfileData()
+        public ContainerGroupProfileData() : base(default(AzureLocation))
         {
             Tags = new ChangeTrackingDictionary<string, string>();
             Zones = new ChangeTrackingList<string>();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="zones"> The availability zones. </param>
-        internal ContainerGroupProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ContainerGroupProfileProperties properties, IDictionary<string, string> tags, string location, IList<string> zones) : base(id, name, resourceType, systemData)
+        internal ContainerGroupProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ContainerGroupProfileProperties properties, IDictionary<string, string> tags, string location, IList<string> zones) : base(id, name, resourceType, systemData, tags ?? new ChangeTrackingDictionary<string, string>(), location != null ? new AzureLocation(location) : default)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -49,10 +49,10 @@ namespace Azure.ResourceManager.ContainerInstance
         internal ContainerGroupProfileProperties Properties { get; set; }
 
         /// <summary> Resource tags. </summary>
-        public IDictionary<string, string> Tags { get; }
+        public new IDictionary<string, string> Tags { get; }
 
         /// <summary> The geo-location where the resource lives. </summary>
-        public string Location { get; set; }
+        public new string Location { get; set; }
 
         /// <summary> The availability zones. </summary>
         public IList<string> Zones { get; }

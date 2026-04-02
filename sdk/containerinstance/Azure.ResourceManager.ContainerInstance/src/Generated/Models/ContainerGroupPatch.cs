@@ -7,18 +7,20 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.ContainerInstance;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
     /// <summary> The Resource model definition. </summary>
-    public partial class ContainerGroupPatch
+    public partial class ContainerGroupPatch : TrackedResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerGroupPatch"/>. </summary>
-        public ContainerGroupPatch()
+        public ContainerGroupPatch() : base(default(AzureLocation))
         {
             Tags = new ChangeTrackingDictionary<string, string>();
             Zones = new ChangeTrackingList<string>();
@@ -32,7 +34,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="tags"> The resource tags. </param>
         /// <param name="zones"> The zones for the container group. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerGroupPatch(string id, string name, string @type, string location, IDictionary<string, string> tags, IList<string> zones, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerGroupPatch(string id, string name, string @type, string location, IDictionary<string, string> tags, IList<string> zones, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(default(AzureLocation))
         {
             Id = id;
             Name = name;
@@ -44,19 +46,19 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         }
 
         /// <summary> The resource id. </summary>
-        public string Id { get; }
+        public new string Id { get; }
 
         /// <summary> The resource name. </summary>
-        public string Name { get; }
+        public new string Name { get; }
 
         /// <summary> The resource type. </summary>
         public string Type { get; }
 
         /// <summary> The resource location. </summary>
-        public string Location { get; set; }
+        public new string Location { get; set; }
 
         /// <summary> The resource tags. </summary>
-        public IDictionary<string, string> Tags { get; }
+        public new IDictionary<string, string> Tags { get; }
 
         /// <summary> The zones for the container group. </summary>
         public IList<string> Zones { get; }

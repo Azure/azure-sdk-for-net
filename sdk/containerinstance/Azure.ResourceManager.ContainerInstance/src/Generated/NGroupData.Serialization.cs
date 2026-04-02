@@ -18,7 +18,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.ContainerInstance
 {
     /// <summary> Describes the NGroups resource. </summary>
-    public partial class NGroupData : ResourceData, IJsonModel<NGroupData>
+    public partial class NGroupData : IJsonModel<NGroupData>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

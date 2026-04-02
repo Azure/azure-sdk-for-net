@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ContainerGroupPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

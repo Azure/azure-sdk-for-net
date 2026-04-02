@@ -18,7 +18,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.ContainerInstance
 {
     /// <summary> A container group profile object. </summary>
-    public partial class ContainerGroupProfileData : ResourceData, IJsonModel<ContainerGroupProfileData>
+    public partial class ContainerGroupProfileData : IJsonModel<ContainerGroupProfileData>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

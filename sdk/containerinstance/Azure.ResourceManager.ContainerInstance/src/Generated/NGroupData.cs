@@ -14,13 +14,13 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.ContainerInstance
 {
     /// <summary> Describes the NGroups resource. </summary>
-    public partial class NGroupData : ResourceData
+    public partial class NGroupData : TrackedResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NGroupData"/>. </summary>
-        public NGroupData()
+        public NGroupData() : base(default(AzureLocation))
         {
             Tags = new ChangeTrackingDictionary<string, string>();
             Zones = new ChangeTrackingList<string>();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="zones"> The availability zones. </param>
         /// <param name="identity"> The identity of the NGroup, if configured. </param>
-        internal NGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, NGroupProperties properties, IDictionary<string, string> tags, string location, IList<string> zones, NGroupIdentity identity) : base(id, name, resourceType, systemData)
+        internal NGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, NGroupProperties properties, IDictionary<string, string> tags, string location, IList<string> zones, NGroupIdentity identity) : base(id, name, resourceType, systemData, tags ?? new ChangeTrackingDictionary<string, string>(), location != null ? new AzureLocation(location) : default)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -51,10 +51,10 @@ namespace Azure.ResourceManager.ContainerInstance
         internal NGroupProperties Properties { get; set; }
 
         /// <summary> Resource tags. </summary>
-        public IDictionary<string, string> Tags { get; }
+        public new IDictionary<string, string> Tags { get; }
 
         /// <summary> The geo-location where the resource lives. </summary>
-        public string Location { get; set; }
+        public new string Location { get; set; }
 
         /// <summary> The availability zones. </summary>
         public IList<string> Zones { get; }
