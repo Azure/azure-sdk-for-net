@@ -112,9 +112,10 @@ public static class FoundryEnvironment
                 ? TimeSpan.FromSeconds(seconds)
                 : Timeout.InfiniteTimeSpan;
 
-        // IsHosted: true when any Foundry platform env var is configured AND the
-        // .NET hosting environment is not "Development". This mirrors the logic
-        // used by Microsoft.Extensions.Hosting.HostEnvironmentEnvExtensions.IsDevelopment().
+        // IsHosted: true when all three Foundry platform env vars (ProjectEndpoint,
+        // AgentName, AgentVersion) are configured AND the .NET hosting environment
+        // is not "Development". This mirrors the logic used by
+        // Microsoft.Extensions.Hosting.HostEnvironmentEnvExtensions.IsDevelopment().
         var hostingEnv = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")
             ?? Environment.GetEnvironmentVariable("DOTNET_ENVIRONMENT");
         var isDevelopment = string.Equals(hostingEnv, "Development", StringComparison.OrdinalIgnoreCase);

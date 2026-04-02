@@ -74,7 +74,7 @@ internal sealed class FoundryStorageProvider : ResponsesProvider
     {
         using var content = StorageEnvelopeSerializer.SerializeCreateRequest(request);
         var http = _httpClientFactory.CreateClient(HttpClientName);
-        var msg = new HttpRequestMessage(HttpMethod.Post, Url("responses")) { Content = content };
+        using var msg = new HttpRequestMessage(HttpMethod.Post, Url("responses")) { Content = content };
         ApplyIsolationHeaders(msg, isolation);
         using var httpResponse = await http.SendAsync(msg, cancellationToken);
         await StorageErrorMapper.ThrowIfErrorAsync(httpResponse, cancellationToken);
@@ -87,7 +87,7 @@ internal sealed class FoundryStorageProvider : ResponsesProvider
         CancellationToken cancellationToken = default)
     {
         var http = _httpClientFactory.CreateClient(HttpClientName);
-        var msg = new HttpRequestMessage(HttpMethod.Get, Url($"responses/{Uri.EscapeDataString(responseId)}"));
+        using var msg = new HttpRequestMessage(HttpMethod.Get, Url($"responses/{Uri.EscapeDataString(responseId)}"));
         ApplyIsolationHeaders(msg, isolation);
         using var httpResponse = await http.SendAsync(msg, cancellationToken);
         await StorageErrorMapper.ThrowIfErrorAsync(httpResponse, cancellationToken);
@@ -103,7 +103,7 @@ internal sealed class FoundryStorageProvider : ResponsesProvider
     {
         using var content = StorageEnvelopeSerializer.SerializeResponse(response);
         var http = _httpClientFactory.CreateClient(HttpClientName);
-        var msg = new HttpRequestMessage(HttpMethod.Post, Url($"responses/{Uri.EscapeDataString(response.Id)}")) { Content = content };
+        using var msg = new HttpRequestMessage(HttpMethod.Post, Url($"responses/{Uri.EscapeDataString(response.Id)}")) { Content = content };
         ApplyIsolationHeaders(msg, isolation);
         using var httpResponse = await http.SendAsync(msg, cancellationToken);
         await StorageErrorMapper.ThrowIfErrorAsync(httpResponse, cancellationToken);
@@ -116,7 +116,7 @@ internal sealed class FoundryStorageProvider : ResponsesProvider
         CancellationToken cancellationToken = default)
     {
         var http = _httpClientFactory.CreateClient(HttpClientName);
-        var msg = new HttpRequestMessage(HttpMethod.Delete, Url($"responses/{Uri.EscapeDataString(responseId)}"));
+        using var msg = new HttpRequestMessage(HttpMethod.Delete, Url($"responses/{Uri.EscapeDataString(responseId)}"));
         ApplyIsolationHeaders(msg, isolation);
         using var httpResponse = await http.SendAsync(msg, cancellationToken);
         await StorageErrorMapper.ThrowIfErrorAsync(httpResponse, cancellationToken);
@@ -140,7 +140,7 @@ internal sealed class FoundryStorageProvider : ResponsesProvider
             query += $"&before={Uri.EscapeDataString(before)}";
 
         var http = _httpClientFactory.CreateClient(HttpClientName);
-        var msg = new HttpRequestMessage(HttpMethod.Get, Url($"responses/{Uri.EscapeDataString(responseId)}/input_items", query));
+        using var msg = new HttpRequestMessage(HttpMethod.Get, Url($"responses/{Uri.EscapeDataString(responseId)}/input_items", query));
         ApplyIsolationHeaders(msg, isolation);
         using var httpResponse = await http.SendAsync(msg, cancellationToken);
         await StorageErrorMapper.ThrowIfErrorAsync(httpResponse, cancellationToken);
@@ -157,7 +157,7 @@ internal sealed class FoundryStorageProvider : ResponsesProvider
         var ids = itemIds.ToList();
         using var content = StorageEnvelopeSerializer.SerializeBatchRequest(ids);
         var http = _httpClientFactory.CreateClient(HttpClientName);
-        var msg = new HttpRequestMessage(HttpMethod.Post, Url("items/batch/retrieve")) { Content = content };
+        using var msg = new HttpRequestMessage(HttpMethod.Post, Url("items/batch/retrieve")) { Content = content };
         ApplyIsolationHeaders(msg, isolation);
         using var httpResponse = await http.SendAsync(msg, cancellationToken);
         await StorageErrorMapper.ThrowIfErrorAsync(httpResponse, cancellationToken);
@@ -180,7 +180,7 @@ internal sealed class FoundryStorageProvider : ResponsesProvider
             query += $"&conversation_id={Uri.EscapeDataString(conversationId)}";
 
         var http = _httpClientFactory.CreateClient(HttpClientName);
-        var msg = new HttpRequestMessage(HttpMethod.Get, Url("history/item_ids", query));
+        using var msg = new HttpRequestMessage(HttpMethod.Get, Url("history/item_ids", query));
         ApplyIsolationHeaders(msg, isolation);
         using var httpResponse = await http.SendAsync(msg, cancellationToken);
         await StorageErrorMapper.ThrowIfErrorAsync(httpResponse, cancellationToken);

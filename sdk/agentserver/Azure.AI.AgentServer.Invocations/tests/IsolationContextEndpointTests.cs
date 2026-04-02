@@ -28,8 +28,8 @@ public class IsolationContextEndpointTests
 
         var request = new HttpRequestMessage(HttpMethod.Post, "/invocations");
         request.Content = new StringContent("{}");
-        request.Headers.Add("x-agent-user-isolation-key", "user-abc");
-        request.Headers.Add("x-agent-chat-isolation-key", "chat-xyz");
+        request.Headers.Add(IsolationContext.UserIsolationKeyHeaderName, "user-abc");
+        request.Headers.Add(IsolationContext.ChatIsolationKeyHeaderName, "chat-xyz");
         var response = await env.Client.SendAsync(request);
 
         Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
@@ -57,8 +57,8 @@ public class IsolationContextEndpointTests
         using var env = await StartAsync<IsolationCapturingHandler>();
 
         var request = new HttpRequestMessage(HttpMethod.Get, "/invocations/inv-123");
-        request.Headers.Add("x-agent-user-isolation-key", "user-get");
-        request.Headers.Add("x-agent-chat-isolation-key", "chat-get");
+        request.Headers.Add(IsolationContext.UserIsolationKeyHeaderName, "user-get");
+        request.Headers.Add(IsolationContext.ChatIsolationKeyHeaderName, "chat-get");
         var response = await env.Client.SendAsync(request);
 
         Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
@@ -73,8 +73,8 @@ public class IsolationContextEndpointTests
         using var env = await StartAsync<IsolationCapturingHandler>();
 
         var request = new HttpRequestMessage(HttpMethod.Post, "/invocations/inv-456/cancel");
-        request.Headers.Add("x-agent-user-isolation-key", "user-cancel");
-        request.Headers.Add("x-agent-chat-isolation-key", "chat-cancel");
+        request.Headers.Add(IsolationContext.UserIsolationKeyHeaderName, "user-cancel");
+        request.Headers.Add(IsolationContext.ChatIsolationKeyHeaderName, "chat-cancel");
         var response = await env.Client.SendAsync(request);
 
         Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
@@ -89,7 +89,7 @@ public class IsolationContextEndpointTests
         using var env = await StartAsync<IsolationCapturingHandler>();
 
         var request = new HttpRequestMessage(HttpMethod.Get, "/invocations/inv-789?custom=value1");
-        request.Headers.Add("x-agent-user-isolation-key", "u");
+        request.Headers.Add(IsolationContext.UserIsolationKeyHeaderName, "u");
         var response = await env.Client.SendAsync(request);
 
         Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
@@ -104,7 +104,7 @@ public class IsolationContextEndpointTests
 
         var request = new HttpRequestMessage(HttpMethod.Get, "/invocations/inv-101");
         request.Headers.Add("x-client-trace-id", "trace-abc");
-        request.Headers.Add("x-agent-user-isolation-key", "u");
+        request.Headers.Add(IsolationContext.UserIsolationKeyHeaderName, "u");
         var response = await env.Client.SendAsync(request);
 
         Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
@@ -117,7 +117,8 @@ public class IsolationContextEndpointTests
     private static async Task<JsonElement> ParseJsonAsync(HttpResponseMessage response)
     {
         var body = await response.Content.ReadAsStringAsync();
-        return JsonDocument.Parse(body).RootElement;
+        using var document = JsonDocument.Parse(body);
+        return document.RootElement.Clone();
     }
 
     private static async Task<TestEnv> StartAsync<THandler>() where THandler : InvocationHandler
