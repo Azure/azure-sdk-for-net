@@ -84,6 +84,14 @@ try {
     }
     if (-not $ProjectDirectory)
     {
+        # Check if only CI config files changed for this service directory.
+        # If so, skip expensive codegen/snippet/API operations since ci*.yml
+        # changes don't affect generated code.
+        $onlyCiConfigChanged = Test-OnlyCiConfigChanged -ServiceDirectory $ServiceDirectory -RepoRoot $RepoRoot
+        if ($onlyCiConfigChanged) {
+            Write-Host "`nOnly CI config files (ci*.yml) changed in sdk/$ServiceDirectory — skipping codegen, snippets, and API export."
+        }
+
         Write-Host "Force .NET Welcome experience"
         Invoke-Block {
             & dotnet msbuild -version
@@ -110,7 +118,7 @@ try {
                         }
             }
 
-        if ($SkipDiffValidation) {
+        if ($SkipDiffValidation -and -not $onlyCiConfigChanged) {
             Write-Host "`nRunning dotnet format"
             Join-Path "$PSScriptRoot/../../sdk" $ServiceDirectory `
                 | Resolve-Path `
@@ -123,17 +131,19 @@ try {
                 }
         }
 
-        $debugLogging = $env:SYSTEM_DEBUG -eq "true"
-        $logsFolder = $env:BUILD_ARTIFACTSTAGINGDIRECTORY
-        $diagnosticArguments = ($debugLogging -and $logsFolder) ? "/binarylogger:$logsFolder/generatecode.binlog" : ""
+        if (-not $onlyCiConfigChanged) {
+            $debugLogging = $env:SYSTEM_DEBUG -eq "true"
+            $logsFolder = $env:BUILD_ARTIFACTSTAGINGDIRECTORY
+            $diagnosticArguments = ($debugLogging -and $logsFolder) ? "/binarylogger:$logsFolder/generatecode.binlog" : ""
 
-        Write-Host "Re-generating clients"
-        Invoke-Block {
-            & dotnet msbuild $PSScriptRoot\..\service.proj /restore /t:GenerateCode /p:SDKType=$SDKType /p:ServiceDirectory=$ServiceDirectory $diagnosticArguments /p:ProjectListOverrideFile=""
+            Write-Host "Re-generating clients"
+            Invoke-Block {
+                & dotnet msbuild $PSScriptRoot\..\service.proj /restore /t:GenerateCode /p:SDKType=$SDKType /p:ServiceDirectory=$ServiceDirectory $diagnosticArguments /p:ProjectListOverrideFile=""
+            }
         }
     }
 
-    if ($ServiceDirectory -ne "tools") {
+    if ($ServiceDirectory -ne "tools" -and -not $onlyCiConfigChanged) {
         Write-Host "Re-generating snippets"
         Invoke-Block {
             & $PSScriptRoot\Update-Snippets.ps1 -ServiceDirectory $ServiceDirectory
@@ -144,7 +154,7 @@ try {
             & $PSScriptRoot\Export-API.ps1 -ServiceDirectory $ServiceDirectory -SDKType $SDKType -SpellCheckPublicApiSurface:$SpellCheckPublicApiSurface
         }
     }
-    else {
+    elseif ($ServiceDirectory -eq "tools") {
         Write-Host "Skipping snippet and API listing generation for tools directory"
     }
 
