@@ -3,6 +3,7 @@
 
 #nullable disable
 
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -16,6 +17,11 @@ namespace Azure.ResourceManager.AlertsManagement.Mocking
     // The new TypeSpec generator places GetSummary on MockableAlertsManagementArmClient (scope-based).
     // This custom mockable class re-introduces the old method signatures on SubscriptionResource,
     // delegating to the generated GetSummary method via MockableAlertsManagementArmClient.
+    //
+    // Backward compatibility: mocking support for the old SDK's
+    // GetServiceAlerts(SubscriptionResource) extension method. The old SDK placed this on
+    // SubscriptionResource; the new generator places it on ArmClient (scope-based). This
+    // delegates to the generated MockableAlertsManagementArmClient.GetServiceAlerts(Id).
     public partial class MockableAlertsManagementSubscriptionResource : ArmResource
     {
         internal MockableAlertsManagementSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
@@ -25,6 +31,13 @@ namespace Azure.ResourceManager.AlertsManagement.Mocking
         private MockableAlertsManagementArmClient GetMockableAlertsManagementArmClient()
         {
             return Client.GetCachedClient(client => new MockableAlertsManagementArmClient(client, ResourceIdentifier.Root));
+        }
+
+        /// <summary> Gets a collection of ServiceAlertCollection in the SubscriptionResource. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual ServiceAlertCollection GetServiceAlerts()
+        {
+            return GetMockableAlertsManagementArmClient().GetServiceAlerts(Id);
         }
 
         /// <summary>

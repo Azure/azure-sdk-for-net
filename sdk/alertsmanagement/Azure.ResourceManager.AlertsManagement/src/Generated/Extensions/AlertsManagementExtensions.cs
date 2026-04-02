@@ -131,36 +131,36 @@ namespace Azure.ResourceManager.AlertsManagement
         /// List alerts meta data information based on value of identifier parameter.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAlertsManagementTenantResource.MetaDataAsync(RetrievedInformationIdentifier, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAlertsManagementTenantResource.GetServiceAlertMetadataAsync(RetrievedInformationIdentifier, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
         /// <param name="identifier"> Identification of the information to be retrieved by API call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        public static async Task<Response<ServiceAlertMetadata>> MetaDataAsync(this TenantResource tenantResource, RetrievedInformationIdentifier identifier, CancellationToken cancellationToken = default)
+        public static async Task<Response<ServiceAlertMetadata>> GetServiceAlertMetadataAsync(this TenantResource tenantResource, RetrievedInformationIdentifier identifier, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return await GetMockableAlertsManagementTenantResource(tenantResource).MetaDataAsync(identifier, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAlertsManagementTenantResource(tenantResource).GetServiceAlertMetadataAsync(identifier, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// List alerts meta data information based on value of identifier parameter.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAlertsManagementTenantResource.MetaData(RetrievedInformationIdentifier, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAlertsManagementTenantResource.GetServiceAlertMetadata(RetrievedInformationIdentifier, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
         /// <param name="identifier"> Identification of the information to be retrieved by API call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        public static Response<ServiceAlertMetadata> MetaData(this TenantResource tenantResource, RetrievedInformationIdentifier identifier, CancellationToken cancellationToken = default)
+        public static Response<ServiceAlertMetadata> GetServiceAlertMetadata(this TenantResource tenantResource, RetrievedInformationIdentifier identifier, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetMockableAlertsManagementTenantResource(tenantResource).MetaData(identifier, cancellationToken);
+            return GetMockableAlertsManagementTenantResource(tenantResource).GetServiceAlertMetadata(identifier, cancellationToken);
         }
     }
 }

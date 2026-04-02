@@ -433,7 +433,7 @@ namespace Azure.ResourceManager.AlertsManagement
             return message;
         }
 
-        internal HttpMessage CreateMetaDataRequest(string identifier, RequestContext context)
+        internal HttpMessage CreateGetServiceAlertMetadataRequest(string identifier, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

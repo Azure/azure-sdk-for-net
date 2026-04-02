@@ -66,9 +66,9 @@ namespace Azure.ResourceManager.AlertsManagement.Mocking
         /// </summary>
         /// <param name="identifier"> Identification of the information to be retrieved by API call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ServiceAlertMetadata>> MetaDataAsync(RetrievedInformationIdentifier identifier, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceAlertMetadata>> GetServiceAlertMetadataAsync(RetrievedInformationIdentifier identifier, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = ServiceAlertClientDiagnostics.CreateScope("MockableAlertsManagementTenantResource.MetaData");
+            using DiagnosticScope scope = ServiceAlertClientDiagnostics.CreateScope("MockableAlertsManagementTenantResource.GetServiceAlertMetadata");
             scope.Start();
             try
             {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.AlertsManagement.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ServiceAlertRestClient.CreateMetaDataRequest(identifier.ToString(), context);
+                HttpMessage message = ServiceAlertRestClient.CreateGetServiceAlertMetadataRequest(identifier.ToString(), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ServiceAlertMetadata> response = Response.FromValue(ServiceAlertMetadata.FromResponse(result), result);
                 if (response.Value == null)
@@ -111,9 +111,9 @@ namespace Azure.ResourceManager.AlertsManagement.Mocking
         /// </summary>
         /// <param name="identifier"> Identification of the information to be retrieved by API call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ServiceAlertMetadata> MetaData(RetrievedInformationIdentifier identifier, CancellationToken cancellationToken = default)
+        public virtual Response<ServiceAlertMetadata> GetServiceAlertMetadata(RetrievedInformationIdentifier identifier, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = ServiceAlertClientDiagnostics.CreateScope("MockableAlertsManagementTenantResource.MetaData");
+            using DiagnosticScope scope = ServiceAlertClientDiagnostics.CreateScope("MockableAlertsManagementTenantResource.GetServiceAlertMetadata");
             scope.Start();
             try
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.AlertsManagement.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ServiceAlertRestClient.CreateMetaDataRequest(identifier.ToString(), context);
+                HttpMessage message = ServiceAlertRestClient.CreateGetServiceAlertMetadataRequest(identifier.ToString(), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ServiceAlertMetadata> response = Response.FromValue(ServiceAlertMetadata.FromResponse(result), result);
                 if (response.Value == null)

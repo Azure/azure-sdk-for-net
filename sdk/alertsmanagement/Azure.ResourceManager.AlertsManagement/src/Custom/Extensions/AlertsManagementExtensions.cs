@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -19,6 +20,13 @@ namespace Azure.ResourceManager.AlertsManagement
     // 2. The old SDK exposed GetServiceAlertSummary/GetServiceAlertSummaryAsync on SubscriptionResource.
     //    The new TypeSpec generator places GetSummary on ArmClient (scope-based). This file re-introduces
     //    the old SubscriptionResource extension methods delegating through MockableAlertsManagementSubscriptionResource.
+    //
+    // Backward compatibility: the old SDK (AutoRest-based, v1.1.1) exposed
+    // GetServiceAlerts(SubscriptionResource) and GetServiceAlertMetadata(TenantResource).
+    // The new TypeSpec generator places GetServiceAlerts on ArmClient (scope-based) and renames
+    // GetServiceAlertMetadata to MetaData on TenantResource. These extension methods re-introduce
+    // the old method signatures, marked [EditorBrowsable(Never)] to hide from IntelliSense while
+    // keeping binary/source compatibility.
     [CodeGenSuppress("GetServiceAlertResource", typeof(ArmClient), typeof(ResourceIdentifier))]
     public static partial class AlertsManagementExtensions
     {
@@ -113,6 +121,14 @@ namespace Azure.ResourceManager.AlertsManagement
         public static Response<ServiceAlertSummary> GetServiceAlertSummary(this SubscriptionResource subscriptionResource, SubscriptionResourceGetServiceAlertSummaryOptions options, CancellationToken cancellationToken = default)
         {
             return GetMockableAlertsManagementSubscriptionResource(subscriptionResource).GetServiceAlertSummary(options, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ServiceAlertCollection in the SubscriptionResource. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ServiceAlertCollection GetServiceAlerts(this SubscriptionResource subscriptionResource)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            return GetMockableAlertsManagementSubscriptionResource(subscriptionResource).GetServiceAlerts();
         }
     }
 }
