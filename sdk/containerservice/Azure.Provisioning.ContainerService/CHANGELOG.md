@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.6 (Unreleased)
+## 1.0.0-beta.6 (2026-04-02)
 
 ### Features Added
 
@@ -20,8 +20,6 @@
 - Changed `UserAssignedIdentities` type from `BicepDictionary<UserAssignedIdentityDetails>` to `BicepDictionary<ManagedServiceIdentityUserAssignedIdentitiesValue>`.
 - `EffectiveOutboundIPs` on load balancer/NAT gateway profiles changed from read-write to read-only.
 - `ResourceVersions` trimmed from ~40 historical versions to `V2026_01_01` only.
-
-### Other Changes
 
 ## 1.0.0-beta.5 (2026-03-03)
 
