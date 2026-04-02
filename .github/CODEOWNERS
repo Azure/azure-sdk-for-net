@@ -503,12 +503,6 @@
 /sdk/storage/Azure.Storage.Queues/    @amnguye @jalauzon-msft @jaschrep-msft @nickliu-msft @seanmcc-msft
 
 # PRLabel: %Storage
-/sdk/storage/Microsoft.Azure.WebJobs.Extensions.Storage.Blobs/    @amnguye @fabiocav @jalauzon-msft @jaschrep-msft @mathewc @nickliu-msft @seanmcc-msft @tg-msft
-
-# PRLabel: %Storage
-/sdk/storage/Microsoft.Azure.WebJobs.Extensions.Storage.Queues/    @amnguye @fabiocav @jalauzon-msft @jaschrep-msft @mathewc @nickliu-msft @seanmcc-msft @tg-msft
-
-# PRLabel: %Storage
 /sdk/storage/Microsoft.Azure.WebJobs.Extensions.Storage/    @amnguye @fabiocav @jalauzon-msft @jaschrep-msft @mathewc @nickliu-msft @seanmcc-msft @tg-msft
 
 # PRLabel: %Storage
