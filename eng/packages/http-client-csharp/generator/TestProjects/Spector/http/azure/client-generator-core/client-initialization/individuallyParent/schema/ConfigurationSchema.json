@@ -1,0 +1,163 @@
+{
+  "type": "object",
+  "properties": {
+    "AzureClients": {
+      "type": "object",
+      "properties": {
+        "IndividuallyParentNestedWithPathClient": {
+          "type": "object",
+          "description": "Configuration for IndividuallyParentNestedWithPathClient.",
+          "properties": {
+            "Endpoint": {
+              "type": "string",
+              "format": "uri",
+              "description": "Gets or sets the Endpoint."
+            },
+            "BlobName": {
+              "type": "string"
+            },
+            "Credential": {
+              "$ref": "#/definitions/credential"
+            },
+            "Options": {
+              "$ref": "#/definitions/individuallyParentClientOptions"
+            }
+          }
+        },
+        "IndividuallyParentNestedWithQueryClient": {
+          "type": "object",
+          "description": "Configuration for IndividuallyParentNestedWithQueryClient.",
+          "properties": {
+            "Endpoint": {
+              "type": "string",
+              "format": "uri",
+              "description": "Gets or sets the Endpoint."
+            },
+            "BlobName": {
+              "type": "string"
+            },
+            "Credential": {
+              "$ref": "#/definitions/credential"
+            },
+            "Options": {
+              "$ref": "#/definitions/individuallyParentClientOptions"
+            }
+          }
+        },
+        "IndividuallyParentNestedWithHeaderClient": {
+          "type": "object",
+          "description": "Configuration for IndividuallyParentNestedWithHeaderClient.",
+          "properties": {
+            "Endpoint": {
+              "type": "string",
+              "format": "uri",
+              "description": "Gets or sets the Endpoint."
+            },
+            "Name": {
+              "type": "string"
+            },
+            "Credential": {
+              "$ref": "#/definitions/credential"
+            },
+            "Options": {
+              "$ref": "#/definitions/individuallyParentClientOptions"
+            }
+          }
+        },
+        "IndividuallyParentNestedWithMultipleClient": {
+          "type": "object",
+          "description": "Configuration for IndividuallyParentNestedWithMultipleClient.",
+          "properties": {
+            "Endpoint": {
+              "type": "string",
+              "format": "uri",
+              "description": "Gets or sets the Endpoint."
+            },
+            "Name": {
+              "type": "string"
+            },
+            "Region": {
+              "type": "string"
+            },
+            "Credential": {
+              "$ref": "#/definitions/credential"
+            },
+            "Options": {
+              "$ref": "#/definitions/individuallyParentClientOptions"
+            }
+          }
+        },
+        "IndividuallyParentNestedWithMixedClient": {
+          "type": "object",
+          "description": "Configuration for IndividuallyParentNestedWithMixedClient.",
+          "properties": {
+            "Endpoint": {
+              "type": "string",
+              "format": "uri",
+              "description": "Gets or sets the Endpoint."
+            },
+            "Name": {
+              "type": "string"
+            },
+            "Credential": {
+              "$ref": "#/definitions/credential"
+            },
+            "Options": {
+              "$ref": "#/definitions/individuallyParentClientOptions"
+            }
+          }
+        },
+        "IndividuallyParentNestedWithParamAliasClient": {
+          "type": "object",
+          "description": "Configuration for IndividuallyParentNestedWithParamAliasClient.",
+          "properties": {
+            "Endpoint": {
+              "type": "string",
+              "format": "uri",
+              "description": "Gets or sets the Endpoint."
+            },
+            "BlobName": {
+              "type": "string"
+            },
+            "Credential": {
+              "$ref": "#/definitions/credential"
+            },
+            "Options": {
+              "$ref": "#/definitions/individuallyParentClientOptions"
+            }
+          }
+        },
+        "IndividuallyParentClient": {
+          "type": "object",
+          "description": "Configuration for IndividuallyParentClient.",
+          "properties": {
+            "Endpoint": {
+              "type": "string",
+              "format": "uri",
+              "description": "Gets or sets the Endpoint."
+            },
+            "Credential": {
+              "$ref": "#/definitions/credential"
+            },
+            "Options": {
+              "$ref": "#/definitions/individuallyParentClientOptions"
+            }
+          }
+        }
+      },
+      "additionalProperties": {
+        "type": "object",
+        "description": "Configuration for a named client instance."
+      }
+    }
+  },
+  "definitions": {
+    "individuallyParentClientOptions": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/azureOptions"
+        }
+      ]
+    }
+  }
+}

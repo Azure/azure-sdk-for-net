@@ -111,7 +111,7 @@ interface Employees2 {
     );
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
 
     // Build ARM provider schema and verify its structure
     const armProviderSchema = buildArmProviderSchema(sdkContext, root);
@@ -334,7 +334,7 @@ interface CurrentEmployees {
     );
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
     // Build ARM provider schema and verify its structure
     const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
     ok(armProviderSchemaResult);
@@ -476,7 +476,7 @@ interface Employees {
     );
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
 
     // Build ARM provider schema and verify its structure
     const armProviderSchema = buildArmProviderSchema(sdkContext, root);
@@ -653,7 +653,7 @@ interface Employees {
     );
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
 
     // Build ARM provider schema and verify its structure
     const armProviderSchema = buildArmProviderSchema(sdkContext, root);
@@ -830,7 +830,7 @@ interface Employees {
     );
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
     // Build ARM provider schema and verify its structure
     const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
     ok(armProviderSchemaResult);
@@ -958,7 +958,7 @@ interface Employees {
     );
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
     // Build ARM provider schema and verify its structure
     const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
     ok(armProviderSchemaResult);
@@ -1038,7 +1038,7 @@ interface Employees {
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
 
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
     // Build ARM provider schema and verify its structure
 
     const armProviderSchema = buildArmProviderSchema(sdkContext, root);
@@ -1117,7 +1117,7 @@ interface Employees {
     );
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
 
     // Build ARM provider schema and verify its structure
     const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
@@ -1197,7 +1197,7 @@ interface ScheduledActionExtension {
     );
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
 
     // Build ARM provider schema and verify its structure
     const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
@@ -1330,7 +1330,7 @@ interface BestPracticeVersions {
     );
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
 
     // Build ARM provider schema and verify its structure
     const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
@@ -1526,7 +1526,7 @@ interface BestPracticeVersionDetails {
     );
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
 
     const armProviderSchema = buildArmProviderSchema(sdkContext, root);
     ok(armProviderSchema);
@@ -1642,7 +1642,7 @@ interface NoGetResources {
     );
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
 
     // Build ARM provider schema and verify its structure
     // This uses the legacy buildArmProviderSchema which properly filters resources without Get
@@ -1770,7 +1770,7 @@ interface SitesByServiceGroup extends SiteOps<ServiceGroup> {}
     );
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
 
     // Build ARM provider schema using legacy detection
     const armProviderSchema = buildArmProviderSchema(sdkContext, root);
@@ -1921,7 +1921,7 @@ interface SharedConfigs {
     );
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
 
     const armProviderSchema = buildArmProviderSchema(sdkContext, root);
     ok(armProviderSchema);
@@ -2058,7 +2058,7 @@ interface ConfigOperations {
     );
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
 
     // Build ARM provider schema using legacy detection
     const armProviderSchema = buildArmProviderSchema(sdkContext, root);
@@ -2244,7 +2244,7 @@ interface TrafficEndpoints {
 
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
 
     // Build ARM provider schema and verify its structure
     const armProviderSchema = buildArmProviderSchema(sdkContext, root);
@@ -2388,7 +2388,7 @@ interface NetworkSecurityPerimeterConfigurations {
     );
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
 
     // Build ARM provider schema and verify its structure
     const armProviderSchema = buildArmProviderSchema(sdkContext, root);
@@ -2521,7 +2521,7 @@ interface MonitorResources {
     );
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
 
     const armProviderSchema = buildArmProviderSchema(sdkContext, root);
     ok(armProviderSchema);
@@ -2753,7 +2753,7 @@ interface TenantTranscripts {
     );
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
 
     // Build ARM provider schema
     const armProviderSchema = buildArmProviderSchema(sdkContext, root);
@@ -2866,7 +2866,7 @@ interface Employees {
     );
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
 
     const armProviderSchema = buildArmProviderSchema(sdkContext, root);
     ok(armProviderSchema);
@@ -2919,7 +2919,7 @@ interface Widgets {
     );
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
 
     const armProviderSchema = buildArmProviderSchema(sdkContext, root);
     ok(armProviderSchema);
@@ -2971,7 +2971,7 @@ interface Gadgets {
     );
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
 
     const armProviderSchema = buildArmProviderSchema(sdkContext, root);
     ok(armProviderSchema);
@@ -3024,7 +3024,7 @@ interface Items {
     );
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
 
     const armProviderSchema = buildArmProviderSchema(sdkContext, root);
     ok(armProviderSchema);
@@ -3072,7 +3072,7 @@ interface Employees {
     );
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
 
     const armProviderSchema = buildArmProviderSchema(sdkContext, root);
     ok(armProviderSchema);
@@ -3161,7 +3161,7 @@ interface Employees {
 
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
 
     // Test buildArmProviderSchema (legacy path)
     const armProviderSchema = buildArmProviderSchema(sdkContext, root);
@@ -3239,7 +3239,7 @@ interface Widgets {
     );
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
 
     const armProviderSchema = buildArmProviderSchema(sdkContext, root);
     ok(armProviderSchema);
@@ -3292,7 +3292,7 @@ interface Gadgets {
     );
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
 
     const armProviderSchema = buildArmProviderSchema(sdkContext, root);
     ok(armProviderSchema);
@@ -3407,7 +3407,7 @@ interface Containers {
     );
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
 
     const armProviderSchema = buildArmProviderSchema(sdkContext, root);
     ok(armProviderSchema);
@@ -3568,7 +3568,7 @@ interface Containers {
     );
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
 
     const armProviderSchema = buildArmProviderSchema(sdkContext, root);
     ok(armProviderSchema);
@@ -3607,8 +3607,12 @@ interface Containers {
     );
 
     // BlobService should still have its own methods (Read + Create)
-    ok(blobServiceResource.metadata.methods.some((m: any) => m.kind === "Read"));
-    ok(blobServiceResource.metadata.methods.some((m: any) => m.kind === "Create"));
+    ok(
+      blobServiceResource.metadata.methods.some((m: any) => m.kind === "Read")
+    );
+    ok(
+      blobServiceResource.metadata.methods.some((m: any) => m.kind === "Create")
+    );
 
     // Validate using resolveArmResources API - use deep equality to ensure schemas match
     const resolvedSchema = resolveArmResources(program, sdkContext);

@@ -13,7 +13,7 @@ internal static class ResponseMutations
 {
     /// <summary>
     /// Transitions the response to <see cref="ResponseStatus.Completed"/>.
-    /// Sets <c>CompletedAt</c>, <c>Usage</c> (if provided), and computes <c>OutputText</c>.
+    /// Sets <c>CompletedAt</c> and <c>Usage</c> (if provided).
     /// </summary>
     internal static void SetCompleted(this Models.ResponseObject response, ResponseUsage? usage = null)
     {
@@ -24,20 +24,17 @@ internal static class ResponseMutations
         {
             response.Usage = usage;
         }
-
-        response.OutputText = response.ComputeOutputText();
     }
 
     /// <summary>
     /// Transitions the response to <see cref="ResponseStatus.Cancelled"/>.
-    /// Clears <c>Output</c> to an empty list, sets <c>OutputText</c> to empty string.
+    /// Clears <c>Output</c> to an empty list.
     /// Does NOT set <c>CompletedAt</c> (cancelled responses have no completion timestamp).
     /// </summary>
     internal static void SetCancelled(this Models.ResponseObject response, ResponseUsage? usage = null)
     {
         response.Status = ResponseStatus.Cancelled;
         response.Output.Clear();
-        response.OutputText = "";
 
         if (usage is not null)
         {
@@ -48,7 +45,7 @@ internal static class ResponseMutations
     /// <summary>
     /// Transitions the response to <see cref="ResponseStatus.Failed"/>.
     /// Sets <c>Error</c> with the given code and message,
-    /// <c>Usage</c> (if provided), and computes <c>OutputText</c>.
+    /// and <c>Usage</c> (if provided).
     /// </summary>
     internal static void SetFailed(
         this Models.ResponseObject response,
@@ -63,8 +60,6 @@ internal static class ResponseMutations
         {
             response.Usage = usage;
         }
-
-        response.OutputText = response.ComputeOutputText();
     }
 
     /// <summary>
@@ -81,14 +76,12 @@ internal static class ResponseMutations
         {
             response.Usage = usage;
         }
-
-        response.OutputText = response.ComputeOutputText();
     }
 
     /// <summary>
     /// Transitions the response to <see cref="ResponseStatus.Incomplete"/>.
-    /// Sets <c>IncompleteDetails</c> if a reason is provided,
-    /// <c>Usage</c> (if provided), and computes <c>OutputText</c>.
+    /// Sets <c>IncompleteDetails</c> if a reason is provided
+    /// and <c>Usage</c> (if provided).
     /// Does NOT set <c>CompletedAt</c> — per B6, only <c>completed</c> status has a non-null <c>CompletedAt</c>.
     /// </summary>
     internal static void SetIncomplete(
@@ -107,22 +100,6 @@ internal static class ResponseMutations
         {
             response.Usage = usage;
         }
-
-        response.OutputText = response.ComputeOutputText();
-    }
-
-    /// <summary>
-    /// Computes <c>OutputText</c> by concatenating text from all
-    /// <see cref="OutputItemMessage"/> items in <c>Response.Output</c>.
-    /// </summary>
-    internal static string ComputeOutputText(this Models.ResponseObject response)
-    {
-        var texts = response.Output
-            .OfType<OutputItemMessage>()
-            .SelectMany(msg => msg.Content.OfType<MessageContentOutputTextContent>())
-            .Select(tc => tc.Text);
-
-        return string.Concat(texts);
     }
 
     /// <summary>
@@ -165,7 +142,6 @@ internal static class ResponseMutations
         target.Error = source.Error;
         target.IncompleteDetails = source.IncompleteDetails;
         target.Usage = source.Usage;
-        target.OutputText = source.OutputText;
     }
 
     /// <summary>

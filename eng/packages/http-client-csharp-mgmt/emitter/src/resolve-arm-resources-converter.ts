@@ -115,17 +115,17 @@ export function resolveArmResources(
         );
       }
       if (!methodKindMap.has(method.crossLanguageDefinitionId)) {
-        methodKindMap.set(
-          method.crossLanguageDefinitionId,
-          method.kind
-        );
+        methodKindMap.set(method.crossLanguageDefinitionId, method.kind);
       }
       if (
         (method.kind === "paging" || method.kind === "lropaging") &&
         !methodResponseModelIdMap.has(method.crossLanguageDefinitionId)
       ) {
         const responseType = method.response?.type;
-        if (responseType?.kind === "array" && responseType.valueType.kind === "model") {
+        if (
+          responseType?.kind === "array" &&
+          responseType.valueType.kind === "model"
+        ) {
           methodResponseModelIdMap.set(
             method.crossLanguageDefinitionId,
             (responseType.valueType as SdkModelType).crossLanguageDefinitionId

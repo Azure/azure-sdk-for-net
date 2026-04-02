@@ -1,6 +1,6 @@
 # Azure SDK for .NET Libraries Inventory
 
-> **Auto-generated** by `Library_Inventory` on 2026-03-31 06:29:16 UTC.
+> **Auto-generated** by `Library_Inventory` on 2026-04-02 05:08:45 UTC.
 > Run that script to refresh this file.
 
 ## Table of Contents
@@ -16,18 +16,18 @@
 
 ## Summary
 
-- Total libraries: 412
+- Total libraries: 413
 - Management Plane (MPG): 232
-  - Autorest/Swagger: 109
-  - New Emitter (TypeSpec): 123
+  - Autorest/Swagger: 108
+  - New Emitter (TypeSpec): 124
   - Old TypeSpec: 0
-- Data Plane (DPG): 143
+- Data Plane (DPG): 144
   - Autorest/Swagger: 52
-  - New Emitter (TypeSpec): 39
+  - New Emitter (TypeSpec): 40
   - Old TypeSpec: 4
 - Provisioning: 37
-  - Reflection-based generator: 34
-  - TypeSpec-based generator: 1
+  - Reflection-based generator: 33
+  - TypeSpec-based generator: 2
   - No generator: 2
 - No generator: 48
 
@@ -36,10 +36,11 @@
 
 Libraries that provide client APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 39 / 43 (90.7%)
+**Migration Status**: 40 / 44 (90.9%)
 
 | Service | Library | New Emitter | Using SCM |
 | ------- | ------- | ----------- | --------- |
+| agentserver | Azure.AI.AgentServer.Responses | ✅ | ✅ |
 | ai | Azure.AI.Agents.Persistent |  |  |
 | ai | Azure.AI.Extensions.OpenAI | ✅ | ✅ |
 | ai | Azure.AI.Projects | ✅ | ✅ |
@@ -149,7 +150,7 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 52
 
 Libraries that provide resource management APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 123 / 123 (100%)
+**Migration Status**: 124 / 124 (100%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
@@ -226,6 +227,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | mongodbatlas | Azure.ResourceManager.MongoDBAtlas | ✅ |
 | mysql | Azure.ResourceManager.MySql | ✅ |
 | networkfunction | Azure.ResourceManager.NetworkFunction | ✅ |
+| newrelicobservability | Azure.ResourceManager.NewRelicObservability | ✅ |
 | nginx | Azure.ResourceManager.Nginx | ✅ |
 | notificationhubs | Azure.ResourceManager.NotificationHubs | ✅ |
 | onlineexperimentation | Azure.ResourceManager.OnlineExperimentation | ✅ |
@@ -280,7 +282,7 @@ Libraries that provide resource management APIs for Azure services and have been
 
 ## Management Plane Libraries (MPG) - Still on Swagger
 
-Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 109
+Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 108
 
 | Service | Library |
 | ------- | ------- |
@@ -359,7 +361,6 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 10
 | network | Azure.ResourceManager.Network |
 | networkanalytics | Azure.ResourceManager.NetworkAnalytics |
 | networkcloud | Azure.ResourceManager.NetworkCloud |
-| newrelicobservability | Azure.ResourceManager.NewRelicObservability |
 | openenergyplatform | Azure.ResourceManager.EnergyServices |
 | operationalinsights | Azure.ResourceManager.OperationalInsights |
 | orbital | Azure.ResourceManager.Orbital |
@@ -399,7 +400,7 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 10
 
 Libraries that provide infrastructure-as-code capabilities for Azure services. These libraries allow you to declaratively specify Azure infrastructure natively in .NET and generate Bicep templates for deployment.
 
-**Migration Status**: 1 / 37 migrated to TypeSpec-based generator
+**Migration Status**: 2 / 37 migrated to TypeSpec-based generator
 
 | Service | Library | Mgmt Peer Library | Generator |
 | ------- | ------- | ----------------- | --------- |
@@ -413,7 +414,7 @@ Libraries that provide infrastructure-as-code capabilities for Azure services. T
 | compute | Azure.Provisioning.Compute | Azure.ResourceManager.Compute | Reflection |
 | containerapps | Azure.Provisioning.AppContainers | Azure.ResourceManager.AppContainers | Reflection |
 | containerregistry | Azure.Provisioning.ContainerRegistry | Azure.ResourceManager.ContainerRegistry | Reflection |
-| containerservice | Azure.Provisioning.ContainerService | Azure.ResourceManager.ContainerService ✅ | Reflection |
+| containerservice | Azure.Provisioning.ContainerService | Azure.ResourceManager.ContainerService ✅ | TypeSpec ✅ |
 | cosmosdb | Azure.Provisioning.CosmosDB | Azure.ResourceManager.CosmosDB | Reflection |
 | datafactory | Azure.Provisioning.DataFactory | Azure.ResourceManager.DataFactory | Reflection |
 | dns | Azure.Provisioning.Dns | Azure.ResourceManager.Dns | None |

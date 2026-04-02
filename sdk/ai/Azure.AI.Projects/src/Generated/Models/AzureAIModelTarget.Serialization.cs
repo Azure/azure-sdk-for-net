@@ -10,7 +10,8 @@ using Azure.AI.Projects;
 
 namespace Azure.AI.Projects.Evaluation
 {
-    internal partial class AzureAIModelTarget : EvaluationTarget, IJsonModel<AzureAIModelTarget>
+    /// <summary> Represents a target specifying an Azure AI model for operations requiring model selection. </summary>
+    public partial class AzureAIModelTarget : EvaluationTarget, IJsonModel<AzureAIModelTarget>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

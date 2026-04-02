@@ -238,6 +238,127 @@ namespace Azure.Generator.Mgmt.Tests
         }
 
         /// <summary>
+        /// Verifies that when all flattened sub-properties are optional (non-required),
+        /// the public constructor is kept as a parameterless constructor instead of being removed.
+        /// This is the regression scenario: a model with a "properties" bag where every
+        /// sub-property is optional should still have a public parameterless constructor
+        /// so users can create the object and populate optional properties via setters.
+        /// </summary>
+        [Test]
+        public void TestFlattenKeepsPublicConstructorWhenAllPropertiesAreOptional()
+        {
+            // Create a nested "properties" model with only optional sub-properties.
+            var optionalProp1 = InputFactory.Property("displayName", InputPrimitiveType.String, isRequired: false, serializedName: "displayName");
+            var optionalProp2 = InputFactory.Property("description", InputPrimitiveType.String, isRequired: false, serializedName: "description");
+            var propertiesModel = InputFactory.Model(
+                "TestOptionalProperties",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [optionalProp1, optionalProp2]);
+
+            // Create a required "properties" property with @flattenProperty decorator.
+            var propertiesProperty = InputFactory.Property("properties", propertiesModel, isRequired: true, serializedName: "properties");
+            ApplyFlattenDecorator(propertiesProperty);
+
+            // Create the parent model with Input+Output usage so it gets a public constructor.
+            var parentModel = InputFactory.Model(
+                "TestResource",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [propertiesProperty]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [parentModel, propertiesModel]);
+
+            // Create the model provider.
+            var model = plugin.Object.TypeFactory.CreateModel(parentModel);
+            Assert.IsNotNull(model);
+
+            // Verify precondition: before visitors run, there IS a public constructor.
+            Assert.IsTrue(
+                model!.Constructors.Any(c => c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public)),
+                "Precondition: model should have a public constructor before visitors run");
+
+            // Run the VisitType visitors (which triggers FlattenPropertyVisitor).
+            var visitTypeCore = typeof(LibraryVisitor).GetMethod(
+                "VisitTypeCore",
+                BindingFlags.NonPublic | BindingFlags.Instance);
+            Assert.IsNotNull(visitTypeCore, "Could not find LibraryVisitor.VisitTypeCore method");
+
+            foreach (var visitor in ManagementClientGenerator.Instance.Visitors)
+            {
+                visitTypeCore!.Invoke(visitor, [model]);
+            }
+
+            // After visitors run, the public constructor should still exist (parameterless).
+            var publicCtor = model.Constructors.SingleOrDefault(
+                c => c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public));
+            Assert.IsNotNull(publicCtor, "Public constructor should be kept (as parameterless) when all flattened properties are optional");
+            Assert.AreEqual(0, publicCtor!.Signature.Parameters.Count,
+                "Public constructor should be parameterless since all flattened properties are optional");
+
+            // The serialization type should NOT have an internal parameterless constructor
+            // (it would conflict with the public one in the partial class, causing CS0111).
+            foreach (var serializationType in model!.SerializationProviders)
+            {
+                var serializationParameterlessCtor = serializationType.Constructors
+                    .SingleOrDefault(c => !c.Signature.Parameters.Any());
+                Assert.IsNull(serializationParameterlessCtor,
+                    "Serialization type should not have a parameterless constructor when the model already has one");
+            }
+        }
+
+        /// <summary>
+        /// Verifies that when flattened sub-properties contain a mix of required and optional,
+        /// only the required ones appear as constructor parameters.
+        /// </summary>
+        [Test]
+        public void TestFlattenConstructorIncludesOnlyRequiredProperties()
+        {
+            // Create a nested "properties" model with one required and one optional property.
+            var requiredProp = InputFactory.Property("name", InputPrimitiveType.String, isRequired: true, serializedName: "name");
+            var optionalProp = InputFactory.Property("description", InputPrimitiveType.String, isRequired: false, serializedName: "description");
+            var propertiesModel = InputFactory.Model(
+                "TestMixedProperties",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [requiredProp, optionalProp]);
+
+            // Create a required "properties" property with @flattenProperty decorator.
+            var propertiesProperty = InputFactory.Property("properties", propertiesModel, isRequired: true, serializedName: "properties");
+            ApplyFlattenDecorator(propertiesProperty);
+
+            // Create the parent model.
+            var parentModel = InputFactory.Model(
+                "TestResourceMixed",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [propertiesProperty]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [parentModel, propertiesModel]);
+
+            var model = plugin.Object.TypeFactory.CreateModel(parentModel);
+            Assert.IsNotNull(model);
+
+            // Run the VisitType visitors.
+            var visitTypeCore = typeof(LibraryVisitor).GetMethod(
+                "VisitTypeCore",
+                BindingFlags.NonPublic | BindingFlags.Instance);
+            Assert.IsNotNull(visitTypeCore);
+
+            foreach (var visitor in ManagementClientGenerator.Instance.Visitors)
+            {
+                visitTypeCore!.Invoke(visitor, [model]);
+            }
+
+            // The public constructor should exist with only the required property as parameter.
+            var publicCtorMixed = model!.Constructors.SingleOrDefault(
+                c => c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public));
+            Assert.IsNotNull(publicCtorMixed, "Public constructor should exist");
+            Assert.That(publicCtorMixed!.Signature.Parameters, Has.Count.EqualTo(1),
+                "Public constructor should have exactly 1 parameter (the required property)");
+            Assert.AreEqual("name", publicCtorMixed.Signature.Parameters[0].Name,
+                "The constructor parameter should be the required 'name' property");
+        }
+
+        /// <summary>
         /// Verifies that a discriminator base model with a single non-discriminator public property
         /// is NOT safe-flattened. Previously, since the discriminator property is internal and not
         /// counted in publicPropertyCount, the model appeared to have only one public property,
