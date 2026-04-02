@@ -93,6 +93,7 @@ namespace Azure.AI.Translation.Document
     public partial class DocumentTranslationClient
     {
         protected DocumentTranslationClient() { }
+        public DocumentTranslationClient(Azure.AI.Translation.Document.DocumentTranslationClientSettings settings) { }
         public DocumentTranslationClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
         public DocumentTranslationClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.AI.Translation.Document.DocumentTranslationClientOptions options) { }
         public DocumentTranslationClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
@@ -146,6 +147,13 @@ namespace Azure.AI.Translation.Document
             V2024_05_01 = 1,
             V2024_11_01_Preview = 2,
         }
+    }
+    public partial class DocumentTranslationClientSettings : System.ClientModel.Primitives.ClientSettings
+    {
+        public DocumentTranslationClientSettings() { }
+        public System.Uri Endpoint { get { throw null; } set { } }
+        public Azure.AI.Translation.Document.DocumentTranslationClientOptions Options { get { throw null; } set { } }
+        protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
     }
     public partial class DocumentTranslationFileFormat : System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Document.DocumentTranslationFileFormat>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Document.DocumentTranslationFileFormat>
     {
@@ -298,6 +306,7 @@ namespace Azure.AI.Translation.Document
     public partial class SingleDocumentTranslationClient
     {
         protected SingleDocumentTranslationClient() { }
+        public SingleDocumentTranslationClient(Azure.AI.Translation.Document.SingleDocumentTranslationClientSettings settings) { }
         public SingleDocumentTranslationClient(System.Uri endpoint) { }
         public SingleDocumentTranslationClient(System.Uri endpoint, Azure.AI.Translation.Document.DocumentTranslationClientOptions options) { }
         public SingleDocumentTranslationClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
@@ -313,6 +322,13 @@ namespace Azure.AI.Translation.Document
         public virtual System.Threading.Tasks.Task<Azure.Response<System.BinaryData>> TranslateAsync(string targetLanguage, Azure.AI.Translation.Document.DocumentTranslateContent documentTranslateContent, string sourceLanguage, string category, bool? allowFallback, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> TranslateAsync(string targetLanguage, Azure.Core.RequestContent content, string contentType, string sourceLanguage, string category, bool? allowFallback, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> TranslateAsync(string targetLanguage, Azure.Core.RequestContent content, string contentType, string sourceLanguage = null, string category = null, bool? allowFallback = default(bool?), bool? translateTextWithinImage = default(bool?), Azure.RequestContext context = null) { throw null; }
+    }
+    public partial class SingleDocumentTranslationClientSettings : System.ClientModel.Primitives.ClientSettings
+    {
+        public SingleDocumentTranslationClientSettings() { }
+        public System.Uri Endpoint { get { throw null; } set { } }
+        public Azure.AI.Translation.Document.DocumentTranslationClientOptions Options { get { throw null; } set { } }
+        protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
     }
     public enum StorageInputUriKind
     {
