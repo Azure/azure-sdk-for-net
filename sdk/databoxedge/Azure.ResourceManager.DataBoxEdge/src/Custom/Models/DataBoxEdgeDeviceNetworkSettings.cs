@@ -7,12 +7,14 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.ComponentModel;
 using System.IO;
 using System.Text.Json;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     /// <summary> The network settings of a device. </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class DataBoxEdgeDeviceNetworkSettings : DataBoxEdgeDeviceNetworkSettingsData,
         IJsonModel<DataBoxEdgeDeviceNetworkSettings>,
         IPersistableModel<DataBoxEdgeDeviceNetworkSettings>

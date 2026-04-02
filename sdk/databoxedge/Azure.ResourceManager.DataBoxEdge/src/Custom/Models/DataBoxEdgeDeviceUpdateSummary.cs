@@ -4,15 +4,20 @@
 // Baseline had this type in Models namespace as a plain model. New generator creates it as
 // DataBoxEdgeDeviceUpdateSummaryData in the base namespace. This subclass provides backward-compatible
 // type name and namespace.
+// The shadowed properties below add no-op setters for backward compatibility.
+// These are server-populated read-only fields — the setters must exist for API compat but
+// writing to them has no effect (the base class properties are getter-only).
 
 using System;
 using System.ClientModel.Primitives;
+using System.ComponentModel;
 using System.IO;
 using System.Text.Json;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     /// <summary> Details about ongoing updates and availability of updates on the device. </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class DataBoxEdgeDeviceUpdateSummary : DataBoxEdgeDeviceUpdateSummaryData,
         IJsonModel<DataBoxEdgeDeviceUpdateSummary>,
         IPersistableModel<DataBoxEdgeDeviceUpdateSummary>
