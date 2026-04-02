@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.AI.AgentServer.Core;
 using Azure.AI.AgentServer.Responses.Internal;
 using Azure.AI.AgentServer.Responses.Models;
 using Azure.AI.AgentServer.Responses.Tests.Helpers;
@@ -35,7 +36,7 @@ public class GetAsyncTests : IDisposable
     public async Task NotFound_ThrowsResourceNotFoundException()
     {
         Assert.ThrowsAsync<ResourceNotFoundException>(
-            () => _orchestrator.GetAsync("resp_unknown"));
+            () => _orchestrator.GetAsync("resp_unknown", IsolationContext.Empty));
     }
 
     [Test]
@@ -46,7 +47,7 @@ public class GetAsyncTests : IDisposable
         _tracker.MarkCompleted("resp_get_store");
 
         Assert.ThrowsAsync<ResourceNotFoundException>(
-            () => _orchestrator.GetAsync("resp_get_store"));
+            () => _orchestrator.GetAsync("resp_get_store", IsolationContext.Empty));
     }
 
     [Test]
@@ -56,7 +57,7 @@ public class GetAsyncTests : IDisposable
         // Models.ResponseObject stays null — response.created was never emitted
 
         Assert.ThrowsAsync<ResourceNotFoundException>(
-            () => _orchestrator.GetAsync("resp_get_nrc"));
+            () => _orchestrator.GetAsync("resp_get_nrc", IsolationContext.Empty));
     }
 
     [Test]
@@ -67,7 +68,7 @@ public class GetAsyncTests : IDisposable
         // CompletedAt is null — not completed yet
 
         Assert.ThrowsAsync<ResourceNotFoundException>(
-            () => _orchestrator.GetAsync("resp_get_nc"));
+            () => _orchestrator.GetAsync("resp_get_nc", IsolationContext.Empty));
     }
 
     [Test]
@@ -78,7 +79,7 @@ public class GetAsyncTests : IDisposable
         _tracker.MarkCompleted("resp_get_can");
 
         Assert.ThrowsAsync<ResourceNotFoundException>(
-            () => _orchestrator.GetAsync("resp_get_can"));
+            () => _orchestrator.GetAsync("resp_get_can", IsolationContext.Empty));
     }
 
     [Test]
@@ -88,7 +89,7 @@ public class GetAsyncTests : IDisposable
         execution.Response = new Models.ResponseObject("resp_get_ok", "test") { Status = ResponseStatus.Completed };
         _tracker.MarkCompleted("resp_get_ok");
 
-        var result = await _orchestrator.GetAsync("resp_get_ok");
+        var result = await _orchestrator.GetAsync("resp_get_ok", IsolationContext.Empty);
 
         Assert.That(result.Id, Is.EqualTo("resp_get_ok"));
         Assert.That(result.Status, Is.EqualTo(ResponseStatus.Completed));
@@ -101,7 +102,7 @@ public class GetAsyncTests : IDisposable
         execution.Response = new Models.ResponseObject("resp_get_bg", "test") { Status = ResponseStatus.InProgress };
         // Not completed — bg responses are accessible before completion
 
-        var result = await _orchestrator.GetAsync("resp_get_bg");
+        var result = await _orchestrator.GetAsync("resp_get_bg", IsolationContext.Empty);
 
         Assert.That(result.Id, Is.EqualTo("resp_get_bg"));
     }
