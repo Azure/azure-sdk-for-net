@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects
 {
     /// <summary> The input definition information for a Microsoft Fabric tool as used to configure an agent. </summary>
-    internal partial class MicrosoftFabricPreviewTool : InternalTool
+    public partial class MicrosoftFabricPreviewTool : ProjectTool
     {
         /// <summary> Initializes a new instance of <see cref="MicrosoftFabricPreviewTool"/>. </summary>
         /// <param name="fabricDataagentPreview"> The fabric data agent tool parameters. </param>

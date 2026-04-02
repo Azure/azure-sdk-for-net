@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects
 {
     /// <summary> The input definition information for a Browser Automation Tool, as used to configure an Agent. </summary>
-    internal partial class BrowserAutomationPreviewTool : InternalTool
+    public partial class BrowserAutomationPreviewTool : ProjectTool
     {
         /// <summary> Initializes a new instance of <see cref="BrowserAutomationPreviewTool"/>. </summary>
         /// <param name="browserAutomationPreview"> The Browser Automation Tool parameters. </param>

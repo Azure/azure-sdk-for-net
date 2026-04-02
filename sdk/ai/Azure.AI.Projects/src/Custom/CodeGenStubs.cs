@@ -13,5 +13,4 @@ namespace Azure.AI.Projects;
 [CodeGenType("CreateMemoryStoreRequest")] internal partial class InternalCreateMemoryStoreRequest { }
 [CodeGenType("DeclarativeAgentDefinition")] internal partial class InternalDeclarativeAgentDefinition { }
 [CodeGenType("SearchMemoriesRequest")] internal partial class InternalMemorySearchOptions { }
-[CodeGenType("Tool")] internal partial class InternalTool { }
 [CodeGenType("UpdateMemoriesRequest")] internal partial class InternalMemoryUpdateOptions { }

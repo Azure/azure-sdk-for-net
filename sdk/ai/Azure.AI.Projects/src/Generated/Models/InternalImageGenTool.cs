@@ -8,7 +8,7 @@ using Azure.AI.Projects;
 
 namespace OpenAI
 {
-    internal partial class InternalImageGenTool : InternalTool
+    internal partial class InternalImageGenTool : ProjectTool
     {
         /// <summary> Initializes a new instance of <see cref="InternalImageGenTool"/>. </summary>
         public InternalImageGenTool() : base(ToolType.ImageGeneration)

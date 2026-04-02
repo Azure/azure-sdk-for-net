@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects
 {
     /// <summary> Grammar format. </summary>
-    internal partial class CustomGrammarFormatParam : CustomToolParamFormat
+    public partial class CustomGrammarFormatParam : CustomToolParamFormat
     {
         /// <summary> Initializes a new instance of <see cref="CustomGrammarFormatParam"/>. </summary>
         /// <param name="syntax"> The syntax of the grammar definition. One of `lark` or `regex`. </param>

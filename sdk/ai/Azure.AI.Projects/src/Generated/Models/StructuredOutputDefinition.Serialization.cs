@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> A structured output that can be produced by the agent. </summary>
-    internal partial class StructuredOutputDefinition : IJsonModel<StructuredOutputDefinition>
+    public partial class StructuredOutputDefinition : IJsonModel<StructuredOutputDefinition>
     {
         /// <summary> Initializes a new instance of <see cref="StructuredOutputDefinition"/> for deserialization. </summary>
         internal StructuredOutputDefinition()

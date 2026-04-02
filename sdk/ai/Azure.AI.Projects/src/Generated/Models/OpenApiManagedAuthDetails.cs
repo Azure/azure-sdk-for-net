@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects
 {
     /// <summary> Security details for OpenApi managed_identity authentication. </summary>
-    internal partial class OpenApiManagedAuthDetails : OpenApiAuthDetails
+    public partial class OpenApiManagedAuthDetails : OpenApiAuthDetails
     {
         /// <summary> Initializes a new instance of <see cref="OpenApiManagedAuthDetails"/>. </summary>
         /// <param name="securityScheme"> Connection auth security details. </param>

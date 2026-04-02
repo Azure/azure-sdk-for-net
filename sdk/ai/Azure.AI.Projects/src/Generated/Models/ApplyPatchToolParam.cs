@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects
 {
     /// <summary> Apply patch tool. </summary>
-    internal partial class ApplyPatchToolParam : InternalTool
+    public partial class ApplyPatchToolParam : ProjectTool
     {
         /// <summary> Initializes a new instance of <see cref="ApplyPatchToolParam"/>. </summary>
         public ApplyPatchToolParam() : base(ToolType.ApplyPatch)

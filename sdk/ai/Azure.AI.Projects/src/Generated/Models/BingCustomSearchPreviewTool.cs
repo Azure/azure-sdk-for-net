@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects
 {
     /// <summary> The input definition information for a Bing custom search tool as used to configure an agent. </summary>
-    internal partial class BingCustomSearchPreviewTool : InternalTool
+    public partial class BingCustomSearchPreviewTool : ProjectTool
     {
         /// <summary> Initializes a new instance of <see cref="BingCustomSearchPreviewTool"/>. </summary>
         /// <param name="bingCustomSearchPreview"> The bing custom search tool parameters. </param>

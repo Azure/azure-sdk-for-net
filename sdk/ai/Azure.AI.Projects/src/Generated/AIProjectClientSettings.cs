@@ -17,10 +17,7 @@ namespace Azure.AI.Projects
         public Uri Endpoint { get; set; }
 
         /// <summary> Gets or sets the Settings. </summary>
-        public global::.AIProjectClientSettings Settings { get; set; }
-
-        /// <summary> Gets or sets the AuthenticationPolicy. </summary>
-        public AuthenticationPolicy AuthenticationPolicy { get; set; }
+        //public global::.AIProjectClientSettings Settings { get; set; }
 
         /// <summary> Gets or sets the Options. </summary>
         public AIProjectClientOptions Options { get; set; }
@@ -33,16 +30,11 @@ namespace Azure.AI.Projects
             {
                 Endpoint = endpoint;
             }
-            IConfigurationSection settingsSection = section.GetSection("Settings");
-            if (settingsSection.Exists())
-            {
-                Settings = new global::.AIProjectClientSettings(settingsSection);
-            }
-            IConfigurationSection authenticationPolicySection = section.GetSection("AuthenticationPolicy");
-            if (authenticationPolicySection.Exists())
-            {
-                AuthenticationPolicy = new System.ClientModel.Primitives.AuthenticationPolicy(authenticationPolicySection);
-            }
+            //IConfigurationSection settingsSection = section.GetSection("Settings");
+            //if (settingsSection.Exists())
+            //{
+            //    Settings = new global::.AIProjectClientSettings(settingsSection);
+            //}
             IConfigurationSection optionsSection = section.GetSection("Options");
             if (optionsSection.Exists())
             {

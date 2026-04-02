@@ -11,7 +11,7 @@ namespace Azure.AI.Projects
     /// The ContainerSkill.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SkillReferenceParam"/> and <see cref="InlineSkillParam"/>.
     /// </summary>
-    internal abstract partial class ContainerSkill
+    public abstract partial class ContainerSkill
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

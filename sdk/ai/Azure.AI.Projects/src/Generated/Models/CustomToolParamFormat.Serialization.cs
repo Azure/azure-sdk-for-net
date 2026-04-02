@@ -13,7 +13,7 @@ namespace Azure.AI.Projects
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CustomTextFormatParam"/> and <see cref="CustomGrammarFormatParam"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownCustomToolParamFormat))]
-    internal abstract partial class CustomToolParamFormat : IJsonModel<CustomToolParamFormat>
+    public abstract partial class CustomToolParamFormat : IJsonModel<CustomToolParamFormat>
     {
         /// <summary> Initializes a new instance of <see cref="CustomToolParamFormat"/> for deserialization. </summary>
         internal CustomToolParamFormat()

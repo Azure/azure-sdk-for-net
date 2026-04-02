@@ -10,11 +10,11 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> An agent implementing the A2A protocol. </summary>
-    internal partial class A2APreviewTool : InternalTool, IJsonModel<A2APreviewTool>
+    public partial class A2APreviewTool : ProjectTool, IJsonModel<A2APreviewTool>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override InternalTool PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override ProjectTool PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<A2APreviewTool>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -104,7 +104,7 @@ namespace Azure.AI.Projects
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override InternalTool JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override ProjectTool JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<A2APreviewTool>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

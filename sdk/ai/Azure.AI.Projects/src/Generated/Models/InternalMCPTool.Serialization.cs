@@ -10,7 +10,7 @@ using Azure.AI.Projects;
 
 namespace OpenAI
 {
-    internal partial class InternalMCPTool : InternalTool, IJsonModel<InternalMCPTool>
+    internal partial class InternalMCPTool : ProjectTool, IJsonModel<InternalMCPTool>
     {
         /// <summary> Initializes a new instance of <see cref="InternalMCPTool"/> for deserialization. </summary>
         internal InternalMCPTool()
@@ -19,7 +19,7 @@ namespace OpenAI
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override InternalTool PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override ProjectTool PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<InternalMCPTool>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -151,7 +151,7 @@ namespace OpenAI
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override InternalTool JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override ProjectTool JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<InternalMCPTool>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

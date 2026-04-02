@@ -1208,6 +1208,16 @@ namespace Azure.AI.Projects
                 additionalBinaryDataProperties: null);
         }
 
+        /// <summary> The LocalSkillParam. </summary>
+        /// <param name="name"> The name of the skill. </param>
+        /// <param name="description"> The description of the skill. </param>
+        /// <param name="path"> The path to the directory containing the skill. </param>
+        /// <returns> A new <see cref="Projects.LocalSkillParam"/> instance for mocking. </returns>
+        public static LocalSkillParam LocalSkillParam(string name = default, string description = default, string path = default)
+        {
+            return new LocalSkillParam(name, description, path, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Memory search options. </summary>
         /// <param name="maxMemories"> Maximum number of memory items to return. </param>
         /// <returns> A new <see cref="Memory.MemorySearchResultOptions"/> instance for mocking. </returns>
@@ -1302,6 +1312,458 @@ namespace Azure.AI.Projects
             return new MemoryStoreDeleteScopeResponse("memory_store.scope.deleted", name, scope, isDeleted, additionalBinaryDataProperties: null);
         }
 
+        /// <summary>
+        /// A tool that can be used to generate a response.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.BingGroundingTool"/>, <see cref="Projects.MicrosoftFabricPreviewTool"/>, <see cref="Projects.SharepointPreviewTool"/>, <see cref="Projects.AzureAISearchTool"/>, <see cref="Projects.OpenApiTool"/>, <see cref="Projects.BingCustomSearchPreviewTool"/>, <see cref="Projects.BrowserAutomationPreviewTool"/>, <see cref="Projects.AzureFunctionTool"/>, <see cref="Projects.CaptureStructuredOutputsTool"/>, <see cref="Projects.A2APreviewTool"/>, <see cref="Projects.WorkIQPreviewTool"/>, <see cref="Projects.MemorySearchPreviewTool"/>, <see cref="Projects.WebSearchTool"/>, <see cref="Projects.LocalShellToolParam"/>, <see cref="Projects.FunctionShellToolParam"/>, <see cref="Projects.CustomToolParam"/>, and <see cref="Projects.ApplyPatchToolParam"/>.
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns> A new <see cref="Projects.ProjectTool"/> instance for mocking. </returns>
+        public static ProjectTool ProjectTool(string @type = default)
+        {
+            return new UnknownTool(new ToolType(@type), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The input definition information for a bing grounding search tool as used to configure an agent. </summary>
+        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
+        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
+        /// <param name="bingGrounding"> The bing grounding search tool parameters. </param>
+        /// <returns> A new <see cref="Projects.BingGroundingTool"/> instance for mocking. </returns>
+        public static BingGroundingTool BingGroundingTool(string name = default, string description = default, BingGroundingSearchToolParameters bingGrounding = default)
+        {
+            return new BingGroundingTool(ToolType.BingGrounding, additionalBinaryDataProperties: null, name, description, bingGrounding);
+        }
+
+        /// <summary> The bing grounding search tool parameters. </summary>
+        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
+        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
+        /// <param name="searchConfigurations">
+        /// The search configurations attached to this tool. There can be a maximum of 1
+        /// search configuration resource attached to the tool.
+        /// </param>
+        /// <returns> A new <see cref="Projects.BingGroundingSearchToolParameters"/> instance for mocking. </returns>
+        public static BingGroundingSearchToolParameters BingGroundingSearchToolParameters(string name = default, string description = default, IEnumerable<BingGroundingSearchConfiguration> searchConfigurations = default)
+        {
+            searchConfigurations ??= new ChangeTrackingList<BingGroundingSearchConfiguration>();
+
+            return new BingGroundingSearchToolParameters(name, description, searchConfigurations.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Search configuration for Bing Grounding. </summary>
+        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
+        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
+        /// <param name="projectConnectionId"> Project connection id for grounding with bing search. </param>
+        /// <param name="market"> The market where the results come from. </param>
+        /// <param name="setLang"> The language to use for user interface strings when calling Bing API. </param>
+        /// <param name="count"> The number of search results to return in the bing api response. </param>
+        /// <param name="freshness"> Filter search results by a specific time range. See [accepted values here](https://learn.microsoft.com/bing/search-apis/bing-web-search/reference/query-parameters). </param>
+        /// <returns> A new <see cref="Projects.BingGroundingSearchConfiguration"/> instance for mocking. </returns>
+        public static BingGroundingSearchConfiguration BingGroundingSearchConfiguration(string name = default, string description = default, string projectConnectionId = default, string market = default, string setLang = default, long? count = default, string freshness = default)
+        {
+            return new BingGroundingSearchConfiguration(
+                name,
+                description,
+                projectConnectionId,
+                market,
+                setLang,
+                count,
+                freshness,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The input definition information for a Microsoft Fabric tool as used to configure an agent. </summary>
+        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
+        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
+        /// <param name="fabricDataagentPreview"> The fabric data agent tool parameters. </param>
+        /// <returns> A new <see cref="Projects.MicrosoftFabricPreviewTool"/> instance for mocking. </returns>
+        public static MicrosoftFabricPreviewTool MicrosoftFabricPreviewTool(string name = default, string description = default, FabricDataAgentToolParameters fabricDataagentPreview = default)
+        {
+            return new MicrosoftFabricPreviewTool(ToolType.FabricDataagentPreview, additionalBinaryDataProperties: null, name, description, fabricDataagentPreview);
+        }
+
+        /// <summary> The fabric data agent tool parameters. </summary>
+        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
+        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
+        /// <param name="projectConnections">
+        /// The project connections attached to this tool. There can be a maximum of 1 connection
+        /// resource attached to the tool.
+        /// </param>
+        /// <returns> A new <see cref="Projects.FabricDataAgentToolParameters"/> instance for mocking. </returns>
+        public static FabricDataAgentToolParameters FabricDataAgentToolParameters(string name = default, string description = default, IEnumerable<ToolProjectConnection> projectConnections = default)
+        {
+            projectConnections ??= new ChangeTrackingList<ToolProjectConnection>();
+
+            return new FabricDataAgentToolParameters(name, description, projectConnections.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A project connection resource. </summary>
+        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
+        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
+        /// <param name="projectConnectionId"> A project connection in a ToolProjectConnectionList attached to this tool. </param>
+        /// <returns> A new <see cref="Projects.ToolProjectConnection"/> instance for mocking. </returns>
+        public static ToolProjectConnection ToolProjectConnection(string name = default, string description = default, string projectConnectionId = default)
+        {
+            return new ToolProjectConnection(name, description, projectConnectionId, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The input definition information for a sharepoint tool as used to configure an agent. </summary>
+        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
+        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
+        /// <param name="sharepointGroundingPreview"> The sharepoint grounding tool parameters. </param>
+        /// <returns> A new <see cref="Projects.SharepointPreviewTool"/> instance for mocking. </returns>
+        public static SharepointPreviewTool SharepointPreviewTool(string name = default, string description = default, SharepointGroundingToolParameters sharepointGroundingPreview = default)
+        {
+            return new SharepointPreviewTool(ToolType.SharepointGroundingPreview, additionalBinaryDataProperties: null, name, description, sharepointGroundingPreview);
+        }
+
+        /// <summary> The sharepoint grounding tool parameters. </summary>
+        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
+        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
+        /// <param name="projectConnections">
+        /// The project connections attached to this tool. There can be a maximum of 1 connection
+        /// resource attached to the tool.
+        /// </param>
+        /// <returns> A new <see cref="Projects.SharepointGroundingToolParameters"/> instance for mocking. </returns>
+        public static SharepointGroundingToolParameters SharepointGroundingToolParameters(string name = default, string description = default, IEnumerable<ToolProjectConnection> projectConnections = default)
+        {
+            projectConnections ??= new ChangeTrackingList<ToolProjectConnection>();
+
+            return new SharepointGroundingToolParameters(name, description, projectConnections.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The input definition information for an Azure AI search tool as used to configure an agent. </summary>
+        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
+        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
+        /// <param name="azureAiSearch"> The azure ai search index resource. </param>
+        /// <returns> A new <see cref="Projects.AzureAISearchTool"/> instance for mocking. </returns>
+        public static AzureAISearchTool AzureAISearchTool(string name = default, string description = default, AzureAISearchToolResource azureAiSearch = default)
+        {
+            return new AzureAISearchTool(ToolType.AzureAiSearch, additionalBinaryDataProperties: null, name, description, azureAiSearch);
+        }
+
+        /// <summary> A set of index resources used by the `azure_ai_search` tool. </summary>
+        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
+        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
+        /// <param name="indexes">
+        /// The indices attached to this agent. There can be a maximum of 1 index
+        /// resource attached to the agent.
+        /// </param>
+        /// <returns> A new <see cref="Projects.AzureAISearchToolResource"/> instance for mocking. </returns>
+        public static AzureAISearchToolResource AzureAISearchToolResource(string name = default, string description = default, IEnumerable<AISearchIndexResource> indexes = default)
+        {
+            indexes ??= new ChangeTrackingList<AISearchIndexResource>();
+
+            return new AzureAISearchToolResource(name, description, indexes.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A AI Search Index resource. </summary>
+        /// <param name="projectConnectionId"> An index connection ID in an IndexResource attached to this agent. </param>
+        /// <param name="indexName"> The name of an index in an IndexResource attached to this agent. </param>
+        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
+        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
+        /// <param name="queryType"> Type of query in an AIIndexResource attached to this agent. </param>
+        /// <param name="topK"> Number of documents to retrieve from search and present to the model. </param>
+        /// <param name="filter"> filter string for search resource. [Learn more here](https://learn.microsoft.com/azure/search/search-filters). </param>
+        /// <param name="indexAssetId"> Index asset id for search resource. </param>
+        /// <returns> A new <see cref="Projects.AISearchIndexResource"/> instance for mocking. </returns>
+        public static AISearchIndexResource AISearchIndexResource(string projectConnectionId = default, string indexName = default, string name = default, string description = default, AzureAISearchQueryType? queryType = default, int? topK = default, string filter = default, string indexAssetId = default)
+        {
+            return new AISearchIndexResource(
+                projectConnectionId,
+                indexName,
+                name,
+                description,
+                queryType,
+                topK,
+                filter,
+                indexAssetId,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The input definition information for an OpenAPI tool as used to configure an agent. </summary>
+        /// <param name="openapi"> The openapi function definition. </param>
+        /// <returns> A new <see cref="Projects.OpenApiTool"/> instance for mocking. </returns>
+        public static OpenApiTool OpenApiTool(OpenApiFunctionDefinition openapi = default)
+        {
+            return new OpenApiTool(ToolType.Openapi, additionalBinaryDataProperties: null, openapi);
+        }
+
+        /// <summary> The input definition information for an openapi function. </summary>
+        /// <param name="name"> The name of the function to be called. </param>
+        /// <param name="description"> A description of what the function does, used by the model to choose when and how to call the function. </param>
+        /// <param name="spec"> The openapi function shape, described as a JSON Schema object. </param>
+        /// <param name="auth"> Open API authentication details. </param>
+        /// <param name="defaultParams"> List of OpenAPI spec parameters that will use user-provided defaults. </param>
+        /// <param name="functions"> List of function definitions used by OpenApi tool. </param>
+        /// <returns> A new <see cref="Projects.OpenApiFunctionDefinition"/> instance for mocking. </returns>
+        public static OpenApiFunctionDefinition OpenApiFunctionDefinition(string name = default, string description = default, IDictionary<string, BinaryData> spec = default, OpenApiAuthDetails auth = default, IEnumerable<string> defaultParams = default, IEnumerable<OpenApiFunctionDefinitionFunction> functions = default)
+        {
+            spec ??= new ChangeTrackingDictionary<string, BinaryData>();
+            defaultParams ??= new ChangeTrackingList<string>();
+            functions ??= new ChangeTrackingList<OpenApiFunctionDefinitionFunction>();
+
+            return new OpenApiFunctionDefinition(
+                name,
+                description,
+                spec,
+                auth,
+                defaultParams.ToList(),
+                functions.ToList(),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// authentication details for OpenApiFunctionDefinition
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.OpenApiAnonymousAuthDetails"/>, <see cref="Projects.OpenApiProjectConnectionAuthDetails"/>, and <see cref="Projects.OpenApiManagedAuthDetails"/>.
+        /// </summary>
+        /// <param name="type"> The type of authentication, must be anonymous/project_connection/managed_identity. </param>
+        /// <returns> A new <see cref="Projects.OpenApiAuthDetails"/> instance for mocking. </returns>
+        public static OpenApiAuthDetails OpenApiAuthDetails(string @type = default)
+        {
+            return new UnknownOpenApiAuthDetails(new OpenApiAuthType(@type), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Security details for OpenApi anonymous authentication. </summary>
+        /// <returns> A new <see cref="Projects.OpenApiAnonymousAuthDetails"/> instance for mocking. </returns>
+        public static OpenApiAnonymousAuthDetails OpenApiAnonymousAuthDetails()
+        {
+            return new OpenApiAnonymousAuthDetails(OpenApiAuthType.Anonymous, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Security details for OpenApi project connection authentication. </summary>
+        /// <param name="securityScheme"> Project connection auth security details. </param>
+        /// <returns> A new <see cref="Projects.OpenApiProjectConnectionAuthDetails"/> instance for mocking. </returns>
+        public static OpenApiProjectConnectionAuthDetails OpenApiProjectConnectionAuthDetails(OpenApiProjectConnectionSecurityScheme securityScheme = default)
+        {
+            return new OpenApiProjectConnectionAuthDetails(OpenApiAuthType.ProjectConnection, additionalBinaryDataProperties: null, securityScheme);
+        }
+
+        /// <summary> Security scheme for OpenApi managed_identity authentication. </summary>
+        /// <param name="projectConnectionId"> Project connection id for Project Connection auth type. </param>
+        /// <returns> A new <see cref="Projects.OpenApiProjectConnectionSecurityScheme"/> instance for mocking. </returns>
+        public static OpenApiProjectConnectionSecurityScheme OpenApiProjectConnectionSecurityScheme(string projectConnectionId = default)
+        {
+            return new OpenApiProjectConnectionSecurityScheme(projectConnectionId, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Security details for OpenApi managed_identity authentication. </summary>
+        /// <param name="securityScheme"> Connection auth security details. </param>
+        /// <returns> A new <see cref="Projects.OpenApiManagedAuthDetails"/> instance for mocking. </returns>
+        public static OpenApiManagedAuthDetails OpenApiManagedAuthDetails(OpenApiManagedSecurityScheme securityScheme = default)
+        {
+            return new OpenApiManagedAuthDetails(OpenApiAuthType.ManagedIdentity, additionalBinaryDataProperties: null, securityScheme);
+        }
+
+        /// <summary> Security scheme for OpenApi managed_identity authentication. </summary>
+        /// <param name="audience"> Authentication scope for managed_identity auth type. </param>
+        /// <returns> A new <see cref="Projects.OpenApiManagedSecurityScheme"/> instance for mocking. </returns>
+        public static OpenApiManagedSecurityScheme OpenApiManagedSecurityScheme(string audience = default)
+        {
+            return new OpenApiManagedSecurityScheme(audience, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The OpenApiFunctionDefinitionFunction. </summary>
+        /// <param name="name"> The name of the function to be called. </param>
+        /// <param name="description"> A description of what the function does, used by the model to choose when and how to call the function. </param>
+        /// <param name="parameters"> The parameters the functions accepts, described as a JSON Schema object. </param>
+        /// <returns> A new <see cref="Projects.OpenApiFunctionDefinitionFunction"/> instance for mocking. </returns>
+        public static OpenApiFunctionDefinitionFunction OpenApiFunctionDefinitionFunction(string name = default, string description = default, IDictionary<string, BinaryData> parameters = default)
+        {
+            parameters ??= new ChangeTrackingDictionary<string, BinaryData>();
+
+            return new OpenApiFunctionDefinitionFunction(name, description, parameters, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The input definition information for a Bing custom search tool as used to configure an agent. </summary>
+        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
+        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
+        /// <param name="bingCustomSearchPreview"> The bing custom search tool parameters. </param>
+        /// <returns> A new <see cref="Projects.BingCustomSearchPreviewTool"/> instance for mocking. </returns>
+        public static BingCustomSearchPreviewTool BingCustomSearchPreviewTool(string name = default, string description = default, BingCustomSearchToolParameters bingCustomSearchPreview = default)
+        {
+            return new BingCustomSearchPreviewTool(ToolType.BingCustomSearchPreview, additionalBinaryDataProperties: null, name, description, bingCustomSearchPreview);
+        }
+
+        /// <summary> The bing custom search tool parameters. </summary>
+        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
+        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
+        /// <param name="searchConfigurations">
+        /// The project connections attached to this tool. There can be a maximum of 1 connection
+        /// resource attached to the tool.
+        /// </param>
+        /// <returns> A new <see cref="Projects.BingCustomSearchToolParameters"/> instance for mocking. </returns>
+        public static BingCustomSearchToolParameters BingCustomSearchToolParameters(string name = default, string description = default, IEnumerable<BingCustomSearchConfiguration> searchConfigurations = default)
+        {
+            searchConfigurations ??= new ChangeTrackingList<BingCustomSearchConfiguration>();
+
+            return new BingCustomSearchToolParameters(name, description, searchConfigurations.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A bing custom search configuration. </summary>
+        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
+        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
+        /// <param name="projectConnectionId"> Project connection id for grounding with bing search. </param>
+        /// <param name="instanceName"> Name of the custom configuration instance given to config. </param>
+        /// <param name="market"> The market where the results come from. </param>
+        /// <param name="setLang"> The language to use for user interface strings when calling Bing API. </param>
+        /// <param name="count"> The number of search results to return in the bing api response. </param>
+        /// <param name="freshness"> Filter search results by a specific time range. See [accepted values here](https://learn.microsoft.com/bing/search-apis/bing-web-search/reference/query-parameters). </param>
+        /// <returns> A new <see cref="Projects.BingCustomSearchConfiguration"/> instance for mocking. </returns>
+        public static BingCustomSearchConfiguration BingCustomSearchConfiguration(string name = default, string description = default, string projectConnectionId = default, string instanceName = default, string market = default, string setLang = default, long? count = default, string freshness = default)
+        {
+            return new BingCustomSearchConfiguration(
+                name,
+                description,
+                projectConnectionId,
+                instanceName,
+                market,
+                setLang,
+                count,
+                freshness,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The input definition information for a Browser Automation Tool, as used to configure an Agent. </summary>
+        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
+        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
+        /// <param name="browserAutomationPreview"> The Browser Automation Tool parameters. </param>
+        /// <returns> A new <see cref="Projects.BrowserAutomationPreviewTool"/> instance for mocking. </returns>
+        public static BrowserAutomationPreviewTool BrowserAutomationPreviewTool(string name = default, string description = default, BrowserAutomationToolParameters browserAutomationPreview = default)
+        {
+            return new BrowserAutomationPreviewTool(ToolType.BrowserAutomationPreview, additionalBinaryDataProperties: null, name, description, browserAutomationPreview);
+        }
+
+        /// <summary> Definition of input parameters for the Browser Automation Tool. </summary>
+        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
+        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
+        /// <param name="connection"> The project connection parameters associated with the Browser Automation Tool. </param>
+        /// <returns> A new <see cref="Projects.BrowserAutomationToolParameters"/> instance for mocking. </returns>
+        public static BrowserAutomationToolParameters BrowserAutomationToolParameters(string name = default, string description = default, BrowserAutomationToolConnectionParameters connection = default)
+        {
+            return new BrowserAutomationToolParameters(name, description, connection, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Definition of input parameters for the connection used by the Browser Automation Tool. </summary>
+        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
+        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
+        /// <param name="projectConnectionId"> The ID of the project connection to your Azure Playwright resource. </param>
+        /// <returns> A new <see cref="Projects.BrowserAutomationToolConnectionParameters"/> instance for mocking. </returns>
+        public static BrowserAutomationToolConnectionParameters BrowserAutomationToolConnectionParameters(string name = default, string description = default, string projectConnectionId = default)
+        {
+            return new BrowserAutomationToolConnectionParameters(name, description, projectConnectionId, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The input definition information for an Azure Function Tool, as used to configure an Agent. </summary>
+        /// <param name="azureFunction"> The Azure Function Tool definition. </param>
+        /// <returns> A new <see cref="Projects.AzureFunctionTool"/> instance for mocking. </returns>
+        public static AzureFunctionTool AzureFunctionTool(AzureFunctionDefinition azureFunction = default)
+        {
+            return new AzureFunctionTool(ToolType.AzureFunction, additionalBinaryDataProperties: null, azureFunction);
+        }
+
+        /// <summary> The structure for keeping storage queue name and URI. </summary>
+        /// <param name="storageQueue"> Storage queue. </param>
+        /// <returns> A new <see cref="Projects.AzureFunctionBinding"/> instance for mocking. </returns>
+        public static AzureFunctionBinding AzureFunctionBinding(AzureFunctionStorageQueue storageQueue = default)
+        {
+            return new AzureFunctionBinding("storage_queue", storageQueue, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The structure for keeping storage queue name and URI. </summary>
+        /// <param name="queueServiceEndpoint"> URI to the Azure Storage Queue service allowing you to manipulate a queue. </param>
+        /// <param name="queueName"> The name of an Azure function storage queue. </param>
+        /// <returns> A new <see cref="Projects.AzureFunctionStorageQueue"/> instance for mocking. </returns>
+        public static AzureFunctionStorageQueue AzureFunctionStorageQueue(string queueServiceEndpoint = default, string queueName = default)
+        {
+            return new AzureFunctionStorageQueue(queueServiceEndpoint, queueName, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A tool for capturing structured outputs. </summary>
+        /// <param name="outputs"> The structured outputs to capture from the model. </param>
+        /// <returns> A new <see cref="Projects.CaptureStructuredOutputsTool"/> instance for mocking. </returns>
+        public static CaptureStructuredOutputsTool CaptureStructuredOutputsTool(StructuredOutputDefinition outputs = default)
+        {
+            return new CaptureStructuredOutputsTool(ToolType.CaptureStructuredOutputs, additionalBinaryDataProperties: null, outputs);
+        }
+
+        /// <summary> A structured output that can be produced by the agent. </summary>
+        /// <param name="name"> The name of the structured output. </param>
+        /// <param name="description"> A description of the output to emit. Used by the model to determine when to emit the output. </param>
+        /// <param name="schema"> The JSON schema for the structured output. </param>
+        /// <param name="strict"> Whether to enforce strict validation. Default `true`. </param>
+        /// <returns> A new <see cref="Projects.StructuredOutputDefinition"/> instance for mocking. </returns>
+        public static StructuredOutputDefinition StructuredOutputDefinition(string name = default, string description = default, IDictionary<string, BinaryData> schema = default, bool? strict = default)
+        {
+            schema ??= new ChangeTrackingDictionary<string, BinaryData>();
+
+            return new StructuredOutputDefinition(name, description, schema, strict, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> An agent implementing the A2A protocol. </summary>
+        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
+        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
+        /// <param name="baseUrl"> Base URL of the agent. </param>
+        /// <param name="agentCardPath">
+        /// The path to the agent card relative to the `base_url`.
+        /// If not provided, defaults to  `/.well-known/agent-card.json`
+        /// </param>
+        /// <param name="projectConnectionId">
+        /// The connection ID in the project for the A2A server.
+        /// The connection stores authentication and other connection details needed to connect to the A2A server.
+        /// </param>
+        /// <returns> A new <see cref="Projects.A2APreviewTool"/> instance for mocking. </returns>
+        public static A2APreviewTool A2APreviewTool(string name = default, string description = default, Uri baseUrl = default, string agentCardPath = default, string projectConnectionId = default)
+        {
+            return new A2APreviewTool(
+                ToolType.A2aPreview,
+                additionalBinaryDataProperties: null,
+                name,
+                description,
+                baseUrl,
+                agentCardPath,
+                projectConnectionId);
+        }
+
+        /// <summary> A WorkIQ server-side tool. </summary>
+        /// <param name="workIqPreview"> The WorkIQ tool parameters. </param>
+        /// <returns> A new <see cref="Projects.WorkIQPreviewTool"/> instance for mocking. </returns>
+        public static WorkIQPreviewTool WorkIQPreviewTool(WorkIQPreviewToolParameters workIqPreview = default)
+        {
+            return new WorkIQPreviewTool(ToolType.WorkIqPreview, additionalBinaryDataProperties: null, workIqPreview);
+        }
+
+        /// <summary> The WorkIQ tool parameters. </summary>
+        /// <param name="projectConnectionId"> The ID of the WorkIQ project connection. </param>
+        /// <returns> A new <see cref="Projects.WorkIQPreviewToolParameters"/> instance for mocking. </returns>
+        public static WorkIQPreviewToolParameters WorkIQPreviewToolParameters(string projectConnectionId = default)
+        {
+            return new WorkIQPreviewToolParameters(projectConnectionId, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A tool for integrating memories into the agent. </summary>
+        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
+        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
+        /// <param name="memoryStoreName"> The name of the memory store to use. </param>
+        /// <param name="scope">
+        /// The namespace used to group and isolate memories, such as a user ID.
+        /// Limits which memories can be retrieved or updated.
+        /// Use special variable `{{$userId}}` to scope memories to the current signed-in user.
+        /// </param>
+        /// <param name="searchOptions"> Options for searching the memory store. </param>
+        /// <param name="updateDelay"> Time to wait before updating memories after inactivity (seconds). Default 300. </param>
+        /// <returns> A new <see cref="Projects.MemorySearchPreviewTool"/> instance for mocking. </returns>
+        public static MemorySearchPreviewTool MemorySearchPreviewTool(string name = default, string description = default, string memoryStoreName = default, string scope = default, MemorySearchResultOptions searchOptions = default, int? updateDelay = default)
+        {
+            return new MemorySearchPreviewTool(
+                ToolType.MemorySearchPreview,
+                additionalBinaryDataProperties: null,
+                name,
+                description,
+                memoryStoreName,
+                scope,
+                searchOptions,
+                updateDelay);
+        }
+
         /// <summary> Automatic Code Interpreter Tool Parameters. </summary>
         /// <param name="fileIds"> An optional list of uploaded files to make available to your code. </param>
         /// <param name="memoryLimit"></param>
@@ -1354,6 +1816,68 @@ namespace Azure.AI.Projects
             return new ContainerNetworkPolicyDomainSecretParam(domain, name, value, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Web search. </summary>
+        /// <param name="filters"></param>
+        /// <param name="userLocation"></param>
+        /// <param name="searchContextSize"> High level guidance for the amount of context window space to use for the search. One of `low`, `medium`, or `high`. `medium` is the default. </param>
+        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
+        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
+        /// <param name="customSearchConfiguration">
+        /// The project connections attached to this tool. There can be a maximum of 1 connection
+        /// resource attached to the tool.
+        /// </param>
+        /// <returns> A new <see cref="Projects.WebSearchTool"/> instance for mocking. </returns>
+        public static WebSearchTool WebSearchTool(WebSearchToolFilters filters = default, WebSearchApproximateLocation userLocation = default, WebSearchToolSearchContextSize? searchContextSize = default, string name = default, string description = default, WebSearchConfiguration customSearchConfiguration = default)
+        {
+            return new WebSearchTool(
+                ToolType.WebSearch,
+                additionalBinaryDataProperties: null,
+                filters,
+                userLocation,
+                searchContextSize,
+                name,
+                description,
+                customSearchConfiguration);
+        }
+
+        /// <summary> The WebSearchToolFilters. </summary>
+        /// <param name="allowedDomains"></param>
+        /// <returns> A new <see cref="Projects.WebSearchToolFilters"/> instance for mocking. </returns>
+        public static WebSearchToolFilters WebSearchToolFilters(IEnumerable<string> allowedDomains = default)
+        {
+            allowedDomains ??= new ChangeTrackingList<string>();
+
+            return new WebSearchToolFilters(allowedDomains.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Web search approximate location. </summary>
+        /// <param name="country"></param>
+        /// <param name="region"></param>
+        /// <param name="city"></param>
+        /// <param name="timezone"></param>
+        /// <returns> A new <see cref="Projects.WebSearchApproximateLocation"/> instance for mocking. </returns>
+        public static WebSearchApproximateLocation WebSearchApproximateLocation(string country = default, string region = default, string city = default, string timezone = default)
+        {
+            return new WebSearchApproximateLocation(
+                "approximate",
+                country,
+                region,
+                city,
+                timezone,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A web search configuration for bing custom search. </summary>
+        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
+        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
+        /// <param name="projectConnectionId"> Project connection id for grounding with bing custom search. </param>
+        /// <param name="instanceName"> Name of the custom configuration instance given to config. </param>
+        /// <returns> A new <see cref="Projects.WebSearchConfiguration"/> instance for mocking. </returns>
+        public static WebSearchConfiguration WebSearchConfiguration(string name = default, string description = default, string projectConnectionId = default, string instanceName = default)
+        {
+            return new WebSearchConfiguration(name, description, projectConnectionId, instanceName, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> MCP tool filter. </summary>
         /// <param name="toolNames"> List of allowed tool names. </param>
         /// <param name="readOnly">
@@ -1378,6 +1902,156 @@ namespace Azure.AI.Projects
             return new MCPToolRequireApproval(always, never, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Local shell tool. </summary>
+        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
+        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
+        /// <returns> A new <see cref="Projects.LocalShellToolParam"/> instance for mocking. </returns>
+        public static LocalShellToolParam LocalShellToolParam(string name = default, string description = default)
+        {
+            return new LocalShellToolParam(ToolType.LocalShell, additionalBinaryDataProperties: null, name, description);
+        }
+
+        /// <summary> Shell tool. </summary>
+        /// <param name="environment"></param>
+        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
+        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
+        /// <returns> A new <see cref="Projects.FunctionShellToolParam"/> instance for mocking. </returns>
+        public static FunctionShellToolParam FunctionShellToolParam(FunctionShellToolParamEnvironment environment = default, string name = default, string description = default)
+        {
+            return new FunctionShellToolParam(ToolType.Shell, additionalBinaryDataProperties: null, environment, name, description);
+        }
+
+        /// <summary>
+        /// The FunctionShellToolParamEnvironment.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.FunctionShellToolParamEnvironmentLocalEnvironmentParam"/>, <see cref="Projects.FunctionShellToolParamEnvironmentContainerReferenceParam"/>, and <see cref="Projects.ContainerAutoParam"/>.
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns> A new <see cref="Projects.FunctionShellToolParamEnvironment"/> instance for mocking. </returns>
+        public static FunctionShellToolParamEnvironment FunctionShellToolParamEnvironment(string @type = default)
+        {
+            return new UnknownFunctionShellToolParamEnvironment(new FunctionShellToolParamEnvironmentType(@type), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The FunctionShellToolParamEnvironmentLocalEnvironmentParam. </summary>
+        /// <param name="skills"> An optional list of skills. </param>
+        /// <returns> A new <see cref="Projects.FunctionShellToolParamEnvironmentLocalEnvironmentParam"/> instance for mocking. </returns>
+        public static FunctionShellToolParamEnvironmentLocalEnvironmentParam FunctionShellToolParamEnvironmentLocalEnvironmentParam(IEnumerable<LocalSkillParam> skills = default)
+        {
+            skills ??= new ChangeTrackingList<LocalSkillParam>();
+
+            return new FunctionShellToolParamEnvironmentLocalEnvironmentParam(FunctionShellToolParamEnvironmentType.Local, additionalBinaryDataProperties: null, skills.ToList());
+        }
+
+        /// <summary> The FunctionShellToolParamEnvironmentContainerReferenceParam. </summary>
+        /// <param name="containerId"> The ID of the referenced container. </param>
+        /// <returns> A new <see cref="Projects.FunctionShellToolParamEnvironmentContainerReferenceParam"/> instance for mocking. </returns>
+        public static FunctionShellToolParamEnvironmentContainerReferenceParam FunctionShellToolParamEnvironmentContainerReferenceParam(string containerId = default)
+        {
+            return new FunctionShellToolParamEnvironmentContainerReferenceParam(FunctionShellToolParamEnvironmentType.ContainerReference, additionalBinaryDataProperties: null, containerId);
+        }
+
+        /// <summary> The ContainerAutoParam. </summary>
+        /// <param name="fileIds"> An optional list of uploaded files to make available to your code. </param>
+        /// <param name="memoryLimit"></param>
+        /// <param name="skills"> An optional list of skills referenced by id or inline data. </param>
+        /// <param name="networkPolicy"></param>
+        /// <returns> A new <see cref="Projects.ContainerAutoParam"/> instance for mocking. </returns>
+        public static ContainerAutoParam ContainerAutoParam(IEnumerable<string> fileIds = default, ContainerMemoryLimit? memoryLimit = default, IEnumerable<ContainerSkill> skills = default, ContainerNetworkPolicyParam networkPolicy = default)
+        {
+            fileIds ??= new ChangeTrackingList<string>();
+            skills ??= new ChangeTrackingList<ContainerSkill>();
+
+            return new ContainerAutoParam(
+                FunctionShellToolParamEnvironmentType.ContainerAuto,
+                additionalBinaryDataProperties: null,
+                fileIds.ToList(),
+                memoryLimit,
+                skills.ToList(),
+                networkPolicy);
+        }
+
+        /// <summary>
+        /// The ContainerSkill.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.SkillReferenceParam"/> and <see cref="Projects.InlineSkillParam"/>.
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns> A new <see cref="Projects.ContainerSkill"/> instance for mocking. </returns>
+        public static ContainerSkill ContainerSkill(string @type = default)
+        {
+            return new UnknownContainerSkill(new ContainerSkillType(@type), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The SkillReferenceParam. </summary>
+        /// <param name="skillId"> The ID of the referenced skill. </param>
+        /// <param name="version"> Optional skill version. Use a positive integer or 'latest'. Omit for default. </param>
+        /// <returns> A new <see cref="Projects.SkillReferenceParam"/> instance for mocking. </returns>
+        public static SkillReferenceParam SkillReferenceParam(string skillId = default, string version = default)
+        {
+            return new SkillReferenceParam(ContainerSkillType.SkillReference, additionalBinaryDataProperties: null, skillId, version);
+        }
+
+        /// <summary> The InlineSkillParam. </summary>
+        /// <param name="name"> The name of the skill. </param>
+        /// <param name="description"> The description of the skill. </param>
+        /// <param name="source"> Inline skill payload. </param>
+        /// <returns> A new <see cref="Projects.InlineSkillParam"/> instance for mocking. </returns>
+        public static InlineSkillParam InlineSkillParam(string name = default, string description = default, InlineSkillSourceParam source = default)
+        {
+            return new InlineSkillParam(ContainerSkillType.Inline, additionalBinaryDataProperties: null, name, description, source);
+        }
+
+        /// <summary> Inline skill payload. </summary>
+        /// <param name="data"> Base64-encoded skill zip bundle. </param>
+        /// <returns> A new <see cref="Projects.InlineSkillSourceParam"/> instance for mocking. </returns>
+        public static InlineSkillSourceParam InlineSkillSourceParam(string data = default)
+        {
+            return new InlineSkillSourceParam("base64", "application/zip", data, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Custom tool. </summary>
+        /// <param name="name"> The name of the custom tool, used to identify it in tool calls. </param>
+        /// <param name="description"> Optional description of the custom tool, used to provide more context. </param>
+        /// <param name="format"> The input format for the custom tool. Default is unconstrained text. </param>
+        /// <returns> A new <see cref="Projects.CustomToolParam"/> instance for mocking. </returns>
+        public static CustomToolParam CustomToolParam(string name = default, string description = default, CustomToolParamFormat format = default)
+        {
+            return new CustomToolParam(ToolType.Custom, additionalBinaryDataProperties: null, name, description, format);
+        }
+
+        /// <summary>
+        /// The input format for the custom tool. Default is unconstrained text.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.CustomTextFormatParam"/> and <see cref="Projects.CustomGrammarFormatParam"/>.
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns> A new <see cref="Projects.CustomToolParamFormat"/> instance for mocking. </returns>
+        public static CustomToolParamFormat CustomToolParamFormat(string @type = default)
+        {
+            return new UnknownCustomToolParamFormat(new CustomToolParamFormatType(@type), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Text format. </summary>
+        /// <returns> A new <see cref="Projects.CustomTextFormatParam"/> instance for mocking. </returns>
+        public static CustomTextFormatParam CustomTextFormatParam()
+        {
+            return new CustomTextFormatParam(CustomToolParamFormatType.Text, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Grammar format. </summary>
+        /// <param name="syntax"> The syntax of the grammar definition. One of `lark` or `regex`. </param>
+        /// <param name="definition"> The grammar definition. </param>
+        /// <returns> A new <see cref="Projects.CustomGrammarFormatParam"/> instance for mocking. </returns>
+        public static CustomGrammarFormatParam CustomGrammarFormatParam(GrammarSyntax1 syntax = default, string definition = default)
+        {
+            return new CustomGrammarFormatParam(CustomToolParamFormatType.Grammar, additionalBinaryDataProperties: null, syntax, definition);
+        }
+
+        /// <summary> Apply patch tool. </summary>
+        /// <returns> A new <see cref="Projects.ApplyPatchToolParam"/> instance for mocking. </returns>
+        public static ApplyPatchToolParam ApplyPatchToolParam()
+        {
+            return new ApplyPatchToolParam(ToolType.ApplyPatch, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Policy configuration for a toolbox, including content safety and other governance settings. </summary>
         /// <param name="raiConfig"> Responsible AI content filtering configuration. </param>
         /// <returns> A new <see cref="Projects.ToolboxPolicies"/> instance for mocking. </returns>
@@ -1399,10 +2073,10 @@ namespace Azure.AI.Projects
         /// <param name="name"> The name of the toolbox. </param>
         /// <param name="description"> A human-readable description of the toolbox. </param>
         /// <param name="versions"> The versions of the toolbox. </param>
-        /// <returns> A new <see cref="Projects.ToolboxObject"/> instance for mocking. </returns>
-        public static ToolboxObject ToolboxObject(string id = default, string name = default, string description = default, ToolboxObjectVersions versions = default)
+        /// <returns> A new <see cref="Projects.ToolboxRecord"/> instance for mocking. </returns>
+        public static ToolboxRecord ToolboxRecord(string id = default, string name = default, string description = default, ToolboxObjectVersions versions = default)
         {
-            return new ToolboxObject(
+            return new ToolboxRecord(
                 "toolbox",
                 id,
                 name,
@@ -1417,6 +2091,40 @@ namespace Azure.AI.Projects
         public static ToolboxObjectVersions ToolboxObjectVersions(ToolboxVersionObject latest = default)
         {
             return new ToolboxObjectVersions(latest, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A specific version of a toolbox. </summary>
+        /// <param name="metadata">
+        /// Set of 16 key-value pairs that can be attached to an object. This can be
+        /// useful for storing additional information about the object in a structured
+        /// format, and querying for objects via API or the dashboard.
+        /// Keys are strings with a maximum length of 64 characters. Values are strings
+        /// with a maximum length of 512 characters.
+        /// </param>
+        /// <param name="id"> The unique identifier of the toolbox version. </param>
+        /// <param name="name"> The name of the toolbox. </param>
+        /// <param name="version"> The version identifier of the toolbox. Toolbox versions are immutable and every update creates a new version. </param>
+        /// <param name="description"> A human-readable description of the toolbox. </param>
+        /// <param name="createdAt"> The Unix timestamp (seconds) when the toolbox version was created. </param>
+        /// <param name="tools"> The list of tools contained in this toolbox version. </param>
+        /// <param name="policies"> Policy configuration for the toolbox version. </param>
+        /// <returns> A new <see cref="Projects.ToolboxVersionObject"/> instance for mocking. </returns>
+        public static ToolboxVersionObject ToolboxVersionObject(IDictionary<string, string> metadata = default, string id = default, string name = default, string version = default, string description = default, DateTimeOffset createdAt = default, IEnumerable<ProjectTool> tools = default, ToolboxPolicies policies = default)
+        {
+            metadata ??= new ChangeTrackingDictionary<string, string>();
+            tools ??= new ChangeTrackingList<ProjectTool>();
+
+            return new ToolboxVersionObject(
+                metadata,
+                "toolbox.version",
+                id,
+                name,
+                version,
+                description,
+                createdAt,
+                tools.ToList(),
+                policies,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Response returned when a toolbox is deleted. </summary>

@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> Grammar format. </summary>
-    internal partial class CustomGrammarFormatParam : CustomToolParamFormat, IJsonModel<CustomGrammarFormatParam>
+    public partial class CustomGrammarFormatParam : CustomToolParamFormat, IJsonModel<CustomGrammarFormatParam>
     {
         /// <summary> Initializes a new instance of <see cref="CustomGrammarFormatParam"/> for deserialization. </summary>
         internal CustomGrammarFormatParam()

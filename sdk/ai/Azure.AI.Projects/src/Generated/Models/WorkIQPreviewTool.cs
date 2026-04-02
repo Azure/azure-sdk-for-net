@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects
 {
     /// <summary> A WorkIQ server-side tool. </summary>
-    internal partial class WorkIQPreviewTool : InternalTool
+    public partial class WorkIQPreviewTool : ProjectTool
     {
         /// <summary> Initializes a new instance of <see cref="WorkIQPreviewTool"/>. </summary>
         /// <param name="workIqPreview"> The WorkIQ tool parameters. </param>

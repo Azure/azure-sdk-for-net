@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects
 {
     /// <summary> Security scheme for OpenApi managed_identity authentication. </summary>
-    internal partial class OpenApiProjectConnectionSecurityScheme
+    public partial class OpenApiProjectConnectionSecurityScheme
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

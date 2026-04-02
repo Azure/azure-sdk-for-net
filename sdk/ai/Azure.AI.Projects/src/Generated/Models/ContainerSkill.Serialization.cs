@@ -13,7 +13,7 @@ namespace Azure.AI.Projects
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SkillReferenceParam"/> and <see cref="InlineSkillParam"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownContainerSkill))]
-    internal abstract partial class ContainerSkill : IJsonModel<ContainerSkill>
+    public abstract partial class ContainerSkill : IJsonModel<ContainerSkill>
     {
         /// <summary> Initializes a new instance of <see cref="ContainerSkill"/> for deserialization. </summary>
         internal ContainerSkill()

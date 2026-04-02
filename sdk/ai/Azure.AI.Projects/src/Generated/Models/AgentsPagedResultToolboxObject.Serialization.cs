@@ -86,7 +86,7 @@ namespace Azure.AI.Projects
             }
             writer.WritePropertyName("data"u8);
             writer.WriteStartArray();
-            foreach (ToolboxObject item in Data)
+            foreach (ToolboxRecord item in Data)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -145,7 +145,7 @@ namespace Azure.AI.Projects
             {
                 return null;
             }
-            IList<ToolboxObject> data = default;
+            IList<ToolboxRecord> data = default;
             string firstId = default;
             string lastId = default;
             bool hasMore = default;
@@ -154,10 +154,10 @@ namespace Azure.AI.Projects
             {
                 if (prop.NameEquals("data"u8))
                 {
-                    List<ToolboxObject> array = new List<ToolboxObject>();
+                    List<ToolboxRecord> array = new List<ToolboxRecord>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ToolboxObject.DeserializeToolboxObject(item, options));
+                        array.Add(ToolboxRecord.DeserializeToolboxRecord(item, options));
                     }
                     data = array;
                     continue;

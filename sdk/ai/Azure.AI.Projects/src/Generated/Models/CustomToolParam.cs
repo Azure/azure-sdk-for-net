@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects
 {
     /// <summary> Custom tool. </summary>
-    internal partial class CustomToolParam : InternalTool
+    public partial class CustomToolParam : ProjectTool
     {
         /// <summary> Initializes a new instance of <see cref="CustomToolParam"/>. </summary>
         /// <param name="name"> The name of the custom tool, used to identify it in tool calls. </param>

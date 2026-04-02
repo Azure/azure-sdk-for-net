@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects
 {
     /// <summary> Text format. </summary>
-    internal partial class CustomTextFormatParam : CustomToolParamFormat
+    public partial class CustomTextFormatParam : CustomToolParamFormat
     {
         /// <summary> Initializes a new instance of <see cref="CustomTextFormatParam"/>. </summary>
         public CustomTextFormatParam() : base(CustomToolParamFormatType.Text)

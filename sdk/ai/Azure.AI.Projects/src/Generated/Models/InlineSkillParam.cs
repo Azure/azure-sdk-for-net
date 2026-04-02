@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects
 {
     /// <summary> The InlineSkillParam. </summary>
-    internal partial class InlineSkillParam : ContainerSkill
+    public partial class InlineSkillParam : ContainerSkill
     {
         /// <summary> Initializes a new instance of <see cref="InlineSkillParam"/>. </summary>
         /// <param name="name"> The name of the skill. </param>

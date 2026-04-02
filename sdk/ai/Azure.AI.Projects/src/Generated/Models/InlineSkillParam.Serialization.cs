@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> The InlineSkillParam. </summary>
-    internal partial class InlineSkillParam : ContainerSkill, IJsonModel<InlineSkillParam>
+    public partial class InlineSkillParam : ContainerSkill, IJsonModel<InlineSkillParam>
     {
         /// <summary> Initializes a new instance of <see cref="InlineSkillParam"/> for deserialization. </summary>
         internal InlineSkillParam()

@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects
 {
     /// <summary> The input definition information for an OpenAPI tool as used to configure an agent. </summary>
-    internal partial class OpenApiTool : InternalTool
+    public partial class OpenApiTool : ProjectTool
     {
         /// <summary> Initializes a new instance of <see cref="OpenApiTool"/>. </summary>
         /// <param name="openapi"> The openapi function definition. </param>

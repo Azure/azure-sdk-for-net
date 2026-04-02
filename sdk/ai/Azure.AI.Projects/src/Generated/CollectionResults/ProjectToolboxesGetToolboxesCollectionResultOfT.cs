@@ -9,19 +9,17 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Projects
 {
-    internal partial class ToolboxesGetToolboxVersionsCollectionResultOfT : CollectionResult<ToolboxVersionObject>
+    internal partial class ProjectToolboxesGetToolboxesCollectionResultOfT : CollectionResult<ToolboxRecord>
     {
-        private readonly Toolboxes _client;
-        private readonly string _toolboxName;
+        private readonly ProjectToolboxes _client;
         private readonly int? _limit;
         private readonly string _order;
         private readonly string _after;
         private readonly string _before;
         private readonly RequestOptions _options;
 
-        /// <summary> Initializes a new instance of ToolboxesGetToolboxVersionsCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The Toolboxes client used to send requests. </param>
-        /// <param name="toolboxName"> The name of the toolbox to list versions for. </param>
+        /// <summary> Initializes a new instance of ProjectToolboxesGetToolboxesCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The ProjectToolboxes client used to send requests. </param>
         /// <param name="limit">
         /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
         /// default is 20.
@@ -41,10 +39,9 @@ namespace Azure.AI.Projects
         /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
         /// </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public ToolboxesGetToolboxVersionsCollectionResultOfT(Toolboxes client, string toolboxName, int? limit, string order, string after, string before, RequestOptions options)
+        public ProjectToolboxesGetToolboxesCollectionResultOfT(ProjectToolboxes client, int? limit, string order, string after, string before, RequestOptions options)
         {
             _client = client;
-            _toolboxName = toolboxName;
             _limit = limit;
             _order = order;
             _after = after;
@@ -56,19 +53,19 @@ namespace Azure.AI.Projects
         /// <returns> The raw pages of the collection. </returns>
         public override IEnumerable<ClientResult> GetRawPages()
         {
-            PipelineMessage message = _client.CreateGetToolboxVersionsRequest(_toolboxName, _limit, _order, _after, _before, _options);
+            PipelineMessage message = _client.CreateGetToolboxesRequest(_limit, _order, _after, _before, _options);
             string nextToken = null;
             while (true)
             {
                 ClientResult result = ClientResult.FromResponse(_client.Pipeline.ProcessMessage(message, _options));
                 yield return result;
 
-                nextToken = ((AgentsPagedResultToolboxVersionObject)result).LastId;
+                nextToken = ((AgentsPagedResultToolboxObject)result).LastId;
                 if (string.IsNullOrEmpty(nextToken))
                 {
                     yield break;
                 }
-                message = _client.CreateGetToolboxVersionsRequest(_toolboxName, _limit, _order, nextToken, _before, _options);
+                message = _client.CreateGetToolboxesRequest(_limit, _order, nextToken, _before, _options);
             }
         }
 
@@ -77,7 +74,7 @@ namespace Azure.AI.Projects
         /// <returns> The continuation token for the specified page. </returns>
         public override ContinuationToken GetContinuationToken(ClientResult page)
         {
-            string nextPage = ((AgentsPagedResultToolboxVersionObject)page).LastId;
+            string nextPage = ((AgentsPagedResultToolboxObject)page).LastId;
             if (!string.IsNullOrEmpty(nextPage))
             {
                 return ContinuationToken.FromBytes(BinaryData.FromString(nextPage));
@@ -91,9 +88,9 @@ namespace Azure.AI.Projects
         /// <summary> Gets the values from the specified page. </summary>
         /// <param name="page"></param>
         /// <returns> The values from the specified page. </returns>
-        protected override IEnumerable<ToolboxVersionObject> GetValuesFromPage(ClientResult page)
+        protected override IEnumerable<ToolboxRecord> GetValuesFromPage(ClientResult page)
         {
-            return ((AgentsPagedResultToolboxVersionObject)page).Data;
+            return ((AgentsPagedResultToolboxObject)page).Data;
         }
     }
 }

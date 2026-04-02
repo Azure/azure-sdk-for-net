@@ -121,7 +121,7 @@ namespace Azure.AI.Projects
             writer.WriteNumberValue(CreatedAt, "U");
             writer.WritePropertyName("tools"u8);
             writer.WriteStartArray();
-            foreach (InternalTool item in Tools)
+            foreach (ProjectTool item in Tools)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -180,7 +180,7 @@ namespace Azure.AI.Projects
             string version = default;
             string description = default;
             DateTimeOffset createdAt = default;
-            IList<InternalTool> tools = default;
+            IList<ProjectTool> tools = default;
             ToolboxPolicies policies = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -239,10 +239,10 @@ namespace Azure.AI.Projects
                 }
                 if (prop.NameEquals("tools"u8))
                 {
-                    List<InternalTool> array = new List<InternalTool>();
+                    List<ProjectTool> array = new List<ProjectTool>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(InternalTool.DeserializeInternalTool(item, options));
+                        array.Add(ProjectTool.DeserializeProjectTool(item, options));
                     }
                     tools = array;
                     continue;

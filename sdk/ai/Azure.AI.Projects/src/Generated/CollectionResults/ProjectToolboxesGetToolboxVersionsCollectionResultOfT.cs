@@ -6,13 +6,12 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Azure.AI.Projects
 {
-    internal partial class ToolboxesGetToolboxVersionsAsyncCollectionResultOfT : AsyncCollectionResult<ToolboxVersionObject>
+    internal partial class ProjectToolboxesGetToolboxVersionsCollectionResultOfT : CollectionResult<ToolboxVersionObject>
     {
-        private readonly Toolboxes _client;
+        private readonly ProjectToolboxes _client;
         private readonly string _toolboxName;
         private readonly int? _limit;
         private readonly string _order;
@@ -20,8 +19,8 @@ namespace Azure.AI.Projects
         private readonly string _before;
         private readonly RequestOptions _options;
 
-        /// <summary> Initializes a new instance of ToolboxesGetToolboxVersionsAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The Toolboxes client used to send requests. </param>
+        /// <summary> Initializes a new instance of ProjectToolboxesGetToolboxVersionsCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The ProjectToolboxes client used to send requests. </param>
         /// <param name="toolboxName"> The name of the toolbox to list versions for. </param>
         /// <param name="limit">
         /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
@@ -42,7 +41,7 @@ namespace Azure.AI.Projects
         /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
         /// </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public ToolboxesGetToolboxVersionsAsyncCollectionResultOfT(Toolboxes client, string toolboxName, int? limit, string order, string after, string before, RequestOptions options)
+        public ProjectToolboxesGetToolboxVersionsCollectionResultOfT(ProjectToolboxes client, string toolboxName, int? limit, string order, string after, string before, RequestOptions options)
         {
             _client = client;
             _toolboxName = toolboxName;
@@ -55,13 +54,13 @@ namespace Azure.AI.Projects
 
         /// <summary> Gets the raw pages of the collection. </summary>
         /// <returns> The raw pages of the collection. </returns>
-        public override async IAsyncEnumerable<ClientResult> GetRawPagesAsync()
+        public override IEnumerable<ClientResult> GetRawPages()
         {
             PipelineMessage message = _client.CreateGetToolboxVersionsRequest(_toolboxName, _limit, _order, _after, _before, _options);
             string nextToken = null;
             while (true)
             {
-                ClientResult result = ClientResult.FromResponse(await _client.Pipeline.ProcessMessageAsync(message, _options).ConfigureAwait(false));
+                ClientResult result = ClientResult.FromResponse(_client.Pipeline.ProcessMessage(message, _options));
                 yield return result;
 
                 nextToken = ((AgentsPagedResultToolboxVersionObject)result).LastId;
@@ -92,13 +91,9 @@ namespace Azure.AI.Projects
         /// <summary> Gets the values from the specified page. </summary>
         /// <param name="page"></param>
         /// <returns> The values from the specified page. </returns>
-        protected override async IAsyncEnumerable<ToolboxVersionObject> GetValuesFromPageAsync(ClientResult page)
+        protected override IEnumerable<ToolboxVersionObject> GetValuesFromPage(ClientResult page)
         {
-            foreach (ToolboxVersionObject item in ((AgentsPagedResultToolboxVersionObject)page).Data)
-            {
-                yield return item;
-                await Task.Yield();
-            }
+            return ((AgentsPagedResultToolboxVersionObject)page).Data;
         }
     }
 }

@@ -13,22 +13,22 @@ using Azure.AI.Projects.Memory;
 
 namespace Azure.AI.Projects
 {
-    /// <summary> The Toolboxes sub-client. </summary>
-    public partial class Toolboxes
+    /// <summary> The ProjectToolboxes sub-client. </summary>
+    public partial class ProjectToolboxes
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of Toolboxes for mocking. </summary>
-        protected Toolboxes()
+        /// <summary> Initializes a new instance of ProjectToolboxes for mocking. </summary>
+        protected ProjectToolboxes()
         {
         }
 
-        /// <summary> Initializes a new instance of Toolboxes. </summary>
+        /// <summary> Initializes a new instance of ProjectToolboxes. </summary>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal Toolboxes(ClientPipeline pipeline, Uri endpoint, string apiVersion)
+        internal ProjectToolboxes(ClientPipeline pipeline, Uri endpoint, string apiVersion)
         {
             _endpoint = endpoint;
             Pipeline = pipeline;
@@ -96,14 +96,14 @@ namespace Azure.AI.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="toolboxName"/> or <paramref name="tools"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="toolboxName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<ToolboxObject> CreateToolbox(string toolboxName, IEnumerable<InternalTool> tools, string description = default, IDictionary<string, string> metadata = default, ToolboxPolicies policies = default, CancellationToken cancellationToken = default)
+        public virtual ClientResult<ToolboxRecord> CreateToolbox(string toolboxName, IEnumerable<ProjectTool> tools, string description = default, IDictionary<string, string> metadata = default, ToolboxPolicies policies = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(toolboxName, nameof(toolboxName));
             Argument.AssertNotNull(tools, nameof(tools));
 
-            CreateToolboxRequest spreadModel = new CreateToolboxRequest(description, metadata ?? new ChangeTrackingDictionary<string, string>(), tools?.ToList() as IList<InternalTool> ?? new ChangeTrackingList<InternalTool>(), policies, default);
+            CreateToolboxRequest spreadModel = new CreateToolboxRequest(description, metadata ?? new ChangeTrackingDictionary<string, string>(), tools?.ToList() as IList<ProjectTool> ?? new ChangeTrackingList<ProjectTool>(), policies, default);
             ClientResult result = CreateToolbox(toolboxName, spreadModel, cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((ToolboxObject)result, result.GetRawResponse());
+            return ClientResult.FromValue((ToolboxRecord)result, result.GetRawResponse());
         }
 
         /// <summary> Create a toolbox. </summary>
@@ -116,14 +116,14 @@ namespace Azure.AI.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="toolboxName"/> or <paramref name="tools"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="toolboxName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<ToolboxObject>> CreateToolboxAsync(string toolboxName, IEnumerable<InternalTool> tools, string description = default, IDictionary<string, string> metadata = default, ToolboxPolicies policies = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult<ToolboxRecord>> CreateToolboxAsync(string toolboxName, IEnumerable<ProjectTool> tools, string description = default, IDictionary<string, string> metadata = default, ToolboxPolicies policies = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(toolboxName, nameof(toolboxName));
             Argument.AssertNotNull(tools, nameof(tools));
 
-            CreateToolboxRequest spreadModel = new CreateToolboxRequest(description, metadata ?? new ChangeTrackingDictionary<string, string>(), tools?.ToList() as IList<InternalTool> ?? new ChangeTrackingList<InternalTool>(), policies, default);
+            CreateToolboxRequest spreadModel = new CreateToolboxRequest(description, metadata ?? new ChangeTrackingDictionary<string, string>(), tools?.ToList() as IList<ProjectTool> ?? new ChangeTrackingList<ProjectTool>(), policies, default);
             ClientResult result = await CreateToolboxAsync(toolboxName, spreadModel, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((ToolboxObject)result, result.GetRawResponse());
+            return ClientResult.FromValue((ToolboxRecord)result, result.GetRawResponse());
         }
 
         /// <summary>
@@ -184,12 +184,12 @@ namespace Azure.AI.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="toolboxName"/> or <paramref name="tools"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="toolboxName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<ToolboxVersionObject> CreateToolboxVersion(string toolboxName, IEnumerable<InternalTool> tools, string description = default, IDictionary<string, string> metadata = default, ToolboxPolicies policies = default, CancellationToken cancellationToken = default)
+        public virtual ClientResult<ToolboxVersionObject> CreateToolboxVersion(string toolboxName, IEnumerable<ProjectTool> tools, string description = default, IDictionary<string, string> metadata = default, ToolboxPolicies policies = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(toolboxName, nameof(toolboxName));
             Argument.AssertNotNull(tools, nameof(tools));
 
-            CreateToolboxVersionRequest spreadModel = new CreateToolboxVersionRequest(description, metadata ?? new ChangeTrackingDictionary<string, string>(), tools?.ToList() as IList<InternalTool> ?? new ChangeTrackingList<InternalTool>(), policies, default);
+            CreateToolboxVersionRequest spreadModel = new CreateToolboxVersionRequest(description, metadata ?? new ChangeTrackingDictionary<string, string>(), tools?.ToList() as IList<ProjectTool> ?? new ChangeTrackingList<ProjectTool>(), policies, default);
             ClientResult result = CreateToolboxVersion(toolboxName, spreadModel, cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((ToolboxVersionObject)result, result.GetRawResponse());
         }
@@ -204,12 +204,12 @@ namespace Azure.AI.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="toolboxName"/> or <paramref name="tools"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="toolboxName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<ToolboxVersionObject>> CreateToolboxVersionAsync(string toolboxName, IEnumerable<InternalTool> tools, string description = default, IDictionary<string, string> metadata = default, ToolboxPolicies policies = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult<ToolboxVersionObject>> CreateToolboxVersionAsync(string toolboxName, IEnumerable<ProjectTool> tools, string description = default, IDictionary<string, string> metadata = default, ToolboxPolicies policies = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(toolboxName, nameof(toolboxName));
             Argument.AssertNotNull(tools, nameof(tools));
 
-            CreateToolboxVersionRequest spreadModel = new CreateToolboxVersionRequest(description, metadata ?? new ChangeTrackingDictionary<string, string>(), tools?.ToList() as IList<InternalTool> ?? new ChangeTrackingList<InternalTool>(), policies, default);
+            CreateToolboxVersionRequest spreadModel = new CreateToolboxVersionRequest(description, metadata ?? new ChangeTrackingDictionary<string, string>(), tools?.ToList() as IList<ProjectTool> ?? new ChangeTrackingList<ProjectTool>(), policies, default);
             ClientResult result = await CreateToolboxVersionAsync(toolboxName, spreadModel, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((ToolboxVersionObject)result, result.GetRawResponse());
         }
@@ -264,12 +264,12 @@ namespace Azure.AI.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="toolboxName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="toolboxName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<ToolboxObject> GetToolbox(string toolboxName, CancellationToken cancellationToken = default)
+        public virtual ClientResult<ToolboxRecord> GetToolbox(string toolboxName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(toolboxName, nameof(toolboxName));
 
             ClientResult result = GetToolbox(toolboxName, cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((ToolboxObject)result, result.GetRawResponse());
+            return ClientResult.FromValue((ToolboxRecord)result, result.GetRawResponse());
         }
 
         /// <summary> Retrieve a toolbox. </summary>
@@ -278,12 +278,12 @@ namespace Azure.AI.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="toolboxName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="toolboxName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<ToolboxObject>> GetToolboxAsync(string toolboxName, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult<ToolboxRecord>> GetToolboxAsync(string toolboxName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(toolboxName, nameof(toolboxName));
 
             ClientResult result = await GetToolboxAsync(toolboxName, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((ToolboxObject)result, result.GetRawResponse());
+            return ClientResult.FromValue((ToolboxRecord)result, result.GetRawResponse());
         }
 
         /// <summary>
@@ -317,7 +317,7 @@ namespace Azure.AI.Projects
         /// <returns> The response returned from the service. </returns>
         public virtual CollectionResult GetToolboxes(int? limit, string order, string after, string before, RequestOptions options)
         {
-            return new ToolboxesGetToolboxesCollectionResult(
+            return new ProjectToolboxesGetToolboxesCollectionResult(
                 this,
                 limit,
                 order,
@@ -357,7 +357,7 @@ namespace Azure.AI.Projects
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncCollectionResult GetToolboxesAsync(int? limit, string order, string after, string before, RequestOptions options)
         {
-            return new ToolboxesGetToolboxesAsyncCollectionResult(
+            return new ProjectToolboxesGetToolboxesAsyncCollectionResult(
                 this,
                 limit,
                 order,
@@ -387,9 +387,9 @@ namespace Azure.AI.Projects
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual CollectionResult<ToolboxObject> GetToolboxes(int? limit = default, MemoryStoreListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
+        public virtual CollectionResult<ToolboxRecord> GetToolboxes(int? limit = default, MemoryStoreListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
         {
-            return new ToolboxesGetToolboxesCollectionResultOfT(
+            return new ProjectToolboxesGetToolboxesCollectionResultOfT(
                 this,
                 limit,
                 order?.ToString(),
@@ -419,9 +419,9 @@ namespace Azure.AI.Projects
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual AsyncCollectionResult<ToolboxObject> GetToolboxesAsync(int? limit = default, MemoryStoreListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
+        public virtual AsyncCollectionResult<ToolboxRecord> GetToolboxesAsync(int? limit = default, MemoryStoreListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
         {
-            return new ToolboxesGetToolboxesAsyncCollectionResultOfT(
+            return new ProjectToolboxesGetToolboxesAsyncCollectionResultOfT(
                 this,
                 limit,
                 order?.ToString(),
@@ -466,7 +466,7 @@ namespace Azure.AI.Projects
         {
             Argument.AssertNotNullOrEmpty(toolboxName, nameof(toolboxName));
 
-            return new ToolboxesGetToolboxVersionsCollectionResult(
+            return new ProjectToolboxesGetToolboxVersionsCollectionResult(
                 this,
                 toolboxName,
                 limit,
@@ -512,7 +512,7 @@ namespace Azure.AI.Projects
         {
             Argument.AssertNotNullOrEmpty(toolboxName, nameof(toolboxName));
 
-            return new ToolboxesGetToolboxVersionsAsyncCollectionResult(
+            return new ProjectToolboxesGetToolboxVersionsAsyncCollectionResult(
                 this,
                 toolboxName,
                 limit,
@@ -550,7 +550,7 @@ namespace Azure.AI.Projects
         {
             Argument.AssertNotNullOrEmpty(toolboxName, nameof(toolboxName));
 
-            return new ToolboxesGetToolboxVersionsCollectionResultOfT(
+            return new ProjectToolboxesGetToolboxVersionsCollectionResultOfT(
                 this,
                 toolboxName,
                 limit,
@@ -588,7 +588,7 @@ namespace Azure.AI.Projects
         {
             Argument.AssertNotNullOrEmpty(toolboxName, nameof(toolboxName));
 
-            return new ToolboxesGetToolboxVersionsAsyncCollectionResultOfT(
+            return new ProjectToolboxesGetToolboxVersionsAsyncCollectionResultOfT(
                 this,
                 toolboxName,
                 limit,

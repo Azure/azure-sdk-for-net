@@ -16,7 +16,7 @@ namespace Azure.AI.Projects
 
         /// <summary> Initializes a new instance of <see cref="CreateToolboxRequest"/>. </summary>
         /// <param name="tools"> The list of tools to include in the toolbox. </param>
-        internal CreateToolboxRequest(IEnumerable<InternalTool> tools)
+        internal CreateToolboxRequest(IEnumerable<ProjectTool> tools)
         {
             Metadata = new ChangeTrackingDictionary<string, string>();
             Tools = tools.ToList();
@@ -28,7 +28,7 @@ namespace Azure.AI.Projects
         /// <param name="tools"> The list of tools to include in the toolbox. </param>
         /// <param name="policies"> Policy configuration for the toolbox. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CreateToolboxRequest(string description, IDictionary<string, string> metadata, IList<InternalTool> tools, ToolboxPolicies policies, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CreateToolboxRequest(string description, IDictionary<string, string> metadata, IList<ProjectTool> tools, ToolboxPolicies policies, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             Metadata = metadata;
@@ -44,7 +44,7 @@ namespace Azure.AI.Projects
         public IDictionary<string, string> Metadata { get; }
 
         /// <summary> The list of tools to include in the toolbox. </summary>
-        public IList<InternalTool> Tools { get; }
+        public IList<ProjectTool> Tools { get; }
 
         /// <summary> Policy configuration for the toolbox. </summary>
         public ToolboxPolicies Policies { get; }

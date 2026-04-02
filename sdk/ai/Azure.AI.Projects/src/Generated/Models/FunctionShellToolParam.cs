@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects
 {
     /// <summary> Shell tool. </summary>
-    internal partial class FunctionShellToolParam : InternalTool
+    public partial class FunctionShellToolParam : ProjectTool
     {
         /// <summary> Initializes a new instance of <see cref="FunctionShellToolParam"/>. </summary>
         public FunctionShellToolParam() : base(ToolType.Shell)

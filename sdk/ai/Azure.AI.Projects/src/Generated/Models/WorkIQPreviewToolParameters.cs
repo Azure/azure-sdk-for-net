@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects
 {
     /// <summary> The WorkIQ tool parameters. </summary>
-    internal partial class WorkIQPreviewToolParameters
+    public partial class WorkIQPreviewToolParameters
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

@@ -9,7 +9,7 @@ using Azure.AI.Projects;
 
 namespace OpenAI
 {
-    internal partial class InternalCodeInterpreterTool : InternalTool
+    internal partial class InternalCodeInterpreterTool : ProjectTool
     {
         /// <summary> Initializes a new instance of <see cref="InternalCodeInterpreterTool"/>. </summary>
         public InternalCodeInterpreterTool() : base(ToolType.CodeInterpreter)

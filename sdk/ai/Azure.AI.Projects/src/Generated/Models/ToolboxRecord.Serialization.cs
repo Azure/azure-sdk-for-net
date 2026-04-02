@@ -11,64 +11,64 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> A toolbox that stores reusable tool definitions for agents. </summary>
-    public partial class ToolboxObject : IJsonModel<ToolboxObject>
+    public partial class ToolboxRecord : IJsonModel<ToolboxRecord>
     {
-        /// <summary> Initializes a new instance of <see cref="ToolboxObject"/> for deserialization. </summary>
-        internal ToolboxObject()
+        /// <summary> Initializes a new instance of <see cref="ToolboxRecord"/> for deserialization. </summary>
+        internal ToolboxRecord()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ToolboxObject PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ToolboxRecord PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ToolboxObject>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ToolboxRecord>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeToolboxObject(document.RootElement, options);
+                        return DeserializeToolboxRecord(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ToolboxObject)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ToolboxRecord)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ToolboxObject>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ToolboxRecord>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ToolboxObject)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ToolboxRecord)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ToolboxObject>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ToolboxRecord>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ToolboxObject IPersistableModel<ToolboxObject>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ToolboxRecord IPersistableModel<ToolboxRecord>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ToolboxObject>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ToolboxRecord>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="ToolboxObject"/> from. </param>
-        public static explicit operator ToolboxObject(ClientResult result)
+        /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="ToolboxRecord"/> from. </param>
+        public static explicit operator ToolboxRecord(ClientResult result)
         {
             PipelineResponse response = result.GetRawResponse();
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeToolboxObject(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeToolboxRecord(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ToolboxObject>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ToolboxRecord>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -79,10 +79,10 @@ namespace Azure.AI.Projects
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ToolboxObject>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ToolboxRecord>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ToolboxObject)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ToolboxRecord)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("object"u8);
             writer.WriteStringValue(Object.ToSerialString());
@@ -116,24 +116,24 @@ namespace Azure.AI.Projects
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ToolboxObject IJsonModel<ToolboxObject>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ToolboxRecord IJsonModel<ToolboxRecord>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ToolboxObject JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ToolboxRecord JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ToolboxObject>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ToolboxRecord>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ToolboxObject)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ToolboxRecord)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeToolboxObject(document.RootElement, options);
+            return DeserializeToolboxRecord(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ToolboxObject DeserializeToolboxObject(JsonElement element, ModelReaderWriterOptions options)
+        internal static ToolboxRecord DeserializeToolboxRecord(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -177,7 +177,7 @@ namespace Azure.AI.Projects
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ToolboxObject(
+            return new ToolboxRecord(
                 @object,
                 id,
                 name,

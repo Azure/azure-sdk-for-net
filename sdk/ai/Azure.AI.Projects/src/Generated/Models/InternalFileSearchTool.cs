@@ -10,7 +10,7 @@ using Azure.AI.Projects;
 
 namespace OpenAI
 {
-    internal partial class InternalFileSearchTool : InternalTool
+    internal partial class InternalFileSearchTool : ProjectTool
     {
         /// <summary> Initializes a new instance of <see cref="InternalFileSearchTool"/>. </summary>
         /// <param name="vectorStoreIds"> The IDs of the vector stores to search. </param>

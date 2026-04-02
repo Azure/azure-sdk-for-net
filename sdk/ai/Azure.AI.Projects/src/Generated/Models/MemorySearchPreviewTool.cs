@@ -9,7 +9,7 @@ using Azure.AI.Projects.Memory;
 namespace Azure.AI.Projects
 {
     /// <summary> A tool for integrating memories into the agent. </summary>
-    internal partial class MemorySearchPreviewTool : InternalTool
+    public partial class MemorySearchPreviewTool : ProjectTool
     {
         /// <summary> Initializes a new instance of <see cref="MemorySearchPreviewTool"/>. </summary>
         /// <param name="memoryStoreName"> The name of the memory store to use. </param>

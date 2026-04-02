@@ -9,7 +9,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> The OpenApiFunctionDefinitionFunction. </summary>
-    internal partial class OpenApiFunctionDefinitionFunction
+    public partial class OpenApiFunctionDefinitionFunction
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

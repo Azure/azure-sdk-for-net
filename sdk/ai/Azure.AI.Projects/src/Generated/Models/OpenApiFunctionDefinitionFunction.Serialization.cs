@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> The OpenApiFunctionDefinitionFunction. </summary>
-    internal partial class OpenApiFunctionDefinitionFunction : IJsonModel<OpenApiFunctionDefinitionFunction>
+    public partial class OpenApiFunctionDefinitionFunction : IJsonModel<OpenApiFunctionDefinitionFunction>
     {
         /// <summary> Initializes a new instance of <see cref="OpenApiFunctionDefinitionFunction"/> for deserialization. </summary>
         internal OpenApiFunctionDefinitionFunction()

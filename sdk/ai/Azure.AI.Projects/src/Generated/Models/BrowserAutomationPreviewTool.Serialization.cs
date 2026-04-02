@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> The input definition information for a Browser Automation Tool, as used to configure an Agent. </summary>
-    internal partial class BrowserAutomationPreviewTool : InternalTool, IJsonModel<BrowserAutomationPreviewTool>
+    public partial class BrowserAutomationPreviewTool : ProjectTool, IJsonModel<BrowserAutomationPreviewTool>
     {
         /// <summary> Initializes a new instance of <see cref="BrowserAutomationPreviewTool"/> for deserialization. </summary>
         internal BrowserAutomationPreviewTool()
@@ -19,7 +19,7 @@ namespace Azure.AI.Projects
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override InternalTool PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override ProjectTool PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<BrowserAutomationPreviewTool>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -96,7 +96,7 @@ namespace Azure.AI.Projects
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override InternalTool JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override ProjectTool JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<BrowserAutomationPreviewTool>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

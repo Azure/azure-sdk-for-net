@@ -9,9 +9,9 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Projects
 {
-    internal partial class ToolboxesGetToolboxVersionsCollectionResult : CollectionResult
+    internal partial class ProjectToolboxesGetToolboxVersionsCollectionResult : CollectionResult
     {
-        private readonly Toolboxes _client;
+        private readonly ProjectToolboxes _client;
         private readonly string _toolboxName;
         private readonly int? _limit;
         private readonly string _order;
@@ -19,8 +19,8 @@ namespace Azure.AI.Projects
         private readonly string _before;
         private readonly RequestOptions _options;
 
-        /// <summary> Initializes a new instance of ToolboxesGetToolboxVersionsCollectionResult, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The Toolboxes client used to send requests. </param>
+        /// <summary> Initializes a new instance of ProjectToolboxesGetToolboxVersionsCollectionResult, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The ProjectToolboxes client used to send requests. </param>
         /// <param name="toolboxName"> The name of the toolbox to list versions for. </param>
         /// <param name="limit">
         /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
@@ -41,7 +41,7 @@ namespace Azure.AI.Projects
         /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
         /// </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public ToolboxesGetToolboxVersionsCollectionResult(Toolboxes client, string toolboxName, int? limit, string order, string after, string before, RequestOptions options)
+        public ProjectToolboxesGetToolboxVersionsCollectionResult(ProjectToolboxes client, string toolboxName, int? limit, string order, string after, string before, RequestOptions options)
         {
             _client = client;
             _toolboxName = toolboxName;

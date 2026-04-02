@@ -8,7 +8,7 @@ using Azure.AI.Projects;
 
 namespace OpenAI
 {
-    internal partial class InternalWebSearchPreviewTool : InternalTool
+    internal partial class InternalWebSearchPreviewTool : ProjectTool
     {
         /// <summary> Initializes a new instance of <see cref="InternalWebSearchPreviewTool"/>. </summary>
         public InternalWebSearchPreviewTool() : base(ToolType.WebSearchPreview)

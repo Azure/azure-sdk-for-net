@@ -11,7 +11,7 @@ using Azure.AI.Projects.Memory;
 namespace Azure.AI.Projects
 {
     /// <summary> A tool for integrating memories into the agent. </summary>
-    internal partial class MemorySearchPreviewTool : InternalTool, IJsonModel<MemorySearchPreviewTool>
+    public partial class MemorySearchPreviewTool : ProjectTool, IJsonModel<MemorySearchPreviewTool>
     {
         /// <summary> Initializes a new instance of <see cref="MemorySearchPreviewTool"/> for deserialization. </summary>
         internal MemorySearchPreviewTool()
@@ -20,7 +20,7 @@ namespace Azure.AI.Projects
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override InternalTool PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override ProjectTool PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<MemorySearchPreviewTool>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -109,7 +109,7 @@ namespace Azure.AI.Projects
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override InternalTool JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override ProjectTool JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<MemorySearchPreviewTool>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

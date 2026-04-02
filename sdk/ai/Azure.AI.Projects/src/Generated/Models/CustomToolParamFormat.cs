@@ -11,7 +11,7 @@ namespace Azure.AI.Projects
     /// The input format for the custom tool. Default is unconstrained text.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CustomTextFormatParam"/> and <see cref="CustomGrammarFormatParam"/>.
     /// </summary>
-    internal abstract partial class CustomToolParamFormat
+    public abstract partial class CustomToolParamFormat
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

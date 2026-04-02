@@ -8,30 +8,30 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects
 {
     /// <summary> A toolbox that stores reusable tool definitions for agents. </summary>
-    public partial class ToolboxObject
+    public partial class ToolboxRecord
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ToolboxObject"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ToolboxRecord"/>. </summary>
         /// <param name="id"> The unique identifier of the toolbox. </param>
         /// <param name="name"> The name of the toolbox. </param>
         /// <param name="versions"> The versions of the toolbox. </param>
-        internal ToolboxObject(string id, string name, ToolboxObjectVersions versions)
+        internal ToolboxRecord(string id, string name, ToolboxObjectVersions versions)
         {
             Id = id;
             Name = name;
             Versions = versions;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ToolboxObject"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ToolboxRecord"/>. </summary>
         /// <param name="object"> The object type, which is always 'toolbox'. </param>
         /// <param name="id"> The unique identifier of the toolbox. </param>
         /// <param name="name"> The name of the toolbox. </param>
         /// <param name="description"> A human-readable description of the toolbox. </param>
         /// <param name="versions"> The versions of the toolbox. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ToolboxObject(ToolboxObjectType @object, string id, string name, string description, ToolboxObjectVersions versions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ToolboxRecord(ToolboxObjectType @object, string id, string name, string description, ToolboxObjectVersions versions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Object = @object;
             Id = id;

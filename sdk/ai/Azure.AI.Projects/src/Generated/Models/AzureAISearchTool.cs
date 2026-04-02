@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects
 {
     /// <summary> The input definition information for an Azure AI search tool as used to configure an agent. </summary>
-    internal partial class AzureAISearchTool : InternalTool
+    public partial class AzureAISearchTool : ProjectTool
     {
         /// <summary> Initializes a new instance of <see cref="AzureAISearchTool"/>. </summary>
         /// <param name="azureAiSearch"> The azure ai search index resource. </param>

@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects
 {
     /// <summary> The input definition information for an Azure Function Tool, as used to configure an Agent. </summary>
-    internal partial class AzureFunctionTool : InternalTool
+    public partial class AzureFunctionTool : ProjectTool
     {
         /// <summary> Initializes a new instance of <see cref="AzureFunctionTool"/>. </summary>
         /// <param name="azureFunction"> The Azure Function Tool definition. </param>

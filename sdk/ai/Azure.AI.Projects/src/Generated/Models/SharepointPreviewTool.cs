@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects
 {
     /// <summary> The input definition information for a sharepoint tool as used to configure an agent. </summary>
-    internal partial class SharepointPreviewTool : InternalTool
+    public partial class SharepointPreviewTool : ProjectTool
     {
         /// <summary> Initializes a new instance of <see cref="SharepointPreviewTool"/>. </summary>
         /// <param name="sharepointGroundingPreview"> The sharepoint grounding tool parameters. </param>

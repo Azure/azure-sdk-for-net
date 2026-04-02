@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> The structure for keeping storage queue name and URI. </summary>
-    internal partial class AzureFunctionBinding : IJsonModel<AzureFunctionBinding>
+    public partial class AzureFunctionBinding : IJsonModel<AzureFunctionBinding>
     {
         /// <summary> Initializes a new instance of <see cref="AzureFunctionBinding"/> for deserialization. </summary>
         internal AzureFunctionBinding()

@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects
 {
     /// <summary> Web search. </summary>
-    internal partial class WebSearchTool : InternalTool
+    public partial class WebSearchTool : ProjectTool
     {
         /// <summary> Initializes a new instance of <see cref="WebSearchTool"/>. </summary>
         public WebSearchTool() : base(ToolType.WebSearch)

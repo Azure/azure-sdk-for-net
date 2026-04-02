@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> A project connection resource. </summary>
-    internal partial class ToolProjectConnection : IJsonModel<ToolProjectConnection>
+    public partial class ToolProjectConnection : IJsonModel<ToolProjectConnection>
     {
         /// <summary> Initializes a new instance of <see cref="ToolProjectConnection"/> for deserialization. </summary>
         internal ToolProjectConnection()

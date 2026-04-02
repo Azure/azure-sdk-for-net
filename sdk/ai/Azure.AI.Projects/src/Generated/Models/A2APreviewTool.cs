@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects
 {
     /// <summary> An agent implementing the A2A protocol. </summary>
-    internal partial class A2APreviewTool : InternalTool
+    public partial class A2APreviewTool : ProjectTool
     {
         /// <summary> Initializes a new instance of <see cref="A2APreviewTool"/>. </summary>
         public A2APreviewTool() : base(ToolType.A2aPreview)

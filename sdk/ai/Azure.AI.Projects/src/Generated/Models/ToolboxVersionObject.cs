@@ -27,7 +27,7 @@ namespace Azure.AI.Projects
         /// <param name="version"> The version identifier of the toolbox. Toolbox versions are immutable and every update creates a new version. </param>
         /// <param name="createdAt"> The Unix timestamp (seconds) when the toolbox version was created. </param>
         /// <param name="tools"> The list of tools contained in this toolbox version. </param>
-        internal ToolboxVersionObject(IDictionary<string, string> metadata, string id, string name, string version, DateTimeOffset createdAt, IEnumerable<InternalTool> tools)
+        internal ToolboxVersionObject(IDictionary<string, string> metadata, string id, string name, string version, DateTimeOffset createdAt, IEnumerable<ProjectTool> tools)
         {
             Metadata = metadata;
             Id = id;
@@ -54,7 +54,7 @@ namespace Azure.AI.Projects
         /// <param name="tools"> The list of tools contained in this toolbox version. </param>
         /// <param name="policies"> Policy configuration for the toolbox version. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ToolboxVersionObject(IDictionary<string, string> metadata, ToolboxObjectType @object, string id, string name, string version, string description, DateTimeOffset createdAt, IList<InternalTool> tools, ToolboxPolicies policies, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ToolboxVersionObject(IDictionary<string, string> metadata, ToolboxObjectType @object, string id, string name, string version, string description, DateTimeOffset createdAt, IList<ProjectTool> tools, ToolboxPolicies policies, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Metadata = metadata;
             Object = @object;
@@ -96,7 +96,7 @@ namespace Azure.AI.Projects
         public DateTimeOffset CreatedAt { get; }
 
         /// <summary> The list of tools contained in this toolbox version. </summary>
-        public IList<InternalTool> Tools { get; }
+        public IList<ProjectTool> Tools { get; }
 
         /// <summary> Policy configuration for the toolbox version. </summary>
         public ToolboxPolicies Policies { get; }

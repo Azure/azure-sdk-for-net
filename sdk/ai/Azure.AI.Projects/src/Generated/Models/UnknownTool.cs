@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Projects
 {
-    internal partial class UnknownTool : InternalTool
+    internal partial class UnknownTool : ProjectTool
     {
         /// <summary> Initializes a new instance of <see cref="UnknownTool"/>. </summary>
         /// <param name="type"></param>

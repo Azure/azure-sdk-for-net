@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects
 {
     /// <summary> A tool for capturing structured outputs. </summary>
-    internal partial class CaptureStructuredOutputsTool : InternalTool
+    public partial class CaptureStructuredOutputsTool : ProjectTool
     {
         /// <summary> Initializes a new instance of <see cref="CaptureStructuredOutputsTool"/>. </summary>
         /// <param name="outputs"> The structured outputs to capture from the model. </param>

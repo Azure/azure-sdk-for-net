@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> The SkillReferenceParam. </summary>
-    internal partial class SkillReferenceParam : ContainerSkill, IJsonModel<SkillReferenceParam>
+    public partial class SkillReferenceParam : ContainerSkill, IJsonModel<SkillReferenceParam>
     {
         /// <summary> Initializes a new instance of <see cref="SkillReferenceParam"/> for deserialization. </summary>
         internal SkillReferenceParam()

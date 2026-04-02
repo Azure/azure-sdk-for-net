@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects
 {
     /// <summary> The input definition information for a bing grounding search tool as used to configure an agent. </summary>
-    internal partial class BingGroundingTool : InternalTool
+    public partial class BingGroundingTool : ProjectTool
     {
         /// <summary> Initializes a new instance of <see cref="BingGroundingTool"/>. </summary>
         /// <param name="bingGrounding"> The bing grounding search tool parameters. </param>
