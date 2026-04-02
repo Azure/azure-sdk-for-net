@@ -16,9 +16,6 @@
             "Settings": {
               "type": "object"
             },
-            "AuthenticationPolicy": {
-              "type": "object"
-            },
             "Credential": {
               "$ref": "#/definitions/credential"
             },
