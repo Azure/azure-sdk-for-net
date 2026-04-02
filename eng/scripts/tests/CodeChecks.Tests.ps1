@@ -1075,4 +1075,27 @@ Describe "Test-OnlyCiConfigChanged" -Tag "UnitTest" {
             $result | Should -Be $false
         }
     }
+
+    Context "error handling — always falls back to running codegen" {
+        It "returns false when RepoRoot is not a git repo" {
+            $nonGitDir = Join-Path ([System.IO.Path]::GetTempPath()) "not-a-repo-$([System.Guid]::NewGuid().ToString('N').Substring(0,8))"
+            New-Item $nonGitDir -ItemType Directory -Force | Out-Null
+            try {
+                $result = Test-OnlyCiConfigChanged -ServiceDirectory "mysvc" -RepoRoot $nonGitDir
+                $result | Should -Be $false
+            } finally {
+                Remove-Item $nonGitDir -Recurse -Force
+            }
+        }
+
+        It "returns false when RepoRoot does not exist" {
+            $result = Test-OnlyCiConfigChanged -ServiceDirectory "mysvc" -RepoRoot "/nonexistent/path/to/repo"
+            $result | Should -Be $false
+        }
+
+        It "returns false when ServiceDirectory is empty" {
+            $result = Test-OnlyCiConfigChanged -ServiceDirectory "" -RepoRoot $script:gitRoot
+            $result | Should -Be $false
+        }
+    }
 }
