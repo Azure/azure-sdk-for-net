@@ -200,22 +200,26 @@ namespace Azure.Generator.Management.Visitors
 
             // Walk up the inheritance chain because flattened properties can come from
             // both the current leaf model and any ancestor model in the hierarchy.
-            while (true)
+            ModelProvider? currentModel;
+            do
             {
                 if (_flattenedModelTypes.TryGetValue(currentType, out var value))
                 {
                     MergeFlattenedProperties(value);
                 }
 
-                if (!(ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap.TryGetValue(currentType, out var typeProvider)
+                currentModel = ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap.TryGetValue(currentType, out var typeProvider)
                     && typeProvider is ModelProvider model
-                    && model.BaseType is not null))
-                {
-                    break;
-                }
+                    && model.BaseType is not null
+                    ? model
+                    : null;
 
-                currentType = model.BaseType;
+                if (currentModel is not null)
+                {
+                    currentType = currentModel.BaseType!;
+                }
             }
+            while (currentModel is not null);
 
             propertyNameMap = mergedPropertyNameMap;
             return foundFlattenedProperties;
