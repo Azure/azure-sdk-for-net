@@ -146,7 +146,10 @@ internal sealed class ResponseEndpointHandler
 
         // Start distributed tracing span — delegates all tag/baggage logic
         // to ResponsesActivitySource.StartCreateResponseActivity (virtual, overridable).
-        using var activity = _activitySource.StartCreateResponseActivity(
+        // Do NOT use 'using' — for streaming, SseResult takes ownership and disposes
+        // the activity when the SSE stream completes so the span covers the full
+        // streaming duration. For non-streaming, disposed in the finally block below.
+        var activity = _activitySource.StartCreateResponseActivity(
             request, responseId, httpContext.Request.Headers);
 
         // Structured log scope — matches Core's HostedAgentTelemetry.StartActivity
@@ -202,43 +205,60 @@ internal sealed class ResponseEndpointHandler
 
             var result = await _orchestrator.CreateAsync(request, execution, context, linkedCts.Token);
 
+            // SseResult takes ownership of the activity — it will dispose it when
+            // the SSE stream completes, ensuring the tracing span covers the full
+            // streaming duration (matching Python's trace_stream pattern).
             return new SseResult(
-                result.Events!, execution, linkedCts,
+                result.Events!, execution, linkedCts, activity,
                 SharedJsonOptions.Instance, _logger, FoundryEnvironment.SseKeepAliveInterval);
         }
         else if (isBackground)
         {
-            // Background (non-streaming): run handler in background task.
-            // Wait for response.created before returning — the handler's response
-            // is the source of truth, not a SDK-constructed seed.
-            execution.ExecutionTask = Task.Run(async () =>
+            try
             {
-                using var bgLinkedCts = CancellationTokenSource.CreateLinkedTokenSource(
-                    providerCt, execution.CancellationTokenSource.Token);
-                await _orchestrator.CreateAsync(request, execution, context, bgLinkedCts.Token);
-            });
+                // Background (non-streaming): run handler in background task.
+                // Wait for response.created before returning — the handler's response
+                // is the source of truth, not a SDK-constructed seed.
+                execution.ExecutionTask = Task.Run(async () =>
+                {
+                    using var bgLinkedCts = CancellationTokenSource.CreateLinkedTokenSource(
+                        providerCt, execution.CancellationTokenSource.Token);
+                    await _orchestrator.CreateAsync(request, execution, context, bgLinkedCts.Token);
+                });
 
-            // Await the handler's response.created (or a pre-created error).
-            // If the handler fails before response.created, the signal faults
-            // and the exception propagates to the exception filter → HTTP 500.
-            // The signal delivers an independent snapshot — no re-snapshot needed.
-            var handlerResponse = await execution.ResponseCreatedSignal.Task;
-            return Results.Json(handlerResponse, SharedJsonOptions.Instance, statusCode: 200);
+                // Await the handler's response.created (or a pre-created error).
+                // If the handler fails before response.created, the signal faults
+                // and the exception propagates to the exception filter → HTTP 500.
+                // The signal delivers an independent snapshot — no re-snapshot needed.
+                var handlerResponse = await execution.ResponseCreatedSignal.Task;
+                return Results.Json(handlerResponse, SharedJsonOptions.Instance, statusCode: 200);
+            }
+            finally
+            {
+                activity?.Dispose();
+            }
         }
         else
         {
-            // Default (non-streaming, non-background): run to completion, return final response.
-            // Order matters: register linked CTS first, then ClientDisconnected flag.
-            // CancellationToken callbacks fire in LIFO order, so registering the flag
-            // second ensures it is set before the linked CTS propagates cancellation
-            // to the handler — matching the streaming path's registration order.
-            using var linkedCts = CancellationTokenSource.CreateLinkedTokenSource(
-                providerCt, execution.CancellationTokenSource.Token, httpContext.RequestAborted);
-            httpContext.RequestAborted.Register(() => execution.ClientDisconnected = true);
+            try
+            {
+                // Default (non-streaming, non-background): run to completion, return final response.
+                // Order matters: register linked CTS first, then ClientDisconnected flag.
+                // CancellationToken callbacks fire in LIFO order, so registering the flag
+                // second ensures it is set before the linked CTS propagates cancellation
+                // to the handler — matching the streaming path's registration order.
+                using var linkedCts = CancellationTokenSource.CreateLinkedTokenSource(
+                    providerCt, execution.CancellationTokenSource.Token, httpContext.RequestAborted);
+                httpContext.RequestAborted.Register(() => execution.ClientDisconnected = true);
 
-            await _orchestrator.CreateAsync(request, execution, context, linkedCts.Token);
+                await _orchestrator.CreateAsync(request, execution, context, linkedCts.Token);
 
-            return Results.Json(execution.Response!.Snapshot(), SharedJsonOptions.Instance, statusCode: 200);
+                return Results.Json(execution.Response!.Snapshot(), SharedJsonOptions.Instance, statusCode: 200);
+            }
+            finally
+            {
+                activity?.Dispose();
+            }
         }
     }
 

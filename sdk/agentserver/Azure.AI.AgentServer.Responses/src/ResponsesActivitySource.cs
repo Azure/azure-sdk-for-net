@@ -45,9 +45,8 @@ public class ResponsesActivitySource
     public const string DefaultName = "Azure.AI.AgentServer.Responses";
 
     /// <summary>
-    /// The default service name used for the <c>service.name</c> and
-    /// <c>gen_ai.provider.name</c> tags: <c>"AzureAI Hosted Agents"</c>.
-    /// Matches the Core package for tracing parity.
+    /// The default service name used for the <c>service.name</c> tag:
+    /// <c>"azure.ai.agentserver"</c>. Matches the Core package for tracing parity.
     /// </summary>
     public const string DefaultServiceName = ResponsesTracingConstants.ServiceName;
 
@@ -134,7 +133,7 @@ public class ResponsesActivitySource
             ? "invoke_agent"
             : $"invoke_agent {request.Model}";
 
-        var activity = _source.StartActivity(activityName);
+        var activity = _source.StartActivity(activityName, ActivityKind.Server);
         if (activity is null)
         {
             return null;
@@ -157,6 +156,7 @@ public class ResponsesActivitySource
         activity.SetTag(ResponsesTracingConstants.Tags.NamespacedResponseId, responseId);
         activity.SetTag(ResponsesTracingConstants.Tags.NamespacedConversationId, conversationId);
         activity.SetTag(ResponsesTracingConstants.Tags.NamespacedStreaming, isStreaming);
+        activity.SetTag(ResponsesTracingConstants.Tags.FoundryProjectId, Core.FoundryEnvironment.ProjectArmId ?? string.Empty);
 
         // --- GenAI semantic convention tags (Responses-specific additions) ---
         activity.SetTag(ResponsesTracingConstants.Tags.OperationName, ResponsesTracingConstants.OperationName);
