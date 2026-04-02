@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+    using System.ComponentModel;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
@@ -16,6 +17,24 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         private const string WindowsValue = "Windows";
         /// <summary> Linux. </summary>
         private const string LinuxValue = "Linux";
+
+        private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerInstanceOperatingSystemType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ContainerInstanceOperatingSystemType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Windows. </summary>
+        public static ContainerInstanceOperatingSystemType Windows { get; } = new ContainerInstanceOperatingSystemType(WindowsValue);
+
+        /// <summary> Linux. </summary>
+        public static ContainerInstanceOperatingSystemType Linux { get; } = new ContainerInstanceOperatingSystemType(LinuxValue);
 
         /// <summary> Determines if two <see cref="ContainerInstanceOperatingSystemType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
@@ -34,5 +53,19 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <summary> Converts a string to a <see cref="ContainerInstanceOperatingSystemType"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator ContainerInstanceOperatingSystemType?(string value) => value == null ? null : new ContainerInstanceOperatingSystemType(value);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is ContainerInstanceOperatingSystemType other && Equals(other);
+
+        /// <inheritdoc/>
+        public bool Equals(ContainerInstanceOperatingSystemType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+
+        /// <inheritdoc/>
+        public override string ToString() => _value;
     }
 }

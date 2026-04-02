@@ -29,5 +29,8 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
         /// <summary> The state of the container group. Only valid in response. </summary>
         public string State { get; }
+
+        /// <summary> Gets the Events. </summary>
+        public IReadOnlyList<ContainerEvent> Events { get; }
     }
 }

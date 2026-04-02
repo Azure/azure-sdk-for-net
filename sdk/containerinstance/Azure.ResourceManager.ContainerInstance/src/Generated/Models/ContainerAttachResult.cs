@@ -29,5 +29,8 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
         /// <summary> The password to the output stream from the attach. Send as an Authorization header value when connecting to the websocketUri. </summary>
         public string Password { get; }
+
+        /// <summary> Gets the WebSocketUri. </summary>
+        public Uri WebSocketUri { get; }
     }
 }

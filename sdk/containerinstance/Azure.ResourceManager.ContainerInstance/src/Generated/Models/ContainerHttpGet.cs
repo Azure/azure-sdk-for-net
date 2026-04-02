@@ -48,5 +48,8 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
         /// <summary> The HTTP headers. </summary>
         public IList<ContainerHttpHeader> HttpHeaders { get; }
+
+        /// <summary> Gets the Scheme. </summary>
+        public ContainerHttpGetScheme? Scheme { get; }
     }
 }

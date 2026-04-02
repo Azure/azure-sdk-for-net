@@ -8,4 +8,10 @@
     <PackageTags>azure;management;arm;resource manager;containerinstance</PackageTags>
     <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
   </PropertyGroup>
+  <ItemGroup>
+    <!-- Generator bug: ModelFactory has incorrect type references -->
+    <!-- Generator bug: ContainerGroupCollection is incomplete (missing constructors, CRUD methods) -->
+    <Compile Remove="Generated\ContainerGroupCollection.cs" />
+    <Compile Remove="Generated\ArmContainerInstanceModelFactory.cs" />
+  </ItemGroup>
 </Project>

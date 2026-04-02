@@ -16,6 +16,29 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     /// <summary> Image registry credential. </summary>
     public partial class ContainerGroupImageRegistryCredential : IJsonModel<ContainerGroupImageRegistryCredential>
     {
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ContainerGroupImageRegistryCredential>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ContainerGroupImageRegistryCredential IPersistableModel<ContainerGroupImageRegistryCredential>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ContainerGroupImageRegistryCredential>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        void IJsonModel<ContainerGroupImageRegistryCredential>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ContainerGroupImageRegistryCredential IJsonModel<ContainerGroupImageRegistryCredential>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
         /// <summary> Initializes a new instance of <see cref="ContainerGroupImageRegistryCredential"/> for deserialization. </summary>
         internal ContainerGroupImageRegistryCredential()
         {

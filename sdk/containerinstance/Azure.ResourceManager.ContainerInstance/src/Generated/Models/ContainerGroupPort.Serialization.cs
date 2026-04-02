@@ -16,6 +16,29 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     /// <summary> The port exposed on the container group. </summary>
     public partial class ContainerGroupPort : IJsonModel<ContainerGroupPort>
     {
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ContainerGroupPort>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ContainerGroupPort IPersistableModel<ContainerGroupPort>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ContainerGroupPort>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        void IJsonModel<ContainerGroupPort>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ContainerGroupPort IJsonModel<ContainerGroupPort>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
         /// <summary> Initializes a new instance of <see cref="ContainerGroupPort"/> for deserialization. </summary>
         internal ContainerGroupPort()
         {

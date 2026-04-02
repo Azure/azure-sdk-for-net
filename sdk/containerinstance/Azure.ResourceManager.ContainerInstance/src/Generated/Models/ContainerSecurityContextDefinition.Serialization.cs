@@ -16,6 +16,29 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     /// <summary> The security context for the container. </summary>
     public partial class ContainerSecurityContextDefinition : IJsonModel<ContainerSecurityContextDefinition>
     {
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ContainerSecurityContextDefinition>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ContainerSecurityContextDefinition IPersistableModel<ContainerSecurityContextDefinition>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ContainerSecurityContextDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        void IJsonModel<ContainerSecurityContextDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ContainerSecurityContextDefinition IJsonModel<ContainerSecurityContextDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ContainerSecurityContextDefinition PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -125,7 +148,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
             bool? privileged = default;
             bool? allowPrivilegeEscalation = default;
-            ContainerSecurityContextCapabilitiesDefinition capabilities = default;
+            SecurityContextCapabilitiesDefinition capabilities = default;
             int? runAsGroup = default;
             int? runAsUser = default;
             string seccompProfile = default;
@@ -156,7 +179,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    capabilities = ContainerSecurityContextCapabilitiesDefinition.DeserializeContainerSecurityContextCapabilitiesDefinition(prop.Value, options);
+                    capabilities = SecurityContextCapabilitiesDefinition.DeserializeSecurityContextCapabilitiesDefinition(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("runAsGroup"u8))

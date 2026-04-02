@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+    using System.ComponentModel;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
@@ -16,6 +17,24 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         private const string HttpValue = "http";
         /// <summary> https. </summary>
         private const string HttpsValue = "https";
+
+        private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerHttpGetScheme"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ContainerHttpGetScheme(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> http. </summary>
+        public static ContainerHttpGetScheme Http { get; } = new ContainerHttpGetScheme(HttpValue);
+
+        /// <summary> https. </summary>
+        public static ContainerHttpGetScheme Https { get; } = new ContainerHttpGetScheme(HttpsValue);
 
         /// <summary> Determines if two <see cref="ContainerHttpGetScheme"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
@@ -34,5 +53,19 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <summary> Converts a string to a <see cref="ContainerHttpGetScheme"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator ContainerHttpGetScheme?(string value) => value == null ? null : new ContainerHttpGetScheme(value);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is ContainerHttpGetScheme other && Equals(other);
+
+        /// <inheritdoc/>
+        public bool Equals(ContainerHttpGetScheme other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+
+        /// <inheritdoc/>
+        public override string ToString() => _value;
     }
 }

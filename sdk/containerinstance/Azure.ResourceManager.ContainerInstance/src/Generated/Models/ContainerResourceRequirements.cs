@@ -26,5 +26,11 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             Limits = limits;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Gets the Requests. </summary>
+        public ContainerResourceRequestsContent Requests { get; }
+
+        /// <summary> Gets the Limits. </summary>
+        public ContainerResourceLimits Limits { get; }
     }
 }

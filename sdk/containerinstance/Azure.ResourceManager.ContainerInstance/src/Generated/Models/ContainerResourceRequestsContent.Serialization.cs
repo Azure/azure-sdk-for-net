@@ -16,6 +16,29 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     /// <summary> The resource requests. </summary>
     public partial class ContainerResourceRequestsContent : IJsonModel<ContainerResourceRequestsContent>
     {
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ContainerResourceRequestsContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ContainerResourceRequestsContent IPersistableModel<ContainerResourceRequestsContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ContainerResourceRequestsContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        void IJsonModel<ContainerResourceRequestsContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ContainerResourceRequestsContent IJsonModel<ContainerResourceRequestsContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
         /// <summary> Initializes a new instance of <see cref="ContainerResourceRequestsContent"/> for deserialization. </summary>
         internal ContainerResourceRequestsContent()
         {

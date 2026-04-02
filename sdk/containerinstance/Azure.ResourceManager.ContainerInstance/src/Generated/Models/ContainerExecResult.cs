@@ -29,5 +29,8 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
         /// <summary> The password to start the exec command. </summary>
         public string Password { get; }
+
+        /// <summary> Gets the WebSocketUri. </summary>
+        public Uri WebSocketUri { get; }
     }
 }

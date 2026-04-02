@@ -30,5 +30,8 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
         /// <summary> Friendly name for the subnet. </summary>
         public string Name { get; set; }
+
+        /// <summary> Gets the Id. </summary>
+        public ResourceIdentifier Id { get; }
     }
 }

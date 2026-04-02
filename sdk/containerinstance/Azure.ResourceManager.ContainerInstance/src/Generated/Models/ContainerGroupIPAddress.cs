@@ -49,5 +49,8 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
         /// <summary> The FQDN for the IP. </summary>
         public string Fqdn { get; }
+
+        /// <summary> Gets the Ports. </summary>
+        public IList<ContainerGroupPort> Ports { get; }
     }
 }

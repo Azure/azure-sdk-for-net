@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+    using System.ComponentModel;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
@@ -16,6 +17,24 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         private const string ContainerInsightsValue = "ContainerInsights";
         /// <summary> ContainerInstanceLogs. </summary>
         private const string ContainerInstanceLogsValue = "ContainerInstanceLogs";
+
+        private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerGroupLogAnalyticsLogType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ContainerGroupLogAnalyticsLogType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> ContainerInsights. </summary>
+        public static ContainerGroupLogAnalyticsLogType ContainerInsights { get; } = new ContainerGroupLogAnalyticsLogType(ContainerInsightsValue);
+
+        /// <summary> ContainerInstanceLogs. </summary>
+        public static ContainerGroupLogAnalyticsLogType ContainerInstanceLogs { get; } = new ContainerGroupLogAnalyticsLogType(ContainerInstanceLogsValue);
 
         /// <summary> Determines if two <see cref="ContainerGroupLogAnalyticsLogType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
@@ -34,5 +53,19 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <summary> Converts a string to a <see cref="ContainerGroupLogAnalyticsLogType"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator ContainerGroupLogAnalyticsLogType?(string value) => value == null ? null : new ContainerGroupLogAnalyticsLogType(value);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is ContainerGroupLogAnalyticsLogType other && Equals(other);
+
+        /// <inheritdoc/>
+        public bool Equals(ContainerGroupLogAnalyticsLogType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+
+        /// <inheritdoc/>
+        public override string ToString() => _value;
     }
 }

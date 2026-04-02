@@ -48,6 +48,9 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <summary> Describes the properties of the NGroups resource. </summary>
         internal NGroupProperties Properties { get; set; }
 
+        /// <summary> The identity of the NGroup, if configured. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
+
         /// <summary> The resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
 

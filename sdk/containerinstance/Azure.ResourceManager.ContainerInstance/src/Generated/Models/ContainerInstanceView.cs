@@ -39,5 +39,8 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
         /// <summary> Previous container instance state. </summary>
         public ContainerState PreviousState { get; }
+
+        /// <summary> Gets the Events. </summary>
+        public IReadOnlyList<ContainerEvent> Events { get; }
     }
 }

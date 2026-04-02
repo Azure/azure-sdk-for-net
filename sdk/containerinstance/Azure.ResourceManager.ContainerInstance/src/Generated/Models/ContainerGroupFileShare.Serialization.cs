@@ -16,6 +16,29 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     /// <summary> File shares that can be mounted on container groups. </summary>
     public partial class ContainerGroupFileShare : IJsonModel<ContainerGroupFileShare>
     {
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ContainerGroupFileShare>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ContainerGroupFileShare IPersistableModel<ContainerGroupFileShare>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ContainerGroupFileShare>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        void IJsonModel<ContainerGroupFileShare>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ContainerGroupFileShare IJsonModel<ContainerGroupFileShare>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ContainerGroupFileShare PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -116,7 +139,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             string name = default;
             string resourceGroupName = default;
             string storageAccountName = default;
-            ContainerGroupFileShareProperties properties = default;
+            FileShareProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -141,7 +164,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    properties = ContainerGroupFileShareProperties.DeserializeContainerGroupFileShareProperties(prop.Value, options);
+                    properties = FileShareProperties.DeserializeFileShareProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

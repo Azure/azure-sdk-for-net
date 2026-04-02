@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    identity = ManagedServiceIdentity.DeserializeManagedServiceIdentity(prop.Value, options);
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), options);
                     continue;
                 }
                 if (prop.NameEquals("tags"u8))

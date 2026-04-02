@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+    using System.ComponentModel;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
@@ -18,6 +19,27 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         private const string P100Value = "P100";
         /// <summary> V100. </summary>
         private const string V100Value = "V100";
+
+        private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerGpuSku"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ContainerGpuSku(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> K80. </summary>
+        public static ContainerGpuSku K80 { get; } = new ContainerGpuSku(K80Value);
+
+        /// <summary> P100. </summary>
+        public static ContainerGpuSku P100 { get; } = new ContainerGpuSku(P100Value);
+
+        /// <summary> V100. </summary>
+        public static ContainerGpuSku V100 { get; } = new ContainerGpuSku(V100Value);
 
         /// <summary> Determines if two <see cref="ContainerGpuSku"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
@@ -36,5 +58,19 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <summary> Converts a string to a <see cref="ContainerGpuSku"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator ContainerGpuSku?(string value) => value == null ? null : new ContainerGpuSku(value);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is ContainerGpuSku other && Equals(other);
+
+        /// <inheritdoc/>
+        public bool Equals(ContainerGpuSku other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+
+        /// <inheritdoc/>
+        public override string ToString() => _value;
     }
 }

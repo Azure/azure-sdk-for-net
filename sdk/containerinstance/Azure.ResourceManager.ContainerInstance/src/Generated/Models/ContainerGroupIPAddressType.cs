@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+    using System.ComponentModel;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
@@ -16,6 +17,24 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         private const string PublicValue = "Public";
         /// <summary> Private. </summary>
         private const string PrivateValue = "Private";
+
+        private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerGroupIPAddressType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ContainerGroupIPAddressType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Public. </summary>
+        public static ContainerGroupIPAddressType Public { get; } = new ContainerGroupIPAddressType(PublicValue);
+
+        /// <summary> Private. </summary>
+        public static ContainerGroupIPAddressType Private { get; } = new ContainerGroupIPAddressType(PrivateValue);
 
         /// <summary> Determines if two <see cref="ContainerGroupIPAddressType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
@@ -34,5 +53,19 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <summary> Converts a string to a <see cref="ContainerGroupIPAddressType"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator ContainerGroupIPAddressType?(string value) => value == null ? null : new ContainerGroupIPAddressType(value);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is ContainerGroupIPAddressType other && Equals(other);
+
+        /// <inheritdoc/>
+        public bool Equals(ContainerGroupIPAddressType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+
+        /// <inheritdoc/>
+        public override string ToString() => _value;
     }
 }

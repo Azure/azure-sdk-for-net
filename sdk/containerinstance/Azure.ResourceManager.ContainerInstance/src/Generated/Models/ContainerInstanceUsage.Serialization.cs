@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             string unit = default;
             int? currentValue = default;
             int? limit = default;
-            ContainerInstanceUsageName name = default;
+            UsageName name = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    name = ContainerInstanceUsageName.DeserializeContainerInstanceUsageName(prop.Value, options);
+                    name = UsageName.DeserializeUsageName(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -47,5 +47,11 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
         /// <summary> The GPU sku that this capability describes. </summary>
         public string Gpu { get; }
+
+        /// <summary> Gets the Location. </summary>
+        public AzureLocation? Location { get; }
+
+        /// <summary> Gets the Capabilities. </summary>
+        public ContainerSupportedCapabilities Capabilities { get; }
     }
 }

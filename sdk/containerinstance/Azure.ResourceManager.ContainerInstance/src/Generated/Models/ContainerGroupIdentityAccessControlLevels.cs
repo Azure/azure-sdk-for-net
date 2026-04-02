@@ -20,11 +20,17 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="defaultAccess"> The default access level. </param>
         /// <param name="acls"> The access control levels for each identity. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerGroupIdentityAccessControlLevels(ContainerGroupIdentityAccessLevel? defaultAccess, IList<ContainerGroupIdentityAccessControl> acls, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerGroupIdentityAccessControlLevels(IdentityAccessLevel? defaultAccess, IList<IdentityAccessControl> acls, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DefaultAccess = defaultAccess;
             Acls = acls;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Gets the DefaultAccess. </summary>
+        public IdentityAccessLevel? DefaultAccess { get; }
+
+        /// <summary> Gets the Acls. </summary>
+        public IList<IdentityAccessControl> Acls { get; }
     }
 }

@@ -49,5 +49,8 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
         /// <summary> Container Group properties which can be set while creating or updating the NGroups. </summary>
         public NGroupContainerGroupProperties ContainerGroupProperties { get; set; }
+
+        /// <summary> A network profile for network settings of a ContainerGroupProfile. </summary>
+        public ContainerGroupNetworkProfile NetworkProfile { get; set; }
     }
 }

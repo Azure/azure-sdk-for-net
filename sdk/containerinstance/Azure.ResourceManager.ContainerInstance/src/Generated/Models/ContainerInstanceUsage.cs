@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="limit"> The maximum permitted usage of the resource. </param>
         /// <param name="name"> The name object of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerInstanceUsage(string id, string unit, int? currentValue, int? limit, ContainerInstanceUsageName name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerInstanceUsage(string id, string unit, int? currentValue, int? limit, UsageName name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Unit = unit;
@@ -49,5 +49,8 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
         /// <summary> The maximum permitted usage of the resource. </summary>
         public int? Limit { get; }
+
+        /// <summary> Gets the Name. </summary>
+        public UsageName Name { get; }
     }
 }
