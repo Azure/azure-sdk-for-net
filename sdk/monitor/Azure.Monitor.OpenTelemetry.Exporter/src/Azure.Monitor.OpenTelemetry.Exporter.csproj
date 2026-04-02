@@ -35,10 +35,4 @@
     <Compile Include="$(AzureCoreSharedSources)ExperimentalAttribute.cs" LinkBase="Shared" />
   </ItemGroup>
 
-  <!-- Shared sources from Azure.Monitor.OpenTelemetry.LiveMetrics -->
-  <ItemGroup>
-    <Compile Include="..\..\Azure.Monitor.OpenTelemetry.LiveMetrics\src\**\*.cs" Exclude="..\..\Azure.Monitor.OpenTelemetry.LiveMetrics\src\Generated\Models\AzureMonitorOpenTelemetryLiveMetricsContext.cs" LinkBase="Shared\LiveMetrics" />
-    <Compile Remove="..\..\Azure.Monitor.OpenTelemetry.LiveMetrics\src\Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-
 </Project>
