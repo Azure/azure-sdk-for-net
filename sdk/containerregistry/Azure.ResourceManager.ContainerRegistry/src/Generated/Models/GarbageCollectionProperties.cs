@@ -23,19 +23,19 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="GarbageCollectionProperties"/>. </summary>
-        /// <param name="isEnabled"> Indicates whether garbage collection is enabled for the connected registry. </param>
+        /// <param name="enabled"> Indicates whether garbage collection is enabled for the connected registry. </param>
         /// <param name="schedule"> The cron expression indicating the schedule that the connected registry will run garbage collection. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GarbageCollectionProperties(bool? isEnabled, string schedule, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GarbageCollectionProperties(bool? enabled, string schedule, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            IsEnabled = isEnabled;
+            Enabled = enabled;
             Schedule = schedule;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Indicates whether garbage collection is enabled for the connected registry. </summary>
         [WirePath("enabled")]
-        public bool? IsEnabled { get; set; }
+        public bool? Enabled { get; set; }
 
         /// <summary> The cron expression indicating the schedule that the connected registry will run garbage collection. </summary>
         [WirePath("schedule")]

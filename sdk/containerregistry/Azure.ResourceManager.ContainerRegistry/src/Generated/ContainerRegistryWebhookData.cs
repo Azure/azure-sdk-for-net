@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.ContainerRegistry
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerRegistryWebhookData"/>. </summary>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        public ContainerRegistryWebhookData(AzureLocation location) : base(location)
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryWebhookData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the private link resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -32,6 +38,70 @@ namespace Azure.ResourceManager.ContainerRegistry
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
+        }
+
+        /// <summary> The properties of the webhook. </summary>
+        [WirePath("properties")]
+        internal WebhookProperties Properties { get; set; }
+
+        /// <summary> The status of the webhook at the time the operation was called. </summary>
+        [WirePath("properties.status")]
+        public ContainerRegistryWebhookStatus? Status
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Status;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WebhookProperties();
+                }
+                Properties.Status = value.Value;
+            }
+        }
+
+        /// <summary> The scope of repositories where the event can be triggered. For example, 'foo:*' means events for all tags under repository 'foo'. 'foo:bar' means events for 'foo:bar' only. 'foo' is equivalent to 'foo:latest'. Empty means all events. </summary>
+        [WirePath("properties.scope")]
+        public string Scope
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Scope;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WebhookProperties();
+                }
+                Properties.Scope = value;
+            }
+        }
+
+        /// <summary> The list of actions that trigger the webhook to post notifications. </summary>
+        [WirePath("properties.actions")]
+        public IList<ContainerRegistryWebhookAction> Actions
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new WebhookProperties();
+                }
+                return Properties.Actions;
+            }
+        }
+
+        /// <summary> The provisioning state of the webhook at the time the operation was called. </summary>
+        [WirePath("properties.provisioningState")]
+        public ContainerRegistryProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
         }
     }
 }

@@ -20,12 +20,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <summary> Initializes a new instance of <see cref="ContainerRegistryPipelineRunResult"/>. </summary>
         internal ContainerRegistryPipelineRunResult()
         {
-            ImportedArtifactsList = new ChangeTrackingList<string>();
+            ImportedArtifacts = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerRegistryPipelineRunResult"/>. </summary>
         /// <param name="status"> The current status of the pipeline run. </param>
-        /// <param name="importedArtifactsList"> The artifacts imported in the pipeline run. </param>
+        /// <param name="importedArtifacts"> The artifacts imported in the pipeline run. </param>
         /// <param name="progress"> The current progress of the copy operation. </param>
         /// <param name="startOn"> The time the pipeline run started. </param>
         /// <param name="finishOn"> The time the pipeline run finished. </param>
@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="trigger"> The trigger that caused the pipeline run. </param>
         /// <param name="pipelineRunErrorMessage"> The detailed error message for the pipeline run in the case of failure. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerRegistryPipelineRunResult(string status, IList<string> importedArtifactsList, ProgressProperties progress, DateTimeOffset? startOn, DateTimeOffset? finishOn, ContainerRegistryImportPipelineSourceProperties source, ContainerRegistryExportPipelineTargetProperties target, string catalogDigest, PipelineTriggerDescriptor trigger, string pipelineRunErrorMessage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerRegistryPipelineRunResult(string status, IReadOnlyList<string> importedArtifacts, ProgressProperties progress, DateTimeOffset? startOn, DateTimeOffset? finishOn, ContainerRegistryImportPipelineSourceProperties source, ContainerRegistryExportPipelineTargetProperties target, string catalogDigest, PipelineTriggerDescriptor trigger, string pipelineRunErrorMessage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
-            ImportedArtifactsList = importedArtifactsList;
+            ImportedArtifacts = importedArtifacts;
             Progress = progress;
             StartOn = startOn;
             FinishOn = finishOn;
@@ -53,10 +53,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <summary> The current status of the pipeline run. </summary>
         [WirePath("status")]
         public string Status { get; }
-
-        /// <summary> The artifacts imported in the pipeline run. </summary>
-        [WirePath("importedArtifacts")]
-        public IList<string> ImportedArtifactsList { get; }
 
         /// <summary> The current progress of the copy operation. </summary>
         [WirePath("progress")]

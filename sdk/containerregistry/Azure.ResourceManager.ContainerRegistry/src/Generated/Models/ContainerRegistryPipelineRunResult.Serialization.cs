@@ -79,11 +79,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (Optional.IsCollectionDefined(ImportedArtifactsList))
+            if (Optional.IsCollectionDefined(ImportedArtifacts))
             {
                 writer.WritePropertyName("importedArtifacts"u8);
                 writer.WriteStartArray();
-                foreach (string item in ImportedArtifactsList)
+                foreach (string item in ImportedArtifacts)
                 {
                     if (item == null)
                     {
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 return null;
             }
             string status = default;
-            IList<string> importedArtifactsList = default;
+            IReadOnlyList<string> importedArtifacts = default;
             ProgressProperties progress = default;
             DateTimeOffset? startOn = default;
             DateTimeOffset? finishOn = default;
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                             array.Add(item.GetString());
                         }
                     }
-                    importedArtifactsList = array;
+                    importedArtifacts = array;
                     continue;
                 }
                 if (prop.NameEquals("progress"u8))
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
             return new ContainerRegistryPipelineRunResult(
                 status,
-                importedArtifactsList ?? new ChangeTrackingList<string>(),
+                importedArtifacts ?? new ChangeTrackingList<string>(),
                 progress,
                 startOn,
                 finishOn,

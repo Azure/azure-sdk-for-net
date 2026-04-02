@@ -114,5 +114,23 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 return Properties.Actions;
             }
         }
+
+        /// <summary> The service URI for the webhook to post notifications. </summary>
+        [WirePath("properties.serviceUri")]
+        public Uri ServiceUri
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ServiceUri;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WebhookPropertiesCreateParameters();
+                }
+                Properties.ServiceUri = value;
+            }
+        }
     }
 }

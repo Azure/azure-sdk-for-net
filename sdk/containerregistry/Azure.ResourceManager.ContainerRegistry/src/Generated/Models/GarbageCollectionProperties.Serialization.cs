@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 throw new FormatException($"The model {nameof(GarbageCollectionProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(IsEnabled))
+            if (Optional.IsDefined(Enabled))
             {
                 writer.WritePropertyName("enabled"u8);
-                writer.WriteBooleanValue(IsEnabled.Value);
+                writer.WriteBooleanValue(Enabled.Value);
             }
             if (Optional.IsDefined(Schedule))
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            bool? isEnabled = default;
+            bool? enabled = default;
             string schedule = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    isEnabled = prop.Value.GetBoolean();
+                    enabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("schedule"u8))
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new GarbageCollectionProperties(isEnabled, schedule, additionalBinaryDataProperties);
+            return new GarbageCollectionProperties(enabled, schedule, additionalBinaryDataProperties);
         }
     }
 }

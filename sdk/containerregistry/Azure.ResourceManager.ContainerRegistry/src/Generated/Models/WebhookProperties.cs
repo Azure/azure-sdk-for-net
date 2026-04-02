@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         /// <summary> The list of actions that trigger the webhook to post notifications. </summary>
         [WirePath("actions")]
-        public IList<ContainerRegistryWebhookAction> Actions { get; }
+        public IList<ContainerRegistryWebhookAction> Actions { get; } = new ChangeTrackingList<ContainerRegistryWebhookAction>();
 
         /// <summary> The provisioning state of the webhook at the time the operation was called. </summary>
         [WirePath("provisioningState")]
