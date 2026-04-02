@@ -1,10 +1,8 @@
-import "@azure-tools/typespec-client-generator-core";
-
 using TypeSpec.Http;
 using TypeSpec.Rest;
 using Azure.ResourceManager;
 
-namespace MgmtTypeSpec {
+namespace MgmtTypeSpec;
 
 /**
  * Minimal repro for the inherited flatten case from ComputeGallery:
@@ -22,12 +20,14 @@ model GrandparentFlattenIdentifier {
 }
 
 #suppress "@azure-tools/typespec-azure-core/composition-over-inheritance" "repro for inherited flatten model factory updates"
-model GrandparentFlattenBase extends Azure.ResourceManager.CommonTypes.Resource {
+model GrandparentFlattenBase
+  extends Azure.ResourceManager.CommonTypes.Resource {
   identifier?: GrandparentFlattenIdentifier;
 }
 
 #suppress "@azure-tools/typespec-azure-core/composition-over-inheritance" "repro for inherited flatten model factory updates"
-model GrandparentFlattenProxy<Properties extends {}> extends GrandparentFlattenBase {
+model GrandparentFlattenProxy<Properties extends {}>
+  extends GrandparentFlattenBase {
   @doc("The resource-specific properties for this resource.")
   properties?: Properties;
 }
@@ -37,10 +37,11 @@ model GrandparentFlattenLeafProperties {
 }
 
 #suppress "@azure-tools/typespec-azure-core/composition-over-inheritance" "repro for inherited flatten model factory updates"
-model GrandparentFlattenLeaf extends GrandparentFlattenProxy<GrandparentFlattenLeafProperties> {
-}
+model GrandparentFlattenLeaf
+  extends GrandparentFlattenProxy<GrandparentFlattenLeafProperties> {}
 
-model GrandparentFlattenLeafListResult is Azure.Core.Page<GrandparentFlattenLeaf>;
+model GrandparentFlattenLeafListResult
+  is Azure.Core.Page<GrandparentFlattenLeaf>;
 
 @armResourceOperations
 interface GrandparentFlattenRepro {
@@ -51,6 +52,4 @@ interface GrandparentFlattenRepro {
     void,
     ArmResponse<GrandparentFlattenLeafListResult>
   >;
-}
-
 }
