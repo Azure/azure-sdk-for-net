@@ -11,3 +11,5 @@ extends:
       safeName: AzureResourceManagerKubernetesConfiguration
     - name: Azure.Provisioning.KubernetesConfiguration
       safeName: AzureProvisioningKubernetesConfiguration
+    - name: Azure.ResourceManager.KubernetesConfiguration.Extensions
+      safeName: AzureResourceManagerKubernetesConfigurationExtensions
