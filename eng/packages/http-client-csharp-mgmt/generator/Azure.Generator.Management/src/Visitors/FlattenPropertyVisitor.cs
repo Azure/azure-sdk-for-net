@@ -521,7 +521,10 @@ namespace Azure.Generator.Management.Visitors
                 var innerProperties = PropertyHelpers.GetAllProperties(modelProvider);
 
                 // handle `@flattenProperty`
-                if (ManagementClientGenerator.Instance.OutputLibrary.OutputFlattenPropertyMap.TryGetValue(model, out var propertiesToFlatten) && propertiesToFlatten.Contains(internalProperty))
+                // Use name-based matching instead of reference equality because custom code
+                // may override the property, creating a different PropertyProvider instance
+                // than the one cached in OutputFlattenPropertyMap.
+                if (ManagementClientGenerator.Instance.OutputLibrary.OutputFlattenPropertyMap.TryGetValue(model, out var propertiesToFlatten) && propertiesToFlatten.Any(p => p.Name == internalProperty.Name))
                 {
                     isFlattenProperty = true;
                     PropertyFlatten(model, modelProvider, innerProperties, propertyMap, internalProperty);
