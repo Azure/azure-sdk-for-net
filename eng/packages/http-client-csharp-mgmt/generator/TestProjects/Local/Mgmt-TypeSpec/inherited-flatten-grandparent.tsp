@@ -3,19 +3,18 @@ import "@azure-tools/typespec-client-generator-core";
 using TypeSpec.Http;
 using TypeSpec.Rest;
 using Azure.ResourceManager;
-using Azure.ClientGenerator.Core;
 
 namespace MgmtTypeSpec {
 
 /**
  * Minimal repro for the inherited flatten case from ComputeGallery:
  *
- *   GrandparentFlattenBase                (base, has @flattenProperty identifier)
+ *   GrandparentFlattenBase                (base, has single-property identifier bag)
  *     -> GrandparentFlattenProxy<T>       (intermediate template, extends base)
  *       -> GrandparentFlattenResource     (ARM resource, is Proxy<Properties>)
  *
- * The model factory for the leaf resource should flatten the base `identifier`
- * bag into a `string uniqueId` parameter instead of exposing the internal
+ * The model factory for the leaf resource should still flatten the inherited
+ * `identifier` bag into a scalar parameter instead of exposing the internal
  * `GrandparentFlattenIdentifier` type.
  */
 model GrandparentFlattenIdentifier {
@@ -54,6 +53,4 @@ interface GrandparentFlattenRepro {
   >;
 }
 
-#suppress "deprecated"
-@@Azure.ClientGenerator.Core.Legacy.flattenProperty(GrandparentFlattenBase.identifier);
 }

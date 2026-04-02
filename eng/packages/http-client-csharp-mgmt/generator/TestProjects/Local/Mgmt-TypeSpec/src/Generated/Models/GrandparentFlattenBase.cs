@@ -43,7 +43,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 
         /// <summary> Gets the UniqueId. </summary>
         [WirePath("identifier.uniqueId")]
-        public string UniqueId
+        public string IdentifierUniqueId
         {
             get
             {

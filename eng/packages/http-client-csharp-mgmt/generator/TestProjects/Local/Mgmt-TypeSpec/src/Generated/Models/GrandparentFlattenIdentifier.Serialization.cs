@@ -15,7 +15,12 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
     /// <summary>
     /// Minimal repro for the inherited flatten case from ComputeGallery:
-    /// GrandparentFlattenBase                (base, has
+    /// GrandparentFlattenBase                (base, has single-property identifier bag)
+    /// -&gt; GrandparentFlattenProxy&lt;T&gt;       (intermediate template, extends base)
+    /// -&gt; GrandparentFlattenResource     (ARM resource, is Proxy&lt;Properties&gt;)
+    /// The model factory for the leaf resource should still flatten the inherited
+    /// `identifier` bag into a scalar parameter instead of exposing the internal
+    /// `GrandparentFlattenIdentifier` type.
     /// </summary>
     internal partial class GrandparentFlattenIdentifier : IJsonModel<GrandparentFlattenIdentifier>
     {

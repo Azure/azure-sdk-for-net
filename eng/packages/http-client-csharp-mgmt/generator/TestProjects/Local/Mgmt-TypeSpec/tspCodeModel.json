@@ -22273,7 +22273,7 @@
                         "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
                         "crossLanguageDefinitionId": "MgmtTypeSpec.GrandparentFlattenIdentifier",
                         "usage": "Output,Json",
-                        "doc": "Minimal repro for the inherited flatten case from ComputeGallery:\n\nGrandparentFlattenBase                (base, has",
+                        "doc": "Minimal repro for the inherited flatten case from ComputeGallery:\n\nGrandparentFlattenBase                (base, has single-property identifier bag)\n-> GrandparentFlattenProxy<T>       (intermediate template, extends base)\n-> GrandparentFlattenResource     (ARM resource, is Proxy<Properties>)\n\nThe model factory for the leaf resource should still flatten the inherited\n`identifier` bag into a scalar parameter instead of exposing the internal\n`GrandparentFlattenIdentifier` type.",
                         "decorators": [
                           {
                             "name": "Azure.ResourceManager.@armProviderNamespace",
@@ -22316,13 +22316,8 @@
                       "optional": true,
                       "readOnly": false,
                       "discriminator": false,
-                      "flatten": true,
-                      "decorators": [
-                        {
-                          "name": "Azure.ResourceManager.@flattenProperty",
-                          "arguments": {}
-                        }
-                      ],
+                      "flatten": false,
+                      "decorators": [],
                       "crossLanguageDefinitionId": "MgmtTypeSpec.GrandparentFlattenBase.identifier",
                       "serializationOptions": {
                         "json": {
