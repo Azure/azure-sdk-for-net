@@ -1,10 +1,10 @@
 # Release History
 
-## 1.5.0 (2026-04-01)
+## 1.5.0 (2026-04-02)
 
 ### Features Added
 
-- Added a JSON schema segment to the NuGet package that provides IntelliSense and validation for Azure.Identity.Broker credential configuration in `appsettings.json`.
+- Added a JSON schema segment to the NuGet package that provides IntelliSense and validation for `Azure.Identity.Broker` credential configuration in `appsettings.json`.
 
 ### Other Changes
 
