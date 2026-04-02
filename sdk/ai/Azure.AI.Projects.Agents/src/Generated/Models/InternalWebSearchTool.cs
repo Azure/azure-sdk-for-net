@@ -8,7 +8,7 @@ using Azure.AI.Projects.Agents;
 
 namespace OpenAI
 {
-    internal partial class InternalWebSearchTool : AgentTool
+    internal partial class InternalWebSearchTool : ProjectsAgentTool
     {
         /// <summary> Initializes a new instance of <see cref="InternalWebSearchTool"/>. </summary>
         public InternalWebSearchTool() : base(ToolType.WebSearch)

@@ -4,12 +4,12 @@
 #nullable disable
 
 using System.ComponentModel;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
-    /// <summary> Description of a NotificationHub PNS Credentials. </summary>
-    public partial class NotificationHubPnsCredentials : TrackedResourceData
+    // Backward-compat: Sku property existed in baseline but is not in the spec.
+    // Required by ApiCompat.
+    public partial class NotificationHubPnsCredentials
     {
         /// <summary> The sku of the created namespace. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]

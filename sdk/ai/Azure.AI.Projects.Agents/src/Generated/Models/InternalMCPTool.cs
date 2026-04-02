@@ -9,7 +9,7 @@ using Azure.AI.Projects.Agents;
 
 namespace OpenAI
 {
-    internal partial class InternalMCPTool : AgentTool
+    internal partial class InternalMCPTool : ProjectsAgentTool
     {
         /// <summary> Initializes a new instance of <see cref="InternalMCPTool"/>. </summary>
         /// <param name="serverLabel"> A label for this MCP server, used to identify it in tool calls. </param>

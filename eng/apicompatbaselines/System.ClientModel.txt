@@ -1,0 +1,6 @@
+# IClientBuilder no longer inherits from IHostApplicationBuilder (composition over inheritance).
+# These are intentional breaking changes to experimental API (SCME0002).
+CannotRemoveBaseTypeOrInterface : Type 'System.ClientModel.Primitives.IClientBuilder' does not implement interface 'Microsoft.Extensions.Hosting.IHostApplicationBuilder' in the implementation but it does in the contract.
+MembersMustExist : Member 'public Microsoft.Extensions.Hosting.IHostApplicationBuilder System.ClientModel.Primitives.IClientBuilder.PostConfigure(System.Action<System.ClientModel.Primitives.ClientSettings>)' does not exist in the implementation but it does exist in the contract.
+InterfacesShouldHaveSameMembers : Interface member 'public System.ClientModel.Primitives.IClientBuilder System.ClientModel.Primitives.IClientBuilder.PostConfigure(System.Action<System.ClientModel.Primitives.ClientSettings>)' is present in the implementation but not in the contract.
+InterfacesShouldHaveSameMembers : Interface member 'public Microsoft.Extensions.Hosting.IHostApplicationBuilder System.ClientModel.Primitives.IClientBuilder.PostConfigure(System.Action<System.ClientModel.Primitives.ClientSettings>)' is present in the contract but not in the implementation.

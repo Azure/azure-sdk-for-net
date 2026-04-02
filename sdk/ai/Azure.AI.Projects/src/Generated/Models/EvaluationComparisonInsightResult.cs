@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Insights from the evaluation comparison. </summary>
     public partial class EvaluationComparisonInsightResult : InsightResult

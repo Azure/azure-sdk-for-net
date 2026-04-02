@@ -25,6 +25,8 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
             public const string ConnectedEvent = "connected";
             public const string MessageEvent = "message";
             public const string DisconnectedEvent = "disconnected";
+            public const string JoinedGroupEvent = "joined";
+            public const string LeftGroupEvent = "left";
         }
 
         public static class Headers
@@ -47,6 +49,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
 
                 public const string TypeSystemPrefix = "azure.webpubsub.sys.";
                 public const string TypeUserPrefix = "azure.webpubsub.user.";
+                public const string TypeGroupPresencePrefix = "azure.webpubsub.gp.";
 
                 public const string Subprotocol = Prefix + "subprotocol";
 

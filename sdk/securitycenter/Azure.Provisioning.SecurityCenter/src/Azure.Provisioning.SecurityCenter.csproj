@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>Azure.Provisioning.SecurityCenter simplifies declarative resource provisioning in .NET.</Description>
+    <Version>1.0.0-beta.2</Version>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <LangVersion>12</LangVersion>
+
+    <!-- Disable warning CS1591: Missing XML comment for publicly visible type or member -->
+    <!-- Disable AZPROVISION001: Allow experimental types to reference each other within the library -->
+    <NoWarn>$(NoWarn);CS1591;AZPROVISION001</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.Provisioning" />
+  </ItemGroup>
+
+</Project>

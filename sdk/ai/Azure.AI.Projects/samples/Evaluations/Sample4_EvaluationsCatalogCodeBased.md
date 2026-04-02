@@ -14,7 +14,7 @@ In this example we will demonstrate how to evaluate the data set using a custom 
 var endpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
 AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
-EvaluationClient evaluationClient = projectClient.OpenAI.GetEvaluationClient();
+EvaluationClient evaluationClient = projectClient.ProjectOpenAIClient.GetEvaluationClient();
 ```
 
 2. Define the `EvaluatorVersion` object, which contains evaluation prompt.

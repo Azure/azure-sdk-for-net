@@ -7,63 +7,47 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary>
     /// Base class for backup copies. Workload-specific backup copies are derived from this class.
-    /// Please note <see cref="BackupGenericRecoveryPoint"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="FileShareRecoveryPoint"/>, <see cref="WorkloadPointInTimeRecoveryPoint"/>, <see cref="WorkloadRecoveryPoint"/>, <see cref="WorkloadSapAsePointInTimeRecoveryPoint"/>, <see cref="WorkloadSapAseRecoveryPoint"/>, <see cref="WorkloadSapHanaPointInTimeRecoveryPoint"/>, <see cref="WorkloadSapHanaRecoveryPoint"/>, <see cref="WorkloadSqlPointInTimeRecoveryPoint"/>, <see cref="WorkloadSqlRecoveryPoint"/>, <see cref="GenericRecoveryPoint"/> and <see cref="IaasVmRecoveryPoint"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="FileShareRecoveryPoint"/>, <see cref="WorkloadPointInTimeRecoveryPoint"/>, <see cref="WorkloadRecoveryPoint"/>, <see cref="WorkloadSapHanaPointInTimeRecoveryPoint"/>, <see cref="WorkloadSapHanaRecoveryPoint"/>, <see cref="WorkloadSapAsePointInTimeRecoveryPoint"/>, <see cref="WorkloadSapAseRecoveryPoint"/>, <see cref="WorkloadSqlPointInTimeRecoveryPoint"/>, <see cref="WorkloadSqlRecoveryPoint"/>, <see cref="GenericRecoveryPoint"/>, and <see cref="IaasVmRecoveryPoint"/>.
     /// </summary>
     public abstract partial class BackupGenericRecoveryPoint
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BackupGenericRecoveryPoint"/>. </summary>
-        protected BackupGenericRecoveryPoint()
+        /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
+        private protected BackupGenericRecoveryPoint(string objectType)
         {
+            ObjectType = objectType;
+            ThreatInfo = new ChangeTrackingList<RecoveryPointThreatInformation>();
         }
 
         /// <summary> Initializes a new instance of <see cref="BackupGenericRecoveryPoint"/>. </summary>
         /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BackupGenericRecoveryPoint(string objectType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="threatStatus"> Threat status of the recovery point. </param>
+        /// <param name="threatInfo"> Recovery point threat information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BackupGenericRecoveryPoint(string objectType, RecoveryPointThreatStatus? threatStatus, IList<RecoveryPointThreatInformation> threatInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ObjectType = objectType;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            ThreatStatus = threatStatus;
+            ThreatInfo = threatInfo;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </summary>
         internal string ObjectType { get; set; }
+
+        /// <summary> Threat status of the recovery point. </summary>
+        public RecoveryPointThreatStatus? ThreatStatus { get; set; }
+
+        /// <summary> Recovery point threat information. </summary>
+        public IList<RecoveryPointThreatInformation> ThreatInfo { get; }
     }
 }

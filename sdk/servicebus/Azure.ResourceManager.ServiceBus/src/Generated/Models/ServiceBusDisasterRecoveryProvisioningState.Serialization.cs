@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
 {
     internal static partial class ServiceBusDisasterRecoveryProvisioningStateExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ServiceBusDisasterRecoveryProvisioningState value) => value switch
         {
             ServiceBusDisasterRecoveryProvisioningState.Accepted => "Accepted",
@@ -19,11 +20,21 @@ namespace Azure.ResourceManager.ServiceBus.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ServiceBusDisasterRecoveryProvisioningState value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static ServiceBusDisasterRecoveryProvisioningState ToServiceBusDisasterRecoveryProvisioningState(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Accepted")) return ServiceBusDisasterRecoveryProvisioningState.Accepted;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Succeeded")) return ServiceBusDisasterRecoveryProvisioningState.Succeeded;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Failed")) return ServiceBusDisasterRecoveryProvisioningState.Failed;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Accepted"))
+            {
+                return ServiceBusDisasterRecoveryProvisioningState.Accepted;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Succeeded"))
+            {
+                return ServiceBusDisasterRecoveryProvisioningState.Succeeded;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Failed"))
+            {
+                return ServiceBusDisasterRecoveryProvisioningState.Failed;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ServiceBusDisasterRecoveryProvisioningState value.");
         }
     }

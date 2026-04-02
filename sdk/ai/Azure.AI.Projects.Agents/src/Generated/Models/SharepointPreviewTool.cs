@@ -9,7 +9,7 @@ using OpenAI;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The input definition information for a sharepoint tool as used to configure an agent. </summary>
-    public partial class SharepointPreviewTool : AgentTool
+    public partial class SharepointPreviewTool : ProjectsAgentTool
     {
         /// <summary> Initializes a new instance of <see cref="SharepointPreviewTool"/>. </summary>
         /// <param name="toolOptions"> The sharepoint grounding tool parameters. </param>

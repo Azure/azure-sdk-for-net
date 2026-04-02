@@ -5,7 +5,9 @@ using Azure.Generator.Management.Models;
 using Azure.Generator.Provisioning.Primitives;
 using Azure.Generator.Provisioning.Utilities;
 using Azure.Provisioning;
+using Azure.Provisioning.Authorization;
 using Azure.Provisioning.Primitives;
+using Azure.Provisioning.Roles;
 using Microsoft.TypeSpec.Generator;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
@@ -20,6 +22,8 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
+using BicepFunction = Azure.Provisioning.Expressions.BicepFunction;
+using BicepIdentifierExpression = Azure.Provisioning.Expressions.IdentifierExpression;
 
 namespace Azure.Generator.Provisioning.Providers
 {
@@ -30,18 +34,16 @@ namespace Azure.Generator.Provisioning.Providers
     /// </summary>
     internal class ProvisioningResourceProvider : ModelProvider, IProvisioningPropertyInfo
     {
-        private const string FlattenPropertyDecoratorName = "Azure.ResourceManager.@flattenProperty";
-
         // System properties that should always be output-only
         private static readonly HashSet<string> OutputOnlyProperties = new(StringComparer.OrdinalIgnoreCase)
         {
             "id", "systemData", "type"
         };
 
-        // System properties that should always be required
+        // System properties that should always be required, even when marked readOnly (path parameters)
         private static readonly HashSet<string> RequiredInputProperties = new(StringComparer.OrdinalIgnoreCase)
         {
-            "name", "location"
+            "name"
         };
 
         // Properties to skip entirely (type is implied by the resource type)
@@ -59,6 +61,11 @@ namespace Azure.Generator.Provisioning.Providers
         /// Used to build the C# Properties, Fields, and DefineProvisionableProperties() method.
         /// </summary>
         private readonly List<ResourcePropertyInfo> _allProperties;
+        /// <summary>
+        /// Lookup from InputModelProperty to ResourcePropertyInfo for O(1) access in
+        /// <see cref="IProvisioningPropertyInfo.GetProvisioningPropertyInfo"/>.
+        /// </summary>
+        private readonly Dictionary<InputModelProperty, ResourcePropertyInfo> _propertyLookup;
         /// <summary>
         /// Serialized property names that are writable in the create/update request body model.
         /// When the resource model is output-only (e.g., a ProxyResource with a separate create body),
@@ -88,14 +95,15 @@ namespace Azure.Generator.Provisioning.Providers
         /// <inheritdoc/>
         ProvisioningPropertyInfo? IProvisioningPropertyInfo.GetProvisioningPropertyInfo(InputModelProperty inputProp)
         {
-            var propInfo = _allProperties.FirstOrDefault(p => p.Property == inputProp);
-            if (propInfo == null) return null;
+            if (!_propertyLookup.TryGetValue(inputProp, out var propInfo))
+                return null;
             return new ProvisioningPropertyInfo(
                 propInfo.PropertyName,
                 propInfo.IsOutput,
                 propInfo.IsRequired,
                 propInfo.BicepPath,
-                propInfo.DefaultValue);
+                propInfo.DefaultValue,
+                propInfo.TypeOverride);
         }
 
         /// <summary>
@@ -111,6 +119,7 @@ namespace Azure.Generator.Provisioning.Providers
                 : null;
             _createBodyWritableProperties = BuildCreateBodyWritableProperties();
             _allProperties = CollectAllProperties();
+            _propertyLookup = _allProperties.ToDictionary(p => p.Property);
         }
 
         /// <summary>
@@ -124,6 +133,7 @@ namespace Azure.Generator.Provisioning.Providers
             _defaultApiVersion = null;
             _createBodyWritableProperties = [];
             _allProperties = CollectAllProperties();
+            _propertyLookup = _allProperties.ToDictionary(p => p.Property);
         }
 
         public override void Reset()
@@ -282,6 +292,18 @@ namespace Azure.Generator.Provisioning.Providers
                 methods.Add(nameRequirementsMethod);
             }
 
+            // CreateRoleAssignment() overloads — only for resources that have RBAC roles
+            if (_inputModel.DiscriminatorValue == null && _resourceMetadata?.RbacRoles?.Count > 0)
+            {
+                var outputLibrary = (ProvisioningOutputLibrary)ProvisioningGenerator.Instance.OutputLibrary;
+                var builtInRole = outputLibrary.BuiltInRole;
+                if (builtInRole != null)
+                {
+                    methods.Add(BuildCreateRoleAssignmentWithIdentityMethod(builtInRole.Type));
+                    methods.Add(BuildCreateRoleAssignmentWithPrincipalMethod(builtInRole.Type));
+                }
+            }
+
             return [.. methods];
         }
 
@@ -357,14 +379,22 @@ namespace Azure.Generator.Provisioning.Providers
             var result = new List<ResourcePropertyInfo>();
             var seen = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
-            // Collect from the resource model and its base chain
-            CollectPropertiesFromModel(_inputModel, result, seen, basePath: null);
-
+            // Collect from the base chain first (top-most ancestor → immediate base),
+            // then from the resource model itself. This ensures inherited ARM common
+            // properties (name, location, tags) appear before leaf-defined properties
+            // (e.g., the "properties" bag), which controls the Bicep emission order.
+            var chain = new Stack<InputModelType>();
+            chain.Push(_inputModel);
             var baseModel = _inputModel.BaseModel;
             while (baseModel != null)
             {
-                CollectPropertiesFromModel(baseModel, result, seen, basePath: null);
+                chain.Push(baseModel);
                 baseModel = baseModel.BaseModel;
+            }
+
+            foreach (var model in chain)
+            {
+                CollectPropertiesFromModel(model, result, seen, basePath: null);
             }
 
             return result;
@@ -382,54 +412,41 @@ namespace Azure.Generator.Provisioning.Providers
 
                 var serializedName = prop.SerializedName ?? prop.Name;
 
-                // Check if this property should be flattened (only via explicit decorator)
-                bool shouldFlatten = prop.Decorators.Any(d => d.Name == FlattenPropertyDecoratorName);
+                if (seen.Contains(serializedName)) continue;
+                seen.Add(serializedName);
 
-                if (shouldFlatten && prop.Type is InputModelType flattenModel)
+                // Skip "type" property
+                if (SkipProperties.Contains(serializedName)) continue;
+
+                var bicepPath = basePath != null
+                    ? [.. basePath, serializedName]
+                    : new[] { serializedName };
+
+                var isOutput = (prop.IsReadOnly && !RequiredInputProperties.Contains(serializedName)
+                        && !_createBodyWritableProperties.Contains(serializedName))
+                    || OutputOnlyProperties.Contains(serializedName);
+                var isRequired = prop.IsRequired || RequiredInputProperties.Contains(serializedName);
+
+                var propertyName = prop.Name.ToIdentifierName();
+                // For singleton resources, the "name" property is output-only with a default value
+                string? defaultValue = null;
+                if (serializedName == "name"
+                    && _resourceMetadata?.SingletonResourceName is not null)
                 {
-                    var flattenPath = basePath != null
-                        ? [.. basePath, serializedName]
-                        : new[] { serializedName };
-
-                    // Flatten the child model's properties
-                    CollectPropertiesFromModel(flattenModel, result, seen, flattenPath);
-
-                    // Also walk the child model's base chain
-                    var childBase = flattenModel.BaseModel;
-                    while (childBase != null)
-                    {
-                        CollectPropertiesFromModel(childBase, result, seen, flattenPath);
-                        childBase = childBase.BaseModel;
-                    }
+                    defaultValue = _resourceMetadata.SingletonResourceName;
+                    isOutput = true;
                 }
-                else
+                // Ensure "location" at the resource level always uses AzureLocation,
+                // even when the TypeSpec defines it as plain string.
+                // TODO - this is currently a workaround until we have a more reliable way to detect such violations from the spec level.
+                CSharpType? typeOverride = null;
+                if (basePath is null
+                    && string.Equals(serializedName, "location", StringComparison.OrdinalIgnoreCase))
                 {
-                    if (seen.Contains(serializedName)) continue;
-                    seen.Add(serializedName);
-
-                    // Skip "type" property
-                    if (SkipProperties.Contains(serializedName)) continue;
-
-                    var bicepPath = basePath != null
-                        ? [.. basePath, serializedName]
-                        : new[] { serializedName };
-
-                    var isOutput = (prop.IsReadOnly && !RequiredInputProperties.Contains(serializedName)
-                            && !_createBodyWritableProperties.Contains(serializedName))
-                        || OutputOnlyProperties.Contains(serializedName);
-                    var isRequired = prop.IsRequired || RequiredInputProperties.Contains(serializedName);
-
-                    var propertyName = prop.Name.ToIdentifierName();
-                    // For singleton resources, the "name" property is output-only with a default value
-                    string? defaultValue = null;
-                    if (serializedName == "name"
-                        && _resourceMetadata?.SingletonResourceName is not null)
-                    {
-                        defaultValue = _resourceMetadata.SingletonResourceName;
-                        isOutput = true;
-                    }
-                    result.Add(new ResourcePropertyInfo(prop, propertyName, bicepPath, isOutput, isRequired, defaultValue));
+                    typeOverride = new CSharpType(typeof(BicepValue<>), typeof(Azure.Core.AzureLocation));
                 }
+
+                result.Add(new ResourcePropertyInfo(prop, propertyName, bicepPath, isOutput, isRequired, defaultValue, typeOverride));
             }
         }
 
@@ -643,6 +660,149 @@ namespace Azure.Generator.Provisioning.Providers
             return result;
         }
 
+        // ── CreateRoleAssignment helpers ─────────────────────────────
+
+        /// <summary>
+        /// Builds: CreateRoleAssignment(XxxBuiltInRole role, UserAssignedIdentity identity)
+        /// </summary>
+        private MethodProvider BuildCreateRoleAssignmentWithIdentityMethod(CSharpType builtInRoleType)
+        {
+            var roleParam = new ParameterProvider("role", $"The role to grant.", builtInRoleType);
+            var identityParam = new ParameterProvider("identity", $"The <see cref=\"UserAssignedIdentity\"/>.", typeof(UserAssignedIdentity));
+
+            var sig = new MethodSignature(
+                "CreateRoleAssignment",
+                $"Creates a role assignment for a user-assigned identity that grants access to this {Name}.",
+                MethodSignatureModifiers.Public,
+                typeof(RoleAssignment),
+                $"The <see cref=\"RoleAssignment\"/>.",
+                [roleParam, identityParam]);
+
+            var resultVar = new VariableExpression(typeof(RoleAssignment), "result");
+            var roleNameVar = new VariableExpression(typeof(string), "roleName");
+
+            // string roleName = XxxBuiltInRole.GetBuiltInRoleName(role);
+            var getRoleName = Static(builtInRoleType).Invoke("GetBuiltInRoleName", [(ValueExpression)roleParam]);
+
+            // Constructor arg: $"{BicepIdentifier}_{identity.BicepIdentifier}_{roleName}"
+            var constructorArg = new FormattableStringExpression(
+                "{0}_{1}_{2}",
+                [
+                    new MemberExpression(null, "BicepIdentifier"),
+                    new MemberExpression(identityParam, "BicepIdentifier"),
+                    roleNameVar
+                ]);
+
+            // BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString())
+            var roleDefId = Static(typeof(BicepFunction)).Invoke(
+                "GetSubscriptionResourceId",
+                [Literal("Microsoft.Authorization/roleDefinitions"), ((ValueExpression)roleParam).InvokeToString()]);
+
+            MethodBodyStatement[] body = [
+                Declare(roleNameVar, getRoleName),
+                Declare(resultVar, New.Instance(typeof(RoleAssignment), [constructorArg])),
+                resultVar.Property("Name").Assign(
+                    Static(typeof(BicepFunction)).Invoke("CreateGuid", [
+                        new MemberExpression(null, "Id"),
+                        new MemberExpression(identityParam, "PrincipalId"),
+                        roleDefId
+                    ])
+                ).Terminate(),
+                resultVar.Property("Scope").Assign(
+                    New.Instance(typeof(BicepIdentifierExpression), [new MemberExpression(null, "BicepIdentifier")])
+                ).Terminate(),
+                resultVar.Property("PrincipalType").Assign(
+                    new MemberExpression(Static(typeof(RoleManagementPrincipalType)), nameof(RoleManagementPrincipalType.ServicePrincipal))
+                ).Terminate(),
+                resultVar.Property("RoleDefinitionId").Assign(roleDefId).Terminate(),
+                resultVar.Property("PrincipalId").Assign(
+                    new MemberExpression(identityParam, "PrincipalId")
+                ).Terminate(),
+                Return(resultVar)
+            ];
+
+            return new MethodProvider(sig, body, this);
+        }
+
+        /// <summary>
+        /// Builds: CreateRoleAssignment(XxxBuiltInRole role, BicepValue&lt;RoleManagementPrincipalType&gt; principalType, BicepValue&lt;Guid&gt; principalId, string? bicepIdentifierSuffix)
+        /// </summary>
+        private MethodProvider BuildCreateRoleAssignmentWithPrincipalMethod(CSharpType builtInRoleType)
+        {
+            var roleParam = new ParameterProvider("role", $"The role to grant.", builtInRoleType);
+            var principalTypeParam = new ParameterProvider(
+                "principalType",
+                $"The type of the principal to assign to.",
+                new CSharpType(typeof(BicepValue<>)).MakeGenericType([typeof(RoleManagementPrincipalType)]));
+            var principalIdParam = new ParameterProvider(
+                "principalId",
+                $"The principal to assign to.",
+                new CSharpType(typeof(BicepValue<>)).MakeGenericType([typeof(Guid)]));
+            var suffixParam = new ParameterProvider(
+                "bicepIdentifierSuffix",
+                $"Optional role assignment identifier name suffix.",
+                new CSharpType(typeof(string), true),
+                DefaultOf(new CSharpType(typeof(string), true)));
+
+            var sig = new MethodSignature(
+                "CreateRoleAssignment",
+                $"Creates a role assignment for a principal that grants access to this {Name}.",
+                MethodSignatureModifiers.Public,
+                typeof(RoleAssignment),
+                $"The <see cref=\"RoleAssignment\"/>.",
+                [roleParam, principalTypeParam, principalIdParam, suffixParam]);
+
+            var resultVar = new VariableExpression(typeof(RoleAssignment), "result");
+            var roleNameVar = new VariableExpression(typeof(string), "roleName");
+            var suffixSepVar = new VariableExpression(typeof(string), "suffixSep");
+
+            // string roleName = XxxBuiltInRole.GetBuiltInRoleName(role);
+            var getRoleName = Static(builtInRoleType).Invoke("GetBuiltInRoleName", [(ValueExpression)roleParam]);
+
+            // string suffixSep = bicepIdentifierSuffix is null ? "" : "_";
+            var declareSuffixSep = Declare(suffixSepVar, new TernaryConditionalExpression(
+                ((ValueExpression)suffixParam).Is(Null),
+                Literal(""),
+                Literal("_")));
+
+            // Constructor arg: $"{BicepIdentifier}_{roleName}{suffixSep}{bicepIdentifierSuffix}"
+            var constructorArg = new FormattableStringExpression(
+                "{0}_{1}{2}{3}",
+                [
+                    new MemberExpression(null, "BicepIdentifier"),
+                    roleNameVar,
+                    suffixSepVar,
+                    (ValueExpression)suffixParam
+                ]);
+
+            // BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString())
+            var roleDefId = Static(typeof(BicepFunction)).Invoke(
+                "GetSubscriptionResourceId",
+                [Literal("Microsoft.Authorization/roleDefinitions"), ((ValueExpression)roleParam).InvokeToString()]);
+
+            MethodBodyStatement[] body = [
+                Declare(roleNameVar, getRoleName),
+                declareSuffixSep,
+                Declare(resultVar, New.Instance(typeof(RoleAssignment), [constructorArg])),
+                resultVar.Property("Name").Assign(
+                    Static(typeof(BicepFunction)).Invoke("CreateGuid", [
+                        new MemberExpression(null, "Id"),
+                        (ValueExpression)principalIdParam,
+                        roleDefId
+                    ])
+                ).Terminate(),
+                resultVar.Property("Scope").Assign(
+                    New.Instance(typeof(BicepIdentifierExpression), [new MemberExpression(null, "BicepIdentifier")])
+                ).Terminate(),
+                resultVar.Property("PrincipalType").Assign((ValueExpression)principalTypeParam).Terminate(),
+                resultVar.Property("RoleDefinitionId").Assign(roleDefId).Terminate(),
+                resultVar.Property("PrincipalId").Assign((ValueExpression)principalIdParam).Terminate(),
+                Return(resultVar)
+            ];
+
+            return new MethodProvider(sig, body, this);
+        }
+
         // ── Type resolution helpers ──────────────────────────────────
 
         private CSharpType GetPropertyType(InputModelProperty prop)
@@ -700,7 +860,8 @@ namespace Azure.Generator.Provisioning.Providers
             string[] BicepPath,
             bool IsOutput,
             bool IsRequired,
-            string? DefaultValue = null);
+            string? DefaultValue = null,
+            CSharpType? TypeOverride = null);
 
         // ── ResourceVersions nested class ────────────────────────────
 

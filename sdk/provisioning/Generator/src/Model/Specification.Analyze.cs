@@ -651,9 +651,11 @@ public abstract partial class Specification
         // Extract the version after the marker - it follows after some whitespace/punctuation
         string rest = summary[(idx + marker.Length)..].Trim().TrimStart('.').Trim();
 
-        // Match YYYY-MM-DD, optionally followed by hyphenated suffix (e.g., "-preview", "-PREVIEW")
-        // The suffix must start with a hyphen to avoid greedily matching into subsequent text.
-        Match match = Regex.Match(rest, @"(\d{4}-\d{2}-\d{2}(?:-[a-zA-Z][\w.]*)*)");
+        // Match YYYY-MM-DD, optionally followed by a hyphenated suffix like "-preview".
+        // The suffix must start with a hyphen and contain only lowercase letters/digits.
+        // This avoids greedily matching into subsequent text like "Resource" or class names
+        // that immediately follow the version in flattened XML doc comments (no space separator).
+        Match match = Regex.Match(rest, @"(\d{4}-\d{2}-\d{2}(?:-[a-z][a-z0-9]*)?)");
         return match.Success ? match.Groups[1].Value.TrimEnd('.') : null;
     }
 
