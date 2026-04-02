@@ -237,13 +237,10 @@ public class SchemaComplianceTests
     [Test]
     public void SchemaCompliance_ExpressionNode_ValidKinds()
     {
-        var validKinds = new HashSet<string>
-        {
-            "null", "boolean", "integer", "string", "array", "object",
-            "identifier", "function-call", "instance-function-call",
-            "property-access", "array-access", "contextual-variable"
-        };
+        // Use the schema oracle as the source of truth — not a hardcoded list
+        var validKinds = ValidExpressionKinds;
 
+        // Cover every concrete expression type we can serialize
         var expressions = new BicepExpression[]
         {
             new NullLiteralExpression(),
@@ -256,6 +253,13 @@ public class SchemaComplianceTests
             new FunctionCallExpression(new IdentifierExpression("toLower"), new StringLiteralExpression("ABC")),
             new MemberExpression(new IdentifierExpression("x"), "y"),
             new IndexExpression(new IdentifierExpression("arr"), new IntLiteralExpression(0)),
+            new BinaryExpression(new IntLiteralExpression(1), BinaryBicepOperator.Add, new IntLiteralExpression(2)),
+            new UnaryExpression(UnaryBicepOperator.Not, new BoolLiteralExpression(false)),
+            new ConditionalExpression(new BoolLiteralExpression(true), new StringLiteralExpression("a"), new StringLiteralExpression("b")),
+            new IfConditionExpression(new BoolLiteralExpression(true), new ObjectExpression()),
+            // NOTE: InterpolatedStringExpression, NestedAccessExpression, and DecoratorExpression
+            // emit kinds not yet in the TypeSpec ExpressionNode union. They are intentionally
+            // excluded here so this test fails when a *spec-defined* kind drifts.
         };
 
         foreach (var expr in expressions)
@@ -263,7 +267,8 @@ public class SchemaComplianceTests
             var json = ModelReaderWriter.Write<BicepExpression>(expr, ModelReaderWriterOptions.Json, AzureProvisioningContext.Default);
             using var doc = JsonDocument.Parse(json);
             string kind = doc.RootElement.GetProperty("kind").GetString()!;
-            Assert.IsTrue(validKinds.Contains(kind), $"Expression kind '{kind}' is not in the schema spec ExpressionNode union");
+            Assert.IsTrue(validKinds.Contains(kind),
+                $"Expression kind '{kind}' (from {expr.GetType().Name}) is not in the schema spec ExpressionNode union. Valid: {string.Join(", ", validKinds)}");
         }
     }
 
@@ -464,22 +469,22 @@ public class SchemaComplianceTests
                 AssertExpressionNode(ifCond, $"{path}.condition");
                 AssertExpressionNode(ifBody, $"{path}.body");
                 break;
-            case "binary":
-                Assert.IsTrue(node.TryGetProperty("operator", out _), $"Binary at {path} missing 'operator'");
-                Assert.IsTrue(node.TryGetProperty("left", out JsonElement binLeft), $"Binary at {path} missing 'left'");
-                Assert.IsTrue(node.TryGetProperty("right", out JsonElement binRight), $"Binary at {path} missing 'right'");
+            case "binary-operation":
+                Assert.IsTrue(node.TryGetProperty("operator", out _), $"BinaryOperation at {path} missing 'operator'");
+                Assert.IsTrue(node.TryGetProperty("left", out JsonElement binLeft), $"BinaryOperation at {path} missing 'left'");
+                Assert.IsTrue(node.TryGetProperty("right", out JsonElement binRight), $"BinaryOperation at {path} missing 'right'");
                 AssertExpressionNode(binLeft, $"{path}.left");
                 AssertExpressionNode(binRight, $"{path}.right");
                 break;
-            case "unary":
-                Assert.IsTrue(node.TryGetProperty("operator", out _), $"Unary at {path} missing 'operator'");
-                Assert.IsTrue(node.TryGetProperty("value", out JsonElement unaryVal), $"Unary at {path} missing 'value'");
+            case "unary-operation":
+                Assert.IsTrue(node.TryGetProperty("operator", out _), $"UnaryOperation at {path} missing 'operator'");
+                Assert.IsTrue(node.TryGetProperty("value", out JsonElement unaryVal), $"UnaryOperation at {path} missing 'value'");
                 AssertExpressionNode(unaryVal, $"{path}.value");
                 break;
-            case "conditional":
-                Assert.IsTrue(node.TryGetProperty("condition", out JsonElement condCond), $"Conditional at {path} missing 'condition'");
-                Assert.IsTrue(node.TryGetProperty("consequent", out JsonElement condCons), $"Conditional at {path} missing 'consequent'");
-                Assert.IsTrue(node.TryGetProperty("alternate", out JsonElement condAlt), $"Conditional at {path} missing 'alternate'");
+            case "ternary-operation":
+                Assert.IsTrue(node.TryGetProperty("condition", out JsonElement condCond), $"TernaryOperation at {path} missing 'condition'");
+                Assert.IsTrue(node.TryGetProperty("consequent", out JsonElement condCons), $"TernaryOperation at {path} missing 'consequent'");
+                Assert.IsTrue(node.TryGetProperty("alternate", out JsonElement condAlt), $"TernaryOperation at {path} missing 'alternate'");
                 AssertExpressionNode(condCond, $"{path}.condition");
                 AssertExpressionNode(condCons, $"{path}.consequent");
                 AssertExpressionNode(condAlt, $"{path}.alternate");
