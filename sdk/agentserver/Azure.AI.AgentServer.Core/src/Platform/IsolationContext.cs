@@ -64,24 +64,12 @@ public class IsolationContext
     public static IsolationContext FromRequest(HttpRequest request)
     {
         string? userKey = request.Headers.TryGetValue(UserIsolationKeyHeaderName, out var userValue)
-            ? userValue.ToString()
+            ? NormalizeHeaderValue(userValue)
             : null;
 
         string? chatKey = request.Headers.TryGetValue(ChatIsolationKeyHeaderName, out var chatValue)
-            ? chatValue.ToString()
+            ? NormalizeHeaderValue(chatValue)
             : null;
-
-        // Treat empty strings as absent — the platform never sends empty values,
-        // but defensive handling avoids surprising null-vs-empty behaviour.
-        if (string.IsNullOrEmpty(userKey))
-        {
-            userKey = null;
-        }
-
-        if (string.IsNullOrEmpty(chatKey))
-        {
-            chatKey = null;
-        }
 
         if (userKey is null && chatKey is null)
         {
@@ -89,6 +77,29 @@ public class IsolationContext
         }
 
         return new IsolationContext(userKey, chatKey);
+    }
+
+    /// <summary>
+    /// Normalizes a header value for use as an isolation key.
+    /// Uses the first value when multiple are present and trims whitespace,
+    /// returning <see langword="null"/> when the result is empty or whitespace.
+    /// </summary>
+    /// <param name="values">The raw header values.</param>
+    /// <returns>A normalized header value or <see langword="null"/>.</returns>
+    private static string? NormalizeHeaderValue(Microsoft.Extensions.Primitives.StringValues values)
+    {
+        if (values.Count == 0)
+        {
+            return null;
+        }
+
+        string? first = values[0];
+        if (string.IsNullOrWhiteSpace(first))
+        {
+            return null;
+        }
+
+        return first.Trim();
     }
 
     /// <summary>

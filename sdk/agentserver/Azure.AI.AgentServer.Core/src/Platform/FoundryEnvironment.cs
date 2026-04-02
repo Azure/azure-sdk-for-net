@@ -61,8 +61,8 @@ public static class FoundryEnvironment
 
     /// <summary>
     /// Indicates whether the process is running in a Foundry hosted environment.
-    /// Returns <c>true</c> when any of <see cref="ProjectEndpoint"/>,
-    /// <see cref="AgentName"/>, or <see cref="AgentVersion"/> is set
+    /// Returns <c>true</c> when <see cref="ProjectEndpoint"/>,
+    /// <see cref="AgentName"/>, and <see cref="AgentVersion"/> are all set
     /// <b>and</b> the .NET hosting environment is not <c>Development</c>.
     /// </summary>
     /// <remarks>
@@ -119,8 +119,8 @@ public static class FoundryEnvironment
             ?? Environment.GetEnvironmentVariable("DOTNET_ENVIRONMENT");
         var isDevelopment = string.Equals(hostingEnv, "Development", StringComparison.OrdinalIgnoreCase);
         var hasFoundryVars = !string.IsNullOrWhiteSpace(ProjectEndpoint)
-            || !string.IsNullOrWhiteSpace(AgentName)
-            || !string.IsNullOrWhiteSpace(AgentVersion);
+            && !string.IsNullOrWhiteSpace(AgentName)
+            && !string.IsNullOrWhiteSpace(AgentVersion);
         IsHosted = hasFoundryVars && !isDevelopment;
     }
 }

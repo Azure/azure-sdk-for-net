@@ -69,6 +69,46 @@ public class IsolationContextFromRequestTests
     }
 
     [Test]
+    public void FromRequest_WhitespaceOnlyHeaders_TreatedAsAbsent()
+    {
+        var httpContext = new DefaultHttpContext();
+        httpContext.Request.Headers[IsolationContext.UserIsolationKeyHeaderName] = "   ";
+        httpContext.Request.Headers[IsolationContext.ChatIsolationKeyHeaderName] = "\t";
+
+        var result = IsolationContext.FromRequest(httpContext.Request);
+
+        Assert.That(result, Is.SameAs(IsolationContext.Empty));
+    }
+
+    [Test]
+    public void FromRequest_MultipleHeaderValues_UsesFirstValue()
+    {
+        var httpContext = new DefaultHttpContext();
+        httpContext.Request.Headers.Append(IsolationContext.UserIsolationKeyHeaderName, "first-user");
+        httpContext.Request.Headers.Append(IsolationContext.UserIsolationKeyHeaderName, "second-user");
+        httpContext.Request.Headers.Append(IsolationContext.ChatIsolationKeyHeaderName, "first-chat");
+        httpContext.Request.Headers.Append(IsolationContext.ChatIsolationKeyHeaderName, "second-chat");
+
+        var result = IsolationContext.FromRequest(httpContext.Request);
+
+        Assert.That(result.UserIsolationKey, Is.EqualTo("first-user"));
+        Assert.That(result.ChatIsolationKey, Is.EqualTo("first-chat"));
+    }
+
+    [Test]
+    public void FromRequest_HeaderWithLeadingTrailingWhitespace_IsTrimmed()
+    {
+        var httpContext = new DefaultHttpContext();
+        httpContext.Request.Headers[IsolationContext.UserIsolationKeyHeaderName] = "  user-key  ";
+        httpContext.Request.Headers[IsolationContext.ChatIsolationKeyHeaderName] = " chat-key ";
+
+        var result = IsolationContext.FromRequest(httpContext.Request);
+
+        Assert.That(result.UserIsolationKey, Is.EqualTo("user-key"));
+        Assert.That(result.ChatIsolationKey, Is.EqualTo("chat-key"));
+    }
+
+    [Test]
     public void FromRequest_EqualKeysInOneToOneChat_BothPopulated()
     {
         // In a 1:1 user↔agent chat the two keys are equal.

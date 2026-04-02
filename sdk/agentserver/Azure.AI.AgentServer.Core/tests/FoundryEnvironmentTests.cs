@@ -179,40 +179,61 @@ public class FoundryEnvironmentTests
     // ---------------------------------------------------------------
 
     [Test]
-    public void IsHosted_ReturnsTrue_WhenEndpointSet_AndNotDevelopment()
+    public void IsHosted_ReturnsTrue_WhenAllFoundryVarsSet_AndNotDevelopment()
     {
         Environment.SetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT", "https://example.com");
-        FoundryEnvironment.Reload();
-        Assert.That(FoundryEnvironment.IsHosted, Is.True);
-    }
-
-    [Test]
-    public void IsHosted_ReturnsFalse_WhenEndpointNotSet()
-    {
-        FoundryEnvironment.Reload();
-        Assert.That(FoundryEnvironment.IsHosted, Is.False);
-    }
-
-    [Test]
-    public void IsHosted_ReturnsTrue_WhenOnlyAgentNameSet()
-    {
         Environment.SetEnvironmentVariable("FOUNDRY_AGENT_NAME", "my-agent");
-        FoundryEnvironment.Reload();
-        Assert.That(FoundryEnvironment.IsHosted, Is.True);
-    }
-
-    [Test]
-    public void IsHosted_ReturnsTrue_WhenOnlyAgentVersionSet()
-    {
         Environment.SetEnvironmentVariable("FOUNDRY_AGENT_VERSION", "1.0.0");
         FoundryEnvironment.Reload();
         Assert.That(FoundryEnvironment.IsHosted, Is.True);
     }
 
     [Test]
-    public void IsHosted_ReturnsFalse_WhenAgentNameSet_ButDevelopment()
+    public void IsHosted_ReturnsFalse_WhenNoFoundryVarsSet()
+    {
+        FoundryEnvironment.Reload();
+        Assert.That(FoundryEnvironment.IsHosted, Is.False);
+    }
+
+    [Test]
+    public void IsHosted_ReturnsFalse_WhenOnlyAgentNameSet()
     {
         Environment.SetEnvironmentVariable("FOUNDRY_AGENT_NAME", "my-agent");
+        FoundryEnvironment.Reload();
+        Assert.That(FoundryEnvironment.IsHosted, Is.False);
+    }
+
+    [Test]
+    public void IsHosted_ReturnsFalse_WhenOnlyAgentVersionSet()
+    {
+        Environment.SetEnvironmentVariable("FOUNDRY_AGENT_VERSION", "1.0.0");
+        FoundryEnvironment.Reload();
+        Assert.That(FoundryEnvironment.IsHosted, Is.False);
+    }
+
+    [Test]
+    public void IsHosted_ReturnsFalse_WhenOnlyEndpointSet()
+    {
+        Environment.SetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT", "https://example.com");
+        FoundryEnvironment.Reload();
+        Assert.That(FoundryEnvironment.IsHosted, Is.False);
+    }
+
+    [Test]
+    public void IsHosted_ReturnsFalse_WhenEndpointAndNameSet_ButMissingVersion()
+    {
+        Environment.SetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT", "https://example.com");
+        Environment.SetEnvironmentVariable("FOUNDRY_AGENT_NAME", "my-agent");
+        FoundryEnvironment.Reload();
+        Assert.That(FoundryEnvironment.IsHosted, Is.False);
+    }
+
+    [Test]
+    public void IsHosted_ReturnsFalse_WhenAllVarsSet_ButDevelopment()
+    {
+        Environment.SetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT", "https://example.com");
+        Environment.SetEnvironmentVariable("FOUNDRY_AGENT_NAME", "my-agent");
+        Environment.SetEnvironmentVariable("FOUNDRY_AGENT_VERSION", "1.0.0");
         Environment.SetEnvironmentVariable("ASPNETCORE_ENVIRONMENT", "Development");
         FoundryEnvironment.Reload();
         Assert.That(FoundryEnvironment.IsHosted, Is.False);
@@ -222,6 +243,8 @@ public class FoundryEnvironmentTests
     public void IsHosted_ReturnsFalse_WhenAspNetCoreEnvironmentIsDevelopment()
     {
         Environment.SetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT", "https://example.com");
+        Environment.SetEnvironmentVariable("FOUNDRY_AGENT_NAME", "my-agent");
+        Environment.SetEnvironmentVariable("FOUNDRY_AGENT_VERSION", "1.0.0");
         Environment.SetEnvironmentVariable("ASPNETCORE_ENVIRONMENT", "Development");
         FoundryEnvironment.Reload();
         Assert.That(FoundryEnvironment.IsHosted, Is.False);
@@ -231,6 +254,8 @@ public class FoundryEnvironmentTests
     public void IsHosted_ReturnsFalse_WhenDotNetEnvironmentIsDevelopment()
     {
         Environment.SetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT", "https://example.com");
+        Environment.SetEnvironmentVariable("FOUNDRY_AGENT_NAME", "my-agent");
+        Environment.SetEnvironmentVariable("FOUNDRY_AGENT_VERSION", "1.0.0");
         Environment.SetEnvironmentVariable("DOTNET_ENVIRONMENT", "Development");
         FoundryEnvironment.Reload();
         Assert.That(FoundryEnvironment.IsHosted, Is.False);
@@ -240,6 +265,8 @@ public class FoundryEnvironmentTests
     public void IsHosted_ReturnsFalse_WhenDevelopment_CaseInsensitive()
     {
         Environment.SetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT", "https://example.com");
+        Environment.SetEnvironmentVariable("FOUNDRY_AGENT_NAME", "my-agent");
+        Environment.SetEnvironmentVariable("FOUNDRY_AGENT_VERSION", "1.0.0");
         Environment.SetEnvironmentVariable("ASPNETCORE_ENVIRONMENT", "development");
         FoundryEnvironment.Reload();
         Assert.That(FoundryEnvironment.IsHosted, Is.False);
@@ -249,6 +276,8 @@ public class FoundryEnvironmentTests
     public void IsHosted_ReturnsTrue_WhenEnvironmentIsProduction()
     {
         Environment.SetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT", "https://example.com");
+        Environment.SetEnvironmentVariable("FOUNDRY_AGENT_NAME", "my-agent");
+        Environment.SetEnvironmentVariable("FOUNDRY_AGENT_VERSION", "1.0.0");
         Environment.SetEnvironmentVariable("ASPNETCORE_ENVIRONMENT", "Production");
         FoundryEnvironment.Reload();
         Assert.That(FoundryEnvironment.IsHosted, Is.True);
@@ -258,6 +287,8 @@ public class FoundryEnvironmentTests
     public void IsHosted_AspNetCoreEnvironment_TakesPrecedence_OverDotNetEnvironment()
     {
         Environment.SetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT", "https://example.com");
+        Environment.SetEnvironmentVariable("FOUNDRY_AGENT_NAME", "my-agent");
+        Environment.SetEnvironmentVariable("FOUNDRY_AGENT_VERSION", "1.0.0");
         Environment.SetEnvironmentVariable("ASPNETCORE_ENVIRONMENT", "Production");
         Environment.SetEnvironmentVariable("DOTNET_ENVIRONMENT", "Development");
         FoundryEnvironment.Reload();
