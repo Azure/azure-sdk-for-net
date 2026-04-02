@@ -24,7 +24,7 @@ var credential = new ClientCertificateCredential(tenantId, clientId, certificate
 
 Applications running on platforms which provide a secure certificate store, such as the Windows Certificate Store on Windows, and the KeyChain on macOS, might prefer to store and retrieve certificates from there.
 
-`ClientCertificateCredential` supports locating certificates by thumbrprint via a certificate path:
+`ClientCertificateCredential` supports locating certificates by thumbprint via a certificate path:
 ```C# Snippet:Identity_CertificateCredential_CreateWithPath_Store
 var credential = new ClientCertificateCredential(tenantId, clientId, "cert:/CurrentUser/My/E661583E8FABEF4C0BEF694CBC41C28FB81CD870");
 ```
