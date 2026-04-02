@@ -931,6 +931,34 @@ namespace Azure.Generator.Mgmt.Tests
         }
 
         [TestCase]
+        public void PopulateArguments_CollectionBodyParameter_UsesRequestContentCreate()
+        {
+            // When the body parameter is a collection type (e.g. IEnumerable<string>), should generate
+            // RequestContent.Create(body) instead of IEnumerable.ToRequestContent(body) which doesn't exist.
+            var registry = new ParameterContextRegistry(new List<ParameterContextMapping>());
+
+            var requestContentParam = new ParameterProvider("content", $"", typeof(RequestContent));
+            requestContentParam.Update(wireInfo: new WireInformation(default, string.Empty));
+
+            var contextVariable = new VariableExpression(typeof(RequestContext), "context");
+
+            var bodyParam = new ParameterProvider("body", $"", new CSharpType(typeof(IEnumerable<>), typeof(string)));
+            bodyParam.Update(wireInfo: new WireInformation(default, string.Empty), location: ParameterLocation.Body);
+
+            var arguments = registry.PopulateArguments(
+                _idVariable,
+                new List<ParameterProvider> { requestContentParam },
+                contextVariable,
+                new List<ParameterProvider> { bodyParam });
+
+            Assert.AreEqual(1, arguments.Count);
+            var displayString = arguments[0].ToDisplayString();
+            // Should use RequestContent.Create(body), not IEnumerable.ToRequestContent(body)
+            Assert.That(displayString, Does.Contain("RequestContent.Create"));
+            Assert.That(displayString, Does.Not.Contain("ToRequestContent"));
+        }
+
+        [TestCase]
         public void PopulateArguments_NonNullableFixedEnumToString_UsesToSerialString()
         {
             // Set up a pass-through parameter mapping (ContextualParameter is null)

@@ -26,12 +26,15 @@ namespace Azure.Generator.Management.Utilities
         };
 
         /// <summary>
-        /// Returns true if the type is a primitive type that can be passed directly to
+        /// Returns true if the type can be passed directly to
         /// <c>RequestContent.Create(value)</c> without model serialization.
+        /// This includes primitive types with direct overloads and collection types
+        /// which are serialized via the <c>RequestContent.Create(object)</c> overload.
         /// </summary>
         public static bool CanCreateRequestContent(this CSharpType type)
         {
-            return type.IsFrameworkType && _requestContentPrimitiveTypes.Contains(type.FrameworkType);
+            return (type.IsFrameworkType && _requestContentPrimitiveTypes.Contains(type.FrameworkType))
+                || type.IsCollection;
         }
         public static CSharpType WrapAsync(this CSharpType type, bool isAsync)
         {
