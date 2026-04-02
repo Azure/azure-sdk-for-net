@@ -100,14 +100,7 @@ namespace Azure.ResourceManager.Hci.Samples
             {
                 Properties = new ArcSettingsPatchProperties
                 {
-                    ConnectivityProperties = new ArcConnectivityProperties
-                    {
-                        Enabled = true,
-                        ServiceConfigurations =
-                        {
-                            new ServiceConfiguration(ServiceName.WAC, 6516)
-                        },
-                    },
+                    ConnectivityProperties = BinaryData.FromObjectAsJson(new { enabled = true }),
                 },
             };
             ArcSettingResource result = await arcSetting.UpdateAsync(patch);
