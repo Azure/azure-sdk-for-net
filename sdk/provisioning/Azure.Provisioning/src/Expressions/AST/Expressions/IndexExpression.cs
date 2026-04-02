@@ -7,6 +7,7 @@ public partial class IndexExpression(BicepExpression value, BicepExpression inde
 {
     public BicepExpression Value { get; } = value;
     public BicepExpression Index { get; } = index;
+    public bool FromEnd { get; set; }
     internal override BicepWriter Write(BicepWriter writer) =>
         writer.Append(Value).Append('[').Append(Index).Append(']');
 }

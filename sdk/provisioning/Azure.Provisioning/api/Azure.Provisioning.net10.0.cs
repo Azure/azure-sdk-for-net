@@ -801,6 +801,7 @@ namespace Azure.Provisioning.Expressions
     public partial class IndexExpression : Azure.Provisioning.Expressions.BicepExpression, System.ClientModel.Primitives.IJsonModel<Azure.Provisioning.Expressions.BicepExpression>, System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Expressions.BicepExpression>
     {
         public IndexExpression(Azure.Provisioning.Expressions.BicepExpression value, Azure.Provisioning.Expressions.BicepExpression index) { }
+        public bool FromEnd { get { throw null; } set { } }
         public Azure.Provisioning.Expressions.BicepExpression Index { get { throw null; } }
         public Azure.Provisioning.Expressions.BicepExpression Value { get { throw null; } }
         public override bool Equals(Azure.Provisioning.Expressions.BicepExpression? other) { throw null; }

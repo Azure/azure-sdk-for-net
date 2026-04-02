@@ -37,7 +37,11 @@ public partial class Infrastructure : IJsonModel<Infrastructure>
         }
 
         using JsonDocument document = JsonDocument.ParseValue(ref reader);
-        return DeserializeInfrastructure(document.RootElement)[0];
+        var infras = DeserializeInfrastructure(document.RootElement);
+
+        // Select the infra matching this instance's BicepName, or fall back to the first one
+        string targetFile = BicepName + ".bicep";
+        return infras.Find(i => i.BicepName + ".bicep" == targetFile) ?? infras[0];
     }
 
     BinaryData IPersistableModel<Infrastructure>.Write(ModelReaderWriterOptions options)

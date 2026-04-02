@@ -309,6 +309,16 @@ public class ModelReaderWriterTests
         SerializationTestHelpers.AssertExpressionRoundTrip(expr);
     }
 
+    [Test]
+    public void MRW_BicepExpression_InstanceFunctionCall_RoundTrips()
+    {
+        var expr = new InstanceFunctionCallExpression(
+            new IdentifierExpression("storageAccount"),
+            "listKeys",
+            new StringLiteralExpression("2024-01-01"));
+        SerializationTestHelpers.AssertExpressionRoundTrip(expr);
+    }
+
     #endregion
 
     #region BicepStatement MRW Tests

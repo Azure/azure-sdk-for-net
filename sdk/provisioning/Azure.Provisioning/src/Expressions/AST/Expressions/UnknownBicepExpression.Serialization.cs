@@ -83,13 +83,9 @@ internal partial class UnknownBicepExpression : IJsonModel<BicepExpression>
         BicepExpression index = DeserializeBicepExpression(element.GetProperty("index"));
         bool nullish = element.TryGetProperty("nullish", out JsonElement n) && n.GetBoolean();
         bool fromEnd = element.TryGetProperty("fromEnd", out JsonElement f) && f.GetBoolean();
-        if (fromEnd)
-        {
-            throw new NotSupportedException("Deserialization of array-access with fromEnd: true is not supported.");
-        }
         return nullish
             ? new SafeIndexExpression(baseExpr, index)
-            : new IndexExpression(baseExpr, index);
+            : new IndexExpression(baseExpr, index) { FromEnd = fromEnd };
     }
 
     private static BicepExpression DeserializeContextualVariable(JsonElement element)
