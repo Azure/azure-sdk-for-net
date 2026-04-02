@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.Projects.Memory;
 
 namespace Azure.AI.Projects;
 

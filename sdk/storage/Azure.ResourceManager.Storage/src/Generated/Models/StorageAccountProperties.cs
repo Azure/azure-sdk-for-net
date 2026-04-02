@@ -68,10 +68,8 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="isSkuConversionBlocked"> This property will be set to true or false on an event of ongoing migration. Default value is null. </param>
         /// <param name="isAccountMigrationInProgress"> If customer initiated account migration is in progress, the value will be true else it will be null. </param>
         /// <param name="geoPriorityReplicationStatus"> Status indicating whether Geo Priority Replication is enabled for the account. </param>
-        /// <param name="allowSharedKeyAccessForServices"> Indicate shared key access properties at service level. </param>
-        /// <param name="dataCollaborationPolicyProperties"> Data Collaboration policy for the storage account. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StorageAccountProperties(StorageAccountProvisioningState? provisioningState, StorageAccountEndpoints primaryEndpoints, AzureLocation? primaryLocation, StorageAccountStatus? statusOfPrimary, DateTimeOffset? lastGeoFailoverOn, AzureLocation? secondaryLocation, StorageAccountStatus? statusOfSecondary, DateTimeOffset? createdOn, StorageCustomDomain customDomain, StorageAccountSasPolicy sasPolicy, KeyPolicy keyPolicy, StorageAccountKeyCreationTime keyCreationTime, StorageAccountEndpoints secondaryEndpoints, StorageAccountEncryption encryption, StorageAccountAccessTier? accessTier, FilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication, bool? enableHttpsTrafficOnly, StorageAccountNetworkRuleSet networkRuleSet, bool? isSftpEnabled, bool? isLocalUserEnabled, bool? isExtendedGroupEnabled, bool? isHnsEnabled, GeoReplicationStatistics geoReplicationStats, bool? isFailoverInProgress, LargeFileSharesState? largeFileSharesState, IReadOnlyList<StoragePrivateEndpointConnectionData> privateEndpointConnections, StorageRoutingPreference routingPreference, DualStackEndpointPreference dualStackEndpointPreference, BlobRestoreStatus blobRestoreStatus, bool? allowBlobPublicAccess, StorageMinimumTlsVersion? minimumTlsVersion, bool? allowSharedKeyAccess, bool? isNfsV3Enabled, bool? allowCrossTenantReplication, bool? isDefaultToOAuthAuthentication, StoragePublicNetworkAccess? publicNetworkAccess, ImmutableStorageAccount immutableStorageWithVersioning, AllowedCopyScope? allowedCopyScope, StorageAccountSkuConversionStatus storageAccountSkuConversionStatus, StorageDnsEndpointType? dnsEndpointType, bool? isSkuConversionBlocked, bool? isAccountMigrationInProgress, GeoPriorityReplicationStatus geoPriorityReplicationStatus, StorageAccountSharedKeyAccessProperties allowSharedKeyAccessForServices, StorageDataCollaborationPolicyProperties dataCollaborationPolicyProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StorageAccountProperties(StorageAccountProvisioningState? provisioningState, StorageAccountEndpoints primaryEndpoints, AzureLocation? primaryLocation, StorageAccountStatus? statusOfPrimary, DateTimeOffset? lastGeoFailoverOn, AzureLocation? secondaryLocation, StorageAccountStatus? statusOfSecondary, DateTimeOffset? createdOn, StorageCustomDomain customDomain, StorageAccountSasPolicy sasPolicy, KeyPolicy keyPolicy, StorageAccountKeyCreationTime keyCreationTime, StorageAccountEndpoints secondaryEndpoints, StorageAccountEncryption encryption, StorageAccountAccessTier? accessTier, FilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication, bool? enableHttpsTrafficOnly, StorageAccountNetworkRuleSet networkRuleSet, bool? isSftpEnabled, bool? isLocalUserEnabled, bool? isExtendedGroupEnabled, bool? isHnsEnabled, GeoReplicationStatistics geoReplicationStats, bool? isFailoverInProgress, LargeFileSharesState? largeFileSharesState, IReadOnlyList<StoragePrivateEndpointConnectionData> privateEndpointConnections, StorageRoutingPreference routingPreference, DualStackEndpointPreference dualStackEndpointPreference, BlobRestoreStatus blobRestoreStatus, bool? allowBlobPublicAccess, StorageMinimumTlsVersion? minimumTlsVersion, bool? allowSharedKeyAccess, bool? isNfsV3Enabled, bool? allowCrossTenantReplication, bool? isDefaultToOAuthAuthentication, StoragePublicNetworkAccess? publicNetworkAccess, ImmutableStorageAccount immutableStorageWithVersioning, AllowedCopyScope? allowedCopyScope, StorageAccountSkuConversionStatus storageAccountSkuConversionStatus, StorageDnsEndpointType? dnsEndpointType, bool? isSkuConversionBlocked, bool? isAccountMigrationInProgress, GeoPriorityReplicationStatus geoPriorityReplicationStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             PrimaryEndpoints = primaryEndpoints;
@@ -116,8 +114,6 @@ namespace Azure.ResourceManager.Storage.Models
             IsSkuConversionBlocked = isSkuConversionBlocked;
             IsAccountMigrationInProgress = isAccountMigrationInProgress;
             GeoPriorityReplicationStatus = geoPriorityReplicationStatus;
-            AllowSharedKeyAccessForServices = allowSharedKeyAccessForServices;
-            DataCollaborationPolicyProperties = dataCollaborationPolicyProperties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -292,14 +288,6 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Status indicating whether Geo Priority Replication is enabled for the account. </summary>
         [WirePath("geoPriorityReplicationStatus")]
         internal GeoPriorityReplicationStatus GeoPriorityReplicationStatus { get; set; }
-
-        /// <summary> Indicate shared key access properties at service level. </summary>
-        [WirePath("allowSharedKeyAccessForServices")]
-        public StorageAccountSharedKeyAccessProperties AllowSharedKeyAccessForServices { get; set; }
-
-        /// <summary> Data Collaboration policy for the storage account. </summary>
-        [WirePath("dataCollaborationPolicyProperties")]
-        public StorageDataCollaborationPolicyProperties DataCollaborationPolicyProperties { get; set; }
 
         /// <summary> The key expiration period in days. </summary>
         [WirePath("keyPolicy.keyExpirationPeriodInDays")]

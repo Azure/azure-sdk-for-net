@@ -6,8 +6,7 @@
 
 - Added `ApplicationInsightsRestClientSettings` to support creating a `ApplicationInsightsRestClient` from `IConfiguration`, including configuration-based credential resolution and dependency injection registration.
   ([#56891](https://github.com/Azure/azure-sdk-for-net/pull/56891))
-- Changed gen-ai semantic convention attribute truncation from exempt to 256KB limit.
-  ([#57194](https://github.com/Azure/azure-sdk-for-net/pull/57194))
+
 ### Bugs Fixed
 
 - Fixed AOT warning regression by using the source generator for `ConfigurationBinder` calls.

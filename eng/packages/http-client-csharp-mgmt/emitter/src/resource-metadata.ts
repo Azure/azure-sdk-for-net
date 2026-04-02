@@ -720,7 +720,9 @@ function relocateCrossResourceListActions(
       // This means the operation is at the child resource's collection path.
       for (const candidate of validResources) {
         if (candidate === resource) continue;
-        if (!isPrefix(method.operationPath, candidate.metadata.resourceIdPattern))
+        if (
+          !isPrefix(method.operationPath, candidate.metadata.resourceIdPattern)
+        )
           continue;
         // Ensure the difference is exactly one segment (the resource name)
         const opSegments = method.operationPath
