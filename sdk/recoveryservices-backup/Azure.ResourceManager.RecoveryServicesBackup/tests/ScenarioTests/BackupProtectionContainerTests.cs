@@ -14,6 +14,7 @@ using NUnit.Framework;
 namespace Azure.ResourceManager.RecoveryServicesBackup.Tests
 {
     [NonParallelizable]
+    [Ignore("Recordings incompatible with TypeSpec-migrated Storage client. https://github.com/Azure/azure-sdk-for-net/issues/57679")]
     public class BackupProtectionContainerTests : RecoveryServicesBackupManagementTestBase
     {
         public BackupProtectionContainerTests(bool isAsnyc)
