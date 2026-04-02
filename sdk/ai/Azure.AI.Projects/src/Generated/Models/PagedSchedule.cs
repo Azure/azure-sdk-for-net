@@ -5,11 +5,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.AI.Projects;
 
-namespace Azure.Core
+namespace Azure.AI.Projects.Evaluation
 {
-    /// <summary> Paged collection of Schedule items. </summary>
     internal partial class PagedSchedule
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

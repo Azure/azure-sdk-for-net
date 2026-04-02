@@ -123,7 +123,7 @@ safe-outputs:
                 }
 
                 const body = item.message
-                  ? `${item.message} ${mentions.join(' ')}`
+                  ? `${item.message}\n\n//cc: ${mentions.join(' ')}`
                   : mentions.join(' ');
 
                 try {
@@ -418,12 +418,12 @@ This comment should be concise: a brief routing message and the @mentions only; 
 ```
 IF AzureSdkOwners were identified in Step 4:
     - Use `mention_owners` with:
-        message: "//cc: "
+        message: "Thank you for your feedback. Tagging and routing to the team member best able to assist"
         owners: "owner1, owner2"
 
 ELSE IF ServiceOwners were identified in Step 4 (Service Attention path):
     - Use `mention_owners` with:
-        message: "//cc: "
+        message: "Thank you for your feedback. Tagging and routing to the team member best able to assist"
         owners: "owner1, owner2"
 
 ELSE:
@@ -432,17 +432,52 @@ ELSE:
 
 ## Step 6: Analysis Comment
 
-Add a single analysis comment to the issue:
+Add a single analysis comment to the issue using `add_comment`:
 
-- Start with "🎯 Agentic Issue Triage"
-- Include "Thank you for your feedback. Tagging and routing to the team member best able to assist" when labels were applied and owners were identified
-- Provide a brief summary of the issue
 - Keep @mentions exclusively in Step 5; this comment contains analysis only
-- Include debugging strategies or reproduction steps if applicable
-- Suggest relevant resources or links that might help resolve the issue
-- If appropriate, break the issue into sub-tasks as a checklist
-- Note any similar open issues found via `search_issues`
-- Include analysis about label selection confidence and what other labels were considered
-- Use collapsed-by-default sections in GitHub markdown to keep the comment tidy; collapse all sections except the short main summary at the top
-- Limit all user-facing communication to this single analysis comment
 - Leave issue closure decisions to human reviewers; the "issue-addressed" label is not used during initial triage
+
+Use the following format exactly:
+
+```
+## 🎯 Agentic Issue Triage
+
+**Summary:** <one or two sentences describing the core issue>
+
+<details>
+<summary>📋 Issue Details</summary>
+
+**Package:** `<package name and version>`
+**Affected API:** `<class, method, or component>`
+**Scenarios:**
+- <scenario 1 description>
+- <scenario 2 description>
+
+**Root ask:** <what the author needs>
+</details>
+
+<details>
+<summary>🔎 Debugging / Reproduction Notes</summary>
+
+<diagnostic observations about the issue>
+
+**Suggested investigation steps:**
+1. <step 1>
+2. <step 2>
+3. <step 3>
+</details>
+
+<details>
+<summary>🏷️ Label Confidence</summary>
+
+- **Category:** `<label>` — <reasoning>
+- **Service:** `<label>` — <reasoning>
+- **Confidence:** <High|Medium|Low> — <justification>
+</details>
+```
+
+Rules for the sections:
+- The Summary is always visible; all three detail sections are collapsed by default
+  - 📋 Issue Details: extract package, affected API, and scenarios from the issue body; include root ask
+  - 🔎 Debugging / Reproduction Notes: include diagnostic observations and numbered investigation steps; note similar open issues found via `search_issues` if any
+  - 🏷️ Label Confidence: explain category and service label selection; state confidence as High, Medium, or Low with justification; note other labels considered and why they were rejected
