@@ -697,6 +697,7 @@ namespace Azure.AI.AgentServer.Responses
             public const string ConversationId = "gen_ai.conversation.id";
             public const string ErrorCode = "azure.ai.agentserver.responses.error.code";
             public const string ErrorMessage = "azure.ai.agentserver.responses.error.message";
+            public const string FoundryProjectId = "microsoft.foundry.project.id";
             public const string NamespacedConversationId = "azure.ai.agentserver.responses.conversation_id";
             public const string NamespacedResponseId = "azure.ai.agentserver.responses.response_id";
             public const string NamespacedStreaming = "azure.ai.agentserver.responses.streaming";
