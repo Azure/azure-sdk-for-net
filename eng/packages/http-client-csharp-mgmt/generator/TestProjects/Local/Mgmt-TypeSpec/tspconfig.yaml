@@ -4,3 +4,4 @@ options:
   "@azure-typespec/http-client-csharp-mgmt":
     namespace: "Azure.Generator.MgmtTypeSpec.Tests"
     enable-wire-path-attribute: true
+    skip-api-version-override: true

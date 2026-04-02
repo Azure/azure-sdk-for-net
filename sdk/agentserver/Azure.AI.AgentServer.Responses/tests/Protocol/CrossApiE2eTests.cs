@@ -693,15 +693,17 @@ public class CrossApiE2eTests : ProtocolTestBase
         var (responseId, sseResponse) = await StartBgStreamAndExtractIdAsync();
         try
         {
-            // Cancel immediately
+            // Cancel immediately — CancelAsync waits for handler to finish (up to 10s),
+            // so the handler exits via CancellationToken before this returns.
             var cancelResponse = await CancelResponseAsync(responseId);
             Assert.That(cancelResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
-            handlerGate.TrySetResult();
             await WaitForBackgroundCompletionAsync(responseId);
         }
         finally
         {
+            // Release gate as safety cleanup (handler already exited via cancellation).
+            handlerGate.TrySetResult();
             sseResponse.Dispose();
         }
 
@@ -726,14 +728,17 @@ public class CrossApiE2eTests : ProtocolTestBase
             // Wait for handler to have emitted deltas (deterministic gate)
             await deltasEmitted.Task.WaitAsync(TimeSpan.FromSeconds(5));
 
+            // CancelAsync waits for handler to finish (up to 10s),
+            // so the handler exits via CancellationToken before this returns.
             var cancelResponse = await CancelResponseAsync(responseId);
             Assert.That(cancelResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
-            handlerGate.TrySetResult();
             await WaitForBackgroundCompletionAsync(responseId);
         }
         finally
         {
+            // Release gate as safety cleanup (handler already exited via cancellation).
+            handlerGate.TrySetResult();
             sseResponse.Dispose();
         }
 
@@ -754,12 +759,15 @@ public class CrossApiE2eTests : ProtocolTestBase
         var (responseId, sseResponse) = await StartBgStreamAndExtractIdAsync();
         try
         {
+            // CancelAsync waits for handler to finish (up to 10s),
+            // so the handler exits via CancellationToken before this returns.
             await CancelResponseAsync(responseId);
-            handlerGate.TrySetResult();
             await WaitForBackgroundCompletionAsync(responseId);
         }
         finally
         {
+            // Release gate as safety cleanup (handler already exited via cancellation).
+            handlerGate.TrySetResult();
             sseResponse.Dispose();
         }
 
