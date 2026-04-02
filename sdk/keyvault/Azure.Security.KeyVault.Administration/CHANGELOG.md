@@ -1,6 +1,6 @@
 # Release History
 
-## 4.8.0-beta.1 (2026-03-31)
+## 4.8.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -11,7 +11,7 @@
 
 ### Bugs Fixed
 
-- Fixed challenge-based authentication to correctly parse tenant ID from DSTSv2 authority URIs. 
+- Fixed challenge-based authentication to correctly parse tenant ID from DSTSv2 authority URIs.
 
 ### Other Changes
 

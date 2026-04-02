@@ -1,6 +1,6 @@
 # Release History
 
-## 4.9.0-beta.1 (2026-03-31)
+## 4.9.0-beta.1 (2026-04-01)
 
 ### Features Added
 
@@ -29,7 +29,7 @@ Thank you to our developer community members who helped to make the Key Vault cl
 
 ### Other Changes
 
-- The default service version is now "7.6". 
+- The default service version is now "7.6".
 
 ## 4.8.0-beta.1 (2025-04-08)
 
