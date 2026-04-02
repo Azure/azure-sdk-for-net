@@ -33,12 +33,14 @@ public abstract class InvocationHandler
     /// <param name="invocationId">The invocation identifier.</param>
     /// <param name="request">The incoming HTTP request.</param>
     /// <param name="response">The outgoing HTTP response.</param>
+    /// <param name="context">Per-request context with isolation keys, headers, and query parameters.</param>
     /// <param name="cancellationToken">A token to observe for cancellation.</param>
     /// <returns>A task representing the async operation.</returns>
     public virtual Task GetAsync(
         string invocationId,
         HttpRequest request,
         HttpResponse response,
+        InvocationContext context,
         CancellationToken cancellationToken)
     {
         response.StatusCode = 404;
@@ -52,12 +54,14 @@ public abstract class InvocationHandler
     /// <param name="invocationId">The invocation identifier.</param>
     /// <param name="request">The incoming HTTP request.</param>
     /// <param name="response">The outgoing HTTP response.</param>
+    /// <param name="context">Per-request context with isolation keys, headers, and query parameters.</param>
     /// <param name="cancellationToken">A token to observe for cancellation.</param>
     /// <returns>A task representing the async operation.</returns>
     public virtual Task CancelAsync(
         string invocationId,
         HttpRequest request,
         HttpResponse response,
+        InvocationContext context,
         CancellationToken cancellationToken)
     {
         response.StatusCode = 404;
