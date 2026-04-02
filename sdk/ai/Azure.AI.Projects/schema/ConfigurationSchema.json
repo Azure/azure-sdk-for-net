@@ -13,6 +13,12 @@
               "format": "uri",
               "description": "Gets or sets the Endpoint."
             },
+            "Settings": {
+              "type": "object"
+            },
+            "AuthenticationPolicy": {
+              "type": "object"
+            },
             "Credential": {
               "$ref": "#/definitions/credential"
             },
@@ -33,6 +39,14 @@
       "allOf": [
         {
           "$ref": "#/definitions/azureOptions"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "UserAgentApplicationId": {
+              "type": "string"
+            }
+          }
         }
       ]
     }

@@ -737,8 +737,11 @@ namespace Azure.AI.Projects
         /// <param name="dataSchema"> The JSON schema (Draft 2020-12) for the evaluator's input data. This includes parameters like type, properties, required. </param>
         /// <param name="metrics"> List of output metrics produced by this evaluator. </param>
         /// <param name="codeText"> Inline code text for the evaluator. </param>
+        /// <param name="entryPoint"> The entry point Python file name for the uploaded evaluator code (e.g. 'answer_length_evaluator.py'). </param>
+        /// <param name="imageTag"> The container image tag to use for evaluator code execution. </param>
+        /// <param name="blobUri"> The blob URI for the evaluator storage. </param>
         /// <returns> A new <see cref="Evaluation.CodeBasedEvaluatorDefinition"/> instance for mocking. </returns>
-        public static CodeBasedEvaluatorDefinition CodeBasedEvaluatorDefinition(BinaryData initParameters = default, BinaryData dataSchema = default, IDictionary<string, EvaluatorMetric> metrics = default, string codeText = default)
+        public static CodeBasedEvaluatorDefinition CodeBasedEvaluatorDefinition(BinaryData initParameters = default, BinaryData dataSchema = default, IDictionary<string, EvaluatorMetric> metrics = default, string codeText = default, string entryPoint = default, string imageTag = default, string blobUri = default)
         {
             metrics ??= new ChangeTrackingDictionary<string, EvaluatorMetric>();
 
@@ -748,7 +751,10 @@ namespace Azure.AI.Projects
                 dataSchema,
                 metrics,
                 additionalBinaryDataProperties: null,
-                codeText);
+                codeText,
+                entryPoint,
+                imageTag,
+                blobUri);
         }
 
         /// <summary> Prompt-based evaluator. </summary>
@@ -1294,6 +1300,154 @@ namespace Azure.AI.Projects
         public static MemoryStoreDeleteScopeResponse MemoryStoreDeleteScopeResponse(string name = default, string scope = default, bool isDeleted = default)
         {
             return new MemoryStoreDeleteScopeResponse("memory_store.scope.deleted", name, scope, isDeleted, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Automatic Code Interpreter Tool Parameters. </summary>
+        /// <param name="fileIds"> An optional list of uploaded files to make available to your code. </param>
+        /// <param name="memoryLimit"></param>
+        /// <param name="networkPolicy"></param>
+        /// <returns> A new <see cref="Projects.AutoCodeInterpreterToolParam"/> instance for mocking. </returns>
+        public static AutoCodeInterpreterToolParam AutoCodeInterpreterToolParam(IEnumerable<string> fileIds = default, ContainerMemoryLimit? memoryLimit = default, ContainerNetworkPolicyParam networkPolicy = default)
+        {
+            fileIds ??= new ChangeTrackingList<string>();
+
+            return new AutoCodeInterpreterToolParam("auto", fileIds.ToList(), memoryLimit, networkPolicy, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// Network access policy for the container.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.ContainerNetworkPolicyDisabledParam"/> and <see cref="Projects.ContainerNetworkPolicyAllowlistParam"/>.
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns> A new <see cref="Projects.ContainerNetworkPolicyParam"/> instance for mocking. </returns>
+        public static ContainerNetworkPolicyParam ContainerNetworkPolicyParam(string @type = default)
+        {
+            return new UnknownContainerNetworkPolicyParam(new ContainerNetworkPolicyParamType(@type), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The ContainerNetworkPolicyDisabledParam. </summary>
+        /// <returns> A new <see cref="Projects.ContainerNetworkPolicyDisabledParam"/> instance for mocking. </returns>
+        public static ContainerNetworkPolicyDisabledParam ContainerNetworkPolicyDisabledParam()
+        {
+            return new ContainerNetworkPolicyDisabledParam(ContainerNetworkPolicyParamType.Disabled, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The ContainerNetworkPolicyAllowlistParam. </summary>
+        /// <param name="allowedDomains"> A list of allowed domains when type is `allowlist`. </param>
+        /// <param name="domainSecrets"> Optional domain-scoped secrets for allowlisted domains. </param>
+        /// <returns> A new <see cref="Projects.ContainerNetworkPolicyAllowlistParam"/> instance for mocking. </returns>
+        public static ContainerNetworkPolicyAllowlistParam ContainerNetworkPolicyAllowlistParam(IEnumerable<string> allowedDomains = default, IEnumerable<ContainerNetworkPolicyDomainSecretParam> domainSecrets = default)
+        {
+            allowedDomains ??= new ChangeTrackingList<string>();
+            domainSecrets ??= new ChangeTrackingList<ContainerNetworkPolicyDomainSecretParam>();
+
+            return new ContainerNetworkPolicyAllowlistParam(ContainerNetworkPolicyParamType.Allowlist, additionalBinaryDataProperties: null, allowedDomains.ToList(), domainSecrets.ToList());
+        }
+
+        /// <summary> The ContainerNetworkPolicyDomainSecretParam. </summary>
+        /// <param name="domain"> The domain associated with the secret. </param>
+        /// <param name="name"> The name of the secret to inject for the domain. </param>
+        /// <param name="value"> The secret value to inject for the domain. </param>
+        /// <returns> A new <see cref="Projects.ContainerNetworkPolicyDomainSecretParam"/> instance for mocking. </returns>
+        public static ContainerNetworkPolicyDomainSecretParam ContainerNetworkPolicyDomainSecretParam(string domain = default, string name = default, string value = default)
+        {
+            return new ContainerNetworkPolicyDomainSecretParam(domain, name, value, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> MCP tool filter. </summary>
+        /// <param name="toolNames"> List of allowed tool names. </param>
+        /// <param name="readOnly">
+        /// Indicates whether or not a tool modifies data or is read-only. If an
+        ///   MCP server is [annotated with `readOnlyHint`](https://modelcontextprotocol.io/specification/2025-06-18/schema#toolannotations-readonlyhint),
+        ///   it will match this filter.
+        /// </param>
+        /// <returns> A new <see cref="Projects.MCPToolFilter"/> instance for mocking. </returns>
+        public static MCPToolFilter MCPToolFilter(IEnumerable<string> toolNames = default, bool? readOnly = default)
+        {
+            toolNames ??= new ChangeTrackingList<string>();
+
+            return new MCPToolFilter(toolNames.ToList(), readOnly, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The MCPToolRequireApproval. </summary>
+        /// <param name="always"></param>
+        /// <param name="never"></param>
+        /// <returns> A new <see cref="Projects.MCPToolRequireApproval"/> instance for mocking. </returns>
+        public static MCPToolRequireApproval MCPToolRequireApproval(MCPToolFilter always = default, MCPToolFilter never = default)
+        {
+            return new MCPToolRequireApproval(always, never, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Policy configuration for a toolbox, including content safety and other governance settings. </summary>
+        /// <param name="raiConfig"> Responsible AI content filtering configuration. </param>
+        /// <returns> A new <see cref="Projects.ToolboxPolicies"/> instance for mocking. </returns>
+        public static ToolboxPolicies ToolboxPolicies(RaiConfig raiConfig = default)
+        {
+            return new ToolboxPolicies(raiConfig, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Configuration for Responsible AI (RAI) content filtering and safety features. </summary>
+        /// <param name="raiPolicyName"> The name of the RAI policy to apply. </param>
+        /// <returns> A new <see cref="Projects.RaiConfig"/> instance for mocking. </returns>
+        public static RaiConfig RaiConfig(string raiPolicyName = default)
+        {
+            return new RaiConfig(raiPolicyName, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A toolbox that stores reusable tool definitions for agents. </summary>
+        /// <param name="id"> The unique identifier of the toolbox. </param>
+        /// <param name="name"> The name of the toolbox. </param>
+        /// <param name="description"> A human-readable description of the toolbox. </param>
+        /// <param name="versions"> The versions of the toolbox. </param>
+        /// <returns> A new <see cref="Projects.ToolboxObject"/> instance for mocking. </returns>
+        public static ToolboxObject ToolboxObject(string id = default, string name = default, string description = default, ToolboxObjectVersions versions = default)
+        {
+            return new ToolboxObject(
+                "toolbox",
+                id,
+                name,
+                description,
+                versions,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The ToolboxObjectVersions. </summary>
+        /// <param name="latest"> The latest version of the toolbox. </param>
+        /// <returns> A new <see cref="Projects.ToolboxObjectVersions"/> instance for mocking. </returns>
+        public static ToolboxObjectVersions ToolboxObjectVersions(ToolboxVersionObject latest = default)
+        {
+            return new ToolboxObjectVersions(latest, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Response returned when a toolbox is deleted. </summary>
+        /// <param name="name"> The name of the toolbox. </param>
+        /// <param name="deleted"> Whether the toolbox was successfully deleted. </param>
+        /// <returns> A new <see cref="Projects.DeleteToolboxResponse"/> instance for mocking. </returns>
+        public static DeleteToolboxResponse DeleteToolboxResponse(string name = default, bool deleted = default)
+        {
+            return new DeleteToolboxResponse("toolbox.deleted", name, deleted, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Response returned when a toolbox version is deleted. </summary>
+        /// <param name="name"> The name of the toolbox. </param>
+        /// <param name="version"> The version identifier that was deleted. </param>
+        /// <param name="deleted"> Whether the version was successfully deleted. </param>
+        /// <returns> A new <see cref="Projects.DeleteToolboxVersionResponse"/> instance for mocking. </returns>
+        public static DeleteToolboxVersionResponse DeleteToolboxVersionResponse(string name = default, string version = default, bool deleted = default)
+        {
+            return new DeleteToolboxVersionResponse("toolbox.version.deleted", name, version, deleted, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Code-based evaluator definition using python code. </summary>
+        /// <param name="initParameters"> The JSON schema (Draft 2020-12) for the evaluator's input parameters. This includes parameters like type, properties, required. </param>
+        /// <param name="dataSchema"> The JSON schema (Draft 2020-12) for the evaluator's input data. This includes parameters like type, properties, required. </param>
+        /// <param name="metrics"> List of output metrics produced by this evaluator. </param>
+        /// <param name="codeText"> Inline code text for the evaluator. </param>
+        /// <returns> A new <see cref="Evaluation.CodeBasedEvaluatorDefinition"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static CodeBasedEvaluatorDefinition CodeBasedEvaluatorDefinition(BinaryData initParameters, BinaryData dataSchema, IDictionary<string, EvaluatorMetric> metrics, string codeText)
+        {
+            return CodeBasedEvaluatorDefinition(initParameters, dataSchema, metrics, codeText, entryPoint: default, imageTag: default, blobUri: default);
         }
 
         /// <summary> Represents a request for a pending upload. </summary>

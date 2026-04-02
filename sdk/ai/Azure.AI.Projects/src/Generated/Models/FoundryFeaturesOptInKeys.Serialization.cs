@@ -16,6 +16,8 @@ namespace Azure.AI.Projects
             FoundryFeaturesOptInKeys.RedTeamsV1Preview => "RedTeams=V1Preview",
             FoundryFeaturesOptInKeys.InsightsV1Preview => "Insights=V1Preview",
             FoundryFeaturesOptInKeys.MemoryStoresV1Preview => "MemoryStores=V1Preview",
+            FoundryFeaturesOptInKeys.ToolsetV1Preview => "Toolsets=V1Preview",
+            FoundryFeaturesOptInKeys.ToolboxV1Preview => "Toolboxes=V1Preview",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown FoundryFeaturesOptInKeys value.")
         };
 
@@ -41,6 +43,14 @@ namespace Azure.AI.Projects
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "MemoryStores=V1Preview"))
             {
                 return FoundryFeaturesOptInKeys.MemoryStoresV1Preview;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Toolsets=V1Preview"))
+            {
+                return FoundryFeaturesOptInKeys.ToolsetV1Preview;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Toolboxes=V1Preview"))
+            {
+                return FoundryFeaturesOptInKeys.ToolboxV1Preview;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown FoundryFeaturesOptInKeys value.");
         }
