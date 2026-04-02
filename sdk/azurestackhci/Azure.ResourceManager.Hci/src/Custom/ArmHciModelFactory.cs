@@ -11,12 +11,9 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    // Backward-compat: preserves [Obsolete] from previous API version on backward-compat overloads
-    // TODO: remove these when https://github.com/Azure/azure-sdk-for-net/issues/57525 is resolved
-    [CodeGenSuppress("ArcSettingData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(HciProvisioningState?), typeof(string), typeof(Guid?), typeof(Guid?), typeof(Guid?), typeof(Guid?), typeof(ArcSettingAggregateState?), typeof(IEnumerable<PerNodeArcState>), typeof(BinaryData), typeof(IEnumerable<ArcDefaultExtensionDetails>))]
-    [CodeGenSuppress("ArcSettingPatch", typeof(IDictionary<string, string>), typeof(BinaryData))]
+    // TODO: remove when https://github.com/Azure/azure-sdk-for-net/issues/57525 is resolved
     [CodeGenSuppress("PerNodeExtensionState", typeof(string), typeof(string), typeof(string), typeof(NodeExtensionState?), typeof(ArcExtensionInstanceView))]
-    // ExtensionProfile is internal (read-only model), but generator emits public factory method referencing it, same as above
+    // ExtensionProfile is internal (read-only model), but generator emits public factory method referencing it
     [CodeGenSuppress("HciReportedProperties", typeof(HciEdgeDeviceState?), typeof(ExtensionProfile), typeof(DateTimeOffset?), typeof(ConfidentialVmProfile), typeof(HciNetworkProfile), typeof(HciOSProfile), typeof(SbeDeploymentPackageInfo), typeof(HciStorageProfile), typeof(string))]
     public static partial class ArmHciModelFactory
     {

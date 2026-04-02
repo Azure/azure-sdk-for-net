@@ -165,6 +165,16 @@ namespace Azure.ResourceManager.Hci.Models
             return new ArcDefaultExtensionDetails(category, consentOn, additionalBinaryDataProperties: null);
         }
 
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="connectivityProperties"> contains connectivity related configuration for ARC resources. </param>
+        /// <returns> A new <see cref="Models.ArcSettingPatch"/> instance for mocking. </returns>
+        public static ArcSettingPatch ArcSettingPatch(IDictionary<string, string> tags = default, BinaryData connectivityProperties = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ArcSettingPatch(tags, connectivityProperties is null ? default : new ArcSettingsPatchProperties(connectivityProperties, null), additionalBinaryDataProperties: null);
+        }
+
         /// <summary> The ArcPasswordCredential. </summary>
         /// <param name="secretText"></param>
         /// <param name="keyId"></param>
