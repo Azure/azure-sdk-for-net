@@ -84,12 +84,16 @@ try {
     }
     if (-not $ProjectDirectory)
     {
-        # Check if only CI config files changed for this service directory.
-        # If so, skip expensive codegen/snippet/API operations since ci*.yml
-        # changes don't affect generated code.
-        $onlyCiConfigChanged = Test-OnlyCiConfigChanged -ServiceDirectory $ServiceDirectory -RepoRoot $RepoRoot
-        if ($onlyCiConfigChanged) {
-            Write-Host "`nOnly CI config files (ci*.yml) changed in sdk/$ServiceDirectory — skipping codegen, snippets, and API export."
+        # In PR builds, check if only CI config files changed for this service directory.
+        # If so, skip expensive codegen/snippet/API operations since ci*.yml changes
+        # don't affect generated code. Only apply this optimization in PR builds —
+        # release and CI push pipelines should always run the full checks.
+        $onlyCiConfigChanged = $false
+        if ($env:BUILD_REASON -eq "PullRequest") {
+            $onlyCiConfigChanged = Test-OnlyCiConfigChanged -ServiceDirectory $ServiceDirectory -RepoRoot $RepoRoot
+            if ($onlyCiConfigChanged) {
+                Write-Host "`nOnly CI config files (ci*.yml) changed in sdk/$ServiceDirectory — skipping codegen, snippets, and API export."
+            }
         }
 
         Write-Host "Force .NET Welcome experience"
