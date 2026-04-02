@@ -14,7 +14,7 @@ namespace Azure.AI.AgentServer.Core.Tests;
 public class MultiProtocolCompositionTests
 {
     [Test]
-    public async Task DualProtocol_BothEndpointsReachable()
+    public async Task InvocationsEndpoint_AndHealthEndpoint_BothReachable()
     {
         var builder = AgentHost.CreateBuilder();
         builder.WebApplicationBuilder.WebHost.UseTestServer();
@@ -29,8 +29,8 @@ public class MultiProtocolCompositionTests
         var invocationResponse = await client.PostAsync("/invocations", new StringContent("test"));
         Assert.That(invocationResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
-        // GET /healthy works
-        var healthResponse = await client.GetAsync("/healthy");
+        // GET /readiness works
+        var healthResponse = await client.GetAsync("/readiness");
         Assert.That(healthResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
         await app.App.StopAsync();

@@ -24,7 +24,7 @@ var agentId = System.Environment.GetEnvironmentVariable("FOUNDRY_AGENT_ID");
 var lookbackHours = int.Parse(System.Environment.GetEnvironmentVariable("TRACE_LOOKBACK_HOURS"));
 DateTimeOffset endTime = DateTimeOffset.Now;
 AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
-EvaluationClient evaluationClient = projectClient.OpenAI.GetEvaluationClient();
+EvaluationClient evaluationClient = projectClient.ProjectOpenAIClient.GetEvaluationClient();
 ```
 
 2. To get the traces IDs for the Agent we will create and run the query our Application Insights.

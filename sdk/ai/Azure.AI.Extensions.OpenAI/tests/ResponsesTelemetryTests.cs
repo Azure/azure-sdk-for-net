@@ -67,7 +67,7 @@ public partial class ResponsesTelemetryTests : ProjectsOpenAITestBase
 
         AIProjectClient projectClient = GetTestProjectClient();
         var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
-        ProjectResponsesClient client = projectClient.OpenAI.GetProjectResponsesClientForModel(modelDeploymentName);
+        ProjectResponsesClient client = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForModel(modelDeploymentName);
 
         ResponseResult response = await client.CreateResponseAsync("What is 2+2?");
         response = await WaitForRun(client, response);
@@ -98,7 +98,7 @@ public partial class ResponsesTelemetryTests : ProjectsOpenAITestBase
 
         AIProjectClient projectClient = GetTestProjectClient();
         var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
-        ProjectResponsesClient client = projectClient.OpenAI.GetProjectResponsesClientForModel(modelDeploymentName);
+        ProjectResponsesClient client = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForModel(modelDeploymentName);
 
         ResponseResult response = await client.CreateResponseAsync("What is 2+2?");
         response = await WaitForRun(client, response);
@@ -130,7 +130,7 @@ public partial class ResponsesTelemetryTests : ProjectsOpenAITestBase
 
         AIProjectClient projectClient = GetTestProjectClient();
         var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
-        ProjectResponsesClient client = projectClient.OpenAI.GetProjectResponsesClientForModel(modelDeploymentName);
+        ProjectResponsesClient client = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForModel(modelDeploymentName);
 
         ResponseResult response = await client.CreateResponseAsync("What is 2+2?");
         response = await WaitForRun(client, response);
@@ -156,7 +156,7 @@ public partial class ResponsesTelemetryTests : ProjectsOpenAITestBase
             Instructions = "You are a helpful assistant."
         };
         var agentName = "responseTelemetryTestAgent";
-        ProjectsAgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+        ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             agentName,
             new ProjectsAgentVersionCreationOptions(agentDefinition));
 
@@ -170,7 +170,7 @@ public partial class ResponsesTelemetryTests : ProjectsOpenAITestBase
             };
             #pragma warning restore OPENAI001
 
-            ProjectResponsesClient client = projectClient.OpenAI.GetProjectResponsesClient();
+            ProjectResponsesClient client = projectClient.ProjectOpenAIClient.GetProjectResponsesClient();
             ResponseResult response = await client.CreateResponseAsync(options);
             response = await WaitForRun(client, response);
 
@@ -183,7 +183,7 @@ public partial class ResponsesTelemetryTests : ProjectsOpenAITestBase
         }
         finally
         {
-            await projectClient.Agents.DeleteAgentAsync(agentName: agentName);
+            await projectClient.AgentAdministrationClient.DeleteAgentAsync(agentName: agentName);
         }
     }
 

@@ -49,10 +49,8 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="immutableStorageWithVersioning"> The property is immutable and can only be set to true at the account creation time. When set to true, it enables object level immutability for all the new containers in the account by default. </param>
         /// <param name="dnsEndpointType"> Allows you to specify the type of endpoint. Set this to AzureDNSZone to create a large number of accounts in a single subscription, which creates accounts in an Azure DNS Zone and the endpoint URL will have an alphanumeric DNS Zone identifier. </param>
         /// <param name="geoPriorityReplicationStatus"> Status indicating whether Geo Priority Replication is enabled for the account. </param>
-        /// <param name="allowSharedKeyAccessForServices"> Indicate shared key access properties at service level. </param>
-        /// <param name="dataCollaborationPolicyProperties"> Data Collaboration policy for the storage account. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StorageAccountPropertiesCreateParameters(AllowedCopyScope? allowedCopyScope, StoragePublicNetworkAccess? publicNetworkAccess, StorageAccountSasPolicy sasPolicy, KeyPolicy keyPolicy, StorageCustomDomain customDomain, StorageAccountEncryption encryption, StorageAccountNetworkRuleSet networkRuleSet, StorageAccountAccessTier? accessTier, FilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication, bool? enableHttpsTrafficOnly, bool? isSftpEnabled, bool? isLocalUserEnabled, bool? isExtendedGroupEnabled, bool? isHnsEnabled, LargeFileSharesState? largeFileSharesState, StorageRoutingPreference routingPreference, DualStackEndpointPreference dualStackEndpointPreference, bool? allowBlobPublicAccess, StorageMinimumTlsVersion? minimumTlsVersion, bool? allowSharedKeyAccess, bool? isNfsV3Enabled, bool? allowCrossTenantReplication, bool? isDefaultToOAuthAuthentication, ImmutableStorageAccount immutableStorageWithVersioning, StorageDnsEndpointType? dnsEndpointType, GeoPriorityReplicationStatus geoPriorityReplicationStatus, StorageAccountSharedKeyAccessProperties allowSharedKeyAccessForServices, StorageDataCollaborationPolicyProperties dataCollaborationPolicyProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StorageAccountPropertiesCreateParameters(AllowedCopyScope? allowedCopyScope, StoragePublicNetworkAccess? publicNetworkAccess, StorageAccountSasPolicy sasPolicy, KeyPolicy keyPolicy, StorageCustomDomain customDomain, StorageAccountEncryption encryption, StorageAccountNetworkRuleSet networkRuleSet, StorageAccountAccessTier? accessTier, FilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication, bool? enableHttpsTrafficOnly, bool? isSftpEnabled, bool? isLocalUserEnabled, bool? isExtendedGroupEnabled, bool? isHnsEnabled, LargeFileSharesState? largeFileSharesState, StorageRoutingPreference routingPreference, DualStackEndpointPreference dualStackEndpointPreference, bool? allowBlobPublicAccess, StorageMinimumTlsVersion? minimumTlsVersion, bool? allowSharedKeyAccess, bool? isNfsV3Enabled, bool? allowCrossTenantReplication, bool? isDefaultToOAuthAuthentication, ImmutableStorageAccount immutableStorageWithVersioning, StorageDnsEndpointType? dnsEndpointType, GeoPriorityReplicationStatus geoPriorityReplicationStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AllowedCopyScope = allowedCopyScope;
             PublicNetworkAccess = publicNetworkAccess;
@@ -80,8 +78,6 @@ namespace Azure.ResourceManager.Storage.Models
             ImmutableStorageWithVersioning = immutableStorageWithVersioning;
             DnsEndpointType = dnsEndpointType;
             GeoPriorityReplicationStatus = geoPriorityReplicationStatus;
-            AllowSharedKeyAccessForServices = allowSharedKeyAccessForServices;
-            DataCollaborationPolicyProperties = dataCollaborationPolicyProperties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -188,14 +184,6 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Status indicating whether Geo Priority Replication is enabled for the account. </summary>
         [WirePath("geoPriorityReplicationStatus")]
         internal GeoPriorityReplicationStatus GeoPriorityReplicationStatus { get; set; }
-
-        /// <summary> Indicate shared key access properties at service level. </summary>
-        [WirePath("allowSharedKeyAccessForServices")]
-        public StorageAccountSharedKeyAccessProperties AllowSharedKeyAccessForServices { get; set; }
-
-        /// <summary> Data Collaboration policy for the storage account. </summary>
-        [WirePath("dataCollaborationPolicyProperties")]
-        public StorageDataCollaborationPolicyProperties DataCollaborationPolicyProperties { get; set; }
 
         /// <summary> The key expiration period in days. </summary>
         [WirePath("keyPolicy.keyExpirationPeriodInDays")]

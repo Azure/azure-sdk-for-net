@@ -8,12 +8,16 @@ using Azure.AI.Projects;
 
 namespace Azure.AI.Projects.Evaluation
 {
-    internal partial class AzureAIAgentTarget : EvaluationTarget
+    /// <summary> Represents a target specifying an Azure AI agent. </summary>
+    public partial class AzureAIAgentTarget : EvaluationTarget
     {
         /// <summary> Initializes a new instance of <see cref="AzureAIAgentTarget"/>. </summary>
         /// <param name="name"> The unique identifier of the Azure AI agent. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public AzureAIAgentTarget(string name) : base("azure_ai_agent")
         {
+            Argument.AssertNotNull(name, nameof(name));
+
             Name = name;
             ToolDescriptions = new ChangeTrackingList<ToolDescription>();
         }

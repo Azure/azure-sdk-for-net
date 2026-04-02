@@ -7,8 +7,8 @@ The Azure AI Agent Server libraries let you build ASP.NET Core servers that impl
 | Package | Description | NuGet |
 |---------|-------------|-------|
 | [Azure.AI.AgentServer.Core](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Core) | Shared hosting foundation: library-owned ASP.NET Core host with OpenTelemetry, health checks, server user-agent header, and multi-protocol composition. | [![NuGet](https://img.shields.io/nuget/vpre/Azure.AI.AgentServer.Core.svg)](https://www.nuget.org/packages/Azure.AI.AgentServer.Core) |
-| Azure.AI.AgentServer.Responses *(coming soon)* | Responses protocol implementation: SSE streaming, background execution, response lifecycle management, and `IResponseHandler` interface. | [![NuGet](https://img.shields.io/nuget/vpre/Azure.AI.AgentServer.Responses.svg)](https://www.nuget.org/packages/Azure.AI.AgentServer.Responses) |
-| Azure.AI.AgentServer.Invocations *(coming soon)* | Invocations protocol implementation: `InvocationHandler` abstract class, session resolution, client header forwarding, and invocation lifecycle. | [![NuGet](https://img.shields.io/nuget/vpre/Azure.AI.AgentServer.Invocations.svg)](https://www.nuget.org/packages/Azure.AI.AgentServer.Invocations) |
+| [Azure.AI.AgentServer.Responses](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Responses) | Responses protocol implementation: SSE streaming, background execution, response lifecycle management, and `ResponseHandler` interface. | [![NuGet](https://img.shields.io/nuget/vpre/Azure.AI.AgentServer.Responses.svg)](https://www.nuget.org/packages/Azure.AI.AgentServer.Responses) |
+| [Azure.AI.AgentServer.Invocations](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Invocations) | Invocations protocol implementation: `InvocationHandler` abstract class, session resolution, client header forwarding, and invocation lifecycle. | [![NuGet](https://img.shields.io/nuget/vpre/Azure.AI.AgentServer.Invocations.svg)](https://www.nuget.org/packages/Azure.AI.AgentServer.Invocations) |
 
 ## When to use which package
 
@@ -19,19 +19,55 @@ The Azure AI Agent Server libraries let you build ASP.NET Core servers that impl
 
 ## Getting started
 
-The fastest way to get a server running:
+### Responses protocol
 
-```csharp
-using Azure.AI.AgentServer.Core;
+The fastest way to get a Responses protocol server running:
 
-var builder = AgentHost.CreateBuilder();
+```C# Snippet:Responses_ReadMe_ConfigureServer_Tier1
+ResponsesServer.Run<EchoHandler>();
+```
 
-// Protocol packages provide extension methods to register their endpoints.
-// Example (requires a protocol package such as Azure.AI.AgentServer.Responses):
-// builder.AddResponses<MyHandler>();
+Where `EchoHandler` implements the Responses protocol:
 
-var app = builder.Build();
-app.Run();
+```C# Snippet:Responses_ReadMe_EchoHandler
+public class EchoHandler : ResponseHandler
+{
+    public override IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
+        CreateResponse request,
+        ResponseContext context,
+        CancellationToken cancellationToken)
+    {
+        return new TextResponse(context, request,
+            createText: ct =>
+            {
+                var input = request.GetInputText();
+                return Task.FromResult($"Echo: {input}");
+            });
+    }
+}
+```
+
+### Invocations protocol
+
+The fastest way to get an Invocations protocol server running:
+
+```C# Snippet:Invocations_Sample1_StartServer
+InvocationsServer.Run<EchoHandler>();
+```
+
+Where `EchoHandler` implements the Invocations protocol:
+
+```C# Snippet:Invocations_Sample1_EchoHandler
+public class EchoHandler : InvocationHandler
+{
+    public override async Task HandleAsync(
+        HttpRequest request, HttpResponse response,
+        InvocationContext context, CancellationToken cancellationToken)
+    {
+        var input = await new StreamReader(request.Body).ReadToEndAsync(cancellationToken);
+        await response.WriteAsync($"You said: {input}", cancellationToken);
+    }
+}
 ```
 
 See each package's README for detailed getting started instructions.

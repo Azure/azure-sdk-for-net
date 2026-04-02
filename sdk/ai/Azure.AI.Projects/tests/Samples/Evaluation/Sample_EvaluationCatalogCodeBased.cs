@@ -253,7 +253,7 @@ public class Sample_EvaluationsCatalogCodeBased : SamplesBase
         var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
 #endif
         AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
-        EvaluationClient evaluationClient = projectClient.OpenAI.GetEvaluationClient();
+        EvaluationClient evaluationClient = projectClient.ProjectOpenAIClient.GetEvaluationClient();
         #endregion
         #region Snippet:Sample_CreateEvaluator_EvaluationsCatalogCodeBased_Async
         EvaluatorVersion promptEvaluator = await projectClient.Evaluators.CreateVersionAsync(
@@ -410,7 +410,7 @@ public class Sample_EvaluationsCatalogCodeBased : SamplesBase
         var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
 #endif
         AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
-        EvaluationClient evaluationClient = projectClient.OpenAI.GetEvaluationClient();
+        EvaluationClient evaluationClient = projectClient.ProjectOpenAIClient.GetEvaluationClient();
         #region Snippet:Sample_CreateEvaluator_EvaluationsCatalogCodeBased_Sync
         EvaluatorVersion promptEvaluator = projectClient.Evaluators.CreateVersion(
             name: "myCustomEvaluatorPrompt",
