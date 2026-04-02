@@ -20,11 +20,6 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
     /// <summary> Represents a cluster role. </summary>
     public partial class CosmosDBForPostgreSqlRoleData : ResourceData, IJsonModel<CosmosDBForPostgreSqlRoleData>
     {
-        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlRoleData"/> for deserialization. </summary>
-        internal CosmosDBForPostgreSqlRoleData()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

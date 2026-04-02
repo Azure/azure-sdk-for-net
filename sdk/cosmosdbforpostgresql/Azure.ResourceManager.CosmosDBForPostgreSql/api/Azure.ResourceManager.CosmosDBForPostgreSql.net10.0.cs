@@ -483,6 +483,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
     }
     public partial class CosmosDBForPostgreSqlRoleData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDBForPostgreSql.CosmosDBForPostgreSqlRoleData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDBForPostgreSql.CosmosDBForPostgreSqlRoleData>
     {
+        public CosmosDBForPostgreSqlRoleData() { }
         public CosmosDBForPostgreSqlRoleData(string password) { }
         public Azure.Core.ResourceIdentifier ObjectId { get { throw null; } set { } }
         public string Password { get { throw null; } set { } }
