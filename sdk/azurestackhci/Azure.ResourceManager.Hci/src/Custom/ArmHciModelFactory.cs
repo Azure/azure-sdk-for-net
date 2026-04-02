@@ -16,6 +16,8 @@ namespace Azure.ResourceManager.Hci.Models
     [CodeGenSuppress("ArcSettingData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(HciProvisioningState?), typeof(string), typeof(Guid?), typeof(Guid?), typeof(Guid?), typeof(Guid?), typeof(ArcSettingAggregateState?), typeof(IEnumerable<PerNodeArcState>), typeof(BinaryData), typeof(IEnumerable<ArcDefaultExtensionDetails>))]
     [CodeGenSuppress("ArcSettingPatch", typeof(IDictionary<string, string>), typeof(BinaryData))]
     [CodeGenSuppress("PerNodeExtensionState", typeof(string), typeof(string), typeof(string), typeof(NodeExtensionState?), typeof(ArcExtensionInstanceView))]
+    // ExtensionProfile is internal (read-only model), but generator emits public factory method referencing it, same as above
+    [CodeGenSuppress("HciReportedProperties", typeof(HciEdgeDeviceState?), typeof(ExtensionProfile), typeof(DateTimeOffset?), typeof(ConfidentialVmProfile), typeof(HciNetworkProfile), typeof(HciOSProfile), typeof(SbeDeploymentPackageInfo), typeof(HciStorageProfile), typeof(string))]
     public static partial class ArmHciModelFactory
     {
         /// <summary> Initializes a new instance of <see cref="Models.HciExtensionInstanceView"/>. </summary>

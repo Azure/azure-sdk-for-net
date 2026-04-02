@@ -1108,31 +1108,6 @@ namespace Azure.ResourceManager.Hci.Models
             return new HciArcEnabledEdgeDeviceProperties(deviceConfiguration, provisioningState, additionalBinaryDataProperties: null, reportedProperties);
         }
 
-        /// <param name="deviceState"> edge device state. </param>
-        /// <param name="extensionProfile"> Extensions details for edge device. </param>
-        /// <param name="lastSyncTimestamp"> Most recent edge device sync timestamp in UTC. </param>
-        /// <param name="confidentialVmProfile"> CVM support details for edge device. </param>
-        /// <param name="networkProfile"> HCI device network information. </param>
-        /// <param name="osProfile"> HCI device OS specific information. </param>
-        /// <param name="sbeDeploymentPackageInfo"> Solution builder extension (SBE) deployment package information. </param>
-        /// <param name="storageProfile"> Hci device storage specific information. </param>
-        /// <param name="hardwareProcessorType"> Process type of the device. </param>
-        /// <returns> A new <see cref="Models.HciReportedProperties"/> instance for mocking. </returns>
-        public static HciReportedProperties HciReportedProperties(HciEdgeDeviceState? deviceState = default, ExtensionProfile extensionProfile = default, DateTimeOffset? lastSyncTimestamp = default, ConfidentialVmProfile confidentialVmProfile = default, HciNetworkProfile networkProfile = default, HciOSProfile osProfile = default, SbeDeploymentPackageInfo sbeDeploymentPackageInfo = default, HciStorageProfile storageProfile = default, string hardwareProcessorType = default)
-        {
-            return new HciReportedProperties(
-                deviceState,
-                extensionProfile,
-                lastSyncTimestamp,
-                confidentialVmProfile,
-                additionalBinaryDataProperties: null,
-                networkProfile,
-                osProfile,
-                sbeDeploymentPackageInfo,
-                storageProfile,
-                hardwareProcessorType is null ? default : new HciHardwareProfile(hardwareProcessorType, null));
-        }
-
         /// <summary> The network profile of a device. </summary>
         /// <param name="nicDetails"> List of NIC Details of device. </param>
         /// <param name="switchDetails"> List of switch details for edge device. </param>
