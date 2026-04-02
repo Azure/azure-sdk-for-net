@@ -234,7 +234,8 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                     Pipeline,
                     message.Request,
                     response,
-                    OperationFinalStateVia.Location);
+                    OperationFinalStateVia.Location,
+                    true);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -294,7 +295,8 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                     Pipeline,
                     message.Request,
                     response,
-                    OperationFinalStateVia.Location);
+                    OperationFinalStateVia.Location,
+                    true);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);
@@ -344,7 +346,13 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 };
                 HttpMessage message = _fleetMembersRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ContainerServiceFleetArmOperation operation = new ContainerServiceFleetArmOperation(_fleetMembersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                ContainerServiceFleetArmOperation operation = new ContainerServiceFleetArmOperation(
+                    _fleetMembersClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location,
+                    true);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -394,7 +402,13 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 };
                 HttpMessage message = _fleetMembersRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ContainerServiceFleetArmOperation operation = new ContainerServiceFleetArmOperation(_fleetMembersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                ContainerServiceFleetArmOperation operation = new ContainerServiceFleetArmOperation(
+                    _fleetMembersClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location,
+                    true);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletionResponse(cancellationToken);
