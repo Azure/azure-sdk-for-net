@@ -106,9 +106,9 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
                 _client = client;
             }
 
-            #pragma warning disable CS8424
+#pragma warning disable CS8424
             public override async IAsyncEnumerable<Page<ContainerGroupProfileResource>> AsPages(string continuationToken = null, int? pageSizeHint = null)
-            #pragma warning restore CS8424
+#pragma warning restore CS8424
             {
 #pragma warning disable AZC0100
                 await foreach (Page<CGProfileResource> page in _inner.AsPages(continuationToken, pageSizeHint))

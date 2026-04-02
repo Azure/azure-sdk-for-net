@@ -158,9 +158,9 @@ namespace Azure.ResourceManager.ContainerInstance
                 _client = client;
             }
 
-            #pragma warning disable CS8424 // The EnumeratorCancellationAttribute on continuationToken (string) is inherited from base
+#pragma warning disable CS8424 // The EnumeratorCancellationAttribute on continuationToken (string) is inherited from base
             public override async IAsyncEnumerable<Page<ContainerGroupProfileRevisionResource>> AsPages(string continuationToken = null, int? pageSizeHint = null)
-            #pragma warning restore CS8424
+#pragma warning restore CS8424
             {
                 await foreach (Page<CGProfileResource> page in _inner.AsPages(continuationToken, pageSizeHint).ConfigureAwait(false))
                 {
