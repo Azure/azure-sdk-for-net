@@ -14,6 +14,7 @@ using NUnit.Framework;
 namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 {
     [NonParallelizable]
+    [Ignore("Recordings incompatible with TypeSpec-migrated Storage client. https://github.com/Azure/azure-sdk-for-net/issues/57679")]
     internal class LinkedServiceResourceTests : DataFactoryManagementTestBase
     {
         public LinkedServiceResourceTests(bool isAsync) : base(isAsync)//,RecordedTestMode.Record)
