@@ -49,7 +49,7 @@ dotnet add package Azure.AI.Language.Conversations.Authoring --prerelease
 
 ### Authenticate the client
 
-In order to interact with the Conversations Authoring service, you'll need to create an instance of the [`ConversationAnalysisAuthoringClient`][ConversationAnalysisAuthoringClient_class] class. You will need an **endpoint**, and an **API key** to instantiate a client object. For more information regarding authenticating with Cognitive Services, see [Authenticate requests to Azure Cognitive Services][cognitive_auth].
+In order to interact with the Conversations Authoring service, you'll need to create an instance of the [`ConversationAnalysisAuthoring`][ConversationAnalysisAuthoring_class] class. You will need an **endpoint**, and an **API key** to instantiate a client object. For more information regarding authenticating with Cognitive Services, see [Authenticate requests to Azure Cognitive Services][cognitive_auth].
 
 #### Get an API key
 
@@ -69,7 +69,7 @@ To use the AnalyzeConversationAuthoring client, include the following namespace 
 using Azure.AI.Language.Conversations.Authoring;
 ```
 
-With your endpoint and API key, you can instantiate a `ConversationAnalysisAuthoringClient` using specific service options:
+With your endpoint and API key, you can instantiate a `ConversationAnalysisAuthoring` client using specific service options:
 
 ```C# Snippet:CreateAuthoringClientForSpecificApiVersion
 Uri endpoint = new Uri("{endpoint}");
@@ -80,7 +80,7 @@ ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoin
 
 #### Create a client using Azure Active Directory authentication
 
-You can also create a `ConversationAnalysisAuthoringClient` using Azure Active Directory (AAD) authentication. Your user or service principal must be assigned the "Cognitive Services Language Reader" role.
+You can also create a `ConversationAnalysisAuthoring` client using Azure Active Directory (AAD) authentication. Your user or service principal must be assigned the "Cognitive Services Language Reader" role.
 Using the [DefaultAzureCredential] you can authenticate a service using Managed Identity or a service principal, authenticate as a developer working on an application, and more, all without changing code.
 
 Before you can use the `DefaultAzureCredential`, or any credential type from [Azure.Identity][azure_identity], you'll first need to [install the Azure.Identity package][azure_identity_install].
@@ -130,9 +130,9 @@ If you do not select an api version we will default to the latest version availa
 
 ## Key concepts
 
-### ConversationAuthoringClientlet
+### ConversationAnalysisAuthoring Client
 
-The [ConversationAuthoringProject][ConversationAuthoringProject_class], [ConversationAuthoringDeployment][ConversationAuthoringDeployment_class], [ConversationAuthoringExportedModel][ConversationAuthoringExportedModel_class] and [ConversationAuthoringTrainedModel][ConversationAuthoringTrainedModel_class] are the clientlets for developers using the Azure AI Conversation Authoring client library. It provides both synchronous and asynchronous operations to access a specific use of conversation authoring, such as creating and managing conversation projects.
+The [ConversationAnalysisAuthoring][ConversationAnalysisAuthoring_class] is the primary client for developers using the Azure AI Conversation Authoring client library. It provides both synchronous and asynchronous operations to access conversation authoring functionality, such as creating and managing conversation projects, deployments, trained models, and exported models.
 
 ### Thread safety
 
@@ -276,11 +276,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [text_refdocs]: https://learn.microsoft.com/dotnet/
 [text_docs]: https://learn.microsoft.com/azure/ai-services/language-service/conversational-language-understanding/overview
 [azure_sub]: https://azure.microsoft.com/free/dotnet/
-[ConversationAnalysisAuthoringClient_class]: https://github.com/azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations.Authoring/src/Generated/ConversationAnalysisAuthoringClient.cs
-[ConversationAuthoringProject_class]: https://github.com/azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations.Authoring/src/Generated/ConversationAuthoringProject.cs
-[ConversationAuthoringDeployment_class]: https://github.com/azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations.Authoring/src/Generated/ConversationAuthoringDeployment.cs
-[ConversationAuthoringExportedModel_class]: https://github.com/azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations.Authoring/src/Generated/ConversationAuthoringExportedModel.cs
-[ConversationAuthoringTrainedModel_class]: https://github.com/azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations.Authoring/src/Generated/ConversationAuthoringTrainedModel.cs
+[ConversationAnalysisAuthoring_class]: https://github.com/azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations.Authoring/src/Generated/ConversationAnalysisAuthoring.cs
 [cognitive_auth]: https://docs.microsoft.com/azure/cognitive-services/authentication/
 [azure_cli]: https://docs.microsoft.com/cli/azure
 [azure_portal]: https://portal.azure.com
