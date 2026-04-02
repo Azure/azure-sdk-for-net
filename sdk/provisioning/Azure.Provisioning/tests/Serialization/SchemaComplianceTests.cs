@@ -478,16 +478,16 @@ public class SchemaComplianceTests
                 break;
             case "unary-operation":
                 Assert.IsTrue(node.TryGetProperty("operator", out _), $"UnaryOperation at {path} missing 'operator'");
-                Assert.IsTrue(node.TryGetProperty("value", out JsonElement unaryVal), $"UnaryOperation at {path} missing 'value'");
-                AssertExpressionNode(unaryVal, $"{path}.value");
+                Assert.IsTrue(node.TryGetProperty("argument", out JsonElement unaryArg), $"UnaryOperation at {path} missing 'argument'");
+                AssertExpressionNode(unaryArg, $"{path}.argument");
                 break;
             case "ternary-operation":
                 Assert.IsTrue(node.TryGetProperty("condition", out JsonElement condCond), $"TernaryOperation at {path} missing 'condition'");
-                Assert.IsTrue(node.TryGetProperty("consequent", out JsonElement condCons), $"TernaryOperation at {path} missing 'consequent'");
-                Assert.IsTrue(node.TryGetProperty("alternate", out JsonElement condAlt), $"TernaryOperation at {path} missing 'alternate'");
+                Assert.IsTrue(node.TryGetProperty("trueValue", out JsonElement condTrue), $"TernaryOperation at {path} missing 'trueValue'");
+                Assert.IsTrue(node.TryGetProperty("falseValue", out JsonElement condFalse), $"TernaryOperation at {path} missing 'falseValue'");
                 AssertExpressionNode(condCond, $"{path}.condition");
-                AssertExpressionNode(condCons, $"{path}.consequent");
-                AssertExpressionNode(condAlt, $"{path}.alternate");
+                AssertExpressionNode(condTrue, $"{path}.trueValue");
+                AssertExpressionNode(condFalse, $"{path}.falseValue");
                 break;
             case "interpolated-string":
                 Assert.IsTrue(node.TryGetProperty("segments", out JsonElement segments), $"InterpolatedString at {path} missing 'segments'");

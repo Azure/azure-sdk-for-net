@@ -16,9 +16,9 @@ public partial class ConditionalExpression : IJsonModel<BicepExpression>
         writer.WriteString("kind", "ternary-operation");
         writer.WritePropertyName("condition");
         ((IJsonModel<BicepExpression>)Condition).Write(writer, options);
-        writer.WritePropertyName("consequent");
+        writer.WritePropertyName("trueValue");
         ((IJsonModel<BicepExpression>)Consequent).Write(writer, options);
-        writer.WritePropertyName("alternate");
+        writer.WritePropertyName("falseValue");
         ((IJsonModel<BicepExpression>)Alternate).Write(writer, options);
         writer.WriteEndObject();
     }
@@ -58,7 +58,7 @@ public partial class ConditionalExpression : IJsonModel<BicepExpression>
     {
         return new ConditionalExpression(
             UnknownBicepExpression.DeserializeBicepExpression(element.GetProperty("condition")),
-            UnknownBicepExpression.DeserializeBicepExpression(element.GetProperty("consequent")),
-            UnknownBicepExpression.DeserializeBicepExpression(element.GetProperty("alternate")));
+            UnknownBicepExpression.DeserializeBicepExpression(element.GetProperty("trueValue")),
+            UnknownBicepExpression.DeserializeBicepExpression(element.GetProperty("falseValue")));
     }
 }

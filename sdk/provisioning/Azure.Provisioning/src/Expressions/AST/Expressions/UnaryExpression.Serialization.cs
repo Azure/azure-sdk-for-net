@@ -21,7 +21,7 @@ public partial class UnaryExpression : IJsonModel<BicepExpression>
             UnaryBicepOperator.SuppressNull => "!*",
             _ => throw new NotImplementedException($"Unknown operator: {Operator}")
         });
-        writer.WritePropertyName("value");
+        writer.WritePropertyName("argument");
         ((IJsonModel<BicepExpression>)Value).Write(writer, options);
         writer.WriteEndObject();
     }
@@ -66,6 +66,6 @@ public partial class UnaryExpression : IJsonModel<BicepExpression>
             "!*" => UnaryBicepOperator.SuppressNull,
             var unknown => throw new NotImplementedException($"Unknown unary operator: {unknown}")
         };
-        return new UnaryExpression(op, UnknownBicepExpression.DeserializeBicepExpression(element.GetProperty("value")));
+        return new UnaryExpression(op, UnknownBicepExpression.DeserializeBicepExpression(element.GetProperty("argument")));
     }
 }
