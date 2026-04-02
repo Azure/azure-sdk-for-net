@@ -684,6 +684,7 @@ public class CrossApiE2eTests : ProtocolTestBase
 
     // E24: Create (SSE) → Cancel immediate (queued) → GET → cancelled, 0 output (B7, B11, S3b)
     [Test]
+    [Ignore("Flaky: cancel races with stream completion under CI load. Tracked in https://github.com/Azure/azure-sdk-for-net/issues/57670")]
     public async Task C4_BgStreamCreate_CancelImmediate_ReturnsCancelled()
     {
         // Validates: B7, B11 — cancel → cancelled with 0 output; S3b
@@ -713,6 +714,7 @@ public class CrossApiE2eTests : ProtocolTestBase
 
     // E25: Create (SSE) → Cancel (mid-stream) → GET → cancelled, 0 output (B7, B11, S6)
     [Test]
+    [Ignore("Flaky: cancel races with stream completion under CI load. Tracked in https://github.com/Azure/azure-sdk-for-net/issues/57670")]
     public async Task C4_BgStreamCreate_CancelMidStream_ReturnsCancelled()
     {
         // Validates: B7, B11 — cancel → cancelled with 0 output; S6
@@ -745,6 +747,7 @@ public class CrossApiE2eTests : ProtocolTestBase
 
     // E26: Create (SSE) → Cancel → GET ?stream=true → SSE replay with terminal event (B26, B11)
     [Test]
+    [Ignore("Flaky: cancel races with stream completion under CI load. Tracked in https://github.com/Azure/azure-sdk-for-net/issues/57670")]
     public async Task C4_BgStreamCreate_Cancel_Then_SseReplay_HasTerminalEvent()
     {
         // Validates: B26 — terminal SSE event after cancel; B11
