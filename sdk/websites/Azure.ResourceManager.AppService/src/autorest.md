@@ -25,7 +25,7 @@ use-model-reader-writer: true
 enable-bicep-serialization: true
 
 #mgmt-debug:
-#  show-serialized-names: true
+# show-serialized-names: true
 
 list-exception:
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName}

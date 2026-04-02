@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.AppService
                     return null;
                 return Uri.TryCreate(ApiDefinitionUrl, UriKind.Absolute, out var uri) ? uri : null;
             }
-            set => ApiDefinitionUrl = value?.ToString();
+            set => ApiDefinitionUrl = value?.AbsoluteUri;
         }
     }
 }

@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.AppService.Models
                     return null;
                 return Uri.TryCreate(AzureStorageUrlValue, UriKind.Absolute, out var uri) ? uri : null;
             }
-            set => AzureStorageUrlValue = value?.ToString();
+            set => AzureStorageUrlValue = value?.AbsoluteUri;
         }
     }
 }
