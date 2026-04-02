@@ -13,7 +13,6 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.HDInsight.Tests
 {
-    [Ignore("Recordings incompatible with TypeSpec-migrated Storage client. https://github.com/Azure/azure-sdk-for-net/issues/57679")]
     internal class HDInsightClusterTests : HDInsightManagementTestBase
     {
         private ResourceGroupResource _resourceGroup;
