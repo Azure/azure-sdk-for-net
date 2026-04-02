@@ -159,8 +159,6 @@ describe("Operation Scope Detection", () => {
     strictEqual(scope, ResourceScope.Extension);
   });
 
-
-
   it("extension scope from generic variable prefix with {resourceId}", async () => {
     const path =
       "/{resourceId}/providers/Microsoft.DataProtection/backupInstances";

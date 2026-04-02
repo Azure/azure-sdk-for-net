@@ -598,7 +598,7 @@ export function getOperationScopeFromPath(
 
 /**
  * Check if a path has multiple /providers/ segments, indicating a cross-RP path
- * that extends another ARM resource.
+ * (e.g. extension resources or cross-RP actions).
  */
 function hasMultipleProviderSegments(path: string): boolean {
   const providerMatches = path.match(/\/providers\//gi);
