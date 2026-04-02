@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -16,8 +17,6 @@ namespace Azure.Communication.ProgrammableConnectivity
     public partial class ProgrammableConnectivityClient
     {
         private readonly Uri _endpoint;
-        /// <summary> A credential used to authenticate to the service. </summary>
-        private readonly TokenCredential _tokenCredential;
         private static readonly string[] AuthorizationScopes = new string[] { "https://management.azure.com//.default" };
         private readonly string _apiVersion;
         private DeviceLocation _cachedDeviceLocation;
@@ -39,22 +38,42 @@ namespace Azure.Communication.ProgrammableConnectivity
         }
 
         /// <summary> Initializes a new instance of ProgrammableConnectivityClient. </summary>
+        /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
         /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public ProgrammableConnectivityClient(Uri endpoint, TokenCredential credential, ProgrammableConnectivityClientOptions options)
+        internal ProgrammableConnectivityClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, ProgrammableConnectivityClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(credential, nameof(credential));
 
             options ??= new ProgrammableConnectivityClientOptions();
 
             _endpoint = endpoint;
-            _tokenCredential = credential;
-            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) });
+            if (authenticationPolicy != null)
+            {
+                Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
+            }
+            else
+            {
+                Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
+            }
             _apiVersion = options.Version;
             ClientDiagnostics = new ClientDiagnostics(options, true);
+        }
+
+        /// <summary> Initializes a new instance of ProgrammableConnectivityClient. </summary>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="credential"> A credential used to authenticate to the service. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public ProgrammableConnectivityClient(Uri endpoint, TokenCredential credential, ProgrammableConnectivityClientOptions options) : this(new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes), endpoint, options)
+        {
+        }
+
+        /// <summary> Initializes a new instance of ProgrammableConnectivityClient from a <see cref="ProgrammableConnectivityClientSettings"/>. </summary>
+        /// <param name="settings"> The settings for ProgrammableConnectivityClient. </param>
+        [Experimental("SCME0002")]
+        public ProgrammableConnectivityClient(ProgrammableConnectivityClientSettings settings) : this(settings?.Endpoint, settings?.CredentialProvider as TokenCredential, settings?.Options)
+        {
         }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>

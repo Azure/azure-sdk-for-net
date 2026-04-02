@@ -4,11 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Represents a target specifying an Azure AI agent. </summary>
-    public partial class AzureAIAgentTarget : Target
+    public partial class AzureAIAgentTarget : EvaluationTarget
     {
         /// <summary> Initializes a new instance of <see cref="AzureAIAgentTarget"/>. </summary>
         /// <param name="name"> The unique identifier of the Azure AI agent. </param>

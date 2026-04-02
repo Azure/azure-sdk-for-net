@@ -10,7 +10,7 @@ using OpenAI;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The prompt agent definition. </summary>
-    public partial class DeclarativeAgentDefinition : AgentDefinition
+    public partial class DeclarativeAgentDefinition : ProjectsAgentDefinition
     {
         /// <summary> Initializes a new instance of <see cref="DeclarativeAgentDefinition"/>. </summary>
         /// <param name="kind"></param>
@@ -40,7 +40,7 @@ namespace Azure.AI.Projects.Agents
         /// </param>
         /// <param name="textOptions"> Configuration options for a text response from the model. Can be plain text or structured JSON data. </param>
         /// <param name="structuredInputs"> Set of structured inputs that can participate in prompt template substitution or tool argument bindings. </param>
-        internal DeclarativeAgentDefinition(AgentKind kind, ContentFilterConfiguration contentFilterConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties, string model, string instructions, float? temperature, float? topP, OpenAI.Responses.ResponseReasoningOptions reasoningOptions, IList<OpenAI.Responses.ResponseTool> tools, BinaryData toolChoice, OpenAI.Responses.ResponseTextOptions textOptions, IDictionary<string, StructuredInputDefinition> structuredInputs) : base(kind, contentFilterConfiguration, additionalBinaryDataProperties)
+        internal DeclarativeAgentDefinition(ProjectsAgentKind kind, ContentFilterConfiguration contentFilterConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties, string model, string instructions, float? temperature, float? topP, OpenAI.Responses.ResponseReasoningOptions reasoningOptions, IList<OpenAI.Responses.ResponseTool> tools, BinaryData toolChoice, OpenAI.Responses.ResponseTextOptions textOptions, IDictionary<string, StructuredInputDefinition> structuredInputs) : base(kind, contentFilterConfiguration, additionalBinaryDataProperties)
         {
             Model = model;
             Instructions = instructions;

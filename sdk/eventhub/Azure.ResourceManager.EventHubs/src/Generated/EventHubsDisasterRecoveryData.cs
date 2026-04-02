@@ -13,43 +13,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventHubs
 {
-    /// <summary>
-    /// A class representing the EventHubsDisasterRecovery data model.
-    /// Single item in List or Get Alias(Disaster Recovery configuration) operation
-    /// </summary>
+    /// <summary> Single item in List or Get Alias(Disaster Recovery configuration) operation. </summary>
     public partial class EventHubsDisasterRecoveryData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="EventHubsDisasterRecoveryData"/>. </summary>
         public EventHubsDisasterRecoveryData()
@@ -57,45 +25,92 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary> Initializes a new instance of <see cref="EventHubsDisasterRecoveryData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Properties required to the Create Or Update Alias(Disaster Recovery configurations). </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="provisioningState"> Provisioning state of the Alias(Disaster Recovery configuration) - possible values 'Accepted' or 'Succeeded' or 'Failed'. </param>
-        /// <param name="partnerNamespace"> ARM Id of the Primary/Secondary eventhub namespace name, which is part of GEO DR pairing. </param>
-        /// <param name="alternateName"> Alternate name specified when alias and namespace names are same. </param>
-        /// <param name="role"> role of namespace in GEO DR - possible values 'Primary' or 'PrimaryNotReplicating' or 'Secondary'. </param>
-        /// <param name="pendingReplicationOperationsCount"> Number of entities pending to be replicated. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EventHubsDisasterRecoveryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, EventHubsDisasterRecoveryProvisioningState? provisioningState, string partnerNamespace, string alternateName, EventHubsDisasterRecoveryRole? role, long? pendingReplicationOperationsCount, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal EventHubsDisasterRecoveryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ArmDisasterRecoveryProperties properties, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
             Location = location;
-            ProvisioningState = provisioningState;
-            PartnerNamespace = partnerNamespace;
-            AlternateName = alternateName;
-            Role = role;
-            PendingReplicationOperationsCount = pendingReplicationOperationsCount;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
+
+        /// <summary> Properties required to the Create Or Update Alias(Disaster Recovery configurations). </summary>
+        [WirePath("properties")]
+        internal ArmDisasterRecoveryProperties Properties { get; set; }
 
         /// <summary> The geo-location where the resource lives. </summary>
         [WirePath("location")]
         public AzureLocation? Location { get; }
+
         /// <summary> Provisioning state of the Alias(Disaster Recovery configuration) - possible values 'Accepted' or 'Succeeded' or 'Failed'. </summary>
         [WirePath("properties.provisioningState")]
-        public EventHubsDisasterRecoveryProvisioningState? ProvisioningState { get; }
+        public EventHubsDisasterRecoveryProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> ARM Id of the Primary/Secondary eventhub namespace name, which is part of GEO DR pairing. </summary>
         [WirePath("properties.partnerNamespace")]
-        public string PartnerNamespace { get; set; }
+        public string PartnerNamespace
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PartnerNamespace;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ArmDisasterRecoveryProperties();
+                }
+                Properties.PartnerNamespace = value;
+            }
+        }
+
         /// <summary> Alternate name specified when alias and namespace names are same. </summary>
         [WirePath("properties.alternateName")]
-        public string AlternateName { get; set; }
+        public string AlternateName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AlternateName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ArmDisasterRecoveryProperties();
+                }
+                Properties.AlternateName = value;
+            }
+        }
+
         /// <summary> role of namespace in GEO DR - possible values 'Primary' or 'PrimaryNotReplicating' or 'Secondary'. </summary>
         [WirePath("properties.role")]
-        public EventHubsDisasterRecoveryRole? Role { get; }
+        public EventHubsDisasterRecoveryRole? Role
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Role;
+            }
+        }
+
         /// <summary> Number of entities pending to be replicated. </summary>
         [WirePath("properties.pendingReplicationOperationsCount")]
-        public long? PendingReplicationOperationsCount { get; }
+        public long? PendingReplicationOperationsCount
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PendingReplicationOperationsCount;
+            }
+        }
     }
 }

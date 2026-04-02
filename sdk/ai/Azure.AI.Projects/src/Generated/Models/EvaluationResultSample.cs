@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> A sample from the evaluation result. </summary>
     public partial class EvaluationResultSample : InsightSample

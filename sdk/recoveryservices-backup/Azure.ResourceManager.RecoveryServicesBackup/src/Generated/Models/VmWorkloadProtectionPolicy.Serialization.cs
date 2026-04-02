@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class VmWorkloadProtectionPolicy : IUtf8JsonSerializable, IJsonModel<VmWorkloadProtectionPolicy>
+    /// <summary> Azure VM (Mercury) workload-specific backup policy. </summary>
+    public partial class VmWorkloadProtectionPolicy : BackupGenericProtectionPolicy, IJsonModel<VmWorkloadProtectionPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VmWorkloadProtectionPolicy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BackupGenericProtectionPolicy PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<VmWorkloadProtectionPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeVmWorkloadProtectionPolicy(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(VmWorkloadProtectionPolicy)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<VmWorkloadProtectionPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(VmWorkloadProtectionPolicy)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<VmWorkloadProtectionPolicy>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        VmWorkloadProtectionPolicy IPersistableModel<VmWorkloadProtectionPolicy>.Create(BinaryData data, ModelReaderWriterOptions options) => (VmWorkloadProtectionPolicy)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<VmWorkloadProtectionPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<VmWorkloadProtectionPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,17 +69,21 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VmWorkloadProtectionPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VmWorkloadProtectionPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(VmWorkloadProtectionPolicy)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(WorkLoadType))
             {
                 writer.WritePropertyName("workLoadType"u8);
                 writer.WriteStringValue(WorkLoadType.Value.ToString());
+            }
+            if (Optional.IsDefined(VmWorkloadPolicyType))
+            {
+                writer.WritePropertyName("vmWorkloadPolicyType"u8);
+                writer.WriteStringValue(VmWorkloadPolicyType.Value.ToString());
             }
             if (Optional.IsDefined(Settings))
             {
@@ -49,7 +94,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 writer.WritePropertyName("subProtectionPolicy"u8);
                 writer.WriteStartArray();
-                foreach (var item in SubProtectionPolicy)
+                foreach (SubProtectionPolicy item in SubProtectionPolicy)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -62,152 +107,142 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
         }
 
-        VmWorkloadProtectionPolicy IJsonModel<VmWorkloadProtectionPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        VmWorkloadProtectionPolicy IJsonModel<VmWorkloadProtectionPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (VmWorkloadProtectionPolicy)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BackupGenericProtectionPolicy JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VmWorkloadProtectionPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VmWorkloadProtectionPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(VmWorkloadProtectionPolicy)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeVmWorkloadProtectionPolicy(document.RootElement, options);
         }
 
-        internal static VmWorkloadProtectionPolicy DeserializeVmWorkloadProtectionPolicy(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static VmWorkloadProtectionPolicy DeserializeVmWorkloadProtectionPolicy(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            int? protectedItemsCount = default;
+            string backupManagementType = "AzureWorkload";
+            IList<string> resourceGuardOperationRequests = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             BackupWorkloadType? workLoadType = default;
+            VmWorkloadPolicyType? vmWorkloadPolicyType = default;
             BackupCommonSettings settings = default;
             IList<SubProtectionPolicy> subProtectionPolicy = default;
-            bool? makePolicyConsistent = default;
-            int? protectedItemsCount = default;
-            string backupManagementType = default;
-            IList<string> resourceGuardOperationRequests = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            bool? doesMakePolicyConsistent = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("workLoadType"u8))
+                if (prop.NameEquals("protectedItemsCount"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    workLoadType = new BackupWorkloadType(property.Value.GetString());
+                    protectedItemsCount = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("settings"u8))
+                if (prop.NameEquals("backupManagementType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    backupManagementType = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("resourceGuardOperationRequests"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    settings = BackupCommonSettings.DeserializeBackupCommonSettings(property.Value, options);
+                    List<string> array = new List<string>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
+                    }
+                    resourceGuardOperationRequests = array;
                     continue;
                 }
-                if (property.NameEquals("subProtectionPolicy"u8))
+                if (prop.NameEquals("workLoadType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    workLoadType = new BackupWorkloadType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("vmWorkloadPolicyType"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    vmWorkloadPolicyType = new VmWorkloadPolicyType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("settings"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    settings = BackupCommonSettings.DeserializeBackupCommonSettings(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("subProtectionPolicy"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<SubProtectionPolicy> array = new List<SubProtectionPolicy>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(Models.SubProtectionPolicy.DeserializeSubProtectionPolicy(item, options));
                     }
                     subProtectionPolicy = array;
                     continue;
                 }
-                if (property.NameEquals("makePolicyConsistent"u8))
+                if (prop.NameEquals("makePolicyConsistent"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    makePolicyConsistent = property.Value.GetBoolean();
-                    continue;
-                }
-                if (property.NameEquals("protectedItemsCount"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    protectedItemsCount = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("backupManagementType"u8))
-                {
-                    backupManagementType = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("resourceGuardOperationRequests"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetString());
-                    }
-                    resourceGuardOperationRequests = array;
+                    doesMakePolicyConsistent = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new VmWorkloadProtectionPolicy(
                 protectedItemsCount,
                 backupManagementType,
                 resourceGuardOperationRequests ?? new ChangeTrackingList<string>(),
-                serializedAdditionalRawData,
+                additionalBinaryDataProperties,
                 workLoadType,
+                vmWorkloadPolicyType,
                 settings,
                 subProtectionPolicy ?? new ChangeTrackingList<SubProtectionPolicy>(),
-                makePolicyConsistent);
+                doesMakePolicyConsistent);
         }
-
-        BinaryData IPersistableModel<VmWorkloadProtectionPolicy>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<VmWorkloadProtectionPolicy>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(VmWorkloadProtectionPolicy)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        VmWorkloadProtectionPolicy IPersistableModel<VmWorkloadProtectionPolicy>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<VmWorkloadProtectionPolicy>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeVmWorkloadProtectionPolicy(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(VmWorkloadProtectionPolicy)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<VmWorkloadProtectionPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

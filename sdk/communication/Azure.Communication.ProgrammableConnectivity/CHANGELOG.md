@@ -5,6 +5,7 @@
 ### Features Added
 
 - Exposed `JsonModelWriteCore` for model serialization procedure.
+- Added `ProgrammableConnectivityClientSettings` to support creating a `ProgrammableConnectivityClient` from `IConfiguration`, including configuration-based credential resolution and dependency injection registration.
 
 ### Breaking Changes
 

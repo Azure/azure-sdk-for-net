@@ -59,7 +59,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             // Others
             SemanticConventions.AttributeEnduserId,
             SemanticConventions.AttributeEnduserPseudoId,
-            "microsoft.client.ip",
+            SemanticConventions.AttributeMicrosoftClientIp,
 
             // Microsoft Application Insights Override Attributes
             SemanticConventions.AttributeMicrosoftDependencyData,
@@ -71,7 +71,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             SemanticConventions.AttributeMicrosoftRequestName,
             SemanticConventions.AttributeMicrosoftRequestUrl,
             SemanticConventions.AttributeMicrosoftRequestSource,
-            SemanticConventions.AttributeMicrosoftRequestResultCode
+            SemanticConventions.AttributeMicrosoftRequestResultCode,
+
+            // Context tag attributes from Application Insights shim
+            SemanticConventions.AttributeMicrosoftSessionId,
+            SemanticConventions.AttributeAiDeviceId,
+            SemanticConventions.AttributeAiDeviceModel,
+            SemanticConventions.AttributeAiDeviceType,
+            SemanticConventions.AttributeAiDeviceOsVersion,
+            SemanticConventions.AttributeMicrosoftSyntheticSource,
+            SemanticConventions.AttributeMicrosoftUserAccountId,
         };
 
         internal static readonly HashSet<string> s_semanticsSet = new(s_semantics);
@@ -132,6 +141,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                         case SemanticConventions.AttributeEnduserPseudoId:
                             EndUserPseudoId = tag.Value.ToString();
                             continue;
+                        case SemanticConventions.AttributeMicrosoftSessionId:
+                        case SemanticConventions.AttributeAiDeviceId:
+                        case SemanticConventions.AttributeAiDeviceModel:
+                        case SemanticConventions.AttributeAiDeviceType:
+                        case SemanticConventions.AttributeAiDeviceOsVersion:
+                        case SemanticConventions.AttributeMicrosoftSyntheticSource:
+                        case SemanticConventions.AttributeMicrosoftUserAccountId:
                         case SemanticConventions.AttributeMicrosoftDependencyData:
                         case SemanticConventions.AttributeMicrosoftDependencyName:
                         case SemanticConventions.AttributeMicrosoftDependencyTarget:

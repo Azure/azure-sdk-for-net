@@ -14,11 +14,6 @@ namespace Azure.AI.Extensions.OpenAI;
 
 public partial class ProjectOpenAIClient : OpenAIClient
 {
-    public virtual ProjectConversationsClient Conversations => GetProjectConversationsClient();
-    public virtual ProjectResponsesClient Responses => GetProjectResponsesClient();
-    public virtual ProjectFilesClient Files => GetProjectFilesClient();
-    public virtual ProjectVectorStoresClient VectorStores => GetProjectVectorStoresClient();
-
     private ProjectConversationsClient _cachedConversationClient;
     private ProjectResponsesClient _cachedResponseClient;
     private ProjectFilesClient _cachedFileClient;
@@ -74,7 +69,6 @@ public partial class ProjectOpenAIClient : OpenAIClient
     public override ConversationClient GetConversationClient()
         => GetProjectConversationsClient();
 
-    [EditorBrowsable(EditorBrowsableState.Never)]
     public virtual ProjectConversationsClient GetProjectConversationsClient()
     {
         return Volatile.Read(ref _cachedConversationClient)
@@ -82,7 +76,6 @@ public partial class ProjectOpenAIClient : OpenAIClient
             ?? _cachedConversationClient;
     }
 
-    [EditorBrowsable(EditorBrowsableState.Never)]
     public virtual ProjectFilesClient GetProjectFilesClient()
     {
         return Volatile.Read(ref _cachedFileClient)
@@ -93,7 +86,6 @@ public partial class ProjectOpenAIClient : OpenAIClient
     [EditorBrowsable(EditorBrowsableState.Never)]
     public override OpenAIFileClient GetOpenAIFileClient() => GetProjectFilesClient();
 
-    [EditorBrowsable(EditorBrowsableState.Never)]
     public virtual ProjectVectorStoresClient GetProjectVectorStoresClient()
     {
         return Volatile.Read(ref _cachedVectorStoreClient)
@@ -101,7 +93,6 @@ public partial class ProjectOpenAIClient : OpenAIClient
             ?? _cachedVectorStoreClient;
     }
 
-    [EditorBrowsable(EditorBrowsableState.Never)]
     public virtual ProjectResponsesClient GetProjectResponsesClient()
     {
         return Volatile.Read(ref _cachedResponseClient)

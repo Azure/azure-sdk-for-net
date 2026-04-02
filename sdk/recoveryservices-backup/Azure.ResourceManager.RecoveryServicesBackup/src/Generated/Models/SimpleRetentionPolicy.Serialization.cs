@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class SimpleRetentionPolicy : IUtf8JsonSerializable, IJsonModel<SimpleRetentionPolicy>
+    /// <summary> Simple policy retention. </summary>
+    public partial class SimpleRetentionPolicy : BackupRetentionPolicy, IJsonModel<SimpleRetentionPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SimpleRetentionPolicy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BackupRetentionPolicy PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SimpleRetentionPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeSimpleRetentionPolicy(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SimpleRetentionPolicy)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SimpleRetentionPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(SimpleRetentionPolicy)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SimpleRetentionPolicy>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SimpleRetentionPolicy IPersistableModel<SimpleRetentionPolicy>.Create(BinaryData data, ModelReaderWriterOptions options) => (SimpleRetentionPolicy)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SimpleRetentionPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SimpleRetentionPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +69,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SimpleRetentionPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SimpleRetentionPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SimpleRetentionPolicy)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(RetentionDuration))
             {
@@ -42,84 +82,56 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
         }
 
-        SimpleRetentionPolicy IJsonModel<SimpleRetentionPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SimpleRetentionPolicy IJsonModel<SimpleRetentionPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (SimpleRetentionPolicy)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BackupRetentionPolicy JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SimpleRetentionPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SimpleRetentionPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SimpleRetentionPolicy)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeSimpleRetentionPolicy(document.RootElement, options);
         }
 
-        internal static SimpleRetentionPolicy DeserializeSimpleRetentionPolicy(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static SimpleRetentionPolicy DeserializeSimpleRetentionPolicy(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            string retentionPolicyType = "SimpleRetentionPolicy";
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             RetentionDuration retentionDuration = default;
-            string retentionPolicyType = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("retentionDuration"u8))
+                if (prop.NameEquals("retentionPolicyType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    retentionPolicyType = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("retentionDuration"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    retentionDuration = RetentionDuration.DeserializeRetentionDuration(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("retentionPolicyType"u8))
-                {
-                    retentionPolicyType = property.Value.GetString();
+                    retentionDuration = RetentionDuration.DeserializeRetentionDuration(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new SimpleRetentionPolicy(retentionPolicyType, serializedAdditionalRawData, retentionDuration);
+            return new SimpleRetentionPolicy(retentionPolicyType, additionalBinaryDataProperties, retentionDuration);
         }
-
-        BinaryData IPersistableModel<SimpleRetentionPolicy>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SimpleRetentionPolicy>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(SimpleRetentionPolicy)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        SimpleRetentionPolicy IPersistableModel<SimpleRetentionPolicy>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SimpleRetentionPolicy>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeSimpleRetentionPolicy(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SimpleRetentionPolicy)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<SimpleRetentionPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

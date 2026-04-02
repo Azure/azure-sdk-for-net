@@ -192,11 +192,11 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
         AgentAdministrationClient agentsClient = new(new(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT), TestEnvironment.Credential, options);
 
         // Remove Agents.
-        foreach (AgentVersion ag in agentsClient.GetAgentVersions(agentName: AGENT_NAME))
+        foreach (ProjectsAgentVersion ag in agentsClient.GetAgentVersions(agentName: AGENT_NAME))
         {
             agentsClient.DeleteAgentVersion(agentName: ag.Name, agentVersion: ag.Version);
         }
-        foreach (AgentVersion ag in agentsClient.GetAgentVersions(agentName: AGENT_NAME2))
+        foreach (ProjectsAgentVersion ag in agentsClient.GetAgentVersions(agentName: AGENT_NAME2))
         {
             agentsClient.DeleteAgentVersion(agentName: ag.Name, agentVersion: ag.Version);
         }

@@ -203,7 +203,7 @@ namespace Azure.Search.Documents.Indexes
             request.Uri = uri;
             request.Method = RequestMethod.Post;
             request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
-            if ("application/json" != null)
+            if (content != null)
             {
                 request.Headers.SetValue("Content-Type", "application/json");
             }

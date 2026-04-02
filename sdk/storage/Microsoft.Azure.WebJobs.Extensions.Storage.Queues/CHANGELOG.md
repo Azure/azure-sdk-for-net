@@ -1,5 +1,19 @@
 # Release History
 
+## 5.4.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+- Fix QueueMetricsProvider: preserve ApproximateMessagesCount when PeekMessages fails
+
+### Other Changes
+
+- Replaced scaling warning/error log calls with standardized `LogFunctionScaleWarning` extension method to enable Scale Controller App Insights diagnostics.
+
 ## 5.3.8 (2026-03-19)
 
 ### Bugs Fixed

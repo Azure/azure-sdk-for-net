@@ -47,9 +47,115 @@ For the purposes of diagnosing generator bugs, the management-plane emitter is l
 
 ---
 
-## Phase 0 — Sync Repositories
+## Migration Status File
 
-Before any migration work, merge the latest `main` branch into all 3 repos:
+Migrations often span multiple sessions and machines. To enable seamless pickup, a **`migration-status.md`** file is stored in the SDK package directory and committed to the migration branch.
+
+### Location
+
+```
+{LIBRARY_PATH}/migration-status.md
+```
+
+Example: `sdk/apimanagement/Azure.ResourceManager.ApiManagement/migration-status.md`
+
+### Template
+
+````markdown
+# Migration Status — {PACKAGE_NAME}
+
+**Tracking Issue:** [#{ISSUE_NUMBER}](https://github.com/Azure/azure-sdk-for-net/issues/{ISSUE_NUMBER})
+**Last Updated:** {DATE}
+
+## PRs
+
+| PR | URL | Status |
+|----|-----|--------|
+| **Spec** | {URL or "Not created"} | {Draft/Open/Merged} |
+| **SDK** | {URL or "Not created"} | {Draft/Open/Merged} |
+| **Generator** | {URL or "N/A"} | {Draft/Open/Merged/N/A} |
+
+## Branches
+
+| Repo | Branch | Fork Remote |
+|------|--------|-------------|
+| azure-sdk-for-net | `{branch}` | `{remote}` |
+| azure-rest-api-specs | `{branch}` | `{remote}` |
+
+## Phase Tracker
+
+**Status legend:** ✅ Done | 🔄 In Progress | ❌ Blocked | ⏭️ Not Started
+
+| Phase | Status | Notes |
+|-------|--------|-------|
+| Phase 0 — Sync & Resume | {status} | |
+| Phase 1 — Discovery | {status} | |
+| Phase 2 — tsp-location.yaml | {status} | |
+| Phase 3 — Legacy config removed | {status} | |
+| Phase 4 — Custom code updated | {status} | |
+| Phase 5 — Code generation | {status} | |
+| Phase 6 — Build-Fix Cycle | {status} | |
+| Phase 7 — CI & Changelog | {status} | |
+| Phase 8 — Test project build | {status} | |
+| Phase 9 — Test execution | {status} | |
+| Phase 10 — Finalization | {status} | |
+| Phase 11 — Create PRs | {status} | |
+| Phase 12 — Verify | {status} | |
+
+## ApiCompat Baseline Summary
+
+| Error Type | Count | Action |
+|-----------|-------|--------|
+| MembersMustExist | {N} | Fix with custom code |
+| TypesMustExist | {N} | Fix with @@clientName |
+| CannotChangeAttribute | {N} | Acceptable to baseline |
+| ... | | |
+
+## Known Issues
+
+- {issue description and link}
+
+## Next Steps
+
+1. {next action}
+````
+
+### When to Save
+
+Commit and push `migration-status.md` to the migration branch at these points:
+1. **After Phase 0** — create the initial `migration-status.md` (or update if resuming)
+2. **After any phase completes** — update phase status
+3. **Before ending a session** — always save current progress
+4. **After creating PRs** — update PR links
+
+### Save Command
+
+```bash
+git add {LIBRARY_PATH}/migration-status.md
+git commit -m "Update migration status for {PACKAGE_NAME}"
+git push
+```
+
+### When to Delete
+
+Remove `migration-status.md` from the branch when the migration is complete (Phase 12). It should **not** be included in the final PR merge to `main`.
+
+---
+
+## Phase 0 — Sync & Resume
+
+Before any migration work:
+
+### Resume Check
+1. Check if `{LIBRARY_PATH}/migration-status.md` exists on the current branch.
+   - **If it exists**: Read and parse the status file. Report the current phase to the user and resume from the first incomplete phase.
+   - **If it does not exist**: This is a fresh migration — proceed with sync and Phase 1.
+
+### Sync Repositories
+Merge the latest `main` branch into all repos.
+
+### Save Status
+Create `migration-status.md` with all phases marked ⏭️ (or update existing with Phase 0 marked ✅). Commit and push to the migration branch.
 
 ---
 
@@ -66,6 +172,8 @@ Use **explore** agents in parallel:
 7. **Review naming conventions**: Consult the `azure-sdk-mgmt-pr-review` skill.
 
 Present a summary plan and **ask the user** to confirm.
+
+After confirmation, update `migration-status.md` to mark Phase 1 as ✅ and save.
 
 ---
 
@@ -589,11 +697,12 @@ During the iteration loop, changes fall into three categories. Identify which on
 
 ### Step 5 — Report Summary
 
-After all PRs are created, report:
+After all PRs are created:
 1. **Spec PR**: Link and summary of decorators added.
 2. **Generator PR**: Link and summary of fixes (if any).
 3. **SDK PR**: Link and summary of migration changes.
 4. **Manual follow-up**: Any remaining items that need human review (naming decisions, breaking changes, etc.).
+5. **Update `migration-status.md`** with all PR links and mark Phase 11 as done. Commit and push.
 
 ---
 
@@ -603,6 +712,12 @@ After all PRs are created, report:
 2. Note any `CodeGenType` attributes needing manual review.
 3. Remind user to review with `git diff` before committing.
 4. Suggest running the `pre-commit-checks` skill.
+5. **Remove `migration-status.md`** from the branch — it should not be included in the final merge to `main`:
+   ```bash
+   git rm {LIBRARY_PATH}/migration-status.md
+   git commit -m "Remove migration status file — migration complete"
+   git push
+   ```
 
 ---
 
@@ -684,6 +799,10 @@ Proceed **without asking the user** except when:
 3. Generator fix affects other SDKs.
 4. 5 consecutive failed attempts for the same error.
 5. Error count increases after a fix.
+
+### Session End Rule
+
+**Always update and push `migration-status.md` before ending a session**, even if the migration is incomplete. This ensures the next session (possibly on a different machine) can resume from the exact point where work stopped.
 
 ---
 
