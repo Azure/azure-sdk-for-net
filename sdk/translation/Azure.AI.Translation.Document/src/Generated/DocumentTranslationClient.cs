@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -19,31 +20,47 @@ namespace Azure.AI.Translation.Document
     public partial class DocumentTranslationClient
     {
         private readonly Uri _endpoint;
-        /// <summary> A credential used to authenticate to the service. </summary>
-        private readonly AzureKeyCredential _keyCredential;
         private const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
-        /// <summary> A credential used to authenticate to the service. </summary>
-        private readonly TokenCredential _tokenCredential;
         private static readonly string[] AuthorizationScopes = new string[] { "https://cognitiveservices.azure.com/.default" };
         private readonly string _apiVersion;
+
+        /// <summary> Initializes a new instance of DocumentTranslationClient. </summary>
+        /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        internal DocumentTranslationClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, DocumentTranslationClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+
+            options ??= new DocumentTranslationClientOptions();
+
+            _endpoint = endpoint;
+            if (authenticationPolicy != null)
+            {
+                Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
+            }
+            else
+            {
+                Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
+            }
+            _apiVersion = options.Version;
+            ClientDiagnostics = new ClientDiagnostics(options, true);
+        }
 
         /// <summary> Initializes a new instance of DocumentTranslationClient. </summary>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public DocumentTranslationClient(Uri endpoint, TokenCredential credential, DocumentTranslationClientOptions options)
+        public DocumentTranslationClient(Uri endpoint, TokenCredential credential, DocumentTranslationClientOptions options) : this(new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes), endpoint, options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(credential, nameof(credential));
+        }
 
-            options ??= new DocumentTranslationClientOptions();
-
-            _endpoint = endpoint;
-            _tokenCredential = credential;
-            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) });
-            _apiVersion = options.Version;
-            ClientDiagnostics = new ClientDiagnostics(options, true);
+        /// <summary> Initializes a new instance of DocumentTranslationClient from a <see cref="DocumentTranslationClientSettings"/>. </summary>
+        /// <param name="settings"> The settings for DocumentTranslationClient. </param>
+        [Experimental("SCME0002")]
+        public DocumentTranslationClient(DocumentTranslationClientSettings settings) : this(settings?.Endpoint, settings?.CredentialProvider as TokenCredential, settings?.Options)
+        {
         }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
@@ -132,6 +149,64 @@ namespace Azure.AI.Translation.Document
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Use this API to submit a bulk (batch) translation request to the Document
+        /// Translation service.
+        /// Each request can contain multiple documents and must
+        /// contain a source and destination container for each document.            
+        /// The
+        /// prefix and suffix filter (if supplied) are used to filter folders. The prefix
+        /// is applied to the subpath after the container name.            
+        /// Glossaries /
+        /// Translation memory can be included in the request and are applied by the
+        /// service when the document is translated.            
+        /// If the glossary is
+        /// invalid or unreachable during translation, an error is indicated in the
+        /// document status.
+        /// If a file with the same name already exists at the
+        /// destination, it will be overwritten. The targetUrl for each target language
+        /// must be unique.
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="body"> Translation job submission batch request. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        public virtual Operation<TranslationStatusResult> StartTranslation(WaitUntil waitUntil, TranslationBatch body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(body, nameof(body));
+
+            return ProtocolOperationHelpers.Convert(StartTranslation(waitUntil, body, cancellationToken.ToRequestContext()), response => (TranslationStatusResult)response, ClientDiagnostics, "DocumentTranslationClient.StartTranslation");
+        }
+
+        /// <summary>
+        /// Use this API to submit a bulk (batch) translation request to the Document
+        /// Translation service.
+        /// Each request can contain multiple documents and must
+        /// contain a source and destination container for each document.            
+        /// The
+        /// prefix and suffix filter (if supplied) are used to filter folders. The prefix
+        /// is applied to the subpath after the container name.            
+        /// Glossaries /
+        /// Translation memory can be included in the request and are applied by the
+        /// service when the document is translated.            
+        /// If the glossary is
+        /// invalid or unreachable during translation, an error is indicated in the
+        /// document status.
+        /// If a file with the same name already exists at the
+        /// destination, it will be overwritten. The targetUrl for each target language
+        /// must be unique.
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="body"> Translation job submission batch request. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        public virtual async Task<Operation<TranslationStatusResult>> StartTranslationAsync(WaitUntil waitUntil, TranslationBatch body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(body, nameof(body));
+
+            return ProtocolOperationHelpers.Convert(await StartTranslationAsync(waitUntil, body, cancellationToken.ToRequestContext()).ConfigureAwait(false), response => (TranslationStatusResult)response, ClientDiagnostics, "DocumentTranslationClient.StartTranslationAsync");
         }
 
         /// <summary>
