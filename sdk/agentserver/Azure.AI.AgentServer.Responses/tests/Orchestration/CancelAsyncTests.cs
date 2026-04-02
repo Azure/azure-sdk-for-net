@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.AI.AgentServer.Core;
 using Azure.AI.AgentServer.Responses.Internal;
 using Azure.AI.AgentServer.Responses.Models;
 using Azure.AI.AgentServer.Responses.Tests.Helpers;
@@ -35,7 +36,7 @@ public class CancelAsyncTests : IDisposable
     public async Task NotFound_ThrowsResourceNotFoundException()
     {
         Assert.ThrowsAsync<ResourceNotFoundException>(
-            () => _orchestrator.CancelAsync("resp_unknown"));
+            () => _orchestrator.CancelAsync("resp_unknown", IsolationContext.Empty));
     }
 
     [Test]
@@ -45,7 +46,7 @@ public class CancelAsyncTests : IDisposable
         _tracker.Create("resp_cancel_nb", isBackground: false, isStreaming: false, store: true);
 
         Assert.ThrowsAsync<ResourceNotFoundException>(
-            () => _orchestrator.CancelAsync("resp_cancel_nb"));
+            () => _orchestrator.CancelAsync("resp_cancel_nb", IsolationContext.Empty));
     }
 
     [Test]
@@ -57,7 +58,7 @@ public class CancelAsyncTests : IDisposable
         _tracker.MarkCompleted("resp_cancel_nbc");
 
         Assert.ThrowsAsync<BadRequestException>(
-            () => _orchestrator.CancelAsync("resp_cancel_nbc"));
+            () => _orchestrator.CancelAsync("resp_cancel_nbc", IsolationContext.Empty));
     }
 
     [Test]
@@ -67,7 +68,7 @@ public class CancelAsyncTests : IDisposable
         execution.Response = new Models.ResponseObject("resp_cancel_c", "test") { Status = ResponseStatus.Completed };
 
         Assert.ThrowsAsync<BadRequestException>(
-            () => _orchestrator.CancelAsync("resp_cancel_c"));
+            () => _orchestrator.CancelAsync("resp_cancel_c", IsolationContext.Empty));
     }
 
     [Test]
@@ -77,7 +78,7 @@ public class CancelAsyncTests : IDisposable
         execution.Response = new Models.ResponseObject("resp_cancel_f", "test") { Status = ResponseStatus.Failed };
 
         Assert.ThrowsAsync<BadRequestException>(
-            () => _orchestrator.CancelAsync("resp_cancel_f"));
+            () => _orchestrator.CancelAsync("resp_cancel_f", IsolationContext.Empty));
     }
 
     [Test]
@@ -87,7 +88,7 @@ public class CancelAsyncTests : IDisposable
         execution.Response = new Models.ResponseObject("resp_cancel_i", "test") { Status = ResponseStatus.Incomplete };
 
         Assert.ThrowsAsync<BadRequestException>(
-            () => _orchestrator.CancelAsync("resp_cancel_i"));
+            () => _orchestrator.CancelAsync("resp_cancel_i", IsolationContext.Empty));
     }
 
     [Test]
@@ -96,7 +97,7 @@ public class CancelAsyncTests : IDisposable
         var execution = _tracker.Create("resp_cancel_ac", isBackground: true, isStreaming: false, store: true);
         execution.Response = new Models.ResponseObject("resp_cancel_ac", "test") { Status = ResponseStatus.Cancelled };
 
-        var result = await _orchestrator.CancelAsync("resp_cancel_ac");
+        var result = await _orchestrator.CancelAsync("resp_cancel_ac", IsolationContext.Empty);
 
         Assert.That(result.Id, Is.EqualTo("resp_cancel_ac"));
         Assert.That(result.Status, Is.EqualTo(ResponseStatus.Cancelled));
@@ -108,7 +109,7 @@ public class CancelAsyncTests : IDisposable
         var execution = _tracker.Create("resp_cancel_ip", isBackground: true, isStreaming: false, store: true);
         execution.Response = new Models.ResponseObject("resp_cancel_ip", "test") { Status = ResponseStatus.InProgress };
 
-        var result = await _orchestrator.CancelAsync("resp_cancel_ip");
+        var result = await _orchestrator.CancelAsync("resp_cancel_ip", IsolationContext.Empty);
 
         Assert.That(execution.CancelRequested, Is.True);
     }

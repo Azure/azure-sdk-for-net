@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.AI.AgentServer.Core;
 using Azure.AI.AgentServer.Responses.Models;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Primitives;
@@ -24,6 +25,7 @@ internal sealed class ResponseContextImpl : ResponseContext
     private readonly BinaryData? _rawBody;
     private readonly IReadOnlyDictionary<string, string> _clientHeaders;
     private readonly IReadOnlyDictionary<string, StringValues> _queryParameters;
+    private readonly IsolationContext _isolation;
 
     /// <summary>
     /// Initializes a new instance of <see cref="ResponseContextImpl"/>.
@@ -35,6 +37,7 @@ internal sealed class ResponseContextImpl : ResponseContext
     /// <param name="rawBody">The full raw JSON request body, or <see langword="null"/> if not available.</param>
     /// <param name="clientHeaders">Forwarded <c>x-client-*</c> headers, or <c>null</c> for empty.</param>
     /// <param name="queryParameters">Query parameters from the request, or <c>null</c> for empty.</param>
+    /// <param name="isolation">The platform isolation context, or <c>null</c> for <see cref="IsolationContext.Empty"/>.</param>
     public ResponseContextImpl(
         string responseId,
         ResponsesProvider provider,
@@ -42,12 +45,14 @@ internal sealed class ResponseContextImpl : ResponseContext
         IOptions<ResponsesServerOptions>? options = null,
         BinaryData? rawBody = null,
         IReadOnlyDictionary<string, string>? clientHeaders = null,
-        IReadOnlyDictionary<string, StringValues>? queryParameters = null)
+        IReadOnlyDictionary<string, StringValues>? queryParameters = null,
+        IsolationContext? isolation = null)
         : base(responseId)
     {
         _rawBody = rawBody;
         _clientHeaders = clientHeaders ?? new Dictionary<string, string>();
         _queryParameters = queryParameters ?? new Dictionary<string, StringValues>();
+        _isolation = isolation ?? IsolationContext.Empty;
         _provider = provider;
         _request = request;
         _historyLimit = options?.Value.DefaultFetchHistoryCount ?? ResponsesServerOptions.DefaultFetchHistoryCountValue;
@@ -58,6 +63,9 @@ internal sealed class ResponseContextImpl : ResponseContext
 
     /// <inheritdoc/>
     public override BinaryData? RawBody => _rawBody;
+
+    /// <inheritdoc/>
+    public override IsolationContext Isolation => _isolation;
 
     /// <inheritdoc/>
     public override IReadOnlyDictionary<string, string> ClientHeaders => _clientHeaders;
@@ -118,7 +126,7 @@ internal sealed class ResponseContextImpl : ResponseContext
         // Batch-resolve references if any
         if (referenceIds.Count > 0)
         {
-            var resolved = (await _provider.GetItemsAsync(referenceIds)).ToList();
+            var resolved = (await _provider.GetItemsAsync(referenceIds, _isolation)).ToList();
 
             for (int i = 0; i < referencePositions.Count; i++)
             {
@@ -146,7 +154,7 @@ internal sealed class ResponseContextImpl : ResponseContext
             return Array.Empty<string>();
         }
 
-        var ids = await _provider.GetHistoryItemIdsAsync(previousResponseId, conversationId, _historyLimit);
+        var ids = await _provider.GetHistoryItemIdsAsync(previousResponseId, conversationId, _historyLimit, _isolation);
         return ids.ToList();
     }
 
@@ -158,7 +166,7 @@ internal sealed class ResponseContextImpl : ResponseContext
             return Array.Empty<OutputItem>();
         }
 
-        var items = await _provider.GetItemsAsync(ids);
+        var items = await _provider.GetItemsAsync(ids, _isolation);
         return items
             .Where(item => item is not null)
             .Select(item => item!)

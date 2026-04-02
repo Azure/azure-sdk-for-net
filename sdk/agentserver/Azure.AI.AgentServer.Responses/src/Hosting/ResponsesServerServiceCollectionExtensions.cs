@@ -70,9 +70,10 @@ public static class ResponsesServerServiceCollectionExtensions
         services.TryAddSingleton<ResponsesStreamProvider>(sp =>
             new InMemoryStreamProvider(sp.GetRequiredService<InMemoryResponsesProvider>()));
 
-        // Auto-detect hosted environment: if FOUNDRY_PROJECT_ENDPOINT is set,
+        // Auto-detect hosted environment: if FOUNDRY_PROJECT_ENDPOINT is set
+        // and the .NET hosting environment is not Development,
         // use FoundryStorageProvider for persistence; otherwise use in-memory.
-        if (!string.IsNullOrWhiteSpace(FoundryEnvironment.ProjectEndpoint))
+        if (FoundryEnvironment.IsHosted)
         {
             services.TryAddSingleton<ResponsesProvider, FoundryStorageProvider>();
 

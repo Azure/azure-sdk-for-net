@@ -163,6 +163,7 @@ internal sealed class ResponseEndpointHandler
         // Extract x-client-* headers and query parameters for ResponseContext
         var clientHeaders = ExtractClientHeaders(httpContext.Request);
         var queryParameters = ExtractQueryParameters(httpContext.Request);
+        var isolation = IsolationContext.FromRequest(httpContext.Request);
 
         var context = new ResponseContextImpl(
             responseId,
@@ -171,7 +172,8 @@ internal sealed class ResponseEndpointHandler
             _options,
             rawBody,
             clientHeaders,
-            queryParameters);
+            queryParameters,
+            isolation);
         execution.Context = context;
 
         // Get cancellation token from provider (supports external cancel)
@@ -247,6 +249,8 @@ internal sealed class ResponseEndpointHandler
     /// </summary>
     public async Task<IResult> GetResponseAsync(HttpContext httpContext, string responseId)
     {
+        var isolation = IsolationContext.FromRequest(httpContext.Request);
+
         // SSE replay trigger: ?stream=true query parameter (FR-005)
         if (httpContext.Request.Query.TryGetValue("stream", out var streamValue)
             && string.Equals(streamValue, "true", StringComparison.OrdinalIgnoreCase))
@@ -273,7 +277,7 @@ internal sealed class ResponseEndpointHandler
                 // attempting replay. Provider throws ResourceNotFoundException (404)
                 // for unknown IDs and BadRequestException (400) for deleted responses.
                 // This also covers store=false (never persisted → 404).
-                await _provider.GetResponseAsync(responseId);
+                await _provider.GetResponseAsync(responseId, isolation);
 
                 // TODO: B2 requires checking that the response was created with
                 // background=true AND stream=true. After the execution leaves the
@@ -302,7 +306,7 @@ internal sealed class ResponseEndpointHandler
         }
 
         // Delegate guard logic and snapshot to orchestrator
-        var response = await _orchestrator.GetAsync(responseId);
+        var response = await _orchestrator.GetAsync(responseId, isolation);
         return Results.Json(response, SharedJsonOptions.Instance, statusCode: 200);
     }
     /// <summary>
@@ -310,7 +314,8 @@ internal sealed class ResponseEndpointHandler
     /// </summary>
     public async Task<IResult> CancelResponseAsync(HttpContext httpContext, string responseId)
     {
-        var response = await _orchestrator.CancelAsync(responseId);
+        var isolation = IsolationContext.FromRequest(httpContext.Request);
+        var response = await _orchestrator.CancelAsync(responseId, isolation);
         return Results.Json(response, SharedJsonOptions.Instance, statusCode: 200);
     }
 
@@ -320,6 +325,8 @@ internal sealed class ResponseEndpointHandler
     /// </summary>
     public async Task<IResult> DeleteResponseAsync(HttpContext httpContext, string responseId)
     {
+        var isolation = IsolationContext.FromRequest(httpContext.Request);
+
         // Guard: if response is in-flight, check for store=false and in-progress guards
         if (_tracker.TryGet(responseId, out var execution) && execution is not null)
         {
@@ -347,7 +354,7 @@ internal sealed class ResponseEndpointHandler
         // Delegate deletion to provider (throws ResourceNotFoundException if not found).
         // This works whether or not the response was in the tracker — the provider
         // is the source of truth for persisted responses.
-        await _provider.DeleteResponseAsync(responseId);
+        await _provider.DeleteResponseAsync(responseId, isolation);
 
         var result = AzureAIAgentServerResponsesModelFactory.DeleteResponseResult(id: responseId);
         return Results.Json(result, SharedJsonOptions.Instance, statusCode: 200);
@@ -360,6 +367,7 @@ internal sealed class ResponseEndpointHandler
     /// </summary>
     public async Task<IResult> GetInputItemsAsync(HttpContext httpContext, string responseId)
     {
+        var isolation = IsolationContext.FromRequest(httpContext.Request);
         // Parse limit (default 20, range 1–100)
         int limit = 20;
         if (httpContext.Request.Query.TryGetValue("limit", out var limitValue))
@@ -395,7 +403,7 @@ internal sealed class ResponseEndpointHandler
             ? (string?)beforeValue : null;
 
         var result = await _provider.GetInputItemsAsync(
-            responseId, limit, ascending, after, before, httpContext.RequestAborted);
+            responseId, isolation, limit, ascending, after, before, httpContext.RequestAborted);
 
         return Results.Json(result, SharedJsonOptions.Instance, statusCode: 200);
     }

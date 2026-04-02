@@ -38,7 +38,8 @@ public class InvocationsActivitySourceTests
         var context = new InvocationContext(
             "inv-123", "sess-456",
             new Dictionary<string, string>(),
-            new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>());
+            new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>(),
+            IsolationContext.Empty);
 
         var headers = new HeaderDictionary();
 
@@ -66,7 +67,8 @@ public class InvocationsActivitySourceTests
         var context = new InvocationContext(
             "inv-1", "sess-1",
             new Dictionary<string, string>(),
-            new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>());
+            new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>(),
+            IsolationContext.Empty);
 
         using var activity = source.StartInvocationActivity(context, new HeaderDictionary());
 
@@ -91,7 +93,8 @@ public class InvocationsActivitySourceTests
         var context = new InvocationContext(
             "inv-1", "sess-1",
             new Dictionary<string, string>(),
-            new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>());
+            new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>(),
+            IsolationContext.Empty);
 
         using var activity = source.StartInvocationActivity(context, new HeaderDictionary());
 
@@ -118,7 +121,8 @@ public class InvocationsActivitySourceTests
         var context = new InvocationContext(
             "inv-abc", "sess-def",
             new Dictionary<string, string>(),
-            new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>());
+            new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>(),
+            IsolationContext.Empty);
 
         using var activity = source.StartInvocationActivity(context, new HeaderDictionary());
 
@@ -162,7 +166,8 @@ public class InvocationsActivitySourceTests
         var context = new InvocationContext(
             "inv-1", "sess-1",
             new Dictionary<string, string>(),
-            new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>());
+            new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>(),
+            IsolationContext.Empty);
 
         using var activity = source.StartInvocationActivity(context, new HeaderDictionary());
 
@@ -188,7 +193,8 @@ public class InvocationsActivitySourceTests
         var context = new InvocationContext(
             "inv-1", "sess-auto",
             new Dictionary<string, string>(),
-            new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>());
+            new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>(),
+            IsolationContext.Empty);
 
         using var activity = source.StartInvocationActivity(context, new HeaderDictionary());
 
@@ -215,7 +221,8 @@ public class InvocationsActivitySourceTests
         var context = new InvocationContext(
             "inv-1", "sess-42",
             new Dictionary<string, string>(),
-            new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>());
+            new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>(),
+            IsolationContext.Empty);
 
         using var activity = source.StartInvocationActivity(context, new HeaderDictionary());
 
@@ -242,7 +249,8 @@ public class InvocationsActivitySourceTests
         var context = new InvocationContext(
             "inv-1", "sess-2",
             new Dictionary<string, string>(),
-            new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>());
+            new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>(),
+            IsolationContext.Empty);
 
         using var activity = source.StartInvocationActivity(context, new HeaderDictionary());
 
@@ -272,7 +280,8 @@ public class InvocationsActivitySourceTests
         var context = new InvocationContext(
             "inv-1", "sess-2",
             new Dictionary<string, string>(),
-            new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>());
+            new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>(),
+            IsolationContext.Empty);
 
         var headers = new HeaderDictionary { ["x-request-id"] = "req-abc-123" };
 
@@ -290,7 +299,8 @@ public class InvocationsActivitySourceTests
         var context = new InvocationContext(
             "inv-1", "sess-2",
             new Dictionary<string, string>(),
-            new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>());
+            new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>(),
+            IsolationContext.Empty);
 
         var activity = source.StartInvocationActivity(context, new HeaderDictionary());
 
