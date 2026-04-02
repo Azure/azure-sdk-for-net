@@ -4,12 +4,13 @@
 
 ### Features Added
 
-- `PlaywrightWorkspaceData` added property `Identity` of type `ManagedServiceIdentity`.
-- `PlaywrightWorkspacePatch` added property `Identity` of type `ManagedServiceIdentity`.
-- `PlaywrightWorkspaceProperties` added property `Reporting` of type `PlaywrightEnablementStatus?`.
-- `PlaywrightWorkspaceProperties` added property `StorageUri` of type `Uri`.
-- `PlaywrightWorkspaceUpdateProperties` added property `Reporting` of type `PlaywrightEnablementStatus?`.
-- `PlaywrightWorkspaceUpdateProperties` added property `StorageUri` of type `Uri`.
+- Upgraded API version to `2026-02-01-preview`.
+  - `PlaywrightWorkspaceData` added property `Identity` of type `ManagedServiceIdentity`.
+  - `PlaywrightWorkspacePatch` added property `Identity` of type `ManagedServiceIdentity`.
+  - `PlaywrightWorkspaceProperties` added property `Reporting` of type `PlaywrightEnablementStatus?`.
+  - `PlaywrightWorkspaceProperties` added property `StorageUri` of type `Uri`.
+  - `PlaywrightWorkspaceUpdateProperties` added property `Reporting` of type `PlaywrightEnablementStatus?`.
+  - `PlaywrightWorkspaceUpdateProperties` added property `StorageUri` of type `Uri`.
 
 ## 1.0.0 (2025-09-05)
 
