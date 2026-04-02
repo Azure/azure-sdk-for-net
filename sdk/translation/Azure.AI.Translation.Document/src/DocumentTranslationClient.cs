@@ -15,8 +15,6 @@ using Azure.Core.Pipeline;
 namespace Azure.AI.Translation.Document
 {
     [CodeGenSuppress("DocumentTranslationClient", typeof(Uri), typeof(AzureKeyCredential), typeof(DocumentTranslationClientOptions))]
-    [CodeGenSuppress("StartTranslation", typeof(WaitUntil), typeof(TranslationBatch), typeof(CancellationToken))]
-    [CodeGenSuppress("StartTranslationAsync", typeof(WaitUntil), typeof(TranslationBatch), typeof(CancellationToken))]
     [CodeGenSuppress("GetTranslationsStatus", typeof(int?), typeof(int?), typeof(int?), typeof(IEnumerable<Guid>), typeof(IEnumerable<string>), typeof(DateTimeOffset?), typeof(DateTimeOffset?), typeof(IEnumerable<string>), typeof(CancellationToken))]
     [CodeGenSuppress("GetTranslationsStatusAsync", typeof(int?), typeof(int?), typeof(int?), typeof(IEnumerable<Guid>), typeof(IEnumerable<string>), typeof(DateTimeOffset?), typeof(DateTimeOffset?), typeof(IEnumerable<string>), typeof(CancellationToken))]
     [CodeGenSuppress("GetTranslationsStatus", typeof(int?), typeof(int?), typeof(int?), typeof(IEnumerable<Guid>), typeof(IEnumerable<string>), typeof(DateTimeOffset?), typeof(DateTimeOffset?), typeof(IEnumerable<string>), typeof(RequestContext))]
@@ -101,39 +99,7 @@ namespace Azure.AI.Translation.Document
         {
             Argument.AssertNotNull(apiVersion, nameof(apiVersion));
 
-            return new DocumentTranslationClient(ClientDiagnostics, Pipeline, _keyCredential, _tokenCredential, _endpoint, apiVersion);
-        }
-
-        /// <summary>
-        /// Use this API to submit a bulk (batch) translation request to the Document Translation service.
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. </param>
-        /// <param name="body"> Translation job submission batch request. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual Operation<TranslationStatusResult> StartTranslation(WaitUntil waitUntil, TranslationBatch body, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(body, nameof(body));
-
-            RequestContext context = cancellationToken.ToRequestContext();
-            Operation<BinaryData> operation = StartTranslation(waitUntil, (RequestContent)body, context);
-            return ProtocolOperationHelpers.Convert(operation, r => TranslationStatusResult.DeserializeTranslationStatusResult(JsonDocument.Parse(r.Content).RootElement, ModelSerializationExtensions.WireOptions), ClientDiagnostics, "DocumentTranslationClient.StartTranslation");
-        }
-
-        /// <summary>
-        /// Use this API to submit a bulk (batch) translation request to the Document Translation service.
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. </param>
-        /// <param name="body"> Translation job submission batch request. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual async Task<Operation<TranslationStatusResult>> StartTranslationAsync(WaitUntil waitUntil, TranslationBatch body, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(body, nameof(body));
-
-            RequestContext context = cancellationToken.ToRequestContext();
-            Operation<BinaryData> operation = await StartTranslationAsync(waitUntil, (RequestContent)body, context).ConfigureAwait(false);
-            return ProtocolOperationHelpers.Convert(operation, r => TranslationStatusResult.DeserializeTranslationStatusResult(JsonDocument.Parse(r.Content).RootElement, ModelSerializationExtensions.WireOptions), ClientDiagnostics, "DocumentTranslationClient.StartTranslation");
+            return new DocumentTranslationClient(ClientDiagnostics, Pipeline, _endpoint, apiVersion);
         }
 
         /// <summary>
