@@ -110,8 +110,8 @@ public class ResponseEventStream
 
     /// <summary>
     /// Produces a <c>response.completed</c> event.
-    /// Sets <c>Status = Completed</c>, <c>CompletedAt</c>, <c>Usage</c>,
-    /// and computes <c>OutputText</c> before creating the event.
+    /// Sets <c>Status = Completed</c>, <c>CompletedAt</c>, and <c>Usage</c>
+    /// before creating the event.
     /// </summary>
     /// <param name="usage">Optional token usage data to include in the response.</param>
     /// <returns>A <see cref="ResponseCompletedEvent"/> with the finalized response.</returns>
@@ -124,7 +124,7 @@ public class ResponseEventStream
     /// <summary>
     /// Produces a <c>response.failed</c> event.
     /// Sets <c>Status = Failed</c>, <c>CompletedAt</c>, <c>Error</c>,
-    /// <c>Usage</c> (if provided), and computes <c>OutputText</c> before creating the event.
+    /// and <c>Usage</c> (if provided) before creating the event.
     /// </summary>
     /// <param name="code">The error code. Defaults to <see cref="ResponseErrorCode.ServerError"/>.</param>
     /// <param name="message">The error message. Defaults to "An internal server error occurred.".</param>
@@ -142,7 +142,7 @@ public class ResponseEventStream
     /// <summary>
     /// Produces a <c>response.incomplete</c> event.
     /// Sets <c>Status = Incomplete</c>, <c>CompletedAt</c>, <c>IncompleteDetails</c>,
-    /// <c>Usage</c> (if provided), and computes <c>OutputText</c> before creating the event.
+    /// and <c>Usage</c> (if provided) before creating the event.
     /// </summary>
     /// <param name="reason">Optional reason for incompleteness.</param>
     /// <param name="usage">Optional token usage data to include in the response.</param>

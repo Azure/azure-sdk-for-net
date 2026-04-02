@@ -684,7 +684,6 @@ public class CrossApiE2eTests : ProtocolTestBase
 
     // E24: Create (SSE) → Cancel immediate (queued) → GET → cancelled, 0 output (B7, B11, S3b)
     [Test]
-    [Ignore("Flaky: cancel races with stream completion under CI load. Tracked in https://github.com/Azure/azure-sdk-for-net/issues/57670")]
     public async Task C4_BgStreamCreate_CancelImmediate_ReturnsCancelled()
     {
         // Validates: B7, B11 — cancel → cancelled with 0 output; S3b
@@ -694,15 +693,17 @@ public class CrossApiE2eTests : ProtocolTestBase
         var (responseId, sseResponse) = await StartBgStreamAndExtractIdAsync();
         try
         {
-            // Cancel immediately
+            // Cancel immediately — CancelAsync waits for handler to finish (up to 10s),
+            // so the handler exits via CancellationToken before this returns.
             var cancelResponse = await CancelResponseAsync(responseId);
             Assert.That(cancelResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
-            handlerGate.TrySetResult();
             await WaitForBackgroundCompletionAsync(responseId);
         }
         finally
         {
+            // Release gate as safety cleanup (handler already exited via cancellation).
+            handlerGate.TrySetResult();
             sseResponse.Dispose();
         }
 
@@ -714,7 +715,6 @@ public class CrossApiE2eTests : ProtocolTestBase
 
     // E25: Create (SSE) → Cancel (mid-stream) → GET → cancelled, 0 output (B7, B11, S6)
     [Test]
-    [Ignore("Flaky: cancel races with stream completion under CI load. Tracked in https://github.com/Azure/azure-sdk-for-net/issues/57670")]
     public async Task C4_BgStreamCreate_CancelMidStream_ReturnsCancelled()
     {
         // Validates: B7, B11 — cancel → cancelled with 0 output; S6
@@ -728,14 +728,17 @@ public class CrossApiE2eTests : ProtocolTestBase
             // Wait for handler to have emitted deltas (deterministic gate)
             await deltasEmitted.Task.WaitAsync(TimeSpan.FromSeconds(5));
 
+            // CancelAsync waits for handler to finish (up to 10s),
+            // so the handler exits via CancellationToken before this returns.
             var cancelResponse = await CancelResponseAsync(responseId);
             Assert.That(cancelResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
-            handlerGate.TrySetResult();
             await WaitForBackgroundCompletionAsync(responseId);
         }
         finally
         {
+            // Release gate as safety cleanup (handler already exited via cancellation).
+            handlerGate.TrySetResult();
             sseResponse.Dispose();
         }
 
@@ -747,7 +750,6 @@ public class CrossApiE2eTests : ProtocolTestBase
 
     // E26: Create (SSE) → Cancel → GET ?stream=true → SSE replay with terminal event (B26, B11)
     [Test]
-    [Ignore("Flaky: cancel races with stream completion under CI load. Tracked in https://github.com/Azure/azure-sdk-for-net/issues/57670")]
     public async Task C4_BgStreamCreate_Cancel_Then_SseReplay_HasTerminalEvent()
     {
         // Validates: B26 — terminal SSE event after cancel; B11
@@ -757,12 +759,15 @@ public class CrossApiE2eTests : ProtocolTestBase
         var (responseId, sseResponse) = await StartBgStreamAndExtractIdAsync();
         try
         {
+            // CancelAsync waits for handler to finish (up to 10s),
+            // so the handler exits via CancellationToken before this returns.
             await CancelResponseAsync(responseId);
-            handlerGate.TrySetResult();
             await WaitForBackgroundCompletionAsync(responseId);
         }
         finally
         {
+            // Release gate as safety cleanup (handler already exited via cancellation).
+            handlerGate.TrySetResult();
             sseResponse.Dispose();
         }
 

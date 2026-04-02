@@ -1,6 +1,6 @@
 # Azure SDK for .NET Libraries Inventory
 
-> **Auto-generated** by `Library_Inventory` on 2026-04-02 03:48:18 UTC.
+> **Auto-generated** by `Library_Inventory` on 2026-04-02 05:08:45 UTC.
 > Run that script to refresh this file.
 
 ## Table of Contents
@@ -23,11 +23,11 @@
   - Old TypeSpec: 0
 - Data Plane (DPG): 144
   - Autorest/Swagger: 52
-  - New Emitter (TypeSpec): 41
-  - Old TypeSpec: 3
+  - New Emitter (TypeSpec): 40
+  - Old TypeSpec: 4
 - Provisioning: 37
-  - Reflection-based generator: 34
-  - TypeSpec-based generator: 1
+  - Reflection-based generator: 33
+  - TypeSpec-based generator: 2
   - No generator: 2
 - No generator: 48
 
@@ -36,7 +36,7 @@
 
 Libraries that provide client APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 41 / 44 (93.2%)
+**Migration Status**: 40 / 44 (90.9%)
 
 | Service | Library | New Emitter | Using SCM |
 | ------- | ------- | ----------- | --------- |
@@ -400,7 +400,7 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 10
 
 Libraries that provide infrastructure-as-code capabilities for Azure services. These libraries allow you to declaratively specify Azure infrastructure natively in .NET and generate Bicep templates for deployment.
 
-**Migration Status**: 1 / 37 migrated to TypeSpec-based generator
+**Migration Status**: 2 / 37 migrated to TypeSpec-based generator
 
 | Service | Library | Mgmt Peer Library | Generator |
 | ------- | ------- | ----------------- | --------- |
@@ -414,7 +414,7 @@ Libraries that provide infrastructure-as-code capabilities for Azure services. T
 | compute | Azure.Provisioning.Compute | Azure.ResourceManager.Compute | Reflection |
 | containerapps | Azure.Provisioning.AppContainers | Azure.ResourceManager.AppContainers | Reflection |
 | containerregistry | Azure.Provisioning.ContainerRegistry | Azure.ResourceManager.ContainerRegistry | Reflection |
-| containerservice | Azure.Provisioning.ContainerService | Azure.ResourceManager.ContainerService ✅ | Reflection |
+| containerservice | Azure.Provisioning.ContainerService | Azure.ResourceManager.ContainerService ✅ | TypeSpec ✅ |
 | cosmosdb | Azure.Provisioning.CosmosDB | Azure.ResourceManager.CosmosDB | Reflection |
 | datafactory | Azure.Provisioning.DataFactory | Azure.ResourceManager.DataFactory | Reflection |
 | dns | Azure.Provisioning.Dns | Azure.ResourceManager.Dns | None |
