@@ -22,15 +22,15 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal ContainerGroupIdentityAccessControlLevels(IdentityAccessLevel? defaultAccess, IList<IdentityAccessControl> acls, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            DefaultAccess = defaultAccess;
-            Acls = acls;
+            DefaultAccessValue = defaultAccess;
+            AclsInternal = acls;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Gets the DefaultAccess. </summary>
-        public IdentityAccessLevel? DefaultAccess { get; }
+        internal IdentityAccessLevel? DefaultAccessValue { get; set; }
 
         /// <summary> Gets the Acls. </summary>
-        public IList<IdentityAccessControl> Acls { get; }
+        internal IList<IdentityAccessControl> AclsInternal { get; }
     }
 }

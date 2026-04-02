@@ -24,6 +24,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
 
         /// <summary> Gets a container group profile. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
         public virtual Response<ContainerGroupProfileResource> GetContainerGroupProfile(string containerGroupProfileName, CancellationToken cancellationToken = default)
         {
             Response<CGProfileResource> response = GetCGProfile(containerGroupProfileName, cancellationToken);
@@ -32,6 +33,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
 
         /// <summary> Gets a container group profile. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
         public virtual async Task<Response<ContainerGroupProfileResource>> GetContainerGroupProfileAsync(string containerGroupProfileName, CancellationToken cancellationToken = default)
         {
             Response<CGProfileResource> response = await GetCGProfileAsync(containerGroupProfileName, cancellationToken).ConfigureAwait(false);
@@ -40,6 +42,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
 
         /// <summary> Gets a container group. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
         public virtual Response<ContainerGroupResource> GetContainerGroup(string containerGroupName, CancellationToken cancellationToken = default)
         {
             return GetContainerGroups().Get(containerGroupName, cancellationToken);
@@ -47,6 +50,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
 
         /// <summary> Gets a container group. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
         public virtual async Task<Response<ContainerGroupResource>> GetContainerGroupAsync(string containerGroupName, CancellationToken cancellationToken = default)
         {
             return await GetContainerGroups().GetAsync(containerGroupName, cancellationToken).ConfigureAwait(false);

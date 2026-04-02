@@ -31,6 +31,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public ContainerGroupNetworkProtocol? Protocol { get; set; }
 
         /// <summary> Gets the Port. </summary>
-        public int Port { get; }
+        public int Port { get; set; }
     }
 }

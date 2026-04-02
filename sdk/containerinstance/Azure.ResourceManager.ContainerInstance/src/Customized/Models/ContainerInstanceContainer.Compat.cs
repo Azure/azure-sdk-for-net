@@ -4,7 +4,8 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 
-// Backward-compat constructor shims for TypeSpec migration (ApiCompat MembersMustExist).
+// Backward-compat constructor and property shims for TypeSpec migration.
+// Properties delegate to the internal ContainerProperties nested type.
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
@@ -26,6 +27,62 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public ContainerInstanceContainer(string name, string image, ContainerResourceRequirements resources)
             : this(name, (ContainerProperties)default, (IDictionary<string, System.BinaryData>)default)
         {
+        }
+
+        // Delegation properties for ContainerProperties members (moved to nested type in TypeSpec generation).
+
+        /// <summary> The environment variables to set in the container instance. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public IList<ContainerEnvironmentVariable> EnvironmentVariables
+        {
+            get
+            {
+                if (Properties is null)
+                    Properties = new ContainerProperties();
+                return Properties.EnvironmentVariables;
+            }
+        }
+
+        /// <summary> The instance view of the container instance. Only valid in response. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public ContainerInstanceView InstanceView => Properties?.InstanceView;
+
+        /// <summary> The resource requirements of the container instance. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public ContainerResourceRequirements Resources
+        {
+            get => Properties?.Resources;
+            set
+            {
+                if (Properties is null)
+                    Properties = new ContainerProperties();
+                Properties.Resources = value;
+            }
+        }
+
+        /// <summary> The container security properties. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public ContainerSecurityContextDefinition SecurityContext
+        {
+            get => Properties?.SecurityContext;
+            set
+            {
+                if (Properties is null)
+                    Properties = new ContainerProperties();
+                Properties.SecurityContext = value;
+            }
+        }
+
+        /// <summary> The volume mounts available to the container instance. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public IList<ContainerVolumeMount> VolumeMounts
+        {
+            get
+            {
+                if (Properties is null)
+                    Properties = new ContainerProperties();
+                return Properties.VolumeMounts;
+            }
         }
     }
 }

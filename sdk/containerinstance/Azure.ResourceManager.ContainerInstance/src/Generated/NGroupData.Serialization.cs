@@ -137,10 +137,10 @@ namespace Azure.ResourceManager.ContainerInstance
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Identity))
+            if (Optional.IsDefined(NGroupIdentityValue))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity, options);
+                writer.WriteObjectValue(NGroupIdentityValue, options);
             }
         }
 

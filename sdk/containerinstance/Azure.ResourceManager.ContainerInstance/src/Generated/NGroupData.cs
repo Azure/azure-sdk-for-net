@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ContainerInstance
             Tags = tags;
             Location = location;
             Zones = zones;
-            Identity = identity;
+            NGroupIdentityValue = identity;
         }
 
         /// <summary> Describes the properties of the NGroups resource. </summary>
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ContainerInstance
         public IList<string> Zones { get; }
 
         /// <summary> The identity of the NGroup, if configured. </summary>
-        public NGroupIdentity Identity { get; set; }
+        internal NGroupIdentity NGroupIdentityValue { get; set; }
 
         /// <summary> The elastic profile. </summary>
         public ContainerGroupElasticProfile ElasticProfile

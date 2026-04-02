@@ -28,9 +28,9 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         }
 
         /// <summary> Gets the Requests. </summary>
-        public ContainerResourceRequestsContent Requests { get; }
+        public ContainerResourceRequestsContent Requests { get; set; }
 
         /// <summary> Gets the Limits. </summary>
-        public ContainerResourceLimits Limits { get; }
+        public ContainerResourceLimits Limits { get; set; }
     }
 }

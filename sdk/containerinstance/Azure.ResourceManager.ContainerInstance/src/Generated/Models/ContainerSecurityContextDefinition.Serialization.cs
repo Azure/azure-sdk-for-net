@@ -88,10 +88,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 writer.WritePropertyName("allowPrivilegeEscalation"u8);
                 writer.WriteBooleanValue(AllowPrivilegeEscalation.Value);
             }
-            if (Optional.IsDefined(Capabilities))
+            if (Optional.IsDefined(CapabilitiesValue))
             {
                 writer.WritePropertyName("capabilities"u8);
-                writer.WriteObjectValue(Capabilities, options);
+                writer.WriteObjectValue(CapabilitiesValue, options);
             }
             if (Optional.IsDefined(RunAsGroup))
             {

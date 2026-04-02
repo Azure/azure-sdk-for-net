@@ -17,5 +17,9 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             : this(shareName, default, storageAccountName, default, default, default)
         {
         }
+
+        /// <summary> The flag indicating whether the Azure File shared mounted as a volume is read-only. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public bool? IsReadOnly { get => ReadOnly; set => ReadOnly = value; }
     }
 }

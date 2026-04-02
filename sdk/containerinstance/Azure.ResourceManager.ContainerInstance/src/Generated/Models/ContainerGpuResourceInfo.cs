@@ -31,6 +31,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public int Count { get; set; }
 
         /// <summary> Gets the Sku. </summary>
-        public ContainerGpuSku Sku { get; }
+        public ContainerGpuSku Sku { get; set; }
     }
 }

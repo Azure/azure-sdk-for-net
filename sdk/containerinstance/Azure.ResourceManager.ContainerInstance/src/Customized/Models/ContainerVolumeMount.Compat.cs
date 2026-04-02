@@ -17,5 +17,9 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             : this(name, mountPath, default, default)
         {
         }
+
+        /// <summary> The flag indicating whether the volume mount is read-only. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public bool? IsReadOnly { get => ReadOnly; set => ReadOnly = value; }
     }
 }

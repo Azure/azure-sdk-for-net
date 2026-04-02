@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         {
             Privileged = privileged;
             AllowPrivilegeEscalation = allowPrivilegeEscalation;
-            Capabilities = capabilities;
+            CapabilitiesValue = capabilities;
             RunAsGroup = runAsGroup;
             RunAsUser = runAsUser;
             SeccompProfile = seccompProfile;
@@ -51,6 +51,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public string SeccompProfile { get; set; }
 
         /// <summary> Gets the Capabilities. </summary>
-        public SecurityContextCapabilitiesDefinition Capabilities { get; }
+        internal SecurityContextCapabilitiesDefinition CapabilitiesValue { get; set; }
     }
 }

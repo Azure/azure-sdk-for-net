@@ -41,10 +41,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public string WorkspaceKey { get; set; }
 
         /// <summary> Gets the LogType. </summary>
-        public ContainerGroupLogAnalyticsLogType? LogType { get; }
+        public ContainerGroupLogAnalyticsLogType? LogType { get; set; }
 
         /// <summary> Gets the WorkspaceResourceId. </summary>
-        public ResourceIdentifier WorkspaceResourceId { get; }
+        public ResourceIdentifier WorkspaceResourceId { get; set; }
 
         /// <summary> Metadata for log analytics. </summary>
         public IDictionary<string, string> Metadata { get; }

@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ContainerInstance
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Zones = zones;
-            Identity = identity;
+            ContainerGroupIdentityValue = identity;
             Properties = properties;
         }
 
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ContainerInstance
         public IList<string> Zones { get; }
 
         /// <summary> The identity of the container group, if configured. </summary>
-        public ContainerGroupIdentity Identity { get; set; }
+        internal ContainerGroupIdentity ContainerGroupIdentityValue { get; set; }
 
         /// <summary> The container group properties. </summary>
         internal ContainerGroupPropertiesProperties Properties { get; set; }
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary> The init containers for a container group. </summary>
-        public IList<InitContainerDefinition> InitContainers
+        internal IList<InitContainerDefinition> InitContainersInternal
         {
             get
             {

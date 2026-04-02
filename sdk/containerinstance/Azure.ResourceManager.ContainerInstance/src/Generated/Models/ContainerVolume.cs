@@ -68,10 +68,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public BinaryData EmptyDir { get; set; }
 
         /// <summary> Gets the AzureFile. </summary>
-        public ContainerInstanceAzureFileVolume AzureFile { get; }
+        public ContainerInstanceAzureFileVolume AzureFile { get; set; }
 
         /// <summary> Gets the GitRepo. </summary>
-        public ContainerInstanceGitRepoVolume GitRepo { get; }
+        public ContainerInstanceGitRepoVolume GitRepo { get; set; }
 
         /// <summary> The secret volume. </summary>
         public IDictionary<string, string> Secret { get; }

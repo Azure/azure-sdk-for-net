@@ -32,6 +32,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public string Name { get; set; }
 
         /// <summary> Gets the Id. </summary>
-        public ResourceIdentifier Id { get; }
+        public ResourceIdentifier Id { get; set; }
     }
 }

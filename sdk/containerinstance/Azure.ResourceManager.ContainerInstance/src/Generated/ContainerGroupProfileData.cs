@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary> The init containers for a container group. </summary>
-        public IList<InitContainerDefinition> InitContainers
+        internal IList<InitContainerDefinition> InitContainersInternal
         {
             get
             {

@@ -20,6 +20,9 @@ namespace Azure.ResourceManager.ContainerInstance
     [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class ContainerGroupProfileResource : CGProfileResource
     {
+        /// <summary> Resource type of ContainerGroupProfileResource. </summary>
+        public static new readonly ResourceType ResourceType = CGProfileResource.ResourceType;
+
         /// <summary> Initializes a new instance for mocking. </summary>
         protected ContainerGroupProfileResource()
         {
@@ -124,6 +127,7 @@ namespace Azure.ResourceManager.ContainerInstance
 
         /// <summary> Gets a container group profile revision. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
         public virtual Response<ContainerGroupProfileRevisionResource> GetContainerGroupProfileRevision(string revisionNumber, CancellationToken cancellationToken = default)
         {
             Response<CGProfileResource> response = base.GetCGProfile(revisionNumber, cancellationToken);
@@ -132,6 +136,7 @@ namespace Azure.ResourceManager.ContainerInstance
 
         /// <summary> Gets a container group profile revision. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
         public virtual async Task<Response<ContainerGroupProfileRevisionResource>> GetContainerGroupProfileRevisionAsync(string revisionNumber, CancellationToken cancellationToken = default)
         {
             Response<CGProfileResource> response = await base.GetCGProfileAsync(revisionNumber, cancellationToken).ConfigureAwait(false);

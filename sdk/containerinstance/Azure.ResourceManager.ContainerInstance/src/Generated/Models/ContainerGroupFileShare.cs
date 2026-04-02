@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             Name = name;
             ResourceGroupName = resourceGroupName;
             StorageAccountName = storageAccountName;
-            Properties = properties;
+            FileSharePropertiesValue = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -41,6 +41,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public string StorageAccountName { get; set; }
 
         /// <summary> Gets the Properties. </summary>
-        public FileShareProperties Properties { get; }
+        internal FileShareProperties FileSharePropertiesValue { get; set; }
     }
 }

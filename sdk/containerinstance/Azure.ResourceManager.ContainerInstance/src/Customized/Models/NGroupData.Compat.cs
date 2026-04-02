@@ -3,8 +3,9 @@
 
 using System.ComponentModel;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
-// Backward-compat constructor shim for TypeSpec migration (ApiCompat MembersMustExist).
+// Backward-compat constructor and property shims for TypeSpec migration (ApiCompat MembersMustExist).
 
 namespace Azure.ResourceManager.ContainerInstance
 {
@@ -15,6 +16,14 @@ namespace Azure.ResourceManager.ContainerInstance
         [EditorBrowsable(EditorBrowsableState.Never)]
         public NGroupData(AzureLocation location) : this()
         {
+        }
+
+        /// <summary> The identity of the NGroup. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public ManagedServiceIdentity Identity
+        {
+            get => null;
+            set { }
         }
     }
 }

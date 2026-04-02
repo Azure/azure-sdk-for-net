@@ -93,10 +93,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 writer.WritePropertyName("storageAccountName"u8);
                 writer.WriteStringValue(StorageAccountName);
             }
-            if (Optional.IsDefined(Properties))
+            if (Optional.IsDefined(FileSharePropertiesValue))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                writer.WriteObjectValue(FileSharePropertiesValue, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

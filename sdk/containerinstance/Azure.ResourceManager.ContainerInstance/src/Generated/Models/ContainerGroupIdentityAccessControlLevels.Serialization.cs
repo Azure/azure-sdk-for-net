@@ -78,16 +78,16 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 throw new FormatException($"The model {nameof(ContainerGroupIdentityAccessControlLevels)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(DefaultAccess))
+            if (Optional.IsDefined(DefaultAccessValue))
             {
                 writer.WritePropertyName("defaultAccess"u8);
-                writer.WriteStringValue(DefaultAccess.Value.ToString());
+                writer.WriteStringValue(DefaultAccessValue.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Acls))
+            if (Optional.IsCollectionDefined(AclsInternal))
             {
                 writer.WritePropertyName("acls"u8);
                 writer.WriteStartArray();
-                foreach (IdentityAccessControl item in Acls)
+                foreach (IdentityAccessControl item in AclsInternal)
                 {
                     writer.WriteObjectValue(item, options);
                 }

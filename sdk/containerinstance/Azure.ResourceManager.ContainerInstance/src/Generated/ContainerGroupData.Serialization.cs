@@ -116,10 +116,10 @@ namespace Azure.ResourceManager.ContainerInstance
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Identity))
+            if (Optional.IsDefined(ContainerGroupIdentityValue))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity, options);
+                writer.WriteObjectValue(ContainerGroupIdentityValue, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteObjectValue(Properties, options);

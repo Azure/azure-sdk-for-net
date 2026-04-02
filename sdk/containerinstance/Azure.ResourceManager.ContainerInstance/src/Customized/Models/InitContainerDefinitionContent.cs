@@ -29,6 +29,11 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         {
         }
 
+        /// <summary> Wraps an <see cref="InitContainerDefinition"/> instance. </summary>
+        internal InitContainerDefinitionContent(InitContainerDefinition other) : base(other?.Name)
+        {
+        }
+
         InitContainerDefinitionContent IJsonModel<InitContainerDefinitionContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
             => throw new InvalidOperationException("Use InitContainerDefinition for deserialization.");
 

@@ -19,5 +19,9 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             : this(keyName, keyVersion)
         {
         }
+
+        /// <summary> The keyvault base url. Removed from TypeSpec model but required for backward compat. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public Uri VaultBaseUri { get; set; }
     }
 }

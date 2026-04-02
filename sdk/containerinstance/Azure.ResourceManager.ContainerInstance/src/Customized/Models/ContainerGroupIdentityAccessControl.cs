@@ -22,6 +22,14 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         {
         }
 
+        /// <summary> The access level of the identity (compat shim). </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public new ContainerGroupIdentityAccessLevel? Access
+        {
+            get => base.Access.HasValue ? new ContainerGroupIdentityAccessLevel(base.Access.Value.ToString()) : (ContainerGroupIdentityAccessLevel?)null;
+            set => base.Access = value.HasValue ? new IdentityAccessLevel(value.Value.ToString()) : (IdentityAccessLevel?)null;
+        }
+
         ContainerGroupIdentityAccessControl IJsonModel<ContainerGroupIdentityAccessControl>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
             => throw new InvalidOperationException("Use IdentityAccessControl for deserialization.");
 

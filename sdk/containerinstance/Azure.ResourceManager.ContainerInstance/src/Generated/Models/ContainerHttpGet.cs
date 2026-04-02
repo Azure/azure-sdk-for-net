@@ -50,6 +50,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public IList<ContainerHttpHeader> HttpHeaders { get; }
 
         /// <summary> Gets the Scheme. </summary>
-        public ContainerHttpGetScheme? Scheme { get; }
+        public ContainerHttpGetScheme? Scheme { get; set; }
     }
 }
