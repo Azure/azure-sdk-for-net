@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 writer.WritePropertyName("environmentVariables"u8);
                 writer.WriteStartArray();
-                foreach (EnvironmentVariable item in EnvironmentVariables)
+                foreach (ContainerEnvironmentVariable item in EnvironmentVariables)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 writer.WritePropertyName("volumeMounts"u8);
                 writer.WriteStartArray();
-                foreach (VolumeMount item in VolumeMounts)
+                foreach (ContainerVolumeMount item in VolumeMounts)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -168,10 +168,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
             string image = default;
             IList<string> command = default;
-            IList<EnvironmentVariable> environmentVariables = default;
+            IList<ContainerEnvironmentVariable> environmentVariables = default;
             InitContainerPropertiesDefinitionInstanceView instanceView = default;
-            IList<VolumeMount> volumeMounts = default;
-            SecurityContextDefinition securityContext = default;
+            IList<ContainerVolumeMount> volumeMounts = default;
+            ContainerSecurityContextDefinition securityContext = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -207,10 +207,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    List<EnvironmentVariable> array = new List<EnvironmentVariable>();
+                    List<ContainerEnvironmentVariable> array = new List<ContainerEnvironmentVariable>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(EnvironmentVariable.DeserializeEnvironmentVariable(item, options));
+                        array.Add(ContainerEnvironmentVariable.DeserializeContainerEnvironmentVariable(item, options));
                     }
                     environmentVariables = array;
                     continue;
@@ -230,10 +230,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    List<VolumeMount> array = new List<VolumeMount>();
+                    List<ContainerVolumeMount> array = new List<ContainerVolumeMount>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(VolumeMount.DeserializeVolumeMount(item, options));
+                        array.Add(ContainerVolumeMount.DeserializeContainerVolumeMount(item, options));
                     }
                     volumeMounts = array;
                     continue;
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    securityContext = SecurityContextDefinition.DeserializeSecurityContextDefinition(prop.Value, options);
+                    securityContext = ContainerSecurityContextDefinition.DeserializeContainerSecurityContextDefinition(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -255,9 +255,9 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             return new InitContainerPropertiesDefinition(
                 image,
                 command ?? new ChangeTrackingList<string>(),
-                environmentVariables ?? new ChangeTrackingList<EnvironmentVariable>(),
+                environmentVariables ?? new ChangeTrackingList<ContainerEnvironmentVariable>(),
                 instanceView,
-                volumeMounts ?? new ChangeTrackingList<VolumeMount>(),
+                volumeMounts ?? new ChangeTrackingList<ContainerVolumeMount>(),
                 securityContext,
                 additionalBinaryDataProperties);
         }

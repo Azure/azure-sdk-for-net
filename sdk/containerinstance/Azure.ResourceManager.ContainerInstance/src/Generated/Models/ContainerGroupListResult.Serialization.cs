@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (ListResultContainerGroup item in Value)
+            foreach (ContainerGroupData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 return null;
             }
-            IList<ListResultContainerGroup> value = default;
+            IList<ContainerGroupData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<ListResultContainerGroup> array = new List<ListResultContainerGroup>();
+                    List<ContainerGroupData> array = new List<ContainerGroupData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ListResultContainerGroup.DeserializeListResultContainerGroup(item, options));
+                        array.Add(ContainerGroupData.DeserializeContainerGroupData(item, options));
                     }
                     value = array;
                     continue;

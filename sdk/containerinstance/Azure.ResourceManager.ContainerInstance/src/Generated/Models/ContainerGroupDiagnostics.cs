@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <summary> Initializes a new instance of <see cref="ContainerGroupDiagnostics"/>. </summary>
         /// <param name="logAnalytics"> Container group log analytics information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerGroupDiagnostics(LogAnalytics logAnalytics, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerGroupDiagnostics(ContainerGroupLogAnalytics logAnalytics, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             LogAnalytics = logAnalytics;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Container group log analytics information. </summary>
-        public LogAnalytics LogAnalytics { get; set; }
+        public ContainerGroupLogAnalytics LogAnalytics { get; set; }
     }
 }

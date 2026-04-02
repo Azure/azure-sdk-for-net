@@ -14,22 +14,10 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.ContainerInstance
 {
     /// <summary> A container group. </summary>
-    public partial class ContainerGroupData : ResourceData
+    public partial class ContainerGroupData : TrackedResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
-        /// <summary> Initializes a new instance of <see cref="ContainerGroupData"/>. </summary>
-        /// <param name="containers"> The containers within the container group. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containers"/> is null. </exception>
-        public ContainerGroupData(IEnumerable<Container> containers)
-        {
-            Argument.AssertNotNull(containers, nameof(containers));
-
-            Tags = new ChangeTrackingDictionary<string, string>();
-            Zones = new ChangeTrackingList<string>();
-            Properties = new ContainerGroupPropertiesProperties(containers);
-        }
 
         /// <summary> Initializes a new instance of <see cref="ContainerGroupData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -37,26 +25,18 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="location"> The resource location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="tags"> The resource tags. </param>
         /// <param name="zones"> The availability zones. </param>
         /// <param name="identity"> The identity of the container group, if configured. </param>
         /// <param name="properties"> The container group properties. </param>
-        internal ContainerGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, string location, IDictionary<string, string> tags, IList<string> zones, ContainerGroupIdentity identity, ContainerGroupPropertiesProperties properties) : base(id, name, resourceType, systemData)
+        internal ContainerGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureLocation location, IDictionary<string, string> tags, IList<string> zones, ContainerGroupIdentity identity, ContainerGroupPropertiesProperties properties) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
-            Location = location;
-            Tags = tags;
             Zones = zones;
             Identity = identity;
             Properties = properties;
         }
-
-        /// <summary> The resource location. </summary>
-        public string Location { get; set; }
-
-        /// <summary> The resource tags. </summary>
-        public IDictionary<string, string> Tags { get; }
 
         /// <summary> The availability zones. </summary>
         public IList<string> Zones { get; }
@@ -68,7 +48,7 @@ namespace Azure.ResourceManager.ContainerInstance
         internal ContainerGroupPropertiesProperties Properties { get; set; }
 
         /// <summary> The secret references that will be referenced within the container group. </summary>
-        public IList<SecretReference> SecretReferences
+        public IList<ContainerGroupSecretReference> SecretReferences
         {
             get
             {
@@ -81,7 +61,7 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary> The containers within the container group. </summary>
-        public IList<Container> Containers
+        public IList<ContainerInstanceContainer> Containers
         {
             get
             {
@@ -94,7 +74,7 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary> The image registry credentials by which the container group is created from. </summary>
-        public IList<ImageRegistryCredential> ImageRegistryCredentials
+        public IList<ContainerGroupImageRegistryCredential> ImageRegistryCredentials
         {
             get
             {
@@ -127,7 +107,7 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary> The IP address type of the container group. </summary>
-        public IpAddress IpAddress
+        public ContainerGroupIPAddress IpAddress
         {
             get
             {
@@ -144,7 +124,7 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary> The operating system type required by the containers in the container group. </summary>
-        public OperatingSystemTypes? OsType
+        public ContainerInstanceOperatingSystemType? OsType
         {
             get
             {
@@ -161,7 +141,7 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary> The list of volumes that can be mounted by containers in this container group. </summary>
-        public IList<Volume> Volumes
+        public IList<ContainerVolume> Volumes
         {
             get
             {
@@ -174,7 +154,7 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary> The instance view of the container group. Only valid in response. </summary>
-        public ContainerGroupPropertiesPropertiesInstanceView InstanceView
+        public ContainerGroupInstanceView InstanceView
         {
             get
             {
@@ -196,7 +176,7 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary> The DNS config information for a container group. </summary>
-        public DnsConfiguration DnsConfig
+        public ContainerGroupDnsConfiguration DnsConfig
         {
             get
             {
@@ -230,7 +210,7 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary> The encryption properties for a container group. </summary>
-        public Models.EncryptionProperties EncryptionProperties
+        public ContainerGroupEncryptionProperties EncryptionProperties
         {
             get
             {
@@ -290,7 +270,7 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary> The access control levels of the identities. </summary>
-        public IdentityAcls IdentityAcls
+        public ContainerGroupIdentityAccessControlLevels IdentityAcls
         {
             get
             {
@@ -350,7 +330,7 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary> Container group log analytics information. </summary>
-        public LogAnalytics DiagnosticsLogAnalytics
+        public ContainerGroupLogAnalytics DiagnosticsLogAnalytics
         {
             get
             {

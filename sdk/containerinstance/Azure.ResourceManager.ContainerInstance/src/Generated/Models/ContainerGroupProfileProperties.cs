@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="containers"> The containers within the container group. </param>
         /// <param name="osType"> The operating system type required by the containers in the container group. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="containers"/> is null. </exception>
-        public ContainerGroupProfileProperties(IEnumerable<Container> containers, OperatingSystemTypes osType)
+        public ContainerGroupProfileProperties(IEnumerable<ContainerInstanceContainer> containers, ContainerInstanceOperatingSystemType osType)
         {
             Argument.AssertNotNull(containers, nameof(containers));
 
             Containers = containers.ToList();
             InitContainers = new ChangeTrackingList<InitContainerDefinition>();
             Extensions = new ChangeTrackingList<DeploymentExtensionSpec>();
-            ImageRegistryCredentials = new ChangeTrackingList<ImageRegistryCredential>();
+            ImageRegistryCredentials = new ChangeTrackingList<ContainerGroupImageRegistryCredential>();
             OsType = osType;
-            Volumes = new ChangeTrackingList<Volume>();
+            Volumes = new ChangeTrackingList<ContainerVolume>();
             RegisteredRevisions = new ChangeTrackingList<int>();
         }
 
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="registeredRevisions"> Registered revisions are calculated at request time based off the records in the table logs. </param>
         /// <param name="useKrypton"> Gets or sets Krypton use property. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerGroupProfileProperties(ContainerGroupSku? sku, EncryptionProperties encryptionProperties, IList<Container> containers, IList<InitContainerDefinition> initContainers, IList<DeploymentExtensionSpec> extensions, IList<ImageRegistryCredential> imageRegistryCredentials, ContainerGroupRestartPolicy? restartPolicy, DateTimeOffset? shutdownGracePeriod, IpAddress ipAddress, DateTimeOffset? timeToLive, OperatingSystemTypes osType, IList<Volume> volumes, ContainerGroupDiagnostics diagnostics, ContainerGroupPriority? priority, ConfidentialComputeProperties confidentialComputeProperties, SecurityContextDefinition securityContext, int? revision, IReadOnlyList<int> registeredRevisions, bool? useKrypton, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerGroupProfileProperties(ContainerGroupSku? sku, ContainerGroupEncryptionProperties encryptionProperties, IList<ContainerInstanceContainer> containers, IList<InitContainerDefinition> initContainers, IList<DeploymentExtensionSpec> extensions, IList<ContainerGroupImageRegistryCredential> imageRegistryCredentials, ContainerGroupRestartPolicy? restartPolicy, DateTimeOffset? shutdownGracePeriod, ContainerGroupIPAddress ipAddress, DateTimeOffset? timeToLive, ContainerInstanceOperatingSystemType osType, IList<ContainerVolume> volumes, ContainerGroupDiagnostics diagnostics, ContainerGroupPriority? priority, ConfidentialComputeProperties confidentialComputeProperties, ContainerSecurityContextDefinition securityContext, int? revision, IReadOnlyList<int> registeredRevisions, bool? useKrypton, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Sku = sku;
             EncryptionProperties = encryptionProperties;
@@ -87,10 +87,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public ContainerGroupSku? Sku { get; set; }
 
         /// <summary> The encryption properties for a container group. </summary>
-        public EncryptionProperties EncryptionProperties { get; set; }
+        public ContainerGroupEncryptionProperties EncryptionProperties { get; set; }
 
         /// <summary> The containers within the container group. </summary>
-        public IList<Container> Containers { get; } = new ChangeTrackingList<Container>();
+        public IList<ContainerInstanceContainer> Containers { get; } = new ChangeTrackingList<ContainerInstanceContainer>();
 
         /// <summary> The init containers for a container group. </summary>
         public IList<InitContainerDefinition> InitContainers { get; } = new ChangeTrackingList<InitContainerDefinition>();
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public IList<DeploymentExtensionSpec> Extensions { get; } = new ChangeTrackingList<DeploymentExtensionSpec>();
 
         /// <summary> The image registry credentials by which the container group is created from. </summary>
-        public IList<ImageRegistryCredential> ImageRegistryCredentials { get; } = new ChangeTrackingList<ImageRegistryCredential>();
+        public IList<ContainerGroupImageRegistryCredential> ImageRegistryCredentials { get; } = new ChangeTrackingList<ContainerGroupImageRegistryCredential>();
 
         /// <summary>
         /// Restart policy for all containers within the container group.
@@ -111,16 +111,16 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public DateTimeOffset? ShutdownGracePeriod { get; set; }
 
         /// <summary> The IP address type of the container group. </summary>
-        public IpAddress IpAddress { get; set; }
+        public ContainerGroupIPAddress IpAddress { get; set; }
 
         /// <summary> Post completion time to live for containers of a CG. </summary>
         public DateTimeOffset? TimeToLive { get; set; }
 
         /// <summary> The operating system type required by the containers in the container group. </summary>
-        public OperatingSystemTypes OsType { get; set; }
+        public ContainerInstanceOperatingSystemType OsType { get; set; }
 
         /// <summary> The list of volumes that can be mounted by containers in this container group. </summary>
-        public IList<Volume> Volumes { get; } = new ChangeTrackingList<Volume>();
+        public IList<ContainerVolume> Volumes { get; } = new ChangeTrackingList<ContainerVolume>();
 
         /// <summary> The diagnostic information for a container group. </summary>
         internal ContainerGroupDiagnostics Diagnostics { get; set; }
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         internal ConfidentialComputeProperties ConfidentialComputeProperties { get; set; }
 
         /// <summary> The container security properties. </summary>
-        public SecurityContextDefinition SecurityContext { get; set; }
+        public ContainerSecurityContextDefinition SecurityContext { get; set; }
 
         /// <summary> Container group profile current revision number. </summary>
         public int? Revision { get; }
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public bool? UseKrypton { get; set; }
 
         /// <summary> Container group log analytics information. </summary>
-        public LogAnalytics DiagnosticsLogAnalytics
+        public ContainerGroupLogAnalytics DiagnosticsLogAnalytics
         {
             get
             {

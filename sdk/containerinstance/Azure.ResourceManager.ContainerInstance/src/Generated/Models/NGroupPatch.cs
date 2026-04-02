@@ -32,11 +32,11 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="tags"> The resource tags. </param>
         /// <param name="zones"> The zones for the NGroup. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NGroupPatch(SystemData systemData, NGroupProperties properties, NGroupIdentity identity, IDictionary<string, string> tags, IList<string> zones, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NGroupPatch(SystemData systemData, NGroupProperties properties, ManagedServiceIdentity identity, IDictionary<string, string> tags, IList<string> zones, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SystemData = systemData;
             Properties = properties;
-            _identity = identity;
+            Identity = identity;
             Tags = tags;
             Zones = zones;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -48,16 +48,11 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <summary> Describes the properties of the NGroups resource. </summary>
         internal NGroupProperties Properties { get; set; }
 
-        /// <summary> The identity of the NGroup, if configured. </summary>
-        private NGroupIdentity _identity;
-
         /// <summary> The resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> The zones for the NGroup. </summary>
         public IList<string> Zones { get; }
-
-        // ElasticProfile: defined in Customized partial with backward-compat type
 
         /// <summary> The Container Group Profiles that could be used in the NGroups resource. </summary>
         public IList<ContainerGroupProfileStub> ContainerGroupProfiles
@@ -80,8 +75,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 return Properties is null ? default : Properties.ProvisioningState;
             }
         }
-
-        // UpdateProfile: defined in Customized partial with backward-compat type
 
         /// <summary> The number of fault domains to be used to spread CGs in the NGroups resource. This can only be specified during NGroup creation and is immutable after that. </summary>
         public int? PlacementFaultDomainCount

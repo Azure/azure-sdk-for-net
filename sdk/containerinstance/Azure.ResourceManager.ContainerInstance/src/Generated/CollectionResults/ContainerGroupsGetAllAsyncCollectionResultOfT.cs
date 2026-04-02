@@ -15,7 +15,7 @@ using Azure.ResourceManager.ContainerInstance.Models;
 
 namespace Azure.ResourceManager.ContainerInstance
 {
-    internal partial class ContainerGroupsGetAllAsyncCollectionResultOfT : AsyncPageable<ListResultContainerGroup>
+    internal partial class ContainerGroupsGetAllAsyncCollectionResultOfT : AsyncPageable<ContainerGroupData>
     {
         private readonly ContainerGroups _client;
         private readonly Guid _subscriptionId;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of ContainerGroupsGetAllAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<ListResultContainerGroup>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<ContainerGroupData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ContainerInstance
                     yield break;
                 }
                 ContainerGroupListResult result = ContainerGroupListResult.FromResponse(response);
-                yield return Page<ListResultContainerGroup>.FromValues((IReadOnlyList<ListResultContainerGroup>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<ContainerGroupData>.FromValues((IReadOnlyList<ContainerGroupData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

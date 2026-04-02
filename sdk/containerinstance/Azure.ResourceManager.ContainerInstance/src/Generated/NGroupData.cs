@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ContainerInstance
         public NGroupIdentity Identity { get; set; }
 
         /// <summary> The elastic profile. </summary>
-        public ElasticProfile ElasticProfile
+        public ContainerGroupElasticProfile ElasticProfile
         {
             get
             {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary> Used by the customer to specify the way to update the Container Groups in NGroup. </summary>
-        public UpdateProfile UpdateProfile
+        public NGroupUpdateProfile UpdateProfile
         {
             get
             {

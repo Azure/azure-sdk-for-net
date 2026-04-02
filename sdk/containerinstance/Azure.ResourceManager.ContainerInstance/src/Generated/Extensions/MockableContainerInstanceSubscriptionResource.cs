@@ -82,14 +82,14 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ListResultContainerGroup"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ListResultContainerGroup> GetContainerGroupsAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ContainerGroupResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ContainerGroupResource> GetContainerGroupsAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new ContainerGroupsGetAllAsyncCollectionResultOfT(ContainerGroupsRestClient, Guid.Parse(Id.SubscriptionId), context);
+            return new AsyncPageableWrapper<ContainerGroupData, ContainerGroupResource>(new ContainerGroupsGetAllAsyncCollectionResultOfT(ContainerGroupsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new ContainerGroupResource(Client, data));
         }
 
         /// <summary>
@@ -110,14 +110,14 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ListResultContainerGroup"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ListResultContainerGroup> GetContainerGroups(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ContainerGroupResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ContainerGroupResource> GetContainerGroups(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new ContainerGroupsGetAllCollectionResultOfT(ContainerGroupsRestClient, Guid.Parse(Id.SubscriptionId), context);
+            return new PageableWrapper<ContainerGroupData, ContainerGroupResource>(new ContainerGroupsGetAllCollectionResultOfT(ContainerGroupsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new ContainerGroupResource(Client, data));
         }
 
         /// <summary>
@@ -385,8 +385,8 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="Capabilities"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Capabilities> GetCapabilitiesAsync(string location, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ContainerCapabilities"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ContainerCapabilities> GetCapabilitiesAsync(string location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
 
@@ -418,8 +418,8 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="Capabilities"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Capabilities> GetCapabilities(string location, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ContainerCapabilities"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ContainerCapabilities> GetCapabilities(string location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
 

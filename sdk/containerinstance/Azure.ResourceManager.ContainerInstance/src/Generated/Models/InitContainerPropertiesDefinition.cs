@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public InitContainerPropertiesDefinition()
         {
             Command = new ChangeTrackingList<string>();
-            EnvironmentVariables = new ChangeTrackingList<EnvironmentVariable>();
-            VolumeMounts = new ChangeTrackingList<VolumeMount>();
+            EnvironmentVariables = new ChangeTrackingList<ContainerEnvironmentVariable>();
+            VolumeMounts = new ChangeTrackingList<ContainerVolumeMount>();
         }
 
         /// <summary> Initializes a new instance of <see cref="InitContainerPropertiesDefinition"/>. </summary>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="volumeMounts"> The volume mounts available to the init container. </param>
         /// <param name="securityContext"> The container security properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InitContainerPropertiesDefinition(string image, IList<string> command, IList<EnvironmentVariable> environmentVariables, InitContainerPropertiesDefinitionInstanceView instanceView, IList<VolumeMount> volumeMounts, SecurityContextDefinition securityContext, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InitContainerPropertiesDefinition(string image, IList<string> command, IList<ContainerEnvironmentVariable> environmentVariables, InitContainerPropertiesDefinitionInstanceView instanceView, IList<ContainerVolumeMount> volumeMounts, ContainerSecurityContextDefinition securityContext, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Image = image;
             Command = command;
@@ -51,15 +51,15 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public IList<string> Command { get; } = new ChangeTrackingList<string>();
 
         /// <summary> The environment variables to set in the init container. </summary>
-        public IList<EnvironmentVariable> EnvironmentVariables { get; } = new ChangeTrackingList<EnvironmentVariable>();
+        public IList<ContainerEnvironmentVariable> EnvironmentVariables { get; } = new ChangeTrackingList<ContainerEnvironmentVariable>();
 
         /// <summary> The instance view of the init container. Only valid in response. </summary>
         public InitContainerPropertiesDefinitionInstanceView InstanceView { get; }
 
         /// <summary> The volume mounts available to the init container. </summary>
-        public IList<VolumeMount> VolumeMounts { get; } = new ChangeTrackingList<VolumeMount>();
+        public IList<ContainerVolumeMount> VolumeMounts { get; } = new ChangeTrackingList<ContainerVolumeMount>();
 
         /// <summary> The container security properties. </summary>
-        public SecurityContextDefinition SecurityContext { get; set; }
+        public ContainerSecurityContextDefinition SecurityContext { get; set; }
     }
 }

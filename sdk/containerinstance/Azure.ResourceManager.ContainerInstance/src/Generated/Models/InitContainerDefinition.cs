@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         }
 
         /// <summary> The environment variables to set in the init container. </summary>
-        public IList<EnvironmentVariable> EnvironmentVariables
+        public IList<ContainerEnvironmentVariable> EnvironmentVariables
         {
             get
             {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         }
 
         /// <summary> The volume mounts available to the init container. </summary>
-        public IList<VolumeMount> VolumeMounts
+        public IList<ContainerVolumeMount> VolumeMounts
         {
             get
             {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         }
 
         /// <summary> The container security properties. </summary>
-        public SecurityContextDefinition SecurityContext
+        public ContainerSecurityContextDefinition SecurityContext
         {
             get
             {

@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 writer.WritePropertyName("limit"u8);
                 writer.WriteNumberValue(Limit.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(_name))
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
-                writer.WriteObjectValue(_name, options);
+                writer.WriteObjectValue(Name, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             string unit = default;
             int? currentValue = default;
             int? limit = default;
-            UsageName name = default;
+            ContainerInstanceUsageName name = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    name = UsageName.DeserializeUsageName(prop.Value, options);
+                    name = ContainerInstanceUsageName.DeserializeContainerInstanceUsageName(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

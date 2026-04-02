@@ -15,7 +15,7 @@ using Azure.ResourceManager.ContainerInstance.Models;
 
 namespace Azure.ResourceManager.ContainerInstance
 {
-    internal partial class LocationGetCapabilitiesAsyncCollectionResultOfT : AsyncPageable<Capabilities>
+    internal partial class LocationGetCapabilitiesAsyncCollectionResultOfT : AsyncPageable<ContainerCapabilities>
     {
         private readonly Location _client;
         private readonly Guid _subscriptionId;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of LocationGetCapabilitiesAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<Capabilities>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<ContainerCapabilities>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ContainerInstance
                     yield break;
                 }
                 CapabilitiesListResult result = CapabilitiesListResult.FromResponse(response);
-                yield return Page<Capabilities>.FromValues((IReadOnlyList<Capabilities>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<ContainerCapabilities>.FromValues((IReadOnlyList<ContainerCapabilities>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 string nextPageString = result.NextLink;
                 if (string.IsNullOrEmpty(nextPageString))
                 {

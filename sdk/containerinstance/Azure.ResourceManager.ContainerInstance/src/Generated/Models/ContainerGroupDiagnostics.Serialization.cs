@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 return null;
             }
-            LogAnalytics logAnalytics = default;
+            ContainerGroupLogAnalytics logAnalytics = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    logAnalytics = LogAnalytics.DeserializeLogAnalytics(prop.Value, options);
+                    logAnalytics = ContainerGroupLogAnalytics.DeserializeContainerGroupLogAnalytics(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -6,66 +6,33 @@
 #nullable disable
 
 using System;
-using System.ComponentModel;
-using Azure.ResourceManager.ContainerInstance;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
     /// <summary> Specifies if the IP is exposed to the public internet or private VNET. </summary>
-    public readonly partial struct ContainerGroupIpAddressType : IEquatable<ContainerGroupIpAddressType>
+    public readonly partial struct ContainerGroupIPAddressType : IEquatable<ContainerGroupIPAddressType>
     {
-        private readonly string _value;
         /// <summary> Public. </summary>
         private const string PublicValue = "Public";
         /// <summary> Private. </summary>
         private const string PrivateValue = "Private";
 
-        /// <summary> Initializes a new instance of <see cref="ContainerGroupIpAddressType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ContainerGroupIpAddressType(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Public. </summary>
-        public static ContainerGroupIpAddressType Public { get; } = new ContainerGroupIpAddressType(PublicValue);
-
-        /// <summary> Private. </summary>
-        public static ContainerGroupIpAddressType Private { get; } = new ContainerGroupIpAddressType(PrivateValue);
-
-        /// <summary> Determines if two <see cref="ContainerGroupIpAddressType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="ContainerGroupIPAddressType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(ContainerGroupIpAddressType left, ContainerGroupIpAddressType right) => left.Equals(right);
+        public static bool operator ==(ContainerGroupIPAddressType left, ContainerGroupIPAddressType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ContainerGroupIpAddressType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="ContainerGroupIPAddressType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(ContainerGroupIpAddressType left, ContainerGroupIpAddressType right) => !left.Equals(right);
+        public static bool operator !=(ContainerGroupIPAddressType left, ContainerGroupIPAddressType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ContainerGroupIpAddressType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ContainerGroupIPAddressType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerGroupIpAddressType(string value) => new ContainerGroupIpAddressType(value);
+        public static implicit operator ContainerGroupIPAddressType(string value) => new ContainerGroupIPAddressType(value);
 
-        /// <summary> Converts a string to a <see cref="ContainerGroupIpAddressType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ContainerGroupIPAddressType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerGroupIpAddressType?(string value) => value == null ? null : new ContainerGroupIpAddressType(value);
-
-        /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ContainerGroupIpAddressType other && Equals(other);
-
-        /// <inheritdoc/>
-        public bool Equals(ContainerGroupIpAddressType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
-
-        /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
-        public override string ToString() => _value;
+        public static implicit operator ContainerGroupIPAddressType?(string value) => value == null ? null : new ContainerGroupIPAddressType(value);
     }
 }

@@ -21,14 +21,14 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <summary> Initializes a new instance of <see cref="ContainerGroupPropertiesProperties"/>. </summary>
         /// <param name="containers"> The containers within the container group. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="containers"/> is null. </exception>
-        public ContainerGroupPropertiesProperties(IEnumerable<Container> containers)
+        public ContainerGroupPropertiesProperties(IEnumerable<ContainerInstanceContainer> containers)
         {
             Argument.AssertNotNull(containers, nameof(containers));
 
-            SecretReferences = new ChangeTrackingList<SecretReference>();
+            SecretReferences = new ChangeTrackingList<ContainerGroupSecretReference>();
             Containers = containers.ToList();
-            ImageRegistryCredentials = new ChangeTrackingList<ImageRegistryCredential>();
-            Volumes = new ChangeTrackingList<Volume>();
+            ImageRegistryCredentials = new ChangeTrackingList<ContainerGroupImageRegistryCredential>();
+            Volumes = new ChangeTrackingList<ContainerVolume>();
             SubnetIds = new ChangeTrackingList<ContainerGroupSubnetId>();
             InitContainers = new ChangeTrackingList<InitContainerDefinition>();
             Extensions = new ChangeTrackingList<DeploymentExtensionSpec>();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="standbyPoolProfile"> The reference standby pool profile properties. </param>
         /// <param name="isCreatedFromStandbyPool"> The flag to determine whether the container group is created from standby pool. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerGroupPropertiesProperties(string provisioningState, IList<SecretReference> secretReferences, IList<Container> containers, IList<ImageRegistryCredential> imageRegistryCredentials, ContainerGroupRestartPolicy? restartPolicy, IpAddress ipAddress, OperatingSystemTypes? osType, IList<Volume> volumes, ContainerGroupPropertiesPropertiesInstanceView instanceView, ContainerGroupDiagnostics diagnostics, IList<ContainerGroupSubnetId> subnetIds, DnsConfiguration dnsConfig, ContainerGroupSku? sku, EncryptionProperties encryptionProperties, IList<InitContainerDefinition> initContainers, IList<DeploymentExtensionSpec> extensions, ConfidentialComputeProperties confidentialComputeProperties, ContainerGroupPriority? priority, IdentityAcls identityAcls, ContainerGroupProfileReferenceDefinition containerGroupProfile, StandbyPoolProfileDefinition standbyPoolProfile, bool? isCreatedFromStandbyPool, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerGroupPropertiesProperties(string provisioningState, IList<ContainerGroupSecretReference> secretReferences, IList<ContainerInstanceContainer> containers, IList<ContainerGroupImageRegistryCredential> imageRegistryCredentials, ContainerGroupRestartPolicy? restartPolicy, ContainerGroupIPAddress ipAddress, ContainerInstanceOperatingSystemType? osType, IList<ContainerVolume> volumes, ContainerGroupInstanceView instanceView, ContainerGroupDiagnostics diagnostics, IList<ContainerGroupSubnetId> subnetIds, ContainerGroupDnsConfiguration dnsConfig, ContainerGroupSku? sku, ContainerGroupEncryptionProperties encryptionProperties, IList<InitContainerDefinition> initContainers, IList<DeploymentExtensionSpec> extensions, ConfidentialComputeProperties confidentialComputeProperties, ContainerGroupPriority? priority, ContainerGroupIdentityAccessControlLevels identityAcls, ContainerGroupProfileReferenceDefinition containerGroupProfile, StandbyPoolProfileDefinition standbyPoolProfile, bool? isCreatedFromStandbyPool, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             SecretReferences = secretReferences;
@@ -92,13 +92,13 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public string ProvisioningState { get; }
 
         /// <summary> The secret references that will be referenced within the container group. </summary>
-        public IList<SecretReference> SecretReferences { get; } = new ChangeTrackingList<SecretReference>();
+        public IList<ContainerGroupSecretReference> SecretReferences { get; } = new ChangeTrackingList<ContainerGroupSecretReference>();
 
         /// <summary> The containers within the container group. </summary>
-        public IList<Container> Containers { get; } = new ChangeTrackingList<Container>();
+        public IList<ContainerInstanceContainer> Containers { get; } = new ChangeTrackingList<ContainerInstanceContainer>();
 
         /// <summary> The image registry credentials by which the container group is created from. </summary>
-        public IList<ImageRegistryCredential> ImageRegistryCredentials { get; } = new ChangeTrackingList<ImageRegistryCredential>();
+        public IList<ContainerGroupImageRegistryCredential> ImageRegistryCredentials { get; } = new ChangeTrackingList<ContainerGroupImageRegistryCredential>();
 
         /// <summary>
         /// Restart policy for all containers within the container group.
@@ -107,16 +107,16 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public ContainerGroupRestartPolicy? RestartPolicy { get; set; }
 
         /// <summary> The IP address type of the container group. </summary>
-        public IpAddress IpAddress { get; set; }
+        public ContainerGroupIPAddress IpAddress { get; set; }
 
         /// <summary> The operating system type required by the containers in the container group. </summary>
-        public OperatingSystemTypes? OsType { get; set; }
+        public ContainerInstanceOperatingSystemType? OsType { get; set; }
 
         /// <summary> The list of volumes that can be mounted by containers in this container group. </summary>
-        public IList<Volume> Volumes { get; } = new ChangeTrackingList<Volume>();
+        public IList<ContainerVolume> Volumes { get; } = new ChangeTrackingList<ContainerVolume>();
 
         /// <summary> The instance view of the container group. Only valid in response. </summary>
-        public ContainerGroupPropertiesPropertiesInstanceView InstanceView { get; }
+        public ContainerGroupInstanceView InstanceView { get; }
 
         /// <summary> The diagnostic information for a container group. </summary>
         internal ContainerGroupDiagnostics Diagnostics { get; set; }
@@ -125,13 +125,13 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public IList<ContainerGroupSubnetId> SubnetIds { get; } = new ChangeTrackingList<ContainerGroupSubnetId>();
 
         /// <summary> The DNS config information for a container group. </summary>
-        public DnsConfiguration DnsConfig { get; set; }
+        public ContainerGroupDnsConfiguration DnsConfig { get; set; }
 
         /// <summary> The SKU for a container group. </summary>
         public ContainerGroupSku? Sku { get; set; }
 
         /// <summary> The encryption properties for a container group. </summary>
-        public EncryptionProperties EncryptionProperties { get; set; }
+        public ContainerGroupEncryptionProperties EncryptionProperties { get; set; }
 
         /// <summary> The init containers for a container group. </summary>
         public IList<InitContainerDefinition> InitContainers { get; } = new ChangeTrackingList<InitContainerDefinition>();
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public ContainerGroupPriority? Priority { get; set; }
 
         /// <summary> The access control levels of the identities. </summary>
-        public IdentityAcls IdentityAcls { get; set; }
+        public ContainerGroupIdentityAccessControlLevels IdentityAcls { get; set; }
 
         /// <summary> The reference container group profile properties. </summary>
         public ContainerGroupProfileReferenceDefinition ContainerGroupProfile { get; set; }
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public bool? IsCreatedFromStandbyPool { get; }
 
         /// <summary> Container group log analytics information. </summary>
-        public LogAnalytics DiagnosticsLogAnalytics
+        public ContainerGroupLogAnalytics DiagnosticsLogAnalytics
         {
             get
             {

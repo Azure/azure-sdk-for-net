@@ -88,9 +88,9 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 writer.WritePropertyName("volumes"u8);
                 writer.WriteStartArray();
-                foreach (Models.NGroupContainerGroupPropertyVolume item in Volumes)
+                foreach (NGroupContainerGroupPropertyVolume item in Volumes)
                 {
-                    writer.WriteObjectValue<Models.NGroupContainerGroupPropertyVolume>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -98,9 +98,9 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 writer.WritePropertyName("containers"u8);
                 writer.WriteStartArray();
-                foreach (Models.NGroupContainerGroupPropertyContainer item in Containers)
+                foreach (NGroupContainerGroupPropertyContainer item in Containers)
                 {
-                    writer.WriteObjectValue<Models.NGroupContainerGroupPropertyContainer>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -147,8 +147,8 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 return null;
             }
             IList<ContainerGroupSubnetId> subnetIds = default;
-            IList<Models.NGroupContainerGroupPropertyVolume> volumes = default;
-            IList<Models.NGroupContainerGroupPropertyContainer> containers = default;
+            IList<NGroupContainerGroupPropertyVolume> volumes = default;
+            IList<NGroupContainerGroupPropertyContainer> containers = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -172,10 +172,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    List<Models.NGroupContainerGroupPropertyVolume> array = new List<Models.NGroupContainerGroupPropertyVolume>();
+                    List<NGroupContainerGroupPropertyVolume> array = new List<NGroupContainerGroupPropertyVolume>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Models.NGroupContainerGroupPropertyVolume.DeserializeNGroupContainerGroupPropertyVolume(item, options));
+                        array.Add(NGroupContainerGroupPropertyVolume.DeserializeNGroupContainerGroupPropertyVolume(item, options));
                     }
                     volumes = array;
                     continue;
@@ -186,10 +186,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    List<Models.NGroupContainerGroupPropertyContainer> array = new List<Models.NGroupContainerGroupPropertyContainer>();
+                    List<NGroupContainerGroupPropertyContainer> array = new List<NGroupContainerGroupPropertyContainer>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Models.NGroupContainerGroupPropertyContainer.DeserializeNGroupContainerGroupPropertyContainer(item, options));
+                        array.Add(NGroupContainerGroupPropertyContainer.DeserializeNGroupContainerGroupPropertyContainer(item, options));
                     }
                     containers = array;
                     continue;
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new NGroupContainerGroupProperties(subnetIds ?? new ChangeTrackingList<ContainerGroupSubnetId>(), volumes ?? new ChangeTrackingList<Models.NGroupContainerGroupPropertyVolume>(), containers ?? new ChangeTrackingList<Models.NGroupContainerGroupPropertyContainer>(), additionalBinaryDataProperties);
+            return new NGroupContainerGroupProperties(subnetIds ?? new ChangeTrackingList<ContainerGroupSubnetId>(), volumes ?? new ChangeTrackingList<NGroupContainerGroupPropertyVolume>(), containers ?? new ChangeTrackingList<NGroupContainerGroupPropertyContainer>(), additionalBinaryDataProperties);
         }
     }
 }

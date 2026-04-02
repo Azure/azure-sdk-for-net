@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary> The encryption properties for a container group. </summary>
-        public Models.EncryptionProperties EncryptionProperties
+        public ContainerGroupEncryptionProperties EncryptionProperties
         {
             get
             {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary> The containers within the container group. </summary>
-        public IList<Container> Containers
+        public IList<ContainerInstanceContainer> Containers
         {
             get
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary> The image registry credentials by which the container group is created from. </summary>
-        public IList<ImageRegistryCredential> ImageRegistryCredentials
+        public IList<ContainerGroupImageRegistryCredential> ImageRegistryCredentials
         {
             get
             {
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary> The IP address type of the container group. </summary>
-        public IpAddress IpAddress
+        public ContainerGroupIPAddress IpAddress
         {
             get
             {
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary> The operating system type required by the containers in the container group. </summary>
-        public OperatingSystemTypes OsType
+        public ContainerInstanceOperatingSystemType OsType
         {
             get
             {
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary> The list of volumes that can be mounted by containers in this container group. </summary>
-        public IList<Volume> Volumes
+        public IList<ContainerVolume> Volumes
         {
             get
             {
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary> The container security properties. </summary>
-        public SecurityContextDefinition SecurityContext
+        public ContainerSecurityContextDefinition SecurityContext
         {
             get
             {
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary> Container group log analytics information. </summary>
-        public LogAnalytics DiagnosticsLogAnalytics
+        public ContainerGroupLogAnalytics DiagnosticsLogAnalytics
         {
             get
             {

@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
             writer.WritePropertyName("containers"u8);
             writer.WriteStartArray();
-            foreach (Container item in Containers)
+            foreach (ContainerInstanceContainer item in Containers)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 writer.WritePropertyName("imageRegistryCredentials"u8);
                 writer.WriteStartArray();
-                foreach (ImageRegistryCredential item in ImageRegistryCredentials)
+                foreach (ContainerGroupImageRegistryCredential item in ImageRegistryCredentials)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 writer.WritePropertyName("volumes"u8);
                 writer.WriteStartArray();
-                foreach (Volume item in Volumes)
+                foreach (ContainerVolume item in Volumes)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -241,21 +241,21 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 return null;
             }
             ContainerGroupSku? sku = default;
-            EncryptionProperties encryptionProperties = default;
-            IList<Container> containers = default;
+            ContainerGroupEncryptionProperties encryptionProperties = default;
+            IList<ContainerInstanceContainer> containers = default;
             IList<InitContainerDefinition> initContainers = default;
             IList<DeploymentExtensionSpec> extensions = default;
-            IList<ImageRegistryCredential> imageRegistryCredentials = default;
+            IList<ContainerGroupImageRegistryCredential> imageRegistryCredentials = default;
             ContainerGroupRestartPolicy? restartPolicy = default;
             DateTimeOffset? shutdownGracePeriod = default;
-            IpAddress ipAddress = default;
+            ContainerGroupIPAddress ipAddress = default;
             DateTimeOffset? timeToLive = default;
-            OperatingSystemTypes osType = default;
-            IList<Volume> volumes = default;
+            ContainerInstanceOperatingSystemType osType = default;
+            IList<ContainerVolume> volumes = default;
             ContainerGroupDiagnostics diagnostics = default;
             ContainerGroupPriority? priority = default;
             ConfidentialComputeProperties confidentialComputeProperties = default;
-            SecurityContextDefinition securityContext = default;
+            ContainerSecurityContextDefinition securityContext = default;
             int? revision = default;
             IReadOnlyList<int> registeredRevisions = default;
             bool? useKrypton = default;
@@ -277,15 +277,15 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    encryptionProperties = EncryptionProperties.DeserializeEncryptionProperties(prop.Value, options);
+                    encryptionProperties = ContainerGroupEncryptionProperties.DeserializeContainerGroupEncryptionProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("containers"u8))
                 {
-                    List<Container> array = new List<Container>();
+                    List<ContainerInstanceContainer> array = new List<ContainerInstanceContainer>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Container.DeserializeContainer(item, options));
+                        array.Add(ContainerInstanceContainer.DeserializeContainerInstanceContainer(item, options));
                     }
                     containers = array;
                     continue;
@@ -324,10 +324,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    List<ImageRegistryCredential> array = new List<ImageRegistryCredential>();
+                    List<ContainerGroupImageRegistryCredential> array = new List<ContainerGroupImageRegistryCredential>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ImageRegistryCredential.DeserializeImageRegistryCredential(item, options));
+                        array.Add(ContainerGroupImageRegistryCredential.DeserializeContainerGroupImageRegistryCredential(item, options));
                     }
                     imageRegistryCredentials = array;
                     continue;
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    ipAddress = IpAddress.DeserializeIpAddress(prop.Value, options);
+                    ipAddress = ContainerGroupIPAddress.DeserializeContainerGroupIPAddress(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("timeToLive"u8))
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
                 if (prop.NameEquals("osType"u8))
                 {
-                    osType = new OperatingSystemTypes(prop.Value.GetString());
+                    osType = new ContainerInstanceOperatingSystemType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("volumes"u8))
@@ -379,10 +379,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    List<Volume> array = new List<Volume>();
+                    List<ContainerVolume> array = new List<ContainerVolume>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Volume.DeserializeVolume(item, options));
+                        array.Add(ContainerVolume.DeserializeContainerVolume(item, options));
                     }
                     volumes = array;
                     continue;
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    securityContext = SecurityContextDefinition.DeserializeSecurityContextDefinition(prop.Value, options);
+                    securityContext = ContainerSecurityContextDefinition.DeserializeContainerSecurityContextDefinition(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("revision"u8))
@@ -466,13 +466,13 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 containers,
                 initContainers ?? new ChangeTrackingList<InitContainerDefinition>(),
                 extensions ?? new ChangeTrackingList<DeploymentExtensionSpec>(),
-                imageRegistryCredentials ?? new ChangeTrackingList<ImageRegistryCredential>(),
+                imageRegistryCredentials ?? new ChangeTrackingList<ContainerGroupImageRegistryCredential>(),
                 restartPolicy,
                 shutdownGracePeriod,
                 ipAddress,
                 timeToLive,
                 osType,
-                volumes ?? new ChangeTrackingList<Volume>(),
+                volumes ?? new ChangeTrackingList<ContainerVolume>(),
                 diagnostics,
                 priority,
                 confidentialComputeProperties,

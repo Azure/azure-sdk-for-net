@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <summary> Initializes a new instance of <see cref="InitContainerPropertiesDefinitionInstanceView"/>. </summary>
         internal InitContainerPropertiesDefinitionInstanceView()
         {
-            _events = new ChangeTrackingList<Event>();
+            Events = new ChangeTrackingList<ContainerEvent>();
         }
 
         /// <summary> Initializes a new instance of <see cref="InitContainerPropertiesDefinitionInstanceView"/>. </summary>
@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="previousState"> The previous state of the init container. </param>
         /// <param name="events"> The events of the init container. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InitContainerPropertiesDefinitionInstanceView(int? restartCount, ContainerState currentState, ContainerState previousState, IReadOnlyList<Event> events, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InitContainerPropertiesDefinitionInstanceView(int? restartCount, ContainerState currentState, ContainerState previousState, IReadOnlyList<ContainerEvent> events, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RestartCount = restartCount;
             CurrentState = currentState;
             PreviousState = previousState;
-            _events = events;
+            Events = events;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -46,8 +46,5 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
         /// <summary> The previous state of the init container. </summary>
         public ContainerState PreviousState { get; }
-
-        /// <summary> The events of the init container. </summary>
-        private readonly IReadOnlyList<Event> _events;
     }
 }

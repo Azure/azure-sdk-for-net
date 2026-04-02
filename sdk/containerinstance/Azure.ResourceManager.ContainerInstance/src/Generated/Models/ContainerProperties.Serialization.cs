@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 writer.WritePropertyName("environmentVariables"u8);
                 writer.WriteStartArray();
-                foreach (EnvironmentVariable item in EnvironmentVariables)
+                foreach (ContainerEnvironmentVariable item in EnvironmentVariables)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 writer.WritePropertyName("volumeMounts"u8);
                 writer.WriteStartArray();
-                foreach (VolumeMount item in VolumeMounts)
+                foreach (ContainerVolumeMount item in VolumeMounts)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -199,13 +199,13 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             string image = default;
             IList<string> command = default;
             IList<ContainerPort> ports = default;
-            IList<EnvironmentVariable> environmentVariables = default;
-            ContainerPropertiesInstanceView instanceView = default;
-            ResourceRequirements resources = default;
-            IList<VolumeMount> volumeMounts = default;
+            IList<ContainerEnvironmentVariable> environmentVariables = default;
+            ContainerInstanceView instanceView = default;
+            ContainerResourceRequirements resources = default;
+            IList<ContainerVolumeMount> volumeMounts = default;
             ContainerProbe livenessProbe = default;
             ContainerProbe readinessProbe = default;
-            SecurityContextDefinition securityContext = default;
+            ContainerSecurityContextDefinition securityContext = default;
             ConfigMap configMap = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -256,10 +256,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    List<EnvironmentVariable> array = new List<EnvironmentVariable>();
+                    List<ContainerEnvironmentVariable> array = new List<ContainerEnvironmentVariable>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(EnvironmentVariable.DeserializeEnvironmentVariable(item, options));
+                        array.Add(ContainerEnvironmentVariable.DeserializeContainerEnvironmentVariable(item, options));
                     }
                     environmentVariables = array;
                     continue;
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    instanceView = ContainerPropertiesInstanceView.DeserializeContainerPropertiesInstanceView(prop.Value, options);
+                    instanceView = ContainerInstanceView.DeserializeContainerInstanceView(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("resources"u8))
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    resources = ResourceRequirements.DeserializeResourceRequirements(prop.Value, options);
+                    resources = ContainerResourceRequirements.DeserializeContainerResourceRequirements(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("volumeMounts"u8))
@@ -288,10 +288,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    List<VolumeMount> array = new List<VolumeMount>();
+                    List<ContainerVolumeMount> array = new List<ContainerVolumeMount>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(VolumeMount.DeserializeVolumeMount(item, options));
+                        array.Add(ContainerVolumeMount.DeserializeContainerVolumeMount(item, options));
                     }
                     volumeMounts = array;
                     continue;
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    securityContext = SecurityContextDefinition.DeserializeSecurityContextDefinition(prop.Value, options);
+                    securityContext = ContainerSecurityContextDefinition.DeserializeContainerSecurityContextDefinition(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("configMap"u8))
@@ -341,10 +341,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 image,
                 command ?? new ChangeTrackingList<string>(),
                 ports ?? new ChangeTrackingList<ContainerPort>(),
-                environmentVariables ?? new ChangeTrackingList<EnvironmentVariable>(),
+                environmentVariables ?? new ChangeTrackingList<ContainerEnvironmentVariable>(),
                 instanceView,
                 resources,
-                volumeMounts ?? new ChangeTrackingList<VolumeMount>(),
+                volumeMounts ?? new ChangeTrackingList<ContainerVolumeMount>(),
                 livenessProbe,
                 readinessProbe,
                 securityContext,

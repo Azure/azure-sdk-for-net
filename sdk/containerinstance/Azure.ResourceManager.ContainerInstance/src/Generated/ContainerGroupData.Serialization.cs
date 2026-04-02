@@ -18,7 +18,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.ContainerInstance
 {
     /// <summary> A container group. </summary>
-    public partial class ContainerGroupData : ResourceData, IJsonModel<ContainerGroupData>
+    public partial class ContainerGroupData : TrackedResourceData, IJsonModel<ContainerGroupData>
     {
         /// <summary> Initializes a new instance of <see cref="ContainerGroupData"/> for deserialization. </summary>
         internal ContainerGroupData()
@@ -101,27 +101,6 @@ namespace Azure.ResourceManager.ContainerInstance
                 throw new FormatException($"The model {nameof(ContainerGroupData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Location))
-            {
-                writer.WritePropertyName("location"u8);
-                writer.WriteStringValue(Location);
-            }
-            if (Optional.IsCollectionDefined(Tags))
-            {
-                writer.WritePropertyName("tags"u8);
-                writer.WriteStartObject();
-                foreach (var item in Tags)
-                {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
             if (Optional.IsCollectionDefined(Zones))
             {
                 writer.WritePropertyName("zones"u8);
@@ -176,7 +155,7 @@ namespace Azure.ResourceManager.ContainerInstance
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            string location = default;
+            AzureLocation location = default;
             IDictionary<string, string> tags = default;
             IList<string> zones = default;
             ContainerGroupIdentity identity = default;
@@ -217,7 +196,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 }
                 if (prop.NameEquals("location"u8))
                 {
-                    location = prop.Value.GetString();
+                    location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("tags"u8))

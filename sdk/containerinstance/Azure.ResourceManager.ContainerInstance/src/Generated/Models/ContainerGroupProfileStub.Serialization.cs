@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 writer.WritePropertyName("revision"u8);
                 writer.WriteNumberValue(Revision.Value);
             }
-            if (Optional.IsDefined(_networkProfile))
+            if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
-                writer.WriteObjectValue(_networkProfile, options);
+                writer.WriteObjectValue(NetworkProfile, options);
             }
             if (Optional.IsDefined(StorageProfile))
             {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
             ApiEntityReference resource = default;
             int? revision = default;
-            NetworkProfile networkProfile = default;
+            ContainerGroupNetworkProfile networkProfile = default;
             StorageProfile storageProfile = default;
             NGroupContainerGroupProperties containerGroupProperties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    networkProfile = Models.NetworkProfile.DeserializeNetworkProfile(prop.Value, options);
+                    networkProfile = ContainerGroupNetworkProfile.DeserializeContainerGroupNetworkProfile(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("storageProfile"u8))

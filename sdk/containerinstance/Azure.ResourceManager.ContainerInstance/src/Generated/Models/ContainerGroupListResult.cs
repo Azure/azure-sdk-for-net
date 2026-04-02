@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.ContainerInstance;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
@@ -19,7 +20,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
         /// <summary> Initializes a new instance of <see cref="ContainerGroupListResult"/>. </summary>
         /// <param name="value"> The ListResultContainerGroup items on this page. </param>
-        internal ContainerGroupListResult(IEnumerable<ListResultContainerGroup> value)
+        internal ContainerGroupListResult(IEnumerable<ContainerGroupData> value)
         {
             Value = value.ToList();
         }
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="value"> The ListResultContainerGroup items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerGroupListResult(IList<ListResultContainerGroup> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerGroupListResult(IList<ContainerGroupData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         }
 
         /// <summary> The ListResultContainerGroup items on this page. </summary>
-        public IList<ListResultContainerGroup> Value { get; }
+        public IList<ContainerGroupData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }

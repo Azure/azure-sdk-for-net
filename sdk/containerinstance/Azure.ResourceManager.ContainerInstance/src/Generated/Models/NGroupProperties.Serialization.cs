@@ -146,11 +146,11 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 return null;
             }
-            ElasticProfile elasticProfile = default;
+            ContainerGroupElasticProfile elasticProfile = default;
             PlacementProfile placementProfile = default;
             IList<ContainerGroupProfileStub> containerGroupProfiles = default;
             NGroupProvisioningState? provisioningState = default;
-            UpdateProfile updateProfile = default;
+            NGroupUpdateProfile updateProfile = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    elasticProfile = ElasticProfile.DeserializeElasticProfile(prop.Value, options);
+                    elasticProfile = ContainerGroupElasticProfile.DeserializeContainerGroupElasticProfile(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("placementProfile"u8))
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    updateProfile = UpdateProfile.DeserializeUpdateProfile(prop.Value, options);
+                    updateProfile = NGroupUpdateProfile.DeserializeNGroupUpdateProfile(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 writer.WritePropertyName("fileShares"u8);
                 writer.WriteStartArray();
-                foreach (FileShare item in FileShares)
+                foreach (ContainerGroupFileShare item in FileShares)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 return null;
             }
-            IList<FileShare> fileShares = default;
+            IList<ContainerGroupFileShare> fileShares = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -136,10 +136,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    List<FileShare> array = new List<FileShare>();
+                    List<ContainerGroupFileShare> array = new List<ContainerGroupFileShare>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(FileShare.DeserializeFileShare(item, options));
+                        array.Add(ContainerGroupFileShare.DeserializeContainerGroupFileShare(item, options));
                     }
                     fileShares = array;
                     continue;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new StorageProfile(fileShares ?? new ChangeTrackingList<FileShare>(), additionalBinaryDataProperties);
+            return new StorageProfile(fileShares ?? new ChangeTrackingList<ContainerGroupFileShare>(), additionalBinaryDataProperties);
         }
     }
 }

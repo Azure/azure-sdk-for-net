@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (Capabilities item in Value)
+                foreach (ContainerCapabilities item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 return null;
             }
-            IList<Capabilities> value = default;
+            IList<ContainerCapabilities> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -150,10 +150,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    List<Capabilities> array = new List<Capabilities>();
+                    List<ContainerCapabilities> array = new List<ContainerCapabilities>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Capabilities.DeserializeCapabilities(item, options));
+                        array.Add(ContainerCapabilities.DeserializeContainerCapabilities(item, options));
                     }
                     value = array;
                     continue;
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CapabilitiesListResult(value ?? new ChangeTrackingList<Capabilities>(), nextLink, additionalBinaryDataProperties);
+            return new CapabilitiesListResult(value ?? new ChangeTrackingList<ContainerCapabilities>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

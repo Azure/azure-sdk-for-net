@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 writer.WritePropertyName("previousState"u8);
                 writer.WriteObjectValue(PreviousState, options);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(_events))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Events))
             {
                 writer.WritePropertyName("events"u8);
                 writer.WriteStartArray();
-                foreach (Event item in _events)
+                foreach (ContainerEvent item in Events)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             int? restartCount = default;
             ContainerState currentState = default;
             ContainerState previousState = default;
-            IReadOnlyList<Event> events = default;
+            IReadOnlyList<ContainerEvent> events = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -181,10 +181,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    List<Event> array = new List<Event>();
+                    List<ContainerEvent> array = new List<ContainerEvent>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Event.DeserializeEvent(item, options));
+                        array.Add(ContainerEvent.DeserializeContainerEvent(item, options));
                     }
                     events = array;
                     continue;
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new InitContainerPropertiesDefinitionInstanceView(restartCount, currentState, previousState, events ?? new ChangeTrackingList<Event>(), additionalBinaryDataProperties);
+            return new InitContainerPropertiesDefinitionInstanceView(restartCount, currentState, previousState, events ?? new ChangeTrackingList<ContainerEvent>(), additionalBinaryDataProperties);
         }
     }
 }

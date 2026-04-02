@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <summary> Initializes a new instance of <see cref="CapabilitiesListResult"/>. </summary>
         internal CapabilitiesListResult()
         {
-            Value = new ChangeTrackingList<Capabilities>();
+            Value = new ChangeTrackingList<ContainerCapabilities>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CapabilitiesListResult"/>. </summary>
         /// <param name="value"> The list of capabilities. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CapabilitiesListResult(IList<Capabilities> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CapabilitiesListResult(IList<ContainerCapabilities> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         }
 
         /// <summary> The list of capabilities. </summary>
-        public IList<Capabilities> Value { get; }
+        public IList<ContainerCapabilities> Value { get; }
 
         /// <summary> The URL to get the next set of results. </summary>
         public string NextLink { get; }

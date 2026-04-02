@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 writer.WritePropertyName("secretReferences"u8);
                 writer.WriteStartArray();
-                foreach (SecretReference item in SecretReferences)
+                foreach (ContainerGroupSecretReference item in SecretReferences)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
             writer.WritePropertyName("containers"u8);
             writer.WriteStartArray();
-            foreach (Container item in Containers)
+            foreach (ContainerInstanceContainer item in Containers)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 writer.WritePropertyName("imageRegistryCredentials"u8);
                 writer.WriteStartArray();
-                foreach (ImageRegistryCredential item in ImageRegistryCredentials)
+                foreach (ContainerGroupImageRegistryCredential item in ImageRegistryCredentials)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 writer.WritePropertyName("volumes"u8);
                 writer.WriteStartArray();
-                foreach (Volume item in Volumes)
+                foreach (ContainerVolume item in Volumes)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -264,24 +264,24 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 return null;
             }
             string provisioningState = default;
-            IList<SecretReference> secretReferences = default;
-            IList<Container> containers = default;
-            IList<ImageRegistryCredential> imageRegistryCredentials = default;
+            IList<ContainerGroupSecretReference> secretReferences = default;
+            IList<ContainerInstanceContainer> containers = default;
+            IList<ContainerGroupImageRegistryCredential> imageRegistryCredentials = default;
             ContainerGroupRestartPolicy? restartPolicy = default;
-            IpAddress ipAddress = default;
-            OperatingSystemTypes? osType = default;
-            IList<Volume> volumes = default;
-            ContainerGroupPropertiesPropertiesInstanceView instanceView = default;
+            ContainerGroupIPAddress ipAddress = default;
+            ContainerInstanceOperatingSystemType? osType = default;
+            IList<ContainerVolume> volumes = default;
+            ContainerGroupInstanceView instanceView = default;
             ContainerGroupDiagnostics diagnostics = default;
             IList<ContainerGroupSubnetId> subnetIds = default;
-            DnsConfiguration dnsConfig = default;
+            ContainerGroupDnsConfiguration dnsConfig = default;
             ContainerGroupSku? sku = default;
-            EncryptionProperties encryptionProperties = default;
+            ContainerGroupEncryptionProperties encryptionProperties = default;
             IList<InitContainerDefinition> initContainers = default;
             IList<DeploymentExtensionSpec> extensions = default;
             ConfidentialComputeProperties confidentialComputeProperties = default;
             ContainerGroupPriority? priority = default;
-            IdentityAcls identityAcls = default;
+            ContainerGroupIdentityAccessControlLevels identityAcls = default;
             ContainerGroupProfileReferenceDefinition containerGroupProfile = default;
             StandbyPoolProfileDefinition standbyPoolProfile = default;
             bool? isCreatedFromStandbyPool = default;
@@ -299,20 +299,20 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    List<SecretReference> array = new List<SecretReference>();
+                    List<ContainerGroupSecretReference> array = new List<ContainerGroupSecretReference>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(SecretReference.DeserializeSecretReference(item, options));
+                        array.Add(ContainerGroupSecretReference.DeserializeContainerGroupSecretReference(item, options));
                     }
                     secretReferences = array;
                     continue;
                 }
                 if (prop.NameEquals("containers"u8))
                 {
-                    List<Container> array = new List<Container>();
+                    List<ContainerInstanceContainer> array = new List<ContainerInstanceContainer>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Container.DeserializeContainer(item, options));
+                        array.Add(ContainerInstanceContainer.DeserializeContainerInstanceContainer(item, options));
                     }
                     containers = array;
                     continue;
@@ -323,10 +323,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    List<ImageRegistryCredential> array = new List<ImageRegistryCredential>();
+                    List<ContainerGroupImageRegistryCredential> array = new List<ContainerGroupImageRegistryCredential>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ImageRegistryCredential.DeserializeImageRegistryCredential(item, options));
+                        array.Add(ContainerGroupImageRegistryCredential.DeserializeContainerGroupImageRegistryCredential(item, options));
                     }
                     imageRegistryCredentials = array;
                     continue;
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    ipAddress = IpAddress.DeserializeIpAddress(prop.Value, options);
+                    ipAddress = ContainerGroupIPAddress.DeserializeContainerGroupIPAddress(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("osType"u8))
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    osType = new OperatingSystemTypes(prop.Value.GetString());
+                    osType = new ContainerInstanceOperatingSystemType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("volumes"u8))
@@ -364,10 +364,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    List<Volume> array = new List<Volume>();
+                    List<ContainerVolume> array = new List<ContainerVolume>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Volume.DeserializeVolume(item, options));
+                        array.Add(ContainerVolume.DeserializeContainerVolume(item, options));
                     }
                     volumes = array;
                     continue;
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    instanceView = ContainerGroupPropertiesPropertiesInstanceView.DeserializeContainerGroupPropertiesPropertiesInstanceView(prop.Value, options);
+                    instanceView = ContainerGroupInstanceView.DeserializeContainerGroupInstanceView(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("diagnostics"u8))
@@ -410,7 +410,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    dnsConfig = DnsConfiguration.DeserializeDnsConfiguration(prop.Value, options);
+                    dnsConfig = ContainerGroupDnsConfiguration.DeserializeContainerGroupDnsConfiguration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("sku"u8))
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    encryptionProperties = EncryptionProperties.DeserializeEncryptionProperties(prop.Value, options);
+                    encryptionProperties = ContainerGroupEncryptionProperties.DeserializeContainerGroupEncryptionProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("initContainers"u8))
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    identityAcls = IdentityAcls.DeserializeIdentityAcls(prop.Value, options);
+                    identityAcls = ContainerGroupIdentityAccessControlLevels.DeserializeContainerGroupIdentityAccessControlLevels(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("containerGroupProfile"u8))
@@ -520,13 +520,13 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
             return new ContainerGroupPropertiesProperties(
                 provisioningState,
-                secretReferences ?? new ChangeTrackingList<SecretReference>(),
+                secretReferences ?? new ChangeTrackingList<ContainerGroupSecretReference>(),
                 containers,
-                imageRegistryCredentials ?? new ChangeTrackingList<ImageRegistryCredential>(),
+                imageRegistryCredentials ?? new ChangeTrackingList<ContainerGroupImageRegistryCredential>(),
                 restartPolicy,
                 ipAddress,
                 osType,
-                volumes ?? new ChangeTrackingList<Volume>(),
+                volumes ?? new ChangeTrackingList<ContainerVolume>(),
                 instanceView,
                 diagnostics,
                 subnetIds ?? new ChangeTrackingList<ContainerGroupSubnetId>(),

@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         {
             Command = new ChangeTrackingList<string>();
             Ports = new ChangeTrackingList<ContainerPort>();
-            EnvironmentVariables = new ChangeTrackingList<EnvironmentVariable>();
-            VolumeMounts = new ChangeTrackingList<VolumeMount>();
+            EnvironmentVariables = new ChangeTrackingList<ContainerEnvironmentVariable>();
+            VolumeMounts = new ChangeTrackingList<ContainerVolumeMount>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerProperties"/>. </summary>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="securityContext"> The container security properties. </param>
         /// <param name="configMap"> The config map. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerProperties(string image, IList<string> command, IList<ContainerPort> ports, IList<EnvironmentVariable> environmentVariables, ContainerPropertiesInstanceView instanceView, ResourceRequirements resources, IList<VolumeMount> volumeMounts, ContainerProbe livenessProbe, ContainerProbe readinessProbe, SecurityContextDefinition securityContext, ConfigMap configMap, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerProperties(string image, IList<string> command, IList<ContainerPort> ports, IList<ContainerEnvironmentVariable> environmentVariables, ContainerInstanceView instanceView, ContainerResourceRequirements resources, IList<ContainerVolumeMount> volumeMounts, ContainerProbe livenessProbe, ContainerProbe readinessProbe, ContainerSecurityContextDefinition securityContext, ConfigMap configMap, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Image = image;
             Command = command;
@@ -65,16 +65,16 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public IList<ContainerPort> Ports { get; } = new ChangeTrackingList<ContainerPort>();
 
         /// <summary> The environment variables to set in the container instance. </summary>
-        public IList<EnvironmentVariable> EnvironmentVariables { get; } = new ChangeTrackingList<EnvironmentVariable>();
+        public IList<ContainerEnvironmentVariable> EnvironmentVariables { get; } = new ChangeTrackingList<ContainerEnvironmentVariable>();
 
         /// <summary> The instance view of the container instance. Only valid in response. </summary>
-        public ContainerPropertiesInstanceView InstanceView { get; }
+        public ContainerInstanceView InstanceView { get; }
 
         /// <summary> The resource requirements of the container instance. </summary>
-        public ResourceRequirements Resources { get; set; }
+        public ContainerResourceRequirements Resources { get; set; }
 
         /// <summary> The volume mounts available to the container instance. </summary>
-        public IList<VolumeMount> VolumeMounts { get; } = new ChangeTrackingList<VolumeMount>();
+        public IList<ContainerVolumeMount> VolumeMounts { get; } = new ChangeTrackingList<ContainerVolumeMount>();
 
         /// <summary> The liveness probe. </summary>
         public ContainerProbe LivenessProbe { get; set; }
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public ContainerProbe ReadinessProbe { get; set; }
 
         /// <summary> The container security properties. </summary>
-        public SecurityContextDefinition SecurityContext { get; set; }
+        public ContainerSecurityContextDefinition SecurityContext { get; set; }
 
         /// <summary> The config map. </summary>
         internal ConfigMap ConfigMap { get; set; }
