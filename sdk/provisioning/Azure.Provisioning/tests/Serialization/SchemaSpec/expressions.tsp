@@ -140,9 +140,8 @@ model ForExpression {
   kind: "for-expression";
   itemVariable: string;
   indexVariable?: string;
-  expression: ExpressionNode;
+  collection: ExpressionNode;
   body: ExpressionNode;
-  condition?: ExpressionNode;
 }
 
 // ──────────────────────────────────────────────
