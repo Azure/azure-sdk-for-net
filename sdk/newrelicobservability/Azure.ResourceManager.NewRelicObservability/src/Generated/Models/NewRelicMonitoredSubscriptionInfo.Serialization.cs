@@ -8,16 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.NewRelicObservability;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    public partial class NewRelicMonitoredSubscriptionInfo : IUtf8JsonSerializable, IJsonModel<NewRelicMonitoredSubscriptionInfo>
+    /// <summary> The list of subscriptions and it's monitoring status by current NewRelic monitor. </summary>
+    public partial class NewRelicMonitoredSubscriptionInfo : IJsonModel<NewRelicMonitoredSubscriptionInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NewRelicMonitoredSubscriptionInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual NewRelicMonitoredSubscriptionInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NewRelicMonitoredSubscriptionInfo>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeNewRelicMonitoredSubscriptionInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NewRelicMonitoredSubscriptionInfo)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NewRelicMonitoredSubscriptionInfo>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNewRelicObservabilityContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(NewRelicMonitoredSubscriptionInfo)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<NewRelicMonitoredSubscriptionInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NewRelicMonitoredSubscriptionInfo IPersistableModel<NewRelicMonitoredSubscriptionInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<NewRelicMonitoredSubscriptionInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NewRelicMonitoredSubscriptionInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,12 +69,11 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NewRelicMonitoredSubscriptionInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NewRelicMonitoredSubscriptionInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NewRelicMonitoredSubscriptionInfo)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(SubscriptionId))
             {
                 writer.WritePropertyName("subscriptionId"u8);
@@ -55,15 +94,15 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 writer.WritePropertyName("tagRules"u8);
                 writer.WriteObjectValue(TagRules, options);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -72,22 +111,27 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             }
         }
 
-        NewRelicMonitoredSubscriptionInfo IJsonModel<NewRelicMonitoredSubscriptionInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NewRelicMonitoredSubscriptionInfo IJsonModel<NewRelicMonitoredSubscriptionInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual NewRelicMonitoredSubscriptionInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NewRelicMonitoredSubscriptionInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NewRelicMonitoredSubscriptionInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NewRelicMonitoredSubscriptionInfo)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeNewRelicMonitoredSubscriptionInfo(document.RootElement, options);
         }
 
-        internal static NewRelicMonitoredSubscriptionInfo DeserializeNewRelicMonitoredSubscriptionInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static NewRelicMonitoredSubscriptionInfo DeserializeNewRelicMonitoredSubscriptionInfo(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -96,169 +140,43 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             NewRelicMonitoringStatus? status = default;
             string error = default;
             NewRelicMonitoringTagRules tagRules = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("subscriptionId"u8))
+                if (prop.NameEquals("subscriptionId"u8))
                 {
-                    subscriptionId = property.Value.GetString();
+                    subscriptionId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("status"u8))
+                if (prop.NameEquals("status"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    status = new NewRelicMonitoringStatus(property.Value.GetString());
+                    status = new NewRelicMonitoringStatus(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("error"u8))
+                if (prop.NameEquals("error"u8))
                 {
-                    error = property.Value.GetString();
+                    error = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tagRules"u8))
+                if (prop.NameEquals("tagRules"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    tagRules = NewRelicMonitoringTagRules.DeserializeNewRelicMonitoringTagRules(property.Value, options);
+                    tagRules = NewRelicMonitoringTagRules.DeserializeNewRelicMonitoringTagRules(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new NewRelicMonitoredSubscriptionInfo(subscriptionId, status, error, tagRules, serializedAdditionalRawData);
+            return new NewRelicMonitoredSubscriptionInfo(subscriptionId, status, error, tagRules, additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SubscriptionId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  subscriptionId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SubscriptionId))
-                {
-                    builder.Append("  subscriptionId: ");
-                    if (SubscriptionId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{SubscriptionId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{SubscriptionId}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Status), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  status: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Status))
-                {
-                    builder.Append("  status: ");
-                    builder.AppendLine($"'{Status.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Error), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  error: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Error))
-                {
-                    builder.Append("  error: ");
-                    if (Error.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Error}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Error}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TagRules), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  tagRules: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(TagRules))
-                {
-                    builder.Append("  tagRules: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, TagRules, options, 2, false, "  tagRules: ");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<NewRelicMonitoredSubscriptionInfo>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<NewRelicMonitoredSubscriptionInfo>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNewRelicObservabilityContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(NewRelicMonitoredSubscriptionInfo)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        NewRelicMonitoredSubscriptionInfo IPersistableModel<NewRelicMonitoredSubscriptionInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<NewRelicMonitoredSubscriptionInfo>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeNewRelicMonitoredSubscriptionInfo(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(NewRelicMonitoredSubscriptionInfo)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<NewRelicMonitoredSubscriptionInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

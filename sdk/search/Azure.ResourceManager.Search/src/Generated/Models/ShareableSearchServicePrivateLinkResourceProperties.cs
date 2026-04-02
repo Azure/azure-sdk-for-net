@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Search;
 
 namespace Azure.ResourceManager.Search.Models
 {
     /// <summary> Describes the properties of a resource type that has been onboarded to private link service, supported by Azure AI Search. </summary>
     public partial class ShareableSearchServicePrivateLinkResourceProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ShareableSearchServicePrivateLinkResourceProperties"/>. </summary>
         internal ShareableSearchServicePrivateLinkResourceProperties()
@@ -54,21 +26,23 @@ namespace Azure.ResourceManager.Search.Models
         /// <param name="shareablePrivateLinkResourcePropertiesType"> The resource provider type for the resource that has been onboarded to private link service, supported by Azure AI Search. </param>
         /// <param name="groupId"> The resource provider group id for the resource that has been onboarded to private link service, supported by Azure AI Search. </param>
         /// <param name="description"> The description of the resource type that has been onboarded to private link service, supported by Azure AI Search. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ShareableSearchServicePrivateLinkResourceProperties(string shareablePrivateLinkResourcePropertiesType, string groupId, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ShareableSearchServicePrivateLinkResourceProperties(string shareablePrivateLinkResourcePropertiesType, string groupId, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ShareablePrivateLinkResourcePropertiesType = shareablePrivateLinkResourcePropertiesType;
             GroupId = groupId;
             Description = description;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The resource provider type for the resource that has been onboarded to private link service, supported by Azure AI Search. </summary>
         [WirePath("type")]
         public string ShareablePrivateLinkResourcePropertiesType { get; }
+
         /// <summary> The resource provider group id for the resource that has been onboarded to private link service, supported by Azure AI Search. </summary>
         [WirePath("groupId")]
         public string GroupId { get; }
+
         /// <summary> The description of the resource type that has been onboarded to private link service, supported by Azure AI Search. </summary>
         [WirePath("description")]
         public string Description { get; }

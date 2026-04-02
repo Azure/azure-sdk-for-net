@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.ApiCenter
 {
+    /// <summary></summary>
     public partial class ApiCenterMetadataSchemaResource : IJsonModel<ApiCenterMetadataSchemaData>
     {
-        private static ApiCenterMetadataSchemaData s_dataDeserializationInstance;
-        private static ApiCenterMetadataSchemaData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ApiCenterMetadataSchemaData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ApiCenterMetadataSchemaData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ApiCenterMetadataSchemaData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ApiCenterMetadataSchemaData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ApiCenterMetadataSchemaData>)Data).Write(writer, options);
 
-        ApiCenterMetadataSchemaData IJsonModel<ApiCenterMetadataSchemaData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ApiCenterMetadataSchemaData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ApiCenterMetadataSchemaData IJsonModel<ApiCenterMetadataSchemaData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ApiCenterMetadataSchemaData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ApiCenterMetadataSchemaData>(Data, options, AzureResourceManagerApiCenterContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ApiCenterMetadataSchemaData IPersistableModel<ApiCenterMetadataSchemaData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApiCenterMetadataSchemaData>(data, options, AzureResourceManagerApiCenterContext.Default);
 
-        string IPersistableModel<ApiCenterMetadataSchemaData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ApiCenterMetadataSchemaData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ApiCenterMetadataSchemaData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

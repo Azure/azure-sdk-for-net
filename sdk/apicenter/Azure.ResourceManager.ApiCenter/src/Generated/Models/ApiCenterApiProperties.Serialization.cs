@@ -9,14 +9,60 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.ApiCenter;
 
 namespace Azure.ResourceManager.ApiCenter.Models
 {
-    public partial class ApiCenterApiProperties : IUtf8JsonSerializable, IJsonModel<ApiCenterApiProperties>
+    /// <summary> API properties. </summary>
+    public partial class ApiCenterApiProperties : IJsonModel<ApiCenterApiProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiCenterApiProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="ApiCenterApiProperties"/> for deserialization. </summary>
+        internal ApiCenterApiProperties()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ApiCenterApiProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ApiCenterApiProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeApiCenterApiProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ApiCenterApiProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ApiCenterApiProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerApiCenterContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ApiCenterApiProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ApiCenterApiProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ApiCenterApiProperties IPersistableModel<ApiCenterApiProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ApiCenterApiProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ApiCenterApiProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +74,11 @@ namespace Azure.ResourceManager.ApiCenter.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ApiCenterApiProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApiCenterApiProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ApiCenterApiProperties)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("title"u8);
             writer.WriteStringValue(Title);
             writer.WritePropertyName("kind"u8);
@@ -62,7 +107,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
             {
                 writer.WritePropertyName("externalDocumentation"u8);
                 writer.WriteStartArray();
-                foreach (var item in ExternalDocumentation)
+                foreach (ApiExternalDocumentation item in ExternalDocumentation)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -72,7 +117,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
             {
                 writer.WritePropertyName("contacts"u8);
                 writer.WriteStartArray();
-                foreach (var item in Contacts)
+                foreach (ApiContactInformation item in Contacts)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -87,23 +132,23 @@ namespace Azure.ResourceManager.ApiCenter.Models
             {
                 writer.WritePropertyName("customProperties"u8);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(CustomProperties);
+                writer.WriteRawValue(CustomProperties);
 #else
-                using (JsonDocument document = JsonDocument.Parse(CustomProperties, ModelSerializationExtensions.JsonDocumentOptions))
+                using (JsonDocument document = JsonDocument.Parse(CustomProperties))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
 #endif
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -112,22 +157,27 @@ namespace Azure.ResourceManager.ApiCenter.Models
             }
         }
 
-        ApiCenterApiProperties IJsonModel<ApiCenterApiProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ApiCenterApiProperties IJsonModel<ApiCenterApiProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ApiCenterApiProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ApiCenterApiProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApiCenterApiProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ApiCenterApiProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeApiCenterApiProperties(document.RootElement, options);
         }
 
-        internal static ApiCenterApiProperties DeserializeApiCenterApiProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ApiCenterApiProperties DeserializeApiCenterApiProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -142,100 +192,98 @@ namespace Azure.ResourceManager.ApiCenter.Models
             IList<ApiContactInformation> contacts = default;
             ApiLicenseInformation license = default;
             BinaryData customProperties = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("title"u8))
+                if (prop.NameEquals("title"u8))
                 {
-                    title = property.Value.GetString();
+                    title = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("kind"u8))
+                if (prop.NameEquals("kind"u8))
                 {
-                    kind = new ApiKind(property.Value.GetString());
+                    kind = new ApiKind(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("description"u8))
+                if (prop.NameEquals("description"u8))
                 {
-                    description = property.Value.GetString();
+                    description = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("summary"u8))
+                if (prop.NameEquals("summary"u8))
                 {
-                    summary = property.Value.GetString();
+                    summary = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("lifecycleStage"u8))
+                if (prop.NameEquals("lifecycleStage"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    lifecycleStage = new ApiLifecycleStage(property.Value.GetString());
+                    lifecycleStage = new ApiLifecycleStage(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("termsOfService"u8))
+                if (prop.NameEquals("termsOfService"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    termsOfService = TermsOfService.DeserializeTermsOfService(property.Value, options);
+                    termsOfService = TermsOfService.DeserializeTermsOfService(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("externalDocumentation"u8))
+                if (prop.NameEquals("externalDocumentation"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ApiExternalDocumentation> array = new List<ApiExternalDocumentation>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(ApiExternalDocumentation.DeserializeApiExternalDocumentation(item, options));
                     }
                     externalDocumentation = array;
                     continue;
                 }
-                if (property.NameEquals("contacts"u8))
+                if (prop.NameEquals("contacts"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ApiContactInformation> array = new List<ApiContactInformation>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(ApiContactInformation.DeserializeApiContactInformation(item, options));
                     }
                     contacts = array;
                     continue;
                 }
-                if (property.NameEquals("license"u8))
+                if (prop.NameEquals("license"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    license = ApiLicenseInformation.DeserializeApiLicenseInformation(property.Value, options);
+                    license = ApiLicenseInformation.DeserializeApiLicenseInformation(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("customProperties"u8))
+                if (prop.NameEquals("customProperties"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    customProperties = BinaryData.FromString(property.Value.GetRawText());
+                    customProperties = BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ApiCenterApiProperties(
                 title,
                 kind,
@@ -247,38 +295,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
                 contacts ?? new ChangeTrackingList<ApiContactInformation>(),
                 license,
                 customProperties,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<ApiCenterApiProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ApiCenterApiProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerApiCenterContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ApiCenterApiProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ApiCenterApiProperties IPersistableModel<ApiCenterApiProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ApiCenterApiProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeApiCenterApiProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ApiCenterApiProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ApiCenterApiProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

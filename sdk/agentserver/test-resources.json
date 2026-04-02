@@ -1,0 +1,39 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "metadata": {
+    "_comment": "Azure.AI.AgentServer is a server-side hosting library. Tests use WebApplicationFactory<T> for in-process protocol testing and do not require live Azure resources. This file satisfies CI pipeline structure requirements."
+  },
+  "parameters": {
+    "baseName": {
+      "type": "string",
+      "defaultValue": "[resourceGroup().name]",
+      "metadata": {
+        "description": "The base resource name."
+      }
+    },
+    "location": {
+      "type": "string",
+      "defaultValue": "[resourceGroup().location]",
+      "metadata": {
+        "description": "The location of the resource. By default, this is the same as the resource group."
+      }
+    },
+    "tenantId": {
+      "type": "string",
+      "defaultValue": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+      "metadata": {
+        "description": "The tenant ID to which the application and resources belong."
+      }
+    },
+    "testApplicationOid": {
+      "type": "string",
+      "defaultValue": "",
+      "metadata": {
+        "description": "The client OID to grant access to test resources."
+      }
+    }
+  },
+  "resources": [],
+  "outputs": {}
+}

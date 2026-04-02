@@ -208,7 +208,7 @@ public class Sample_EvaluationsWithDataSetID : SamplesBase
         var connectionName = TestEnvironment.STORAGECONNECTIONNAME;
 #endif
         AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
-        EvaluationClient evaluationClient = projectClient.OpenAI.GetEvaluationClient();
+        EvaluationClient evaluationClient = projectClient.ProjectOpenAIClient.GetEvaluationClient();
         #endregion
         #region Snippet:Sample_CreateData_EvaluationsWithDataSetID
         object[] testingCriteria = [
@@ -352,7 +352,7 @@ public class Sample_EvaluationsWithDataSetID : SamplesBase
         var connectionName = TestEnvironment.STORAGECONNECTIONNAME;
 #endif
         AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
-        EvaluationClient evaluationClient = projectClient.OpenAI.GetEvaluationClient();
+        EvaluationClient evaluationClient = projectClient.ProjectOpenAIClient.GetEvaluationClient();
         object[] testingCriteria = [
             new {
                 type = "azure_ai_evaluator",
