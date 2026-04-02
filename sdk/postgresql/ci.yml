@@ -4,23 +4,20 @@ trigger:
   branches:
     include:
     - main
-    - feature/*
     - hotfix/*
     - release/*
   paths:
     include:
-    - sdk/synapse/ci.yml
-    - sdk/synapse/service.projects
-    - sdk/synapse/Azure.Analytics.Synapse.Artifacts
+    - sdk/postgresql/ci.yml
+    - sdk/postgresql/service.projects
+    - sdk/postgresql/Microsoft.Azure.PostgreSQL.Auth
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     SDKType: client
-    ServiceDirectory: synapse
+    ServiceDirectory: postgresql
     ArtifactName: packages
     Artifacts:
-    - name: Azure.Analytics.Synapse.Artifacts
-      safeName: AzureAnalyticsSynapseArtifacts
-      triggeringPaths:
-      - Azure.Analytics.Synapse.Shared
+    - name: Microsoft.Azure.PostgreSQL.Auth
+      safeName: MicrosoftAzurePostgreSQLAuth
