@@ -120,7 +120,7 @@ public partial class Infrastructure : IJsonModel<Infrastructure>
         IDictionary<string, IEnumerable<BicepStatement>> modules = CompileModules(buildOptions);
 
         writer.WriteStartObject();
-        writer.WritePropertyName("bicepFiles");
+        writer.WritePropertyName("infras");
         writer.WriteStartArray();
 
         foreach (KeyValuePair<string, IEnumerable<BicepStatement>> module in modules)
@@ -245,7 +245,7 @@ public partial class Infrastructure : IJsonModel<Infrastructure>
     {
         List<Infrastructure> modules = new();
 
-        foreach (JsonElement bicepFile in element.GetProperty("bicepFiles").EnumerateArray())
+        foreach (JsonElement bicepFile in element.GetProperty("infras").EnumerateArray())
         {
             string fileName = bicepFile.GetProperty("fileName").GetString()!;
             string moduleName = fileName.EndsWith(".bicep")
@@ -337,11 +337,27 @@ public partial class Infrastructure : IJsonModel<Infrastructure>
     {
         if (resource == null) return;
 
-        ObjectExpression? body = wrapper.Body;
+        BicepExpression? body = wrapper.Body;
         if (body != null)
         {
             resource.EnsureInitialized();
-            HydrateProperties(resource.ProvisionableProperties, body);
+            // first check if the body is if-condition, and if so, extract the inner body for property hydration and set the condition on BicepMetadata
+            if (body is IfConditionExpression ifExpr)
+            {
+                var condition = ifExpr.Condition;
+                resource.BicepMetadata.Condition = condition;
+                body = ifExpr.Body;
+            }
+            // now the body should be the object expression with properties to hydrate
+            if (body is ObjectExpression objExpr)
+            {
+                HydrateProperties(resource.ProvisionableProperties, objExpr);
+            }
+            else
+            {
+                throw new FormatException(
+                    $"Expected resource body to be an ObjectExpression, but got {body.GetType().Name}.");
+            }
         }
 
         // Fix #2: Transfer existing flag
@@ -372,12 +388,6 @@ public partial class Infrastructure : IJsonModel<Infrastructure>
                         break;
                 }
             }
-        }
-
-        // Fix #3: Transfer condition
-        if (wrapper.Condition != null)
-        {
-            resource.BicepMetadata.Condition = wrapper.Condition;
         }
     }
 
@@ -464,13 +474,10 @@ internal class DeserializedResource : NamedProvisionableConstruct
     internal string ApiVersion { get; }
 
     /// <summary>The deserialized expression body.</summary>
-    internal ObjectExpression? Body => _statement.Body as ObjectExpression;
+    internal BicepExpression? Body => _statement.Body;
 
     /// <summary>Whether this is an existing resource reference.</summary>
     internal bool IsExisting => _statement.Existing;
-
-    /// <summary>The condition expression, if any.</summary>
-    internal BicepExpression? Condition => _statement.Condition;
 
     /// <summary>The decorator expressions.</summary>
     internal IList<DecoratorExpression> Decorators => _statement.Decorators;

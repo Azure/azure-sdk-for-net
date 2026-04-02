@@ -52,12 +52,15 @@ internal partial class UnknownBicepExpression : IJsonModel<BicepExpression>
             "array-access" => DeserializeArrayAccess(element),
             "contextual-variable" => DeserializeContextualVariable(element),
             "primitive-type" => TypeExpression.DeserializeTypeExpression(element),
-            "binary" => BinaryExpression.DeserializeBinaryExpression(element),
-            "unary" => UnaryExpression.DeserializeUnaryExpression(element),
-            "conditional" => ConditionalExpression.DeserializeConditionalExpression(element),
+            "binary-operation" => BinaryExpression.DeserializeBinaryExpression(element),
+            "unary-operation" => UnaryExpression.DeserializeUnaryExpression(element),
+            "ternary-operation" => ConditionalExpression.DeserializeConditionalExpression(element),
             "interpolated-string" => InterpolatedStringExpression.DeserializeInterpolatedStringExpression(element),
             "nested-access" => NestedExpression.DeserializeNestedExpression(element),
             "decorator" => DecoratorExpression.DeserializeDecoratorExpression(element),
+            "if-condition" => IfConditionExpression.DeserializeIfConditionExpression(element),
+            "for-expression" => throw new NotSupportedException(
+                "ForExpression deserialization is not yet implemented. See https://github.com/Azure/azure-sdk-for-net/issues/51592"),
             // TODO: For forward-compatibility, consider returning a node that preserves
             // the raw JSON payload so unknown kinds can round-trip without data loss.
             _ => throw new InvalidOperationException($"Unknown BicepExpression kind: {kind}")

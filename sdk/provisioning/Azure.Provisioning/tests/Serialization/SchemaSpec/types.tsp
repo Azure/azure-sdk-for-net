@@ -5,7 +5,6 @@
  * primitive types, named type references, array types, object types,
  * union types, and parameterized type instantiations.
  */
-
 namespace AzureCDK.Serialization;
 
 // ──────────────────────────────────────────────
@@ -151,21 +150,21 @@ model ParameterizedTypeInstantiationNode {
 // ──────────────────────────────────────────────
 
 /** Discriminated union of all type node kinds. */
-@discriminator("kind")
+@discriminated(#{ envelope: "none" })
 union TypeNode {
-  primitiveType: PrimitiveTypeNode,
-  typeReference: TypeReferenceNode,
-  stringTypeLiteral: StringTypeLiteralNode,
-  integerTypeLiteral: IntegerTypeLiteralNode,
-  booleanTypeLiteral: BooleanTypeLiteralNode,
-  nullTypeLiteral: NullTypeLiteralNode,
-  arrayType: ArrayTypeNode,
-  objectTypeProperty: ObjectTypePropertyNode,
-  objectTypeAdditionalProperties: ObjectTypeAdditionalPropertiesNode,
-  objectType: ObjectTypeNode,
-  unionTypeMember: UnionTypeMemberNode,
-  unionType: UnionTypeNode,
-  nullableType: NullableTypeNode,
-  parameterizedTypeArgument: ParameterizedTypeArgumentNode,
-  parameterizedTypeInstantiation: ParameterizedTypeInstantiationNode,
+  "primitive-type": PrimitiveTypeNode,
+  "type-reference": TypeReferenceNode,
+  "string-type-literal": StringTypeLiteralNode,
+  "integer-type-literal": IntegerTypeLiteralNode,
+  "boolean-type-literal": BooleanTypeLiteralNode,
+  "null-type-literal": NullTypeLiteralNode,
+  "array-type": ArrayTypeNode,
+  "object-type-property": ObjectTypePropertyNode,
+  "object-type-additional-properties": ObjectTypeAdditionalPropertiesNode,
+  "object-type": ObjectTypeNode,
+  "union-type-member": UnionTypeMemberNode,
+  "union-type": UnionTypeNode,
+  "nullable-type": NullableTypeNode,
+  "parameterized-type-argument": ParameterizedTypeArgumentNode,
+  "parameterized-type-instantiation": ParameterizedTypeInstantiationNode,
 }

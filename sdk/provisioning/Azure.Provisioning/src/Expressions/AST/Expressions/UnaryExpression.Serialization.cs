@@ -13,7 +13,7 @@ public partial class UnaryExpression : IJsonModel<BicepExpression>
     void IJsonModel<BicepExpression>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
     {
         writer.WriteStartObject();
-        writer.WriteString("kind", "unary");
+        writer.WriteString("kind", "unary-operation");
         writer.WriteString("operator", Operator switch
         {
             UnaryBicepOperator.Not => "!",

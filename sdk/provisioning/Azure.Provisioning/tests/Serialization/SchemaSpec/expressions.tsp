@@ -5,7 +5,6 @@
  * function calls, member access, and contextual variables.
  * ExpressionNode is a superset that includes all ValueNode variants.
  */
-
 namespace AzureCDK.Serialization;
 
 // ──────────────────────────────────────────────
@@ -40,7 +39,7 @@ model InstanceFunctionCallExpression {
 // Member access
 // ──────────────────────────────────────────────
 
-/** Property access on an expression (e.g. `base.property` or `base?.property`). */
+/** Property access on an expression (e.g. `base.property` or `base.?property`). */
 model PropertyAccessExpression {
   kind: "property-access";
   base: ExpressionNode;
@@ -73,6 +72,79 @@ model ContextualVariableExpression {
 }
 
 // ──────────────────────────────────────────────
+// Operators
+// ──────────────────────────────────────────────
+
+/** Binary operators supported in Bicep expressions. */
+union BinaryOperator {
+  modulo: "%",
+  multiply: "*",
+  add: "+",
+  subtract: "-",
+  divide: "/",
+  lessThan: "<",
+  lessThanOrEqual: "<=",
+  equal: "==",
+  notEqual: "!=",
+  regexMatch: "=~",
+  regexNotMatch: "!~",
+  greaterThan: ">",
+  greaterThanOrEqual: ">=",
+  logicalAnd: "&&",
+  logicalOr: "||",
+  coalesce: "??",
+}
+
+/** Unary operators supported in Bicep expressions. */
+union UnaryOperator {
+  not: "!",
+  negate: "-",
+}
+
+/** A binary operator expression (e.g. `a + b`, `a ?? b`, `a && b`). */
+model BinaryOperationExpression {
+  kind: "binary-operation";
+  operator: BinaryOperator;
+  left: ExpressionNode;
+  right: ExpressionNode;
+}
+
+/** A unary operator expression (e.g. `!enabled`, `-count`). */
+model UnaryOperationExpression {
+  kind: "unary-operation";
+  operator: UnaryOperator;
+  argument: ExpressionNode;
+}
+
+/** A ternary conditional expression (e.g. `condition ? whenTrue : whenFalse`). */
+model TernaryOperationExpression {
+  kind: "ternary-operation";
+  condition: ExpressionNode;
+  trueValue: ExpressionNode;
+  falseValue: ExpressionNode;
+}
+
+// ──────────────────────────────────────────────
+// Control flow
+// ──────────────────────────────────────────────
+
+/** A conditional expression block (e.g. `if (enabled) { ... }`). */
+model IfConditionExpression {
+  kind: "if-condition";
+  condition: ExpressionNode;
+  body: ExpressionNode;
+}
+
+/** A `for` expression (e.g. `[for item in items: { ... }]`). */
+model ForExpression {
+  kind: "for-expression";
+  itemVariable: string;
+  indexVariable?: string;
+  collection: ExpressionNode;
+  body: ExpressionNode;
+}
+
+// ──────────────────────────────────────────────
 // Expression union
 // ──────────────────────────────────────────────
 
@@ -80,10 +152,11 @@ model ContextualVariableExpression {
  * Discriminated union of all expression node types.
  * This includes all ValueNode variants plus expression-specific variants.
  */
-@discriminator("kind")
+@discriminated(#{ envelope: "none" })
 union ExpressionNode {
   // Value nodes
   null: NullValue,
+
   boolean: BooleanValue,
   integer: IntegerValue,
   string: StringValue,
@@ -92,9 +165,15 @@ union ExpressionNode {
 
   // Expression nodes
   identifier: IdentifierExpression,
-  functionCall: FunctionCallExpression,
-  instanceFunctionCall: InstanceFunctionCallExpression,
-  propertyAccess: PropertyAccessExpression,
-  arrayAccess: ArrayAccessExpression,
-  contextualVariable: ContextualVariableExpression,
+
+  "function-call": FunctionCallExpression,
+  "instance-function-call": InstanceFunctionCallExpression,
+  "property-access": PropertyAccessExpression,
+  "array-access": ArrayAccessExpression,
+  "contextual-variable": ContextualVariableExpression,
+  "binary-operation": BinaryOperationExpression,
+  "unary-operation": UnaryOperationExpression,
+  "ternary-operation": TernaryOperationExpression,
+  "if-condition": IfConditionExpression,
+  "for-expression": ForExpression,
 }

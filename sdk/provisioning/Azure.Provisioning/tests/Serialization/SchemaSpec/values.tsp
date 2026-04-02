@@ -45,14 +45,3 @@ model ObjectValue {
   kind: "object";
   value: Record<ExpressionNode>;
 }
-
-/** Discriminated union of all value node types. */
-@discriminator("kind")
-union ValueNode {
-  null: NullValue,
-  boolean: BooleanValue,
-  integer: IntegerValue,
-  string: StringValue,
-  array: ArrayValue,
-  object: ObjectValue,
-}

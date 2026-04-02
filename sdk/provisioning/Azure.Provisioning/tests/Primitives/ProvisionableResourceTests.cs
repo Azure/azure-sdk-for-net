@@ -430,6 +430,69 @@ namespace Azure.Provisioning.Tests.Primitives
                     """);
         }
 
+        // BUG: Changing BicepIdentifier after a cross-resource property reference has been
+        // established does not propagate to the referencing resource. The identifier is
+        // snapshotted at assignment time in BicepValue.Assign() (via _source.GetReference()),
+        // so the compiled Bicep output still references the old identifier name. This produces
+        // invalid Bicep because the resource declaration uses the new name while the reference
+        // from the second resource still uses the old name.
+        // Actual output: resource declaration is "renamedStorage" but reference is "storage1".
+        [Test]
+        [Ignore("BicepIdentifier rename does not propagate to already-established cross-resource references")]
+        public async Task ValidateBicepIdentifierRename_UpdatesReferences()
+        {
+            await using var test = new Trycep();
+
+            test.Define(
+                ctx =>
+                {
+                    Infrastructure infra = new();
+
+                    // Create the first resource
+                    var storage1 = new StorageAccount("storage1")
+                    {
+                        Name = "first-storage",
+                        Location = AzureLocation.WestUS2,
+                        StorageTier = StorageTier.Standard,
+                        IsEnabled = true,
+                    };
+                    infra.Add(storage1);
+
+                    // Create a second resource that references the first resource's output property
+                    var storage2 = new StorageAccount("storage2")
+                    {
+                        Name = storage1.ProvisioningState,
+                        Location = AzureLocation.EastUS,
+                        StorageTier = StorageTier.Premium,
+                    };
+                    infra.Add(storage2);
+
+                    // Rename the first resource's BicepIdentifier after the reference was established
+                    storage1.BicepIdentifier = "renamedStorage";
+
+                    return infra;
+                })
+                .Compare(
+                    """
+                    resource renamedStorage 'Test.Provider/storageAccounts@2024-01-01' = {
+                      name: 'first-storage'
+                      location: 'westus2'
+                      properties: {
+                        tier: 'Standard'
+                        isEnabled: true
+                      }
+                    }
+
+                    resource storage2 'Test.Provider/storageAccounts@2024-01-01' = {
+                      name: renamedStorage.properties.provisioningState
+                      location: 'eastus'
+                      properties: {
+                        tier: 'Premium'
+                      }
+                    }
+                    """);
+        }
+
         /// <summary>
         /// Private nested class that implements a storage account resource
         /// to validate various property types supported by the library

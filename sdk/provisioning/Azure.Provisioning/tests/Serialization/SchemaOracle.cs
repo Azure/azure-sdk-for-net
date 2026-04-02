@@ -108,7 +108,7 @@ internal static class SchemaOracle
         if (!unionMatch.Success) return kinds;
 
         string body = unionMatch.Groups[1].Value;
-        foreach (Match member in Regex.Matches(body, @"(\w+)\s*:\s*(""[^""]+""|\w+)"))
+        foreach (Match member in Regex.Matches(body, @"""?([\w-]+)""?\s*:\s*(""[^""]+""|\w+)"))
         {
             string value = member.Groups[2].Value;
             if (value.StartsWith("\""))
@@ -142,27 +142,4 @@ internal static class SchemaOracle
     /// <summary>Valid primitive type names from types.tsp PrimitiveTypeName union.</summary>
     public static readonly Lazy<HashSet<string>> PrimitiveTypeNames = new(() =>
         LoadUnionKinds("types.tsp", "PrimitiveTypeName"));
-
-    /// <summary>
-    /// Forward-compat expression kinds produced by the compiler but not yet in the spec.
-    /// These are kept so we don't reject valid compiled output.
-    /// </summary>
-    public static readonly HashSet<string> ForwardCompatExpressionKinds = new()
-    {
-        "binary", "unary", "conditional", "interpolated-string",
-        "nested-access", "decorator"
-    };
-
-    /// <summary>
-    /// All valid expression kinds: spec + forward-compat.
-    /// </summary>
-    public static HashSet<string> AllValidExpressionKinds
-    {
-        get
-        {
-            var combined = new HashSet<string>(ExpressionKinds.Value);
-            combined.UnionWith(ForwardCompatExpressionKinds);
-            return combined;
-        }
-    }
 }

@@ -52,11 +52,11 @@ public class SchemaComplianceTests
         using JsonDocument doc = JsonDocument.Parse(json);
         JsonElement root = doc.RootElement;
 
-        // === Top-level: { "bicepFiles": [...] } ===
-        Assert.IsTrue(root.TryGetProperty("bicepFiles", out JsonElement bicepFiles));
-        Assert.AreEqual(JsonValueKind.Array, bicepFiles.ValueKind);
+        // === Top-level: { "infras": [...] } ===
+        Assert.IsTrue(root.TryGetProperty("infras", out JsonElement infras));
+        Assert.AreEqual(JsonValueKind.Array, infras.ValueKind);
 
-        JsonElement file = bicepFiles[0];
+        JsonElement file = infras[0];
 
         // === File-level: fileName, targetScope ===
         Assert.AreEqual("main.bicep", file.GetProperty("fileName").GetString());
@@ -196,7 +196,7 @@ public class SchemaComplianceTests
         infra.Add(storage);
         string json = SerializationTestHelpers.SerializeToJson(infra);
         using var doc = JsonDocument.Parse(json);
-        var file = doc.RootElement.GetProperty("bicepFiles")[0];
+        var file = doc.RootElement.GetProperty("infras")[0];
         Assert.IsFalse(file.TryGetProperty("targetScope", out _), "targetScope should be omitted for resourceGroup (default)");
     }
 
@@ -206,7 +206,7 @@ public class SchemaComplianceTests
         Infrastructure infra = new() { TargetScope = DeploymentScope.Subscription };
         string json = SerializationTestHelpers.SerializeToJson(infra);
         using var doc = JsonDocument.Parse(json);
-        var file = doc.RootElement.GetProperty("bicepFiles")[0];
+        var file = doc.RootElement.GetProperty("infras")[0];
         Assert.AreEqual("subscription", file.GetProperty("targetScope").GetString());
     }
 
@@ -222,7 +222,7 @@ public class SchemaComplianceTests
         infra.Add(param);
         string json = SerializationTestHelpers.SerializeToJson(infra);
         using var doc = JsonDocument.Parse(json);
-        var file = doc.RootElement.GetProperty("bicepFiles")[0];
+        var file = doc.RootElement.GetProperty("infras")[0];
         var paramNode = file.GetProperty("parameters").GetProperty("myParam");
         if (paramNode.TryGetProperty("decorators", out JsonElement decs))
         {
@@ -237,13 +237,10 @@ public class SchemaComplianceTests
     [Test]
     public void SchemaCompliance_ExpressionNode_ValidKinds()
     {
-        var validKinds = new HashSet<string>
-        {
-            "null", "boolean", "integer", "string", "array", "object",
-            "identifier", "function-call", "instance-function-call",
-            "property-access", "array-access", "contextual-variable"
-        };
+        // Use the schema oracle as the source of truth — not a hardcoded list
+        var validKinds = ValidExpressionKinds;
 
+        // Cover every concrete expression type we can serialize
         var expressions = new BicepExpression[]
         {
             new NullLiteralExpression(),
@@ -256,6 +253,13 @@ public class SchemaComplianceTests
             new FunctionCallExpression(new IdentifierExpression("toLower"), new StringLiteralExpression("ABC")),
             new MemberExpression(new IdentifierExpression("x"), "y"),
             new IndexExpression(new IdentifierExpression("arr"), new IntLiteralExpression(0)),
+            new BinaryExpression(new IntLiteralExpression(1), BinaryBicepOperator.Add, new IntLiteralExpression(2)),
+            new UnaryExpression(UnaryBicepOperator.Not, new BoolLiteralExpression(false)),
+            new ConditionalExpression(new BoolLiteralExpression(true), new StringLiteralExpression("a"), new StringLiteralExpression("b")),
+            new IfConditionExpression(new BoolLiteralExpression(true), new ObjectExpression()),
+            // NOTE: InterpolatedStringExpression, NestedAccessExpression, and DecoratorExpression
+            // emit kinds not yet in the TypeSpec ExpressionNode union. They are intentionally
+            // excluded here so this test fails when a *spec-defined* kind drifts.
         };
 
         foreach (var expr in expressions)
@@ -263,13 +267,14 @@ public class SchemaComplianceTests
             var json = ModelReaderWriter.Write<BicepExpression>(expr, ModelReaderWriterOptions.Json, AzureProvisioningContext.Default);
             using var doc = JsonDocument.Parse(json);
             string kind = doc.RootElement.GetProperty("kind").GetString()!;
-            Assert.IsTrue(validKinds.Contains(kind), $"Expression kind '{kind}' is not in the schema spec ExpressionNode union");
+            Assert.IsTrue(validKinds.Contains(kind),
+                $"Expression kind '{kind}' (from {expr.GetType().Name}) is not in the schema spec ExpressionNode union. Valid: {string.Join(", ", validKinds)}");
         }
     }
 
     #region Schema Validation Helpers
 
-    private static HashSet<string> ValidExpressionKinds => SchemaOracle.AllValidExpressionKinds;
+    private static HashSet<string> ValidExpressionKinds => new(SchemaOracle.ExpressionKinds.Value);
     private static HashSet<string> ValidTypeKinds => SchemaOracle.TypeKinds.Value;
     private static HashSet<string> ValidTargetScopes => SchemaOracle.TargetScopes.Value;
 
@@ -282,7 +287,7 @@ public class SchemaComplianceTests
         using JsonDocument doc = JsonDocument.Parse(json);
         JsonElement root = doc.RootElement;
 
-        Assert.IsTrue(root.TryGetProperty("bicepFiles", out JsonElement files), "Missing 'bicepFiles'");
+        Assert.IsTrue(root.TryGetProperty("infras", out JsonElement files), "Missing 'infras'");
         Assert.AreEqual(JsonValueKind.Array, files.ValueKind);
 
         foreach (JsonElement file in files.EnumerateArray())
@@ -337,6 +342,8 @@ public class SchemaComplianceTests
         }
     }
 
+    private static readonly HashSet<string> ValidResourceValueKinds = new() { "object", "if-condition", "for-expression" };
+
     private static void AssertResourceDeclarationNode(JsonElement node, string key)
     {
         Assert.AreEqual(key, node.GetProperty("bicepIdentifier").GetString(), $"Resource key '{key}' mismatch with bicepIdentifier");
@@ -344,7 +351,9 @@ public class SchemaComplianceTests
         Assert.IsTrue(node.TryGetProperty("apiVersion", out _), $"Resource '{key}' missing 'apiVersion'");
         Assert.IsTrue(node.TryGetProperty("existing", out _), $"Resource '{key}' missing 'existing'");
         Assert.IsTrue(node.TryGetProperty("value", out JsonElement value), $"Resource '{key}' missing 'value'");
-        Assert.AreEqual("object", value.GetProperty("kind").GetString(), $"Resource '{key}' value must be ObjectValue");
+        string valueKind = value.GetProperty("kind").GetString()!;
+        Assert.IsTrue(ValidResourceValueKinds.Contains(valueKind),
+            $"Resource '{key}' value kind '{valueKind}' not in {string.Join(", ", ValidResourceValueKinds)}");
         AssertExpressionNode(value, $"resource '{key}'.value");
         if (node.TryGetProperty("decorators", out JsonElement decs))
             AssertDecoratorsNode(decs, $"resource '{key}'");
@@ -355,7 +364,9 @@ public class SchemaComplianceTests
         Assert.AreEqual(key, node.GetProperty("bicepIdentifier").GetString(), $"Module key '{key}' mismatch");
         Assert.IsTrue(node.TryGetProperty("path", out _), $"Module '{key}' missing 'path'");
         Assert.IsTrue(node.TryGetProperty("value", out JsonElement value), $"Module '{key}' missing 'value'");
-        Assert.AreEqual("object", value.GetProperty("kind").GetString(), $"Module '{key}' value must be ObjectValue");
+        string valueKind = value.GetProperty("kind").GetString()!;
+        Assert.IsTrue(ValidResourceValueKinds.Contains(valueKind),
+            $"Module '{key}' value kind '{valueKind}' not in {string.Join(", ", ValidResourceValueKinds)}");
         AssertExpressionNode(value, $"module '{key}'.value");
         if (node.TryGetProperty("decorators", out JsonElement decs))
             AssertDecoratorsNode(decs, $"module '{key}'");
@@ -451,6 +462,46 @@ public class SchemaComplianceTests
             case "contextual-variable":
                 Assert.IsTrue(node.TryGetProperty("context", out _), $"ContextualVariable at {path} missing 'context'");
                 Assert.IsTrue(node.TryGetProperty("property", out _), $"ContextualVariable at {path} missing 'property'");
+                break;
+            case "if-condition":
+                Assert.IsTrue(node.TryGetProperty("condition", out JsonElement ifCond), $"IfCondition at {path} missing 'condition'");
+                Assert.IsTrue(node.TryGetProperty("body", out JsonElement ifBody), $"IfCondition at {path} missing 'body'");
+                AssertExpressionNode(ifCond, $"{path}.condition");
+                AssertExpressionNode(ifBody, $"{path}.body");
+                break;
+            case "binary-operation":
+                Assert.IsTrue(node.TryGetProperty("operator", out _), $"BinaryOperation at {path} missing 'operator'");
+                Assert.IsTrue(node.TryGetProperty("left", out JsonElement binLeft), $"BinaryOperation at {path} missing 'left'");
+                Assert.IsTrue(node.TryGetProperty("right", out JsonElement binRight), $"BinaryOperation at {path} missing 'right'");
+                AssertExpressionNode(binLeft, $"{path}.left");
+                AssertExpressionNode(binRight, $"{path}.right");
+                break;
+            case "unary-operation":
+                Assert.IsTrue(node.TryGetProperty("operator", out _), $"UnaryOperation at {path} missing 'operator'");
+                Assert.IsTrue(node.TryGetProperty("value", out JsonElement unaryVal), $"UnaryOperation at {path} missing 'value'");
+                AssertExpressionNode(unaryVal, $"{path}.value");
+                break;
+            case "ternary-operation":
+                Assert.IsTrue(node.TryGetProperty("condition", out JsonElement condCond), $"TernaryOperation at {path} missing 'condition'");
+                Assert.IsTrue(node.TryGetProperty("consequent", out JsonElement condCons), $"TernaryOperation at {path} missing 'consequent'");
+                Assert.IsTrue(node.TryGetProperty("alternate", out JsonElement condAlt), $"TernaryOperation at {path} missing 'alternate'");
+                AssertExpressionNode(condCond, $"{path}.condition");
+                AssertExpressionNode(condCons, $"{path}.consequent");
+                AssertExpressionNode(condAlt, $"{path}.alternate");
+                break;
+            case "interpolated-string":
+                Assert.IsTrue(node.TryGetProperty("segments", out JsonElement segments), $"InterpolatedString at {path} missing 'segments'");
+                foreach (JsonElement seg in segments.EnumerateArray())
+                    AssertExpressionNode(seg, $"{path}.segments[]");
+                break;
+            case "nested-access":
+                Assert.IsTrue(node.TryGetProperty("base", out JsonElement naBase), $"NestedAccess at {path} missing 'base'");
+                Assert.IsTrue(node.TryGetProperty("member", out _), $"NestedAccess at {path} missing 'member'");
+                AssertExpressionNode(naBase, $"{path}.base");
+                break;
+            case "decorator":
+                Assert.IsTrue(node.TryGetProperty("value", out JsonElement decVal), $"Decorator at {path} missing 'value'");
+                AssertExpressionNode(decVal, $"{path}.value");
                 break;
         }
     }

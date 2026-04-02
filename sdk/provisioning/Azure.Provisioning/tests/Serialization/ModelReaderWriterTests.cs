@@ -53,7 +53,7 @@ public class ModelReaderWriterTests
         string json = jsonData.ToString();
 
         using JsonDocument doc = JsonDocument.Parse(json);
-        Assert.IsTrue(doc.RootElement.TryGetProperty("bicepFiles", out _));
+        Assert.IsTrue(doc.RootElement.TryGetProperty("infras", out _));
     }
 
     [Test]
@@ -233,6 +233,16 @@ public class ModelReaderWriterTests
             new IdentifierExpression("name"),
             new StringLiteralExpression("-suffix"),
         ]);
+        SerializationTestHelpers.AssertExpressionRoundTrip(expr);
+    }
+
+    [Test]
+    public void MRW_BicepExpression_IfConditionExpression_RoundTrips()
+    {
+        var expr = new IfConditionExpression(
+            new IdentifierExpression("enabled"),
+            new ObjectExpression(
+                new PropertyExpression("name", new StringLiteralExpression("myResource"))));
         SerializationTestHelpers.AssertExpressionRoundTrip(expr);
     }
 

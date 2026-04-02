@@ -13,7 +13,7 @@ public partial class ConditionalExpression : IJsonModel<BicepExpression>
     void IJsonModel<BicepExpression>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
     {
         writer.WriteStartObject();
-        writer.WriteString("kind", "conditional");
+        writer.WriteString("kind", "ternary-operation");
         writer.WritePropertyName("condition");
         ((IJsonModel<BicepExpression>)Condition).Write(writer, options);
         writer.WritePropertyName("consequent");
