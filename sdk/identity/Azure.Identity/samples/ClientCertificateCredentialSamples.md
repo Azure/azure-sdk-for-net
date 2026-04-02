@@ -31,7 +31,7 @@ var credential = new ClientCertificateCredential(tenantId, clientId, "cert:/Curr
 
 Alternatively, the application can retrieve the certificate from the store itself and use it to construct the `ClientCertificateCredential`.
 
-For example, loading the newest certificate with a certain friendly name from Local Computer\Personal certificate store (`certlm.msc` on Windows):
+For example, loading the newest certificate with a certain friendly name from **Local Computer > Personal > Certificates** store (`certlm.msc` on Windows):
 
 ```C# Snippet:Identity_CertificateCredential_CreateFromStore
 using var store = new X509Store(StoreName.My, StoreLocation.LocalMachine);
