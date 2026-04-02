@@ -117,7 +117,12 @@ public class ResponsesActivitySource
     /// </param>
     /// <returns>
     /// A started <see cref="Activity"/>, or <c>null</c> if no listener is sampling.
-    /// The caller wraps the returned value in a <c>using</c> block.
+    /// <b>Ownership / lifetime:</b> For streaming requests the caller transfers
+    /// ownership to <see cref="Internal.SseResult"/>, which disposes the activity
+    /// when the SSE stream completes. For non-streaming requests the caller
+    /// disposes the activity in a <c>try/finally</c> block.
+    /// Subclasses that override this method should <b>not</b> dispose the returned
+    /// activity — disposal is always handled by the endpoint handler.
     /// </returns>
     public virtual Activity? StartCreateResponseActivity(
         CreateResponse request,

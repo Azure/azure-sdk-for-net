@@ -187,30 +187,46 @@ internal sealed class ResponseEndpointHandler
             // Streaming (bg or non-bg): create orchestrator event stream, return SSE result.
             // CTS includes httpContext.RequestAborted for non-bg only (disconnect → cancel).
             // Do NOT use 'using' — SseResult takes ownership and disposes the CTS.
-            CancellationTokenSource linkedCts;
-            if (isBackground)
+            CancellationTokenSource? linkedCts = null;
+            try
             {
-                linkedCts = CancellationTokenSource.CreateLinkedTokenSource(
-                    providerCt, execution.CancellationTokenSource.Token);
+                if (isBackground)
+                {
+                    linkedCts = CancellationTokenSource.CreateLinkedTokenSource(
+                        providerCt, execution.CancellationTokenSource.Token);
+                }
+                else
+                {
+                    // Order matters: CancellationToken callbacks fire LIFO, so register
+                    // the linked CTS first and the flag second — flag is set before
+                    // the linked CTS propagates cancellation to the handler.
+                    linkedCts = CancellationTokenSource.CreateLinkedTokenSource(
+                        providerCt, execution.CancellationTokenSource.Token, httpContext.RequestAborted);
+                    httpContext.RequestAborted.Register(() => execution.ClientDisconnected = true);
+                }
+
+                var result = await _orchestrator.CreateAsync(request, execution, context, linkedCts.Token);
+
+                // SseResult takes ownership of linkedCts and activity — it will
+                // dispose both when the SSE stream completes, ensuring the tracing
+                // span covers the full streaming duration.
+                var sseResult = new SseResult(
+                    result.Events!, execution, linkedCts, activity,
+                    SharedJsonOptions.Instance, _logger, FoundryEnvironment.SseKeepAliveInterval);
+
+                // Ownership transferred — prevent the catch/finally from disposing.
+                linkedCts = null;
+                activity = null;
+                return sseResult;
             }
-            else
+            catch
             {
-                // Order matters: CancellationToken callbacks fire LIFO, so register
-                // the linked CTS first and the flag second — flag is set before
-                // the linked CTS propagates cancellation to the handler.
-                linkedCts = CancellationTokenSource.CreateLinkedTokenSource(
-                    providerCt, execution.CancellationTokenSource.Token, httpContext.RequestAborted);
-                httpContext.RequestAborted.Register(() => execution.ClientDisconnected = true);
+                // If CreateAsync or SseResult construction fails, we still own
+                // the resources — dispose them before re-throwing.
+                linkedCts?.Dispose();
+                activity?.Dispose();
+                throw;
             }
-
-            var result = await _orchestrator.CreateAsync(request, execution, context, linkedCts.Token);
-
-            // SseResult takes ownership of the activity — it will dispose it when
-            // the SSE stream completes, ensuring the tracing span covers the full
-            // streaming duration (matching Python's trace_stream pattern).
-            return new SseResult(
-                result.Events!, execution, linkedCts, activity,
-                SharedJsonOptions.Instance, _logger, FoundryEnvironment.SseKeepAliveInterval);
         }
         else if (isBackground)
         {

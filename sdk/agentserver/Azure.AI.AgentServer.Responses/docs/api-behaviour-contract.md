@@ -676,7 +676,6 @@ The library sets the following baggage items on the activity, making them availa
 | `azure.ai.agentserver.conversation_id` | Conversation ID or `""` | Always set |
 | `azure.ai.agentserver.streaming` | `"True"` / `"False"` (PascalCase) | Always set |
 | `azure.ai.agentserver.x-request-id` | `X-Request-Id` header value (truncated to 256 chars) | When header is present |
-| `request.id` | Request ID | From the `X-Request-Id` header, if present |
 
 Handlers can read these baggage items from `Activity.Current` for use in downstream tracing or logging.
 
