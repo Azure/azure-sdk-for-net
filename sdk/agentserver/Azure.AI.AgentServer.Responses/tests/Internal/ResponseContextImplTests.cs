@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 
 using System.Text.Json;
-using Azure.AI.AgentServer.Responses.Internal;
 using Azure.AI.AgentServer.Core;
+using Azure.AI.AgentServer.Responses.Internal;
 using Azure.AI.AgentServer.Responses.Models;
 using Microsoft.Extensions.Options;
 
