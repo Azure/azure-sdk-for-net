@@ -830,6 +830,12 @@
 # ServiceLabel: %PostgreSQL
 # ServiceOwners: @lfittl-msft @niklarin @sr-msft @sunilagarwal
 
+# PRLabel: %PostgreSQL Auth
+/sdk/postgresql/Microsoft.Azure.PostgreSQL.Auth/    @alxhghs @nasc17 @rmendiza @carlovi81 @mattboentoro
+
+# ServiceLabel: %PostgreSQL Auth
+# ServiceOwners:    @alxhghs @nasc17 @rmendiza @carlovi81 @mattboentoro
+
 # ServiceLabel: %Recovery Services Backup
 # ServiceOwners: @Daya-Patil
 
