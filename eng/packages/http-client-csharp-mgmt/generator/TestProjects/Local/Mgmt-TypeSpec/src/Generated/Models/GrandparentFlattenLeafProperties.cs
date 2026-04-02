@@ -18,7 +18,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="GrandparentFlattenLeafProperties"/>. </summary>
-        public GrandparentFlattenLeafProperties()
+        internal GrandparentFlattenLeafProperties()
         {
         }
 
@@ -31,8 +31,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets or sets the Disclaimer. </summary>
+        /// <summary> Gets the Disclaimer. </summary>
         [WirePath("disclaimer")]
-        public string Disclaimer { get; set; }
+        public string Disclaimer { get; }
     }
 }

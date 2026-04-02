@@ -1,5 +1,6 @@
 import "@azure-tools/typespec-client-generator-core";
 
+using TypeSpec.Http;
 using TypeSpec.Rest;
 using Azure.ResourceManager;
 using Azure.ClientGenerator.Core;
@@ -21,10 +22,12 @@ model GrandparentFlattenIdentifier {
   uniqueId?: string;
 }
 
+#suppress "@azure-tools/typespec-azure-core/composition-over-inheritance" "repro for inherited flatten model factory updates"
 model GrandparentFlattenBase extends Azure.ResourceManager.CommonTypes.Resource {
   identifier?: GrandparentFlattenIdentifier;
 }
 
+#suppress "@azure-tools/typespec-azure-core/composition-over-inheritance" "repro for inherited flatten model factory updates"
 model GrandparentFlattenProxy<Properties extends {}> extends GrandparentFlattenBase {
   @doc("The resource-specific properties for this resource.")
   properties?: Properties;
@@ -34,17 +37,21 @@ model GrandparentFlattenLeafProperties {
   disclaimer?: string;
 }
 
-@resource("grandparentFlattenResources")
-@subscriptionResource
-@parentResource(SubscriptionLocationResource)
-model GrandparentFlattenResource is GrandparentFlattenProxy<GrandparentFlattenLeafProperties> {
-  ...ResourceNameParameter<GrandparentFlattenResource, SegmentName = "grandparentFlattenResources">;
+#suppress "@azure-tools/typespec-azure-core/composition-over-inheritance" "repro for inherited flatten model factory updates"
+model GrandparentFlattenLeaf extends GrandparentFlattenProxy<GrandparentFlattenLeafProperties> {
 }
 
+model GrandparentFlattenLeafListResult is Azure.Core.Page<GrandparentFlattenLeaf>;
+
 @armResourceOperations
-interface GrandparentFlattenResources {
-  get is ArmResourceRead<GrandparentFlattenResource>;
-  createOrUpdate is ArmResourceCreateOrUpdateAsync<GrandparentFlattenResource>;
+interface GrandparentFlattenRepro {
+  @get
+  @action("listGrandparentFlattenLeaves")
+  listGrandparentFlattenLeaves is ArmResourceActionSync<
+    Foo,
+    void,
+    ArmResponse<GrandparentFlattenLeafListResult>
+  >;
 }
 
 #suppress "deprecated"

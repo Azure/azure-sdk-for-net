@@ -13,15 +13,15 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
-    /// <summary> The GrandparentFlattenResource. </summary>
-    public partial class GrandparentFlattenResource : GrandparentFlattenBase
+    /// <summary> The GrandparentFlattenProxyGrandparentFlattenLeafProperties. </summary>
+    public partial class GrandparentFlattenProxyGrandparentFlattenLeafProperties : GrandparentFlattenBase
     {
-        /// <summary> Initializes a new instance of <see cref="GrandparentFlattenResource"/>. </summary>
-        public GrandparentFlattenResource()
+        /// <summary> Initializes a new instance of <see cref="GrandparentFlattenProxyGrandparentFlattenLeafProperties"/>. </summary>
+        internal GrandparentFlattenProxyGrandparentFlattenLeafProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="GrandparentFlattenResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="GrandparentFlattenProxyGrandparentFlattenLeafProperties"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -29,30 +29,22 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="identifier"></param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        internal GrandparentFlattenResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, GrandparentFlattenIdentifier identifier, GrandparentFlattenLeafProperties properties) : base(id, name, resourceType, systemData, additionalBinaryDataProperties, identifier)
+        internal GrandparentFlattenProxyGrandparentFlattenLeafProperties(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, GrandparentFlattenIdentifier identifier, GrandparentFlattenLeafProperties properties) : base(id, name, resourceType, systemData, additionalBinaryDataProperties, identifier)
         {
             Properties = properties;
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
         [WirePath("properties")]
-        internal GrandparentFlattenLeafProperties Properties { get; set; }
+        internal GrandparentFlattenLeafProperties Properties { get; }
 
-        /// <summary> Gets or sets the Disclaimer. </summary>
+        /// <summary> Gets the Disclaimer. </summary>
         [WirePath("properties.disclaimer")]
         public string GrandparentFlattenLeafDisclaimer
         {
             get
             {
-                return Properties is null ? default : Properties.Disclaimer;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new GrandparentFlattenLeafProperties();
-                }
-                Properties.Disclaimer = value;
+                return Properties.Disclaimer;
             }
         }
     }

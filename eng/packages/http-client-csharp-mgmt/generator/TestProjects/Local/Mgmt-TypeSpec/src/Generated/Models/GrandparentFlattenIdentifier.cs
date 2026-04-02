@@ -21,7 +21,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="GrandparentFlattenIdentifier"/>. </summary>
-        public GrandparentFlattenIdentifier()
+        internal GrandparentFlattenIdentifier()
         {
         }
 
@@ -34,8 +34,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets or sets the UniqueId. </summary>
+        /// <summary> Gets the UniqueId. </summary>
         [WirePath("uniqueId")]
-        public string UniqueId { get; set; }
+        public string UniqueId { get; }
     }
 }
