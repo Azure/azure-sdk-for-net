@@ -33,7 +33,7 @@ namespace Samples
             _operationId = this.GetOperationId(rehydrationToken);
         }
 
-        internal SamplesArmOperation(global::Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics, global::Azure.Core.Pipeline.HttpPipeline pipeline, global::Azure.Core.Request request, global::Azure.Response response, global::Azure.Core.OperationFinalStateVia finalStateVia, bool skipApiVersionOverride = false, string apiVersionOverrideValue = null)
+        internal SamplesArmOperation(global::Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics, global::Azure.Core.Pipeline.HttpPipeline pipeline, global::Azure.Core.Request request, global::Azure.Response response, global::Azure.Core.OperationFinalStateVia finalStateVia, bool skipApiVersionOverride = true, string apiVersionOverrideValue = null)
         {
             global::Azure.Core.IOperation nextLinkOperation = global::Azure.Core.NextLinkOperationImplementation.Create(pipeline, request.Method, request.Uri.ToUri(), response, finalStateVia, skipApiVersionOverride, apiVersionOverrideValue);
             if ((nextLinkOperation is global::Azure.Core.NextLinkOperationImplementation nextLinkOperationImplementation))
