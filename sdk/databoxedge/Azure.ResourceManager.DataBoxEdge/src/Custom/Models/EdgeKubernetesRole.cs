@@ -3,6 +3,8 @@
 
 // Generated flattened RoleStatus/HostPlatform properties are non-nullable, but baseline API had nullable types.
 // These Custom/ properties shadow the generated ones to restore nullable type signatures for backward compatibility.
+// Note: Setting null is a no-op because the underlying generated property is non-nullable.
+// This is an intentional trade-off — we cannot store null, but the setter must exist for API compat.
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {

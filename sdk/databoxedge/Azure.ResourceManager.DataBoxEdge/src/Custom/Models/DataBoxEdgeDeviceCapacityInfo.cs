@@ -7,12 +7,14 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.ComponentModel;
 using System.IO;
 using System.Text.Json;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     /// <summary> The device capacity info. </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class DataBoxEdgeDeviceCapacityInfo : DataBoxEdgeDeviceCapacityInfoData,
         IJsonModel<DataBoxEdgeDeviceCapacityInfo>,
         IPersistableModel<DataBoxEdgeDeviceCapacityInfo>
@@ -70,8 +72,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         DataBoxEdgeDeviceCapacityInfo IPersistableModel<DataBoxEdgeDeviceCapacityInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            using var doc = JsonDocument.Parse(data);
-            var reader = doc.RootElement.EnumerateObject().GetEnumerator();
             var utf8Reader = new Utf8JsonReader(data);
             return ((IJsonModel<DataBoxEdgeDeviceCapacityInfo>)this).Create(ref utf8Reader, options);
         }
