@@ -638,25 +638,33 @@ These tags align with the OpenTelemetry GenAI semantic conventions:
 
 | Tag | Value | Description |
 |---|---|---|
-| `gen_ai.response.id` | Response ID (`resp_*`) | The library-generated response identifier |
+| `gen_ai.response.id` | Response ID (`caresp_*`) | The library-generated response identifier |
 | `gen_ai.agent.name` | Agent name from request | The agent name, if provided via `agent_reference` |
-| `gen_ai.agent.id` | `{name}:{version}` | Composite agent identifier combining name and version from `agent_reference` |
-| `gen_ai.provider.name` | `"azure.ai.responses"` | Fixed provider identifier for this library |
-| `service.name` | `"azure.ai.responses"` | Service name for trace grouping |
+| `gen_ai.agent.id` | `{name}:{version}` or `""` | Composite agent identifier combining name and version from `agent_reference`. Empty string when agent is null |
+| `gen_ai.provider.name` | `"AzureAI Hosted Agents"` | Fixed provider identifier per protocol spec |
+| `service.name` | `"azure.ai.agentserver"` | Service name for trace grouping per protocol spec |
 
 ### Additional OTEL Tags
 
 | Tag | Value | Description |
 |---|---|---|
-| `gen_ai.system` | System identifier | The GenAI system identifier |
 | `gen_ai.operation.name` | `"invoke_agent"` | Fixed operation name for agent invocation |
 | `gen_ai.request.model` | Resolved model name | Model from the request (B22 resolution) |
 | `gen_ai.conversation.id` | Conversation ID | The conversation identifier, if present on the request |
 | `gen_ai.agent.version` | Agent version | Agent version from `agent_reference`, if provided |
 
+### Namespaced Tags
+
+| Tag | Value | Description |
+|---|---|---|
+| `azure.ai.agentserver.responses.response_id` | Response ID | Always set |
+| `azure.ai.agentserver.responses.conversation_id` | Conversation ID or `""` | Always set |
+| `azure.ai.agentserver.responses.streaming` | `true` / `false` (boolean) | Always set |
+| `microsoft.foundry.project.id` | Foundry project ARM resource ID | Always set |
+
 ### Request ID Propagation
 
-The `X-Request-Id` HTTP request header, if present, is propagated as the `request.id` tag on the activity. The value is **truncated to 256 characters** to prevent tag value overflow.
+The `X-Request-Id` HTTP request header, if present, is propagated as the `azure.ai.agentserver.x-request-id` baggage item on the activity. The value is **truncated to 256 characters** to prevent tag value overflow.
 
 ### Baggage Items
 
@@ -664,13 +672,10 @@ The library sets the following baggage items on the activity, making them availa
 
 | Baggage Key | Value | Description |
 |---|---|---|
-| `response.id` | Response ID | The library-generated response identifier |
-| `conversation.id` | Conversation ID | From the request, if present |
-| `streaming` | `"true"` or `"false"` | Whether SSE streaming was requested |
-| `agent.name` | Agent name | From `agent_reference`, if provided |
-| `agent.id` | Agent ID | Composite `{name}:{version}`, if provided |
-| `provider.name` | `"azure.ai.responses"` | Fixed provider identifier |
-| `request.id` | Request ID | From the `X-Request-Id` header, if present |
+| `azure.ai.agentserver.response_id` | Response ID | Always set |
+| `azure.ai.agentserver.conversation_id` | Conversation ID or `""` | Always set |
+| `azure.ai.agentserver.streaming` | `"True"` / `"False"` (PascalCase) | Always set |
+| `azure.ai.agentserver.x-request-id` | `X-Request-Id` header value (truncated to 256 chars) | When header is present |
 
 Handlers can read these baggage items from `Activity.Current` for use in downstream tracing or logging.
 

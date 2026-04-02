@@ -62,15 +62,15 @@ public class ResponseShapeProtocolTests : ProtocolTestBase
     }
 
     [Test]
-    public async Task Response_OutputText_ComputedCorrectly()
+    public async Task Response_OutputText_NotReturnedByServer()
     {
         Handler.EventFactory = (req, ctx, ct) => SimpleTextStream(ctx);
 
         var response = await PostResponsesAsync(new { model = "test-model" });
         using var doc = await ParseJsonAsync(response);
 
-        var outputText = doc.RootElement.GetProperty("output_text").GetString();
-        Assert.That(outputText, Is.EqualTo("Hello"));
+        // output_text is a client SDK convenience property; the server should never return it.
+        Assert.That(doc.RootElement.TryGetProperty("output_text", out _), Is.False);
     }
 
     [Test]
