@@ -1192,6 +1192,7 @@
 /eng/                                                              @hallipr @weshaggard @benbp
 /eng/common/                                                       @Azure/azure-sdk-eng
 /eng/mgmt/                                                         @ArthurMa1978 @m-nash
+/eng/apicompatbaselines/                                           @Azure/azure-sdk-write-net-core @jsquire
 /.github/workflows/                                                @Azure/azure-sdk-eng
 /.github/CODEOWNERS                                                @jsquire @m-redding @Azure/azure-sdk-eng
 /.github/copilot-instructions.md                                   @jsquire @m-redding @praveenkuttappan @maririos

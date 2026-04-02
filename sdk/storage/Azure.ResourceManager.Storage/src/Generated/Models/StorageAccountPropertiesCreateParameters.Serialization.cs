@@ -204,16 +204,6 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("geoPriorityReplicationStatus"u8);
                 writer.WriteObjectValue(GeoPriorityReplicationStatus, options);
             }
-            if (Optional.IsDefined(AllowSharedKeyAccessForServices))
-            {
-                writer.WritePropertyName("allowSharedKeyAccessForServices"u8);
-                writer.WriteObjectValue(AllowSharedKeyAccessForServices, options);
-            }
-            if (Optional.IsDefined(DataCollaborationPolicyProperties))
-            {
-                writer.WritePropertyName("dataCollaborationPolicyProperties"u8);
-                writer.WriteObjectValue(DataCollaborationPolicyProperties, options);
-            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -282,8 +272,6 @@ namespace Azure.ResourceManager.Storage.Models
             ImmutableStorageAccount immutableStorageWithVersioning = default;
             StorageDnsEndpointType? dnsEndpointType = default;
             GeoPriorityReplicationStatus geoPriorityReplicationStatus = default;
-            StorageAccountSharedKeyAccessProperties allowSharedKeyAccessForServices = default;
-            StorageDataCollaborationPolicyProperties dataCollaborationPolicyProperties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -521,24 +509,6 @@ namespace Azure.ResourceManager.Storage.Models
                     geoPriorityReplicationStatus = GeoPriorityReplicationStatus.DeserializeGeoPriorityReplicationStatus(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("allowSharedKeyAccessForServices"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    allowSharedKeyAccessForServices = StorageAccountSharedKeyAccessProperties.DeserializeStorageAccountSharedKeyAccessProperties(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("dataCollaborationPolicyProperties"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    dataCollaborationPolicyProperties = StorageDataCollaborationPolicyProperties.DeserializeStorageDataCollaborationPolicyProperties(prop.Value, options);
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -571,8 +541,6 @@ namespace Azure.ResourceManager.Storage.Models
                 immutableStorageWithVersioning,
                 dnsEndpointType,
                 geoPriorityReplicationStatus,
-                allowSharedKeyAccessForServices,
-                dataCollaborationPolicyProperties,
                 additionalBinaryDataProperties);
         }
     }

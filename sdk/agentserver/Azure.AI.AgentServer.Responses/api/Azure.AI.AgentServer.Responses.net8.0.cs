@@ -540,6 +540,7 @@ namespace Azure.AI.AgentServer.Responses
     {
         public ResponseContext(string responseId) { }
         public virtual System.Collections.Generic.IReadOnlyDictionary<string, string> ClientHeaders { get { throw null; } }
+        public virtual Azure.AI.AgentServer.Core.IsolationContext Isolation { get { throw null; } }
         public bool IsShutdownRequested { get { throw null; } set { } }
         public virtual System.Collections.Generic.IReadOnlyDictionary<string, Microsoft.Extensions.Primitives.StringValues> QueryParameters { get { throw null; } }
         public virtual System.BinaryData? RawBody { get { throw null; } }
@@ -637,13 +638,13 @@ namespace Azure.AI.AgentServer.Responses
     public abstract partial class ResponsesProvider
     {
         protected ResponsesProvider() { }
-        public abstract System.Threading.Tasks.Task CreateResponseAsync(Azure.AI.AgentServer.Responses.CreateResponseRequest request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-        public abstract System.Threading.Tasks.Task DeleteResponseAsync(string responseId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-        public abstract System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<string>> GetHistoryItemIdsAsync(string? previousResponseId, string? conversationId, int limit, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-        public abstract System.Threading.Tasks.Task<Azure.AI.AgentServer.Responses.Models.AgentsPagedResultOutputItem> GetInputItemsAsync(string responseId, int limit = 20, bool ascending = false, string? after = null, string? before = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-        public abstract System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.AI.AgentServer.Responses.Models.OutputItem?>> GetItemsAsync(System.Collections.Generic.IEnumerable<string> itemIds, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-        public abstract System.Threading.Tasks.Task<Azure.AI.AgentServer.Responses.Models.ResponseObject> GetResponseAsync(string responseId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-        public abstract System.Threading.Tasks.Task UpdateResponseAsync(Azure.AI.AgentServer.Responses.Models.ResponseObject response, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        public abstract System.Threading.Tasks.Task CreateResponseAsync(Azure.AI.AgentServer.Responses.CreateResponseRequest request, Azure.AI.AgentServer.Core.IsolationContext isolation, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        public abstract System.Threading.Tasks.Task DeleteResponseAsync(string responseId, Azure.AI.AgentServer.Core.IsolationContext isolation, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        public abstract System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<string>> GetHistoryItemIdsAsync(string? previousResponseId, string? conversationId, int limit, Azure.AI.AgentServer.Core.IsolationContext isolation, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        public abstract System.Threading.Tasks.Task<Azure.AI.AgentServer.Responses.Models.AgentsPagedResultOutputItem> GetInputItemsAsync(string responseId, Azure.AI.AgentServer.Core.IsolationContext isolation, int limit = 20, bool ascending = false, string? after = null, string? before = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        public abstract System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.AI.AgentServer.Responses.Models.OutputItem?>> GetItemsAsync(System.Collections.Generic.IEnumerable<string> itemIds, Azure.AI.AgentServer.Core.IsolationContext isolation, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        public abstract System.Threading.Tasks.Task<Azure.AI.AgentServer.Responses.Models.ResponseObject> GetResponseAsync(string responseId, Azure.AI.AgentServer.Core.IsolationContext isolation, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        public abstract System.Threading.Tasks.Task UpdateResponseAsync(Azure.AI.AgentServer.Responses.Models.ResponseObject response, Azure.AI.AgentServer.Core.IsolationContext isolation, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     }
     public static partial class ResponsesServer
     {
@@ -696,6 +697,7 @@ namespace Azure.AI.AgentServer.Responses
             public const string ConversationId = "gen_ai.conversation.id";
             public const string ErrorCode = "azure.ai.agentserver.responses.error.code";
             public const string ErrorMessage = "azure.ai.agentserver.responses.error.message";
+            public const string FoundryProjectId = "microsoft.foundry.project.id";
             public const string NamespacedConversationId = "azure.ai.agentserver.responses.conversation_id";
             public const string NamespacedResponseId = "azure.ai.agentserver.responses.response_id";
             public const string NamespacedStreaming = "azure.ai.agentserver.responses.streaming";
