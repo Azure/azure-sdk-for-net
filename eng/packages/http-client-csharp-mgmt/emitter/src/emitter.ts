@@ -24,10 +24,7 @@ export async function $onEmit(context: EmitContext<AzureMgmtEmitterOptions>) {
   context.options["emitter-extension-path"] ??= import.meta.url;
   context.options["sdk-context-options"] ??= azureSDKContextOptions;
   context.options["model-namespace"] ??= true;
-  const [, diagnostics] = await emitAzureCodeModel(
-    context,
-    updateCodeModel as Parameters<typeof emitAzureCodeModel>[1]
-  );
+  const [, diagnostics] = await emitAzureCodeModel(context, updateCodeModel);
   context.program.reportDiagnostics(diagnostics);
 
   function updateCodeModel(
