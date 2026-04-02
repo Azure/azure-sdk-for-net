@@ -931,9 +931,9 @@ namespace Azure.Generator.Mgmt.Tests
         }
 
         [TestCase]
-        public void PopulateArguments_CollectionBodyParameter_UsesRequestContentCreate()
+        public void PopulateArguments_PrimitiveCollectionBodyParameter_UsesRequestContentCreate()
         {
-            // When the body parameter is a collection type (e.g. IEnumerable<string>), should generate
+            // When the body parameter is a primitive collection type (e.g. IEnumerable<string>), should generate
             // RequestContent.Create(body) instead of IEnumerable.ToRequestContent(body) which doesn't exist.
             var registry = new ParameterContextRegistry(new List<ParameterContextMapping>());
 
@@ -956,6 +956,71 @@ namespace Azure.Generator.Mgmt.Tests
             // Should use RequestContent.Create(body), not IEnumerable.ToRequestContent(body)
             Assert.That(displayString, Does.Contain("RequestContent.Create"));
             Assert.That(displayString, Does.Not.Contain("ToRequestContent"));
+        }
+
+        [TestCase]
+        public void PopulateArguments_ModelCollectionBodyParameter_UsesWriteObjectValue()
+        {
+            // When the body parameter is a collection of model types (e.g. IEnumerable<MyModel>),
+            // should generate preparation statements using Utf8JsonWriter with WriteObjectValue
+            // for proper IJsonModel<T> serialization instead of RequestContent.Create(object).
+            var registry = new ParameterContextRegistry(new List<ParameterContextMapping>());
+
+            var requestContentParam = new ParameterProvider("content", $"", typeof(RequestContent));
+            requestContentParam.Update(wireInfo: new WireInformation(default, string.Empty));
+
+            var contextVariable = new VariableExpression(typeof(RequestContext), "context");
+
+            // Use a non-framework type to simulate a generated model type
+            var modelType = CreateModelCSharpType("TestModel", "Test.Namespace");
+            var bodyParam = new ParameterProvider("body", $"", new CSharpType(typeof(IEnumerable<>), modelType));
+            bodyParam.Update(wireInfo: new WireInformation(default, string.Empty), location: ParameterLocation.Body);
+
+            var preparationStatements = new List<Microsoft.TypeSpec.Generator.Statements.MethodBodyStatement>();
+            var arguments = registry.PopulateArguments(
+                _idVariable,
+                new List<ParameterProvider> { requestContentParam },
+                contextVariable,
+                new List<ParameterProvider> { bodyParam },
+                preparationStatements);
+
+            Assert.AreEqual(1, arguments.Count);
+            // Should have preparation statements for model collection serialization
+            Assert.That(preparationStatements.Count, Is.GreaterThan(0), "Model collection should generate preparation statements");
+            // The argument should reference RequestContent.Create with the stream variable
+            var displayString = arguments[0].ToDisplayString();
+            Assert.That(displayString, Does.Contain("RequestContent.Create"));
+            Assert.That(displayString, Does.Not.Contain("ToRequestContent"));
+        }
+
+        [TestCase]
+        public void PopulateArguments_ModelCollectionBodyParameter_FallsBackWithoutPreparationList()
+        {
+            // When no preparation statements list is provided, model collections should still
+            // generate compilable code using RequestContent.Create(object) as a fallback.
+            var registry = new ParameterContextRegistry(new List<ParameterContextMapping>());
+
+            var requestContentParam = new ParameterProvider("content", $"", typeof(RequestContent));
+            requestContentParam.Update(wireInfo: new WireInformation(default, string.Empty));
+
+            var contextVariable = new VariableExpression(typeof(RequestContext), "context");
+
+            // Use a non-framework type to simulate a generated model type
+            var modelType = CreateModelCSharpType("TestModel", "Test.Namespace");
+            var bodyParam = new ParameterProvider("body", $"", new CSharpType(typeof(IEnumerable<>), modelType));
+            bodyParam.Update(wireInfo: new WireInformation(default, string.Empty), location: ParameterLocation.Body);
+
+            // Pass null (default) for preparationStatements
+            var arguments = registry.PopulateArguments(
+                _idVariable,
+                new List<ParameterProvider> { requestContentParam },
+                contextVariable,
+                new List<ParameterProvider> { bodyParam });
+
+            Assert.AreEqual(1, arguments.Count);
+            var displayString = arguments[0].ToDisplayString();
+            // Fallback: should use RequestContent.Create(body)
+            Assert.That(displayString, Does.Contain("RequestContent.Create"));
         }
 
         [TestCase]
@@ -1047,6 +1112,25 @@ namespace Azure.Generator.Mgmt.Tests
             return (CSharpType)ctor!.Invoke(new object?[] {
                 name, ns, isValueType, isNullable, declaringType,
                 args, isPublic, isStruct, baseType, underlyingEnumType
+            });
+        }
+
+        /// <summary>
+        /// Creates a CSharpType that simulates a generated model class (IsFrameworkType=false).
+        /// Uses reflection because the multi-param CSharpType constructor is internal.
+        /// </summary>
+        private static CSharpType CreateModelCSharpType(string name, string ns)
+        {
+            var ctor = typeof(CSharpType).GetConstructor(
+                System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance,
+                null,
+                new[] { typeof(string), typeof(string), typeof(bool), typeof(bool), typeof(CSharpType),
+                        typeof(IReadOnlyList<CSharpType>), typeof(bool), typeof(bool), typeof(CSharpType), typeof(Type) },
+                null);
+
+            return (CSharpType)ctor!.Invoke(new object?[] {
+                name, ns, false, false, null,
+                Array.Empty<CSharpType>(), true, false, null, null
             });
         }
     }

@@ -2,17 +2,21 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
+using Azure.Generator.Management.Snippets;
 using Azure.Generator.Management.Utilities;
 using Azure.Generator.Management.Visitors;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Snippets;
+using Microsoft.TypeSpec.Generator.Statements;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using System.Linq;
+using System.Text.Json;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 using TernaryConditionalExpression = Microsoft.TypeSpec.Generator.Expressions.TernaryConditionalExpression;
 
@@ -71,7 +75,8 @@ internal class ParameterContextRegistry : IReadOnlyDictionary<string, ParameterC
         ScopedApi<ResourceIdentifier> idProperty,
         IReadOnlyList<ParameterProvider> requestParameters,
         VariableExpression requestContext,
-        IReadOnlyList<ParameterProvider> methodParameters)
+        IReadOnlyList<ParameterProvider> methodParameters,
+        List<MethodBodyStatement>? preparationStatements = null)
     {
         var arguments = new List<ValueExpression>();
         // here we always assume that the parameter name matches the parameter name in the request path.
@@ -111,6 +116,37 @@ internal class ParameterContextRegistry : IReadOnlyDictionary<string, ParameterC
                         else
                         {
                             arguments.Add(createContent);
+                        }
+                    }
+                    else if (bodyParameter.Type.IsCollection)
+                    {
+                        // For collection body parameters (e.g., IEnumerable<string> or IEnumerable<MyModel>),
+                        // we need to serialize the collection to a RequestContent.
+                        // For collections of model types, we use Utf8JsonWriter with WriteObjectValue to ensure
+                        // proper IJsonModel<T> serialization (correct wire property names, custom logic, etc.).
+                        // For primitive collections, RequestContent.Create(object) works via System.Text.Json.
+                        bool hasModelElements = bodyParameter.Type.Arguments.Count > 0
+                            && !bodyParameter.Type.Arguments[0].IsFrameworkType;
+
+                        if (hasModelElements && preparationStatements is not null)
+                        {
+                            arguments.Add(BuildModelCollectionRequestContent(bodyParameter, preparationStatements));
+                        }
+                        else
+                        {
+                            // Primitive collection or no preparation statements list provided:
+                            // use RequestContent.Create(object) which serializes via System.Text.Json.
+                            var createContent = Static(typeof(RequestContent)).Invoke(
+                                nameof(RequestContent.Create),
+                                [bodyParameter]);
+                            if (bodyParameter.Type.IsNullable)
+                            {
+                                arguments.Add(new TernaryConditionalExpression(bodyParameter.NotEqual(Null), createContent, Null));
+                            }
+                            else
+                            {
+                                arguments.Add(createContent);
+                            }
                         }
                     }
                     else
@@ -192,5 +228,71 @@ internal class ParameterContextRegistry : IReadOnlyDictionary<string, ParameterC
     private static bool IsMatchConditionType(CSharpType type)
     {
         return type.Equals(typeof(MatchConditions)) || type.Equals(typeof(RequestConditions));
+    }
+
+    /// <summary>
+    /// Builds preparation statements and a RequestContent argument expression for a collection
+    /// of model types. Uses Utf8JsonWriter with WriteObjectValue to ensure proper IJsonModel&lt;T&gt;
+    /// serialization (correct wire property names, custom serialization logic, discriminators, etc.).
+    /// </summary>
+    /// <remarks>
+    /// Generates the following code:
+    /// <code>
+    /// MemoryStream collectionBodyStream = new MemoryStream();
+    /// Utf8JsonWriter collectionBodyWriter = new Utf8JsonWriter(collectionBodyStream);
+    /// collectionBodyWriter.WriteStartArray();
+    /// foreach (var item in body) { collectionBodyWriter.WriteObjectValue(item, ModelSerializationExtensions.WireOptions); }
+    /// collectionBodyWriter.WriteEndArray();
+    /// collectionBodyWriter.Flush();
+    /// collectionBodyStream.Position = 0;
+    /// // argument: RequestContent.Create(collectionBodyStream)
+    /// </code>
+    /// </remarks>
+    private static ValueExpression BuildModelCollectionRequestContent(
+        ParameterProvider bodyParameter,
+        List<MethodBodyStatement> preparationStatements)
+    {
+        // var collectionBodyStream = new MemoryStream();
+        preparationStatements.Add(
+            Declare("collectionBodyStream", typeof(MemoryStream), New.Instance(typeof(MemoryStream)), out var streamVar));
+
+        // var collectionBodyWriter = new Utf8JsonWriter(collectionBodyStream);
+        preparationStatements.Add(
+            Declare("collectionBodyWriter", typeof(Utf8JsonWriter), New.Instance(typeof(Utf8JsonWriter), new ValueExpression[] { streamVar }), out var writerVar));
+
+        // collectionBodyWriter.WriteStartArray();
+        preparationStatements.Add(
+            writerVar.Invoke(nameof(Utf8JsonWriter.WriteStartArray)).Terminate());
+
+        // foreach (var item in body) { collectionBodyWriter.WriteObjectValue(item, ModelSerializationExtensions.WireOptions); }
+        var foreachStatement = new ForEachStatement("item", bodyParameter.As(bodyParameter.Type), out var itemVar)
+        {
+            writerVar.Invoke("WriteObjectValue", new ValueExpression[] { itemVar, ModelSerializationExtensionsSnippets.Wire }).Terminate()
+        };
+        preparationStatements.Add(foreachStatement);
+
+        // collectionBodyWriter.WriteEndArray();
+        preparationStatements.Add(
+            writerVar.Invoke(nameof(Utf8JsonWriter.WriteEndArray)).Terminate());
+
+        // collectionBodyWriter.Flush();
+        preparationStatements.Add(
+            writerVar.Invoke(nameof(Utf8JsonWriter.Flush)).Terminate());
+
+        // collectionBodyStream.Position = 0;
+        preparationStatements.Add(
+            streamVar.Property(nameof(MemoryStream.Position)).Assign(Literal(0L)).Terminate());
+
+        // Argument: RequestContent.Create(collectionBodyStream)
+        var createContent = Static(typeof(RequestContent)).Invoke(
+            nameof(RequestContent.Create),
+            [streamVar]);
+
+        if (bodyParameter.Type.IsNullable)
+        {
+            return new TernaryConditionalExpression(bodyParameter.NotEqual(Null), createContent, Null);
+        }
+
+        return createContent;
     }
 }
