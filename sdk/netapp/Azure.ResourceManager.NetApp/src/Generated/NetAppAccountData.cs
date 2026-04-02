@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="multiAdStatus"> MultiAD Status for the account. </param>
         /// <param name="ldapConfiguration"> LDAP Configuration for the account. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetAppAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ManagedServiceIdentity identity, string provisioningState, IList<NetAppAccountActiveDirectory> activeDirectories, EntraIdConfig entraIdConfig, NetAppAccountEncryption encryption, bool? disableShowmount, string nfsV4IdDomain, MultiAdStatus? multiAdStatus, LdapConfiguration ldapConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal NetAppAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ManagedServiceIdentity identity, string provisioningState, IList<NetAppAccountActiveDirectory> activeDirectories, NetAppEntraIdConfig entraIdConfig, NetAppAccountEncryption encryption, bool? disableShowmount, string nfsV4IdDomain, MultiAdStatus? multiAdStatus, NetAppLdapConfiguration ldapConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ETag = etag;
             Identity = identity;
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.NetApp
         /// <summary> Active Directories. </summary>
         public IList<NetAppAccountActiveDirectory> ActiveDirectories { get; }
         /// <summary> Entra ID configuration for the account. </summary>
-        public EntraIdConfig EntraIdConfig { get; set; }
+        public NetAppEntraIdConfig EntraIdConfig { get; set; }
         /// <summary> Encryption settings. </summary>
         public NetAppAccountEncryption Encryption { get; set; }
         /// <summary> Shows the status of disableShowmount for all volumes under the subscription, null equals false. </summary>
@@ -115,6 +115,6 @@ namespace Azure.ResourceManager.NetApp
         /// <summary> MultiAD Status for the account. </summary>
         public MultiAdStatus? MultiAdStatus { get; }
         /// <summary> LDAP Configuration for the account. </summary>
-        public LdapConfiguration LdapConfiguration { get; set; }
+        public NetAppLdapConfiguration LdapConfiguration { get; set; }
     }
 }

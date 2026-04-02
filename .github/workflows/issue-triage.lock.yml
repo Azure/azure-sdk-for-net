@@ -26,7 +26,7 @@
 # analysis notes including debugging strategies and resource links
 # Implements the initial issue triage rules for the Azure SDK repository
 #
-# gh-aw-metadata: {"schema_version":"v3","frontmatter_hash":"991d56241e0d622e3ed516f22f709ba5f146891898b7d4507e7a279d3c7d4c4c","compiler_version":"v0.63.1","strict":true,"agent_id":"copilot"}
+# gh-aw-metadata: {"schema_version":"v3","frontmatter_hash":"af43ce644836bafd30e2dadecd3ededced5bd19fe707746605584cfa2741ab6c","compiler_version":"v0.63.1","strict":true,"agent_id":"copilot"}
 
 name: "Agentic Triage"
 "on":
@@ -351,7 +351,7 @@ jobs:
           mkdir -p /tmp/gh-aw/safeoutputs
           mkdir -p /tmp/gh-aw/mcp-logs/safeoutputs
           cat > ${RUNNER_TEMP}/gh-aw/safeoutputs/config.json << 'GH_AW_SAFE_OUTPUTS_CONFIG_EOF'
-          {"add_comment":{"max":1},"add_labels":{"max":7},"assign_to_user":{"max":1},"mention-owners":{"description":"Post a routing comment @mentioning team owners on the triggering issue; bypasses safe-outputs mention neutralization","inputs":{"message":{"default":null,"description":"The full comment body including @mentions","required":true,"type":"string"}},"output":"Owner mention comment posted"},"missing_data":{},"missing_tool":{},"noop":{"max":1,"report-as-issue":"false"},"remove_labels":{"max":7}}
+          {"add_comment":{"max":1},"add_labels":{"max":7},"assign_to_user":{"max":1},"mention_owners":{"description":"Post a routing comment @mentioning team owners on the triggering issue; bypasses safe-outputs mention neutralization","inputs":{"message":{"default":null,"description":"The comment body text without any @mentions or @ symbols","required":true,"type":"string"},"owners":{"default":null,"description":"Comma-separated GitHub usernames to notify, without the @ prefix (e.g. 'user1, user2, Azure/team-name')","required":true,"type":"string"}},"output":"Owner mention comment posted"},"missing_data":{},"missing_tool":{},"noop":{"max":1,"report-as-issue":"false"},"remove_labels":{"max":7}}
           GH_AW_SAFE_OUTPUTS_CONFIG_EOF
       - name: Write Safe Outputs Tools
         run: |
@@ -370,12 +370,17 @@ jobs:
                   "additionalProperties": false,
                   "properties": {
                     "message": {
-                      "description": "The full comment body including @mentions",
+                      "description": "The comment body text without any @mentions or @ symbols",
+                      "type": "string"
+                    },
+                    "owners": {
+                      "description": "Comma-separated GitHub usernames to notify, without the @ prefix (e.g. 'user1, user2, Azure/team-name')",
                       "type": "string"
                     }
                   },
                   "required": [
-                    "message"
+                    "message",
+                    "owners"
                   ],
                   "type": "object"
                 },
@@ -1080,20 +1085,92 @@ jobs:
           script: |
             const fs = require('fs');
             const outputFile = process.env.GH_AW_AGENT_OUTPUT;
+            const issueNumber = context.issue.number;
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+
+            async function failSafe(reason) {
+              core.error(`mention_owners failed: ${reason}`);
+              try {
+                await github.rest.issues.addLabels({
+                  owner, repo, issue_number: issueNumber,
+                  labels: ['needs-team-triage']
+                });
+                await github.rest.issues.createComment({
+                  owner, repo, issue_number: issueNumber,
+                  body: '⚠️ Automated triage was unable to complete owner notification for this issue. Routing for manual triage'
+                });
+              } catch (recoveryError) {
+                core.error(`Recovery also failed: ${recoveryError.message}`);
+              }
+              core.setFailed(reason);
+            }
+
             if (!outputFile) {
-              core.info('No agent output found');
+              await failSafe('No agent output path provided');
               return;
             }
-            const agentOutput = JSON.parse(fs.readFileSync(outputFile, 'utf8'));
+            if (!fs.existsSync(outputFile)) {
+              await failSafe(`Agent output file not found: ${outputFile}`);
+              return;
+            }
+
+            let agentOutput;
+            try {
+              agentOutput = JSON.parse(fs.readFileSync(outputFile, 'utf8'));
+            } catch (parseError) {
+              await failSafe(`Failed to parse agent output: ${parseError.message}`);
+              return;
+            }
+
+            if (!agentOutput || !Array.isArray(agentOutput.items)) {
+              await failSafe('Agent output missing items array');
+              return;
+            }
+
             const items = agentOutput.items.filter(i => i.type === 'mention_owners');
+            if (items.length === 0) {
+              await failSafe('No mention_owners items in agent output');
+              return;
+            }
+
             for (const item of items) {
-              await github.rest.issues.createComment({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                issue_number: context.issue.number,
-                body: item.message
-              });
-              core.info(`Posted routing comment on #${context.issue.number}`);
+              if (!item.owners || typeof item.owners !== 'string' || !item.owners.trim()) {
+                await failSafe('mention_owners item missing owners field');
+                return;
+              }
+
+              const mentions = item.owners
+                .split(/[\s,]+/)
+                .map(s => s.trim())
+                .filter(Boolean)
+                .map(raw => {
+                  const normalized = raw.replace(/^\\?@/, '');
+                  if (/\r|\n/.test(normalized)) return null;
+                  if (!/^[A-Za-z0-9-]+(?:\/[A-Za-z0-9-]+)?$/.test(normalized)) return null;
+                  return `@${normalized}`;
+                })
+                .filter(Boolean);
+
+              if (mentions.length === 0) {
+                await failSafe('No valid owners after parsing owners field');
+                return;
+              }
+
+              const body = item.message
+                ? `${item.message} ${mentions.join(' ')}`
+                : mentions.join(' ');
+
+              try {
+                await github.rest.issues.createComment({
+                  owner, repo, issue_number: issueNumber,
+                  body
+                });
+                core.info(`Posted routing comment on #${issueNumber} mentioning: ${mentions.join(', ')}`);
+              } catch (apiError) {
+                await failSafe(`GitHub API error posting comment: ${apiError.message}`);
+                return;
+              }
             }
 
   safe_outputs:

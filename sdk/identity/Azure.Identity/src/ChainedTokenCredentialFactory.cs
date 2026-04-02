@@ -175,16 +175,6 @@ namespace Azure.Identity
                 options.SendCertificateChain = source.EnvironmentSendCertificateChain.Value;
             }
 
-            if (!string.IsNullOrEmpty(source.EnvironmentUsername))
-            {
-                options.Username = source.EnvironmentUsername;
-            }
-
-            if (!string.IsNullOrEmpty(source.EnvironmentPassword))
-            {
-                options.Password = source.EnvironmentPassword;
-            }
-
             return new EnvironmentCredential(options);
         }
 

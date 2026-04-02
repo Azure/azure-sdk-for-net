@@ -34,18 +34,16 @@ namespace Azure.Generator.Provisioning.Providers
     /// </summary>
     internal class ProvisioningResourceProvider : ModelProvider, IProvisioningPropertyInfo
     {
-        private const string FlattenPropertyDecoratorName = "Azure.ResourceManager.@flattenProperty";
-
         // System properties that should always be output-only
         private static readonly HashSet<string> OutputOnlyProperties = new(StringComparer.OrdinalIgnoreCase)
         {
             "id", "systemData", "type"
         };
 
-        // System properties that should always be required
+        // System properties that should always be required, even when marked readOnly (path parameters)
         private static readonly HashSet<string> RequiredInputProperties = new(StringComparer.OrdinalIgnoreCase)
         {
-            "name", "location"
+            "name"
         };
 
         // Properties to skip entirely (type is implied by the resource type)
@@ -63,6 +61,11 @@ namespace Azure.Generator.Provisioning.Providers
         /// Used to build the C# Properties, Fields, and DefineProvisionableProperties() method.
         /// </summary>
         private readonly List<ResourcePropertyInfo> _allProperties;
+        /// <summary>
+        /// Lookup from InputModelProperty to ResourcePropertyInfo for O(1) access in
+        /// <see cref="IProvisioningPropertyInfo.GetProvisioningPropertyInfo"/>.
+        /// </summary>
+        private readonly Dictionary<InputModelProperty, ResourcePropertyInfo> _propertyLookup;
         /// <summary>
         /// Serialized property names that are writable in the create/update request body model.
         /// When the resource model is output-only (e.g., a ProxyResource with a separate create body),
@@ -92,14 +95,15 @@ namespace Azure.Generator.Provisioning.Providers
         /// <inheritdoc/>
         ProvisioningPropertyInfo? IProvisioningPropertyInfo.GetProvisioningPropertyInfo(InputModelProperty inputProp)
         {
-            var propInfo = _allProperties.FirstOrDefault(p => p.Property == inputProp);
-            if (propInfo == null) return null;
+            if (!_propertyLookup.TryGetValue(inputProp, out var propInfo))
+                return null;
             return new ProvisioningPropertyInfo(
                 propInfo.PropertyName,
                 propInfo.IsOutput,
                 propInfo.IsRequired,
                 propInfo.BicepPath,
-                propInfo.DefaultValue);
+                propInfo.DefaultValue,
+                propInfo.TypeOverride);
         }
 
         /// <summary>
@@ -115,6 +119,7 @@ namespace Azure.Generator.Provisioning.Providers
                 : null;
             _createBodyWritableProperties = BuildCreateBodyWritableProperties();
             _allProperties = CollectAllProperties();
+            _propertyLookup = _allProperties.ToDictionary(p => p.Property);
         }
 
         /// <summary>
@@ -128,6 +133,7 @@ namespace Azure.Generator.Provisioning.Providers
             _defaultApiVersion = null;
             _createBodyWritableProperties = [];
             _allProperties = CollectAllProperties();
+            _propertyLookup = _allProperties.ToDictionary(p => p.Property);
         }
 
         public override void Reset()
@@ -373,14 +379,22 @@ namespace Azure.Generator.Provisioning.Providers
             var result = new List<ResourcePropertyInfo>();
             var seen = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
-            // Collect from the resource model and its base chain
-            CollectPropertiesFromModel(_inputModel, result, seen, basePath: null);
-
+            // Collect from the base chain first (top-most ancestor → immediate base),
+            // then from the resource model itself. This ensures inherited ARM common
+            // properties (name, location, tags) appear before leaf-defined properties
+            // (e.g., the "properties" bag), which controls the Bicep emission order.
+            var chain = new Stack<InputModelType>();
+            chain.Push(_inputModel);
             var baseModel = _inputModel.BaseModel;
             while (baseModel != null)
             {
-                CollectPropertiesFromModel(baseModel, result, seen, basePath: null);
+                chain.Push(baseModel);
                 baseModel = baseModel.BaseModel;
+            }
+
+            foreach (var model in chain)
+            {
+                CollectPropertiesFromModel(model, result, seen, basePath: null);
             }
 
             return result;
@@ -398,54 +412,41 @@ namespace Azure.Generator.Provisioning.Providers
 
                 var serializedName = prop.SerializedName ?? prop.Name;
 
-                // Check if this property should be flattened (only via explicit decorator)
-                bool shouldFlatten = prop.Decorators.Any(d => d.Name == FlattenPropertyDecoratorName);
+                if (seen.Contains(serializedName)) continue;
+                seen.Add(serializedName);
 
-                if (shouldFlatten && prop.Type is InputModelType flattenModel)
+                // Skip "type" property
+                if (SkipProperties.Contains(serializedName)) continue;
+
+                var bicepPath = basePath != null
+                    ? [.. basePath, serializedName]
+                    : new[] { serializedName };
+
+                var isOutput = (prop.IsReadOnly && !RequiredInputProperties.Contains(serializedName)
+                        && !_createBodyWritableProperties.Contains(serializedName))
+                    || OutputOnlyProperties.Contains(serializedName);
+                var isRequired = prop.IsRequired || RequiredInputProperties.Contains(serializedName);
+
+                var propertyName = prop.Name.ToIdentifierName();
+                // For singleton resources, the "name" property is output-only with a default value
+                string? defaultValue = null;
+                if (serializedName == "name"
+                    && _resourceMetadata?.SingletonResourceName is not null)
                 {
-                    var flattenPath = basePath != null
-                        ? [.. basePath, serializedName]
-                        : new[] { serializedName };
-
-                    // Flatten the child model's properties
-                    CollectPropertiesFromModel(flattenModel, result, seen, flattenPath);
-
-                    // Also walk the child model's base chain
-                    var childBase = flattenModel.BaseModel;
-                    while (childBase != null)
-                    {
-                        CollectPropertiesFromModel(childBase, result, seen, flattenPath);
-                        childBase = childBase.BaseModel;
-                    }
+                    defaultValue = _resourceMetadata.SingletonResourceName;
+                    isOutput = true;
                 }
-                else
+                // Ensure "location" at the resource level always uses AzureLocation,
+                // even when the TypeSpec defines it as plain string.
+                // TODO - this is currently a workaround until we have a more reliable way to detect such violations from the spec level.
+                CSharpType? typeOverride = null;
+                if (basePath is null
+                    && string.Equals(serializedName, "location", StringComparison.OrdinalIgnoreCase))
                 {
-                    if (seen.Contains(serializedName)) continue;
-                    seen.Add(serializedName);
-
-                    // Skip "type" property
-                    if (SkipProperties.Contains(serializedName)) continue;
-
-                    var bicepPath = basePath != null
-                        ? [.. basePath, serializedName]
-                        : new[] { serializedName };
-
-                    var isOutput = (prop.IsReadOnly && !RequiredInputProperties.Contains(serializedName)
-                            && !_createBodyWritableProperties.Contains(serializedName))
-                        || OutputOnlyProperties.Contains(serializedName);
-                    var isRequired = prop.IsRequired || RequiredInputProperties.Contains(serializedName);
-
-                    var propertyName = prop.Name.ToIdentifierName();
-                    // For singleton resources, the "name" property is output-only with a default value
-                    string? defaultValue = null;
-                    if (serializedName == "name"
-                        && _resourceMetadata?.SingletonResourceName is not null)
-                    {
-                        defaultValue = _resourceMetadata.SingletonResourceName;
-                        isOutput = true;
-                    }
-                    result.Add(new ResourcePropertyInfo(prop, propertyName, bicepPath, isOutput, isRequired, defaultValue));
+                    typeOverride = new CSharpType(typeof(BicepValue<>), typeof(Azure.Core.AzureLocation));
                 }
+
+                result.Add(new ResourcePropertyInfo(prop, propertyName, bicepPath, isOutput, isRequired, defaultValue, typeOverride));
             }
         }
 
@@ -859,7 +860,8 @@ namespace Azure.Generator.Provisioning.Providers
             string[] BicepPath,
             bool IsOutput,
             bool IsRequired,
-            string? DefaultValue = null);
+            string? DefaultValue = null,
+            CSharpType? TypeOverride = null);
 
         // ── ResourceVersions nested class ────────────────────────────
 

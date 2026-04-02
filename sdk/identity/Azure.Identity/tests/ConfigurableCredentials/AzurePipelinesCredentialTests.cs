@@ -34,8 +34,8 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.AzurePipelines
                 config["MyClient:Credential:TenantId"] = tenantId;
             }
             config["MyClient:Credential:ClientId"] = ClientId;
-            config["MyClient:Credential:AzurePipelinesServiceConnectionId"] = Guid.NewGuid().ToString();
-            config["MyClient:Credential:AzurePipelinesSystemAccessToken"] = "mytoken";
+            config["MyClient:Credential:ServiceConnectionId"] = Guid.NewGuid().ToString();
+            config["MyClient:Credential:SystemAccessToken"] = "mytoken";
             configureExtra?.Invoke(config);
 
             ConfigurableCredential credential;
@@ -89,8 +89,8 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.AzurePipelines
 
             IConfiguration configuration = _helper.GetConfigurationFromCommonCredentialTestConfig<AzurePipelinesCredentialOptions>(config);
             configuration["MyClient:Credential:ClientId"] = ClientId;
-            configuration["MyClient:Credential:AzurePipelinesServiceConnectionId"] = "myConnectionId";
-            configuration["MyClient:Credential:AzurePipelinesSystemAccessToken"] = "mytoken";
+            configuration["MyClient:Credential:ServiceConnectionId"] = "myConnectionId";
+            configuration["MyClient:Credential:SystemAccessToken"] = "mytoken";
 
             ConfigurableCredential credential;
             using (new TestEnvVar(new Dictionary<string, string>
@@ -145,8 +145,8 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.AzurePipelines
             IConfiguration config = _helper.GetConfiguration();
             config["MyClient:Credential:TenantId"] = tenantId;
             config["MyClient:Credential:ClientId"] = clientId;
-            config["MyClient:Credential:AzurePipelinesServiceConnectionId"] = serviceConnectionId;
-            config["MyClient:Credential:AzurePipelinesSystemAccessToken"] = systemAccessToken;
+            config["MyClient:Credential:ServiceConnectionId"] = serviceConnectionId;
+            config["MyClient:Credential:SystemAccessToken"] = systemAccessToken;
 
             IConfigurationSection credentialSection = config.GetSection("MyClient:Credential");
             var dacOptions = new DefaultAzureCredentialOptions(new CredentialSettings(credentialSection), credentialSection);

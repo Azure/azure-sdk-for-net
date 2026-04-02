@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            ElasticEncryption encryption = default;
+            NetAppElasticEncryption encryption = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    encryption = ElasticEncryption.DeserializeElasticEncryption(property.Value, options);
+                    encryption = NetAppElasticEncryption.DeserializeNetAppElasticEncryption(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
