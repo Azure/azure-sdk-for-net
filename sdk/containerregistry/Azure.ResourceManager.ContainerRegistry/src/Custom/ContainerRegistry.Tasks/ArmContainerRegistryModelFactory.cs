@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default,
             int? count = null, string tier = null, ContainerRegistryOS? os = null,
             ResourceIdentifier virtualNetworkSubnetResourceId = null, ContainerRegistryProvisioningState? provisioningState = null)
-            => throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.Models.ArmContainerRegistryTasksModelFactory.AgentPoolData instead.");
+            => throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead.");
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             string sourceRegistryAuth = null, string updateTriggerToken = null,
             ContainerRegistryImageDescriptor logArtifact = null,
             ContainerRegistryProvisioningState? provisioningState = null, bool? isArchiveEnabled = null)
-            => throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.Models.ArmContainerRegistryTasksModelFactory.RunData instead.");
+            => throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead.");
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             ContainerRegistryTriggerProperties trigger = null,
             ContainerRegistryCredentials credentials = null, string logTemplate = null,
             bool? isSystemTask = null)
-            => throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.Models.ArmContainerRegistryTasksModelFactory.TaskData instead.");
+            => throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead.");
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             SystemData systemData = null, ManagedServiceIdentity identity = null, AzureLocation? location = null,
             ContainerRegistryProvisioningState? provisioningState = null, ContainerRegistryRunContent runRequest = null,
             ContainerRegistryRunData runResult = null, string forceUpdateTag = null)
-            => throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.Models.ArmContainerRegistryTasksModelFactory.TaskRunData instead.");
+            => throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead.");
 
         /// <summary> The QueueStatus of Agent Pool. </summary>
         /// <param name="count"> The number of pending runs in the queue. </param>
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         [Obsolete("This method has been moved to Azure.ResourceManager.ContainerRegistry.Tasks and will be removed in a future version.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ContainerRegistryAgentPoolQueueStatus ContainerRegistryAgentPoolQueueStatus(int? count = null)
-            => throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.Models.ArmContainerRegistryTasksModelFactory.AgentPoolQueueStatus instead.");
+            => throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead.");
 
         /// <summary> Properties that describe a base image dependency. </summary>
         /// <param name="dependencyType"> The type of the base image dependency. </param>
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static ContainerRegistryBaseImageDependency ContainerRegistryBaseImageDependency(
             ContainerRegistryBaseImageDependencyType? dependencyType = null, string registry = null,
             string repository = null, string tag = null, string digest = null)
-            => throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.Models.ArmContainerRegistryTasksModelFactory.ContainerRegistryTaskBaseImageDependency instead.");
+            => throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead.");
 
         /// <summary> The properties for updating base image dependency trigger. </summary>
         /// <param name="baseImageTriggerType"> The type of the auto trigger for base image dependency updates. </param>
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             ContainerRegistryBaseImageTriggerType? baseImageTriggerType = null, string updateTriggerEndpoint = null,
             ContainerRegistryUpdateTriggerPayloadType? updateTriggerPayloadType = null,
             ContainerRegistryTriggerStatus? status = null, string name = null)
-            => throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.Models.ArmContainerRegistryTasksModelFactory.ContainerRegistryTaskBaseImageTriggerUpdateContent instead.");
+            => throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead.");
 
         /// <summary> The Docker build step. </summary>
         /// <param name="baseImageDependencies"> List of base image dependencies for a step. </param>
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             IEnumerable<string> imageNames = null, bool? isPushEnabled = null,
             bool? noCache = null, string dockerFilePath = null, string target = null,
             IEnumerable<ContainerRegistryRunArgument> arguments = null)
-            => throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.Models.ArmContainerRegistryTasksModelFactory.DockerBuildStep instead.");
+            => throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead.");
 
         /// <summary> The properties of a encoded task step. </summary>
         /// <param name="baseImageDependencies"> List of base image dependencies for a step. </param>
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             string contextPath = null, string contextAccessToken = null,
             string encodedTaskContent = null, string encodedValuesContent = null,
             IEnumerable<ContainerRegistryTaskOverridableValue> values = null)
-            => throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.Models.ArmContainerRegistryTasksModelFactory.EncodedTaskStep instead.");
+            => throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead.");
 
         /// <summary> The properties of a task step. </summary>
         /// <param name="baseImageDependencies"> List of base image dependencies for a step. </param>
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             string contextPath = null, string contextAccessToken = null,
             string taskFilePath = null, string valuesFilePath = null,
             IEnumerable<ContainerRegistryTaskOverridableValue> values = null)
-            => throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.Models.ArmContainerRegistryTasksModelFactory.FileTaskStep instead.");
+            => throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead.");
 
         /// <summary> The result of get log link operation. </summary>
         /// <param name="logLink"> The link to logs for a run on a azure container registry. </param>
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ContainerRegistryRunGetLogResult ContainerRegistryRunGetLogResult(
             string logLink = null, string logArtifactLink = null)
-            => throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.Models.ArmContainerRegistryTasksModelFactory.ContainerRegistryTaskRunLogResult instead.");
+            => throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead.");
 
         /// <summary> The properties for updating a source based trigger. </summary>
         /// <param name="sourceRepository"> The properties that describes the source(code) for the task. </param>
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             SourceCodeRepoUpdateContent sourceRepository = null,
             IEnumerable<ContainerRegistrySourceTriggerEvent> sourceTriggerEvents = null,
             ContainerRegistryTriggerStatus? status = null, string name = null)
-            => throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.Models.ArmContainerRegistryTasksModelFactory.ContainerRegistryTaskSourceTriggerUpdateContent instead.");
+            => throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead.");
 
         /// <summary>
         /// Base properties for any task step.
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static ContainerRegistryTaskStepProperties ContainerRegistryTaskStepProperties(
             string contextPath = null, IEnumerable<ContainerRegistryBaseImageDependency> baseImageDependencies = null,
             string contextAccessToken = null, string type = null)
-            => throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.Models.ArmContainerRegistryTasksModelFactory.TaskStepProperties instead.");
+            => throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead.");
 
         /// <summary> The properties for updating a timer trigger. </summary>
         /// <param name="schedule"> The CRON expression for the task schedule. </param>
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ContainerRegistryTimerTriggerUpdateContent ContainerRegistryTimerTriggerUpdateContent(
             string schedule = null, ContainerRegistryTriggerStatus? status = null, string name = null)
-            => throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.Models.ArmContainerRegistryTasksModelFactory.ContainerRegistryTaskTimerTriggerUpdateContent instead.");
+            => throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead.");
 
         /// <summary> The properties of a response to source upload request. </summary>
         /// <param name="uploadUri"> The URL where the client can upload the source. </param>
@@ -289,6 +289,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         [Obsolete("This method has been moved to Azure.ResourceManager.ContainerRegistry.Tasks and will be removed in a future version.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static SourceUploadDefinition SourceUploadDefinition(Uri uploadUri = null, string relativePath = null)
-            => throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.Models.ArmContainerRegistryTasksModelFactory.ContainerRegistryTaskSourceUploadResult instead.");
+            => throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead.");
     }
 }

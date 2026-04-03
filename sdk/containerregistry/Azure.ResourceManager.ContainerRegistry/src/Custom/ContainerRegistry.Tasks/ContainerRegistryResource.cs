@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <returns> An object representing collection of AgentPools and their operations over a AgentPoolResource. </returns>
         [Obsolete("This method has been moved to Azure.ResourceManager.ContainerRegistry.Tasks and will be removed in a future version.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual ContainerRegistryAgentPoolCollection GetContainerRegistryAgentPools() => throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.Resource.GetAgentPools instead.");
+        public virtual ContainerRegistryAgentPoolCollection GetContainerRegistryAgentPools() => throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead.");
         /// <summary>
         /// Gets the detailed information for a given agent pool.
         /// <item>
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         [ForwardsClientCalls]
         [Obsolete("This method has been moved to Azure.ResourceManager.ContainerRegistry.Tasks and will be removed in a future version.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Response<ContainerRegistryAgentPoolResource> GetContainerRegistryAgentPool(string agentPoolName, CancellationToken cancellationToken = default) => throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.Resource.GetAgentPool instead.");
+        public virtual Response<ContainerRegistryAgentPoolResource> GetContainerRegistryAgentPool(string agentPoolName, CancellationToken cancellationToken = default) => throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead.");
         /// <summary>
         /// Gets the detailed information for a given agent pool.
         /// <item>
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         [ForwardsClientCalls]
         [Obsolete("This method has been moved to Azure.ResourceManager.ContainerRegistry.Tasks and will be removed in a future version.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Task<Response<ContainerRegistryAgentPoolResource>> GetContainerRegistryAgentPoolAsync(string agentPoolName, CancellationToken cancellationToken = default) => throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.Resource.GetAgentPoolAsync instead.");
+        public virtual Task<Response<ContainerRegistryAgentPoolResource>> GetContainerRegistryAgentPoolAsync(string agentPoolName, CancellationToken cancellationToken = default) => throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead.");
         /// <summary>
         /// Gets a collection of Runs in the resource group
         /// <item>
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <returns> An object representing collection of Runs and their operations over a RunResource. </returns>
         [Obsolete("This method has been moved to Azure.ResourceManager.ContainerRegistry.Tasks and will be removed in a future version.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual ContainerRegistryRunCollection GetContainerRegistryRuns() => throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.Resource.GetRuns instead.");
+        public virtual ContainerRegistryRunCollection GetContainerRegistryRuns() => throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead.");
         /// <summary>
         /// Gets the detailed information for a given run.
         /// <item>
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         [ForwardsClientCalls]
         [Obsolete("This method has been moved to Azure.ResourceManager.ContainerRegistry.Tasks and will be removed in a future version.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Response<ContainerRegistryRunResource> GetContainerRegistryRun(string runId, CancellationToken cancellationToken = default) => throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.Resource.GetRun instead.");
+        public virtual Response<ContainerRegistryRunResource> GetContainerRegistryRun(string runId, CancellationToken cancellationToken = default) => throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead.");
         /// <summary>
         /// Gets the detailed information for a given run.
         /// <item>
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         [ForwardsClientCalls]
         [Obsolete("This method has been moved to Azure.ResourceManager.ContainerRegistry.Tasks and will be removed in a future version.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Task<Response<ContainerRegistryRunResource>> GetContainerRegistryRunAsync(string runId, CancellationToken cancellationToken = default) => throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.Resource.GetRunAsync instead.");
+        public virtual Task<Response<ContainerRegistryRunResource>> GetContainerRegistryRunAsync(string runId, CancellationToken cancellationToken = default) => throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead.");
         /// <summary>
         /// Gets a collection of Tasks in the resource group
         /// <item>
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <returns> An object representing collection of Tasks and their operations over a TaskResource. </returns>
         [Obsolete("This method has been moved to Azure.ResourceManager.ContainerRegistry.Tasks and will be removed in a future version.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual ContainerRegistryTaskCollection GetContainerRegistryTasks() => throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.Resource.GetTasks instead.");
+        public virtual ContainerRegistryTaskCollection GetContainerRegistryTasks() => throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead.");
         /// <summary>
         /// Get the properties of a specified task.
         /// <item>
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         [ForwardsClientCalls]
         [Obsolete("This method has been moved to Azure.ResourceManager.ContainerRegistry.Tasks and will be removed in a future version.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Response<ContainerRegistryTaskResource> GetContainerRegistryTask(string taskName, CancellationToken cancellationToken = default) => throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.Resource.GetTask instead.");
+        public virtual Response<ContainerRegistryTaskResource> GetContainerRegistryTask(string taskName, CancellationToken cancellationToken = default) => throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead.");
         /// <summary>
         /// Get the properties of a specified task.
         /// <item>
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         [ForwardsClientCalls]
         [Obsolete("This method has been moved to Azure.ResourceManager.ContainerRegistry.Tasks and will be removed in a future version.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Task<Response<ContainerRegistryTaskResource>> GetContainerRegistryTaskAsync(string taskName, CancellationToken cancellationToken = default) => throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.Resource.GetTaskAsync instead.");
+        public virtual Task<Response<ContainerRegistryTaskResource>> GetContainerRegistryTaskAsync(string taskName, CancellationToken cancellationToken = default) => throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead.");
         /// <summary>
         /// Gets a collection of TaskRuns in the resource group
         /// <item>
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <returns> An object representing collection of TaskRuns and their operations over a TaskRunResource. </returns>
         [Obsolete("This method has been moved to Azure.ResourceManager.ContainerRegistry.Tasks and will be removed in a future version.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual ContainerRegistryTaskRunCollection GetContainerRegistryTaskRuns() => throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.Resource.GetTaskRuns instead.");
+        public virtual ContainerRegistryTaskRunCollection GetContainerRegistryTaskRuns() => throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead.");
         /// <summary>
         /// Gets the detailed information for a given task run.
         /// <item>
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         [ForwardsClientCalls]
         [Obsolete("This method has been moved to Azure.ResourceManager.ContainerRegistry.Tasks and will be removed in a future version.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Response<ContainerRegistryTaskRunResource> GetContainerRegistryTaskRun(string taskRunName, CancellationToken cancellationToken = default) => throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.Resource.GetTaskRun instead.");
+        public virtual Response<ContainerRegistryTaskRunResource> GetContainerRegistryTaskRun(string taskRunName, CancellationToken cancellationToken = default) => throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead.");
         /// <summary>
         /// Gets the detailed information for a given task run.
         /// <item>
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         [ForwardsClientCalls]
         [Obsolete("This method has been moved to Azure.ResourceManager.ContainerRegistry.Tasks and will be removed in a future version.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Task<Response<ContainerRegistryTaskRunResource>> GetContainerRegistryTaskRunAsync(string taskRunName, CancellationToken cancellationToken = default) => throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.Resource.GetTaskRunAsync instead.");
+        public virtual Task<Response<ContainerRegistryTaskRunResource>> GetContainerRegistryTaskRunAsync(string taskRunName, CancellationToken cancellationToken = default) => throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead.");
         /// <summary>
         /// Schedules a new run based on the request parameters and add it to the run queue.
         /// <item>
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [Obsolete("This method has been moved to Azure.ResourceManager.ContainerRegistry.Tasks and will be removed in a future version.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual ArmOperation<ContainerRegistryRunResource> ScheduleRun(WaitUntil waitUntil, ContainerRegistryRunContent content, CancellationToken cancellationToken = default) => throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.Resource.ScheduleRun instead.");
+        public virtual ArmOperation<ContainerRegistryRunResource> ScheduleRun(WaitUntil waitUntil, ContainerRegistryRunContent content, CancellationToken cancellationToken = default) => throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead.");
         /// <summary>
         /// Schedules a new run based on the request parameters and add it to the run queue.
         /// <item>
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [Obsolete("This method has been moved to Azure.ResourceManager.ContainerRegistry.Tasks and will be removed in a future version.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Task<ArmOperation<ContainerRegistryRunResource>> ScheduleRunAsync(WaitUntil waitUntil, ContainerRegistryRunContent content, CancellationToken cancellationToken = default) => throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.Resource.ScheduleRunAsync instead.");
+        public virtual Task<ArmOperation<ContainerRegistryRunResource>> ScheduleRunAsync(WaitUntil waitUntil, ContainerRegistryRunContent content, CancellationToken cancellationToken = default) => throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead.");
         /// <summary>
         /// Schedules a new run based on the request parameters and add it to the run queue.
         /// <item>
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [Obsolete("This method has been moved to Azure.ResourceManager.ContainerRegistry.Tasks and will be removed in a future version.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Response<ContainerRegistryRunResource> ScheduleRun(ContainerRegistryRunContent content, CancellationToken cancellationToken = default) => throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.Resource.ScheduleRun instead.");
+        public virtual Response<ContainerRegistryRunResource> ScheduleRun(ContainerRegistryRunContent content, CancellationToken cancellationToken = default) => throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead.");
         /// <summary>
         /// Schedules a new run based on the request parameters and add it to the run queue.
         /// <item>
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [Obsolete("This method has been moved to Azure.ResourceManager.ContainerRegistry.Tasks and will be removed in a future version.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Task<Response<ContainerRegistryRunResource>> ScheduleRunAsync(ContainerRegistryRunContent content, CancellationToken cancellationToken = default) => throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.Resource.ScheduleRunAsync instead.");
+        public virtual Task<Response<ContainerRegistryRunResource>> ScheduleRunAsync(ContainerRegistryRunContent content, CancellationToken cancellationToken = default) => throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead.");
         /// <summary>
         /// Get the upload location for the user to be able to upload the source.
         /// <item>
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [Obsolete("This method has been moved to Azure.ResourceManager.ContainerRegistry.Tasks and will be removed in a future version.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Response<SourceUploadDefinition> GetBuildSourceUploadUrl(CancellationToken cancellationToken = default) => throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.Resource.GetBuildSourceUploadUrl instead.");
+        public virtual Response<SourceUploadDefinition> GetBuildSourceUploadUrl(CancellationToken cancellationToken = default) => throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead.");
         /// <summary>
         /// Get the upload location for the user to be able to upload the source.
         /// <item>
@@ -238,6 +238,6 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [Obsolete("This method has been moved to Azure.ResourceManager.ContainerRegistry.Tasks and will be removed in a future version.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Task<Response<SourceUploadDefinition>> GetBuildSourceUploadUrlAsync(CancellationToken cancellationToken = default) => throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.Resource.GetBuildSourceUploadUrlAsync instead.");
+        public virtual Task<Response<SourceUploadDefinition>> GetBuildSourceUploadUrlAsync(CancellationToken cancellationToken = default) => throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead.");
     }
 }

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="reader"> The JSON reader containing the serialized model. </param>
         /// <param name="options"> The serialization options to use. </param>
         /// <returns> A deserialized <see cref="ContainerRegistryDockerBuildStep"/> instance. </returns>
-        ContainerRegistryDockerBuildStep IJsonModel<ContainerRegistryDockerBuildStep>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw new NotSupportedException("Serialization for ContainerRegistryDockerBuildStep is not supported in this compatibility shim. Use Azure.ResourceManager.ContainerRegistry.Tasks.Models.DockerBuildStep instead.");
+        ContainerRegistryDockerBuildStep IJsonModel<ContainerRegistryDockerBuildStep>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead.");
         /// <summary> Writes the current <see cref="ContainerRegistryDockerBuildStep"/> instance to the provided JSON writer. </summary>
         /// <param name="writer"> The JSON writer to write to. </param>
         /// <param name="options"> The serialization options to use. </param>
@@ -36,16 +36,16 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <summary> Writes the current <see cref="ContainerRegistryDockerBuildStep"/> instance to a binary payload. </summary>
         /// <param name="options"> The serialization options to use. </param>
         /// <returns> A binary representation of this <see cref="ContainerRegistryDockerBuildStep"/> instance. </returns>
-        BinaryData IPersistableModel<ContainerRegistryDockerBuildStep>.Write(ModelReaderWriterOptions options) => throw new NotSupportedException("Serialization for ContainerRegistryDockerBuildStep is not supported in this compatibility shim. Use Azure.ResourceManager.ContainerRegistry.Tasks.Models.DockerBuildStep instead.");
+        BinaryData IPersistableModel<ContainerRegistryDockerBuildStep>.Write(ModelReaderWriterOptions options) => throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead.");
         /// <summary> Creates an instance of <see cref="ContainerRegistryDockerBuildStep"/> from the provided binary payload. </summary>
         /// <param name="data"> The serialized data to read from. </param>
         /// <param name="options"> The serialization options to use. </param>
         /// <returns> A deserialized <see cref="ContainerRegistryDockerBuildStep"/> instance. </returns>
-        ContainerRegistryDockerBuildStep IPersistableModel<ContainerRegistryDockerBuildStep>.Create(BinaryData data, ModelReaderWriterOptions options) => throw new NotSupportedException("Serialization for ContainerRegistryDockerBuildStep is not supported in this compatibility shim. Use Azure.ResourceManager.ContainerRegistry.Tasks.Models.DockerBuildStep instead.");
+        ContainerRegistryDockerBuildStep IPersistableModel<ContainerRegistryDockerBuildStep>.Create(BinaryData data, ModelReaderWriterOptions options) => throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead.");
         /// <summary> Gets the wire format used for this <see cref="ContainerRegistryDockerBuildStep"/> instance with the provided options. </summary>
         /// <param name="options"> The serialization options to use. </param>
         /// <returns> The format string used for persistence. </returns>
-        string IPersistableModel<ContainerRegistryDockerBuildStep>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw new NotSupportedException("Serialization for ContainerRegistryDockerBuildStep is not supported in this compatibility shim. Use Azure.ResourceManager.ContainerRegistry.Tasks.Models.DockerBuildStep instead.");
+        string IPersistableModel<ContainerRegistryDockerBuildStep>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead.");
         /// <summary> Initializes a new instance of this compatibility shim type. </summary>
         public ContainerRegistryDockerBuildStep(string dockerFilePath) { }
         /// <summary> Writes the JSON representation of this instance to the provided writer. </summary>
@@ -54,21 +54,21 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
         /// <summary> Gets or sets the compatibility shim property value. </summary>
         [WirePath("dockerFilePath")]
-        public string DockerFilePath { get { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.Models.DockerBuildStep.DockerFilePath instead."); } set { } }
+        public string DockerFilePath { get { throw new NotSupportedException("Use the corresponding property in Azure.ResourceManager.ContainerRegistry instead."); } set { } }
         /// <summary> Gets or sets the compatibility shim property value. </summary>
         [WirePath("imageNames")]
-        public IList<string> ImageNames { get { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.Models.DockerBuildStep.ImageNames instead."); } }
+        public IList<string> ImageNames { get { throw new NotSupportedException("Use the corresponding property in Azure.ResourceManager.ContainerRegistry instead."); } }
         /// <summary> Gets or sets the compatibility shim property value. </summary>
         [WirePath("isPushEnabled")]
-        public bool? IsPushEnabled { get { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.Models.DockerBuildStep.IsPushEnabled instead."); } set { } }
+        public bool? IsPushEnabled { get { throw new NotSupportedException("Use the corresponding property in Azure.ResourceManager.ContainerRegistry instead."); } set { } }
         /// <summary> Gets or sets the compatibility shim property value. </summary>
         [WirePath("noCache")]
-        public bool? NoCache { get { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.Models.DockerBuildStep.NoCache instead."); } set { } }
+        public bool? NoCache { get { throw new NotSupportedException("Use the corresponding property in Azure.ResourceManager.ContainerRegistry instead."); } set { } }
         /// <summary> Gets or sets the compatibility shim property value. </summary>
         [WirePath("target")]
-        public string Target { get { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.Models.DockerBuildStep.Target instead."); } set { } }
+        public string Target { get { throw new NotSupportedException("Use the corresponding property in Azure.ResourceManager.ContainerRegistry instead."); } set { } }
         /// <summary> Gets or sets the compatibility shim property value. </summary>
         [WirePath("arguments")]
-        public IList<ContainerRegistryRunArgument> Arguments { get { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.Models.DockerBuildStep.Arguments instead."); } }
+        public IList<ContainerRegistryRunArgument> Arguments { get { throw new NotSupportedException("Use the corresponding property in Azure.ResourceManager.ContainerRegistry instead."); } }
     }
 }

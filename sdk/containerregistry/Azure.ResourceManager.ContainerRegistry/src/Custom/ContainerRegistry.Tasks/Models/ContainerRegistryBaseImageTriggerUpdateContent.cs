@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="reader"> The JSON reader containing the serialized model. </param>
         /// <param name="options"> The serialization options to use. </param>
         /// <returns> A deserialized <see cref="ContainerRegistryBaseImageTriggerUpdateContent"/> instance. </returns>
-        ContainerRegistryBaseImageTriggerUpdateContent IJsonModel<ContainerRegistryBaseImageTriggerUpdateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw new NotSupportedException("Serialization for ContainerRegistryBaseImageTriggerUpdateContent is not supported in this compatibility shim. Use Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskBaseImageTriggerUpdateContent instead.");
+        ContainerRegistryBaseImageTriggerUpdateContent IJsonModel<ContainerRegistryBaseImageTriggerUpdateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead.");
         /// <summary> Writes the current <see cref="ContainerRegistryBaseImageTriggerUpdateContent"/> instance to the provided JSON writer. </summary>
         /// <param name="writer"> The JSON writer to write to. </param>
         /// <param name="options"> The serialization options to use. </param>
@@ -30,34 +30,34 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <summary> Writes the current <see cref="ContainerRegistryBaseImageTriggerUpdateContent"/> instance to a binary payload. </summary>
         /// <param name="options"> The serialization options to use. </param>
         /// <returns> A binary representation of this <see cref="ContainerRegistryBaseImageTriggerUpdateContent"/> instance. </returns>
-        BinaryData IPersistableModel<ContainerRegistryBaseImageTriggerUpdateContent>.Write(ModelReaderWriterOptions options) => throw new NotSupportedException("Serialization for ContainerRegistryBaseImageTriggerUpdateContent is not supported in this compatibility shim. Use Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskBaseImageTriggerUpdateContent instead.");
+        BinaryData IPersistableModel<ContainerRegistryBaseImageTriggerUpdateContent>.Write(ModelReaderWriterOptions options) => throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead.");
         /// <summary> Creates an instance of <see cref="ContainerRegistryBaseImageTriggerUpdateContent"/> from the provided binary payload. </summary>
         /// <param name="data"> The serialized data to read from. </param>
         /// <param name="options"> The serialization options to use. </param>
         /// <returns> A deserialized <see cref="ContainerRegistryBaseImageTriggerUpdateContent"/> instance. </returns>
-        ContainerRegistryBaseImageTriggerUpdateContent IPersistableModel<ContainerRegistryBaseImageTriggerUpdateContent>.Create(BinaryData data, ModelReaderWriterOptions options) => throw new NotSupportedException("Serialization for ContainerRegistryBaseImageTriggerUpdateContent is not supported in this compatibility shim. Use Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskBaseImageTriggerUpdateContent instead.");
+        ContainerRegistryBaseImageTriggerUpdateContent IPersistableModel<ContainerRegistryBaseImageTriggerUpdateContent>.Create(BinaryData data, ModelReaderWriterOptions options) => throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead.");
         /// <summary> Gets the wire format used for this <see cref="ContainerRegistryBaseImageTriggerUpdateContent"/> instance with the provided options. </summary>
         /// <param name="options"> The serialization options to use. </param>
         /// <returns> The format string used for persistence. </returns>
-        string IPersistableModel<ContainerRegistryBaseImageTriggerUpdateContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw new NotSupportedException("Serialization for ContainerRegistryBaseImageTriggerUpdateContent is not supported in this compatibility shim. Use Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskBaseImageTriggerUpdateContent instead.");
+        string IPersistableModel<ContainerRegistryBaseImageTriggerUpdateContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead.");
         /// <summary> Initializes a new instance of this compatibility shim type. </summary>
         public ContainerRegistryBaseImageTriggerUpdateContent(string name) { }
         /// <summary> Writes the JSON representation of this instance to the provided writer. </summary>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
         /// <summary> Gets or sets the compatibility shim property value. </summary>
         [WirePath("baseImageTriggerType")]
-        public ContainerRegistryBaseImageTriggerType? BaseImageTriggerType { get { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskBaseImageTriggerUpdateContent.BaseImageTriggerType instead."); } set { } }
+        public ContainerRegistryBaseImageTriggerType? BaseImageTriggerType { get { throw new NotSupportedException("Use the corresponding property in Azure.ResourceManager.ContainerRegistry instead."); } set { } }
         /// <summary> Gets or sets the compatibility shim property value. </summary>
         [WirePath("name")]
-        public string Name { get { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskBaseImageTriggerUpdateContent.Name instead."); } }
+        public string Name { get { throw new NotSupportedException("Use the corresponding property in Azure.ResourceManager.ContainerRegistry instead."); } }
         /// <summary> Gets or sets the compatibility shim property value. </summary>
         [WirePath("status")]
-        public ContainerRegistryTriggerStatus? Status { get { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskBaseImageTriggerUpdateContent.Status instead."); } set { } }
+        public ContainerRegistryTriggerStatus? Status { get { throw new NotSupportedException("Use the corresponding property in Azure.ResourceManager.ContainerRegistry instead."); } set { } }
         /// <summary> Gets or sets the compatibility shim property value. </summary>
         [WirePath("updateTriggerEndpoint")]
-        public string UpdateTriggerEndpoint { get { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskBaseImageTriggerUpdateContent.UpdateTriggerEndpoint instead."); } set { } }
+        public string UpdateTriggerEndpoint { get { throw new NotSupportedException("Use the corresponding property in Azure.ResourceManager.ContainerRegistry instead."); } set { } }
         /// <summary> Gets or sets the compatibility shim property value. </summary>
         [WirePath("updateTriggerPayloadType")]
-        public ContainerRegistryUpdateTriggerPayloadType? UpdateTriggerPayloadType { get { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskBaseImageTriggerUpdateContent.UpdateTriggerPayloadType instead."); } set { } }
+        public ContainerRegistryUpdateTriggerPayloadType? UpdateTriggerPayloadType { get { throw new NotSupportedException("Use the corresponding property in Azure.ResourceManager.ContainerRegistry instead."); } set { } }
     }
 }

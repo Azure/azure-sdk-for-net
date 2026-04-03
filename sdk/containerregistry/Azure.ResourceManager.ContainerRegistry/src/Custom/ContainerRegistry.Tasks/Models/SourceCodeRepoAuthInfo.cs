@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="reader"> The JSON reader containing the serialized model. </param>
         /// <param name="options"> The serialization options to use. </param>
         /// <returns> A deserialized <see cref="SourceCodeRepoAuthInfo"/> instance. </returns>
-        SourceCodeRepoAuthInfo IJsonModel<SourceCodeRepoAuthInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw new NotSupportedException("Serialization for SourceCodeRepoAuthInfo is not supported in this compatibility shim. Use Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskAuthInfo instead.");
+        SourceCodeRepoAuthInfo IJsonModel<SourceCodeRepoAuthInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead.");
         /// <summary> Writes the current <see cref="SourceCodeRepoAuthInfo"/> instance to the provided JSON writer. </summary>
         /// <param name="writer"> The JSON writer to write to. </param>
         /// <param name="options"> The serialization options to use. </param>
@@ -30,34 +30,34 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <summary> Writes the current <see cref="SourceCodeRepoAuthInfo"/> instance to a binary payload. </summary>
         /// <param name="options"> The serialization options to use. </param>
         /// <returns> A binary representation of this <see cref="SourceCodeRepoAuthInfo"/> instance. </returns>
-        BinaryData IPersistableModel<SourceCodeRepoAuthInfo>.Write(ModelReaderWriterOptions options) => throw new NotSupportedException("Serialization for SourceCodeRepoAuthInfo is not supported in this compatibility shim. Use Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskAuthInfo instead.");
+        BinaryData IPersistableModel<SourceCodeRepoAuthInfo>.Write(ModelReaderWriterOptions options) => throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead.");
         /// <summary> Creates an instance of <see cref="SourceCodeRepoAuthInfo"/> from the provided binary payload. </summary>
         /// <param name="data"> The serialized data to read from. </param>
         /// <param name="options"> The serialization options to use. </param>
         /// <returns> A deserialized <see cref="SourceCodeRepoAuthInfo"/> instance. </returns>
-        SourceCodeRepoAuthInfo IPersistableModel<SourceCodeRepoAuthInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => throw new NotSupportedException("Serialization for SourceCodeRepoAuthInfo is not supported in this compatibility shim. Use Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskAuthInfo instead.");
+        SourceCodeRepoAuthInfo IPersistableModel<SourceCodeRepoAuthInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead.");
         /// <summary> Gets the wire format used for this <see cref="SourceCodeRepoAuthInfo"/> instance with the provided options. </summary>
         /// <param name="options"> The serialization options to use. </param>
         /// <returns> The format string used for persistence. </returns>
-        string IPersistableModel<SourceCodeRepoAuthInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw new NotSupportedException("Serialization for SourceCodeRepoAuthInfo is not supported in this compatibility shim. Use Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskAuthInfo instead.");
+        string IPersistableModel<SourceCodeRepoAuthInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead.");
         /// <summary> Initializes a new instance of this compatibility shim type. </summary>
         public SourceCodeRepoAuthInfo(SourceCodeRepoAuthTokenType tokenType, string token) { }
         /// <summary> Writes the JSON representation of this instance to the provided writer. </summary>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
         /// <summary> Gets or sets the compatibility shim property value. </summary>
         [WirePath("tokenType")]
-        public SourceCodeRepoAuthTokenType TokenType { get { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskAuthInfo.TokenType instead."); } set { } }
+        public SourceCodeRepoAuthTokenType TokenType { get { throw new NotSupportedException("Use the corresponding property in Azure.ResourceManager.ContainerRegistry instead."); } set { } }
         /// <summary> Gets or sets the compatibility shim property value. </summary>
         [WirePath("token")]
-        public string Token { get { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskAuthInfo.Token instead."); } set { } }
+        public string Token { get { throw new NotSupportedException("Use the corresponding property in Azure.ResourceManager.ContainerRegistry instead."); } set { } }
         /// <summary> Gets or sets the compatibility shim property value. </summary>
         [WirePath("refreshToken")]
-        public string RefreshToken { get { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskAuthInfo.RefreshToken instead."); } set { } }
+        public string RefreshToken { get { throw new NotSupportedException("Use the corresponding property in Azure.ResourceManager.ContainerRegistry instead."); } set { } }
         /// <summary> Gets or sets the compatibility shim property value. </summary>
         [WirePath("scope")]
-        public string Scope { get { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskAuthInfo.Scope instead."); } set { } }
+        public string Scope { get { throw new NotSupportedException("Use the corresponding property in Azure.ResourceManager.ContainerRegistry instead."); } set { } }
         /// <summary> Gets or sets the compatibility shim property value. </summary>
         [WirePath("expiresIn")]
-        public int? ExpireInSeconds { get { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskAuthInfo.ExpireInSeconds instead."); } set { } }
+        public int? ExpireInSeconds { get { throw new NotSupportedException("Use the corresponding property in Azure.ResourceManager.ContainerRegistry instead."); } set { } }
     }
 }

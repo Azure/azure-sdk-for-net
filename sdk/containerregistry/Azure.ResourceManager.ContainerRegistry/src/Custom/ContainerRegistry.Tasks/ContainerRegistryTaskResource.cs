@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="reader"> The JSON reader containing the serialized model. </param>
         /// <param name="options"> The serialization options to use. </param>
         /// <returns> A deserialized <see cref="ContainerRegistryTaskResource"/> instance. </returns>
-        ContainerRegistryTaskData IJsonModel<ContainerRegistryTaskData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw new NotSupportedException("Serialization for ContainerRegistryTaskResource is not supported in this compatibility shim. Use Azure.ResourceManager.ContainerRegistry.Tasks.TaskResource instead.");
+        ContainerRegistryTaskData IJsonModel<ContainerRegistryTaskData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead.");
         /// <summary> Writes the current <see cref="ContainerRegistryTaskResource"/> instance to the provided JSON writer. </summary>
         /// <param name="writer"> The JSON writer to write to. </param>
         /// <param name="options"> The serialization options to use. </param>
@@ -39,16 +39,16 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <summary> Writes the current <see cref="ContainerRegistryTaskResource"/> instance to a binary payload. </summary>
         /// <param name="options"> The serialization options to use. </param>
         /// <returns> A binary representation of this <see cref="ContainerRegistryTaskResource"/> instance. </returns>
-        BinaryData IPersistableModel<ContainerRegistryTaskData>.Write(ModelReaderWriterOptions options) => throw new NotSupportedException("Serialization for ContainerRegistryTaskResource is not supported in this compatibility shim. Use Azure.ResourceManager.ContainerRegistry.Tasks.TaskResource instead.");
+        BinaryData IPersistableModel<ContainerRegistryTaskData>.Write(ModelReaderWriterOptions options) => throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead.");
         /// <summary> Creates an instance of <see cref="ContainerRegistryTaskResource"/> from the provided binary payload. </summary>
         /// <param name="data"> The serialized data to read from. </param>
         /// <param name="options"> The serialization options to use. </param>
         /// <returns> A deserialized <see cref="ContainerRegistryTaskResource"/> instance. </returns>
-        ContainerRegistryTaskData IPersistableModel<ContainerRegistryTaskData>.Create(BinaryData data, ModelReaderWriterOptions options) => throw new NotSupportedException("Serialization for ContainerRegistryTaskResource is not supported in this compatibility shim. Use Azure.ResourceManager.ContainerRegistry.Tasks.TaskResource instead.");
+        ContainerRegistryTaskData IPersistableModel<ContainerRegistryTaskData>.Create(BinaryData data, ModelReaderWriterOptions options) => throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead.");
         /// <summary> Gets the wire format used for this <see cref="ContainerRegistryTaskResource"/> instance with the provided options. </summary>
         /// <param name="options"> The serialization options to use. </param>
         /// <returns> The format string used for persistence. </returns>
-        string IPersistableModel<ContainerRegistryTaskData>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw new NotSupportedException("Serialization for ContainerRegistryTaskResource is not supported in this compatibility shim. Use Azure.ResourceManager.ContainerRegistry.Tasks.TaskResource instead.");
+        string IPersistableModel<ContainerRegistryTaskData>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead.");
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType;
 
@@ -57,17 +57,17 @@ namespace Azure.ResourceManager.ContainerRegistry
 
         /// <summary> Gets the resource data for this task. </summary>
         [WirePath("")]
-        public virtual ContainerRegistryTaskData Data { get { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.TaskResource.Data instead."); } }
+        public virtual ContainerRegistryTaskData Data { get { throw new NotSupportedException("Use the corresponding property in Azure.ResourceManager.ContainerRegistry instead."); } }
         /// <summary> Gets a value indicating whether this resource has data. </summary>
         [WirePath("")]
-        public virtual bool HasData { get { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.TaskResource.HasData instead."); } }
+        public virtual bool HasData { get { throw new NotSupportedException("Use the corresponding property in Azure.ResourceManager.ContainerRegistry instead."); } }
 
         /// <summary> Generate the resource identifier for this resource. </summary>
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
         /// <param name="registryName"> The registryName. </param>
         /// <param name="taskName"> The taskName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string registryName, string taskName) { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.TaskResource.CreateResourceIdentifier instead."); }
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string registryName, string taskName) { throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead."); }
         /// <summary>
         /// Get the properties of a specified task.
         /// <list type="bullet">
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ContainerRegistryTaskResource> Get(CancellationToken cancellationToken = default) { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.TaskResource.Get instead."); }
+        public virtual Response<ContainerRegistryTaskResource> Get(CancellationToken cancellationToken = default) { throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead."); }
         /// <summary>
         /// Get the properties of a specified task.
         /// <list type="bullet">
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Task<Response<ContainerRegistryTaskResource>> GetAsync(CancellationToken cancellationToken = default) { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.TaskResource.GetAsync instead."); }
+        public virtual Task<Response<ContainerRegistryTaskResource>> GetAsync(CancellationToken cancellationToken = default) { throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead."); }
         /// <summary>
         /// Deletes a specified task.
         /// <list type="bullet">
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default) { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.TaskResource.Delete instead."); }
+        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default) { throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead."); }
         /// <summary>
         /// Deletes a specified task.
         /// <list type="bullet">
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default) { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.TaskResource.DeleteAsync instead."); }
+        public virtual Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default) { throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead."); }
         /// <summary>
         /// Updates a task with the specified parameters.
         /// <list type="bullet">
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="patch"> The parameters for updating a task. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual ArmOperation<ContainerRegistryTaskResource> Update(WaitUntil waitUntil, ContainerRegistryTaskPatch patch, CancellationToken cancellationToken = default) { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.TaskResource.Update instead."); }
+        public virtual ArmOperation<ContainerRegistryTaskResource> Update(WaitUntil waitUntil, ContainerRegistryTaskPatch patch, CancellationToken cancellationToken = default) { throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead."); }
         /// <summary>
         /// Updates a task with the specified parameters.
         /// <list type="bullet">
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="patch"> The parameters for updating a task. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Task<ArmOperation<ContainerRegistryTaskResource>> UpdateAsync(WaitUntil waitUntil, ContainerRegistryTaskPatch patch, CancellationToken cancellationToken = default) { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.TaskResource.UpdateAsync instead."); }
+        public virtual Task<ArmOperation<ContainerRegistryTaskResource>> UpdateAsync(WaitUntil waitUntil, ContainerRegistryTaskPatch patch, CancellationToken cancellationToken = default) { throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead."); }
         /// <summary>
         /// Updates a task with the specified parameters.
         /// <list type="bullet">
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         [Obsolete("This method is obsolete and will be removed in a future version. Use the Update(WaitUntil, ContainerRegistryTaskPatch, CancellationToken) overload instead.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Response<ContainerRegistryTaskResource> Update(ContainerRegistryTaskPatch patch, CancellationToken cancellationToken = default) { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.TaskResource.Update instead."); }
+        public virtual Response<ContainerRegistryTaskResource> Update(ContainerRegistryTaskPatch patch, CancellationToken cancellationToken = default) { throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead."); }
         /// <summary>
         /// Updates a task with the specified parameters.
         /// <list type="bullet">
@@ -235,39 +235,39 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         [Obsolete("This method is obsolete and will be removed in a future version. Use the UpdateAsync(WaitUntil, ContainerRegistryTaskPatch, CancellationToken) overload instead.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Task<Response<ContainerRegistryTaskResource>> UpdateAsync(ContainerRegistryTaskPatch patch, CancellationToken cancellationToken = default) { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.TaskResource.UpdateAsync instead."); }
+        public virtual Task<Response<ContainerRegistryTaskResource>> UpdateAsync(ContainerRegistryTaskPatch patch, CancellationToken cancellationToken = default) { throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead."); }
         /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual Response<ContainerRegistryTaskResource> AddTag(string key, string value, CancellationToken cancellationToken = default) { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.TaskResource.AddTag instead."); }
+        public virtual Response<ContainerRegistryTaskResource> AddTag(string key, string value, CancellationToken cancellationToken = default) { throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead."); }
         /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual Task<Response<ContainerRegistryTaskResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default) { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.TaskResource.AddTagAsync instead."); }
+        public virtual Task<Response<ContainerRegistryTaskResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default) { throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead."); }
         /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual Response<ContainerRegistryTaskResource> RemoveTag(string key, CancellationToken cancellationToken = default) { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.TaskResource.RemoveTag instead."); }
+        public virtual Response<ContainerRegistryTaskResource> RemoveTag(string key, CancellationToken cancellationToken = default) { throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead."); }
         /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual Task<Response<ContainerRegistryTaskResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default) { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.TaskResource.RemoveTagAsync instead."); }
+        public virtual Task<Response<ContainerRegistryTaskResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default) { throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead."); }
         /// <summary> Replace the tags on the resource with the given set. </summary>
         /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual Response<ContainerRegistryTaskResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default) { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.TaskResource.SetTags instead."); }
+        public virtual Response<ContainerRegistryTaskResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default) { throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead."); }
         /// <summary> Replace the tags on the resource with the given set. </summary>
         /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual Task<Response<ContainerRegistryTaskResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default) { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.TaskResource.SetTagsAsync instead."); }
+        public virtual Task<Response<ContainerRegistryTaskResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default) { throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead."); }
         /// <summary>
         /// Returns a task with extended information that includes all secrets.
         /// <list type="bullet">
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ContainerRegistryTaskResource> GetDetails(CancellationToken cancellationToken = default) { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.TaskResource.GetDetails instead."); }
+        public virtual Response<ContainerRegistryTaskResource> GetDetails(CancellationToken cancellationToken = default) { throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead."); }
         /// <summary>
         /// Returns a task with extended information that includes all secrets.
         /// <list type="bullet">
@@ -305,6 +305,6 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Task<Response<ContainerRegistryTaskResource>> GetDetailsAsync(CancellationToken cancellationToken = default) { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.TaskResource.GetDetailsAsync instead."); }
+        public virtual Task<Response<ContainerRegistryTaskResource>> GetDetailsAsync(CancellationToken cancellationToken = default) { throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead."); }
     }
 }

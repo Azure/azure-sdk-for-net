@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="reader"> The JSON reader containing the serialized model. </param>
         /// <param name="options"> The serialization options to use. </param>
         /// <returns> A deserialized <see cref="ContainerRegistryTaskPatch"/> instance. </returns>
-        ContainerRegistryTaskPatch IJsonModel<ContainerRegistryTaskPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw new NotSupportedException("Serialization for ContainerRegistryTaskPatch is not supported in this compatibility shim. Use Azure.ResourceManager.ContainerRegistry.Tasks.Models.TaskPatch instead.");
+        ContainerRegistryTaskPatch IJsonModel<ContainerRegistryTaskPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead.");
         /// <summary> Writes the current <see cref="ContainerRegistryTaskPatch"/> instance to the provided JSON writer. </summary>
         /// <param name="writer"> The JSON writer to write to. </param>
         /// <param name="options"> The serialization options to use. </param>
@@ -30,50 +30,50 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <summary> Writes the current <see cref="ContainerRegistryTaskPatch"/> instance to a binary payload. </summary>
         /// <param name="options"> The serialization options to use. </param>
         /// <returns> A binary representation of this <see cref="ContainerRegistryTaskPatch"/> instance. </returns>
-        BinaryData IPersistableModel<ContainerRegistryTaskPatch>.Write(ModelReaderWriterOptions options) => throw new NotSupportedException("Serialization for ContainerRegistryTaskPatch is not supported in this compatibility shim. Use Azure.ResourceManager.ContainerRegistry.Tasks.Models.TaskPatch instead.");
+        BinaryData IPersistableModel<ContainerRegistryTaskPatch>.Write(ModelReaderWriterOptions options) => throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead.");
         /// <summary> Creates an instance of <see cref="ContainerRegistryTaskPatch"/> from the provided binary payload. </summary>
         /// <param name="data"> The serialized data to read from. </param>
         /// <param name="options"> The serialization options to use. </param>
         /// <returns> A deserialized <see cref="ContainerRegistryTaskPatch"/> instance. </returns>
-        ContainerRegistryTaskPatch IPersistableModel<ContainerRegistryTaskPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => throw new NotSupportedException("Serialization for ContainerRegistryTaskPatch is not supported in this compatibility shim. Use Azure.ResourceManager.ContainerRegistry.Tasks.Models.TaskPatch instead.");
+        ContainerRegistryTaskPatch IPersistableModel<ContainerRegistryTaskPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead.");
         /// <summary> Gets the wire format used for this <see cref="ContainerRegistryTaskPatch"/> instance with the provided options. </summary>
         /// <param name="options"> The serialization options to use. </param>
         /// <returns> The format string used for persistence. </returns>
-        string IPersistableModel<ContainerRegistryTaskPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw new NotSupportedException("Serialization for ContainerRegistryTaskPatch is not supported in this compatibility shim. Use Azure.ResourceManager.ContainerRegistry.Tasks.Models.TaskPatch instead.");
+        string IPersistableModel<ContainerRegistryTaskPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead.");
         /// <summary> Writes the JSON representation of this instance to the provided writer. </summary>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
         /// <summary> Gets or sets the compatibility shim property value. </summary>
         [WirePath("identity")]
-        public ManagedServiceIdentity Identity { get { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.Models.TaskPatch.Identity instead."); } set { } }
+        public ManagedServiceIdentity Identity { get { throw new NotSupportedException("Use the corresponding property in Azure.ResourceManager.ContainerRegistry instead."); } set { } }
         /// <summary> Gets or sets the compatibility shim property value. </summary>
         [WirePath("tags")]
-        public IDictionary<string, string> Tags { get { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.Models.TaskPatch.Tags instead."); } }
+        public IDictionary<string, string> Tags { get { throw new NotSupportedException("Use the corresponding property in Azure.ResourceManager.ContainerRegistry instead."); } }
         /// <summary> Gets or sets the compatibility shim property value. </summary>
         [WirePath("properties.platform")]
-        public ContainerRegistryPlatformUpdateContent Platform { get { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.Models.TaskPatch.Platform instead."); } set { } }
+        public ContainerRegistryPlatformUpdateContent Platform { get { throw new NotSupportedException("Use the corresponding property in Azure.ResourceManager.ContainerRegistry instead."); } set { } }
         /// <summary> Gets or sets the compatibility shim property value. </summary>
         [WirePath("properties.agentConfiguration.cpu")]
-        public int? AgentCpu { get { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.Models.TaskPatch.AgentCpu instead."); } set { } }
+        public int? AgentCpu { get { throw new NotSupportedException("Use the corresponding property in Azure.ResourceManager.ContainerRegistry instead."); } set { } }
         /// <summary> Gets or sets the compatibility shim property value. </summary>
         [WirePath("properties.agentPoolName")]
-        public string AgentPoolName { get { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.Models.TaskPatch.AgentPoolName instead."); } set { } }
+        public string AgentPoolName { get { throw new NotSupportedException("Use the corresponding property in Azure.ResourceManager.ContainerRegistry instead."); } set { } }
         /// <summary> Gets or sets the compatibility shim property value. </summary>
         [WirePath("properties.timeout")]
-        public int? TimeoutInSeconds { get { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.Models.TaskPatch.TimeoutInSeconds instead."); } set { } }
+        public int? TimeoutInSeconds { get { throw new NotSupportedException("Use the corresponding property in Azure.ResourceManager.ContainerRegistry instead."); } set { } }
         /// <summary> Gets or sets the compatibility shim property value. </summary>
         [WirePath("properties.step")]
-        public ContainerRegistryTaskStepUpdateContent Step { get { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.Models.TaskPatch.Step instead."); } set { } }
+        public ContainerRegistryTaskStepUpdateContent Step { get { throw new NotSupportedException("Use the corresponding property in Azure.ResourceManager.ContainerRegistry instead."); } set { } }
         /// <summary> Gets or sets the compatibility shim property value. </summary>
         [WirePath("properties.trigger")]
-        public ContainerRegistryTriggerUpdateContent Trigger { get { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.Models.TaskPatch.Trigger instead."); } set { } }
+        public ContainerRegistryTriggerUpdateContent Trigger { get { throw new NotSupportedException("Use the corresponding property in Azure.ResourceManager.ContainerRegistry instead."); } set { } }
         /// <summary> Gets or sets the compatibility shim property value. </summary>
         [WirePath("properties.credentials")]
-        public ContainerRegistryCredentials Credentials { get { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.Models.TaskPatch.Credentials instead."); } set { } }
+        public ContainerRegistryCredentials Credentials { get { throw new NotSupportedException("Use the corresponding property in Azure.ResourceManager.ContainerRegistry instead."); } set { } }
         /// <summary> Gets or sets the compatibility shim property value. </summary>
         [WirePath("properties.logTemplate")]
-        public string LogTemplate { get { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.Models.TaskPatch.LogTemplate instead."); } set { } }
+        public string LogTemplate { get { throw new NotSupportedException("Use the corresponding property in Azure.ResourceManager.ContainerRegistry instead."); } set { } }
         /// <summary> Gets or sets the compatibility shim property value. </summary>
         [WirePath("properties.status")]
-        public ContainerRegistryTaskStatus? Status { get { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.Models.TaskPatch.Status instead."); } set { } }
+        public ContainerRegistryTaskStatus? Status { get { throw new NotSupportedException("Use the corresponding property in Azure.ResourceManager.ContainerRegistry instead."); } set { } }
     }
 }

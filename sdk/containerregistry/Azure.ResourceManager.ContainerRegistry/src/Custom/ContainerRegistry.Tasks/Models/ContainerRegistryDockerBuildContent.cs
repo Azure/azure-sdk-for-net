@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="reader"> The JSON reader containing the serialized model. </param>
         /// <param name="options"> The serialization options to use. </param>
         /// <returns> A deserialized <see cref="ContainerRegistryDockerBuildContent"/> instance. </returns>
-        ContainerRegistryDockerBuildContent IJsonModel<ContainerRegistryDockerBuildContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw new NotSupportedException("Serialization for ContainerRegistryDockerBuildContent is not supported in this compatibility shim. Use Azure.ResourceManager.ContainerRegistry.Tasks.Models.DockerBuildContent instead.");
+        ContainerRegistryDockerBuildContent IJsonModel<ContainerRegistryDockerBuildContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead.");
         /// <summary> Writes the current <see cref="ContainerRegistryDockerBuildContent"/> instance to the provided JSON writer. </summary>
         /// <param name="writer"> The JSON writer to write to. </param>
         /// <param name="options"> The serialization options to use. </param>
@@ -36,16 +36,16 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <summary> Writes the current <see cref="ContainerRegistryDockerBuildContent"/> instance to a binary payload. </summary>
         /// <param name="options"> The serialization options to use. </param>
         /// <returns> A binary representation of this <see cref="ContainerRegistryDockerBuildContent"/> instance. </returns>
-        BinaryData IPersistableModel<ContainerRegistryDockerBuildContent>.Write(ModelReaderWriterOptions options) => throw new NotSupportedException("Serialization for ContainerRegistryDockerBuildContent is not supported in this compatibility shim. Use Azure.ResourceManager.ContainerRegistry.Tasks.Models.DockerBuildContent instead.");
+        BinaryData IPersistableModel<ContainerRegistryDockerBuildContent>.Write(ModelReaderWriterOptions options) => throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead.");
         /// <summary> Creates an instance of <see cref="ContainerRegistryDockerBuildContent"/> from the provided binary payload. </summary>
         /// <param name="data"> The serialized data to read from. </param>
         /// <param name="options"> The serialization options to use. </param>
         /// <returns> A deserialized <see cref="ContainerRegistryDockerBuildContent"/> instance. </returns>
-        ContainerRegistryDockerBuildContent IPersistableModel<ContainerRegistryDockerBuildContent>.Create(BinaryData data, ModelReaderWriterOptions options) => throw new NotSupportedException("Serialization for ContainerRegistryDockerBuildContent is not supported in this compatibility shim. Use Azure.ResourceManager.ContainerRegistry.Tasks.Models.DockerBuildContent instead.");
+        ContainerRegistryDockerBuildContent IPersistableModel<ContainerRegistryDockerBuildContent>.Create(BinaryData data, ModelReaderWriterOptions options) => throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead.");
         /// <summary> Gets the wire format used for this <see cref="ContainerRegistryDockerBuildContent"/> instance with the provided options. </summary>
         /// <param name="options"> The serialization options to use. </param>
         /// <returns> The format string used for persistence. </returns>
-        string IPersistableModel<ContainerRegistryDockerBuildContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw new NotSupportedException("Serialization for ContainerRegistryDockerBuildContent is not supported in this compatibility shim. Use Azure.ResourceManager.ContainerRegistry.Tasks.Models.DockerBuildContent instead.");
+        string IPersistableModel<ContainerRegistryDockerBuildContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead.");
         /// <summary> Initializes a new instance of this compatibility shim type. </summary>
         public ContainerRegistryDockerBuildContent(string dockerFilePath, ContainerRegistryPlatformProperties platform) { }
         /// <summary> Writes the JSON representation of this instance to the provided writer. </summary>
@@ -54,36 +54,36 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
         /// <summary> Gets or sets the compatibility shim property value. </summary>
         [WirePath("dockerFilePath")]
-        public string DockerFilePath { get { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.Models.DockerBuildContent.DockerFilePath instead."); } set { } }
+        public string DockerFilePath { get { throw new NotSupportedException("Use the corresponding property in Azure.ResourceManager.ContainerRegistry instead."); } set { } }
         /// <summary> Gets or sets the compatibility shim property value. </summary>
         [WirePath("platform")]
-        public ContainerRegistryPlatformProperties Platform { get { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.Models.DockerBuildContent.Platform instead."); } set { } }
+        public ContainerRegistryPlatformProperties Platform { get { throw new NotSupportedException("Use the corresponding property in Azure.ResourceManager.ContainerRegistry instead."); } set { } }
         /// <summary> Gets or sets the compatibility shim property value. </summary>
         [WirePath("imageNames")]
-        public IList<string> ImageNames { get { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.Models.DockerBuildContent.ImageNames instead."); } }
+        public IList<string> ImageNames { get { throw new NotSupportedException("Use the corresponding property in Azure.ResourceManager.ContainerRegistry instead."); } }
         /// <summary> Gets or sets the compatibility shim property value. </summary>
         [WirePath("isPushEnabled")]
-        public bool? IsPushEnabled { get { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.Models.DockerBuildContent.IsPushEnabled instead."); } set { } }
+        public bool? IsPushEnabled { get { throw new NotSupportedException("Use the corresponding property in Azure.ResourceManager.ContainerRegistry instead."); } set { } }
         /// <summary> Gets or sets the compatibility shim property value. </summary>
         [WirePath("noCache")]
-        public bool? NoCache { get { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.Models.DockerBuildContent.NoCache instead."); } set { } }
+        public bool? NoCache { get { throw new NotSupportedException("Use the corresponding property in Azure.ResourceManager.ContainerRegistry instead."); } set { } }
         /// <summary> Gets or sets the compatibility shim property value. </summary>
         [WirePath("agentConfiguration.cpu")]
-        public int? AgentCpu { get { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.Models.DockerBuildContent.AgentCpu instead."); } set { } }
+        public int? AgentCpu { get { throw new NotSupportedException("Use the corresponding property in Azure.ResourceManager.ContainerRegistry instead."); } set { } }
         /// <summary> Gets or sets the compatibility shim property value. </summary>
         [WirePath("timeout")]
-        public int? TimeoutInSeconds { get { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.Models.DockerBuildContent.TimeoutInSeconds instead."); } set { } }
+        public int? TimeoutInSeconds { get { throw new NotSupportedException("Use the corresponding property in Azure.ResourceManager.ContainerRegistry instead."); } set { } }
         /// <summary> Gets or sets the compatibility shim property value. </summary>
         [WirePath("sourceLocation")]
-        public string SourceLocation { get { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.Models.DockerBuildContent.SourceLocation instead."); } set { } }
+        public string SourceLocation { get { throw new NotSupportedException("Use the corresponding property in Azure.ResourceManager.ContainerRegistry instead."); } set { } }
         /// <summary> Gets or sets the compatibility shim property value. </summary>
         [WirePath("target")]
-        public string Target { get { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.Models.DockerBuildContent.Target instead."); } set { } }
+        public string Target { get { throw new NotSupportedException("Use the corresponding property in Azure.ResourceManager.ContainerRegistry instead."); } set { } }
         /// <summary> Gets or sets the compatibility shim property value. </summary>
         [WirePath("credentials")]
-        public ContainerRegistryCredentials Credentials { get { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.Models.DockerBuildContent.Credentials instead."); } set { } }
+        public ContainerRegistryCredentials Credentials { get { throw new NotSupportedException("Use the corresponding property in Azure.ResourceManager.ContainerRegistry instead."); } set { } }
         /// <summary> Gets or sets the compatibility shim property value. </summary>
         [WirePath("arguments")]
-        public IList<ContainerRegistryRunArgument> Arguments { get { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.Models.DockerBuildContent.Arguments instead."); } }
+        public IList<ContainerRegistryRunArgument> Arguments { get { throw new NotSupportedException("Use the corresponding property in Azure.ResourceManager.ContainerRegistry instead."); } }
     }
 }

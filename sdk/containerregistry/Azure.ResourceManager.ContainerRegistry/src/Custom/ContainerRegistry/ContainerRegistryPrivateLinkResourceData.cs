@@ -4,17 +4,12 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 // NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.ContainerRegistry
 {
     public partial class ContainerRegistryPrivateLinkResourceData
     {
-        /// <summary> Initializes a new instance of <see cref="ContainerRegistryPrivateLinkResourceData"/>. </summary>
-        public ContainerRegistryPrivateLinkResourceData()
-        { }
-
         /// <summary> The private link resource private link DNS zone name. </summary>
         [WirePath("properties.requiredZoneNames")]
         public IReadOnlyList<string> RequiredZoneNames

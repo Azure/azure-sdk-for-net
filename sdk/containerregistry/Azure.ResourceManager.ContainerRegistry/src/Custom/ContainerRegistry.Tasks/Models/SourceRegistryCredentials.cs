@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="reader"> The JSON reader containing the serialized model. </param>
         /// <param name="options"> The serialization options to use. </param>
         /// <returns> A deserialized <see cref="SourceRegistryCredentials"/> instance. </returns>
-        SourceRegistryCredentials IJsonModel<SourceRegistryCredentials>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw new NotSupportedException("Serialization for SourceRegistryCredentials is not supported in this compatibility shim. Use Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceRegistryCredentials instead.");
+        SourceRegistryCredentials IJsonModel<SourceRegistryCredentials>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead.");
         /// <summary> Writes the current <see cref="SourceRegistryCredentials"/> instance to the provided JSON writer. </summary>
         /// <param name="writer"> The JSON writer to write to. </param>
         /// <param name="options"> The serialization options to use. </param>
@@ -30,16 +30,16 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <summary> Writes the current <see cref="SourceRegistryCredentials"/> instance to a binary payload. </summary>
         /// <param name="options"> The serialization options to use. </param>
         /// <returns> A binary representation of this <see cref="SourceRegistryCredentials"/> instance. </returns>
-        BinaryData IPersistableModel<SourceRegistryCredentials>.Write(ModelReaderWriterOptions options) => throw new NotSupportedException("Serialization for SourceRegistryCredentials is not supported in this compatibility shim. Use Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceRegistryCredentials instead.");
+        BinaryData IPersistableModel<SourceRegistryCredentials>.Write(ModelReaderWriterOptions options) => throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead.");
         /// <summary> Creates an instance of <see cref="SourceRegistryCredentials"/> from the provided binary payload. </summary>
         /// <param name="data"> The serialized data to read from. </param>
         /// <param name="options"> The serialization options to use. </param>
         /// <returns> A deserialized <see cref="SourceRegistryCredentials"/> instance. </returns>
-        SourceRegistryCredentials IPersistableModel<SourceRegistryCredentials>.Create(BinaryData data, ModelReaderWriterOptions options) => throw new NotSupportedException("Serialization for SourceRegistryCredentials is not supported in this compatibility shim. Use Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceRegistryCredentials instead.");
+        SourceRegistryCredentials IPersistableModel<SourceRegistryCredentials>.Create(BinaryData data, ModelReaderWriterOptions options) => throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead.");
         /// <summary> Gets the wire format used for this <see cref="SourceRegistryCredentials"/> instance with the provided options. </summary>
         /// <param name="options"> The serialization options to use. </param>
         /// <returns> The format string used for persistence. </returns>
-        string IPersistableModel<SourceRegistryCredentials>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw new NotSupportedException("Serialization for SourceRegistryCredentials is not supported in this compatibility shim. Use Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceRegistryCredentials instead.");
+        string IPersistableModel<SourceRegistryCredentials>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead.");
         /// <summary> Writes the JSON representation of this instance to the provided writer. </summary>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
         /// <summary>
@@ -48,11 +48,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// and client ID for user-assigned managed identity.
         /// </summary>
         [WirePath("identity")]
-        public string Identity { get { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceRegistryCredentials.Identity instead."); } set { } }
+        public string Identity { get { throw new NotSupportedException("Use the corresponding property in Azure.ResourceManager.ContainerRegistry instead."); } set { } }
         /// <summary>
         /// The authentication mode which determines the source registry login scope.
         /// </summary>
         [WirePath("loginMode")]
-        public SourceRegistryLoginMode? LoginMode { get { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceRegistryCredentials.LoginMode instead."); } set { } }
+        public SourceRegistryLoginMode? LoginMode { get { throw new NotSupportedException("Use the corresponding property in Azure.ResourceManager.ContainerRegistry instead."); } set { } }
     }
 }

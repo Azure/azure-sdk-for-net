@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="reader"> The JSON reader containing the serialized model. </param>
         /// <param name="options"> The serialization options to use. </param>
         /// <returns> A deserialized <see cref="ContainerRegistryTaskData"/> instance. </returns>
-        ContainerRegistryTaskData IJsonModel<ContainerRegistryTaskData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw new NotSupportedException("Serialization for ContainerRegistryTaskData is not supported in this compatibility shim. Use Azure.ResourceManager.ContainerRegistry.Tasks.TaskData instead.");
+        ContainerRegistryTaskData IJsonModel<ContainerRegistryTaskData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead.");
         /// <summary> Writes the current <see cref="ContainerRegistryTaskData"/> instance to the provided JSON writer. </summary>
         /// <param name="writer"> The JSON writer to write to. </param>
         /// <param name="options"> The serialization options to use. </param>
@@ -38,16 +38,16 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <summary> Writes the current <see cref="ContainerRegistryTaskData"/> instance to a binary payload. </summary>
         /// <param name="options"> The serialization options to use. </param>
         /// <returns> A binary representation of this <see cref="ContainerRegistryTaskData"/> instance. </returns>
-        BinaryData IPersistableModel<ContainerRegistryTaskData>.Write(ModelReaderWriterOptions options) => throw new NotSupportedException("Serialization for ContainerRegistryTaskData is not supported in this compatibility shim. Use Azure.ResourceManager.ContainerRegistry.Tasks.TaskData instead.");
+        BinaryData IPersistableModel<ContainerRegistryTaskData>.Write(ModelReaderWriterOptions options) => throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead.");
         /// <summary> Creates an instance of <see cref="ContainerRegistryTaskData"/> from the provided binary payload. </summary>
         /// <param name="data"> The serialized data to read from. </param>
         /// <param name="options"> The serialization options to use. </param>
         /// <returns> A deserialized <see cref="ContainerRegistryTaskData"/> instance. </returns>
-        ContainerRegistryTaskData IPersistableModel<ContainerRegistryTaskData>.Create(BinaryData data, ModelReaderWriterOptions options) => throw new NotSupportedException("Serialization for ContainerRegistryTaskData is not supported in this compatibility shim. Use Azure.ResourceManager.ContainerRegistry.Tasks.TaskData instead.");
+        ContainerRegistryTaskData IPersistableModel<ContainerRegistryTaskData>.Create(BinaryData data, ModelReaderWriterOptions options) => throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead.");
         /// <summary> Gets the wire format used for this <see cref="ContainerRegistryTaskData"/> instance with the provided options. </summary>
         /// <param name="options"> The serialization options to use. </param>
         /// <returns> The format string used for persistence. </returns>
-        string IPersistableModel<ContainerRegistryTaskData>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw new NotSupportedException("Serialization for ContainerRegistryTaskData is not supported in this compatibility shim. Use Azure.ResourceManager.ContainerRegistry.Tasks.TaskData instead.");
+        string IPersistableModel<ContainerRegistryTaskData>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead.");
         /// <summary> Initializes a new instance of <see cref="ContainerRegistryTaskData"/>. </summary>
         /// <param name="location"> The location of the resource. </param>
         public ContainerRegistryTaskData(AzureLocation location) : base(location) { }
@@ -58,42 +58,42 @@ namespace Azure.ResourceManager.ContainerRegistry
 
         /// <summary> Identity for the resource. </summary>
         [WirePath("identity")]
-        public ManagedServiceIdentity Identity { get { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.TaskData.Identity instead."); } set { } }
+        public ManagedServiceIdentity Identity { get { throw new NotSupportedException("Use the corresponding property in Azure.ResourceManager.ContainerRegistry instead."); } set { } }
         /// <summary> The provisioning state of the task. </summary>
         [WirePath("properties.provisioningState")]
-        public ContainerRegistryProvisioningState? ProvisioningState { get { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.TaskData.ProvisioningState instead."); } }
+        public ContainerRegistryProvisioningState? ProvisioningState { get { throw new NotSupportedException("Use the corresponding property in Azure.ResourceManager.ContainerRegistry instead."); } }
         /// <summary> The time when the task was created. </summary>
         [WirePath("properties.creationDate")]
-        public DateTimeOffset? CreatedOn { get { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.TaskData.CreatedOn instead."); } }
+        public DateTimeOffset? CreatedOn { get { throw new NotSupportedException("Use the corresponding property in Azure.ResourceManager.ContainerRegistry instead."); } }
         /// <summary> The current status of the task. </summary>
         [WirePath("properties.status")]
-        public ContainerRegistryTaskStatus? Status { get { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.TaskData.Status instead."); } set { } }
+        public ContainerRegistryTaskStatus? Status { get { throw new NotSupportedException("Use the corresponding property in Azure.ResourceManager.ContainerRegistry instead."); } set { } }
         /// <summary> The platform configuration for the task. </summary>
         [WirePath("properties.platform")]
-        public ContainerRegistryPlatformProperties Platform { get { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.TaskData.Platform instead."); } set { } }
+        public ContainerRegistryPlatformProperties Platform { get { throw new NotSupportedException("Use the corresponding property in Azure.ResourceManager.ContainerRegistry instead."); } set { } }
         /// <summary> The CPU count configured for the task agent. </summary>
         [WirePath("properties.agentConfiguration.cpu")]
-        public int? AgentCpu { get { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.TaskData.AgentCpu instead."); } set { } }
+        public int? AgentCpu { get { throw new NotSupportedException("Use the corresponding property in Azure.ResourceManager.ContainerRegistry instead."); } set { } }
         /// <summary> The name of the agent pool used by the task. </summary>
         [WirePath("properties.agentPoolName")]
-        public string AgentPoolName { get { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.TaskData.AgentPoolName instead."); } set { } }
+        public string AgentPoolName { get { throw new NotSupportedException("Use the corresponding property in Azure.ResourceManager.ContainerRegistry instead."); } set { } }
         /// <summary> The task timeout in seconds. </summary>
         [WirePath("properties.timeout")]
-        public int? TimeoutInSeconds { get { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.TaskData.TimeoutInSeconds instead."); } set { } }
+        public int? TimeoutInSeconds { get { throw new NotSupportedException("Use the corresponding property in Azure.ResourceManager.ContainerRegistry instead."); } set { } }
         /// <summary> The step definition for the task. </summary>
         [WirePath("properties.step")]
-        public ContainerRegistryTaskStepProperties Step { get { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.TaskData.Step instead."); } set { } }
+        public ContainerRegistryTaskStepProperties Step { get { throw new NotSupportedException("Use the corresponding property in Azure.ResourceManager.ContainerRegistry instead."); } set { } }
         /// <summary> The trigger configuration for the task. </summary>
         [WirePath("properties.trigger")]
-        public ContainerRegistryTriggerProperties Trigger { get { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.TaskData.Trigger instead."); } set { } }
+        public ContainerRegistryTriggerProperties Trigger { get { throw new NotSupportedException("Use the corresponding property in Azure.ResourceManager.ContainerRegistry instead."); } set { } }
         /// <summary> The credentials used by the task. </summary>
         [WirePath("properties.credentials")]
-        public ContainerRegistryCredentials Credentials { get { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.TaskData.Credentials instead."); } set { } }
+        public ContainerRegistryCredentials Credentials { get { throw new NotSupportedException("Use the corresponding property in Azure.ResourceManager.ContainerRegistry instead."); } set { } }
         /// <summary> The log template used by the task. </summary>
         [WirePath("properties.logTemplate")]
-        public string LogTemplate { get { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.TaskData.LogTemplate instead."); } set { } }
+        public string LogTemplate { get { throw new NotSupportedException("Use the corresponding property in Azure.ResourceManager.ContainerRegistry instead."); } set { } }
         /// <summary> Indicates whether the task is a system task. </summary>
         [WirePath("properties.isSystemTask")]
-        public bool? IsSystemTask { get { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.TaskData.IsSystemTask instead."); } set { } }
+        public bool? IsSystemTask { get { throw new NotSupportedException("Use the corresponding property in Azure.ResourceManager.ContainerRegistry instead."); } set { } }
     }
 }

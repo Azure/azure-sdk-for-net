@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="reader"> The JSON reader containing the serialized model. </param>
         /// <param name="options"> The serialization options to use. </param>
         /// <returns> A deserialized <see cref="ContainerRegistryTaskRunData"/> instance. </returns>
-        ContainerRegistryTaskRunData IJsonModel<ContainerRegistryTaskRunData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw new NotSupportedException("Serialization for ContainerRegistryTaskRunData is not supported in this compatibility shim. Use Azure.ResourceManager.ContainerRegistry.Tasks.TaskRunData instead.");
+        ContainerRegistryTaskRunData IJsonModel<ContainerRegistryTaskRunData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead.");
         /// <summary> Writes the current <see cref="ContainerRegistryTaskRunData"/> instance to the provided JSON writer. </summary>
         /// <param name="writer"> The JSON writer to write to. </param>
         /// <param name="options"> The serialization options to use. </param>
@@ -38,16 +38,16 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <summary> Writes the current <see cref="ContainerRegistryTaskRunData"/> instance to a binary payload. </summary>
         /// <param name="options"> The serialization options to use. </param>
         /// <returns> A binary representation of this <see cref="ContainerRegistryTaskRunData"/> instance. </returns>
-        BinaryData IPersistableModel<ContainerRegistryTaskRunData>.Write(ModelReaderWriterOptions options) => throw new NotSupportedException("Serialization for ContainerRegistryTaskRunData is not supported in this compatibility shim. Use Azure.ResourceManager.ContainerRegistry.Tasks.TaskRunData instead.");
+        BinaryData IPersistableModel<ContainerRegistryTaskRunData>.Write(ModelReaderWriterOptions options) => throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead.");
         /// <summary> Creates an instance of <see cref="ContainerRegistryTaskRunData"/> from the provided binary payload. </summary>
         /// <param name="data"> The serialized data to read from. </param>
         /// <param name="options"> The serialization options to use. </param>
         /// <returns> A deserialized <see cref="ContainerRegistryTaskRunData"/> instance. </returns>
-        ContainerRegistryTaskRunData IPersistableModel<ContainerRegistryTaskRunData>.Create(BinaryData data, ModelReaderWriterOptions options) => throw new NotSupportedException("Serialization for ContainerRegistryTaskRunData is not supported in this compatibility shim. Use Azure.ResourceManager.ContainerRegistry.Tasks.TaskRunData instead.");
+        ContainerRegistryTaskRunData IPersistableModel<ContainerRegistryTaskRunData>.Create(BinaryData data, ModelReaderWriterOptions options) => throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead.");
         /// <summary> Gets the wire format used for this <see cref="ContainerRegistryTaskRunData"/> instance with the provided options. </summary>
         /// <param name="options"> The serialization options to use. </param>
         /// <returns> The format string used for persistence. </returns>
-        string IPersistableModel<ContainerRegistryTaskRunData>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw new NotSupportedException("Serialization for ContainerRegistryTaskRunData is not supported in this compatibility shim. Use Azure.ResourceManager.ContainerRegistry.Tasks.TaskRunData instead.");
+        string IPersistableModel<ContainerRegistryTaskRunData>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead.");
         /// <summary> Initializes a new instance of <see cref="ContainerRegistryTaskRunData"/>. </summary>
         public ContainerRegistryTaskRunData() { }
         /// <summary> Writes the JSON representation of this instance to the provided writer. </summary>
@@ -57,21 +57,21 @@ namespace Azure.ResourceManager.ContainerRegistry
 
         /// <summary> Identity for the resource. </summary>
         [WirePath("identity")]
-        public ManagedServiceIdentity Identity { get { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.TaskRunData.Identity instead."); } set { } }
+        public ManagedServiceIdentity Identity { get { throw new NotSupportedException("Use the corresponding property in Azure.ResourceManager.ContainerRegistry instead."); } set { } }
         /// <summary> The location of the resource. </summary>
         [WirePath("location")]
-        public AzureLocation? Location { get { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.TaskRunData.Location instead."); } set { } }
+        public AzureLocation? Location { get { throw new NotSupportedException("Use the corresponding property in Azure.ResourceManager.ContainerRegistry instead."); } set { } }
         /// <summary> The provisioning state of this task run. </summary>
         [WirePath("properties.provisioningState")]
-        public ContainerRegistryProvisioningState? ProvisioningState { get { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.TaskRunData.ProvisioningState instead."); } }
+        public ContainerRegistryProvisioningState? ProvisioningState { get { throw new NotSupportedException("Use the corresponding property in Azure.ResourceManager.ContainerRegistry instead."); } }
         /// <summary> The request parameters for the run. </summary>
         [WirePath("properties.runRequest")]
-        public ContainerRegistryRunContent RunRequest { get { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.TaskRunData.RunRequest instead."); } set { } }
+        public ContainerRegistryRunContent RunRequest { get { throw new NotSupportedException("Use the corresponding property in Azure.ResourceManager.ContainerRegistry instead."); } set { } }
         /// <summary> The result of this task run. </summary>
         [WirePath("properties.runResult")]
-        public ContainerRegistryRunData RunResult { get { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.TaskRunData.RunResult instead."); } }
+        public ContainerRegistryRunData RunResult { get { throw new NotSupportedException("Use the corresponding property in Azure.ResourceManager.ContainerRegistry instead."); } }
         /// <summary> Forces the run to rerun even if the request has not changed. </summary>
         [WirePath("properties.forceUpdateTag")]
-        public string ForceUpdateTag { get { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.TaskRunData.ForceUpdateTag instead."); } set { } }
+        public string ForceUpdateTag { get { throw new NotSupportedException("Use the corresponding property in Azure.ResourceManager.ContainerRegistry instead."); } set { } }
     }
 }

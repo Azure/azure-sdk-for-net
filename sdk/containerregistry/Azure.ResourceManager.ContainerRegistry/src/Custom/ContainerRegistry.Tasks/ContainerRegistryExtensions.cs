@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <returns> Returns a <see cref="ContainerRegistryAgentPoolResource"/> object. </returns>
         [Obsolete("This method has been moved to Azure.ResourceManager.ContainerRegistry.Tasks and will be removed in a future version.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ContainerRegistryAgentPoolResource GetContainerRegistryAgentPoolResource(this ArmClient client, ResourceIdentifier id) => throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.ContainerRegistryTasksExtensions.GetAgentPoolResource instead.");
+        public static ContainerRegistryAgentPoolResource GetContainerRegistryAgentPoolResource(this ArmClient client, ResourceIdentifier id) => throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead.");
         /// <summary>
         /// Gets an object representing a <see cref="ContainerRegistryRunResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <returns> Returns a <see cref="ContainerRegistryRunResource"/> object. </returns>
         [Obsolete("This method has been moved to Azure.ResourceManager.ContainerRegistry.Tasks and will be removed in a future version.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ContainerRegistryRunResource GetContainerRegistryRunResource(this ArmClient client, ResourceIdentifier id) => throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.ContainerRegistryTasksExtensions.GetRunResource instead.");
+        public static ContainerRegistryRunResource GetContainerRegistryRunResource(this ArmClient client, ResourceIdentifier id) => throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead.");
         /// <summary>
         /// Gets an object representing a <see cref="ContainerRegistryTaskResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <returns> Returns a <see cref="ContainerRegistryTaskResource"/> object. </returns>
         [Obsolete("This method has been moved to Azure.ResourceManager.ContainerRegistry.Tasks and will be removed in a future version.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ContainerRegistryTaskResource GetContainerRegistryTaskResource(this ArmClient client, ResourceIdentifier id) => throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.ContainerRegistryTasksExtensions.GetTaskResource instead.");
+        public static ContainerRegistryTaskResource GetContainerRegistryTaskResource(this ArmClient client, ResourceIdentifier id) => throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead.");
         /// <summary>
         /// Gets an object representing a <see cref="ContainerRegistryTaskRunResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
@@ -71,6 +71,6 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <returns> Returns a <see cref="ContainerRegistryTaskRunResource"/> object. </returns>
         [Obsolete("This method has been moved to Azure.ResourceManager.ContainerRegistry.Tasks and will be removed in a future version.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ContainerRegistryTaskRunResource GetContainerRegistryTaskRunResource(this ArmClient client, ResourceIdentifier id) => throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.ContainerRegistryTasksExtensions.GetTaskRunResource instead.");
+        public static ContainerRegistryTaskRunResource GetContainerRegistryTaskRunResource(this ArmClient client, ResourceIdentifier id) => throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead.");
     }
 }

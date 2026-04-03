@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="reader"> The JSON reader containing the serialized model. </param>
         /// <param name="options"> The serialization options to use. </param>
         /// <returns> A deserialized <see cref="ContainerRegistryRunResource"/> instance. </returns>
-        ContainerRegistryRunData IJsonModel<ContainerRegistryRunData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw new NotSupportedException("Serialization for ContainerRegistryRunResource is not supported in this compatibility shim. Use Azure.ResourceManager.ContainerRegistry.Tasks.RunResource instead.");
+        ContainerRegistryRunData IJsonModel<ContainerRegistryRunData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead.");
         /// <summary> Writes the current <see cref="ContainerRegistryRunResource"/> instance to the provided JSON writer. </summary>
         /// <param name="writer"> The JSON writer to write to. </param>
         /// <param name="options"> The serialization options to use. </param>
@@ -39,16 +39,16 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <summary> Writes the current <see cref="ContainerRegistryRunResource"/> instance to a binary payload. </summary>
         /// <param name="options"> The serialization options to use. </param>
         /// <returns> A binary representation of this <see cref="ContainerRegistryRunResource"/> instance. </returns>
-        BinaryData IPersistableModel<ContainerRegistryRunData>.Write(ModelReaderWriterOptions options) => throw new NotSupportedException("Serialization for ContainerRegistryRunResource is not supported in this compatibility shim. Use Azure.ResourceManager.ContainerRegistry.Tasks.RunResource instead.");
+        BinaryData IPersistableModel<ContainerRegistryRunData>.Write(ModelReaderWriterOptions options) => throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead.");
         /// <summary> Creates an instance of <see cref="ContainerRegistryRunResource"/> from the provided binary payload. </summary>
         /// <param name="data"> The serialized data to read from. </param>
         /// <param name="options"> The serialization options to use. </param>
         /// <returns> A deserialized <see cref="ContainerRegistryRunResource"/> instance. </returns>
-        ContainerRegistryRunData IPersistableModel<ContainerRegistryRunData>.Create(BinaryData data, ModelReaderWriterOptions options) => throw new NotSupportedException("Serialization for ContainerRegistryRunResource is not supported in this compatibility shim. Use Azure.ResourceManager.ContainerRegistry.Tasks.RunResource instead.");
+        ContainerRegistryRunData IPersistableModel<ContainerRegistryRunData>.Create(BinaryData data, ModelReaderWriterOptions options) => throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead.");
         /// <summary> Gets the wire format used for this <see cref="ContainerRegistryRunResource"/> instance with the provided options. </summary>
         /// <param name="options"> The serialization options to use. </param>
         /// <returns> The format string used for persistence. </returns>
-        string IPersistableModel<ContainerRegistryRunData>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw new NotSupportedException("Serialization for ContainerRegistryRunResource is not supported in this compatibility shim. Use Azure.ResourceManager.ContainerRegistry.Tasks.RunResource instead.");
+        string IPersistableModel<ContainerRegistryRunData>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead.");
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType;
 
@@ -57,17 +57,17 @@ namespace Azure.ResourceManager.ContainerRegistry
 
         /// <summary> Gets the resource data for this run. </summary>
         [WirePath("")]
-        public virtual ContainerRegistryRunData Data { get { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.RunResource.Data instead."); } }
+        public virtual ContainerRegistryRunData Data { get { throw new NotSupportedException("Use the corresponding property in Azure.ResourceManager.ContainerRegistry instead."); } }
         /// <summary> Gets a value indicating whether this resource has data. </summary>
         [WirePath("")]
-        public virtual bool HasData { get { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.RunResource.HasData instead."); } }
+        public virtual bool HasData { get { throw new NotSupportedException("Use the corresponding property in Azure.ResourceManager.ContainerRegistry instead."); } }
 
         /// <summary> Generate the resource identifier for this resource. </summary>
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
         /// <param name="registryName"> The registryName. </param>
         /// <param name="runId"> The runId. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string registryName, string runId) { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.RunResource.CreateResourceIdentifier instead."); }
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string registryName, string runId) { throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead."); }
         /// <summary>
         /// Gets the detailed information for a given run.
         /// <list type="bullet">
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ContainerRegistryRunResource> Get(CancellationToken cancellationToken = default) { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.RunResource.Get instead."); }
+        public virtual Response<ContainerRegistryRunResource> Get(CancellationToken cancellationToken = default) { throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead."); }
         /// <summary>
         /// Gets the detailed information for a given run.
         /// <list type="bullet">
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Task<Response<ContainerRegistryRunResource>> GetAsync(CancellationToken cancellationToken = default) { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.RunResource.GetAsync instead."); }
+        public virtual Task<Response<ContainerRegistryRunResource>> GetAsync(CancellationToken cancellationToken = default) { throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead."); }
         /// <summary>
         /// Cancel an existing run.
         /// <list type="bullet">
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Cancel(WaitUntil waitUntil, CancellationToken cancellationToken = default) { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.RunResource.Cancel instead."); }
+        public virtual ArmOperation Cancel(WaitUntil waitUntil, CancellationToken cancellationToken = default) { throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead."); }
         /// <summary>
         /// Cancel an existing run.
         /// <list type="bullet">
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Task<ArmOperation> CancelAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default) { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.RunResource.CancelAsync instead."); }
+        public virtual Task<ArmOperation> CancelAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default) { throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead."); }
         /// <summary>
         /// Cancel an existing run.
         /// <list type="bullet">
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [Obsolete("This method is obsolete and will be removed in a future version. Use the Cancel(WaitUntil, CancellationToken) overload instead.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Response Cancel(CancellationToken cancellationToken = default) { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.RunResource.Cancel instead."); }
+        public virtual Response Cancel(CancellationToken cancellationToken = default) { throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead."); }
         /// <summary>
         /// Cancel an existing run.
         /// <list type="bullet">
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [Obsolete("This method is obsolete and will be removed in a future version. Use the CancelAsync(WaitUntil, CancellationToken) overload instead.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Task<Response> CancelAsync(CancellationToken cancellationToken = default) { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.RunResource.CancelAsync instead."); }
+        public virtual Task<Response> CancelAsync(CancellationToken cancellationToken = default) { throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead."); }
         /// <summary>
         /// Patch the run properties.
         /// <list type="bullet">
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="patch"> The run update properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual ArmOperation<ContainerRegistryRunResource> Update(WaitUntil waitUntil, ContainerRegistryRunPatch patch, CancellationToken cancellationToken = default) { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.RunResource.Update instead."); }
+        public virtual ArmOperation<ContainerRegistryRunResource> Update(WaitUntil waitUntil, ContainerRegistryRunPatch patch, CancellationToken cancellationToken = default) { throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead."); }
         /// <summary>
         /// Patch the run properties.
         /// <list type="bullet">
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="patch"> The run update properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Task<ArmOperation<ContainerRegistryRunResource>> UpdateAsync(WaitUntil waitUntil, ContainerRegistryRunPatch patch, CancellationToken cancellationToken = default) { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.RunResource.UpdateAsync instead."); }
+        public virtual Task<ArmOperation<ContainerRegistryRunResource>> UpdateAsync(WaitUntil waitUntil, ContainerRegistryRunPatch patch, CancellationToken cancellationToken = default) { throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead."); }
         /// <summary>
         /// Patch the run properties.
         /// <list type="bullet">
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         [Obsolete("This method is obsolete and will be removed in a future version. Use the Update(WaitUntil, ContainerRegistryRunPatch, CancellationToken) overload instead.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Response<ContainerRegistryRunResource> Update(ContainerRegistryRunPatch patch, CancellationToken cancellationToken = default) { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.RunResource.Update instead."); }
+        public virtual Response<ContainerRegistryRunResource> Update(ContainerRegistryRunPatch patch, CancellationToken cancellationToken = default) { throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead."); }
         /// <summary>
         /// Patch the run properties.
         /// <list type="bullet">
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         [Obsolete("This method is obsolete and will be removed in a future version. Use the UpdateAsync(WaitUntil, ContainerRegistryRunPatch, CancellationToken) overload instead.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Task<Response<ContainerRegistryRunResource>> UpdateAsync(ContainerRegistryRunPatch patch, CancellationToken cancellationToken = default) { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.RunResource.UpdateAsync instead."); }
+        public virtual Task<Response<ContainerRegistryRunResource>> UpdateAsync(ContainerRegistryRunPatch patch, CancellationToken cancellationToken = default) { throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead."); }
         /// <summary>
         /// Gets a link to download the run logs.
         /// <list type="bullet">
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ContainerRegistryRunGetLogResult> GetLogSasUrl(CancellationToken cancellationToken = default) { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.RunResource.GetLogSasUrl instead."); }
+        public virtual Response<ContainerRegistryRunGetLogResult> GetLogSasUrl(CancellationToken cancellationToken = default) { throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead."); }
         /// <summary>
         /// Gets a link to download the run logs.
         /// <list type="bullet">
@@ -315,6 +315,6 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Task<Response<ContainerRegistryRunGetLogResult>> GetLogSasUrlAsync(CancellationToken cancellationToken = default) { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.RunResource.GetLogSasUrlAsync instead."); }
+        public virtual Task<Response<ContainerRegistryRunGetLogResult>> GetLogSasUrlAsync(CancellationToken cancellationToken = default) { throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead."); }
     }
 }

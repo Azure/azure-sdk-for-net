@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="reader"> The JSON reader containing the serialized model. </param>
         /// <param name="options"> The serialization options to use. </param>
         /// <returns> A deserialized <see cref="ContainerRegistryAgentPoolData"/> instance. </returns>
-        ContainerRegistryAgentPoolData IJsonModel<ContainerRegistryAgentPoolData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw new NotSupportedException("Serialization for ContainerRegistryAgentPoolData is not supported in this compatibility shim. Use Azure.ResourceManager.ContainerRegistry.Tasks.AgentPoolData instead.");
+        ContainerRegistryAgentPoolData IJsonModel<ContainerRegistryAgentPoolData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead.");
         /// <summary> Writes the current <see cref="ContainerRegistryAgentPoolData"/> instance to the provided JSON writer. </summary>
         /// <param name="writer"> The JSON writer to write to. </param>
         /// <param name="options"> The serialization options to use. </param>
@@ -38,16 +38,16 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <summary> Writes the current <see cref="ContainerRegistryAgentPoolData"/> instance to a binary payload. </summary>
         /// <param name="options"> The serialization options to use. </param>
         /// <returns> A binary representation of this <see cref="ContainerRegistryAgentPoolData"/> instance. </returns>
-        BinaryData IPersistableModel<ContainerRegistryAgentPoolData>.Write(ModelReaderWriterOptions options) => throw new NotSupportedException("Serialization for ContainerRegistryAgentPoolData is not supported in this compatibility shim. Use Azure.ResourceManager.ContainerRegistry.Tasks.AgentPoolData instead.");
+        BinaryData IPersistableModel<ContainerRegistryAgentPoolData>.Write(ModelReaderWriterOptions options) => throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead.");
         /// <summary> Creates an instance of <see cref="ContainerRegistryAgentPoolData"/> from the provided binary payload. </summary>
         /// <param name="data"> The serialized data to read from. </param>
         /// <param name="options"> The serialization options to use. </param>
         /// <returns> A deserialized <see cref="ContainerRegistryAgentPoolData"/> instance. </returns>
-        ContainerRegistryAgentPoolData IPersistableModel<ContainerRegistryAgentPoolData>.Create(BinaryData data, ModelReaderWriterOptions options) => throw new NotSupportedException("Serialization for ContainerRegistryAgentPoolData is not supported in this compatibility shim. Use Azure.ResourceManager.ContainerRegistry.Tasks.AgentPoolData instead.");
+        ContainerRegistryAgentPoolData IPersistableModel<ContainerRegistryAgentPoolData>.Create(BinaryData data, ModelReaderWriterOptions options) => throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead.");
         /// <summary> Gets the wire format used for this <see cref="ContainerRegistryAgentPoolData"/> instance with the provided options. </summary>
         /// <param name="options"> The serialization options to use. </param>
         /// <returns> The format string used for persistence. </returns>
-        string IPersistableModel<ContainerRegistryAgentPoolData>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw new NotSupportedException("Serialization for ContainerRegistryAgentPoolData is not supported in this compatibility shim. Use Azure.ResourceManager.ContainerRegistry.Tasks.AgentPoolData instead.");
+        string IPersistableModel<ContainerRegistryAgentPoolData>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead.");
         /// <summary> Initializes a new instance of <see cref="ContainerRegistryAgentPoolData"/>. </summary>
         /// <param name="location"> The location of the resource. </param>
         public ContainerRegistryAgentPoolData(AzureLocation location) : base(location) { }
@@ -58,18 +58,18 @@ namespace Azure.ResourceManager.ContainerRegistry
 
         /// <summary> The number of agent machines in the agent pool. </summary>
         [WirePath("properties.count")]
-        public int? Count { get { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.AgentPoolData.Count instead."); } set { } }
+        public int? Count { get { throw new NotSupportedException("Use the corresponding property in Azure.ResourceManager.ContainerRegistry instead."); } set { } }
         /// <summary> The SKU tier of the agent pool. </summary>
         [WirePath("properties.tier")]
-        public string Tier { get { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.AgentPoolData.Tier instead."); } set { } }
+        public string Tier { get { throw new NotSupportedException("Use the corresponding property in Azure.ResourceManager.ContainerRegistry instead."); } set { } }
         /// <summary> The operating system of the agent pool. </summary>
         [WirePath("properties.os")]
-        public ContainerRegistryOS? OS { get { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.AgentPoolData.OS instead."); } set { } }
+        public ContainerRegistryOS? OS { get { throw new NotSupportedException("Use the corresponding property in Azure.ResourceManager.ContainerRegistry instead."); } set { } }
         /// <summary> The virtual network subnet resource ID used by the agent pool. </summary>
         [WirePath("properties.virtualNetworkSubnetResourceId")]
-        public ResourceIdentifier VirtualNetworkSubnetResourceId { get { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.AgentPoolData.VirtualNetworkSubnetResourceId instead."); } set { } }
+        public ResourceIdentifier VirtualNetworkSubnetResourceId { get { throw new NotSupportedException("Use the corresponding property in Azure.ResourceManager.ContainerRegistry instead."); } set { } }
         /// <summary> The provisioning state of the agent pool. </summary>
         [WirePath("properties.provisioningState")]
-        public ContainerRegistryProvisioningState? ProvisioningState { get { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.AgentPoolData.ProvisioningState instead."); } }
+        public ContainerRegistryProvisioningState? ProvisioningState { get { throw new NotSupportedException("Use the corresponding property in Azure.ResourceManager.ContainerRegistry instead."); } }
     }
 }

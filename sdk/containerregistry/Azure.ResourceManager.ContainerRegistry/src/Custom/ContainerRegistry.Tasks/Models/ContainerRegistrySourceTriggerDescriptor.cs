@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="reader"> The JSON reader containing the serialized model. </param>
         /// <param name="options"> The serialization options to use. </param>
         /// <returns> A deserialized <see cref="ContainerRegistrySourceTriggerDescriptor"/> instance. </returns>
-        ContainerRegistrySourceTriggerDescriptor IJsonModel<ContainerRegistrySourceTriggerDescriptor>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw new NotSupportedException("Serialization for ContainerRegistrySourceTriggerDescriptor is not supported in this compatibility shim. Use Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceTriggerDescriptor instead.");
+        ContainerRegistrySourceTriggerDescriptor IJsonModel<ContainerRegistrySourceTriggerDescriptor>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead.");
         /// <summary> Writes the current <see cref="ContainerRegistrySourceTriggerDescriptor"/> instance to the provided JSON writer. </summary>
         /// <param name="writer"> The JSON writer to write to. </param>
         /// <param name="options"> The serialization options to use. </param>
@@ -30,38 +30,38 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <summary> Writes the current <see cref="ContainerRegistrySourceTriggerDescriptor"/> instance to a binary payload. </summary>
         /// <param name="options"> The serialization options to use. </param>
         /// <returns> A binary representation of this <see cref="ContainerRegistrySourceTriggerDescriptor"/> instance. </returns>
-        BinaryData IPersistableModel<ContainerRegistrySourceTriggerDescriptor>.Write(ModelReaderWriterOptions options) => throw new NotSupportedException("Serialization for ContainerRegistrySourceTriggerDescriptor is not supported in this compatibility shim. Use Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceTriggerDescriptor instead.");
+        BinaryData IPersistableModel<ContainerRegistrySourceTriggerDescriptor>.Write(ModelReaderWriterOptions options) => throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead.");
         /// <summary> Creates an instance of <see cref="ContainerRegistrySourceTriggerDescriptor"/> from the provided binary payload. </summary>
         /// <param name="data"> The serialized data to read from. </param>
         /// <param name="options"> The serialization options to use. </param>
         /// <returns> A deserialized <see cref="ContainerRegistrySourceTriggerDescriptor"/> instance. </returns>
-        ContainerRegistrySourceTriggerDescriptor IPersistableModel<ContainerRegistrySourceTriggerDescriptor>.Create(BinaryData data, ModelReaderWriterOptions options) => throw new NotSupportedException("Serialization for ContainerRegistrySourceTriggerDescriptor is not supported in this compatibility shim. Use Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceTriggerDescriptor instead.");
+        ContainerRegistrySourceTriggerDescriptor IPersistableModel<ContainerRegistrySourceTriggerDescriptor>.Create(BinaryData data, ModelReaderWriterOptions options) => throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead.");
         /// <summary> Gets the wire format used for this <see cref="ContainerRegistrySourceTriggerDescriptor"/> instance with the provided options. </summary>
         /// <param name="options"> The serialization options to use. </param>
         /// <returns> The format string used for persistence. </returns>
-        string IPersistableModel<ContainerRegistrySourceTriggerDescriptor>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw new NotSupportedException("Serialization for ContainerRegistrySourceTriggerDescriptor is not supported in this compatibility shim. Use Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceTriggerDescriptor instead.");
+        string IPersistableModel<ContainerRegistrySourceTriggerDescriptor>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead.");
         /// <summary> Writes the JSON representation of this instance to the provided writer. </summary>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
         /// <summary> Gets or sets the compatibility shim property value. </summary>
         [WirePath("id")]
-        public System.Guid? Id { get { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceTriggerDescriptor.Id instead."); } set { } }
+        public System.Guid? Id { get { throw new NotSupportedException("Use the corresponding property in Azure.ResourceManager.ContainerRegistry instead."); } set { } }
         /// <summary> Gets or sets the compatibility shim property value. </summary>
         [WirePath("eventType")]
-        public string EventType { get { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceTriggerDescriptor.EventType instead."); } set { } }
+        public string EventType { get { throw new NotSupportedException("Use the corresponding property in Azure.ResourceManager.ContainerRegistry instead."); } set { } }
         /// <summary> Gets or sets the compatibility shim property value. </summary>
         [WirePath("commitId")]
-        public string CommitId { get { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceTriggerDescriptor.CommitId instead."); } set { } }
+        public string CommitId { get { throw new NotSupportedException("Use the corresponding property in Azure.ResourceManager.ContainerRegistry instead."); } set { } }
         /// <summary> Gets or sets the compatibility shim property value. </summary>
         [WirePath("pullRequestId")]
-        public string PullRequestId { get { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceTriggerDescriptor.PullRequestId instead."); } set { } }
+        public string PullRequestId { get { throw new NotSupportedException("Use the corresponding property in Azure.ResourceManager.ContainerRegistry instead."); } set { } }
         /// <summary> Gets or sets the compatibility shim property value. </summary>
         [WirePath("repositoryUrl")]
-        public System.Uri RepositoryUri { get { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceTriggerDescriptor.RepositoryUri instead."); } set { } }
+        public System.Uri RepositoryUri { get { throw new NotSupportedException("Use the corresponding property in Azure.ResourceManager.ContainerRegistry instead."); } set { } }
         /// <summary> Gets or sets the compatibility shim property value. </summary>
         [WirePath("branchName")]
-        public string BranchName { get { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceTriggerDescriptor.BranchName instead."); } set { } }
+        public string BranchName { get { throw new NotSupportedException("Use the corresponding property in Azure.ResourceManager.ContainerRegistry instead."); } set { } }
         /// <summary> Gets or sets the compatibility shim property value. </summary>
         [WirePath("providerType")]
-        public string ProviderType { get { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceTriggerDescriptor.ProviderType instead."); } set { } }
+        public string ProviderType { get { throw new NotSupportedException("Use the corresponding property in Azure.ResourceManager.ContainerRegistry instead."); } set { } }
     }
 }

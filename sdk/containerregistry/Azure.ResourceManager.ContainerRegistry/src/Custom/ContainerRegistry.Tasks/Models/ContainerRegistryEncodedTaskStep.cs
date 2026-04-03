@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="reader"> The JSON reader containing the serialized model. </param>
         /// <param name="options"> The serialization options to use. </param>
         /// <returns> A deserialized <see cref="ContainerRegistryEncodedTaskStep"/> instance. </returns>
-        ContainerRegistryEncodedTaskStep IJsonModel<ContainerRegistryEncodedTaskStep>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw new NotSupportedException("Serialization for ContainerRegistryEncodedTaskStep is not supported in this compatibility shim. Use Azure.ResourceManager.ContainerRegistry.Tasks.Models.EncodedTaskStep instead.");
+        ContainerRegistryEncodedTaskStep IJsonModel<ContainerRegistryEncodedTaskStep>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead.");
         /// <summary> Writes the current <see cref="ContainerRegistryEncodedTaskStep"/> instance to the provided JSON writer. </summary>
         /// <param name="writer"> The JSON writer to write to. </param>
         /// <param name="options"> The serialization options to use. </param>
@@ -30,16 +30,16 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <summary> Writes the current <see cref="ContainerRegistryEncodedTaskStep"/> instance to a binary payload. </summary>
         /// <param name="options"> The serialization options to use. </param>
         /// <returns> A binary representation of this <see cref="ContainerRegistryEncodedTaskStep"/> instance. </returns>
-        BinaryData IPersistableModel<ContainerRegistryEncodedTaskStep>.Write(ModelReaderWriterOptions options) => throw new NotSupportedException("Serialization for ContainerRegistryEncodedTaskStep is not supported in this compatibility shim. Use Azure.ResourceManager.ContainerRegistry.Tasks.Models.EncodedTaskStep instead.");
+        BinaryData IPersistableModel<ContainerRegistryEncodedTaskStep>.Write(ModelReaderWriterOptions options) => throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead.");
         /// <summary> Creates an instance of <see cref="ContainerRegistryEncodedTaskStep"/> from the provided binary payload. </summary>
         /// <param name="data"> The serialized data to read from. </param>
         /// <param name="options"> The serialization options to use. </param>
         /// <returns> A deserialized <see cref="ContainerRegistryEncodedTaskStep"/> instance. </returns>
-        ContainerRegistryEncodedTaskStep IPersistableModel<ContainerRegistryEncodedTaskStep>.Create(BinaryData data, ModelReaderWriterOptions options) => throw new NotSupportedException("Serialization for ContainerRegistryEncodedTaskStep is not supported in this compatibility shim. Use Azure.ResourceManager.ContainerRegistry.Tasks.Models.EncodedTaskStep instead.");
+        ContainerRegistryEncodedTaskStep IPersistableModel<ContainerRegistryEncodedTaskStep>.Create(BinaryData data, ModelReaderWriterOptions options) => throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead.");
         /// <summary> Gets the wire format used for this <see cref="ContainerRegistryEncodedTaskStep"/> instance with the provided options. </summary>
         /// <param name="options"> The serialization options to use. </param>
         /// <returns> The format string used for persistence. </returns>
-        string IPersistableModel<ContainerRegistryEncodedTaskStep>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw new NotSupportedException("Serialization for ContainerRegistryEncodedTaskStep is not supported in this compatibility shim. Use Azure.ResourceManager.ContainerRegistry.Tasks.Models.EncodedTaskStep instead.");
+        string IPersistableModel<ContainerRegistryEncodedTaskStep>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead.");
         /// <summary> Initializes a new instance of this compatibility shim type. </summary>
         public ContainerRegistryEncodedTaskStep(string encodedTaskContent) { }
         /// <summary> Writes the JSON representation of this instance to the provided writer. </summary>
@@ -48,12 +48,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
         /// <summary> Gets or sets the compatibility shim property value. </summary>
         [WirePath("encodedTaskContent")]
-        public string EncodedTaskContent { get { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.Models.EncodedTaskStep.EncodedTaskContent instead."); } set { } }
+        public string EncodedTaskContent { get { throw new NotSupportedException("Use the corresponding property in Azure.ResourceManager.ContainerRegistry instead."); } set { } }
         /// <summary> Gets or sets the compatibility shim property value. </summary>
         [WirePath("encodedValuesContent")]
-        public string EncodedValuesContent { get { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.Models.EncodedTaskStep.EncodedValuesContent instead."); } set { } }
+        public string EncodedValuesContent { get { throw new NotSupportedException("Use the corresponding property in Azure.ResourceManager.ContainerRegistry instead."); } set { } }
         /// <summary> Gets or sets the compatibility shim property value. </summary>
         [WirePath("values")]
-        public IList<ContainerRegistryTaskOverridableValue> Values { get { throw new NotSupportedException("Use Azure.ResourceManager.ContainerRegistry.Tasks.Models.EncodedTaskStep.Values instead."); } }
+        public IList<ContainerRegistryTaskOverridableValue> Values { get { throw new NotSupportedException("Use the corresponding property in Azure.ResourceManager.ContainerRegistry instead."); } }
     }
 }

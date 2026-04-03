@@ -10,7 +10,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 // NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    [CodeGenSuppress("RegistryUri")]
     public partial class ContainerRegistryImportSource
     {
         /// <summary> The address of the source registry (e.g. 'mcr.microsoft.com'). </summary>

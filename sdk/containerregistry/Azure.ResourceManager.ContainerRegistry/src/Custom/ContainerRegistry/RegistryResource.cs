@@ -7,15 +7,10 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.ResourceManager.ContainerRegistry.Models;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 // NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.ContainerRegistry
 {
-    [CodeGenSuppress("GetContainerRegistryArchives", typeof(string))]
-    [CodeGenSuppress("GetContainerRegistryArchiveAsync", typeof(string), typeof(CancellationToken))]
-    [CodeGenSuppress("GetContainerRegistryArchive", typeof(string), typeof(CancellationToken))]
     public partial class ContainerRegistryResource : ArmResource
     {
         /// <summary> Gets a collection of ContainerRegistryArchives in the <see cref="ContainerRegistryResource"/>. </summary>
