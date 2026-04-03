@@ -101,8 +101,8 @@ dotnet test --filter TestCategory!=Live
 # Run tests for a single framework
 dotnet test -f net8.0
 
-# Regenerate REST clients from swagger
-./generate.ps1
+# Regenerate REST clients from swagger (run from the package's src/ directory)
+dotnet build /t:GenerateCode
 
 # Export public API after changes (from repo root)
 eng/scripts/Export-API.ps1 storage
