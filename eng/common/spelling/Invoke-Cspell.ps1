@@ -58,7 +58,7 @@ param(
 begin {
   Set-StrictMode -Version 3.0
 
-  . (Join-Path $PSScriptRoot .. scripts logging.ps1)/
+  . (Join-Path $PSScriptRoot .. scripts logging.ps1)
 
   if (!(Get-Command npm -ErrorAction SilentlyContinue)) {
     LogError "Could not locate npm. Install NodeJS (includes npm) https://nodejs.org/en/download/"
