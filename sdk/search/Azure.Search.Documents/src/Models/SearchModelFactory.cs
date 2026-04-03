@@ -340,11 +340,11 @@ namespace Azure.Search.Documents.Models
         /// <returns> A new SearchServiceLimits instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static SearchServiceLimits SearchServiceLimits(
-        int? maxFieldsPerIndex,
-        int? maxFieldNestingDepthPerIndex,
-        int? maxComplexCollectionFieldsPerIndex,
-        int? maxComplexObjectsInCollectionsPerDocument,
-        long? maxStoragePerIndexInBytes) =>
+        int? maxFieldsPerIndex = null,
+        int? maxFieldNestingDepthPerIndex = null,
+        int? maxComplexCollectionFieldsPerIndex = null,
+        int? maxComplexObjectsInCollectionsPerDocument = null,
+        long? maxStoragePerIndexInBytes = null) =>
         new SearchServiceLimits(maxFieldsPerIndex, maxFieldNestingDepthPerIndex, maxComplexCollectionFieldsPerIndex, maxComplexObjectsInCollectionsPerDocument, maxStoragePerIndexInBytes, null, additionalBinaryDataProperties: null);
 
         /// <summary> Initializes a new instance of SearchServiceLimits. </summary>
@@ -591,7 +591,7 @@ namespace Azure.Search.Documents.Models
         /// <summary> Initializes a new instance of DocumentDebugInfo. </summary>
         /// <param name="vectors"> Contains debugging information specific to vector and hybrid search. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DocumentDebugInfo DocumentDebugInfo(VectorsDebugInfo vectors)
+        public static DocumentDebugInfo DocumentDebugInfo(VectorsDebugInfo vectors = null)
         {
             return new DocumentDebugInfo(vectors, additionalBinaryDataProperties: null);
         }
@@ -602,7 +602,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="text"> The text passage extracted from the document contents as the answer. </param>
         /// <param name="highlights"> Same text passage as in the Text property with highlighted text phrases most relevant to the query. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        public static QueryAnswerResult QueryAnswerResult(double? score, string key, string text, string highlights, IReadOnlyDictionary<string, object> additionalProperties)
+        public static QueryAnswerResult QueryAnswerResult(double? score = null, string key = null, string text = null, string highlights = null, IReadOnlyDictionary<string, object> additionalProperties = null)
         {
             return new QueryAnswerResult(score, key, text, highlights, (IDictionary<string, object>)additionalProperties);
         }

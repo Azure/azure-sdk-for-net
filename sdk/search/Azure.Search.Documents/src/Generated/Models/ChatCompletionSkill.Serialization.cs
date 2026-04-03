@@ -81,7 +81,7 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("uri"u8);
-            writer.WriteStringValue(Uri);
+            writer.WriteStringValue(Uri.AbsoluteUri);
             if (Optional.IsDefined(AuthIdentity))
             {
                 writer.WritePropertyName("authIdentity"u8);
@@ -164,7 +164,7 @@ namespace Azure.Search.Documents.Indexes.Models
             IList<InputFieldMappingEntry> inputs = default;
             IList<OutputFieldMappingEntry> outputs = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            string uri = default;
+            Uri uri = default;
             SearchIndexerDataIdentity authIdentity = default;
             string apiKey = default;
             ChatCompletionCommonModelParameters commonModelParameters = default;
@@ -215,7 +215,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("uri"u8))
                 {
-                    uri = prop.Value.GetString();
+                    uri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("authIdentity"u8))

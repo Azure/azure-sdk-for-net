@@ -186,10 +186,10 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("similarity"u8);
                 writer.WriteObjectValue(Similarity, options);
             }
-            if (Optional.IsDefined(Semantic))
+            if (Optional.IsDefined(SemanticSearch))
             {
                 writer.WritePropertyName("semantic"u8);
-                writer.WriteObjectValue(Semantic, options);
+                writer.WriteObjectValue(SemanticSearch, options);
             }
             if (Optional.IsDefined(VectorSearch))
             {
@@ -257,7 +257,7 @@ namespace Azure.Search.Documents.Indexes.Models
             IList<LexicalNormalizer> normalizers = default;
             SearchResourceEncryptionKey encryptionKey = default;
             SimilarityAlgorithm similarity = default;
-            SemanticSearch semantic = default;
+            SemanticSearch semanticSearch = default;
             VectorSearch vectorSearch = default;
             string eTag = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -423,10 +423,10 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        semantic = null;
+                        semanticSearch = null;
                         continue;
                     }
-                    semantic = SemanticSearch.DeserializeSemanticSearch(prop.Value, options);
+                    semanticSearch = SemanticSearch.DeserializeSemanticSearch(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("vectorSearch"u8))
@@ -464,7 +464,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 normalizers ?? new ChangeTrackingList<LexicalNormalizer>(),
                 encryptionKey,
                 similarity,
-                semantic,
+                semanticSearch,
                 vectorSearch,
                 eTag,
                 additionalBinaryDataProperties);

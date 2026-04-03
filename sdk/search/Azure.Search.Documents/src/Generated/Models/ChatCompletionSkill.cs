@@ -20,7 +20,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
         /// <param name="uri"> The url for the Web API. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="inputs"/>, <paramref name="outputs"/> or <paramref name="uri"/> is null. </exception>
-        public ChatCompletionSkill(IEnumerable<InputFieldMappingEntry> inputs, IEnumerable<OutputFieldMappingEntry> outputs, string uri) : base("#Microsoft.Skills.Custom.ChatCompletionSkill", inputs, outputs)
+        public ChatCompletionSkill(IEnumerable<InputFieldMappingEntry> inputs, IEnumerable<OutputFieldMappingEntry> outputs, Uri uri) : base("#Microsoft.Skills.Custom.ChatCompletionSkill", inputs, outputs)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
             Argument.AssertNotNull(outputs, nameof(outputs));
@@ -45,7 +45,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="extraParameters"> Open-type dictionary for model-specific parameters that should be appended to the chat completions call. Follows Azure AI Foundry's extensibility pattern. </param>
         /// <param name="extraParametersBehavior"> How extra parameters are handled by Azure AI Foundry. Default is 'error'. </param>
         /// <param name="responseFormat"> Determines how the LLM should format its response. Defaults to 'text' response type. </param>
-        internal ChatCompletionSkill(string odataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, IDictionary<string, BinaryData> additionalBinaryDataProperties, string uri, SearchIndexerDataIdentity authIdentity, string apiKey, ChatCompletionCommonModelParameters commonModelParameters, IDictionary<string, BinaryData> extraParameters, ChatCompletionExtraParametersBehavior? extraParametersBehavior, ChatCompletionResponseFormat responseFormat) : base(odataType, name, description, context, inputs, outputs, additionalBinaryDataProperties)
+        internal ChatCompletionSkill(string odataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, IDictionary<string, BinaryData> additionalBinaryDataProperties, Uri uri, SearchIndexerDataIdentity authIdentity, string apiKey, ChatCompletionCommonModelParameters commonModelParameters, IDictionary<string, BinaryData> extraParameters, ChatCompletionExtraParametersBehavior? extraParametersBehavior, ChatCompletionResponseFormat responseFormat) : base(odataType, name, description, context, inputs, outputs, additionalBinaryDataProperties)
         {
             Uri = uri;
             AuthIdentity = authIdentity;
@@ -57,7 +57,7 @@ namespace Azure.Search.Documents.Indexes.Models
         }
 
         /// <summary> The url for the Web API. </summary>
-        public string Uri { get; set; }
+        public Uri Uri { get; set; }
 
         /// <summary> The user-assigned managed identity used for outbound connections. If an authResourceId is provided and it's not specified, the system-assigned managed identity is used. On updates to the indexer, if the identity is unspecified, the value remains unchanged. If set to "none", the value of this property is cleared. </summary>
         public SearchIndexerDataIdentity AuthIdentity { get; set; }

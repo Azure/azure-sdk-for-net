@@ -1514,11 +1514,11 @@ namespace Azure.Search.Documents.Models
         /// <param name="normalizers"> The normalizers for the index. </param>
         /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your data when you want full assurance that no one, not even Microsoft, can decrypt your data. Once you have encrypted your data, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your data will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </param>
         /// <param name="similarity"> The type of similarity algorithm to be used when scoring and ranking the documents matching a search query. The similarity algorithm can only be defined at index creation time and cannot be modified on existing indexes. If null, the ClassicSimilarity algorithm is used. </param>
-        /// <param name="semantic"> Defines parameters for a search index that influence semantic capabilities. </param>
+        /// <param name="semanticSearch"> Defines parameters for a search index that influence semantic capabilities. </param>
         /// <param name="vectorSearch"> Contains configuration options related to vector search. </param>
         /// <param name="eTag"> The ETag of the index. </param>
         /// <returns> A new <see cref="Indexes.Models.SearchIndexResponse"/> instance for mocking. </returns>
-        public static SearchIndexResponse SearchIndexResponse(string name = default, string description = default, IEnumerable<SearchField> fields = default, IEnumerable<ScoringProfile> scoringProfiles = default, string defaultScoringProfile = default, CorsOptions corsOptions = default, IEnumerable<SearchSuggester> suggesters = default, IEnumerable<LexicalAnalyzer> analyzers = default, IEnumerable<LexicalTokenizer> tokenizers = default, IEnumerable<TokenFilter> tokenFilters = default, IEnumerable<CharFilter> charFilters = default, IEnumerable<LexicalNormalizer> normalizers = default, SearchResourceEncryptionKey encryptionKey = default, SimilarityAlgorithm similarity = default, SemanticSearch semantic = default, VectorSearch vectorSearch = default, string eTag = default)
+        public static SearchIndexResponse SearchIndexResponse(string name = default, string description = default, IEnumerable<SearchField> fields = default, IEnumerable<ScoringProfile> scoringProfiles = default, string defaultScoringProfile = default, CorsOptions corsOptions = default, IEnumerable<SearchSuggester> suggesters = default, IEnumerable<LexicalAnalyzer> analyzers = default, IEnumerable<LexicalTokenizer> tokenizers = default, IEnumerable<TokenFilter> tokenFilters = default, IEnumerable<CharFilter> charFilters = default, IEnumerable<LexicalNormalizer> normalizers = default, SearchResourceEncryptionKey encryptionKey = default, SimilarityAlgorithm similarity = default, SemanticSearch semanticSearch = default, VectorSearch vectorSearch = default, string eTag = default)
         {
             fields ??= new ChangeTrackingList<SearchField>();
             scoringProfiles ??= new ChangeTrackingList<ScoringProfile>();
@@ -1544,7 +1544,7 @@ namespace Azure.Search.Documents.Models
                 normalizers.ToList(),
                 encryptionKey,
                 similarity,
-                semantic,
+                semanticSearch,
                 vectorSearch,
                 eTag,
                 additionalBinaryDataProperties: null);
@@ -2905,7 +2905,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="extraParametersBehavior"> How extra parameters are handled by Azure AI Foundry. Default is 'error'. </param>
         /// <param name="responseFormat"> Determines how the LLM should format its response. Defaults to 'text' response type. </param>
         /// <returns> A new <see cref="Indexes.Models.ChatCompletionSkill"/> instance for mocking. </returns>
-        public static ChatCompletionSkill ChatCompletionSkill(string name = default, string description = default, string context = default, IEnumerable<InputFieldMappingEntry> inputs = default, IEnumerable<OutputFieldMappingEntry> outputs = default, string uri = default, SearchIndexerDataIdentity authIdentity = default, string apiKey = default, ChatCompletionCommonModelParameters commonModelParameters = default, IDictionary<string, BinaryData> extraParameters = default, ChatCompletionExtraParametersBehavior? extraParametersBehavior = default, ChatCompletionResponseFormat responseFormat = default)
+        public static ChatCompletionSkill ChatCompletionSkill(string name = default, string description = default, string context = default, IEnumerable<InputFieldMappingEntry> inputs = default, IEnumerable<OutputFieldMappingEntry> outputs = default, Uri uri = default, SearchIndexerDataIdentity authIdentity = default, string apiKey = default, ChatCompletionCommonModelParameters commonModelParameters = default, IDictionary<string, BinaryData> extraParameters = default, ChatCompletionExtraParametersBehavior? extraParametersBehavior = default, ChatCompletionResponseFormat responseFormat = default)
         {
             inputs ??= new ChangeTrackingList<InputFieldMappingEntry>();
             outputs ??= new ChangeTrackingList<OutputFieldMappingEntry>();
@@ -2964,12 +2964,12 @@ namespace Azure.Search.Documents.Models
         /// <summary> Properties for JSON schema response format. </summary>
         /// <param name="name"> Name of the json schema the model will adhere to. </param>
         /// <param name="description"> Description of the json schema the model will adhere to. </param>
-        /// <param name="strict"> Whether or not the model's response should use structured outputs. Default is true. </param>
+        /// <param name="isStrict"> Whether or not the model's response should use structured outputs. Default is true. </param>
         /// <param name="schema"> The schema definition. </param>
         /// <returns> A new <see cref="Indexes.Models.ChatCompletionSchemaProperties"/> instance for mocking. </returns>
-        public static ChatCompletionSchemaProperties ChatCompletionSchemaProperties(string name = default, string description = default, bool? strict = default, ChatCompletionSchema schema = default)
+        public static ChatCompletionSchemaProperties ChatCompletionSchemaProperties(string name = default, string description = default, bool? isStrict = default, ChatCompletionSchema schema = default)
         {
-            return new ChatCompletionSchemaProperties(name, description, strict, schema, additionalBinaryDataProperties: null);
+            return new ChatCompletionSchemaProperties(name, description, isStrict, schema, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Object defining the custom schema the model will use to structure its output. </summary>
@@ -3015,11 +3015,11 @@ namespace Azure.Search.Documents.Models
         /// <summary> The multi-region account of an Azure AI service resource that's attached to a skillset. </summary>
         /// <param name="description"> Description of the Azure AI service resource attached to a skillset. </param>
         /// <param name="identity"> The user-assigned managed identity used for connections to AI Service. If not specified, the system-assigned managed identity is used. On updates to the skillset, if the identity is unspecified, the value remains unchanged. If set to "none", the value of this property is cleared. </param>
-        /// <param name="subdomainUrl"> The subdomain/Azure AI Services endpoint url for the corresponding AI Service. </param>
+        /// <param name="subdomainUri"> The subdomain/Azure AI Services endpoint url for the corresponding AI Service. </param>
         /// <returns> A new <see cref="Indexes.Models.AIServicesAccountIdentity"/> instance for mocking. </returns>
-        public static AIServicesAccountIdentity AIServicesAccountIdentity(string description = default, SearchIndexerDataIdentity identity = default, string subdomainUrl = default)
+        public static AIServicesAccountIdentity AIServicesAccountIdentity(string description = default, SearchIndexerDataIdentity identity = default, Uri subdomainUri = default)
         {
-            return new AIServicesAccountIdentity("#Microsoft.Azure.Search.AIServicesByIdentity", description, additionalBinaryDataProperties: null, identity, subdomainUrl);
+            return new AIServicesAccountIdentity("#Microsoft.Azure.Search.AIServicesByIdentity", description, additionalBinaryDataProperties: null, identity, subdomainUri);
         }
 
         /// <summary> Definition of additional projections to azure blob, table, or files, of enriched data. </summary>
