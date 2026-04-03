@@ -14,9 +14,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public partial class StorageProtectableContainer : ProtectableContainer
     {
         /// <summary> Initializes a new instance of <see cref="StorageProtectableContainer"/>. </summary>
-        public StorageProtectableContainer()
+        public StorageProtectableContainer() : base(ProtectableContainerType.StorageContainer)
         {
-            ProtectableContainerType = ProtectableContainerType.StorageContainer;
         }
 
         /// <summary> Initializes a new instance of <see cref="StorageProtectableContainer"/>. </summary>
@@ -24,15 +23,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="backupManagementType"> Type of backup management for the container. </param>
         /// <param name="protectableContainerType">
         /// Type of the container. The value of this property for
-        /// 1. Compute Azure VM is Microsoft.Compute/virtualMachines
-        /// 2. Classic Compute Azure VM is Microsoft.ClassicCompute/virtualMachines
+        /// <list type="number"><item><description>Compute Azure VM is Microsoft.Compute/virtualMachines</description></item><item><description>Classic Compute Azure VM is Microsoft.ClassicCompute/virtualMachines</description></item></list>
         /// </param>
         /// <param name="healthStatus"> Status of health of the container. </param>
         /// <param name="containerId"> Fabric Id of the container such as ARM Id. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StorageProtectableContainer(string friendlyName, BackupManagementType? backupManagementType, ProtectableContainerType protectableContainerType, string healthStatus, string containerId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(friendlyName, backupManagementType, protectableContainerType, healthStatus, containerId, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal StorageProtectableContainer(string friendlyName, BackupManagementType? backupManagementType, ProtectableContainerType protectableContainerType, string healthStatus, string containerId, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(friendlyName, backupManagementType, protectableContainerType, healthStatus, containerId, additionalBinaryDataProperties)
         {
-            ProtectableContainerType = protectableContainerType;
         }
     }
 }

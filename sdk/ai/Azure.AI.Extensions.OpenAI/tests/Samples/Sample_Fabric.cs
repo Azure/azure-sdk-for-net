@@ -21,12 +21,12 @@ public class Sample_Fabric : ProjectsOpenAITestBase
         IgnoreSampleMayBe();
         #region Snippet:Sample_CreateAgentClient_Fabric
 #if SNIPPET
-        var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-        var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+        var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+        var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
         var fabricConnectionName = System.Environment.GetEnvironmentVariable("FABRIC_CONNECTION_NAME");
 #else
-        var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
-        var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
+        var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
+        var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
         var fabricConnectionName = TestEnvironment.FABRIC_CONNECTION_NAME;
 #endif
         AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
@@ -37,17 +37,17 @@ public class Sample_Fabric : ProjectsOpenAITestBase
         {
             ProjectConnections = { new ToolProjectConnection(projectConnectionId: fabricConnection.Id) }
         };
-        PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+        DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a helpful assistant.",
             Tools = { new MicrosoftFabricPreviewTool(fabricToolOption), }
         };
-        AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+        ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             agentName: "myAgent",
             options: new(agentDefinition));
         #endregion
         #region Snippet:Sample_CreateResponse_Fabric_Async
-        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
+        ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(agentVersion.Name);
         CreateResponseOptions responseOptions = new()
         {
             ToolChoice = ResponseToolChoice.CreateRequiredChoice(),
@@ -62,7 +62,7 @@ public class Sample_Fabric : ProjectsOpenAITestBase
         #endregion
 
         #region Snippet:Sample_Cleanup_Fabric_Async
-        await projectClient.Agents.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+        await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         #endregion
     }
 
@@ -72,12 +72,12 @@ public class Sample_Fabric : ProjectsOpenAITestBase
     {
         IgnoreSampleMayBe();
 #if SNIPPET
-        var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-        var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+        var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+        var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
         var fabricConnectionName = System.Environment.GetEnvironmentVariable("FABRIC_CONNECTION_NAME");
 #else
-        var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
-        var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
+        var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
+        var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
         var fabricConnectionName = TestEnvironment.FABRIC_CONNECTION_NAME;
 #endif
         AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
@@ -88,17 +88,17 @@ public class Sample_Fabric : ProjectsOpenAITestBase
         {
             ProjectConnections = { new ToolProjectConnection(projectConnectionId: fabricConnection.Id) }
         };
-        PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+        DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a helpful assistant.",
             Tools = { new MicrosoftFabricPreviewTool(fabricToolOption), }
         };
-        AgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
+        ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.CreateAgentVersion(
             agentName: "myAgent",
             options: new(agentDefinition));
         #endregion
         #region Snippet:Sample_CreateResponse_Fabric_Sync
-        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
+        ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(agentVersion.Name);
         CreateResponseOptions responseOptions = new()
         {
             ToolChoice = ResponseToolChoice.CreateRequiredChoice(),
@@ -111,7 +111,7 @@ public class Sample_Fabric : ProjectsOpenAITestBase
         Console.WriteLine(response.GetOutputText());
 
         #region Snippet:Sample_Cleanup_Fabric_Sync
-        projectClient.Agents.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+        projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         #endregion
     }
 

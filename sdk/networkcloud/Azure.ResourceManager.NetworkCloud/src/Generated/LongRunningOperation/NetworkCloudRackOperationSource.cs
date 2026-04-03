@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
-    internal class NetworkCloudRackOperationSource : IOperationSource<NetworkCloudRackResource>
+    /// <summary></summary>
+    internal partial class NetworkCloudRackOperationSource : IOperationSource<NetworkCloudRackResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal NetworkCloudRackOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         NetworkCloudRackResource IOperationSource<NetworkCloudRackResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NetworkCloudRackData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkCloudContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            NetworkCloudRackData data = NetworkCloudRackData.DeserializeNetworkCloudRackData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new NetworkCloudRackResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<NetworkCloudRackResource> IOperationSource<NetworkCloudRackResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NetworkCloudRackData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkCloudContext.Default);
-            return await Task.FromResult(new NetworkCloudRackResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            NetworkCloudRackData data = NetworkCloudRackData.DeserializeNetworkCloudRackData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new NetworkCloudRackResource(_client, data);
         }
     }
 }

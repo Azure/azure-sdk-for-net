@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Storage.Models
 {
     internal static partial class StorageAccountNameUnavailableReasonExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this StorageAccountNameUnavailableReason value) => value switch
         {
             StorageAccountNameUnavailableReason.AccountNameInvalid => "AccountNameInvalid",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.Storage.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown StorageAccountNameUnavailableReason value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static StorageAccountNameUnavailableReason ToStorageAccountNameUnavailableReason(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AccountNameInvalid")) return StorageAccountNameUnavailableReason.AccountNameInvalid;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AlreadyExists")) return StorageAccountNameUnavailableReason.AlreadyExists;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AccountNameInvalid"))
+            {
+                return StorageAccountNameUnavailableReason.AccountNameInvalid;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AlreadyExists"))
+            {
+                return StorageAccountNameUnavailableReason.AlreadyExists;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown StorageAccountNameUnavailableReason value.");
         }
     }

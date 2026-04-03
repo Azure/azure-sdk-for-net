@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Support;
 
 namespace Azure.ResourceManager.Support.Models
 {
     /// <summary> Contact information associated with the support ticket. </summary>
     public partial class SupportContactProfile
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SupportContactProfile"/>. </summary>
         /// <param name="firstName"> First name. </param>
@@ -83,8 +55,8 @@ namespace Azure.ResourceManager.Support.Models
         /// <param name="preferredTimeZone"> Time zone of the user. This is the name of the time zone from [Microsoft Time Zone Index Values](https://support.microsoft.com/help/973627/microsoft-time-zone-index-values). </param>
         /// <param name="country"> Country of the user. This is the ISO 3166-1 alpha-3 code. </param>
         /// <param name="preferredSupportLanguage"> Preferred language of support from Azure. Support languages vary based on the severity you choose for your support ticket. Learn more at [Azure Severity and responsiveness](https://azure.microsoft.com/support/plans/response). Use the standard language-country code. Valid values are 'en-us' for English, 'zh-hans' for Chinese, 'es-es' for Spanish, 'fr-fr' for French, 'ja-jp' for Japanese, 'ko-kr' for Korean, 'ru-ru' for Russian, 'pt-br' for Portuguese, 'it-it' for Italian, 'zh-tw' for Chinese and 'de-de' for German. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SupportContactProfile(string firstName, string lastName, PreferredContactMethod preferredContactMethod, string primaryEmailAddress, IList<string> additionalEmailAddresses, string phoneNumber, string preferredTimeZone, string country, string preferredSupportLanguage, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SupportContactProfile(string firstName, string lastName, PreferredContactMethod preferredContactMethod, string primaryEmailAddress, IList<string> additionalEmailAddresses, string phoneNumber, string preferredTimeZone, string country, string preferredSupportLanguage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             FirstName = firstName;
             LastName = lastName;
@@ -95,30 +67,33 @@ namespace Azure.ResourceManager.Support.Models
             PreferredTimeZone = preferredTimeZone;
             Country = country;
             PreferredSupportLanguage = preferredSupportLanguage;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="SupportContactProfile"/> for deserialization. </summary>
-        internal SupportContactProfile()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> First name. </summary>
         public string FirstName { get; set; }
+
         /// <summary> Last name. </summary>
         public string LastName { get; set; }
+
         /// <summary> Preferred contact method. </summary>
         public PreferredContactMethod PreferredContactMethod { get; set; }
+
         /// <summary> Primary email address. </summary>
         public string PrimaryEmailAddress { get; set; }
+
         /// <summary> Additional email addresses listed will be copied on any correspondence about the support ticket. </summary>
         public IList<string> AdditionalEmailAddresses { get; }
+
         /// <summary> Phone number. This is required if preferred contact method is phone. It is also required when submitting 'critical' or 'highestcriticalimpact' severity cases. </summary>
         public string PhoneNumber { get; set; }
+
         /// <summary> Time zone of the user. This is the name of the time zone from [Microsoft Time Zone Index Values](https://support.microsoft.com/help/973627/microsoft-time-zone-index-values). </summary>
         public string PreferredTimeZone { get; set; }
+
         /// <summary> Country of the user. This is the ISO 3166-1 alpha-3 code. </summary>
         public string Country { get; set; }
+
         /// <summary> Preferred language of support from Azure. Support languages vary based on the severity you choose for your support ticket. Learn more at [Azure Severity and responsiveness](https://azure.microsoft.com/support/plans/response). Use the standard language-country code. Valid values are 'en-us' for English, 'zh-hans' for Chinese, 'es-es' for Spanish, 'fr-fr' for French, 'ja-jp' for Japanese, 'ko-kr' for Korean, 'ru-ru' for Russian, 'pt-br' for Portuguese, 'it-it' for Italian, 'zh-tw' for Chinese and 'de-de' for German. </summary>
         public string PreferredSupportLanguage { get; set; }
     }

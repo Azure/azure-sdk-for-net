@@ -3,8 +3,9 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure.AI.Projects.Evaluation;
+using Azure.AI.Projects.Memory;
 using Azure.Core;
-using Azure.Core.Foundations;
 using OpenAI;
 
 namespace Azure.AI.Projects
@@ -70,10 +71,9 @@ namespace Azure.AI.Projects
     [ModelReaderWriterBuildable(typeof(EvaluationRunClusterInsightRequest))]
     [ModelReaderWriterBuildable(typeof(EvaluationRunClusterInsightResult))]
     [ModelReaderWriterBuildable(typeof(EvaluationScheduleTask))]
-    [ModelReaderWriterBuildable(typeof(EvaluationScheduleTaskEvalRun))]
+    [ModelReaderWriterBuildable(typeof(EvaluationTarget))]
     [ModelReaderWriterBuildable(typeof(EvaluationTaxonomy))]
     [ModelReaderWriterBuildable(typeof(EvaluationTaxonomyInput))]
-    [ModelReaderWriterBuildable(typeof(EvaluatorCredentialRequest))]
     [ModelReaderWriterBuildable(typeof(EvaluatorDefinition))]
     [ModelReaderWriterBuildable(typeof(EvaluatorMetric))]
     [ModelReaderWriterBuildable(typeof(EvaluatorVersion))]
@@ -96,14 +96,13 @@ namespace Azure.AI.Projects
     [ModelReaderWriterBuildable(typeof(FunctionShellCallOutputOutcomeParam))]
     [ModelReaderWriterBuildable(typeof(FunctionShellCallOutputTimeoutOutcomeParam))]
     [ModelReaderWriterBuildable(typeof(HourlyRecurrenceSchedule))]
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.HumanEvaluationPreviewRuleAction is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Evaluation.HumanEvaluationPreviewRuleAction is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(HumanEvaluationPreviewRuleAction))]
     [ModelReaderWriterBuildable(typeof(InputContent))]
     [ModelReaderWriterBuildable(typeof(InputContentInputFileContent))]
     [ModelReaderWriterBuildable(typeof(InputContentInputImageContent))]
     [ModelReaderWriterBuildable(typeof(InputContentInputTextContent))]
     [ModelReaderWriterBuildable(typeof(InputFileContentParam))]
-    [ModelReaderWriterBuildable(typeof(InputImageContentParamAutoParam))]
     [ModelReaderWriterBuildable(typeof(InputItem))]
     [ModelReaderWriterBuildable(typeof(InputItemApplyPatchToolCallItemParam))]
     [ModelReaderWriterBuildable(typeof(InputItemApplyPatchToolCallOutputItemParam))]
@@ -129,7 +128,6 @@ namespace Azure.AI.Projects
     [ModelReaderWriterBuildable(typeof(InputItemReasoningItem))]
     [ModelReaderWriterBuildable(typeof(InputItemWebSearchToolCall))]
     [ModelReaderWriterBuildable(typeof(InputTextContentParam))]
-    [ModelReaderWriterBuildable(typeof(Insight))]
     [ModelReaderWriterBuildable(typeof(InsightCluster))]
     [ModelReaderWriterBuildable(typeof(InsightModelConfiguration))]
     [ModelReaderWriterBuildable(typeof(InsightRequest))]
@@ -144,6 +142,7 @@ namespace Azure.AI.Projects
     [ModelReaderWriterBuildable(typeof(InternalComputerAction))]
     [ModelReaderWriterBuildable(typeof(InternalCreateMemoryStoreRequest))]
     [ModelReaderWriterBuildable(typeof(InternalEasyInputMessage))]
+    [ModelReaderWriterBuildable(typeof(InternalInputImageContentParamAutoParam))]
     [ModelReaderWriterBuildable(typeof(InternalLocalShellExecAction))]
     [ModelReaderWriterBuildable(typeof(InternalLogProb))]
     [ModelReaderWriterBuildable(typeof(InternalMCPListToolsTool))]
@@ -197,6 +196,9 @@ namespace Azure.AI.Projects
     [ModelReaderWriterBuildable(typeof(PagedScheduleRun))]
     [ModelReaderWriterBuildable(typeof(PendingUploadConfiguration))]
     [ModelReaderWriterBuildable(typeof(PendingUploadResult))]
+    [ModelReaderWriterBuildable(typeof(ProjectsInsight))]
+    [ModelReaderWriterBuildable(typeof(ProjectsSchedule))]
+    [ModelReaderWriterBuildable(typeof(ProjectsScheduleTask))]
     [ModelReaderWriterBuildable(typeof(PromptBasedEvaluatorDefinition))]
     [ModelReaderWriterBuildable(typeof(ReasoningTextContent))]
     [ModelReaderWriterBuildable(typeof(RecurrenceSchedule))]
@@ -204,18 +206,15 @@ namespace Azure.AI.Projects
     [ModelReaderWriterBuildable(typeof(RedTeam))]
     [ModelReaderWriterBuildable(typeof(ResponseUsageInputTokensDetails))]
     [ModelReaderWriterBuildable(typeof(ResponseUsageOutputTokensDetails))]
-    [ModelReaderWriterBuildable(typeof(Schedule))]
     [ModelReaderWriterBuildable(typeof(ScheduleRun))]
-    [ModelReaderWriterBuildable(typeof(ScheduleTask))]
+    [ModelReaderWriterBuildable(typeof(ScheduleTrigger))]
     [ModelReaderWriterBuildable(typeof(ScreenshotParam))]
     [ModelReaderWriterBuildable(typeof(ScrollParam))]
     [ModelReaderWriterBuildable(typeof(SummaryTextContent))]
-    [ModelReaderWriterBuildable(typeof(Target))]
     [ModelReaderWriterBuildable(typeof(TargetConfig))]
     [ModelReaderWriterBuildable(typeof(TaxonomyCategory))]
     [ModelReaderWriterBuildable(typeof(TaxonomySubCategory))]
     [ModelReaderWriterBuildable(typeof(ToolDescription))]
-    [ModelReaderWriterBuildable(typeof(Trigger))]
     [ModelReaderWriterBuildable(typeof(TypeParam))]
     [ModelReaderWriterBuildable(typeof(UnknownAIProjectConnectionBaseCredential))]
     [ModelReaderWriterBuildable(typeof(UnknownAIProjectDataset))]
@@ -225,6 +224,7 @@ namespace Azure.AI.Projects
     [ModelReaderWriterBuildable(typeof(UnknownApplyPatchOperationParam))]
     [ModelReaderWriterBuildable(typeof(UnknownComputerAction))]
     [ModelReaderWriterBuildable(typeof(UnknownEvaluationRuleAction))]
+    [ModelReaderWriterBuildable(typeof(UnknownEvaluationTarget))]
     [ModelReaderWriterBuildable(typeof(UnknownEvaluationTaxonomyInput))]
     [ModelReaderWriterBuildable(typeof(UnknownEvaluatorDefinition))]
     [ModelReaderWriterBuildable(typeof(UnknownFunctionAndCustomToolCallOutput))]
@@ -241,7 +241,6 @@ namespace Azure.AI.Projects
     [ModelReaderWriterBuildable(typeof(UnknownOutputMessageContent))]
     [ModelReaderWriterBuildable(typeof(UnknownRecurrenceSchedule))]
     [ModelReaderWriterBuildable(typeof(UnknownScheduleTask))]
-    [ModelReaderWriterBuildable(typeof(UnknownTarget))]
     [ModelReaderWriterBuildable(typeof(UnknownTargetConfig))]
     [ModelReaderWriterBuildable(typeof(UnknownTrigger))]
     [ModelReaderWriterBuildable(typeof(UpdateMemoryStoreRequest))]

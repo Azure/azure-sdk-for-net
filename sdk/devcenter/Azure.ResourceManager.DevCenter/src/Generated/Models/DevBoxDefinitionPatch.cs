@@ -22,26 +22,82 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <summary> Initializes a new instance of <see cref="DevBoxDefinitionPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="imageReference"> Image reference information. </param>
-        /// <param name="sku"> The SKU for Dev Boxes created using this definition. </param>
-        /// <param name="osStorageType"> The storage type used for the Operating System disk of Dev Boxes created using this definition. </param>
-        /// <param name="hibernateSupport"> Indicates whether Dev Boxes created with this definition are capable of hibernation. Not all images are capable of supporting hibernation. To find out more see https://aka.ms/devbox/hibernate. </param>
-        internal DevBoxDefinitionPatch(IDictionary<string, string> tags, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData, DevCenterImageReference imageReference, DevCenterSku sku, string osStorageType, DevCenterHibernateSupport? hibernateSupport) : base(tags, location, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Properties of a Dev Box definition to be updated. </param>
+        internal DevBoxDefinitionPatch(IDictionary<string, string> tags, AzureLocation? location, IDictionary<string, BinaryData> additionalBinaryDataProperties, DevBoxDefinitionUpdateProperties properties) : base(tags, location, additionalBinaryDataProperties)
         {
-            ImageReference = imageReference;
-            Sku = sku;
-            OSStorageType = osStorageType;
-            HibernateSupport = hibernateSupport;
+            Properties = properties;
         }
 
+        /// <summary> Properties of a Dev Box definition to be updated. </summary>
+        internal DevBoxDefinitionUpdateProperties Properties { get; set; }
+
         /// <summary> Image reference information. </summary>
-        public DevCenterImageReference ImageReference { get; set; }
+        public DevCenterImageReference ImageReference
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ImageReference;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DevBoxDefinitionUpdateProperties();
+                }
+                Properties.ImageReference = value;
+            }
+        }
+
         /// <summary> The SKU for Dev Boxes created using this definition. </summary>
-        public DevCenterSku Sku { get; set; }
+        public DevCenterSku Sku
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Sku;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DevBoxDefinitionUpdateProperties();
+                }
+                Properties.Sku = value;
+            }
+        }
+
         /// <summary> The storage type used for the Operating System disk of Dev Boxes created using this definition. </summary>
-        public string OSStorageType { get; set; }
+        public string OSStorageType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OSStorageType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DevBoxDefinitionUpdateProperties();
+                }
+                Properties.OSStorageType = value;
+            }
+        }
+
         /// <summary> Indicates whether Dev Boxes created with this definition are capable of hibernation. Not all images are capable of supporting hibernation. To find out more see https://aka.ms/devbox/hibernate. </summary>
-        public DevCenterHibernateSupport? HibernateSupport { get; set; }
+        public DevCenterHibernateSupport? HibernateSupport
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HibernateSupport;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DevBoxDefinitionUpdateProperties();
+                }
+                Properties.HibernateSupport = value.Value;
+            }
+        }
     }
 }

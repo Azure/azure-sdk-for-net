@@ -25,8 +25,8 @@ public partial class ResponsesTelemetryTests
         ReinitializeResponseScopeConfiguration();
 
         AIProjectClient projectClient = GetTestProjectClient();
-        var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
-        ProjectResponsesClient client = projectClient.OpenAI.GetProjectResponsesClientForModel(modelDeploymentName);
+        var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
+        ProjectResponsesClient client = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForModel(modelDeploymentName);
 
         CreateResponseOptions options = new()
         {
@@ -81,8 +81,8 @@ public partial class ResponsesTelemetryTests
         ReinitializeResponseScopeConfiguration();
 
         AIProjectClient projectClient = GetTestProjectClient();
-        var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
-        ProjectResponsesClient client = projectClient.OpenAI.GetProjectResponsesClientForModel(modelDeploymentName);
+        var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
+        ProjectResponsesClient client = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForModel(modelDeploymentName);
 
         var deltaTexts = new List<string>();
         await foreach (StreamingResponseUpdate update in client.CreateResponseStreamingAsync("What is 2+2?"))
@@ -134,8 +134,8 @@ public partial class ResponsesTelemetryTests
         ReinitializeResponseScopeConfiguration();
 
         AIProjectClient projectClient = GetTestProjectClient();
-        var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
-        ProjectResponsesClient client = projectClient.OpenAI.GetProjectResponsesClientForModel(modelDeploymentName);
+        var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
+        ProjectResponsesClient client = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForModel(modelDeploymentName);
 
         var deltaTexts = new List<string>();
         await foreach (StreamingResponseUpdate update in client.CreateResponseStreamingAsync("What is 2+2?"))
@@ -162,21 +162,21 @@ public partial class ResponsesTelemetryTests
         ReinitializeResponseScopeConfiguration();
 
         AIProjectClient projectClient = GetTestProjectClient();
-        var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
+        var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
 
-        PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+        DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a helpful assistant."
         };
         var agentName = "responseStreamingTelemetryAgent";
-        AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+        ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             agentName,
-            new AgentVersionCreationOptions(agentDefinition));
+            new ProjectsAgentVersionCreationOptions(agentDefinition));
 
         try
         {
             var agentRef = new AgentReference(agentVersion.Name, agentVersion.Version);
-            ProjectResponsesClient client = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentRef);
+            ProjectResponsesClient client = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(agentRef);
 
             var deltaTexts = new List<string>();
             await foreach (StreamingResponseUpdate update in client.CreateResponseStreamingAsync("Hello agent!"))
@@ -220,7 +220,7 @@ public partial class ResponsesTelemetryTests
         }
         finally
         {
-            await projectClient.Agents.DeleteAgentAsync(agentName: agentName);
+            await projectClient.AgentAdministrationClient.DeleteAgentAsync(agentName: agentName);
         }
     }
 }

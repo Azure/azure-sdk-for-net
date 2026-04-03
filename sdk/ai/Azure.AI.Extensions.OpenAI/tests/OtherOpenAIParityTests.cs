@@ -93,7 +93,7 @@ public class OtherOpenAIParityTests : ProjectsOpenAITestBase
             {
                 InputItems = { ResponseItem.CreateUserMessageItem("Based on available file search documents, what's Travis's favorite food?") },
                 Tools = { ResponseTool.CreateFileSearchTool(vectorStoreIds: [vectorStore.Id]) },
-                Model = TestEnvironment.MODELDEPLOYMENTNAME,
+                Model = TestEnvironment.FOUNDRY_MODEL_NAME,
             });
         Assert.That(response.GetOutputText().ToLower(), Does.Contain("pizza"));
     }

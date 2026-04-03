@@ -953,16 +953,6 @@
       ]
     },
     {
-      "filename": "**/sdk/kusto/**/*.cs",
-      "words": [
-        "openai",
-        "scsv",
-        "sohsv",
-        "tbps",
-        "tsve"
-      ]
-    },
-    {
       "filename": "**/sdk/labservices/**/*.cs",
       "words": [
         "reimage",
@@ -1421,6 +1411,7 @@
         "informix",
         "magento",
         "netezza",
+        "ondemand",
         "oozie",
         "responsys",
         "sasl",
@@ -1583,12 +1574,6 @@
         "rpath",
         "runpath",
         "sbom"
-      ]
-    },
-    {
-      "filename": "**/sdk/monitor/**/*.cs",
-      "words": [
-        "resourceid"
       ]
     },
     {

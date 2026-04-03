@@ -11,7 +11,7 @@ using OpenAI;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> A tool for capturing structured outputs. </summary>
-    public partial class CaptureStructuredOutputsTool : AgentTool, IJsonModel<CaptureStructuredOutputsTool>
+    public partial class CaptureStructuredOutputsTool : ProjectsAgentTool, IJsonModel<CaptureStructuredOutputsTool>
     {
         /// <summary> Initializes a new instance of <see cref="CaptureStructuredOutputsTool"/> for deserialization. </summary>
         internal CaptureStructuredOutputsTool()
@@ -20,7 +20,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AgentTool PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override ProjectsAgentTool PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<CaptureStructuredOutputsTool>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -78,7 +78,7 @@ namespace Azure.AI.Projects.Agents
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("outputs"u8);
-            writer.WriteObjectValue(Outputs, options);
+            writer.WriteObjectValue(OutputDefinition, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -87,7 +87,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AgentTool JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override ProjectsAgentTool JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<CaptureStructuredOutputsTool>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -108,7 +108,7 @@ namespace Azure.AI.Projects.Agents
             }
             ToolType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            StructuredOutputDefinition outputs = default;
+            StructuredOutputDefinition outputDefinition = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -118,7 +118,7 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("outputs"u8))
                 {
-                    outputs = StructuredOutputDefinition.DeserializeStructuredOutputDefinition(prop.Value, options);
+                    outputDefinition = StructuredOutputDefinition.DeserializeStructuredOutputDefinition(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -126,7 +126,7 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CaptureStructuredOutputsTool(@type, additionalBinaryDataProperties, outputs);
+            return new CaptureStructuredOutputsTool(@type, additionalBinaryDataProperties, outputDefinition);
         }
     }
 }

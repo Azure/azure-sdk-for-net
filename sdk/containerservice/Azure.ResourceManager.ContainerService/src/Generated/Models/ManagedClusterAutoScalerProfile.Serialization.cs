@@ -8,16 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class ManagedClusterAutoScalerProfile : IUtf8JsonSerializable, IJsonModel<ManagedClusterAutoScalerProfile>
+    /// <summary> Parameters to be applied to the cluster-autoscaler when enabled. </summary>
+    public partial class ManagedClusterAutoScalerProfile : IJsonModel<ManagedClusterAutoScalerProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedClusterAutoScalerProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ManagedClusterAutoScalerProfile PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedClusterAutoScalerProfile>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeManagedClusterAutoScalerProfile(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ManagedClusterAutoScalerProfile)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedClusterAutoScalerProfile>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerServiceContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ManagedClusterAutoScalerProfile)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ManagedClusterAutoScalerProfile>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ManagedClusterAutoScalerProfile IPersistableModel<ManagedClusterAutoScalerProfile>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ManagedClusterAutoScalerProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ManagedClusterAutoScalerProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,31 +69,30 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterAutoScalerProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedClusterAutoScalerProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ManagedClusterAutoScalerProfile)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(BalanceSimilarNodeGroups))
             {
                 writer.WritePropertyName("balance-similar-node-groups"u8);
                 writer.WriteStringValue(BalanceSimilarNodeGroups);
             }
-            if (Optional.IsDefined(DaemonsetEvictionForEmptyNodes))
+            if (Optional.IsDefined(IsDaemonsetEvictionForEmptyNodesEnabled))
             {
                 writer.WritePropertyName("daemonset-eviction-for-empty-nodes"u8);
-                writer.WriteBooleanValue(DaemonsetEvictionForEmptyNodes.Value);
+                writer.WriteBooleanValue(IsDaemonsetEvictionForEmptyNodesEnabled.Value);
             }
-            if (Optional.IsDefined(DaemonsetEvictionForOccupiedNodes))
+            if (Optional.IsDefined(IsDaemonsetEvictionForOccupiedNodesEnabled))
             {
                 writer.WritePropertyName("daemonset-eviction-for-occupied-nodes"u8);
-                writer.WriteBooleanValue(DaemonsetEvictionForOccupiedNodes.Value);
+                writer.WriteBooleanValue(IsDaemonsetEvictionForOccupiedNodesEnabled.Value);
             }
-            if (Optional.IsDefined(IgnoreDaemonsetsUtilization))
+            if (Optional.IsDefined(IsDaemonsetsUtilizationIgnored))
             {
                 writer.WritePropertyName("ignore-daemonsets-utilization"u8);
-                writer.WriteBooleanValue(IgnoreDaemonsetsUtilization.Value);
+                writer.WriteBooleanValue(IsDaemonsetsUtilizationIgnored.Value);
             }
             if (Optional.IsDefined(Expander))
             {
@@ -135,15 +174,15 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("skip-nodes-with-system-pods"u8);
                 writer.WriteStringValue(SkipNodesWithSystemPods);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -152,30 +191,35 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
         }
 
-        ManagedClusterAutoScalerProfile IJsonModel<ManagedClusterAutoScalerProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ManagedClusterAutoScalerProfile IJsonModel<ManagedClusterAutoScalerProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ManagedClusterAutoScalerProfile JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterAutoScalerProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedClusterAutoScalerProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ManagedClusterAutoScalerProfile)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeManagedClusterAutoScalerProfile(document.RootElement, options);
         }
 
-        internal static ManagedClusterAutoScalerProfile DeserializeManagedClusterAutoScalerProfile(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ManagedClusterAutoScalerProfile DeserializeManagedClusterAutoScalerProfile(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string balanceSimilarNodeGroups = default;
-            bool? daemonsetEvictionForEmptyNodes = default;
-            bool? daemonsetEvictionForOccupiedNodes = default;
-            bool? ignoreDaemonsetsUtilization = default;
+            bool? isDaemonsetEvictionForEmptyNodesEnabled = default;
+            bool? isDaemonsetEvictionForOccupiedNodesEnabled = default;
+            bool? isDaemonsetsUtilizationIgnored = default;
             AutoScaleExpander? expander = default;
             string maxEmptyBulkDelete = default;
             string maxGracefulTerminationSec = default;
@@ -183,7 +227,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             string maxTotalUnreadyPercentage = default;
             string newPodScaleUpDelay = default;
             string okTotalUnreadyCount = default;
-            string scanInterval = default;
+            string scanIntervalInSeconds = default;
             string scaleDownDelayAfterAdd = default;
             string scaleDownDelayAfterDelete = default;
             string scaleDownDelayAfterFailure = default;
@@ -192,137 +236,135 @@ namespace Azure.ResourceManager.ContainerService.Models
             string scaleDownUtilizationThreshold = default;
             string skipNodesWithLocalStorage = default;
             string skipNodesWithSystemPods = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("balance-similar-node-groups"u8))
+                if (prop.NameEquals("balance-similar-node-groups"u8))
                 {
-                    balanceSimilarNodeGroups = property.Value.GetString();
+                    balanceSimilarNodeGroups = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("daemonset-eviction-for-empty-nodes"u8))
+                if (prop.NameEquals("daemonset-eviction-for-empty-nodes"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    daemonsetEvictionForEmptyNodes = property.Value.GetBoolean();
+                    isDaemonsetEvictionForEmptyNodesEnabled = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("daemonset-eviction-for-occupied-nodes"u8))
+                if (prop.NameEquals("daemonset-eviction-for-occupied-nodes"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    daemonsetEvictionForOccupiedNodes = property.Value.GetBoolean();
+                    isDaemonsetEvictionForOccupiedNodesEnabled = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("ignore-daemonsets-utilization"u8))
+                if (prop.NameEquals("ignore-daemonsets-utilization"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    ignoreDaemonsetsUtilization = property.Value.GetBoolean();
+                    isDaemonsetsUtilizationIgnored = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("expander"u8))
+                if (prop.NameEquals("expander"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    expander = new AutoScaleExpander(property.Value.GetString());
+                    expander = new AutoScaleExpander(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("max-empty-bulk-delete"u8))
+                if (prop.NameEquals("max-empty-bulk-delete"u8))
                 {
-                    maxEmptyBulkDelete = property.Value.GetString();
+                    maxEmptyBulkDelete = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("max-graceful-termination-sec"u8))
+                if (prop.NameEquals("max-graceful-termination-sec"u8))
                 {
-                    maxGracefulTerminationSec = property.Value.GetString();
+                    maxGracefulTerminationSec = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("max-node-provision-time"u8))
+                if (prop.NameEquals("max-node-provision-time"u8))
                 {
-                    maxNodeProvisionTime = property.Value.GetString();
+                    maxNodeProvisionTime = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("max-total-unready-percentage"u8))
+                if (prop.NameEquals("max-total-unready-percentage"u8))
                 {
-                    maxTotalUnreadyPercentage = property.Value.GetString();
+                    maxTotalUnreadyPercentage = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("new-pod-scale-up-delay"u8))
+                if (prop.NameEquals("new-pod-scale-up-delay"u8))
                 {
-                    newPodScaleUpDelay = property.Value.GetString();
+                    newPodScaleUpDelay = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ok-total-unready-count"u8))
+                if (prop.NameEquals("ok-total-unready-count"u8))
                 {
-                    okTotalUnreadyCount = property.Value.GetString();
+                    okTotalUnreadyCount = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("scan-interval"u8))
+                if (prop.NameEquals("scan-interval"u8))
                 {
-                    scanInterval = property.Value.GetString();
+                    scanIntervalInSeconds = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("scale-down-delay-after-add"u8))
+                if (prop.NameEquals("scale-down-delay-after-add"u8))
                 {
-                    scaleDownDelayAfterAdd = property.Value.GetString();
+                    scaleDownDelayAfterAdd = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("scale-down-delay-after-delete"u8))
+                if (prop.NameEquals("scale-down-delay-after-delete"u8))
                 {
-                    scaleDownDelayAfterDelete = property.Value.GetString();
+                    scaleDownDelayAfterDelete = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("scale-down-delay-after-failure"u8))
+                if (prop.NameEquals("scale-down-delay-after-failure"u8))
                 {
-                    scaleDownDelayAfterFailure = property.Value.GetString();
+                    scaleDownDelayAfterFailure = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("scale-down-unneeded-time"u8))
+                if (prop.NameEquals("scale-down-unneeded-time"u8))
                 {
-                    scaleDownUnneededTime = property.Value.GetString();
+                    scaleDownUnneededTime = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("scale-down-unready-time"u8))
+                if (prop.NameEquals("scale-down-unready-time"u8))
                 {
-                    scaleDownUnreadyTime = property.Value.GetString();
+                    scaleDownUnreadyTime = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("scale-down-utilization-threshold"u8))
+                if (prop.NameEquals("scale-down-utilization-threshold"u8))
                 {
-                    scaleDownUtilizationThreshold = property.Value.GetString();
+                    scaleDownUtilizationThreshold = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("skip-nodes-with-local-storage"u8))
+                if (prop.NameEquals("skip-nodes-with-local-storage"u8))
                 {
-                    skipNodesWithLocalStorage = property.Value.GetString();
+                    skipNodesWithLocalStorage = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("skip-nodes-with-system-pods"u8))
+                if (prop.NameEquals("skip-nodes-with-system-pods"u8))
                 {
-                    skipNodesWithSystemPods = property.Value.GetString();
+                    skipNodesWithSystemPods = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ManagedClusterAutoScalerProfile(
                 balanceSimilarNodeGroups,
-                daemonsetEvictionForEmptyNodes,
-                daemonsetEvictionForOccupiedNodes,
-                ignoreDaemonsetsUtilization,
+                isDaemonsetEvictionForEmptyNodesEnabled,
+                isDaemonsetEvictionForOccupiedNodesEnabled,
+                isDaemonsetsUtilizationIgnored,
                 expander,
                 maxEmptyBulkDelete,
                 maxGracefulTerminationSec,
@@ -330,7 +372,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 maxTotalUnreadyPercentage,
                 newPodScaleUpDelay,
                 okTotalUnreadyCount,
-                scanInterval,
+                scanIntervalInSeconds,
                 scaleDownDelayAfterAdd,
                 scaleDownDelayAfterDelete,
                 scaleDownDelayAfterFailure,
@@ -339,486 +381,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 scaleDownUtilizationThreshold,
                 skipNodesWithLocalStorage,
                 skipNodesWithSystemPods,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BalanceSimilarNodeGroups), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  balance-similar-node-groups: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(BalanceSimilarNodeGroups))
-                {
-                    builder.Append("  balance-similar-node-groups: ");
-                    if (BalanceSimilarNodeGroups.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{BalanceSimilarNodeGroups}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{BalanceSimilarNodeGroups}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DaemonsetEvictionForEmptyNodes), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  daemonset-eviction-for-empty-nodes: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(DaemonsetEvictionForEmptyNodes))
-                {
-                    builder.Append("  daemonset-eviction-for-empty-nodes: ");
-                    var boolValue = DaemonsetEvictionForEmptyNodes.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DaemonsetEvictionForOccupiedNodes), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  daemonset-eviction-for-occupied-nodes: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(DaemonsetEvictionForOccupiedNodes))
-                {
-                    builder.Append("  daemonset-eviction-for-occupied-nodes: ");
-                    var boolValue = DaemonsetEvictionForOccupiedNodes.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IgnoreDaemonsetsUtilization), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  ignore-daemonsets-utilization: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IgnoreDaemonsetsUtilization))
-                {
-                    builder.Append("  ignore-daemonsets-utilization: ");
-                    var boolValue = IgnoreDaemonsetsUtilization.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Expander), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  expander: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Expander))
-                {
-                    builder.Append("  expander: ");
-                    builder.AppendLine($"'{Expander.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxEmptyBulkDelete), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  max-empty-bulk-delete: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(MaxEmptyBulkDelete))
-                {
-                    builder.Append("  max-empty-bulk-delete: ");
-                    if (MaxEmptyBulkDelete.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{MaxEmptyBulkDelete}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{MaxEmptyBulkDelete}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxGracefulTerminationSec), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  max-graceful-termination-sec: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(MaxGracefulTerminationSec))
-                {
-                    builder.Append("  max-graceful-termination-sec: ");
-                    if (MaxGracefulTerminationSec.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{MaxGracefulTerminationSec}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{MaxGracefulTerminationSec}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxNodeProvisionTime), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  max-node-provision-time: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(MaxNodeProvisionTime))
-                {
-                    builder.Append("  max-node-provision-time: ");
-                    if (MaxNodeProvisionTime.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{MaxNodeProvisionTime}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{MaxNodeProvisionTime}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxTotalUnreadyPercentage), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  max-total-unready-percentage: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(MaxTotalUnreadyPercentage))
-                {
-                    builder.Append("  max-total-unready-percentage: ");
-                    if (MaxTotalUnreadyPercentage.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{MaxTotalUnreadyPercentage}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{MaxTotalUnreadyPercentage}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NewPodScaleUpDelay), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  new-pod-scale-up-delay: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(NewPodScaleUpDelay))
-                {
-                    builder.Append("  new-pod-scale-up-delay: ");
-                    if (NewPodScaleUpDelay.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{NewPodScaleUpDelay}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{NewPodScaleUpDelay}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OkTotalUnreadyCount), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  ok-total-unready-count: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(OkTotalUnreadyCount))
-                {
-                    builder.Append("  ok-total-unready-count: ");
-                    if (OkTotalUnreadyCount.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{OkTotalUnreadyCount}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{OkTotalUnreadyCount}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ScanIntervalInSeconds), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  scan-interval: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ScanIntervalInSeconds))
-                {
-                    builder.Append("  scan-interval: ");
-                    if (ScanIntervalInSeconds.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ScanIntervalInSeconds}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ScanIntervalInSeconds}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ScaleDownDelayAfterAdd), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  scale-down-delay-after-add: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ScaleDownDelayAfterAdd))
-                {
-                    builder.Append("  scale-down-delay-after-add: ");
-                    if (ScaleDownDelayAfterAdd.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ScaleDownDelayAfterAdd}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ScaleDownDelayAfterAdd}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ScaleDownDelayAfterDelete), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  scale-down-delay-after-delete: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ScaleDownDelayAfterDelete))
-                {
-                    builder.Append("  scale-down-delay-after-delete: ");
-                    if (ScaleDownDelayAfterDelete.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ScaleDownDelayAfterDelete}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ScaleDownDelayAfterDelete}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ScaleDownDelayAfterFailure), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  scale-down-delay-after-failure: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ScaleDownDelayAfterFailure))
-                {
-                    builder.Append("  scale-down-delay-after-failure: ");
-                    if (ScaleDownDelayAfterFailure.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ScaleDownDelayAfterFailure}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ScaleDownDelayAfterFailure}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ScaleDownUnneededTime), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  scale-down-unneeded-time: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ScaleDownUnneededTime))
-                {
-                    builder.Append("  scale-down-unneeded-time: ");
-                    if (ScaleDownUnneededTime.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ScaleDownUnneededTime}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ScaleDownUnneededTime}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ScaleDownUnreadyTime), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  scale-down-unready-time: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ScaleDownUnreadyTime))
-                {
-                    builder.Append("  scale-down-unready-time: ");
-                    if (ScaleDownUnreadyTime.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ScaleDownUnreadyTime}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ScaleDownUnreadyTime}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ScaleDownUtilizationThreshold), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  scale-down-utilization-threshold: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ScaleDownUtilizationThreshold))
-                {
-                    builder.Append("  scale-down-utilization-threshold: ");
-                    if (ScaleDownUtilizationThreshold.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ScaleDownUtilizationThreshold}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ScaleDownUtilizationThreshold}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SkipNodesWithLocalStorage), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  skip-nodes-with-local-storage: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SkipNodesWithLocalStorage))
-                {
-                    builder.Append("  skip-nodes-with-local-storage: ");
-                    if (SkipNodesWithLocalStorage.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{SkipNodesWithLocalStorage}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{SkipNodesWithLocalStorage}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SkipNodesWithSystemPods), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  skip-nodes-with-system-pods: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SkipNodesWithSystemPods))
-                {
-                    builder.Append("  skip-nodes-with-system-pods: ");
-                    if (SkipNodesWithSystemPods.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{SkipNodesWithSystemPods}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{SkipNodesWithSystemPods}'");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<ManagedClusterAutoScalerProfile>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterAutoScalerProfile>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerServiceContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(ManagedClusterAutoScalerProfile)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ManagedClusterAutoScalerProfile IPersistableModel<ManagedClusterAutoScalerProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterAutoScalerProfile>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeManagedClusterAutoScalerProfile(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ManagedClusterAutoScalerProfile)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ManagedClusterAutoScalerProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

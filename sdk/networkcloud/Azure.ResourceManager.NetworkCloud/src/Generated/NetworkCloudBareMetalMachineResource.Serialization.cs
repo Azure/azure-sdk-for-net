@@ -8,22 +8,33 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
-    public partial class NetworkCloudBareMetalMachineResource : IJsonModel<NetworkCloudBareMetalMachineData>
+    /// <summary></summary>
+    public partial class NetworkCloudBareMetalMachineResource : ArmResource, IJsonModel<NetworkCloudBareMetalMachineData>
     {
-        private static NetworkCloudBareMetalMachineData s_dataDeserializationInstance;
-        private static NetworkCloudBareMetalMachineData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<NetworkCloudBareMetalMachineData> s_dataDeserializationInstance;
 
+        private static IJsonModel<NetworkCloudBareMetalMachineData> DataDeserializationInstance => s_dataDeserializationInstance ??= new NetworkCloudBareMetalMachineData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NetworkCloudBareMetalMachineData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetworkCloudBareMetalMachineData>)Data).Write(writer, options);
 
-        NetworkCloudBareMetalMachineData IJsonModel<NetworkCloudBareMetalMachineData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkCloudBareMetalMachineData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NetworkCloudBareMetalMachineData IJsonModel<NetworkCloudBareMetalMachineData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<NetworkCloudBareMetalMachineData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkCloudBareMetalMachineData>(Data, options, AzureResourceManagerNetworkCloudContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         NetworkCloudBareMetalMachineData IPersistableModel<NetworkCloudBareMetalMachineData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkCloudBareMetalMachineData>(data, options, AzureResourceManagerNetworkCloudContext.Default);
 
-        string IPersistableModel<NetworkCloudBareMetalMachineData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkCloudBareMetalMachineData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<NetworkCloudBareMetalMachineData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

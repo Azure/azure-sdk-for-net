@@ -5,6 +5,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.ClientModel.TestFramework;
+using Azure.AI.Projects.Evaluation;
 using NUnit.Framework;
 
 namespace Azure.AI.Projects.Tests;
@@ -20,7 +21,7 @@ public class RedTeamTests : ProjectsClientTestBase
     {
         AIProjectClient projectClient = GetTestProjectClient();
 
-        AzureOpenAIModelConfiguration config = new(modelDeploymentName: TestEnvironment.MODELDEPLOYMENTNAME);
+        AzureOpenAIModelConfiguration config = new(modelDeploymentName: TestEnvironment.FOUNDRY_MODEL_NAME);
         RedTeam redTeam = new(target: config)
         {
             AttackStrategies = { AttackStrategy.Base64 },
@@ -52,7 +53,7 @@ public class RedTeamTests : ProjectsClientTestBase
     {
         AIProjectClient projectClient = GetTestProjectClient();
 
-        AzureOpenAIModelConfiguration config = new(modelDeploymentName: TestEnvironment.MODELDEPLOYMENTNAME);
+        AzureOpenAIModelConfiguration config = new(modelDeploymentName: TestEnvironment.FOUNDRY_MODEL_NAME);
         RedTeam redTeam = new(target: config)
         {
             AttackStrategies = { AttackStrategy.Base64 },

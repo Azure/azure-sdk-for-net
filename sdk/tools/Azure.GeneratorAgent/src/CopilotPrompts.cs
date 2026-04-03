@@ -250,4 +250,99 @@ internal static class CopilotPrompts
             Start now.
             """;
     }
+
+    /// <summary>
+    /// Builds the prompt for the local specs workflow: iterate through commits, diagnose failures,
+    /// and take the appropriate action based on the root cause of each failure.
+    /// </summary>
+    /// <param name="sdkProjectPath">Absolute path to the SDK project being migrated.</param>
+    /// <param name="tspLocationPath">Absolute path to the tsp-location.yaml file.</param>
+    /// <param name="specsRelativeDirectory">The relative directory path for the specs (e.g., specification/ai/ImageAnalysis/).</param>
+    /// <param name="localSpecsPath">Absolute path to the local specs repository.</param>
+    /// <returns>Prompt instructing Copilot to iterate commits with failure diagnosis.</returns>
+    public static string LocalSpecsCommitIterationPrompt(string sdkProjectPath, string tspLocationPath, string specsRelativeDirectory, string localSpecsPath)
+    {
+        var sdkNamespace = Path.GetFileName(sdkProjectPath.TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar));
+
+        return $$"""
+            You need to find a commit whose tspconfig.yaml has the correct "@azure-typespec/http-client-csharp" emitter config for this SDK project.
+
+            SDK PROJECT: {{sdkProjectPath}}
+            SDK NAMESPACE: {{sdkNamespace}}
+            TSP-LOCATION FILE: {{tspLocationPath}}
+            SPECS DIRECTORY (relative): {{specsRelativeDirectory}}
+            LOCAL SPECS REPO: {{localSpecsPath}}
+
+            === WHAT A VALID tspconfig.yaml LOOKS LIKE ===
+
+            The "options" section of tspconfig.yaml must contain an "@azure-typespec/http-client-csharp" key
+            with EXACTLY these 3 fields and NO others:
+
+            ```yaml
+            options:
+              "@azure-typespec/http-client-csharp":
+                emitter-output-dir: "{output-dir}/{service-dir}/{namespace}"
+                namespace: {{sdkNamespace}}
+                model-namespace: false
+            ```
+
+            Validation rules:
+            - The key "@azure-typespec/http-client-csharp" MUST exist under "options".
+            - It MUST have exactly 3 fields: emitter-output-dir, namespace, model-namespace.
+
+            === PHASE 1: READ CURRENT STATE ===
+
+            1. Read {{tspLocationPath}} and extract the current "commit" field value. This is your STARTING commit.
+            2. Use the powershell tool to run:
+               git log --format="%H" --reverse <starting-commit>..HEAD -- {{specsRelativeDirectory}}
+               in {{localSpecsPath}} to get all commits NEWER than the starting commit for this directory.
+            3. Your candidate list is: [starting-commit, ...newer-commits] in chronological order (oldest first).
+
+            === PHASE 2: ITERATE COMMITS ===
+
+            For each candidate commit (starting from the current one, then progressively newer):
+
+            4. Use the powershell tool to checkout the candidate commit:
+               git checkout <candidate-commit> -- {{specsRelativeDirectory}}
+               in {{localSpecsPath}}
+            5. Read {{localSpecsPath}}/{{specsRelativeDirectory}}/tspconfig.yaml
+            6. Check if the "@azure-typespec/http-client-csharp" section under "options" is EXACTLY valid per the rules above.
+            7. IF VALID → Update the "commit" field in {{tspLocationPath}} to this commit SHA. Announce: "Found valid commit: <SHA>". Go to PHASE 4.
+            8. IF INVALID → Log what's wrong (missing key, wrong namespace, extra fields, etc.) and move to the next candidate commit.
+
+            === PHASE 3: FALLBACK (only if NO commit has a valid config) ===
+
+            If every candidate commit had an invalid tspconfig.yaml:
+
+            9. Use the LATEST (newest) candidate commit as the base.
+            10. Checkout that commit's tspconfig.yaml:
+                git checkout <latest-commit> -- {{specsRelativeDirectory}}
+                in {{localSpecsPath}}
+            11. Read {{localSpecsPath}}/{{specsRelativeDirectory}}/tspconfig.yaml
+            12. Edit it so that the "@azure-typespec/http-client-csharp" section under "options" has EXACTLY the 3 required fields
+                (emitter-output-dir, namespace, model-namespace) and NOTHING else. Remove any extra fields. Fix any wrong values.
+            13. In {{localSpecsPath}}, run these git commands:
+                a. git checkout -b sdk-migration-fallback
+                b. git add {{specsRelativeDirectory}}/tspconfig.yaml
+                c. git commit -m "Update tspconfig.yaml for SDK migration: set @azure-typespec/http-client-csharp emitter config"
+                d. git rev-parse HEAD   (capture the new commit SHA)
+            14. Use the edit tool to update the "commit" field in {{tspLocationPath}} with the new commit SHA.
+            15. Announce: "No valid commit found. Created fallback commit: <SHA>"
+
+            === PHASE 4: RESTORE LOCAL SPECS ===
+
+            After finding or creating a valid commit:
+            16. In {{localSpecsPath}}, restore the working tree to HEAD:
+                git checkout HEAD -- {{specsRelativeDirectory}}
+
+            === RULES ===
+            - ACTUALLY execute every command — do not just describe what should be done.
+            - Stop iterating as soon as you find a valid tspconfig.yaml.
+            - Announce each commit you check and whether its tspconfig.yaml is valid or invalid (and why).
+            - If the candidate list is empty (no newer commits and the current commit is also invalid), go directly to PHASE 3.
+            - This phase does NOT run code generation — it only validates tspconfig.yaml content.
+
+            Start now.
+            """;
+    }
 }

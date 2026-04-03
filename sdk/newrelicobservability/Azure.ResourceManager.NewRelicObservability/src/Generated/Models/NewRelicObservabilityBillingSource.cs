@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NewRelicObservability;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
@@ -14,38 +15,56 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
     public readonly partial struct NewRelicObservabilityBillingSource : IEquatable<NewRelicObservabilityBillingSource>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="NewRelicObservabilityBillingSource"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public NewRelicObservabilityBillingSource(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
+        /// <summary> Billing source is Azure. </summary>
         private const string AzureValue = "AZURE";
         private const string NewrelicValue = "NEWRELIC";
 
+        /// <summary> Initializes a new instance of <see cref="NewRelicObservabilityBillingSource"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public NewRelicObservabilityBillingSource(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
         /// <summary> Billing source is Azure. </summary>
         public static NewRelicObservabilityBillingSource Azure { get; } = new NewRelicObservabilityBillingSource(AzureValue);
-        /// <summary> NEWRELIC. </summary>
+
+        /// <summary> Gets the Newrelic. </summary>
         public static NewRelicObservabilityBillingSource Newrelic { get; } = new NewRelicObservabilityBillingSource(NewrelicValue);
+
         /// <summary> Determines if two <see cref="NewRelicObservabilityBillingSource"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NewRelicObservabilityBillingSource left, NewRelicObservabilityBillingSource right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NewRelicObservabilityBillingSource"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NewRelicObservabilityBillingSource left, NewRelicObservabilityBillingSource right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NewRelicObservabilityBillingSource"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NewRelicObservabilityBillingSource"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NewRelicObservabilityBillingSource(string value) => new NewRelicObservabilityBillingSource(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NewRelicObservabilityBillingSource"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NewRelicObservabilityBillingSource?(string value) => value == null ? null : new NewRelicObservabilityBillingSource(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NewRelicObservabilityBillingSource other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NewRelicObservabilityBillingSource other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -14,14 +15,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public readonly partial struct BackupUsagesUnit : IEquatable<BackupUsagesUnit>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="BackupUsagesUnit"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public BackupUsagesUnit(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string CountValue = "Count";
         private const string BytesValue = "Bytes";
         private const string SecondsValue = "Seconds";
@@ -29,35 +22,64 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private const string CountPerSecondValue = "CountPerSecond";
         private const string BytesPerSecondValue = "BytesPerSecond";
 
-        /// <summary> Count. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupUsagesUnit"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public BackupUsagesUnit(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Count. </summary>
         public static BackupUsagesUnit Count { get; } = new BackupUsagesUnit(CountValue);
-        /// <summary> Bytes. </summary>
+
+        /// <summary> Gets the Bytes. </summary>
         public static BackupUsagesUnit Bytes { get; } = new BackupUsagesUnit(BytesValue);
-        /// <summary> Seconds. </summary>
+
+        /// <summary> Gets the Seconds. </summary>
         public static BackupUsagesUnit Seconds { get; } = new BackupUsagesUnit(SecondsValue);
-        /// <summary> Percent. </summary>
+
+        /// <summary> Gets the Percent. </summary>
         public static BackupUsagesUnit Percent { get; } = new BackupUsagesUnit(PercentValue);
-        /// <summary> CountPerSecond. </summary>
+
+        /// <summary> Gets the CountPerSecond. </summary>
         public static BackupUsagesUnit CountPerSecond { get; } = new BackupUsagesUnit(CountPerSecondValue);
-        /// <summary> BytesPerSecond. </summary>
+
+        /// <summary> Gets the BytesPerSecond. </summary>
         public static BackupUsagesUnit BytesPerSecond { get; } = new BackupUsagesUnit(BytesPerSecondValue);
+
         /// <summary> Determines if two <see cref="BackupUsagesUnit"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BackupUsagesUnit left, BackupUsagesUnit right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BackupUsagesUnit"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BackupUsagesUnit left, BackupUsagesUnit right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BackupUsagesUnit"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BackupUsagesUnit"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BackupUsagesUnit(string value) => new BackupUsagesUnit(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BackupUsagesUnit"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BackupUsagesUnit?(string value) => value == null ? null : new BackupUsagesUnit(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BackupUsagesUnit other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BackupUsagesUnit other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
