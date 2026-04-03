@@ -23,3 +23,4 @@ extends:
     Artifacts:
     - name: Azure.AI.OpenAI
       safeName: AzureAIOpenAI
+    TestDependsOnDependency: Azure.AI.OpenAI

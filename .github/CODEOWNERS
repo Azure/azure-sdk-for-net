@@ -1223,3 +1223,6 @@
 
 #PRLabel: %CodeGen %Client
 /eng/scripts/typespec/                                             @JoshLove-msft @m-nash @jorgerangel-msft @jsquire @live1206 @ArcturusZhang @ArthurMa1978
+
+# Add owners for CI pipeline configuration changes
+/sdk/**/ci*.yml                                                    @Azure/azure-sdk-write-net-core
