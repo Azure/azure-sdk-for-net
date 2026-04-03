@@ -19,6 +19,8 @@ safe-outputs:
   create-pull-request:
     draft: true
     labels: []
+  noop:
+    report-as-issue: false
 
 tools:
   github:

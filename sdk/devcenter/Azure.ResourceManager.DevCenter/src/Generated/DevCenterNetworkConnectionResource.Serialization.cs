@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.DevCenter
 {
+    /// <summary></summary>
     public partial class DevCenterNetworkConnectionResource : IJsonModel<DevCenterNetworkConnectionData>
     {
-        private static DevCenterNetworkConnectionData s_dataDeserializationInstance;
-        private static DevCenterNetworkConnectionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<DevCenterNetworkConnectionData> s_dataDeserializationInstance;
 
+        private static IJsonModel<DevCenterNetworkConnectionData> DataDeserializationInstance => s_dataDeserializationInstance ??= new DevCenterNetworkConnectionData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DevCenterNetworkConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DevCenterNetworkConnectionData>)Data).Write(writer, options);
 
-        DevCenterNetworkConnectionData IJsonModel<DevCenterNetworkConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DevCenterNetworkConnectionData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DevCenterNetworkConnectionData IJsonModel<DevCenterNetworkConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<DevCenterNetworkConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DevCenterNetworkConnectionData>(Data, options, AzureResourceManagerDevCenterContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         DevCenterNetworkConnectionData IPersistableModel<DevCenterNetworkConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DevCenterNetworkConnectionData>(data, options, AzureResourceManagerDevCenterContext.Default);
 
-        string IPersistableModel<DevCenterNetworkConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DevCenterNetworkConnectionData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DevCenterNetworkConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }
