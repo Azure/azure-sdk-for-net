@@ -27,9 +27,6 @@ namespace Azure.ResourceManager.Cdn.Models
             _value = value;
         }
 
-        /// <summary> Gets the SHA256. </summary>
-        public static UriSigningAlgorithm SHA256 { get; } = new UriSigningAlgorithm(SHA256Value);
-
         /// <summary> Determines if two <see cref="UriSigningAlgorithm"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>

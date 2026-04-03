@@ -20,11 +20,11 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedCertificateProperties"/>. </summary>
-        /// <param name="type"> The type of the secret resource. </param>
+        /// <param name="secretType"> The type of the secret resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="subject"> Subject name in the certificate. </param>
         /// <param name="expirationDate"> Certificate expiration date. </param>
-        internal ManagedCertificateProperties(SecretType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string subject, string expirationDate) : base(@type, additionalBinaryDataProperties)
+        internal ManagedCertificateProperties(SecretType secretType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string subject, string expirationDate) : base(secretType, additionalBinaryDataProperties)
         {
             Subject = subject;
             ExpirationDate = expirationDate;

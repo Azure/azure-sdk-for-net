@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         // Backward compatibility: old API used WritableSubResource secretSource parameter
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public UriSigningKeyProperties(string keyId, Azure.ResourceManager.Resources.Models.WritableSubResource secretSource) : base(SecretType.UrlSigningKey)
+        public UriSigningKeyProperties(string keyId, Azure.ResourceManager.Resources.Models.WritableSubResource secretSource) : base(SecretType.UriSigningKey)
         {
             Argument.AssertNotNull(keyId, nameof(keyId));
             Argument.AssertNotNull(secretSource, nameof(secretSource));

@@ -23,16 +23,16 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityPolicyUpdateProperties"/>. </summary>
-        /// <param name="parameters"> object which contains security policy parameters. </param>
+        /// <param name="properties"> object which contains security policy parameters. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityPolicyUpdateProperties(SecurityPolicyProperties parameters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SecurityPolicyUpdateProperties(SecurityPolicyProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Parameters = parameters;
+            Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> object which contains security policy parameters. </summary>
         [WirePath("parameters")]
-        public SecurityPolicyProperties Parameters { get; set; }
+        public SecurityPolicyProperties Properties { get; set; }
     }
 }

@@ -33,27 +33,6 @@ namespace Azure.ResourceManager.Cdn.Models
             _value = value;
         }
 
-        /// <summary> Gets the GET. </summary>
-        public static RequestMethodMatchConditionMatchValue GET { get; } = new RequestMethodMatchConditionMatchValue(GETValue);
-
-        /// <summary> Gets the HEAD. </summary>
-        public static RequestMethodMatchConditionMatchValue HEAD { get; } = new RequestMethodMatchConditionMatchValue(HEADValue);
-
-        /// <summary> Gets the POST. </summary>
-        public static RequestMethodMatchConditionMatchValue POST { get; } = new RequestMethodMatchConditionMatchValue(POSTValue);
-
-        /// <summary> Gets the PUT. </summary>
-        public static RequestMethodMatchConditionMatchValue PUT { get; } = new RequestMethodMatchConditionMatchValue(PUTValue);
-
-        /// <summary> Gets the DELETE. </summary>
-        public static RequestMethodMatchConditionMatchValue DELETE { get; } = new RequestMethodMatchConditionMatchValue(DELETEValue);
-
-        /// <summary> Gets the OPTIONS. </summary>
-        public static RequestMethodMatchConditionMatchValue OPTIONS { get; } = new RequestMethodMatchConditionMatchValue(OPTIONSValue);
-
-        /// <summary> Gets the TRACE. </summary>
-        public static RequestMethodMatchConditionMatchValue TRACE { get; } = new RequestMethodMatchConditionMatchValue(TRACEValue);
-
         /// <summary> Determines if two <see cref="RequestMethodMatchConditionMatchValue"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>

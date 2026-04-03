@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
@@ -37,7 +38,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="limit"> The limit of usage. </param>
         /// <param name="name"> The name of the type of usage. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FrontDoorUsage(string id, FrontDoorUsageUnit unit, long currentValue, long limit, FrontDoorUsageResourceName name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FrontDoorUsage(ResourceIdentifier id, FrontDoorUsageUnit unit, long currentValue, long limit, FrontDoorUsageResourceName name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Unit = unit;
@@ -49,7 +50,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Resource identifier. </summary>
         [WirePath("id")]
-        public string Id { get; }
+        public ResourceIdentifier Id { get; }
 
         /// <summary> An enum describing the unit of measurement. </summary>
         [WirePath("unit")]

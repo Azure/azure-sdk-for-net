@@ -29,15 +29,6 @@ namespace Azure.ResourceManager.Cdn.Models
             _value = value;
         }
 
-        /// <summary> Gets the TLSv1. </summary>
-        public static DeliveryRuleSslProtocol TLSv1 { get; } = new DeliveryRuleSslProtocol(TLSv1Value);
-
-        /// <summary> Gets the TLSv11. </summary>
-        public static DeliveryRuleSslProtocol TLSv11 { get; } = new DeliveryRuleSslProtocol(TLSv11Value);
-
-        /// <summary> Gets the TLSv12. </summary>
-        public static DeliveryRuleSslProtocol TLSv12 { get; } = new DeliveryRuleSslProtocol(TLSv12Value);
-
         /// <summary> Determines if two <see cref="DeliveryRuleSslProtocol"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>

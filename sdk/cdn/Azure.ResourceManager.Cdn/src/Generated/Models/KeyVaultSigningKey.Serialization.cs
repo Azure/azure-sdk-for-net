@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 throw new FormatException($"The model {nameof(KeyVaultSigningKey)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("typeName"u8);
-            writer.WriteStringValue(TypeName.ToString());
+            writer.WriteStringValue(KeyType.ToString());
             writer.WritePropertyName("subscriptionId"u8);
             writer.WriteStringValue(SubscriptionId);
             writer.WritePropertyName("resourceGroupName"u8);
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            KeyVaultSigningKeyType typeName = default;
+            KeyVaultSigningKeyType keyType = default;
             string subscriptionId = default;
             string resourceGroupName = default;
             string vaultName = default;
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 if (prop.NameEquals("typeName"u8))
                 {
-                    typeName = new KeyVaultSigningKeyType(prop.Value.GetString());
+                    keyType = new KeyVaultSigningKeyType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("subscriptionId"u8))
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             return new KeyVaultSigningKey(
-                typeName,
+                keyType,
                 subscriptionId,
                 resourceGroupName,
                 vaultName,

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AfdSecretMtlsCertificateChain"/>. </summary>
-        /// <param name="type"> The type of the secret resource. </param>
+        /// <param name="secretType"> The type of the secret resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="secretSource"> Resource reference to the Azure Key Vault secret. Expected to be in format of /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}/secrets/{secretName}. </param>
         /// <param name="secretVersion"> Version of the secret to be used. </param>
         /// <param name="expireOn"> Soonest expiration date among certificates in customer's certificate chain in ISO 8601 compliant format yyyy-MM-ddTHH:mm:ss.fffffffK in UTC. </param>
-        internal AfdSecretMtlsCertificateChain(SecretType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceReference secretSource, string secretVersion, DateTimeOffset? expireOn) : base(@type, additionalBinaryDataProperties)
+        internal AfdSecretMtlsCertificateChain(SecretType secretType, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceReference secretSource, string secretVersion, DateTimeOffset? expireOn) : base(secretType, additionalBinaryDataProperties)
         {
             SecretSource = secretSource;
             SecretVersion = secretVersion;

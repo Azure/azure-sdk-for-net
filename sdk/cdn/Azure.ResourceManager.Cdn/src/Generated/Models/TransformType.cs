@@ -41,12 +41,6 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Gets the Trim. </summary>
         public static TransformType Trim { get; } = new TransformType(TrimValue);
 
-        /// <summary> Gets the UrlDecode. </summary>
-        public static TransformType UrlDecode { get; } = new TransformType(UrlDecodeValue);
-
-        /// <summary> Gets the UrlEncode. </summary>
-        public static TransformType UrlEncode { get; } = new TransformType(UrlEncodeValue);
-
         /// <summary> Gets the RemoveNulls. </summary>
         public static TransformType RemoveNulls { get; } = new TransformType(RemoveNullsValue);
 

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="keyId"> Defines the customer defined key Id. This id will exist in the incoming request to indicate the key used to form the hash. </param>
         /// <param name="secretVersion"> Version of the secret to be used. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyId"/> or <paramref name="secretVersion"/> is null. </exception>
-        public UriSigningKeyProperties(string keyId, string secretVersion) : base(SecretType.UrlSigningKey)
+        public UriSigningKeyProperties(string keyId, string secretVersion) : base(SecretType.UriSigningKey)
         {
             Argument.AssertNotNull(keyId, nameof(keyId));
             Argument.AssertNotNull(secretVersion, nameof(secretVersion));
@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="UriSigningKeyProperties"/>. </summary>
-        /// <param name="type"> The type of the secret resource. </param>
+        /// <param name="secretType"> The type of the secret resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="keyId"> Defines the customer defined key Id. This id will exist in the incoming request to indicate the key used to form the hash. </param>
         /// <param name="secretSource"> Resource reference to the Azure Key Vault secret. Expected to be in format of /subscriptions/{​​​​​​​​​subscriptionId}​​​​​​​​​/resourceGroups/{​​​​​​​​​resourceGroupName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/providers/Microsoft.KeyVault/vaults/{vaultName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/secrets/{secretName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​. </param>
         /// <param name="secretVersion"> Version of the secret to be used. </param>
-        internal UriSigningKeyProperties(SecretType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string keyId, ResourceReference secretSource, string secretVersion) : base(@type, additionalBinaryDataProperties)
+        internal UriSigningKeyProperties(SecretType secretType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string keyId, ResourceReference secretSource, string secretVersion) : base(secretType, additionalBinaryDataProperties)
         {
             KeyId = keyId;
             SecretSource = secretSource;

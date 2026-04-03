@@ -46,12 +46,6 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Gets the UserAgent. </summary>
         public static WafRankingType UserAgent { get; } = new WafRankingType(UserAgentValue);
 
-        /// <summary> Gets the ClientIp. </summary>
-        public static WafRankingType ClientIp { get; } = new WafRankingType(ClientIpValue);
-
-        /// <summary> Gets the Url. </summary>
-        public static WafRankingType Url { get; } = new WafRankingType(UrlValue);
-
         /// <summary> Gets the CountryOrRegion. </summary>
         public static WafRankingType CountryOrRegion { get; } = new WafRankingType(CountryOrRegionValue);
 

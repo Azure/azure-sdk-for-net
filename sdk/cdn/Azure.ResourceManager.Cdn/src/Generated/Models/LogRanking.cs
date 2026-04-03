@@ -31,9 +31,6 @@ namespace Azure.ResourceManager.Cdn.Models
             _value = value;
         }
 
-        /// <summary> Gets the Url. </summary>
-        public static LogRanking Url { get; } = new LogRanking(UrlValue);
-
         /// <summary> Gets the Referrer. </summary>
         public static LogRanking Referrer { get; } = new LogRanking(ReferrerValue);
 

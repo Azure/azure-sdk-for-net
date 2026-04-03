@@ -15,8 +15,8 @@ namespace Azure.ResourceManager.Cdn.Models
         public static string ToSerialString(this HealthProbeRequestType value) => value switch
         {
             HealthProbeRequestType.NotSet => "NotSet",
-            HealthProbeRequestType.GET => "GET",
-            HealthProbeRequestType.HEAD => "HEAD",
+            HealthProbeRequestType.Get => "GET",
+            HealthProbeRequestType.Head => "HEAD",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown HealthProbeRequestType value.")
         };
 
@@ -29,11 +29,11 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "GET"))
             {
-                return HealthProbeRequestType.GET;
+                return HealthProbeRequestType.Get;
             }
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "HEAD"))
             {
-                return HealthProbeRequestType.HEAD;
+                return HealthProbeRequestType.Head;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown HealthProbeRequestType value.");
         }

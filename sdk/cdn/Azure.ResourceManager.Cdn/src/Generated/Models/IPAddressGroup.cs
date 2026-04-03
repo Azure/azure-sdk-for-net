@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Cdn.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="IPAddressGroup"/>. </summary>
-        internal IPAddressGroup()
+        public IPAddressGroup()
         {
             Ipv4Addresses = new ChangeTrackingList<CidrIPAddress>();
             Ipv6Addresses = new ChangeTrackingList<CidrIPAddress>();
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> The delivery region of the ip address group. </summary>
         [WirePath("deliveryRegion")]
-        public string DeliveryRegion { get; }
+        public string DeliveryRegion { get; set; }
 
         /// <summary> The list of ip v4 addresses. </summary>
         [WirePath("ipv4Addresses")]

@@ -21,23 +21,23 @@ namespace Azure.ResourceManager.Cdn.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SecurityPolicyProperties"/>. </summary>
-        /// <param name="type"> The type of the Security policy to create. </param>
-        private protected SecurityPolicyProperties(SecurityPolicyType @type)
+        /// <param name="policyType"> The type of the Security policy to create. </param>
+        private protected SecurityPolicyProperties(SecurityPolicyType policyType)
         {
-            Type = @type;
+            PolicyType = policyType;
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityPolicyProperties"/>. </summary>
-        /// <param name="type"> The type of the Security policy to create. </param>
+        /// <param name="policyType"> The type of the Security policy to create. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityPolicyProperties(SecurityPolicyType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SecurityPolicyProperties(SecurityPolicyType policyType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = @type;
+            PolicyType = policyType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The type of the Security policy to create. </summary>
         [WirePath("type")]
-        internal SecurityPolicyType Type { get; set; }
+        internal SecurityPolicyType PolicyType { get; set; }
     }
 }

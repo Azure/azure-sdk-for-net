@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="ipAddressGroups"> List of ip address groups. </param>
         internal EdgeNodeProperties(IEnumerable<IPAddressGroup> ipAddressGroups)
         {
-            IpAddressGroups = ipAddressGroups.ToList();
+            IPAddressGroups = ipAddressGroups.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="EdgeNodeProperties"/>. </summary>
@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal EdgeNodeProperties(IList<IPAddressGroup> ipAddressGroups, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            IpAddressGroups = ipAddressGroups;
+            IPAddressGroups = ipAddressGroups;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> List of ip address groups. </summary>
         [WirePath("ipAddressGroups")]
-        public IList<IPAddressGroup> IpAddressGroups { get; } = new ChangeTrackingList<IPAddressGroup>();
+        public IList<IPAddressGroup> IPAddressGroups { get; } = new ChangeTrackingList<IPAddressGroup>();
     }
 }

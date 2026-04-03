@@ -10,11 +10,11 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> TLS protocol version that will be used for Https when cipherSuiteSetType is Customized. </summary>
     public enum FrontDoorMinimumTlsVersion
     {
-        /// <summary> TLS10. </summary>
-        TLS10,
-        /// <summary> TLS12. </summary>
-        TLS12,
-        /// <summary> TLS13. </summary>
-        TLS13
+        /// <summary> Tls10. </summary>
+        Tls10,
+        /// <summary> Tls12. </summary>
+        Tls12,
+        /// <summary> Tls13. </summary>
+        Tls13
     }
 }

@@ -21,11 +21,11 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityPolicyWebApplicationFirewallParametersWithEmbeddedWafPolicy"/>. </summary>
-        /// <param name="type"> The type of the Security policy to create. </param>
+        /// <param name="policyType"> The type of the Security policy to create. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="wafPolicy"> Properties of the web application firewall policy. </param>
         /// <param name="associations"> Waf associations. </param>
-        internal SecurityPolicyWebApplicationFirewallParametersWithEmbeddedWafPolicy(SecurityPolicyType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, WebApplicationFirewallPolicy wafPolicy, IList<SecurityPolicyWebApplicationFirewallAssociation> associations) : base(@type, additionalBinaryDataProperties)
+        internal SecurityPolicyWebApplicationFirewallParametersWithEmbeddedWafPolicy(SecurityPolicyType policyType, IDictionary<string, BinaryData> additionalBinaryDataProperties, WebApplicationFirewallPolicy wafPolicy, IList<SecurityPolicyWebApplicationFirewallAssociation> associations) : base(policyType, additionalBinaryDataProperties)
         {
             WafPolicy = wafPolicy;
             Associations = associations;

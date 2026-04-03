@@ -162,13 +162,13 @@ namespace Azure.ResourceManager.Cdn.Models
             return new CdnMigrationToAfdContent(skuName is null ? default : new CdnSku(skuName, null), migrationEndpointMappings.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceId"> Resource ID. </param>
+        /// <param name="migrateResultType"> Resource type. </param>
         /// <param name="migratedProfileResourceIdId"> Resource ID. </param>
         /// <returns> A new <see cref="Models.MigrateResult"/> instance for mocking. </returns>
-        public static MigrateResult MigrateResult(ResourceIdentifier id = default, string @type = default, ResourceIdentifier migratedProfileResourceIdId = default)
+        public static MigrateResult MigrateResult(ResourceIdentifier resourceId = default, string migrateResultType = default, ResourceIdentifier migratedProfileResourceIdId = default)
         {
-            return new MigrateResult(id, @type, migratedProfileResourceIdId is null ? default : new MigrateResultProperties(new ResourceReference(migratedProfileResourceIdId, null), null), additionalBinaryDataProperties: null);
+            return new MigrateResult(resourceId, migrateResultType, migratedProfileResourceIdId is null ? default : new MigrateResultProperties(new ResourceReference(migratedProfileResourceIdId, null), null), additionalBinaryDataProperties: null);
         }
 
         /// <param name="classicResourceReferenceId"> Resource ID. </param>
@@ -179,15 +179,15 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <param name="skuName"> Name of the pricing tier. </param>
-        /// <param name="classicResourceReferenceId"> Resource ID. </param>
+        /// <param name="classicResourceReference"> Resource reference of the classic cdn profile or classic frontdoor that need to be migrated. </param>
         /// <param name="profileName"> Name of the new profile that need to be created. </param>
         /// <param name="migrationWebApplicationFirewallMappings"> Waf mapping for the migrated profile. </param>
         /// <returns> A new <see cref="Models.MigrationContent"/> instance for mocking. </returns>
-        public static MigrationContent MigrationContent(CdnSkuName? skuName = default, ResourceIdentifier classicResourceReferenceId = default, string profileName = default, IEnumerable<MigrationWebApplicationFirewallMapping> migrationWebApplicationFirewallMappings = default)
+        public static MigrationContent MigrationContent(CdnSkuName? skuName = default, WritableSubResource classicResourceReference = default, string profileName = default, IEnumerable<MigrationWebApplicationFirewallMapping> migrationWebApplicationFirewallMappings = default)
         {
             migrationWebApplicationFirewallMappings ??= new ChangeTrackingList<MigrationWebApplicationFirewallMapping>();
 
-            return new MigrationContent(skuName is null ? default : new CdnSku(skuName, null), classicResourceReferenceId is null ? default : new ResourceReference(classicResourceReferenceId, null), profileName, migrationWebApplicationFirewallMappings.ToList(), additionalBinaryDataProperties: null);
+            return new MigrationContent(skuName is null ? default : new CdnSku(skuName, null), classicResourceReference, profileName, migrationWebApplicationFirewallMappings.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="limit"> The limit of usage. </param>
         /// <param name="name"> The name of the type of usage. </param>
         /// <returns> A new <see cref="Models.FrontDoorUsage"/> instance for mocking. </returns>
-        public static FrontDoorUsage FrontDoorUsage(string id = default, FrontDoorUsageUnit unit = default, long currentValue = default, long limit = default, FrontDoorUsageResourceName name = default)
+        public static FrontDoorUsage FrontDoorUsage(ResourceIdentifier id = default, FrontDoorUsageUnit unit = default, long currentValue = default, long limit = default, FrontDoorUsageResourceName name = default)
         {
             return new FrontDoorUsage(
                 id,
@@ -2391,15 +2391,6 @@ namespace Azure.ResourceManager.Cdn.Models
             return new IPAddressGroup(deliveryRegion, ipv4Addresses.ToList(), ipv6Addresses.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> CIDR Ip address. </summary>
-        /// <param name="baseIpAddress"> Ip address itself. </param>
-        /// <param name="prefixLength"> The length of the prefix of the ip address. </param>
-        /// <returns> A new <see cref="Models.CidrIPAddress"/> instance for mocking. </returns>
-        public static CidrIPAddress CidrIPAddress(string baseIpAddress = default, int? prefixLength = default)
-        {
-            return new CidrIPAddress(baseIpAddress, prefixLength, additionalBinaryDataProperties: null);
-        }
-
         /// <summary> Describes a managed rule group. </summary>
         /// <param name="ruleGroupName"> Name of the managed rule group. </param>
         /// <param name="description"> Description of the managed rule group. </param>
@@ -2663,6 +2654,20 @@ namespace Azure.ResourceManager.Cdn.Models
             actions ??= new ChangeTrackingList<DeliveryRuleAction>();
 
             return new FrontDoorRulePatch(default, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MigrationContent"/>. </summary>
+        /// <param name="skuName"> Sku for the migration. </param>
+        /// <param name="classicResourceReferenceId"> Resource reference of the classic cdn profile or classic frontdoor that need to be migrated. </param>
+        /// <param name="profileName"> Name of the new profile that need to be created. </param>
+        /// <param name="migrationWebApplicationFirewallMappings"> Waf mapping for the migrated profile. </param>
+        /// <returns> A new <see cref="Models.MigrationContent"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static MigrationContent MigrationContent(CdnSkuName? skuName, ResourceIdentifier classicResourceReferenceId, string profileName, IEnumerable<MigrationWebApplicationFirewallMapping> migrationWebApplicationFirewallMappings)
+        {
+            migrationWebApplicationFirewallMappings ??= new ChangeTrackingList<MigrationWebApplicationFirewallMapping>();
+
+            return new MigrationContent(default, default, profileName, migrationWebApplicationFirewallMappings.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SsoUri"/>. </summary>
@@ -2961,7 +2966,8 @@ namespace Azure.ResourceManager.Cdn.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ProfileData ProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CdnSkuName? skuName, string kind, ProfileResourceState? resourceState, ProfileProvisioningState? provisioningState, Guid? frontDoorId, int? originResponseTimeoutSeconds)
         {
-            return ProfileData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, skuName: skuName, kind: kind, resourceState: resourceState, provisioningState: provisioningState, frontDoorId: frontDoorId, originResponseTimeoutSeconds: originResponseTimeoutSeconds);
+            //return ProfileData(id, name, resourceType, systemData, tags, location, resourceState, provisioningState, extendedProperties: default, frontDoorId, originResponseTimeoutSeconds, logScrubbing: default, skuName, kind, identity: default);
+            throw new NotImplementedException();
         }
 
         /// <summary> Initializes a new instance of CdnWebApplicationFirewallPolicyData. </summary>
@@ -2984,7 +2990,8 @@ namespace Azure.ResourceManager.Cdn.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static CdnWebApplicationFirewallPolicyData CdnWebApplicationFirewallPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, CdnSkuName? skuName, WafPolicySettings policySettings, IEnumerable<RateLimitRule> rateLimitRules, IEnumerable<CustomRule> customRules, IEnumerable<WafPolicyManagedRuleSet> managedRuleSets, IEnumerable<SubResource> endpointLinks, WebApplicationFirewallPolicyProvisioningState? provisioningState, PolicyResourceState? resourceState)
         {
-            return CdnWebApplicationFirewallPolicyData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, etag: etag, skuName: skuName, policySettings: policySettings, rateLimitRules: rateLimitRules, customRules: customRules, managedRuleSets: managedRuleSets, endpointLinks: endpointLinks, provisioningState: provisioningState, resourceState: resourceState);
+            //return CdnWebApplicationFirewallPolicyData(id, name, resourceType, systemData, tags, location, policySettings, endpointLinks, extendedProperties: default, provisioningState, resourceState, rateLimitRules, customRules, managedRuleSets, etag, skuName);
+            throw new NotImplementedException();
         }
     }
 }

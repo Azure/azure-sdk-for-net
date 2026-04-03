@@ -106,13 +106,13 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            SecretType @type = default;
+            SecretType secretType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new SecretType(prop.Value.GetString());
+                    secretType = new SecretType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new UnknownFrontDoorSecretProperties(@type, additionalBinaryDataProperties);
+            return new UnknownFrontDoorSecretProperties(secretType, additionalBinaryDataProperties);
         }
     }
 }

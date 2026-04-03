@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            SecretType @type = default;
+            SecretType secretType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             ResourceReference secretSource = default;
             string subject = default;
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new SecretType(prop.Value.GetString());
+                    secretType = new SecretType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("secretSource"u8))
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             return new AzureFirstPartyManagedCertificateProperties(
-                @type,
+                secretType,
                 additionalBinaryDataProperties,
                 secretSource,
                 subject,

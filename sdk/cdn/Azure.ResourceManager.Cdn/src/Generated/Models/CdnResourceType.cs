@@ -28,12 +28,6 @@ namespace Azure.ResourceManager.Cdn.Models
             _value = value;
         }
 
-        /// <summary> Gets the MicrosoftCdnProfilesEndpoints. </summary>
-        public static CdnResourceType MicrosoftCdnProfilesEndpoints { get; } = new CdnResourceType(MicrosoftCdnProfilesEndpointsValue);
-
-        /// <summary> Gets the MicrosoftCdnProfilesAfdEndpoints. </summary>
-        public static CdnResourceType MicrosoftCdnProfilesAfdEndpoints { get; } = new CdnResourceType(MicrosoftCdnProfilesAfdEndpointsValue);
-
         /// <summary> Determines if two <see cref="CdnResourceType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>

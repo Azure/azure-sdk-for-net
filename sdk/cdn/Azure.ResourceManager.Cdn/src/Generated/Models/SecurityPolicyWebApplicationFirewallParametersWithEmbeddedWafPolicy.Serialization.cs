@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            SecurityPolicyType @type = default;
+            SecurityPolicyType policyType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             WebApplicationFirewallPolicy wafPolicy = default;
             IList<SecurityPolicyWebApplicationFirewallAssociation> associations = default;
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new SecurityPolicyType(prop.Value.GetString());
+                    policyType = new SecurityPolicyType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("wafPolicy"u8))
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SecurityPolicyWebApplicationFirewallParametersWithEmbeddedWafPolicy(@type, additionalBinaryDataProperties, wafPolicy, associations ?? new ChangeTrackingList<SecurityPolicyWebApplicationFirewallAssociation>());
+            return new SecurityPolicyWebApplicationFirewallParametersWithEmbeddedWafPolicy(policyType, additionalBinaryDataProperties, wafPolicy, associations ?? new ChangeTrackingList<SecurityPolicyWebApplicationFirewallAssociation>());
         }
     }
 }

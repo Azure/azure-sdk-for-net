@@ -31,9 +31,6 @@ namespace Azure.ResourceManager.Cdn.Models
             _value = value;
         }
 
-        /// <summary> Gets the UrlSigningKey. </summary>
-        public static SecretType UrlSigningKey { get; } = new SecretType(UrlSigningKeyValue);
-
         /// <summary> Gets the CustomerCertificate. </summary>
         public static SecretType CustomerCertificate { get; } = new SecretType(CustomerCertificateValue);
 

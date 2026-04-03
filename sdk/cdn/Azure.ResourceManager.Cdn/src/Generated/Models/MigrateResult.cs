@@ -24,25 +24,25 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MigrateResult"/>. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceId"> Resource ID. </param>
+        /// <param name="migrateResultType"> Resource type. </param>
         /// <param name="properties"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MigrateResult(ResourceIdentifier id, string @type, MigrateResultProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MigrateResult(ResourceIdentifier resourceId, string migrateResultType, MigrateResultProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Id = id;
-            Type = @type;
+            ResourceId = resourceId;
+            MigrateResultType = migrateResultType;
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Resource ID. </summary>
         [WirePath("id")]
-        public ResourceIdentifier Id { get; }
+        public ResourceIdentifier ResourceId { get; }
 
         /// <summary> Resource type. </summary>
         [WirePath("type")]
-        public string Type { get; }
+        public string MigrateResultType { get; }
 
         /// <summary> Gets the Properties. </summary>
         [WirePath("properties")]

@@ -23,33 +23,33 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="FrontDoorSecurityPolicyPatch"/>. </summary>
-        /// <param name="properties"> The json object that contains properties required to update a security policy. </param>
+        /// <param name="updateProperties"> The json object that contains properties required to update a security policy. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FrontDoorSecurityPolicyPatch(SecurityPolicyUpdateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FrontDoorSecurityPolicyPatch(SecurityPolicyUpdateProperties updateProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Properties = properties;
+            UpdateProperties = updateProperties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The json object that contains properties required to update a security policy. </summary>
         [WirePath("properties")]
-        internal SecurityPolicyUpdateProperties Properties { get; set; }
+        internal SecurityPolicyUpdateProperties UpdateProperties { get; set; }
 
         /// <summary> object which contains security policy parameters. </summary>
         [WirePath("properties.parameters")]
-        public SecurityPolicyProperties Parameters
+        public SecurityPolicyProperties Properties
         {
             get
             {
-                return Properties is null ? default : Properties.Parameters;
+                return UpdateProperties is null ? default : UpdateProperties.Properties;
             }
             set
             {
-                if (Properties is null)
+                if (UpdateProperties is null)
                 {
-                    Properties = new SecurityPolicyUpdateProperties();
+                    UpdateProperties = new SecurityPolicyUpdateProperties();
                 }
-                Properties.Parameters = value;
+                UpdateProperties.Properties = value;
             }
         }
     }

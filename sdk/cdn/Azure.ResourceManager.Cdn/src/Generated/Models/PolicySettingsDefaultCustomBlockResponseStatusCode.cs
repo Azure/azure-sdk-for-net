@@ -28,21 +28,6 @@ namespace Azure.ResourceManager.Cdn.Models
             _value = value;
         }
 
-        /// <summary> Gets the _200. </summary>
-        public static PolicySettingsDefaultCustomBlockResponseStatusCode _200 { get; } = new PolicySettingsDefaultCustomBlockResponseStatusCode(_200Value);
-
-        /// <summary> Gets the _403. </summary>
-        public static PolicySettingsDefaultCustomBlockResponseStatusCode _403 { get; } = new PolicySettingsDefaultCustomBlockResponseStatusCode(_403Value);
-
-        /// <summary> Gets the _405. </summary>
-        public static PolicySettingsDefaultCustomBlockResponseStatusCode _405 { get; } = new PolicySettingsDefaultCustomBlockResponseStatusCode(_405Value);
-
-        /// <summary> Gets the _406. </summary>
-        public static PolicySettingsDefaultCustomBlockResponseStatusCode _406 { get; } = new PolicySettingsDefaultCustomBlockResponseStatusCode(_406Value);
-
-        /// <summary> Gets the _429. </summary>
-        public static PolicySettingsDefaultCustomBlockResponseStatusCode _429 { get; } = new PolicySettingsDefaultCustomBlockResponseStatusCode(_429Value);
-
         /// <summary> Determines if two <see cref="PolicySettingsDefaultCustomBlockResponseStatusCode"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>

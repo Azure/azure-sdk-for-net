@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Cdn.Models
     /// StandardPlus_955BandWidth_ChinaCdn = The SKU name for a China CDN live-streaming profile using 95-5 peak bandwidth billing model.
     /// StandardPlus_AvgBandWidth_ChinaCdn = The SKU name for a China CDN live-streaming profile using monthly average peak bandwidth billing model.
     /// </summary>
-    internal partial class CdnSku : IJsonModel<CdnSku>
+    public partial class CdnSku : IJsonModel<CdnSku>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

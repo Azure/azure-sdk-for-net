@@ -8,9 +8,11 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Cdn;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -93,7 +95,7 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(Sku, options);
             writer.WritePropertyName("classicResourceReference"u8);
-            writer.WriteObjectValue(ClassicResourceReference, options);
+            ((IJsonModel<WritableSubResource>)ClassicResourceReference).Write(writer, options);
             writer.WritePropertyName("profileName"u8);
             writer.WriteStringValue(ProfileName);
             if (Optional.IsCollectionDefined(MigrationWebApplicationFirewallMappings))
@@ -149,7 +151,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 return null;
             }
             CdnSku sku = default;
-            ResourceReference classicResourceReference = default;
+            WritableSubResource classicResourceReference = default;
             string profileName = default;
             IList<MigrationWebApplicationFirewallMapping> migrationWebApplicationFirewallMappings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -162,7 +164,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (prop.NameEquals("classicResourceReference"u8))
                 {
-                    classicResourceReference = ResourceReference.DeserializeResourceReference(prop.Value, options);
+                    classicResourceReference = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerCdnContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("profileName"u8))

@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 throw new FormatException($"The model {nameof(FrontDoorSecurityPolicyPatch)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Properties))
+            if (Optional.IsDefined(UpdateProperties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                writer.WriteObjectValue(UpdateProperties, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            SecurityPolicyUpdateProperties properties = default;
+            SecurityPolicyUpdateProperties updateProperties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     {
                         continue;
                     }
-                    properties = SecurityPolicyUpdateProperties.DeserializeSecurityPolicyUpdateProperties(prop.Value, options);
+                    updateProperties = SecurityPolicyUpdateProperties.DeserializeSecurityPolicyUpdateProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new FrontDoorSecurityPolicyPatch(properties, additionalBinaryDataProperties);
+            return new FrontDoorSecurityPolicyPatch(updateProperties, additionalBinaryDataProperties);
         }
     }
 }

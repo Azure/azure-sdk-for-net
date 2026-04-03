@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.Cdn.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="KeyVaultSigningKey"/>. </summary>
-        /// <param name="typeName"></param>
+        /// <param name="keyType"></param>
         /// <param name="subscriptionId"> Subscription Id of the user's Key Vault containing the secret. </param>
         /// <param name="resourceGroupName"> Resource group of the user's Key Vault containing the secret. </param>
         /// <param name="vaultName"> The name of the user's Key Vault containing the secret. </param>
         /// <param name="secretName"> The name of secret in Key Vault. </param>
         /// <param name="secretVersion"> The version(GUID) of secret in Key Vault. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="secretName"/> or <paramref name="secretVersion"/> is null. </exception>
-        public KeyVaultSigningKey(KeyVaultSigningKeyType typeName, string subscriptionId, string resourceGroupName, string vaultName, string secretName, string secretVersion)
+        public KeyVaultSigningKey(KeyVaultSigningKeyType keyType, string subscriptionId, string resourceGroupName, string vaultName, string secretName, string secretVersion)
         {
             Argument.AssertNotNull(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(resourceGroupName, nameof(resourceGroupName));
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Cdn.Models
             Argument.AssertNotNull(secretName, nameof(secretName));
             Argument.AssertNotNull(secretVersion, nameof(secretVersion));
 
-            TypeName = typeName;
+            KeyType = keyType;
             SubscriptionId = subscriptionId;
             ResourceGroupName = resourceGroupName;
             VaultName = vaultName;
@@ -42,16 +42,16 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="KeyVaultSigningKey"/>. </summary>
-        /// <param name="typeName"></param>
+        /// <param name="keyType"></param>
         /// <param name="subscriptionId"> Subscription Id of the user's Key Vault containing the secret. </param>
         /// <param name="resourceGroupName"> Resource group of the user's Key Vault containing the secret. </param>
         /// <param name="vaultName"> The name of the user's Key Vault containing the secret. </param>
         /// <param name="secretName"> The name of secret in Key Vault. </param>
         /// <param name="secretVersion"> The version(GUID) of secret in Key Vault. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KeyVaultSigningKey(KeyVaultSigningKeyType typeName, string subscriptionId, string resourceGroupName, string vaultName, string secretName, string secretVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KeyVaultSigningKey(KeyVaultSigningKeyType keyType, string subscriptionId, string resourceGroupName, string vaultName, string secretName, string secretVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            TypeName = typeName;
+            KeyType = keyType;
             SubscriptionId = subscriptionId;
             ResourceGroupName = resourceGroupName;
             VaultName = vaultName;
@@ -60,9 +60,9 @@ namespace Azure.ResourceManager.Cdn.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets or sets the TypeName. </summary>
+        /// <summary> Gets or sets the KeyType. </summary>
         [WirePath("typeName")]
-        public KeyVaultSigningKeyType TypeName { get; set; }
+        public KeyVaultSigningKeyType KeyType { get; set; }
 
         /// <summary> Subscription Id of the user's Key Vault containing the secret. </summary>
         [WirePath("subscriptionId")]

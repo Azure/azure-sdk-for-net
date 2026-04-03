@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 throw new FormatException($"The model {nameof(SecurityPolicyUpdateProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Parameters))
+            if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("parameters"u8);
-                writer.WriteObjectValue(Parameters, options);
+                writer.WriteObjectValue(Properties, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            SecurityPolicyProperties parameters = default;
+            SecurityPolicyProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     {
                         continue;
                     }
-                    parameters = SecurityPolicyProperties.DeserializeSecurityPolicyProperties(prop.Value, options);
+                    properties = SecurityPolicyProperties.DeserializeSecurityPolicyProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SecurityPolicyUpdateProperties(parameters, additionalBinaryDataProperties);
+            return new SecurityPolicyUpdateProperties(properties, additionalBinaryDataProperties);
         }
     }
 }

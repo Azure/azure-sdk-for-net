@@ -28,12 +28,6 @@ namespace Azure.ResourceManager.Cdn.Models
             _value = value;
         }
 
-        /// <summary> Gets the HTTP. </summary>
-        public static RequestSchemeMatchConditionMatchValue HTTP { get; } = new RequestSchemeMatchConditionMatchValue(HTTPValue);
-
-        /// <summary> Gets the HTTPS. </summary>
-        public static RequestSchemeMatchConditionMatchValue HTTPS { get; } = new RequestSchemeMatchConditionMatchValue(HTTPSValue);
-
         /// <summary> Determines if two <see cref="RequestSchemeMatchConditionMatchValue"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>

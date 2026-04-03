@@ -10,12 +10,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     public partial class MigrateResult
     {
-        // Backward compatibility: old API exposed ResourceId, new generator uses Id
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public ResourceIdentifier ResourceId => Id;
-
-        // Backward compatibility: old API used MigrateResultType, new uses Type
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public string MigrateResultType => Type;
+        public string Id => ResourceId?.ToString();
     }
 }

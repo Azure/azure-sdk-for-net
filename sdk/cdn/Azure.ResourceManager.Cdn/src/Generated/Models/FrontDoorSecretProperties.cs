@@ -21,23 +21,23 @@ namespace Azure.ResourceManager.Cdn.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FrontDoorSecretProperties"/>. </summary>
-        /// <param name="type"> The type of the secret resource. </param>
-        private protected FrontDoorSecretProperties(SecretType @type)
+        /// <param name="secretType"> The type of the secret resource. </param>
+        private protected FrontDoorSecretProperties(SecretType secretType)
         {
-            Type = @type;
+            SecretType = secretType;
         }
 
         /// <summary> Initializes a new instance of <see cref="FrontDoorSecretProperties"/>. </summary>
-        /// <param name="type"> The type of the secret resource. </param>
+        /// <param name="secretType"> The type of the secret resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FrontDoorSecretProperties(SecretType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FrontDoorSecretProperties(SecretType secretType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = @type;
+            SecretType = secretType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The type of the secret resource. </summary>
         [WirePath("type")]
-        internal SecretType Type { get; set; }
+        internal SecretType SecretType { get; set; }
     }
 }

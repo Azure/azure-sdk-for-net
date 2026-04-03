@@ -15,26 +15,26 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class DeliveryRuleServerPortCondition : DeliveryRuleCondition
     {
         /// <summary> Initializes a new instance of <see cref="DeliveryRuleServerPortCondition"/>. </summary>
-        /// <param name="parameters"> Defines the parameters for the condition. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public DeliveryRuleServerPortCondition(ServerPortMatchCondition parameters) : base(MatchVariable.ServerPort)
+        /// <param name="properties"> Defines the parameters for the condition. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
+        public DeliveryRuleServerPortCondition(ServerPortMatchCondition properties) : base(MatchVariable.ServerPort)
         {
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(properties, nameof(properties));
 
-            Parameters = parameters;
+            Properties = properties;
         }
 
         /// <summary> Initializes a new instance of <see cref="DeliveryRuleServerPortCondition"/>. </summary>
         /// <param name="name"> The name of the condition for the delivery rule. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="parameters"> Defines the parameters for the condition. </param>
-        internal DeliveryRuleServerPortCondition(MatchVariable name, IDictionary<string, BinaryData> additionalBinaryDataProperties, ServerPortMatchCondition parameters) : base(name, additionalBinaryDataProperties)
+        /// <param name="properties"> Defines the parameters for the condition. </param>
+        internal DeliveryRuleServerPortCondition(MatchVariable name, IDictionary<string, BinaryData> additionalBinaryDataProperties, ServerPortMatchCondition properties) : base(name, additionalBinaryDataProperties)
         {
-            Parameters = parameters;
+            Properties = properties;
         }
 
         /// <summary> Defines the parameters for the condition. </summary>
         [WirePath("parameters")]
-        public ServerPortMatchCondition Parameters { get; set; }
+        public ServerPortMatchCondition Properties { get; set; }
     }
 }

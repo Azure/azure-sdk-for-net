@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Cdn.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CidrIPAddress"/>. </summary>
-        internal CidrIPAddress()
+        public CidrIPAddress()
         {
         }
 
@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Ip address itself. </summary>
         [WirePath("baseIpAddress")]
-        public string BaseIpAddress { get; }
+        public string BaseIpAddress { get; set; }
 
         /// <summary> The length of the prefix of the ip address. </summary>
         [WirePath("prefixLength")]
-        public int? PrefixLength { get; }
+        public int? PrefixLength { get; set; }
     }
 }

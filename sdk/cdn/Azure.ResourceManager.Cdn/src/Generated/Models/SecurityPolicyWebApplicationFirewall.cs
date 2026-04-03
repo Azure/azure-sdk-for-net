@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityPolicyWebApplicationFirewall"/>. </summary>
-        /// <param name="type"> The type of the Security policy to create. </param>
+        /// <param name="policyType"> The type of the Security policy to create. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="wafPolicy"> Resource ID. </param>
         /// <param name="associations"> Waf associations. </param>
-        internal SecurityPolicyWebApplicationFirewall(SecurityPolicyType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceReference wafPolicy, IList<SecurityPolicyWebApplicationFirewallAssociation> associations) : base(@type, additionalBinaryDataProperties)
+        internal SecurityPolicyWebApplicationFirewall(SecurityPolicyType policyType, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceReference wafPolicy, IList<SecurityPolicyWebApplicationFirewallAssociation> associations) : base(policyType, additionalBinaryDataProperties)
         {
             WafPolicy = wafPolicy;
             Associations = associations;

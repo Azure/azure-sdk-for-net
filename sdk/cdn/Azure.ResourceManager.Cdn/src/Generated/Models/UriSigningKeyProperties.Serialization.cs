@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            SecretType @type = default;
+            SecretType secretType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string keyId = default;
             ResourceReference secretSource = default;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new SecretType(prop.Value.GetString());
+                    secretType = new SecretType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("keyId"u8))
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new UriSigningKeyProperties(@type, additionalBinaryDataProperties, keyId, secretSource, secretVersion);
+            return new UriSigningKeyProperties(secretType, additionalBinaryDataProperties, keyId, secretSource, secretVersion);
         }
     }
 }

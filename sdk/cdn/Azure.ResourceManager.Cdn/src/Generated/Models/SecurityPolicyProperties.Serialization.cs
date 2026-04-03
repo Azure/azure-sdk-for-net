@@ -19,11 +19,6 @@ namespace Azure.ResourceManager.Cdn.Models
     [PersistableModelProxy(typeof(UnknownSecurityPolicyProperties))]
     public abstract partial class SecurityPolicyProperties : IJsonModel<SecurityPolicyProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="SecurityPolicyProperties"/> for deserialization. </summary>
-        internal SecurityPolicyProperties()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual SecurityPolicyProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -83,7 +78,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 throw new FormatException($"The model {nameof(SecurityPolicyProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToString());
+            writer.WriteStringValue(PolicyType.ToString());
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)

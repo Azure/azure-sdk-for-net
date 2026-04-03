@@ -106,13 +106,13 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            SecurityPolicyType @type = default;
+            SecurityPolicyType policyType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new SecurityPolicyType(prop.Value.GetString());
+                    policyType = new SecurityPolicyType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new UnknownSecurityPolicyProperties(@type, additionalBinaryDataProperties);
+            return new UnknownSecurityPolicyProperties(policyType, additionalBinaryDataProperties);
         }
     }
 }

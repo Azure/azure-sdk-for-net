@@ -41,12 +41,6 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Gets the Trim. </summary>
         public static PreTransformCategory Trim { get; } = new PreTransformCategory(TrimValue);
 
-        /// <summary> Gets the UrlDecode. </summary>
-        public static PreTransformCategory UrlDecode { get; } = new PreTransformCategory(UrlDecodeValue);
-
-        /// <summary> Gets the UrlEncode. </summary>
-        public static PreTransformCategory UrlEncode { get; } = new PreTransformCategory(UrlEncodeValue);
-
         /// <summary> Gets the RemoveNulls. </summary>
         public static PreTransformCategory RemoveNulls { get; } = new PreTransformCategory(RemoveNullsValue);
 

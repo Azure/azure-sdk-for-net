@@ -19,11 +19,6 @@ namespace Azure.ResourceManager.Cdn.Models
     [PersistableModelProxy(typeof(UnknownFrontDoorSecretProperties))]
     public abstract partial class FrontDoorSecretProperties : IJsonModel<FrontDoorSecretProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="FrontDoorSecretProperties"/> for deserialization. </summary>
-        internal FrontDoorSecretProperties()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual FrontDoorSecretProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -83,7 +78,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 throw new FormatException($"The model {nameof(FrontDoorSecretProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToString());
+            writer.WriteStringValue(SecretType.ToString());
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)

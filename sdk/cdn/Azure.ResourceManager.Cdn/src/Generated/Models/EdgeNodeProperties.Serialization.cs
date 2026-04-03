@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             writer.WritePropertyName("ipAddressGroups"u8);
             writer.WriteStartArray();
-            foreach (IPAddressGroup item in IpAddressGroups)
+            foreach (IPAddressGroup item in IPAddressGroups)
             {
                 writer.WriteObjectValue(item, options);
             }
