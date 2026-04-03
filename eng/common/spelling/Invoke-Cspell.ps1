@@ -95,12 +95,12 @@ end {
     Write-Verbose "  $file"
   }
 
-  $fileListPath = (New-TemporaryFile).FullName
-  $filesToCheck | Out-File -FilePath $fileListPath -Encoding utf8
-
   npm --prefix $PackageInstallCache ci | Write-Host
 
   try {
+    $fileListPath = (New-TemporaryFile).FullName
+    $filesToCheck | Out-File -FilePath $fileListPath -Encoding utf8
+
     $cspellArgs = @(
       '--prefix', $PackageInstallCache,
       'exec', '--no', '--',
