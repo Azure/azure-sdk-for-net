@@ -16,31 +16,8 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     /// <summary> IP address for the container group. </summary>
     public partial class ContainerGroupIPAddress : IJsonModel<ContainerGroupIPAddress>
     {
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ContainerGroupIPAddress>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ContainerGroupIPAddress IPersistableModel<ContainerGroupIPAddress>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ContainerGroupIPAddress>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ContainerGroupIPAddress>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
-            writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
-            writer.WriteEndObject();
-        }
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ContainerGroupIPAddress IJsonModel<ContainerGroupIPAddress>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
         /// <summary> Initializes a new instance of <see cref="ContainerGroupIPAddress"/> for deserialization. </summary>
-        protected ContainerGroupIPAddress()
+        internal ContainerGroupIPAddress()
         {
         }
 
@@ -72,6 +49,25 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 default:
                     throw new FormatException($"The model {nameof(ContainerGroupIPAddress)} does not support writing '{options.Format}' format.");
             }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ContainerGroupIPAddress>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ContainerGroupIPAddress IPersistableModel<ContainerGroupIPAddress>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ContainerGroupIPAddress>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        void IJsonModel<ContainerGroupIPAddress>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
         }
 
         /// <param name="writer"> The JSON writer. </param>
@@ -128,6 +124,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
             }
         }
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ContainerGroupIPAddress IJsonModel<ContainerGroupIPAddress>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

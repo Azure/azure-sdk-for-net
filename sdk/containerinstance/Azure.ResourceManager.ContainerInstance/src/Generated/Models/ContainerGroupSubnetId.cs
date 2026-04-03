@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Resource ID of virtual network and subnet. </summary>
+        public ResourceIdentifier Id { get; set; }
+
         /// <summary> Friendly name for the subnet. </summary>
         public string Name { get; set; }
-
-        /// <summary> Gets the Id. </summary>
-        public ResourceIdentifier Id { get; set; }
     }
 }

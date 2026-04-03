@@ -17,6 +17,11 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerEvent"/>. </summary>
+        internal ContainerEvent()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerEvent"/>. </summary>
         /// <param name="count"> The count of the event. </param>
         /// <param name="firstTimestamp"> The date-time of the earliest logged event. </param>
         /// <param name="lastTimestamp"> The date-time of the latest logged event. </param>

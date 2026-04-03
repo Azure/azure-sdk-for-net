@@ -17,6 +17,11 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerLogs"/>. </summary>
+        internal ContainerLogs()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerLogs"/>. </summary>
         /// <param name="content"> The content of the log. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal ContainerLogs(string content, IDictionary<string, BinaryData> additionalBinaryDataProperties)

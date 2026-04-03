@@ -16,29 +16,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     /// <summary> The supported capabilities. </summary>
     public partial class ContainerSupportedCapabilities : IJsonModel<ContainerSupportedCapabilities>
     {
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ContainerSupportedCapabilities>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ContainerSupportedCapabilities IPersistableModel<ContainerSupportedCapabilities>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ContainerSupportedCapabilities>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ContainerSupportedCapabilities>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
-            writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
-            writer.WriteEndObject();
-        }
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ContainerSupportedCapabilities IJsonModel<ContainerSupportedCapabilities>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ContainerSupportedCapabilities PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -67,6 +44,25 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 default:
                     throw new FormatException($"The model {nameof(ContainerSupportedCapabilities)} does not support writing '{options.Format}' format.");
             }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ContainerSupportedCapabilities>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ContainerSupportedCapabilities IPersistableModel<ContainerSupportedCapabilities>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ContainerSupportedCapabilities>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        void IJsonModel<ContainerSupportedCapabilities>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
         }
 
         /// <param name="writer"> The JSON writer. </param>
@@ -109,6 +105,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
             }
         }
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ContainerSupportedCapabilities IJsonModel<ContainerSupportedCapabilities>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

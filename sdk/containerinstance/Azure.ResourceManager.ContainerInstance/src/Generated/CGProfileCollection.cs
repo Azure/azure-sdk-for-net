@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal CGProfileCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            this.TryGetApiVersion(CGProfileResource.ResourceType, out string cgProfileApiVersion);
+            TryGetApiVersion(CGProfileResource.ResourceType, out string cgProfileApiVersion);
             _cgProfileClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerInstance", CGProfileResource.ResourceType.Namespace, Diagnostics);
             _cgProfileRestClient = new CGProfile(_cgProfileClientDiagnostics, Pipeline, Endpoint, cgProfileApiVersion ?? "2025-09-01");
             _cgProfilesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerInstance", CGProfileResource.ResourceType.Namespace, Diagnostics);
             _cgProfilesRestClient = new CGProfiles(_cgProfilesClientDiagnostics, Pipeline, Endpoint, cgProfileApiVersion ?? "2025-09-01");
-            CGProfileCollection.ValidateResourceId(id);
+            ValidateResourceId(id);
         }
 
         /// <param name="id"></param>
@@ -561,18 +561,18 @@ namespace Azure.ResourceManager.ContainerInstance
 
         IEnumerator<CGProfileResource> IEnumerable<CGProfileResource>.GetEnumerator()
         {
-            return this.GetAll().GetEnumerator();
+            return GetAll().GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return this.GetAll().GetEnumerator();
+            return GetAll().GetEnumerator();
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<CGProfileResource> IAsyncEnumerable<CGProfileResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
-            return this.GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

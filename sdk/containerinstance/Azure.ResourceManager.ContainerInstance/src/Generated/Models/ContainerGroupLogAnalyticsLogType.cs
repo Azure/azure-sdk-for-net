@@ -6,19 +6,19 @@
 #nullable disable
 
 using System;
-    using System.ComponentModel;
+using System.ComponentModel;
+using Azure.ResourceManager.ContainerInstance;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
     /// <summary> The log type to be used. </summary>
     public readonly partial struct ContainerGroupLogAnalyticsLogType : IEquatable<ContainerGroupLogAnalyticsLogType>
     {
+        private readonly string _value;
         /// <summary> ContainerInsights. </summary>
         private const string ContainerInsightsValue = "ContainerInsights";
         /// <summary> ContainerInstanceLogs. </summary>
         private const string ContainerInstanceLogsValue = "ContainerInstanceLogs";
-
-        private readonly string _value;
 
         /// <summary> Initializes a new instance of <see cref="ContainerGroupLogAnalyticsLogType"/>. </summary>
         /// <param name="value"> The value. </param>

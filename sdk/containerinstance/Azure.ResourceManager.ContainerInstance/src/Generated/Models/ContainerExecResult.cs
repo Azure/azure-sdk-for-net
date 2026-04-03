@@ -17,6 +17,11 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerExecResult"/>. </summary>
+        internal ContainerExecResult()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerExecResult"/>. </summary>
         /// <param name="webSocketUri"> The uri for the exec websocket. </param>
         /// <param name="password"> The password to start the exec command. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
@@ -27,10 +32,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> The uri for the exec websocket. </summary>
+        public Uri WebSocketUri { get; }
+
         /// <summary> The password to start the exec command. </summary>
         public string Password { get; }
-
-        /// <summary> Gets the WebSocketUri. </summary>
-        public Uri WebSocketUri { get; }
     }
 }

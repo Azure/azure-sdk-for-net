@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> The list of ports exposed on the container group. </summary>
+        public IList<ContainerGroupPort> Ports { get; }
+
         /// <summary> Specifies if the IP is exposed to the public internet or private VNET. </summary>
         public ContainerGroupIPAddressType Type { get; set; }
 
@@ -49,8 +52,5 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
         /// <summary> The FQDN for the IP. </summary>
         public string Fqdn { get; }
-
-        /// <summary> Gets the Ports. </summary>
-        public IList<ContainerGroupPort> Ports { get; }
     }
 }

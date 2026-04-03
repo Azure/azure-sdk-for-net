@@ -24,11 +24,11 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="runAsUser"> Sets the User UID for the container. </param>
         /// <param name="seccompProfile"> a base64 encoded string containing the contents of the JSON in the seccomp profile. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerSecurityContextDefinition(bool? privileged, bool? allowPrivilegeEscalation, SecurityContextCapabilitiesDefinition capabilities, int? runAsGroup, int? runAsUser, string seccompProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerSecurityContextDefinition(bool? privileged, bool? allowPrivilegeEscalation, ContainerSecurityContextCapabilitiesDefinition capabilities, int? runAsGroup, int? runAsUser, string seccompProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Privileged = privileged;
             AllowPrivilegeEscalation = allowPrivilegeEscalation;
-            CapabilitiesValue = capabilities;
+            Capabilities = capabilities;
             RunAsGroup = runAsGroup;
             RunAsUser = runAsUser;
             SeccompProfile = seccompProfile;
@@ -49,8 +49,5 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
         /// <summary> a base64 encoded string containing the contents of the JSON in the seccomp profile. </summary>
         public string SeccompProfile { get; set; }
-
-        /// <summary> Gets the Capabilities. </summary>
-        internal SecurityContextCapabilitiesDefinition CapabilitiesValue { get; set; }
     }
 }

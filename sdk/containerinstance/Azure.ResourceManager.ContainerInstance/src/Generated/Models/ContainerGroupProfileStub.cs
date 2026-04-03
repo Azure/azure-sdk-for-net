@@ -44,13 +44,13 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <summary> The revision of the CG profile is an optional property. If customer does not to provide a revision then NGroups will pickup the latest revision of CGProfile. </summary>
         public int? Revision { get; set; }
 
+        /// <summary> A network profile for network settings of a ContainerGroupProfile. </summary>
+        public ContainerGroupNetworkProfile NetworkProfile { get; set; }
+
         /// <summary> Storage profile for storage related settings of a container group profile. </summary>
         internal StorageProfile StorageProfile { get; set; }
 
         /// <summary> Container Group properties which can be set while creating or updating the NGroups. </summary>
         public NGroupContainerGroupProperties ContainerGroupProperties { get; set; }
-
-        /// <summary> A network profile for network settings of a ContainerGroupProfile. </summary>
-        public ContainerGroupNetworkProfile NetworkProfile { get; set; }
     }
 }

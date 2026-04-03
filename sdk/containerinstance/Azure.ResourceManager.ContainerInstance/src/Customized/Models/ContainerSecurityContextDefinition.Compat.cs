@@ -3,7 +3,8 @@
 
 using System.ComponentModel;
 
-// Backward-compat constructor and property shims for TypeSpec migration (ApiCompat).
+// Backward-compat: generated constructor sets Capabilities/Privileged but no generated property declarations.
+// We provide them here. Also restores IsPrivileged alias and public parameterless ctor for ApiCompat.
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
@@ -19,11 +20,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public bool? IsPrivileged { get => Privileged; set => Privileged = value; }
 
         /// <summary> The capabilities to add or drop from a container. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public ContainerSecurityContextCapabilitiesDefinition Capabilities
-        {
-            get => CapabilitiesValue as ContainerSecurityContextCapabilitiesDefinition;
-            set => CapabilitiesValue = value;
-        }
+        public ContainerSecurityContextCapabilitiesDefinition Capabilities { get; set; }
     }
 }

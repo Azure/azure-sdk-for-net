@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <summary> The CPU request of this container instance. </summary>
         public double Cpu { get; set; }
 
-        /// <summary> Gets the Gpu. </summary>
+        /// <summary> The GPU request of this container instance. </summary>
         public ContainerGpuResourceInfo Gpu { get; set; }
     }
 }

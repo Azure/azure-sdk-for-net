@@ -17,6 +17,11 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerSupportedCapabilities"/>. </summary>
+        internal ContainerSupportedCapabilities()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerSupportedCapabilities"/>. </summary>
         /// <param name="maxMemoryInGB"> The maximum allowed memory request in GB. </param>
         /// <param name="maxCpu"> The maximum allowed CPU request in cores. </param>
         /// <param name="maxGpuCount"> The maximum allowed GPU count. </param>

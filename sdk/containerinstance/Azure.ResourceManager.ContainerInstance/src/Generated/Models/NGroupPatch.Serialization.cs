@@ -5,9 +5,6 @@
 
 #nullable disable
 
-#pragma warning disable IL2026 // RequiresUnreferencedCode
-#pragma warning disable IL3050 // RequiresDynamicCode
-
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
@@ -100,10 +97,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
             }
-            if (Optional.IsDefined(Identity))
+            if (Optional.IsDefined(NGroupIdentityValue))
             {
                 writer.WritePropertyName("identity"u8);
-                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
+                writer.WriteObjectValue(NGroupIdentityValue, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -180,7 +177,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
             SystemData systemData = default;
             NGroupProperties properties = default;
-            ManagedServiceIdentity identity = default;
+            NGroupIdentity identity = default;
             IDictionary<string, string> tags = default;
             IList<string> zones = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -210,7 +207,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), options);
+                    identity = NGroupIdentity.DeserializeNGroupIdentity(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("tags"u8))

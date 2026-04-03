@@ -19,15 +19,8 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContainerInstanceContainer"/>. </summary>
-        /// <param name="name"> The name of the container. </param>
-        /// <param name="image"> The container image. </param>
-        /// <param name="resources"> The resource requirements. </param>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public ContainerInstanceContainer(string name, string image, ContainerResourceRequirements resources)
-            : this(name, (ContainerProperties)default, (IDictionary<string, System.BinaryData>)default)
-        {
-        }
+        // Constructor (string name, string image, ContainerResourceRequirements) is in ContainerInstanceContainer.cs
+        // (removed here to avoid CS0111)
 
         // Delegation properties for ContainerProperties members (moved to nested type in TypeSpec generation).
 

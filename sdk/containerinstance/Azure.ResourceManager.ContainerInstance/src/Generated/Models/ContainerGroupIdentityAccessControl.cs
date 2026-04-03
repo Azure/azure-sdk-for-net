@@ -12,21 +12,21 @@ using Azure.Core;
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
     /// <summary> The access control for an identity. </summary>
-    public partial class IdentityAccessControl
+    public partial class ContainerGroupIdentityAccessControl
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="IdentityAccessControl"/>. </summary>
-        public IdentityAccessControl()
+        /// <summary> Initializes a new instance of <see cref="ContainerGroupIdentityAccessControl"/>. </summary>
+        public ContainerGroupIdentityAccessControl()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="IdentityAccessControl"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerGroupIdentityAccessControl"/>. </summary>
         /// <param name="access"> The access level of the identity. </param>
         /// <param name="identity"> An identity. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IdentityAccessControl(IdentityAccessLevel? access, ResourceIdentifier identity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerGroupIdentityAccessControl(ContainerGroupIdentityAccessLevel? access, ResourceIdentifier identity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Access = access;
             Identity = identity;
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         }
 
         /// <summary> The access level of the identity. </summary>
-        public IdentityAccessLevel? Access { get; set; }
+        public ContainerGroupIdentityAccessLevel? Access { get; set; }
 
         /// <summary> An identity. </summary>
         public ResourceIdentifier Identity { get; set; }

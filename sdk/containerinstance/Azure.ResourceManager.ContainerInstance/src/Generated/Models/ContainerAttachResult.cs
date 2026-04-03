@@ -17,6 +17,11 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerAttachResult"/>. </summary>
+        internal ContainerAttachResult()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAttachResult"/>. </summary>
         /// <param name="webSocketUri"> The uri for the output stream from the attach. </param>
         /// <param name="password"> The password to the output stream from the attach. Send as an Authorization header value when connecting to the websocketUri. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
@@ -27,10 +32,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> The uri for the output stream from the attach. </summary>
+        public Uri WebSocketUri { get; }
+
         /// <summary> The password to the output stream from the attach. Send as an Authorization header value when connecting to the websocketUri. </summary>
         public string Password { get; }
-
-        /// <summary> Gets the WebSocketUri. </summary>
-        public Uri WebSocketUri { get; }
     }
 }

@@ -10,22 +10,22 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
-    /// <summary> The FileShareProperties. </summary>
-    public partial class FileShareProperties
+    /// <summary> The ContainerGroupFileShareProperties. </summary>
+    public partial class ContainerGroupFileShareProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="FileShareProperties"/>. </summary>
-        public FileShareProperties()
+        /// <summary> Initializes a new instance of <see cref="ContainerGroupFileShareProperties"/>. </summary>
+        public ContainerGroupFileShareProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="FileShareProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerGroupFileShareProperties"/>. </summary>
         /// <param name="shareAccessType"> Specifies how Container Groups can access the Azure file share i.e. all CG will share same Azure file share or going to have exclusive file share. </param>
         /// <param name="shareAccessTier"> Access tier for specific share. GpV2 account can choose between TransactionOptimized (default), Hot, and Cool. FileStorage account can choose Premium. Learn more at: https://learn.microsoft.com/en-us/rest/api/storagerp/file-shares/create?tabs=HTTP#shareaccesstier. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FileShareProperties(AzureFileShareAccessType? shareAccessType, AzureFileShareAccessTier? shareAccessTier, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerGroupFileShareProperties(AzureFileShareAccessType? shareAccessType, AzureFileShareAccessTier? shareAccessTier, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ShareAccessType = shareAccessType;
             ShareAccessTier = shareAccessTier;

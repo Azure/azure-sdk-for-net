@@ -6,21 +6,21 @@
 #nullable disable
 
 using System;
-    using System.ComponentModel;
+using System.ComponentModel;
+using Azure.ResourceManager.ContainerInstance;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
     /// <summary> The SKU of the GPU resource. </summary>
     public readonly partial struct ContainerGpuSku : IEquatable<ContainerGpuSku>
     {
+        private readonly string _value;
         /// <summary> K80. </summary>
         private const string K80Value = "K80";
         /// <summary> P100. </summary>
         private const string P100Value = "P100";
         /// <summary> V100. </summary>
         private const string V100Value = "V100";
-
-        private readonly string _value;
 
         /// <summary> Initializes a new instance of <see cref="ContainerGpuSku"/>. </summary>
         /// <param name="value"> The value. </param>

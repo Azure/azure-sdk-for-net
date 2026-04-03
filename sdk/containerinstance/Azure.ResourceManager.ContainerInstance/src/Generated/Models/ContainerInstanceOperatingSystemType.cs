@@ -6,19 +6,19 @@
 #nullable disable
 
 using System;
-    using System.ComponentModel;
+using System.ComponentModel;
+using Azure.ResourceManager.ContainerInstance;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
     /// <summary> The operating system type required by the containers in the container group. </summary>
     public readonly partial struct ContainerInstanceOperatingSystemType : IEquatable<ContainerInstanceOperatingSystemType>
     {
+        private readonly string _value;
         /// <summary> Windows. </summary>
         private const string WindowsValue = "Windows";
         /// <summary> Linux. </summary>
         private const string LinuxValue = "Linux";
-
-        private readonly string _value;
 
         /// <summary> Initializes a new instance of <see cref="ContainerInstanceOperatingSystemType"/>. </summary>
         /// <param name="value"> The value. </param>

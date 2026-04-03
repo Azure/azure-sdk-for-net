@@ -11,21 +11,21 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
     /// <summary> The name object of the resource. </summary>
-    public partial class UsageName
+    public partial class ContainerInstanceUsageName
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="UsageName"/>. </summary>
-        internal UsageName()
+        /// <summary> Initializes a new instance of <see cref="ContainerInstanceUsageName"/>. </summary>
+        internal ContainerInstanceUsageName()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="UsageName"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerInstanceUsageName"/>. </summary>
         /// <param name="value"> The name of the resource. </param>
         /// <param name="localizedValue"> The localized name of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UsageName(string value, string localizedValue, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerInstanceUsageName(string value, string localizedValue, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             LocalizedValue = localizedValue;

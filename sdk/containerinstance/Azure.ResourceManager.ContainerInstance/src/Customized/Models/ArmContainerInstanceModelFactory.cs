@@ -106,38 +106,8 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             throw null;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContainerInstance.ContainerGroupData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="zones"> The zones for the container group. </param>
-        /// <param name="identity"> The identity of the container group, if configured. </param>
-        /// <param name="provisioningState"> The provisioning state of the container group. </param>
-        /// <param name="containers"> The containers within the container group. </param>
-        /// <param name="imageRegistryCredentials"> The image registry credentials. </param>
-        /// <param name="restartPolicy"> Restart policy for all containers within the container group. </param>
-        /// <param name="ipAddress"> The IP address type of the container group. </param>
-        /// <param name="osType"> The operating system type required by the containers. </param>
-        /// <param name="volumes"> The list of volumes. </param>
-        /// <param name="instanceView"> The instance view of the container group. </param>
-        /// <param name="diagnosticsLogAnalytics"> Container group log analytics information. </param>
-        /// <param name="subnetIds"> The subnet resource IDs for a container group. </param>
-        /// <param name="dnsConfig"> The DNS config information. </param>
-        /// <param name="sku"> The SKU for a container group. </param>
-        /// <param name="encryptionProperties"> The encryption properties for a container group. </param>
-        /// <param name="initContainers"> The init containers for a container group. </param>
-        /// <param name="extensions"> extensions used by virtual kubelet. </param>
-        /// <param name="confidentialComputeCcePolicy"> The properties for confidential container group. </param>
-        /// <param name="priority"> The priority of the container group. </param>
-        /// <returns> A new <see cref="ContainerInstance.ContainerGroupData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ContainerGroupData ContainerGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IEnumerable<string> zones, ManagedServiceIdentity identity, string provisioningState, IEnumerable<ContainerInstanceContainer> containers, IEnumerable<ContainerGroupImageRegistryCredential> imageRegistryCredentials, ContainerGroupRestartPolicy? restartPolicy, ContainerGroupIPAddress ipAddress, ContainerInstanceOperatingSystemType osType, IEnumerable<ContainerVolume> volumes, ContainerGroupInstanceView instanceView, ContainerGroupLogAnalytics diagnosticsLogAnalytics, IEnumerable<ContainerGroupSubnetId> subnetIds, ContainerGroupDnsConfiguration dnsConfig, ContainerGroupSku? sku, ContainerGroupEncryptionProperties encryptionProperties, IEnumerable<InitContainerDefinitionContent> initContainers, IEnumerable<DeploymentExtensionSpec> extensions, string confidentialComputeCcePolicy, ContainerGroupPriority? priority)
-        {
-            throw null;
-        }
+        // Old GA compat overload for ContainerGroupData is in Customized/ArmContainerInstanceModelFactory.cs
+        // (removed from here to avoid CS0111)
 
         /// <summary> Initializes a new instance of <see cref="Models.ContainerGroupInstanceView"/>. </summary>
         /// <param name="events"> The events of this container group. </param>

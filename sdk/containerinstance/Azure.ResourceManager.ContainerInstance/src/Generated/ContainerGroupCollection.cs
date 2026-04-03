@@ -5,9 +5,8 @@
 
 #nullable disable
 
-using System.Collections;
 using System.Collections.Generic;
-using System.Threading;
+using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
@@ -20,20 +19,7 @@ namespace Azure.ResourceManager.ContainerInstance
     /// </summary>
     public partial class ContainerGroupCollection : ArmCollection, IEnumerable<ContainerGroupResource>, IAsyncEnumerable<ContainerGroupResource>
     {
-        IEnumerator<ContainerGroupResource> IEnumerable<ContainerGroupResource>.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<ContainerGroupResource> IAsyncEnumerable<ContainerGroupResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
-        {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
-        }
+        private readonly ClientDiagnostics _containersClientDiagnostics;
+        private readonly Containers _containersRestClient;
     }
 }

@@ -46,10 +46,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <summary> The port number to probe. </summary>
         public int Port { get; set; }
 
+        /// <summary> The scheme. </summary>
+        public ContainerHttpGetScheme? Scheme { get; set; }
+
         /// <summary> The HTTP headers. </summary>
         public IList<ContainerHttpHeader> HttpHeaders { get; }
-
-        /// <summary> Gets the Scheme. </summary>
-        public ContainerHttpGetScheme? Scheme { get; set; }
     }
 }

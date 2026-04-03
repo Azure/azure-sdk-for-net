@@ -16,29 +16,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     /// <summary> The security context for the container. </summary>
     public partial class ContainerSecurityContextDefinition : IJsonModel<ContainerSecurityContextDefinition>
     {
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ContainerSecurityContextDefinition>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ContainerSecurityContextDefinition IPersistableModel<ContainerSecurityContextDefinition>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ContainerSecurityContextDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ContainerSecurityContextDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
-            writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
-            writer.WriteEndObject();
-        }
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ContainerSecurityContextDefinition IJsonModel<ContainerSecurityContextDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ContainerSecurityContextDefinition PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -69,6 +46,25 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ContainerSecurityContextDefinition>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ContainerSecurityContextDefinition IPersistableModel<ContainerSecurityContextDefinition>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ContainerSecurityContextDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        void IJsonModel<ContainerSecurityContextDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -88,10 +84,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 writer.WritePropertyName("allowPrivilegeEscalation"u8);
                 writer.WriteBooleanValue(AllowPrivilegeEscalation.Value);
             }
-            if (Optional.IsDefined(CapabilitiesValue))
+            if (Optional.IsDefined(Capabilities))
             {
                 writer.WritePropertyName("capabilities"u8);
-                writer.WriteObjectValue(CapabilitiesValue, options);
+                writer.WriteObjectValue(Capabilities, options);
             }
             if (Optional.IsDefined(RunAsGroup))
             {
@@ -127,6 +123,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+        ContainerSecurityContextDefinition IJsonModel<ContainerSecurityContextDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ContainerSecurityContextDefinition JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ContainerSecurityContextDefinition>)this).GetFormatFromOptions(options) : options.Format;
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
             bool? privileged = default;
             bool? allowPrivilegeEscalation = default;
-            SecurityContextCapabilitiesDefinition capabilities = default;
+            ContainerSecurityContextCapabilitiesDefinition capabilities = default;
             int? runAsGroup = default;
             int? runAsUser = default;
             string seccompProfile = default;
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    capabilities = SecurityContextCapabilitiesDefinition.DeserializeSecurityContextCapabilitiesDefinition(prop.Value, options);
+                    capabilities = ContainerSecurityContextCapabilitiesDefinition.DeserializeContainerSecurityContextCapabilitiesDefinition(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("runAsGroup"u8))

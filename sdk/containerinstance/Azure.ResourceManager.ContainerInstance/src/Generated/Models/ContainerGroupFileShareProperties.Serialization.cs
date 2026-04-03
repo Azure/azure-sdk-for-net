@@ -9,57 +9,56 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 using Azure.ResourceManager.ContainerInstance;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
-    /// <summary> The access control for an identity. </summary>
-    public partial class IdentityAccessControl : IJsonModel<IdentityAccessControl>
+    /// <summary> The ContainerGroupFileShareProperties. </summary>
+    public partial class ContainerGroupFileShareProperties : IJsonModel<ContainerGroupFileShareProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual IdentityAccessControl PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ContainerGroupFileShareProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IdentityAccessControl>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerGroupFileShareProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeIdentityAccessControl(document.RootElement, options);
+                        return DeserializeContainerGroupFileShareProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IdentityAccessControl)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerGroupFileShareProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IdentityAccessControl>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerGroupFileShareProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerInstanceContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(IdentityAccessControl)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerGroupFileShareProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<IdentityAccessControl>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ContainerGroupFileShareProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        IdentityAccessControl IPersistableModel<IdentityAccessControl>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ContainerGroupFileShareProperties IPersistableModel<ContainerGroupFileShareProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<IdentityAccessControl>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ContainerGroupFileShareProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<IdentityAccessControl>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ContainerGroupFileShareProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -70,20 +69,20 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IdentityAccessControl>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerGroupFileShareProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IdentityAccessControl)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerGroupFileShareProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Access))
+            if (Optional.IsDefined(ShareAccessType))
             {
-                writer.WritePropertyName("access"u8);
-                writer.WriteStringValue(Access.Value.ToString());
+                writer.WritePropertyName("shareAccessType"u8);
+                writer.WriteStringValue(ShareAccessType.Value.ToSerialString());
             }
-            if (Optional.IsDefined(Identity))
+            if (Optional.IsDefined(ShareAccessTier))
             {
-                writer.WritePropertyName("identity"u8);
-                writer.WriteStringValue(Identity);
+                writer.WritePropertyName("shareAccessTier"u8);
+                writer.WriteStringValue(ShareAccessTier.Value.ToSerialString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -104,50 +103,50 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        IdentityAccessControl IJsonModel<IdentityAccessControl>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ContainerGroupFileShareProperties IJsonModel<ContainerGroupFileShareProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual IdentityAccessControl JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ContainerGroupFileShareProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IdentityAccessControl>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerGroupFileShareProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IdentityAccessControl)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerGroupFileShareProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeIdentityAccessControl(document.RootElement, options);
+            return DeserializeContainerGroupFileShareProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static IdentityAccessControl DeserializeIdentityAccessControl(JsonElement element, ModelReaderWriterOptions options)
+        internal static ContainerGroupFileShareProperties DeserializeContainerGroupFileShareProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IdentityAccessLevel? access = default;
-            ResourceIdentifier identity = default;
+            AzureFileShareAccessType? shareAccessType = default;
+            AzureFileShareAccessTier? shareAccessTier = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("access"u8))
+                if (prop.NameEquals("shareAccessType"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    access = new IdentityAccessLevel(prop.Value.GetString());
+                    shareAccessType = prop.Value.GetString().ToAzureFileShareAccessType();
                     continue;
                 }
-                if (prop.NameEquals("identity"u8))
+                if (prop.NameEquals("shareAccessTier"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    identity = new ResourceIdentifier(prop.Value.GetString());
+                    shareAccessTier = prop.Value.GetString().ToAzureFileShareAccessTier();
                     continue;
                 }
                 if (options.Format != "W")
@@ -155,7 +154,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new IdentityAccessControl(access, identity, additionalBinaryDataProperties);
+            return new ContainerGroupFileShareProperties(shareAccessType, shareAccessTier, additionalBinaryDataProperties);
         }
     }
 }

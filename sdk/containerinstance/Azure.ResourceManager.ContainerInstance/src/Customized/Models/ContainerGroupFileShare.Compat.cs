@@ -3,7 +3,8 @@
 
 using System.ComponentModel;
 
-// Backward-compat property shims for TypeSpec migration (ApiCompat MembersMustExist).
+// Backward-compat: generated constructor sets Properties but no generated property declaration.
+// We provide the Properties property here. Also provides a public parameterless ctor for ApiCompat.
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
@@ -16,10 +17,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
         /// <summary> The file share properties. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public ContainerGroupFileShareProperties Properties
-        {
-            get => FileSharePropertiesValue as ContainerGroupFileShareProperties;
-            set => FileSharePropertiesValue = value;
-        }
+        public ContainerGroupFileShareProperties Properties { get; set; }
     }
 }

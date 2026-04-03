@@ -14,51 +14,51 @@ using Azure.ResourceManager.ContainerInstance;
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
     /// <summary> The capabilities to add or drop from a container. </summary>
-    public partial class SecurityContextCapabilitiesDefinition : IJsonModel<SecurityContextCapabilitiesDefinition>
+    public partial class ContainerSecurityContextCapabilitiesDefinition : IJsonModel<ContainerSecurityContextCapabilitiesDefinition>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SecurityContextCapabilitiesDefinition PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ContainerSecurityContextCapabilitiesDefinition PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SecurityContextCapabilitiesDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerSecurityContextCapabilitiesDefinition>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeSecurityContextCapabilitiesDefinition(document.RootElement, options);
+                        return DeserializeContainerSecurityContextCapabilitiesDefinition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecurityContextCapabilitiesDefinition)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerSecurityContextCapabilitiesDefinition)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SecurityContextCapabilitiesDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerSecurityContextCapabilitiesDefinition>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerInstanceContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SecurityContextCapabilitiesDefinition)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerSecurityContextCapabilitiesDefinition)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SecurityContextCapabilitiesDefinition>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ContainerSecurityContextCapabilitiesDefinition>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SecurityContextCapabilitiesDefinition IPersistableModel<SecurityContextCapabilitiesDefinition>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ContainerSecurityContextCapabilitiesDefinition IPersistableModel<ContainerSecurityContextCapabilitiesDefinition>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SecurityContextCapabilitiesDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ContainerSecurityContextCapabilitiesDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SecurityContextCapabilitiesDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ContainerSecurityContextCapabilitiesDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SecurityContextCapabilitiesDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerSecurityContextCapabilitiesDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityContextCapabilitiesDefinition)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerSecurityContextCapabilitiesDefinition)} does not support writing '{format}' format.");
             }
             if (Optional.IsCollectionDefined(Add))
             {
@@ -123,24 +123,24 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SecurityContextCapabilitiesDefinition IJsonModel<SecurityContextCapabilitiesDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ContainerSecurityContextCapabilitiesDefinition IJsonModel<ContainerSecurityContextCapabilitiesDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SecurityContextCapabilitiesDefinition JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ContainerSecurityContextCapabilitiesDefinition JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SecurityContextCapabilitiesDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerSecurityContextCapabilitiesDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityContextCapabilitiesDefinition)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerSecurityContextCapabilitiesDefinition)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSecurityContextCapabilitiesDefinition(document.RootElement, options);
+            return DeserializeContainerSecurityContextCapabilitiesDefinition(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static SecurityContextCapabilitiesDefinition DeserializeSecurityContextCapabilitiesDefinition(JsonElement element, ModelReaderWriterOptions options)
+        internal static ContainerSecurityContextCapabilitiesDefinition DeserializeContainerSecurityContextCapabilitiesDefinition(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SecurityContextCapabilitiesDefinition(@add ?? new ChangeTrackingList<string>(), drop ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
+            return new ContainerSecurityContextCapabilitiesDefinition(@add ?? new ChangeTrackingList<string>(), drop ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }

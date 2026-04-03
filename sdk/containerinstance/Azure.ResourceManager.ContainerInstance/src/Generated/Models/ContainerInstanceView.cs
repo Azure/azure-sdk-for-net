@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ContainerInstance;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
@@ -15,6 +16,12 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerInstanceView"/>. </summary>
+        internal ContainerInstanceView()
+        {
+            Events = new ChangeTrackingList<ContainerEvent>();
+        }
 
         /// <summary> Initializes a new instance of <see cref="ContainerInstanceView"/>. </summary>
         /// <param name="restartCount"> The number of times that the container instance has been restarted. </param>
@@ -40,7 +47,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <summary> Previous container instance state. </summary>
         public ContainerState PreviousState { get; }
 
-        /// <summary> Gets the Events. </summary>
+        /// <summary> The events of the container instance. </summary>
         public IReadOnlyList<ContainerEvent> Events { get; }
     }
 }

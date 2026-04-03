@@ -18,16 +18,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContainerGroupImageRegistryCredential"/>. </summary>
-        /// <param name="server"> The server. </param>
-        /// <param name="identity"> The identity. </param>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This method is obsolete and will be removed in a future release.", false)]
-        public ContainerGroupImageRegistryCredential(string server, string identity)
-            : this(server, default, default, default, identity, default)
-        {
-        }
-
         /// <summary> The identity for the private registry (as URI). </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public Uri IdentityUri

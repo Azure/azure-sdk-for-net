@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ContainerInstance;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
@@ -15,6 +16,12 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerGroupInstanceView"/>. </summary>
+        internal ContainerGroupInstanceView()
+        {
+            Events = new ChangeTrackingList<ContainerEvent>();
+        }
 
         /// <summary> Initializes a new instance of <see cref="ContainerGroupInstanceView"/>. </summary>
         /// <param name="events"> The events of this container group. </param>
@@ -27,10 +34,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> The events of this container group. </summary>
+        public IReadOnlyList<ContainerEvent> Events { get; }
+
         /// <summary> The state of the container group. Only valid in response. </summary>
         public string State { get; }
-
-        /// <summary> Gets the Events. </summary>
-        public IReadOnlyList<ContainerEvent> Events { get; }
     }
 }

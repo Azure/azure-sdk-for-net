@@ -14,15 +14,16 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
     /// <summary> The Resource model definition. </summary>
+    // NOTE: Base class manually changed to TrackedResourceData for backward compat (ApiCompat CannotRemoveBaseTypeOrInterface).
     public partial class ContainerGroupPatch : TrackedResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerGroupPatch"/>. </summary>
-        public ContainerGroupPatch() : base(default(AzureLocation))
+        public ContainerGroupPatch()
+            : base(default(AzureLocation))
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
             Zones = new ChangeTrackingList<string>();
         }
 
@@ -34,33 +35,17 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="tags"> The resource tags. </param>
         /// <param name="zones"> The zones for the container group. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerGroupPatch(string id, string name, string @type, string location, IDictionary<string, string> tags, IList<string> zones, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(default(AzureLocation))
+        internal ContainerGroupPatch(string id, string name, string @type, string location, IDictionary<string, string> tags, IList<string> zones, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+            : base(id == null ? default : new ResourceIdentifier(id), name, @type == null ? default : new ResourceType(@type), default, tags, new AzureLocation(location ?? string.Empty))
         {
-            Id = id;
-            Name = name;
-            Type = @type;
-            Location = location;
-            Tags = tags;
             Zones = zones;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The resource id. </summary>
-        public new string Id { get; }
-
-        /// <summary> The resource name. </summary>
-        public new string Name { get; }
-
-        /// <summary> The resource type. </summary>
-        public string Type { get; }
-
-        /// <summary> The resource location. </summary>
-        public new string Location { get; set; }
-
-        /// <summary> The resource tags. </summary>
-        public new IDictionary<string, string> Tags { get; }
-
         /// <summary> The zones for the container group. </summary>
         public IList<string> Zones { get; }
+
+        // Helper for serialization — maps TrackedResourceData.ResourceType to the "type" JSON property.
+        private string Type => ResourceType.ToString();
     }
 }

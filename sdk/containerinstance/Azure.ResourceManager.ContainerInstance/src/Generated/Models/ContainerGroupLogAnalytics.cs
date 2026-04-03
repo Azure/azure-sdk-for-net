@@ -40,13 +40,13 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <summary> The workspace key for log analytics. </summary>
         public string WorkspaceKey { get; set; }
 
-        /// <summary> Gets the LogType. </summary>
+        /// <summary> The log type to be used. </summary>
         public ContainerGroupLogAnalyticsLogType? LogType { get; set; }
-
-        /// <summary> Gets the WorkspaceResourceId. </summary>
-        public ResourceIdentifier WorkspaceResourceId { get; set; }
 
         /// <summary> Metadata for log analytics. </summary>
         public IDictionary<string, string> Metadata { get; }
+
+        /// <summary> The workspace resource id for log analytics. </summary>
+        public ResourceIdentifier WorkspaceResourceId { get; set; }
     }
 }

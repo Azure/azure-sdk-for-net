@@ -6,19 +6,19 @@
 #nullable disable
 
 using System;
-    using System.ComponentModel;
+using System.ComponentModel;
+using Azure.ResourceManager.ContainerInstance;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
     /// <summary> Specifies if the IP is exposed to the public internet or private VNET. </summary>
     public readonly partial struct ContainerGroupIPAddressType : IEquatable<ContainerGroupIPAddressType>
     {
+        private readonly string _value;
         /// <summary> Public. </summary>
         private const string PublicValue = "Public";
         /// <summary> Private. </summary>
         private const string PrivateValue = "Private";
-
-        private readonly string _value;
 
         /// <summary> Initializes a new instance of <see cref="ContainerGroupIPAddressType"/>. </summary>
         /// <param name="value"> The value. </param>

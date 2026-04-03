@@ -6,19 +6,19 @@
 #nullable disable
 
 using System;
-    using System.ComponentModel;
+using System.ComponentModel;
+using Azure.ResourceManager.ContainerInstance;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
     /// <summary> The scheme. </summary>
     public readonly partial struct ContainerHttpGetScheme : IEquatable<ContainerHttpGetScheme>
     {
+        private readonly string _value;
         /// <summary> http. </summary>
         private const string HttpValue = "http";
         /// <summary> https. </summary>
         private const string HttpsValue = "https";
-
-        private readonly string _value;
 
         /// <summary> Initializes a new instance of <see cref="ContainerHttpGetScheme"/>. </summary>
         /// <param name="value"> The value. </param>

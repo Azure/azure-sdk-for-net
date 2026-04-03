@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     public partial class ContainerGroupSubnetId : IJsonModel<ContainerGroupSubnetId>
     {
         /// <summary> Initializes a new instance of <see cref="ContainerGroupSubnetId"/> for deserialization. </summary>
-        protected ContainerGroupSubnetId()
+        internal ContainerGroupSubnetId()
         {
         }
 

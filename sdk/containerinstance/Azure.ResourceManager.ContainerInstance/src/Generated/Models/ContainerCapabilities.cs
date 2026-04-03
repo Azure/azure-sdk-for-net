@@ -18,6 +18,11 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerCapabilities"/>. </summary>
+        internal ContainerCapabilities()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerCapabilities"/>. </summary>
         /// <param name="resourceType"> The resource type that this capability describes. </param>
         /// <param name="osType"> The OS type that this capability describes. </param>
         /// <param name="location"> The resource location. </param>
@@ -42,16 +47,16 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <summary> The OS type that this capability describes. </summary>
         public string OsType { get; }
 
+        /// <summary> The resource location. </summary>
+        public AzureLocation? Location { get; }
+
         /// <summary> The ip address type that this capability describes. </summary>
         public string IpAddressType { get; }
 
         /// <summary> The GPU sku that this capability describes. </summary>
         public string Gpu { get; }
 
-        /// <summary> Gets the Location. </summary>
-        public AzureLocation? Location { get; }
-
-        /// <summary> Gets the Capabilities. </summary>
+        /// <summary> The supported capabilities. </summary>
         public ContainerSupportedCapabilities Capabilities { get; }
     }
 }

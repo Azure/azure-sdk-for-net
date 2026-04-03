@@ -13,36 +13,11 @@ namespace Azure.ResourceManager.ContainerInstance
 {
     public partial class ContainerGroupData
     {
-        /// <summary> Initializes a new instance of <see cref="ContainerGroupData"/>. </summary>
-        /// <param name="location"> The location. </param>
-        /// <param name="containers"> The containers. </param>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public ContainerGroupData(AzureLocation location, IEnumerable<ContainerInstanceContainer> containers)
-            : this(default, default, default, default, default, location, default, default, default, default)
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ContainerGroupData"/>. </summary>
-        /// <param name="location"> The location. </param>
-        /// <param name="containers"> The containers. </param>
-        /// <param name="osType"> The operating system type. </param>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public ContainerGroupData(AzureLocation location, IEnumerable<ContainerInstanceContainer> containers, ContainerInstanceOperatingSystemType osType)
-            : this(default, default, default, default, default, location, default, default, default, default)
-        {
-        }
+        // Backward-compat property shims — constructors and OSType/ProvisioningState are in ContainerGroupData.cs
 
         /// <summary> The IP address of the container group. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public ContainerGroupIPAddress IPAddress { get => IpAddress; set => IpAddress = value; }
-
-        /// <summary> The operating system type required by the containers in the container group. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public ContainerInstanceOperatingSystemType OSType
-        {
-            get => OsType ?? default;
-            set => OsType = value;
-        }
 
         /// <summary> The operating system type required by the containers in the container group (nullable). </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -58,10 +33,6 @@ namespace Azure.ResourceManager.ContainerInstance
                 return state != null ? new ContainerGroupProvisioningState(state) : null;
             }
         }
-
-        /// <summary> The provisioning state of the container group. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public string ProvisioningState => Properties?.ProvisioningState;
 
         /// <summary> The identity of the container group. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]

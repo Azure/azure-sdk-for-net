@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// <returns> An object representing collection of CGProfiles and their operations over a CGProfileResource. </returns>
         public virtual CGProfileCollection GetCGProfiles()
         {
-            return this.GetCachedClient(client => new CGProfileCollection(client, Id));
+            return GetCachedClient(client => new CGProfileCollection(client, Id));
         }
 
         /// <summary>

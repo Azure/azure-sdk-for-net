@@ -118,29 +118,7 @@ namespace Azure.ResourceManager.ContainerInstance
             return Response.FromValue(new ContainerGroupProfileResource(Client, response.Value.Data), response.GetRawResponse());
         }
 
-        /// <summary> Gets the container group profile revisions collection. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual ContainerGroupProfileRevisionCollection GetContainerGroupProfileRevisions()
-        {
-            return GetCachedClient(client => new ContainerGroupProfileRevisionCollection(client, Id));
-        }
-
-        /// <summary> Gets a container group profile revision. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [ForwardsClientCalls]
-        public virtual Response<ContainerGroupProfileRevisionResource> GetContainerGroupProfileRevision(string revisionNumber, CancellationToken cancellationToken = default)
-        {
-            Response<CGProfileResource> response = base.GetCGProfile(revisionNumber, cancellationToken);
-            return Response.FromValue(new ContainerGroupProfileRevisionResource(Client, response.Value.Data), response.GetRawResponse());
-        }
-
-        /// <summary> Gets a container group profile revision. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ContainerGroupProfileRevisionResource>> GetContainerGroupProfileRevisionAsync(string revisionNumber, CancellationToken cancellationToken = default)
-        {
-            Response<CGProfileResource> response = await base.GetCGProfileAsync(revisionNumber, cancellationToken).ConfigureAwait(false);
-            return Response.FromValue(new ContainerGroupProfileRevisionResource(Client, response.Value.Data), response.GetRawResponse());
-        }
+        // GetContainerGroupProfileRevisions/GetContainerGroupProfileRevision methods are now
+        // provided by the base CGProfileResource class (via LegacyOperations ResourceName fix).
     }
 }

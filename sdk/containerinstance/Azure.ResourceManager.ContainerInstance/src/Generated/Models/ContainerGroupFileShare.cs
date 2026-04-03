@@ -22,12 +22,12 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="storageAccountName"></param>
         /// <param name="properties"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerGroupFileShare(string name, string resourceGroupName, string storageAccountName, FileShareProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerGroupFileShare(string name, string resourceGroupName, string storageAccountName, ContainerGroupFileShareProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             ResourceGroupName = resourceGroupName;
             StorageAccountName = storageAccountName;
-            FileSharePropertiesValue = properties;
+            Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -39,8 +39,5 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
         /// <summary> Gets or sets the StorageAccountName. </summary>
         public string StorageAccountName { get; set; }
-
-        /// <summary> Gets the Properties. </summary>
-        internal FileShareProperties FileSharePropertiesValue { get; set; }
     }
 }

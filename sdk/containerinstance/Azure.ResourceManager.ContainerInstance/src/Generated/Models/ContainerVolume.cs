@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <summary> The name of the volume. </summary>
         public string Name { get; set; }
 
+        /// <summary> The Azure File volume. </summary>
+        public ContainerInstanceAzureFileVolume AzureFile { get; set; }
+
         /// <summary>
         /// The empty directory volume.
         /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
@@ -67,16 +70,13 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// </summary>
         public BinaryData EmptyDir { get; set; }
 
-        /// <summary> Gets the AzureFile. </summary>
-        public ContainerInstanceAzureFileVolume AzureFile { get; set; }
-
-        /// <summary> Gets the GitRepo. </summary>
-        public ContainerInstanceGitRepoVolume GitRepo { get; set; }
-
         /// <summary> The secret volume. </summary>
         public IDictionary<string, string> Secret { get; }
 
         /// <summary> The secret reference volume. </summary>
         public IDictionary<string, string> SecretReference { get; }
+
+        /// <summary> The git repo volume. </summary>
+        public ContainerInstanceGitRepoVolume GitRepo { get; set; }
     }
 }

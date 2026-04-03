@@ -16,29 +16,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     /// <summary> The access control levels of the identities. </summary>
     public partial class ContainerGroupIdentityAccessControlLevels : IJsonModel<ContainerGroupIdentityAccessControlLevels>
     {
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ContainerGroupIdentityAccessControlLevels>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ContainerGroupIdentityAccessControlLevels IPersistableModel<ContainerGroupIdentityAccessControlLevels>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ContainerGroupIdentityAccessControlLevels>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ContainerGroupIdentityAccessControlLevels>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
-            writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
-            writer.WriteEndObject();
-        }
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ContainerGroupIdentityAccessControlLevels IJsonModel<ContainerGroupIdentityAccessControlLevels>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ContainerGroupIdentityAccessControlLevels PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -69,6 +46,25 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ContainerGroupIdentityAccessControlLevels>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ContainerGroupIdentityAccessControlLevels IPersistableModel<ContainerGroupIdentityAccessControlLevels>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ContainerGroupIdentityAccessControlLevels>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        void IJsonModel<ContainerGroupIdentityAccessControlLevels>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -78,16 +74,16 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 throw new FormatException($"The model {nameof(ContainerGroupIdentityAccessControlLevels)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(DefaultAccessValue))
+            if (Optional.IsDefined(DefaultAccess))
             {
                 writer.WritePropertyName("defaultAccess"u8);
-                writer.WriteStringValue(DefaultAccessValue.Value.ToString());
+                writer.WriteStringValue(DefaultAccess.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(AclsInternal))
+            if (Optional.IsCollectionDefined(Acls))
             {
                 writer.WritePropertyName("acls"u8);
                 writer.WriteStartArray();
-                foreach (IdentityAccessControl item in AclsInternal)
+                foreach (ContainerGroupIdentityAccessControl item in Acls)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -112,6 +108,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+        ContainerGroupIdentityAccessControlLevels IJsonModel<ContainerGroupIdentityAccessControlLevels>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ContainerGroupIdentityAccessControlLevels JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ContainerGroupIdentityAccessControlLevels>)this).GetFormatFromOptions(options) : options.Format;
@@ -131,8 +131,8 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 return null;
             }
-            IdentityAccessLevel? defaultAccess = default;
-            IList<IdentityAccessControl> acls = default;
+            ContainerGroupIdentityAccessLevel? defaultAccess = default;
+            IList<ContainerGroupIdentityAccessControl> acls = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    defaultAccess = new IdentityAccessLevel(prop.Value.GetString());
+                    defaultAccess = new ContainerGroupIdentityAccessLevel(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("acls"u8))
@@ -151,10 +151,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    List<IdentityAccessControl> array = new List<IdentityAccessControl>();
+                    List<ContainerGroupIdentityAccessControl> array = new List<ContainerGroupIdentityAccessControl>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(IdentityAccessControl.DeserializeIdentityAccessControl(item, options));
+                        array.Add(ContainerGroupIdentityAccessControl.DeserializeContainerGroupIdentityAccessControl(item, options));
                     }
                     acls = array;
                     continue;
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ContainerGroupIdentityAccessControlLevels(defaultAccess, acls ?? new ChangeTrackingList<IdentityAccessControl>(), additionalBinaryDataProperties);
+            return new ContainerGroupIdentityAccessControlLevels(defaultAccess, acls ?? new ChangeTrackingList<ContainerGroupIdentityAccessControl>(), additionalBinaryDataProperties);
         }
     }
 }

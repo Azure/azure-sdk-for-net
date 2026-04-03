@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <summary> The count of the GPU resource. </summary>
         public int Count { get; set; }
 
-        /// <summary> Gets the Sku. </summary>
+        /// <summary> The SKU of the GPU resource. </summary>
         public ContainerGpuSku Sku { get; set; }
     }
 }

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <summary> Gets or sets the UpdateMode. </summary>
         public NGroupUpdateMode? UpdateMode { get; set; }
 
-        /// <summary> Gets the RollingUpdateProfile. </summary>
+        /// <summary> This profile allows the customers to customize the rolling update. </summary>
         public NGroupRollingUpdateProfile RollingUpdateProfile { get; set; }
     }
 }

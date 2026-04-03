@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="data"> The resource that is the target of operations. </param>
         internal CGProfileResource(ArmClient client, ContainerGroupProfileData data) : this(client, data.Id)
         {
-            this.HasData = true;
+            HasData = true;
             _data = data;
         }
 
@@ -53,12 +53,12 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal CGProfileResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            this.TryGetApiVersion(ResourceType, out string cgProfileApiVersion);
+            TryGetApiVersion(ResourceType, out string cgProfileApiVersion);
             _cgProfileClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerInstance", ResourceType.Namespace, Diagnostics);
             _cgProfileRestClient = new CGProfile(_cgProfileClientDiagnostics, Pipeline, Endpoint, cgProfileApiVersion ?? "2025-09-01");
             _cgProfilesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerInstance", ResourceType.Namespace, Diagnostics);
             _cgProfilesRestClient = new CGProfiles(_cgProfilesClientDiagnostics, Pipeline, Endpoint, cgProfileApiVersion ?? "2025-09-01");
-            CGProfileResource.ValidateResourceId(id);
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
@@ -429,7 +429,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 }
                 else
                 {
-                    ContainerGroupProfileData current = (await this.GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    ContainerGroupProfileData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     ContainerGroupProfilePatch patch = new ContainerGroupProfilePatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 }
                 else
                 {
-                    ContainerGroupProfileData current = this.Get(cancellationToken: cancellationToken).Value.Data;
+                    ContainerGroupProfileData current = Get(cancellationToken: cancellationToken).Value.Data;
                     ContainerGroupProfilePatch patch = new ContainerGroupProfilePatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
@@ -524,7 +524,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 }
                 else
                 {
-                    ContainerGroupProfileData current = (await this.GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    ContainerGroupProfileData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     ContainerGroupProfilePatch patch = new ContainerGroupProfilePatch();
                     patch.Tags.ReplaceWith(tags);
                     Response<CGProfileResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
@@ -567,7 +567,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 }
                 else
                 {
-                    ContainerGroupProfileData current = this.Get(cancellationToken: cancellationToken).Value.Data;
+                    ContainerGroupProfileData current = Get(cancellationToken: cancellationToken).Value.Data;
                     ContainerGroupProfilePatch patch = new ContainerGroupProfilePatch();
                     patch.Tags.ReplaceWith(tags);
                     Response<CGProfileResource> result = Update(patch, cancellationToken: cancellationToken);
@@ -609,7 +609,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 }
                 else
                 {
-                    ContainerGroupProfileData current = (await this.GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    ContainerGroupProfileData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     ContainerGroupProfilePatch patch = new ContainerGroupProfilePatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
@@ -655,7 +655,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 }
                 else
                 {
-                    ContainerGroupProfileData current = this.Get(cancellationToken: cancellationToken).Value.Data;
+                    ContainerGroupProfileData current = Get(cancellationToken: cancellationToken).Value.Data;
                     ContainerGroupProfilePatch patch = new ContainerGroupProfilePatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
@@ -673,11 +673,11 @@ namespace Azure.ResourceManager.ContainerInstance
             }
         }
 
-        /// <summary> Gets a collection of CGProfiles in the <see cref="CGProfileResource"/>. </summary>
-        /// <returns> An object representing collection of CGProfiles and their operations over a CGProfileResource. </returns>
-        public virtual CGProfileCollection GetCGProfiles()
+        /// <summary> Gets a collection of ContainerGroupProfileRevisions in the <see cref="CGProfileResource"/>. </summary>
+        /// <returns> An object representing collection of ContainerGroupProfileRevisions and their operations over a ContainerGroupProfileRevisionResource. </returns>
+        public virtual ContainerGroupProfileRevisionCollection GetContainerGroupProfileRevisions()
         {
-            return this.GetCachedClient(client => new CGProfileCollection(client, Id));
+            return GetCachedClient(client => new ContainerGroupProfileRevisionCollection(client, Id));
         }
 
         /// <summary> Gets the properties of the specified revision of the container group profile in the given subscription and resource group. The operation returns the properties of container group profile including containers, image registry credentials, restart policy, IP address type, OS type, volumes, current revision number, etc. </summary>
@@ -686,11 +686,11 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <exception cref="ArgumentNullException"> <paramref name="revisionNumber"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="revisionNumber"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<CGProfileResource>> GetCGProfileAsync(string revisionNumber, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContainerGroupProfileRevisionResource>> GetContainerGroupProfileRevisionAsync(string revisionNumber, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(revisionNumber, nameof(revisionNumber));
 
-            return await GetCGProfiles().GetAsync(revisionNumber, cancellationToken).ConfigureAwait(false);
+            return await GetContainerGroupProfileRevisions().GetAsync(revisionNumber, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets the properties of the specified revision of the container group profile in the given subscription and resource group. The operation returns the properties of container group profile including containers, image registry credentials, restart policy, IP address type, OS type, volumes, current revision number, etc. </summary>
@@ -699,11 +699,11 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <exception cref="ArgumentNullException"> <paramref name="revisionNumber"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="revisionNumber"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<CGProfileResource> GetCGProfile(string revisionNumber, CancellationToken cancellationToken = default)
+        public virtual Response<ContainerGroupProfileRevisionResource> GetContainerGroupProfileRevision(string revisionNumber, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(revisionNumber, nameof(revisionNumber));
 
-            return GetCGProfiles().Get(revisionNumber, cancellationToken);
+            return GetContainerGroupProfileRevisions().Get(revisionNumber, cancellationToken);
         }
     }
 }

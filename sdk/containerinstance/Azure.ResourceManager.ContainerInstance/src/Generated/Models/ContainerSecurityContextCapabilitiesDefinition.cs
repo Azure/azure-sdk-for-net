@@ -12,23 +12,23 @@ using Azure.ResourceManager.ContainerInstance;
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
     /// <summary> The capabilities to add or drop from a container. </summary>
-    public partial class SecurityContextCapabilitiesDefinition
+    public partial class ContainerSecurityContextCapabilitiesDefinition
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SecurityContextCapabilitiesDefinition"/>. </summary>
-        public SecurityContextCapabilitiesDefinition()
+        /// <summary> Initializes a new instance of <see cref="ContainerSecurityContextCapabilitiesDefinition"/>. </summary>
+        public ContainerSecurityContextCapabilitiesDefinition()
         {
             Add = new ChangeTrackingList<string>();
             Drop = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SecurityContextCapabilitiesDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerSecurityContextCapabilitiesDefinition"/>. </summary>
         /// <param name="add"> The capabilities to add to the container. </param>
         /// <param name="drop"> The capabilities to drop from the container. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityContextCapabilitiesDefinition(IList<string> @add, IList<string> drop, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerSecurityContextCapabilitiesDefinition(IList<string> @add, IList<string> drop, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Add = @add;
             Drop = drop;
