@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <param name="upgradeMode"> The mode used to monitor health during a rolling upgrade. The values are UnmonitoredAuto, UnmonitoredManual, and Monitored. </param>
         /// <param name="recreateApplication"> Determines whether the application should be recreated on update. If value=true, the rest of the upgrade policy parameters are not allowed and it will result in availability loss. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationUpgradePolicy(string upgradeReplicaSetCheckTimeout, bool? forceRestart, ArmRollingUpgradeMonitoringPolicy rollingUpgradeMonitoringPolicy, ArmApplicationHealthPolicy applicationHealthPolicy, ApplicationRollingUpgradeMode? upgradeMode, bool? recreateApplication, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApplicationUpgradePolicy(TimeSpan? upgradeReplicaSetCheckTimeout, bool? forceRestart, ArmRollingUpgradeMonitoringPolicy rollingUpgradeMonitoringPolicy, ArmApplicationHealthPolicy applicationHealthPolicy, ApplicationRollingUpgradeMode? upgradeMode, bool? recreateApplication, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             UpgradeReplicaSetCheckTimeout = upgradeReplicaSetCheckTimeout;
             ForceRestart = forceRestart;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         }
 
         /// <summary> The maximum amount of time to block processing of an upgrade domain and prevent loss of availability when there are unexpected issues. When this timeout expires, processing of the upgrade domain will proceed regardless of availability loss issues. The timeout is reset at the start of each upgrade domain. Valid values are between 0 and 42949672925 inclusive. (unsigned 32-bit integer). </summary>
-        public string UpgradeReplicaSetCheckTimeout { get; set; }
+        public TimeSpan? UpgradeReplicaSetCheckTimeout { get; set; }
 
         /// <summary> If true, then processes are forcefully restarted during upgrade even when the code version has not changed (the upgrade only changes configuration or data). </summary>
         public bool? ForceRestart { get; set; }

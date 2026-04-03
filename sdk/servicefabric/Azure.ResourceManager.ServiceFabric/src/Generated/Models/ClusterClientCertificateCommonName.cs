@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <param name="certificateCommonName"> The common name of the client certificate. </param>
         /// <param name="certificateIssuerThumbprint"> The issuer thumbprint of the client certificate. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateCommonName"/> or <paramref name="certificateIssuerThumbprint"/> is null. </exception>
-        public ClusterClientCertificateCommonName(bool isAdmin, string certificateCommonName, string certificateIssuerThumbprint)
+        public ClusterClientCertificateCommonName(bool isAdmin, string certificateCommonName, BinaryData certificateIssuerThumbprint)
         {
             Argument.AssertNotNull(certificateCommonName, nameof(certificateCommonName));
             Argument.AssertNotNull(certificateIssuerThumbprint, nameof(certificateIssuerThumbprint));
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <param name="certificateCommonName"> The common name of the client certificate. </param>
         /// <param name="certificateIssuerThumbprint"> The issuer thumbprint of the client certificate. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ClusterClientCertificateCommonName(bool isAdmin, string certificateCommonName, string certificateIssuerThumbprint, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ClusterClientCertificateCommonName(bool isAdmin, string certificateCommonName, BinaryData certificateIssuerThumbprint, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsAdmin = isAdmin;
             CertificateCommonName = certificateCommonName;
@@ -51,7 +51,22 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <summary> The common name of the client certificate. </summary>
         public string CertificateCommonName { get; set; }
 
-        /// <summary> The issuer thumbprint of the client certificate. </summary>
-        public string CertificateIssuerThumbprint { get; set; }
+        /// <summary>
+        /// The issuer thumbprint of the client certificate.
+        /// <para>
+        /// To assign a byte[] to this property use <see cref="BinaryData.FromBytes(byte[])"/>.
+        /// The byte[] will be serialized to a Base64 encoded string.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term> BinaryData.FromBytes(new byte[] { 1, 2, 3 }). </term>
+        /// <description> Creates a payload of "AQID". </description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        public BinaryData CertificateIssuerThumbprint { get; set; }
     }
 }

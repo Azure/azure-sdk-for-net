@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 writer.WriteBooleanValue(ForceRestart.Value);
             }
             writer.WritePropertyName("upgradeReplicaSetCheckTimeout"u8);
-            writer.WriteStringValue(UpgradeReplicaSetCheckTimeout);
+            writer.WriteStringValue(UpgradeReplicaSetCheckTimeout, "P");
             writer.WritePropertyName("healthCheckWaitDuration"u8);
             writer.WriteStringValue(HealthCheckWaitDuration, "c");
             writer.WritePropertyName("healthCheckStableDuration"u8);
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 return null;
             }
             bool? forceRestart = default;
-            string upgradeReplicaSetCheckTimeout = default;
+            TimeSpan upgradeReplicaSetCheckTimeout = default;
             TimeSpan healthCheckWaitDuration = default;
             TimeSpan healthCheckStableDuration = default;
             TimeSpan healthCheckRetryTimeout = default;
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
                 if (prop.NameEquals("upgradeReplicaSetCheckTimeout"u8))
                 {
-                    upgradeReplicaSetCheckTimeout = prop.Value.GetString();
+                    upgradeReplicaSetCheckTimeout = prop.Value.GetTimeSpan("P");
                     continue;
                 }
                 if (prop.NameEquals("healthCheckWaitDuration"u8))

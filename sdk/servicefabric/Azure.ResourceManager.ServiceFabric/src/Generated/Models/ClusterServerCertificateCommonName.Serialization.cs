@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             writer.WritePropertyName("certificateCommonName"u8);
             writer.WriteStringValue(CertificateCommonName);
             writer.WritePropertyName("certificateIssuerThumbprint"u8);
-            writer.WriteStringValue(CertificateIssuerThumbprint);
+            writer.WriteBase64StringValue(CertificateIssuerThumbprint.ToArray(), "D");
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 return null;
             }
             string certificateCommonName = default;
-            string certificateIssuerThumbprint = default;
+            BinaryData certificateIssuerThumbprint = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
                 if (prop.NameEquals("certificateIssuerThumbprint"u8))
                 {
-                    certificateIssuerThumbprint = prop.Value.GetString();
+                    certificateIssuerThumbprint = BinaryData.FromBytes(prop.Value.GetBytesFromBase64("D"));
                     continue;
                 }
                 if (options.Format != "W")

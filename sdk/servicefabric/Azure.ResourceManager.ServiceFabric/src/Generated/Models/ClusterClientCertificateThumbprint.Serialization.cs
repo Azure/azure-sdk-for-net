@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             writer.WritePropertyName("isAdmin"u8);
             writer.WriteBooleanValue(IsAdmin);
             writer.WritePropertyName("certificateThumbprint"u8);
-            writer.WriteStringValue(CertificateThumbprint);
+            writer.WriteBase64StringValue(CertificateThumbprint.ToArray(), "D");
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 return null;
             }
             bool isAdmin = default;
-            string certificateThumbprint = default;
+            BinaryData certificateThumbprint = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
                 if (prop.NameEquals("certificateThumbprint"u8))
                 {
-                    certificateThumbprint = prop.Value.GetString();
+                    certificateThumbprint = BinaryData.FromBytes(prop.Value.GetBytesFromBase64("D"));
                     continue;
                 }
                 if (options.Format != "W")

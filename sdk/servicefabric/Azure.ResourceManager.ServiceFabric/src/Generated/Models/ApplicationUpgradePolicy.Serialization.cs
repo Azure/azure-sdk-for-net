@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             if (Optional.IsDefined(UpgradeReplicaSetCheckTimeout))
             {
                 writer.WritePropertyName("upgradeReplicaSetCheckTimeout"u8);
-                writer.WriteStringValue(UpgradeReplicaSetCheckTimeout);
+                writer.WriteStringValue(UpgradeReplicaSetCheckTimeout.Value, "P");
             }
             if (Optional.IsDefined(ForceRestart))
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             {
                 return null;
             }
-            string upgradeReplicaSetCheckTimeout = default;
+            TimeSpan? upgradeReplicaSetCheckTimeout = default;
             bool? forceRestart = default;
             ArmRollingUpgradeMonitoringPolicy rollingUpgradeMonitoringPolicy = default;
             ArmApplicationHealthPolicy applicationHealthPolicy = default;
@@ -157,7 +157,11 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             {
                 if (prop.NameEquals("upgradeReplicaSetCheckTimeout"u8))
                 {
-                    upgradeReplicaSetCheckTimeout = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    upgradeReplicaSetCheckTimeout = prop.Value.GetTimeSpan("P");
                     continue;
                 }
                 if (prop.NameEquals("forceRestart"u8))

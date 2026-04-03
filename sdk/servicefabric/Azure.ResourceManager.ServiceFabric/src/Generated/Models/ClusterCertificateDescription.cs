@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <summary> Initializes a new instance of <see cref="ClusterCertificateDescription"/>. </summary>
         /// <param name="thumbprint"> Thumbprint of the primary certificate. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="thumbprint"/> is null. </exception>
-        public ClusterCertificateDescription(string thumbprint)
+        public ClusterCertificateDescription(BinaryData thumbprint)
         {
             Argument.AssertNotNull(thumbprint, nameof(thumbprint));
 
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <param name="thumbprintSecondary"> Thumbprint of the secondary certificate. </param>
         /// <param name="x509StoreName"> The local certificate store location. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ClusterCertificateDescription(string thumbprint, string thumbprintSecondary, ClusterCertificateStoreName? x509StoreName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ClusterCertificateDescription(BinaryData thumbprint, string thumbprintSecondary, ClusterCertificateStoreName? x509StoreName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Thumbprint = thumbprint;
             ThumbprintSecondary = thumbprintSecondary;
@@ -40,8 +40,23 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Thumbprint of the primary certificate. </summary>
-        public string Thumbprint { get; set; }
+        /// <summary>
+        /// Thumbprint of the primary certificate.
+        /// <para>
+        /// To assign a byte[] to this property use <see cref="BinaryData.FromBytes(byte[])"/>.
+        /// The byte[] will be serialized to a Base64 encoded string.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term> BinaryData.FromBytes(new byte[] { 1, 2, 3 }). </term>
+        /// <description> Creates a payload of "AQID". </description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        public BinaryData Thumbprint { get; set; }
 
         /// <summary> Thumbprint of the secondary certificate. </summary>
         public string ThumbprintSecondary { get; set; }

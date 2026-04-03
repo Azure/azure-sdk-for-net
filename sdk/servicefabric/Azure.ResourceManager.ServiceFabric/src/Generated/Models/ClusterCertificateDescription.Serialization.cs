@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 throw new FormatException($"The model {nameof(ClusterCertificateDescription)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("thumbprint"u8);
-            writer.WriteStringValue(Thumbprint);
+            writer.WriteBase64StringValue(Thumbprint.ToArray(), "D");
             if (Optional.IsDefined(ThumbprintSecondary))
             {
                 writer.WritePropertyName("thumbprintSecondary"u8);
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             {
                 return null;
             }
-            string thumbprint = default;
+            BinaryData thumbprint = default;
             string thumbprintSecondary = default;
             ClusterCertificateStoreName? x509StoreName = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             {
                 if (prop.NameEquals("thumbprint"u8))
                 {
-                    thumbprint = prop.Value.GetString();
+                    thumbprint = BinaryData.FromBytes(prop.Value.GetBytesFromBase64("D"));
                     continue;
                 }
                 if (prop.NameEquals("thumbprintSecondary"u8))

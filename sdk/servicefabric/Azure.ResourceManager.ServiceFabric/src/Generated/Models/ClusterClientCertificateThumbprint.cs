@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <param name="isAdmin"> Indicates if the client certificate has admin access to the cluster. Non admin clients can perform only read only operations on the cluster. </param>
         /// <param name="certificateThumbprint"> The thumbprint of the client certificate. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateThumbprint"/> is null. </exception>
-        public ClusterClientCertificateThumbprint(bool isAdmin, string certificateThumbprint)
+        public ClusterClientCertificateThumbprint(bool isAdmin, BinaryData certificateThumbprint)
         {
             Argument.AssertNotNull(certificateThumbprint, nameof(certificateThumbprint));
 
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <param name="isAdmin"> Indicates if the client certificate has admin access to the cluster. Non admin clients can perform only read only operations on the cluster. </param>
         /// <param name="certificateThumbprint"> The thumbprint of the client certificate. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ClusterClientCertificateThumbprint(bool isAdmin, string certificateThumbprint, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ClusterClientCertificateThumbprint(bool isAdmin, BinaryData certificateThumbprint, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsAdmin = isAdmin;
             CertificateThumbprint = certificateThumbprint;
@@ -43,7 +43,22 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <summary> Indicates if the client certificate has admin access to the cluster. Non admin clients can perform only read only operations on the cluster. </summary>
         public bool IsAdmin { get; set; }
 
-        /// <summary> The thumbprint of the client certificate. </summary>
-        public string CertificateThumbprint { get; set; }
+        /// <summary>
+        /// The thumbprint of the client certificate.
+        /// <para>
+        /// To assign a byte[] to this property use <see cref="BinaryData.FromBytes(byte[])"/>.
+        /// The byte[] will be serialized to a Base64 encoded string.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term> BinaryData.FromBytes(new byte[] { 1, 2, 3 }). </term>
+        /// <description> Creates a payload of "AQID". </description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        public BinaryData CertificateThumbprint { get; set; }
     }
 }

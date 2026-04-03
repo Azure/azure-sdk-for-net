@@ -25,10 +25,9 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <param name="upgradeTimeout"> The amount of time the overall upgrade has to complete before the upgrade rolls back. The timeout can be in either hh:mm:ss or in d.hh:mm:ss.ms format. </param>
         /// <param name="upgradeDomainTimeout"> The amount of time each upgrade domain has to complete before the upgrade rolls back. The timeout can be in either hh:mm:ss or in d.hh:mm:ss.ms format. </param>
         /// <param name="healthPolicy"> The cluster health policy used when upgrading the cluster. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="upgradeReplicaSetCheckTimeout"/> or <paramref name="healthPolicy"/> is null. </exception>
-        public ClusterUpgradePolicy(string upgradeReplicaSetCheckTimeout, TimeSpan healthCheckWaitDuration, TimeSpan healthCheckStableDuration, TimeSpan healthCheckRetryTimeout, TimeSpan upgradeTimeout, TimeSpan upgradeDomainTimeout, ClusterHealthPolicy healthPolicy)
+        /// <exception cref="ArgumentNullException"> <paramref name="healthPolicy"/> is null. </exception>
+        public ClusterUpgradePolicy(TimeSpan upgradeReplicaSetCheckTimeout, TimeSpan healthCheckWaitDuration, TimeSpan healthCheckStableDuration, TimeSpan healthCheckRetryTimeout, TimeSpan upgradeTimeout, TimeSpan upgradeDomainTimeout, ClusterHealthPolicy healthPolicy)
         {
-            Argument.AssertNotNull(upgradeReplicaSetCheckTimeout, nameof(upgradeReplicaSetCheckTimeout));
             Argument.AssertNotNull(healthPolicy, nameof(healthPolicy));
 
             UpgradeReplicaSetCheckTimeout = upgradeReplicaSetCheckTimeout;
@@ -51,7 +50,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <param name="healthPolicy"> The cluster health policy used when upgrading the cluster. </param>
         /// <param name="deltaHealthPolicy"> The cluster delta health policy used when upgrading the cluster. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ClusterUpgradePolicy(bool? forceRestart, string upgradeReplicaSetCheckTimeout, TimeSpan healthCheckWaitDuration, TimeSpan healthCheckStableDuration, TimeSpan healthCheckRetryTimeout, TimeSpan upgradeTimeout, TimeSpan upgradeDomainTimeout, ClusterHealthPolicy healthPolicy, ClusterUpgradeDeltaHealthPolicy deltaHealthPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ClusterUpgradePolicy(bool? forceRestart, TimeSpan upgradeReplicaSetCheckTimeout, TimeSpan healthCheckWaitDuration, TimeSpan healthCheckStableDuration, TimeSpan healthCheckRetryTimeout, TimeSpan upgradeTimeout, TimeSpan upgradeDomainTimeout, ClusterHealthPolicy healthPolicy, ClusterUpgradeDeltaHealthPolicy deltaHealthPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ForceRestart = forceRestart;
             UpgradeReplicaSetCheckTimeout = upgradeReplicaSetCheckTimeout;
@@ -69,7 +68,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         public bool? ForceRestart { get; set; }
 
         /// <summary> The maximum amount of time to block processing of an upgrade domain and prevent loss of availability when there are unexpected issues. When this timeout expires, processing of the upgrade domain will proceed regardless of availability loss issues. The timeout is reset at the start of each upgrade domain. The timeout can be in either hh:mm:ss or in d.hh:mm:ss.ms format. </summary>
-        public string UpgradeReplicaSetCheckTimeout { get; set; }
+        public TimeSpan UpgradeReplicaSetCheckTimeout { get; set; }
 
         /// <summary> The length of time to wait after completing an upgrade domain before performing health checks. The duration can be in either hh:mm:ss or in d.hh:mm:ss.ms format. </summary>
         public TimeSpan HealthCheckWaitDuration { get; set; }

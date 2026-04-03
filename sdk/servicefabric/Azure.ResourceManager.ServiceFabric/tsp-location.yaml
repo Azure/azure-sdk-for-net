@@ -1,4 +1,4 @@
 directory: specification/servicefabric/resource-manager/Microsoft.ServiceFabric/ServiceFabric
-commit: 6f2efa2fd0fe06a3c086e3df2686dc66d567839a
+commit: 824c1ee6d827d205d522028db669e0e1890c4888
 repo: live1206/azure-rest-api-specs
 emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json
