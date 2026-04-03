@@ -16,9 +16,6 @@ namespace Azure.AI.Projects
         /// <summary> Gets or sets the Endpoint. </summary>
         public Uri Endpoint { get; set; }
 
-        /// <summary> Gets or sets the Settings. </summary>
-        public global::.AIProjectClientSettings Settings { get; set; }
-
         /// <summary> Gets or sets the Options. </summary>
         public AIProjectClientOptions Options { get; set; }
 
@@ -29,11 +26,6 @@ namespace Azure.AI.Projects
             if (Uri.TryCreate(section["Endpoint"], UriKind.Absolute, out Uri endpoint))
             {
                 Endpoint = endpoint;
-            }
-            IConfigurationSection settingsSection = section.GetSection("Settings");
-            if (settingsSection.Exists())
-            {
-                Settings = new global::.AIProjectClientSettings(settingsSection);
             }
             IConfigurationSection optionsSection = section.GetSection("Options");
             if (optionsSection.Exists())
