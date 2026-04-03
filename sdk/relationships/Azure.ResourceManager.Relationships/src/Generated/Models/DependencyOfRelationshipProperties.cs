@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Relationships.Models
         /// <param name="metadata"> Metadata about the relationship. </param>
         /// <param name="provisioningState"> The provisioning state of the relationship. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DependencyOfRelationshipProperties(ResourceIdentifier sourceId, ResourceIdentifier targetId, string targetTenant, RelationshipOriginInformation originInformation, RelationshipMetadata metadata, ProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DependencyOfRelationshipProperties(ResourceIdentifier sourceId, ResourceIdentifier targetId, string targetTenant, RelationshipOriginInformation originInformation, RelationshipMetadata metadata, RelationshipProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SourceId = sourceId;
             TargetId = targetId;
@@ -63,6 +63,6 @@ namespace Azure.ResourceManager.Relationships.Models
         public RelationshipMetadata Metadata { get; }
 
         /// <summary> The provisioning state of the relationship. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public RelationshipProvisioningState? ProvisioningState { get; }
     }
 }

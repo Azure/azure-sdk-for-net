@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Relationships.Models
 {
@@ -25,7 +26,7 @@ namespace Azure.ResourceManager.Relationships.Models
         /// <param name="sourceType"> The type of the relationship source resource. </param>
         /// <param name="targetType"> The type of the relationship target resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RelationshipMetadata(string sourceType, string targetType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RelationshipMetadata(ResourceType sourceType, ResourceType targetType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SourceType = sourceType;
             TargetType = targetType;
@@ -33,9 +34,9 @@ namespace Azure.ResourceManager.Relationships.Models
         }
 
         /// <summary> The type of the relationship source resource. </summary>
-        public string SourceType { get; }
+        public ResourceType SourceType { get; }
 
         /// <summary> The type of the relationship target resource. </summary>
-        public string TargetType { get; }
+        public ResourceType TargetType { get; }
     }
 }

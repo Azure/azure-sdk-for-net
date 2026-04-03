@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Relationships.Models
             string targetTenant = default;
             RelationshipOriginInformation originInformation = default;
             RelationshipMetadata metadata = default;
-            ProvisioningState? provisioningState = default;
+            RelationshipProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Relationships.Models
                     {
                         continue;
                     }
-                    provisioningState = new ProvisioningState(prop.Value.GetString());
+                    provisioningState = new RelationshipProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

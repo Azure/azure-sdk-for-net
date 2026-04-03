@@ -126,14 +126,14 @@ namespace Azure.ResourceManager.Relationships.Models
             {
                 return null;
             }
-            RelationshipOrigins relationshipOriginType = default;
+            RelationshipOriginType relationshipOriginType = default;
             string discoveryEngine = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("relationshipOriginType"u8))
                 {
-                    relationshipOriginType = new RelationshipOrigins(prop.Value.GetString());
+                    relationshipOriginType = new RelationshipOriginType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("discoveryEngine"u8))

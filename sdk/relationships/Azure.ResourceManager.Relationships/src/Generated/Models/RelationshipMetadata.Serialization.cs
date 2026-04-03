@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.Relationships;
 
 namespace Azure.ResourceManager.Relationships.Models
@@ -126,19 +127,19 @@ namespace Azure.ResourceManager.Relationships.Models
             {
                 return null;
             }
-            string sourceType = default;
-            string targetType = default;
+            ResourceType sourceType = default;
+            ResourceType targetType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("sourceType"u8))
                 {
-                    sourceType = prop.Value.GetString();
+                    sourceType = new ResourceType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("targetType"u8))
                 {
-                    targetType = prop.Value.GetString();
+                    targetType = new ResourceType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

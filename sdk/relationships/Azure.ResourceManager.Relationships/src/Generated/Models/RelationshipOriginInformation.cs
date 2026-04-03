@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Relationships.Models
         /// <param name="relationshipOriginType"> Identifies the origin type of the relationship. </param>
         /// <param name="discoveryEngine"> The name of the discovery engine that created the relationship. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RelationshipOriginInformation(RelationshipOrigins relationshipOriginType, string discoveryEngine, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RelationshipOriginInformation(RelationshipOriginType relationshipOriginType, string discoveryEngine, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RelationshipOriginType = relationshipOriginType;
             DiscoveryEngine = discoveryEngine;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Relationships.Models
         }
 
         /// <summary> Identifies the origin type of the relationship. </summary>
-        public RelationshipOrigins RelationshipOriginType { get; }
+        public RelationshipOriginType RelationshipOriginType { get; }
 
         /// <summary> The name of the discovery engine that created the relationship. </summary>
         public string DiscoveryEngine { get; }

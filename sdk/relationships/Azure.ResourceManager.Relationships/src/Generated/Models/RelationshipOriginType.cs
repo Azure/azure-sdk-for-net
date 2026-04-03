@@ -12,7 +12,7 @@ using Azure.ResourceManager.Relationships;
 namespace Azure.ResourceManager.Relationships.Models
 {
     /// <summary> The possible origins of a relationship. </summary>
-    public readonly partial struct RelationshipOrigins : IEquatable<RelationshipOrigins>
+    public readonly partial struct RelationshipOriginType : IEquatable<RelationshipOriginType>
     {
         private readonly string _value;
         /// <summary> The relationship was explicitly created by a system. </summary>
@@ -24,10 +24,10 @@ namespace Azure.ResourceManager.Relationships.Models
         /// <summary> The relationship was discovered by a user-created rule. </summary>
         private const string UserDiscoveredByRuleValue = "UserDiscoveredByRule";
 
-        /// <summary> Initializes a new instance of <see cref="RelationshipOrigins"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RelationshipOriginType"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public RelationshipOrigins(string value)
+        public RelationshipOriginType(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -35,41 +35,41 @@ namespace Azure.ResourceManager.Relationships.Models
         }
 
         /// <summary> The relationship was explicitly created by a system. </summary>
-        public static RelationshipOrigins ServiceExplicitlyCreated { get; } = new RelationshipOrigins(ServiceExplicitlyCreatedValue);
+        public static RelationshipOriginType ServiceExplicitlyCreated { get; } = new RelationshipOriginType(ServiceExplicitlyCreatedValue);
 
         /// <summary> The relationship was discovered by a system-created rule. </summary>
-        public static RelationshipOrigins SystemDiscoveredByRule { get; } = new RelationshipOrigins(SystemDiscoveredByRuleValue);
+        public static RelationshipOriginType SystemDiscoveredByRule { get; } = new RelationshipOriginType(SystemDiscoveredByRuleValue);
 
         /// <summary> The relationship was explicitly created by a user. </summary>
-        public static RelationshipOrigins UserExplicitlyCreated { get; } = new RelationshipOrigins(UserExplicitlyCreatedValue);
+        public static RelationshipOriginType UserExplicitlyCreated { get; } = new RelationshipOriginType(UserExplicitlyCreatedValue);
 
         /// <summary> The relationship was discovered by a user-created rule. </summary>
-        public static RelationshipOrigins UserDiscoveredByRule { get; } = new RelationshipOrigins(UserDiscoveredByRuleValue);
+        public static RelationshipOriginType UserDiscoveredByRule { get; } = new RelationshipOriginType(UserDiscoveredByRuleValue);
 
-        /// <summary> Determines if two <see cref="RelationshipOrigins"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="RelationshipOriginType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(RelationshipOrigins left, RelationshipOrigins right) => left.Equals(right);
+        public static bool operator ==(RelationshipOriginType left, RelationshipOriginType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="RelationshipOrigins"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="RelationshipOriginType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(RelationshipOrigins left, RelationshipOrigins right) => !left.Equals(right);
+        public static bool operator !=(RelationshipOriginType left, RelationshipOriginType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="RelationshipOrigins"/>. </summary>
+        /// <summary> Converts a string to a <see cref="RelationshipOriginType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RelationshipOrigins(string value) => new RelationshipOrigins(value);
+        public static implicit operator RelationshipOriginType(string value) => new RelationshipOriginType(value);
 
-        /// <summary> Converts a string to a <see cref="RelationshipOrigins"/>. </summary>
+        /// <summary> Converts a string to a <see cref="RelationshipOriginType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RelationshipOrigins?(string value) => value == null ? null : new RelationshipOrigins(value);
+        public static implicit operator RelationshipOriginType?(string value) => value == null ? null : new RelationshipOriginType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is RelationshipOrigins other && Equals(other);
+        public override bool Equals(object obj) => obj is RelationshipOriginType other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(RelationshipOrigins other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(RelationshipOriginType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Relationships.Models
         /// <param name="metadata"> Metadata about the relationship. </param>
         /// <param name="provisioningState"> The provisioning state of the relationship. </param>
         /// <returns> A new <see cref="Models.DependencyOfRelationshipProperties"/> instance for mocking. </returns>
-        public static DependencyOfRelationshipProperties DependencyOfRelationshipProperties(ResourceIdentifier sourceId = default, ResourceIdentifier targetId = default, string targetTenant = default, RelationshipOriginInformation originInformation = default, RelationshipMetadata metadata = default, ProvisioningState? provisioningState = default)
+        public static DependencyOfRelationshipProperties DependencyOfRelationshipProperties(ResourceIdentifier sourceId = default, ResourceIdentifier targetId = default, string targetTenant = default, RelationshipOriginInformation originInformation = default, RelationshipMetadata metadata = default, RelationshipProvisioningState? provisioningState = default)
         {
             return new DependencyOfRelationshipProperties(
                 sourceId,
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Relationships.Models
         /// <param name="relationshipOriginType"> Identifies the origin type of the relationship. </param>
         /// <param name="discoveryEngine"> The name of the discovery engine that created the relationship. </param>
         /// <returns> A new <see cref="Models.RelationshipOriginInformation"/> instance for mocking. </returns>
-        public static RelationshipOriginInformation RelationshipOriginInformation(RelationshipOrigins relationshipOriginType = default, string discoveryEngine = default)
+        public static RelationshipOriginInformation RelationshipOriginInformation(RelationshipOriginType relationshipOriginType = default, string discoveryEngine = default)
         {
             return new RelationshipOriginInformation(relationshipOriginType, discoveryEngine, additionalBinaryDataProperties: null);
         }
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Relationships.Models
         /// <param name="sourceType"> The type of the relationship source resource. </param>
         /// <param name="targetType"> The type of the relationship target resource. </param>
         /// <returns> A new <see cref="Models.RelationshipMetadata"/> instance for mocking. </returns>
-        public static RelationshipMetadata RelationshipMetadata(string sourceType = default, string targetType = default)
+        public static RelationshipMetadata RelationshipMetadata(ResourceType sourceType = default, ResourceType targetType = default)
         {
             return new RelationshipMetadata(sourceType, targetType, additionalBinaryDataProperties: null);
         }
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Relationships.Models
         /// <param name="metadata"> Metadata about the relationship. </param>
         /// <param name="provisioningState"> The provisioning state of the relationship. </param>
         /// <returns> A new <see cref="Models.ServiceGroupMemberRelationshipProperties"/> instance for mocking. </returns>
-        public static ServiceGroupMemberRelationshipProperties ServiceGroupMemberRelationshipProperties(ResourceIdentifier sourceId = default, ResourceIdentifier targetId = default, string targetTenant = default, RelationshipOriginInformation originInformation = default, RelationshipMetadata metadata = default, ProvisioningState? provisioningState = default)
+        public static ServiceGroupMemberRelationshipProperties ServiceGroupMemberRelationshipProperties(ResourceIdentifier sourceId = default, ResourceIdentifier targetId = default, string targetTenant = default, RelationshipOriginInformation originInformation = default, RelationshipMetadata metadata = default, RelationshipProvisioningState? provisioningState = default)
         {
             return new ServiceGroupMemberRelationshipProperties(
                 sourceId,

@@ -128,18 +128,18 @@ namespace Azure.ResourceManager.Relationships.Models
     public static partial class ArmRelationshipsModelFactory
     {
         public static Azure.ResourceManager.Relationships.DependencyOfRelationshipData DependencyOfRelationshipData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Relationships.Models.DependencyOfRelationshipProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.Relationships.Models.DependencyOfRelationshipProperties DependencyOfRelationshipProperties(Azure.Core.ResourceIdentifier sourceId = null, Azure.Core.ResourceIdentifier targetId = null, string targetTenant = null, Azure.ResourceManager.Relationships.Models.RelationshipOriginInformation originInformation = null, Azure.ResourceManager.Relationships.Models.RelationshipMetadata metadata = null, Azure.ResourceManager.Relationships.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.Relationships.Models.ProvisioningState?)) { throw null; }
-        public static Azure.ResourceManager.Relationships.Models.RelationshipMetadata RelationshipMetadata(string sourceType = null, string targetType = null) { throw null; }
-        public static Azure.ResourceManager.Relationships.Models.RelationshipOriginInformation RelationshipOriginInformation(Azure.ResourceManager.Relationships.Models.RelationshipOrigins relationshipOriginType = default(Azure.ResourceManager.Relationships.Models.RelationshipOrigins), string discoveryEngine = null) { throw null; }
+        public static Azure.ResourceManager.Relationships.Models.DependencyOfRelationshipProperties DependencyOfRelationshipProperties(Azure.Core.ResourceIdentifier sourceId = null, Azure.Core.ResourceIdentifier targetId = null, string targetTenant = null, Azure.ResourceManager.Relationships.Models.RelationshipOriginInformation originInformation = null, Azure.ResourceManager.Relationships.Models.RelationshipMetadata metadata = null, Azure.ResourceManager.Relationships.Models.RelationshipProvisioningState? provisioningState = default(Azure.ResourceManager.Relationships.Models.RelationshipProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.Relationships.Models.RelationshipMetadata RelationshipMetadata(Azure.Core.ResourceType sourceType = default(Azure.Core.ResourceType), Azure.Core.ResourceType targetType = default(Azure.Core.ResourceType)) { throw null; }
+        public static Azure.ResourceManager.Relationships.Models.RelationshipOriginInformation RelationshipOriginInformation(Azure.ResourceManager.Relationships.Models.RelationshipOriginType relationshipOriginType = default(Azure.ResourceManager.Relationships.Models.RelationshipOriginType), string discoveryEngine = null) { throw null; }
         public static Azure.ResourceManager.Relationships.ServiceGroupMemberRelationshipData ServiceGroupMemberRelationshipData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Relationships.Models.ServiceGroupMemberRelationshipProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.Relationships.Models.ServiceGroupMemberRelationshipProperties ServiceGroupMemberRelationshipProperties(Azure.Core.ResourceIdentifier sourceId = null, Azure.Core.ResourceIdentifier targetId = null, string targetTenant = null, Azure.ResourceManager.Relationships.Models.RelationshipOriginInformation originInformation = null, Azure.ResourceManager.Relationships.Models.RelationshipMetadata metadata = null, Azure.ResourceManager.Relationships.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.Relationships.Models.ProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.Relationships.Models.ServiceGroupMemberRelationshipProperties ServiceGroupMemberRelationshipProperties(Azure.Core.ResourceIdentifier sourceId = null, Azure.Core.ResourceIdentifier targetId = null, string targetTenant = null, Azure.ResourceManager.Relationships.Models.RelationshipOriginInformation originInformation = null, Azure.ResourceManager.Relationships.Models.RelationshipMetadata metadata = null, Azure.ResourceManager.Relationships.Models.RelationshipProvisioningState? provisioningState = default(Azure.ResourceManager.Relationships.Models.RelationshipProvisioningState?)) { throw null; }
     }
     public partial class DependencyOfRelationshipProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relationships.Models.DependencyOfRelationshipProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Relationships.Models.DependencyOfRelationshipProperties>
     {
         public DependencyOfRelationshipProperties(Azure.Core.ResourceIdentifier targetId) { }
         public Azure.ResourceManager.Relationships.Models.RelationshipMetadata Metadata { get { throw null; } }
         public Azure.ResourceManager.Relationships.Models.RelationshipOriginInformation OriginInformation { get { throw null; } }
-        public Azure.ResourceManager.Relationships.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Relationships.Models.RelationshipProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.Core.ResourceIdentifier SourceId { get { throw null; } }
         public Azure.Core.ResourceIdentifier TargetId { get { throw null; } set { } }
         public string TargetTenant { get { throw null; } set { } }
@@ -153,33 +153,11 @@ namespace Azure.ResourceManager.Relationships.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Relationships.Models.DependencyOfRelationshipProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Relationships.Models.DependencyOfRelationshipProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ProvisioningState : System.IEquatable<Azure.ResourceManager.Relationships.Models.ProvisioningState>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ProvisioningState(string value) { throw null; }
-        public static Azure.ResourceManager.Relationships.Models.ProvisioningState Accepted { get { throw null; } }
-        public static Azure.ResourceManager.Relationships.Models.ProvisioningState Canceled { get { throw null; } }
-        public static Azure.ResourceManager.Relationships.Models.ProvisioningState Deleting { get { throw null; } }
-        public static Azure.ResourceManager.Relationships.Models.ProvisioningState Failed { get { throw null; } }
-        public static Azure.ResourceManager.Relationships.Models.ProvisioningState Provisioning { get { throw null; } }
-        public static Azure.ResourceManager.Relationships.Models.ProvisioningState Succeeded { get { throw null; } }
-        public static Azure.ResourceManager.Relationships.Models.ProvisioningState Updating { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Relationships.Models.ProvisioningState other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Relationships.Models.ProvisioningState left, Azure.ResourceManager.Relationships.Models.ProvisioningState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Relationships.Models.ProvisioningState (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Relationships.Models.ProvisioningState? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Relationships.Models.ProvisioningState left, Azure.ResourceManager.Relationships.Models.ProvisioningState right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class RelationshipMetadata : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relationships.Models.RelationshipMetadata>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Relationships.Models.RelationshipMetadata>
     {
         internal RelationshipMetadata() { }
-        public string SourceType { get { throw null; } }
-        public string TargetType { get { throw null; } }
+        public Azure.Core.ResourceType SourceType { get { throw null; } }
+        public Azure.Core.ResourceType TargetType { get { throw null; } }
         protected virtual Azure.ResourceManager.Relationships.Models.RelationshipMetadata JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Relationships.Models.RelationshipMetadata PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -194,7 +172,7 @@ namespace Azure.ResourceManager.Relationships.Models
     {
         internal RelationshipOriginInformation() { }
         public string DiscoveryEngine { get { throw null; } }
-        public Azure.ResourceManager.Relationships.Models.RelationshipOrigins RelationshipOriginType { get { throw null; } }
+        public Azure.ResourceManager.Relationships.Models.RelationshipOriginType RelationshipOriginType { get { throw null; } }
         protected virtual Azure.ResourceManager.Relationships.Models.RelationshipOriginInformation JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Relationships.Models.RelationshipOriginInformation PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -206,22 +184,44 @@ namespace Azure.ResourceManager.Relationships.Models
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Relationships.Models.RelationshipOriginInformation>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct RelationshipOrigins : System.IEquatable<Azure.ResourceManager.Relationships.Models.RelationshipOrigins>
+    public readonly partial struct RelationshipOriginType : System.IEquatable<Azure.ResourceManager.Relationships.Models.RelationshipOriginType>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public RelationshipOrigins(string value) { throw null; }
-        public static Azure.ResourceManager.Relationships.Models.RelationshipOrigins ServiceExplicitlyCreated { get { throw null; } }
-        public static Azure.ResourceManager.Relationships.Models.RelationshipOrigins SystemDiscoveredByRule { get { throw null; } }
-        public static Azure.ResourceManager.Relationships.Models.RelationshipOrigins UserDiscoveredByRule { get { throw null; } }
-        public static Azure.ResourceManager.Relationships.Models.RelationshipOrigins UserExplicitlyCreated { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Relationships.Models.RelationshipOrigins other) { throw null; }
+        public RelationshipOriginType(string value) { throw null; }
+        public static Azure.ResourceManager.Relationships.Models.RelationshipOriginType ServiceExplicitlyCreated { get { throw null; } }
+        public static Azure.ResourceManager.Relationships.Models.RelationshipOriginType SystemDiscoveredByRule { get { throw null; } }
+        public static Azure.ResourceManager.Relationships.Models.RelationshipOriginType UserDiscoveredByRule { get { throw null; } }
+        public static Azure.ResourceManager.Relationships.Models.RelationshipOriginType UserExplicitlyCreated { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Relationships.Models.RelationshipOriginType other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Relationships.Models.RelationshipOrigins left, Azure.ResourceManager.Relationships.Models.RelationshipOrigins right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Relationships.Models.RelationshipOrigins (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Relationships.Models.RelationshipOrigins? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Relationships.Models.RelationshipOrigins left, Azure.ResourceManager.Relationships.Models.RelationshipOrigins right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Relationships.Models.RelationshipOriginType left, Azure.ResourceManager.Relationships.Models.RelationshipOriginType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Relationships.Models.RelationshipOriginType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Relationships.Models.RelationshipOriginType? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Relationships.Models.RelationshipOriginType left, Azure.ResourceManager.Relationships.Models.RelationshipOriginType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct RelationshipProvisioningState : System.IEquatable<Azure.ResourceManager.Relationships.Models.RelationshipProvisioningState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public RelationshipProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.Relationships.Models.RelationshipProvisioningState Accepted { get { throw null; } }
+        public static Azure.ResourceManager.Relationships.Models.RelationshipProvisioningState Canceled { get { throw null; } }
+        public static Azure.ResourceManager.Relationships.Models.RelationshipProvisioningState Deleting { get { throw null; } }
+        public static Azure.ResourceManager.Relationships.Models.RelationshipProvisioningState Failed { get { throw null; } }
+        public static Azure.ResourceManager.Relationships.Models.RelationshipProvisioningState Provisioning { get { throw null; } }
+        public static Azure.ResourceManager.Relationships.Models.RelationshipProvisioningState Succeeded { get { throw null; } }
+        public static Azure.ResourceManager.Relationships.Models.RelationshipProvisioningState Updating { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Relationships.Models.RelationshipProvisioningState other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Relationships.Models.RelationshipProvisioningState left, Azure.ResourceManager.Relationships.Models.RelationshipProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Relationships.Models.RelationshipProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Relationships.Models.RelationshipProvisioningState? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Relationships.Models.RelationshipProvisioningState left, Azure.ResourceManager.Relationships.Models.RelationshipProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class ServiceGroupMemberRelationshipProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Relationships.Models.ServiceGroupMemberRelationshipProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Relationships.Models.ServiceGroupMemberRelationshipProperties>
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Relationships.Models
         public ServiceGroupMemberRelationshipProperties(Azure.Core.ResourceIdentifier targetId) { }
         public Azure.ResourceManager.Relationships.Models.RelationshipMetadata Metadata { get { throw null; } }
         public Azure.ResourceManager.Relationships.Models.RelationshipOriginInformation OriginInformation { get { throw null; } }
-        public Azure.ResourceManager.Relationships.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Relationships.Models.RelationshipProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.Core.ResourceIdentifier SourceId { get { throw null; } }
         public Azure.Core.ResourceIdentifier TargetId { get { throw null; } set { } }
         public string TargetTenant { get { throw null; } set { } }
