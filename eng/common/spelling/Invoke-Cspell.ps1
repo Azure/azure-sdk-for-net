@@ -8,7 +8,8 @@ Invokes cspell using dependencies defined in adjacent ./package*.json
 Maps to cspell command (e.g. `lint`, `trace`, etc.). Default is `lint`
 
 .PARAMETER FileList
-List of file paths to be scanned. This is piped into cspell via stdin.
+List of file paths to be scanned. Written to a temp file and passed to cspell
+via the --file-list argument.
 
 .PARAMETER CSpellConfigPath
 Location of cspell.json file to use when scanning. Defaults to
