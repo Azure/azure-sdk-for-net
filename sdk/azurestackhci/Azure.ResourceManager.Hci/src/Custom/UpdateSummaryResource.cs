@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Hci
 
         /// <summary> Gets the data representing this Feature. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual new UpdateSummaryData Data => (UpdateSummaryData)(object)base.Data;
+        public virtual new UpdateSummaryData Data => throw new NotSupportedException("This class is obsolete. Please use HciClusterUpdateSummaryResource instead.");
 
         /// <summary> Initializes a new instance of <see cref="UpdateSummaryResource"/>. </summary>
         protected UpdateSummaryResource()
@@ -35,8 +35,7 @@ namespace Azure.ResourceManager.Hci
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual new Response<UpdateSummaryResource> Get(CancellationToken cancellationToken)
         {
-            var response = base.Get(cancellationToken);
-            return Response.FromValue((UpdateSummaryResource)(object)response.Value, response.GetRawResponse());
+            throw new NotSupportedException("This type is obsolete. Please use HciClusterUpdateSummaryResource instead.");
         }
 
         /// <summary> Get the update summary. </summary>
@@ -44,8 +43,7 @@ namespace Azure.ResourceManager.Hci
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual new async Task<Response<UpdateSummaryResource>> GetAsync(CancellationToken cancellationToken)
         {
-            var response = await base.GetAsync(cancellationToken).ConfigureAwait(false);
-            return Response.FromValue((UpdateSummaryResource)(object)response.Value, response.GetRawResponse());
+            throw new NotSupportedException("This type is obsolete. Please use HciClusterUpdateSummaryResource instead.");
         }
 
         /// <summary> Put Update summaries. </summary>
@@ -55,8 +53,7 @@ namespace Azure.ResourceManager.Hci
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<UpdateSummaryResource> CreateOrUpdate(WaitUntil waitUntil, UpdateSummaryData data, CancellationToken cancellationToken)
         {
-            var operation = base.CreateOrUpdate(waitUntil, data, cancellationToken);
-            return new ArmOperationWrapper<HciClusterUpdateSummaryResource, UpdateSummaryResource>(operation);
+            throw new NotSupportedException("This type is obsolete. Please use HciClusterUpdateSummaryResource instead.");
         }
 
         /// <summary> Put Update summaries. </summary>
@@ -66,8 +63,7 @@ namespace Azure.ResourceManager.Hci
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<UpdateSummaryResource>> CreateOrUpdateAsync(WaitUntil waitUntil, UpdateSummaryData data, CancellationToken cancellationToken)
         {
-            var operation = await base.CreateOrUpdateAsync(waitUntil, data, cancellationToken).ConfigureAwait(false);
-            return new ArmOperationWrapper<HciClusterUpdateSummaryResource, UpdateSummaryResource>(operation);
+            throw new NotSupportedException("This type is obsolete. Please use HciClusterUpdateSummaryResource instead.");
         }
     }
 }

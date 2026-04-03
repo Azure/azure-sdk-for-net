@@ -137,60 +137,6 @@ namespace Azure.ResourceManager.Hci.Models
             }
         }
 
-        /// <summary> When the step started, or empty if it has not started executing. </summary>
-        [WirePath("progress.startTimeUtc")]
-        public DateTimeOffset? StartTimeUtc
-        {
-            get
-            {
-                return Progress is null ? default : Progress.StartTimeUtc;
-            }
-            set
-            {
-                if (Progress is null)
-                {
-                    Progress = new HciUpdateStep();
-                }
-                Progress.StartTimeUtc = value.Value;
-            }
-        }
-
-        /// <summary> When the step reached a terminal state. </summary>
-        [WirePath("progress.endTimeUtc")]
-        public DateTimeOffset? EndTimeUtc
-        {
-            get
-            {
-                return Progress is null ? default : Progress.EndTimeUtc;
-            }
-            set
-            {
-                if (Progress is null)
-                {
-                    Progress = new HciUpdateStep();
-                }
-                Progress.EndTimeUtc = value.Value;
-            }
-        }
-
-        /// <summary> Completion time of this step or the last completed sub-step. </summary>
-        [WirePath("progress.lastUpdatedTimeUtc")]
-        public DateTimeOffset? LastUpdatedTimeUtc
-        {
-            get
-            {
-                return Progress is null ? default : Progress.LastUpdatedTimeUtc;
-            }
-            set
-            {
-                if (Progress is null)
-                {
-                    Progress = new HciUpdateStep();
-                }
-                Progress.LastUpdatedTimeUtc = value.Value;
-            }
-        }
-
         /// <summary> Expected execution time of a given step. This is optionally authored in the update action plan and can be empty. </summary>
         [WirePath("progress.expectedExecutionTime")]
         public string ExpectedExecutionTime
@@ -271,6 +217,60 @@ namespace Azure.ResourceManager.Hci.Models
                     Progress = new HciUpdateStep();
                 }
                 Progress.LastUpdatedOn = value.Value;
+            }
+        }
+
+        /// <summary> When the step started, or empty if it has not started executing. </summary>
+        [WirePath("progress.startTimeUtc")]
+        public DateTimeOffset? StartTimeUtc
+        {
+            get
+            {
+                return Progress is null ? default : Progress.StartTimeUtc;
+            }
+            set
+            {
+                if (Progress is null)
+                {
+                    Progress = new HciUpdateStep();
+                }
+                Progress.StartTimeUtc = value.Value;
+            }
+        }
+
+        /// <summary> When the step reached a terminal state. </summary>
+        [WirePath("progress.endTimeUtc")]
+        public DateTimeOffset? EndTimeUtc
+        {
+            get
+            {
+                return Progress is null ? default : Progress.EndTimeUtc;
+            }
+            set
+            {
+                if (Progress is null)
+                {
+                    Progress = new HciUpdateStep();
+                }
+                Progress.EndTimeUtc = value.Value;
+            }
+        }
+
+        /// <summary> Completion time of this step or the last completed sub-step. </summary>
+        [WirePath("progress.lastUpdatedTimeUtc")]
+        public DateTimeOffset? LastUpdatedTimeUtc
+        {
+            get
+            {
+                return Progress is null ? default : Progress.LastUpdatedTimeUtc;
+            }
+            set
+            {
+                if (Progress is null)
+                {
+                    Progress = new HciUpdateStep();
+                }
+                Progress.LastUpdatedTimeUtc = value.Value;
             }
         }
     }

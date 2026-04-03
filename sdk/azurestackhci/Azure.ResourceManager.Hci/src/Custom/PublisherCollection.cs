@@ -23,14 +23,12 @@ namespace Azure.ResourceManager.Hci
 
         IEnumerator<PublisherResource> IEnumerable<PublisherResource>.GetEnumerator()
         {
-            return GetAll().GetEnumerator() as IEnumerator<PublisherResource>
-                ?? throw new NotSupportedException("Use HciClusterPublisherCollection instead.");
+            throw new NotSupportedException("This type is obsolete. Please use HciClusterPublisherCollection instead.");
         }
 
         IAsyncEnumerator<PublisherResource> IAsyncEnumerable<PublisherResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken)
         {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken) as IAsyncEnumerator<PublisherResource>
-                ?? throw new NotSupportedException("Use HciClusterPublisherCollection instead.");
+            throw new NotSupportedException("This type is obsolete. Please use HciClusterPublisherCollection instead.");
         }
 
         /// <summary> Get Publisher resource details within a HCI Cluster. </summary>
@@ -39,8 +37,7 @@ namespace Azure.ResourceManager.Hci
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual new Response<PublisherResource> Get(string publisherName, CancellationToken cancellationToken)
         {
-            var response = base.Get(publisherName, cancellationToken);
-            return Response.FromValue((PublisherResource)(object)response.Value, response.GetRawResponse());
+            throw new NotSupportedException("This type is obsolete. Please use HciClusterPublisherCollection instead.");
         }
 
         /// <summary> Get Publisher resource details within a HCI Cluster. </summary>
@@ -49,8 +46,7 @@ namespace Azure.ResourceManager.Hci
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual new async Task<Response<PublisherResource>> GetAsync(string publisherName, CancellationToken cancellationToken)
         {
-            var response = await base.GetAsync(publisherName, cancellationToken).ConfigureAwait(false);
-            return Response.FromValue((PublisherResource)(object)response.Value, response.GetRawResponse());
+            throw new NotSupportedException("This type is obsolete. Please use HciClusterPublisherCollection instead.");
         }
 
         /// <summary> List Publishers available across publishers for the HCI Cluster. </summary>
@@ -58,7 +54,7 @@ namespace Azure.ResourceManager.Hci
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual new Pageable<PublisherResource> GetAll(CancellationToken cancellationToken)
         {
-            return PageableHelpers.CastPageable<HciClusterPublisherResource, PublisherResource>(base.GetAll(cancellationToken));
+            throw new NotSupportedException("This type is obsolete. Please use HciClusterPublisherCollection instead.");
         }
 
         /// <summary> List Publishers available across publishers for the HCI Cluster. </summary>
@@ -66,7 +62,7 @@ namespace Azure.ResourceManager.Hci
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual new AsyncPageable<PublisherResource> GetAllAsync(CancellationToken cancellationToken)
         {
-            return PageableHelpers.CastAsyncPageable<HciClusterPublisherResource, PublisherResource>(base.GetAllAsync(cancellationToken));
+            throw new NotSupportedException("This type is obsolete. Please use HciClusterPublisherCollection instead.");
         }
 
         /// <summary> Tries to get details for this resource from the service. </summary>
@@ -75,12 +71,7 @@ namespace Azure.ResourceManager.Hci
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual new NullableResponse<PublisherResource> GetIfExists(string publisherName, CancellationToken cancellationToken)
         {
-            var response = base.GetIfExists(publisherName, cancellationToken);
-            if (response.HasValue)
-            {
-                return new NullableResponseWrapper<PublisherResource>((PublisherResource)(object)response.Value, response.GetRawResponse());
-            }
-            return new NullableResponseWrapper<PublisherResource>(null, response.GetRawResponse());
+            throw new NotSupportedException("This type is obsolete. Please use HciClusterPublisherCollection instead.");
         }
 
         /// <summary> Tries to get details for this resource from the service. </summary>
@@ -89,12 +80,7 @@ namespace Azure.ResourceManager.Hci
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual new async Task<NullableResponse<PublisherResource>> GetIfExistsAsync(string publisherName, CancellationToken cancellationToken)
         {
-            var response = await base.GetIfExistsAsync(publisherName, cancellationToken).ConfigureAwait(false);
-            if (response.HasValue)
-            {
-                return new NullableResponseWrapper<PublisherResource>((PublisherResource)(object)response.Value, response.GetRawResponse());
-            }
-            return new NullableResponseWrapper<PublisherResource>(null, response.GetRawResponse());
+            throw new NotSupportedException("This type is obsolete. Please use HciClusterPublisherCollection instead.");
         }
     }
 }

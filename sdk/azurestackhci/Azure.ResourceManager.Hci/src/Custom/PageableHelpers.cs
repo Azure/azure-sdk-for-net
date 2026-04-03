@@ -15,12 +15,12 @@ namespace Azure.ResourceManager.Hci
     {
         public static Pageable<TDest> CastPageable<TSource, TDest>(Pageable<TSource> source) where TDest : TSource
         {
-            return new CastingPageable<TSource, TDest>(source);
+            throw new System.NotSupportedException("This type is obsolete and should not be used.");
         }
 
         public static AsyncPageable<TDest> CastAsyncPageable<TSource, TDest>(AsyncPageable<TSource> source) where TDest : TSource
         {
-            return new CastingAsyncPageable<TSource, TDest>(source);
+            throw new System.NotSupportedException("This type is obsolete and should not be used.");
         }
 
         private class CastingPageable<TSource, TDest> : Pageable<TDest> where TDest : TSource
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Hci
         }
 
         public override string Id => _inner.Id;
-        public override TDest Value => (TDest)(object)_inner.Value;
+        public override TDest Value => throw new System.NotSupportedException("This type is obsolete and should not be used.");
         public override bool HasValue => _inner.HasValue;
         public override bool HasCompleted => _inner.HasCompleted;
         public override Response GetRawResponse() => _inner.GetRawResponse();

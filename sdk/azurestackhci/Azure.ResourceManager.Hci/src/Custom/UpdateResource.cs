@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Hci
 
         /// <summary> Gets the data representing this Feature. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual new UpdateData Data => (UpdateData)(object)base.Data;
+        public virtual new UpdateData Data => throw new NotSupportedException("This class is obsolete. Please use HciClusterUpdateResource instead.");
 
         /// <summary> Initializes a new instance of <see cref="UpdateResource"/>. </summary>
         protected UpdateResource()
@@ -34,8 +34,7 @@ namespace Azure.ResourceManager.Hci
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual new Response<UpdateResource> Get(CancellationToken cancellationToken)
         {
-            var response = base.Get(cancellationToken);
-            return Response.FromValue((UpdateResource)(object)response.Value, response.GetRawResponse());
+            throw new NotSupportedException("This type is obsolete. Please use HciClusterUpdateResource instead.");
         }
 
         /// <summary> Get Update resource details. </summary>
@@ -43,8 +42,7 @@ namespace Azure.ResourceManager.Hci
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual new async Task<Response<UpdateResource>> GetAsync(CancellationToken cancellationToken)
         {
-            var response = await base.GetAsync(cancellationToken).ConfigureAwait(false);
-            return Response.FromValue((UpdateResource)(object)response.Value, response.GetRawResponse());
+            throw new NotSupportedException("This type is obsolete. Please use HciClusterUpdateResource instead.");
         }
 
         /// <summary> Put specified Update. </summary>
@@ -54,8 +52,7 @@ namespace Azure.ResourceManager.Hci
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<UpdateResource> Update(WaitUntil waitUntil, UpdateData data, CancellationToken cancellationToken)
         {
-            var operation = base.Update(waitUntil, data, cancellationToken);
-            return new ArmOperationWrapper<HciClusterUpdateResource, UpdateResource>(operation);
+            throw new NotSupportedException("This type is obsolete. Please use HciClusterUpdateResource instead.");
         }
 
         /// <summary> Put specified Update. </summary>
@@ -65,8 +62,7 @@ namespace Azure.ResourceManager.Hci
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<UpdateResource>> UpdateAsync(WaitUntil waitUntil, UpdateData data, CancellationToken cancellationToken)
         {
-            var operation = await base.UpdateAsync(waitUntil, data, cancellationToken).ConfigureAwait(false);
-            return new ArmOperationWrapper<HciClusterUpdateResource, UpdateResource>(operation);
+            throw new NotSupportedException("This type is obsolete. Please use HciClusterUpdateResource instead.");
         }
 
         /// <summary> Gets a collection of HciClusterUpdateRunResources in the HciClusterUpdate. </summary>
@@ -74,7 +70,7 @@ namespace Azure.ResourceManager.Hci
         [ForwardsClientCalls]
         public virtual UpdateRunCollection GetUpdateRuns()
         {
-            return (UpdateRunCollection)(object)GetHciClusterUpdateRuns();
+            throw new NotSupportedException("This type is obsolete. Please use HciClusterUpdateResource instead.");
         }
 
         /// <summary> Gets a UpdateRun resource. </summary>
@@ -84,8 +80,7 @@ namespace Azure.ResourceManager.Hci
         [ForwardsClientCalls]
         public virtual Response<UpdateRunResource> GetUpdateRun(string updateRunName, CancellationToken cancellationToken)
         {
-            var response = GetHciClusterUpdateRun(updateRunName, cancellationToken);
-            return Response.FromValue((UpdateRunResource)(object)response.Value, response.GetRawResponse());
+            throw new NotSupportedException("This type is obsolete. Please use HciClusterUpdateResource instead.");
         }
 
         /// <summary> Gets a UpdateRun resource. </summary>
@@ -95,8 +90,7 @@ namespace Azure.ResourceManager.Hci
         [ForwardsClientCalls]
         public virtual async Task<Response<UpdateRunResource>> GetUpdateRunAsync(string updateRunName, CancellationToken cancellationToken)
         {
-            var response = await GetHciClusterUpdateRunAsync(updateRunName, cancellationToken).ConfigureAwait(false);
-            return Response.FromValue((UpdateRunResource)(object)response.Value, response.GetRawResponse());
+            throw new NotSupportedException("This type is obsolete. Please use HciClusterUpdateResource instead.");
         }
     }
 }

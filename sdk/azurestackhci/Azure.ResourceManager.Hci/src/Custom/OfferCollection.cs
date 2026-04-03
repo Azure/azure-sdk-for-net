@@ -23,14 +23,12 @@ namespace Azure.ResourceManager.Hci
 
         IEnumerator<OfferResource> IEnumerable<OfferResource>.GetEnumerator()
         {
-            return GetAll().GetEnumerator() as IEnumerator<OfferResource>
-                ?? throw new NotSupportedException("Use HciClusterOfferCollection instead.");
+            throw new NotSupportedException("This type is obsolete. Please use HciClusterOfferCollection instead.");
         }
 
         IAsyncEnumerator<OfferResource> IAsyncEnumerable<OfferResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken)
         {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken) as IAsyncEnumerator<OfferResource>
-                ?? throw new NotSupportedException("Use HciClusterOfferCollection instead.");
+            throw new NotSupportedException("This type is obsolete. Please use HciClusterOfferCollection instead.");
         }
 
         /// <summary>
@@ -42,8 +40,7 @@ namespace Azure.ResourceManager.Hci
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual new Response<OfferResource> Get(string offerName, string expand, CancellationToken cancellationToken)
         {
-            var response = base.Get(offerName, expand, cancellationToken);
-            return Response.FromValue((OfferResource)(object)response.Value, response.GetRawResponse());
+            throw new NotSupportedException("This type is obsolete. Please use HciClusterOfferCollection instead.");
         }
 
         /// <summary>
@@ -55,8 +52,7 @@ namespace Azure.ResourceManager.Hci
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual new async Task<Response<OfferResource>> GetAsync(string offerName, string expand, CancellationToken cancellationToken)
         {
-            var response = await base.GetAsync(offerName, expand, cancellationToken).ConfigureAwait(false);
-            return Response.FromValue((OfferResource)(object)response.Value, response.GetRawResponse());
+            throw new NotSupportedException("This type is obsolete. Please use HciClusterOfferCollection instead.");
         }
 
         /// <summary>
@@ -67,7 +63,7 @@ namespace Azure.ResourceManager.Hci
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual new Pageable<OfferResource> GetAll(string expand, CancellationToken cancellationToken)
         {
-            return PageableHelpers.CastPageable<HciClusterOfferResource, OfferResource>(base.GetAll(expand, cancellationToken));
+            throw new NotSupportedException("This type is obsolete. Please use HciClusterOfferCollection instead.");
         }
 
         /// <summary>
@@ -78,7 +74,7 @@ namespace Azure.ResourceManager.Hci
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual new AsyncPageable<OfferResource> GetAllAsync(string expand, CancellationToken cancellationToken)
         {
-            return PageableHelpers.CastAsyncPageable<HciClusterOfferResource, OfferResource>(base.GetAllAsync(expand, cancellationToken));
+            throw new NotSupportedException("This type is obsolete. Please use HciClusterOfferCollection instead.");
         }
 
         /// <summary>
@@ -90,12 +86,7 @@ namespace Azure.ResourceManager.Hci
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual new NullableResponse<OfferResource> GetIfExists(string offerName, string expand, CancellationToken cancellationToken)
         {
-            var response = base.GetIfExists(offerName, expand, cancellationToken);
-            if (response.HasValue)
-            {
-                return new NullableResponseWrapper<OfferResource>((OfferResource)(object)response.Value, response.GetRawResponse());
-            }
-            return new NullableResponseWrapper<OfferResource>(null, response.GetRawResponse());
+            throw new NotSupportedException("This type is obsolete. Please use HciClusterOfferCollection instead.");
         }
 
         /// <summary>
@@ -107,12 +98,7 @@ namespace Azure.ResourceManager.Hci
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual new async Task<NullableResponse<OfferResource>> GetIfExistsAsync(string offerName, string expand, CancellationToken cancellationToken)
         {
-            var response = await base.GetIfExistsAsync(offerName, expand, cancellationToken).ConfigureAwait(false);
-            if (response.HasValue)
-            {
-                return new NullableResponseWrapper<OfferResource>((OfferResource)(object)response.Value, response.GetRawResponse());
-            }
-            return new NullableResponseWrapper<OfferResource>(null, response.GetRawResponse());
+            throw new NotSupportedException("This type is obsolete. Please use HciClusterOfferCollection instead.");
         }
     }
 }
