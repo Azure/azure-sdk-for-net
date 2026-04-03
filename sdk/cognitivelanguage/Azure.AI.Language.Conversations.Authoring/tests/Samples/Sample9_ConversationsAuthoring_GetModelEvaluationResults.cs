@@ -19,19 +19,15 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
+            ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential);
 
             #region Snippet:Sample9_ConversationsAuthoring_GetModelEvaluationResults
             string projectName = "{projectName}";
             string trainedModelLabel = "{trainedModelLabel}";
-
-            ConversationAuthoringTrainedModel trainedModelClient = client.GetTrainedModel(projectName, trainedModelLabel);
             StringIndexType stringIndexType = StringIndexType.Utf16CodeUnit;
-            Pageable<UtteranceEvaluationResult> results = trainedModelClient.GetModelEvaluationResults(
-                stringIndexType: stringIndexType
-            );
+            Pageable<AnalyzeConversationAuthoringUtteranceEvaluationResult> results = client.GetModelEvaluationResults(projectName, trainedModelLabel, stringIndexType);
 
-            foreach (UtteranceEvaluationResult result in results)
+            foreach (AnalyzeConversationAuthoringUtteranceEvaluationResult result in results)
             {
                 Console.WriteLine($"Text: {result.Text}");
                 Console.WriteLine($"Language: {result.Language}");
@@ -64,19 +60,16 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
+            ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential);
 
             #region Snippet:Sample9_ConversationsAuthoring_GetModelEvaluationResultsAsync
             string projectName = "{projectName}";
             string trainedModelLabel = "{trainedModelLabel}";
-            ConversationAuthoringTrainedModel trainedModelClient = client.GetTrainedModel(projectName, trainedModelLabel);
             StringIndexType stringIndexType = StringIndexType.Utf16CodeUnit;
 
-            AsyncPageable<UtteranceEvaluationResult> results = trainedModelClient.GetModelEvaluationResultsAsync(
-                stringIndexType: stringIndexType
-            );
+            AsyncPageable<AnalyzeConversationAuthoringUtteranceEvaluationResult> results = client.GetModelEvaluationResultsAsync(projectName, trainedModelLabel, stringIndexType);
 
-            await foreach (UtteranceEvaluationResult result in results)
+            await foreach (AnalyzeConversationAuthoringUtteranceEvaluationResult result in results)
             {
                 Console.WriteLine($"Text: {result.Text}");
                 Console.WriteLine($"Language: {result.Language}");
