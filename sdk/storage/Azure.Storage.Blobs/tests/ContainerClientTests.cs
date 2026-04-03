@@ -1004,15 +1004,11 @@ namespace Azure.Storage.Blobs.Test
         {
             // Arrange
             BlobServiceClient service = GetServiceClient_OAuth();
-            BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(GetNewContainerName()));
-            await container.CreateIfNotExistsAsync();
+            await using DisposingContainer test = await GetTestContainerAsync(service);
 
             // Act
             CreateSessionConfiguration options = new CreateSessionConfiguration(AuthenticationType.Hmac);
-            Response<CreateSessionResponse> response = await container.CreateSessionAsync(options: options);
-
-            // Dispose
-            await container.DeleteIfExistsAsync();
+            Response<CreateSessionResponse> response = await test.Container.CreateSessionAsync(options: options);
         }
 
         [RecordedTest]
