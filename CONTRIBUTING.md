@@ -161,6 +161,55 @@ information or instructions.
 ### Testing Against Latest Versions of Client Libraries
 In some cases, you might want to test against the latest versions of the client libraries. i.e. version not yet published to nuget. For this scenario you should make use of the `UseProjectReferenceToAzureClients` property which when set to `true` will switch all package references for client libraries present in the build to project references. This result in testing against the current version of the libraries in the repo. e.g. `dotnet test eng\service.proj /p:ServiceDirectory=eventhub --filter TestCategory!=Live /p:UseProjectReferenceToAzureClients=true`
 
+### Cross-Service Dependency Testing (`TestDependsOnDependency`)
+
+When a package is used as a dependency by test projects in **other** service directories, changes to that package can silently break those downstream consumers. To catch this automatically in CI, each `ci.yml` that ships such a package must declare it via the `TestDependsOnDependency` parameter.
+
+#### What it does
+
+When `TestDependsOnDependency` is set on a service's CI pipeline, the CI automatically discovers all test projects that reference the listed packages (across the entire repo) and runs them with `UseProjectReferenceToAzureClients=true`. This means: any PR touching that service will also validate its downstream consumers.
+
+#### How to configure it
+
+Add the `TestDependsOnDependency` parameter to the `archetype-sdk-client.yml` template call in your service's `ci.yml`:
+
+```yaml
+extends:
+  template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
+  parameters:
+    ServiceDirectory: myservice
+    Artifacts:
+    - name: Azure.MyService
+      safeName: AzureMyService
+    TestDependsOnDependency: Azure.MyService
+```
+
+List all packages shipped from the service that other services' test projects take a dependency on. Separate multiple package names with a space:
+
+```yaml
+    TestDependsOnDependency: Azure.MyService Azure.MyService.Extensions
+```
+
+#### CI validation
+
+`CodeChecks.ps1` automatically validates that every package with cross-service test dependents is covered by `TestDependsOnDependency`. If a package is missing, CI will fail with a message like:
+
+```
+Package 'Azure.MyService' has cross-service test dependents (Azure.OtherService.Tests, ...)
+but is not listed in TestDependsOnDependency in 'sdk/myservice/ci.yml'.
+Add 'Azure.MyService' to the TestDependsOnDependency parameter in 'sdk/myservice/ci.yml'.
+
+To fix this locally, run 'eng\scripts\CodeChecks.ps1 -ServiceDirectory myservice -SkipDiffValidation' and commit the resulting changes.
+```
+
+To fix locally, run:
+
+```powershell
+eng\scripts\CodeChecks.ps1 -ServiceDirectory <service-directory> -SkipDiffValidation
+```
+
+This auto-adds the missing entries to your `ci.yml` file. Commit the resulting changes and push.
+
 ### Code Coverage
 
 If you want to enable code coverage reporting, on the command line pass `/p:CollectCoverage=true` like so:
