@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Relationships.Samples
             string name = "relationshipOne";
             DependencyOfRelationshipData data = new DependencyOfRelationshipData
             {
-                Properties = new DependencyOfRelationshipProperties(null, new ResourceIdentifier("/subscriptions/a925f2f7-5c63-4b7b-8799-25a5f97bc3b2/resourceGroups/testrg123/providers/Microsoft.Web/staticSites/test-site"), null, null)
+                Properties = new DependencyOfRelationshipProperties(new ResourceIdentifier("/subscriptions/a925f2f7-5c63-4b7b-8799-25a5f97bc3b2/resourceGroups/testrg123/providers/Microsoft.Web/staticSites/test-site"))
                 {
                     TargetTenant = "72f988bf-86f1-41af-91ab-2d7cd011db47",
                 },

@@ -68,11 +68,7 @@ namespace Azure.ResourceManager.Relationships.Tests.Scenario
         {
             var data = new DependencyOfRelationshipData
             {
-                Properties = new DependencyOfRelationshipProperties(
-                    sourceId: sourceId,
-                    targetId: targetId,
-                    originInformation: null,
-                    metadata: null)
+                Properties = ArmRelationshipsModelFactory.DependencyOfRelationshipProperties(sourceId, targetId)
             };
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, data);
             return lro.Value;

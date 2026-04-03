@@ -64,11 +64,7 @@ namespace Azure.ResourceManager.Relationships.Tests.Scenario
         {
             var data = new ServiceGroupMemberRelationshipData
             {
-                Properties = new ServiceGroupMemberRelationshipProperties(
-                    sourceId: sourceId,
-                    targetId: targetId,
-                    originInformation: null,
-                    metadata: null)
+                Properties = ArmRelationshipsModelFactory.ServiceGroupMemberRelationshipProperties(sourceId, targetId, null, null, null, null)
             };
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, data);
             return lro.Value;
@@ -148,7 +144,7 @@ namespace Azure.ResourceManager.Relationships.Tests.Scenario
         {
             _target = await CreateServiceGroup("sg-kv-");
             _cleanupRG = await CreateResourceGroup(DefaultSubscription, "rg-kv-", AzureLocation.WestUS);
-            KeyVaultResource vault = await CreateKeyVault(_cleanupRG, "kv-member-");
+            var vault = await CreateKeyVault(_cleanupRG, "kv-member-");
 
             _collection = Client.GetServiceGroupMemberRelationships(vault.Id);
             string relationshipName = Recording.GenerateAssetName("sgm-kv-");

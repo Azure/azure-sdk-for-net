@@ -62,11 +62,7 @@ namespace Azure.ResourceManager.Relationships.Tests.Scenario
         {
             return new ServiceGroupMemberRelationshipData
             {
-                Properties = new ServiceGroupMemberRelationshipProperties(
-                    sourceId: sourceId,
-                    targetId: targetId,
-                    originInformation: null,
-                    metadata: null)
+                Properties = ArmRelationshipsModelFactory.ServiceGroupMemberRelationshipProperties(sourceId, targetId)
             };
         }
 
@@ -204,11 +200,7 @@ namespace Azure.ResourceManager.Relationships.Tests.Scenario
             // Pass a resource group ID as targetId — only Service Group IDs are valid targets.
             var data = new ServiceGroupMemberRelationshipData
             {
-                Properties = new ServiceGroupMemberRelationshipProperties(
-                    sourceId: _source.Id,
-                    targetId: _source.Id,
-                    originInformation: null,
-                    metadata: null)
+                Properties = ArmRelationshipsModelFactory.ServiceGroupMemberRelationshipProperties(_source.Id, _source.Id)
             };
 
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () =>
@@ -234,11 +226,7 @@ namespace Azure.ResourceManager.Relationships.Tests.Scenario
 
             var data = new ServiceGroupMemberRelationshipData
             {
-                Properties = new ServiceGroupMemberRelationshipProperties(
-                    sourceId: _source.Id,
-                    targetId: nonExistentSgId,
-                    originInformation: null,
-                    metadata: null)
+                Properties = ArmRelationshipsModelFactory.ServiceGroupMemberRelationshipProperties(_source.Id, nonExistentSgId)
             };
 
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () =>

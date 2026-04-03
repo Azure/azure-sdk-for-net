@@ -4,8 +4,8 @@
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
     <ProjectReference Include="..\src\Azure.ResourceManager.Relationships.csproj" />
-    <ProjectReference Include="..\..\..\servicegroups\Azure.ResourceManager.ServiceGroups\src\Azure.ResourceManager.ServiceGroups.csproj" />
-    <ProjectReference Include="..\..\..\keyvault\Azure.ResourceManager.KeyVault\src\Azure.ResourceManager.KeyVault.csproj" />
-    <ProjectReference Include=".\..\..\..\authorization\Azure.ResourceManager.Authorization\src\Azure.ResourceManager.Authorization.csproj" />
+    <PackageReference Include="Azure.ResourceManager.ServiceGroups" />
+    <PackageReference Include="Azure.ResourceManager.KeyVault" />
+    <PackageReference Include="Azure.ResourceManager.Authorization" />
   </ItemGroup>
 </Project>

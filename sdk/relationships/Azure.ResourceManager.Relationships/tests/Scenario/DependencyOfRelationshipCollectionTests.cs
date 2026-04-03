@@ -69,11 +69,7 @@ namespace Azure.ResourceManager.Relationships.Tests.Scenario
         {
             return new DependencyOfRelationshipData
             {
-                Properties = new DependencyOfRelationshipProperties(
-                    sourceId: sourceId,
-                    targetId: targetId,
-                    originInformation: null,
-                    metadata: null)
+                Properties = ArmRelationshipsModelFactory.DependencyOfRelationshipProperties(sourceId, targetId)
             };
         }
 
@@ -85,11 +81,7 @@ namespace Azure.ResourceManager.Relationships.Tests.Scenario
         {
             var data = new DependencyOfRelationshipData
             {
-                Properties = new DependencyOfRelationshipProperties(
-                    sourceId: sourceId,
-                    targetId: targetId,
-                    originInformation: null,
-                    metadata: null)
+                Properties = ArmRelationshipsModelFactory.DependencyOfRelationshipProperties(sourceId, targetId)
             };
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, data);
             return lro.Value;
@@ -281,11 +273,7 @@ namespace Azure.ResourceManager.Relationships.Tests.Scenario
             // Set targetId equal to the source resource group — the service must reject this.
             var data = new DependencyOfRelationshipData
             {
-                Properties = new DependencyOfRelationshipProperties(
-                    sourceId: _source.Id,
-                    targetId: _source.Id,
-                    originInformation: null,
-                    metadata: null)
+                Properties = ArmRelationshipsModelFactory.DependencyOfRelationshipProperties(_source.Id, _source.Id)
             };
 
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () =>
