@@ -30,19 +30,110 @@ To create an authenticated client and start interacting with Microsoft Azure res
 
 ## Key concepts
 
-Key concepts of the Microsoft Azure SDK for .NET can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html)
+Azure Monitor Cloud Health lets you build *health models* — directed graphs where **entities** (Azure resources) are connected by **relationships** (parent–child edges). The library exposes the following top-level resource types:
+
+| Resource type | ARM type | Description |
+|---|---|---|
+| `HealthModelResource` | `Microsoft.CloudHealth/healthmodels` | A health model scoped to a resource group. |
+| `HealthModelEntityResource` | `Microsoft.CloudHealth/healthmodels/entities` | A monitored Azure resource (node) inside a health model. |
+| `HealthModelRelationshipResource` | `Microsoft.CloudHealth/healthmodels/relationships` | A directed edge between two entities (parent → child). |
+| `HealthModelDiscoveryRuleResource` | `Microsoft.CloudHealth/healthmodels/discoveryrules` | A rule that automatically discovers entities and relationships. |
+| `HealthModelAuthenticationSettingResource` | `Microsoft.CloudHealth/healthmodels/authenticationsettings` | Authentication settings used by the health model. |
+| `HealthModelSignalDefinitionResource` | `Microsoft.CloudHealth/healthmodels/signaldefinitions` | A signal definition that determines health criteria for entities. |
+
+Key concepts of the Microsoft Azure SDK for .NET can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html).
 
 ## Documentation
 
 Documentation is available to help you learn how to use this package:
 
 - [Quickstart](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/dev/mgmt_quickstart.md).
-- [API References](https://docs.microsoft.com/dotnet/api/?view=azure-dotnet).
+- [API References](https://learn.microsoft.com/dotnet/api/?view=azure-dotnet).
 - [Authentication](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md).
 
 ## Examples
 
-Code samples for using the management library for .NET can be found in the following locations
+### Manage relationships between health model entities
+
+A **relationship** is a directed edge between two entities (identified by their resource names inside the health model). The following examples demonstrate the most common operations.
+
+#### Create or update a relationship
+
+```C#
+TokenCredential cred = new DefaultAzureCredential();
+ArmClient client = new ArmClient(cred);
+
+string subscriptionId = "<subscription-id>";
+string resourceGroupName = "<resource-group>";
+string healthModelName = "<health-model-name>";
+
+ResourceIdentifier healthModelId = HealthModelResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, healthModelName);
+HealthModelResource healthModel = client.GetHealthModelResource(healthModelId);
+
+HealthModelRelationshipCollection relationships = healthModel.GetHealthModelRelationships();
+
+string relationshipName = "rel-parent-child";
+HealthModelRelationshipData data = new HealthModelRelationshipData
+{
+    Properties = new HealthModelRelationshipProperties("ParentEntity", "ChildEntity")
+    {
+        DisplayName = "Parent to Child",
+        Labels = { ["environment"] = "production" },
+    },
+};
+
+ArmOperation<HealthModelRelationshipResource> lro = await relationships.CreateOrUpdateAsync(WaitUntil.Completed, relationshipName, data);
+HealthModelRelationshipResource relationship = lro.Value;
+Console.WriteLine($"Created relationship: {relationship.Data.Id}");
+```
+
+#### Get an existing relationship
+
+```C#
+TokenCredential cred = new DefaultAzureCredential();
+ArmClient client = new ArmClient(cred);
+
+ResourceIdentifier relationshipId = HealthModelRelationshipResource.CreateResourceIdentifier(
+    subscriptionId: "<subscription-id>",
+    resourceGroupName: "<resource-group>",
+    healthModelName: "<health-model-name>",
+    relationshipName: "<relationship-name>");
+
+HealthModelRelationshipResource relationship = client.GetHealthModelRelationshipResource(relationshipId);
+HealthModelRelationshipResource result = await relationship.GetAsync();
+Console.WriteLine($"Parent: {result.Data.Properties.ParentEntityName}, Child: {result.Data.Properties.ChildEntityName}");
+```
+
+#### List all relationships in a health model
+
+```C#
+TokenCredential cred = new DefaultAzureCredential();
+ArmClient client = new ArmClient(cred);
+
+ResourceIdentifier healthModelId = HealthModelResource.CreateResourceIdentifier("<subscription-id>", "<resource-group>", "<health-model-name>");
+HealthModelResource healthModel = client.GetHealthModelResource(healthModelId);
+
+await foreach (HealthModelRelationshipResource item in healthModel.GetHealthModelRelationships())
+{
+    Console.WriteLine($"{item.Data.Properties.ParentEntityName} -> {item.Data.Properties.ChildEntityName}");
+}
+```
+
+#### Delete a relationship
+
+```C#
+TokenCredential cred = new DefaultAzureCredential();
+ArmClient client = new ArmClient(cred);
+
+ResourceIdentifier relationshipId = HealthModelRelationshipResource.CreateResourceIdentifier(
+    "<subscription-id>", "<resource-group>", "<health-model-name>", "<relationship-name>");
+
+HealthModelRelationshipResource relationship = client.GetHealthModelRelationshipResource(relationshipId);
+await relationship.DeleteAsync(WaitUntil.Completed);
+Console.WriteLine("Relationship deleted.");
+```
+
+Additional code samples for using the management library can be found in the following locations:
 - [.NET Management Library Code Samples](https://aka.ms/azuresdk-net-mgmt-samples)
 
 ## Troubleshooting

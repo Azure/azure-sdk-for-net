@@ -4,6 +4,12 @@
 
 ### Features Added
 
+- Added support for the `HealthModelRelationship` resource type (`Microsoft.CloudHealth/healthmodels/relationships`), which represents a directed edge (parent–child relationship) between two entities in a health model.
+  - `HealthModelRelationshipResource` — get, create/update, and delete individual relationships.
+  - `HealthModelRelationshipCollection` — list and enumerate all relationships under a health model.
+  - `HealthModelRelationshipData` / `HealthModelRelationshipProperties` — data model for relationship resources, including `ParentEntityName`, `ChildEntityName`, `DisplayName`, `Labels`, `DiscoveredBy`, and `DeletedOn`.
+  - `DiscoveryRuleRelationshipDiscoveryBehavior` — enum (`Enabled` / `Disabled`) that controls whether a discovery rule automatically discovers relationships.
+
 ### Breaking Changes
 
 ### Bugs Fixed
