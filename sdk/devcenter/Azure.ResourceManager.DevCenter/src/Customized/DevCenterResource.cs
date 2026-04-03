@@ -1,16 +1,13 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-// After generator PR #57161, GetImages returns Pageable<DevCenterImageData> because
-// ImageOperationGroupResource now also shares DevCenterImageData. The ApiCompat baseline
-// (v1.0.2) expects Pageable<DevCenterImageResource>, so we restore the old generated
-// methods using PageableWrapper/AsyncPageableWrapper (also from the old generated code).
-
 using System;
 using System.Threading;
 
 namespace Azure.ResourceManager.DevCenter
 {
+    // Backward compatibility: restore GetImages/GetImagesAsync returning Pageable<DevCenterImageResource>
+    // to match the baseline SDK.
     public partial class DevCenterResource
     {
         /// <summary> Lists images for a devcenter. </summary>

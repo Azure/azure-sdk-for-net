@@ -8,14 +8,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DevCenter
 {
-    /// <summary>
-    /// Backward compatibility overloads for getting a Schedule from a Pool resource.
-    ///
-    /// The baseline SDK included a "top" (int?) query parameter on the Schedule GET operation,
-    /// inherited from the old Swagger spec. The TypeSpec spec does not include "$top" on the
-    /// GET operation, so the generated code omits it. These overloads accept but ignore the
-    /// "top" parameter to preserve backward API compatibility.
-    /// </summary>
+    // Backward compatibility overloads for getting a Schedule from a Pool resource.
+    // The baseline SDK included a "top" (int?) query parameter on the Schedule GET operation.
+    // These overloads accept but ignore the "top" parameter to preserve backward API compatibility.
     public partial class DevCenterPoolResource
     {
         /// <summary> Gets a schedule resource. </summary>

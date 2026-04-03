@@ -1,13 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-// Backward compatibility: full serialization replacement for DevCenterOperationStatus.
-// The generator drops the OperationStatusResult base class, which breaks:
-// 1. override vs virtual for JsonModelWriteCore
-// 2. Deserialization of base class fields (id, name, status, etc.)
-// 3. Properties type (BinaryData vs IReadOnlyDictionary)
-// This file provides the correct override-based serialization with base class support.
-
 #nullable disable
 
 using System;
@@ -22,6 +15,8 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
+    // Backward compatibility: full serialization for DevCenterOperationStatus
+    // to match the baseline SDK's OperationStatusResult inheritance and BinaryData Properties type.
     public partial class DevCenterOperationStatus : IJsonModel<DevCenterOperationStatus>
     {
         /// <summary> Initializes a new instance of <see cref="DevCenterOperationStatus"/> for deserialization. </summary>

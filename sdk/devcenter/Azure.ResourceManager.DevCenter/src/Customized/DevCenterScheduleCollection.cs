@@ -7,16 +7,9 @@ using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.DevCenter
 {
-    /// <summary>
-    /// Backward compatibility overloads for Schedule collection methods.
-    ///
-    /// The baseline SDK included a "top" (int?) query parameter on the Schedule GET operation,
-    /// inherited from the old Swagger spec. The TypeSpec spec does not include "$top" on the
-    /// GET operation (only on create/update/delete/list), so the generated code omits it.
-    /// Adding "$top" to the TypeSpec GET would cause a swagger change, which is not allowed
-    /// during migration. These overloads accept but ignore the "top" parameter to preserve
-    /// backward API compatibility.
-    /// </summary>
+    // Backward compatibility overloads for Schedule collection methods.
+    // The baseline SDK included a "top" (int?) query parameter on the Schedule GET operation.
+    // These overloads accept but ignore the "top" parameter to preserve backward API compatibility.
     public partial class DevCenterScheduleCollection
     {
         /// <summary> Gets a schedule resource. </summary>

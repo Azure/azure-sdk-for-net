@@ -12,13 +12,9 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
-    /// <summary>
-    /// Backward compatibility: the generator drops OperationStatusResult as a base class
-    /// (it is in _idToSystemTypeMap instead of _idToInheritableSystemTypeMap). This full
-    /// customized model restores the OperationStatusResult inheritance, provides the correct
-    /// BinaryData Properties type (baseline had BinaryData, generator emits IReadOnlyDictionary),
-    /// and ensures ResourceId is inherited from the base class.
-    /// </summary>
+    // Backward compatibility: restore OperationStatusResult as the base class,
+    // provide the correct BinaryData Properties type, and ensure ResourceId is
+    // inherited from the base class.
     [CodeGenSuppress("DevCenterOperationStatus")]
     [CodeGenSuppress("DevCenterOperationStatus", typeof(IReadOnlyDictionary<string, BinaryData>), typeof(IDictionary<string, BinaryData>))]
     public partial class DevCenterOperationStatus : OperationStatusResult

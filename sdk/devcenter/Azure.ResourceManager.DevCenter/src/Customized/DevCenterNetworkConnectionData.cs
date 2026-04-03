@@ -6,9 +6,7 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.DevCenter
 {
-    /// <summary>
-    /// Backward compatibility: DomainJoinType was Nullable in the baseline SDK
-    /// </summary>
+    // Backward compatibility: DomainJoinType was Nullable in the baseline SDK
     public partial class DevCenterNetworkConnectionData
     {
         /// <summary> AAD Join type. </summary>
