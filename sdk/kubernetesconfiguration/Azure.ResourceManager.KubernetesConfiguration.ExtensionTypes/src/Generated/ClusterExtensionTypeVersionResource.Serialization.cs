@@ -12,7 +12,7 @@ using System.Text.Json;
 namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
 {
     /// <summary></summary>
-    public partial class ExtensionTypeInterfaceResource : IJsonModel<ExtensionTypeVersionForReleaseTrainData>
+    public partial class ClusterExtensionTypeVersionResource : IJsonModel<ExtensionTypeVersionForReleaseTrainData>
     {
         private static IJsonModel<ExtensionTypeVersionForReleaseTrainData> s_dataDeserializationInstance;
 

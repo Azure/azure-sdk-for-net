@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextLocationListRequest(nextLink, _subscriptionId, _location, _publisherId, _offerId, _planId, _releaseTrain, _clusterType, _context) : _client.CreateLocationListRequest(_subscriptionId, _location, _publisherId, _offerId, _planId, _releaseTrain, _clusterType, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ExtensionTypeInterfaceCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("LocationExtensionTypeCollection.GetAll");
             scope.Start();
             try
             {

@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes.Mocking
         {
         }
 
-        /// <summary> Gets a collection of ExtensionTypeInterfaces in the <see cref="SubscriptionResource"/>. </summary>
+        /// <summary> Gets a collection of LocationExtensionTypes in the <see cref="SubscriptionResource"/>. </summary>
         /// <param name="location"> The location for the resource. </param>
-        /// <returns> An object representing collection of ExtensionTypeInterfaces and their operations over a ExtensionTypeInterfaceResource. </returns>
-        public virtual ExtensionTypeInterfaceCollection GetExtensionTypeInterfaces(string location)
+        /// <returns> An object representing collection of LocationExtensionTypes and their operations over a LocationExtensionTypeResource. </returns>
+        public virtual LocationExtensionTypeCollection GetLocationExtensionTypes(string location)
         {
-            return GetCachedClient(client => new ExtensionTypeInterfaceCollection(client, Id, location));
+            return GetCachedClient(client => new LocationExtensionTypeCollection(client, Id, location));
         }
 
         /// <summary>
@@ -62,11 +62,11 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="extensionTypeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="extensionTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ExtensionTypeInterfaceResource>> GetExtensionTypeInterfaceAsync(string location, string extensionTypeName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LocationExtensionTypeResource>> GetLocationExtensionTypeAsync(string location, string extensionTypeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(extensionTypeName, nameof(extensionTypeName));
 
-            return await GetExtensionTypeInterfaces(location).GetAsync(extensionTypeName, cancellationToken).ConfigureAwait(false);
+            return await GetLocationExtensionTypes(location).GetAsync(extensionTypeName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -92,11 +92,11 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="extensionTypeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="extensionTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ExtensionTypeInterfaceResource> GetExtensionTypeInterface(string location, string extensionTypeName, CancellationToken cancellationToken = default)
+        public virtual Response<LocationExtensionTypeResource> GetLocationExtensionType(string location, string extensionTypeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(extensionTypeName, nameof(extensionTypeName));
 
-            return GetExtensionTypeInterfaces(location).Get(extensionTypeName, cancellationToken);
+            return GetLocationExtensionTypes(location).Get(extensionTypeName, cancellationToken);
         }
     }
 }

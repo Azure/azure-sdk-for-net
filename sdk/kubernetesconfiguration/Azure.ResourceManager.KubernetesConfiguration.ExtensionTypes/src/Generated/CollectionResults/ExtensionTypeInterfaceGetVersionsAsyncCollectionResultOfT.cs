@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetVersionsRequest(nextLink, _subscriptionId, _location, _extensionTypeName, _releaseTrain, _clusterType, _majorVersion, _showLatest, _context) : _client.CreateGetVersionsRequest(_subscriptionId, _location, _extensionTypeName, _releaseTrain, _clusterType, _majorVersion, _showLatest, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ExtensionTypeInterfaceCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("LocationExtensionTypeVersionCollection.GetAll");
             scope.Start();
             try
             {

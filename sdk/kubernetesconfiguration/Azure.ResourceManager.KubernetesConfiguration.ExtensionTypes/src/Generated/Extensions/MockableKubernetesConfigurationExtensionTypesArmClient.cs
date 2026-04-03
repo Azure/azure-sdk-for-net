@@ -7,6 +7,7 @@
 
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes.Mocking
 {
@@ -23,6 +24,42 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes.Mocking
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableKubernetesConfigurationExtensionTypesArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
+        }
+
+        /// <summary> Gets an object representing a <see cref="LocationExtensionTypeResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="LocationExtensionTypeResource"/> object. </returns>
+        public virtual LocationExtensionTypeResource GetLocationExtensionTypeResource(ResourceIdentifier id)
+        {
+            LocationExtensionTypeResource.ValidateResourceId(id);
+            return new LocationExtensionTypeResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ClusterExtensionTypeResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ClusterExtensionTypeResource"/> object. </returns>
+        public virtual ClusterExtensionTypeResource GetClusterExtensionTypeResource(ResourceIdentifier id)
+        {
+            ClusterExtensionTypeResource.ValidateResourceId(id);
+            return new ClusterExtensionTypeResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="LocationExtensionTypeVersionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="LocationExtensionTypeVersionResource"/> object. </returns>
+        public virtual LocationExtensionTypeVersionResource GetLocationExtensionTypeVersionResource(ResourceIdentifier id)
+        {
+            LocationExtensionTypeVersionResource.ValidateResourceId(id);
+            return new LocationExtensionTypeVersionResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ClusterExtensionTypeVersionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ClusterExtensionTypeVersionResource"/> object. </returns>
+        public virtual ClusterExtensionTypeVersionResource GetClusterExtensionTypeVersionResource(ResourceIdentifier id)
+        {
+            ClusterExtensionTypeVersionResource.ValidateResourceId(id);
+            return new ClusterExtensionTypeVersionResource(Client, id);
         }
     }
 }

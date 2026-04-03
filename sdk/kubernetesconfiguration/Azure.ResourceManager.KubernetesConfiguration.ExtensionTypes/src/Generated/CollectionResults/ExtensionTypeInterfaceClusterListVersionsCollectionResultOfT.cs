@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextClusterListVersionsRequest(nextLink, _subscriptionId, _resourceGroupName, _clusterRp, _clusterResourceName, _clusterName, _extensionTypeName, _releaseTrain, _majorVersion, _showLatest, _context) : _client.CreateClusterListVersionsRequest(_subscriptionId, _resourceGroupName, _clusterRp, _clusterResourceName, _clusterName, _extensionTypeName, _releaseTrain, _majorVersion, _showLatest, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ExtensionTypeInterfaceCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ClusterExtensionTypeVersionCollection.GetAll");
             scope.Start();
             try
             {
