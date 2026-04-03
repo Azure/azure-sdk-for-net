@@ -91,18 +91,25 @@ process {
 end {
   npm --prefix $PackageInstallCache ci | Write-Host
 
-  $command = "npm --prefix $PackageInstallCache exec --no -- cspell $JobType --config $CSpellConfigPath --no-must-find-files --root $SpellCheckRoot --file-list stdin"
-  Write-Host $command
-  $cspellOutput = $filesToCheck | npm --prefix $PackageInstallCache `
-    exec  `
-    --no `
-    '--' `
-    cspell `
-    $JobType `
-    --config $CSpellConfigPath `
-    --no-must-find-files `
-    --root $SpellCheckRoot `
-    --file-list stdin
+  $fileListPath = (New-TemporaryFile).FullName
+  $filesToCheck | Out-File -FilePath $fileListPath -Encoding utf8
+
+  try {
+    $command = "npm --prefix $PackageInstallCache exec --no -- cspell $JobType --config $CSpellConfigPath --no-must-find-files --root $SpellCheckRoot --file-list $fileListPath"
+    Write-Host $command
+    $cspellOutput = npm --prefix $PackageInstallCache `
+      exec  `
+      --no `
+      '--' `
+      cspell `
+      $JobType `
+      --config $CSpellConfigPath `
+      --no-must-find-files `
+      --root $SpellCheckRoot `
+      --file-list $fileListPath
+  } finally {
+    Remove-Item -Path $fileListPath -Force -ErrorAction SilentlyContinue | Out-Null
+  }
 
   if (!$LeavePackageInstallCache) {
     Write-Host "Cleaning up package install cache at $PackageInstallCache"
