@@ -22,6 +22,27 @@ dotnet add package Azure.Provisioning.Monitor --prerelease
 
 This library allows you to specify your infrastructure in a declarative style using dotnet.  You can then use azd to deploy your infrastructure to Azure directly without needing to write or maintain bicep or arm templates.
 
+The following Azure Monitor resource types are supported:
+
+| Resource | Description |
+|---|---|
+| `ActionGroup` | Defines a set of notification actions triggered by alerts |
+| `ActivityLogAlert` | Creates alerts based on Azure activity log events (e.g., service health, resource changes) |
+| `AlertRule` | Classic metric alert rule for Azure Monitor metrics |
+| `AutoscaleSetting` | Configures automatic scaling of compute resources based on metrics |
+| `DataCollectionEndpoint` | Defines an endpoint for data collection pipelines |
+| `DataCollectionRule` | Specifies how data is collected and routed to destinations |
+| `DataCollectionRuleAssociation` | Associates a data collection rule with a monitored resource |
+| `DiagnosticSetting` | Routes diagnostic logs and metrics to storage, event hubs, or Log Analytics |
+| `LogProfile` | Classic log profile for routing activity logs (legacy) |
+| `MetricAlert` | Creates alerts based on Azure Monitor metric thresholds or dynamic conditions |
+| `MonitorPrivateEndpointConnection` | Manages private endpoint connections for Azure Monitor Private Link |
+| `MonitorPrivateLinkScope` | Defines the scope of a Private Link configuration for Azure Monitor |
+| `MonitorPrivateLinkScoped` | Associates resources with a Monitor Private Link scope |
+| `MonitorWorkspace` | Azure Monitor workspace for storing Prometheus metrics |
+| `PipelineGroup` | Groups data collection pipelines for centralized management |
+| `ScheduledQueryRule` | Creates alerts based on Log Analytics or metrics queries |
+
 ## Examples
 
 ### Create a Service Health Alert with Action Group
@@ -108,6 +129,10 @@ infra.Add(alert);
 
 ## Next steps
 
+- Learn more about [Azure Monitor][azure_monitor_docs]
+- Learn about deploying Bicep using the [Azure Developer CLI][azd_docs]
+- Explore [Azure Monitor quickstart templates][azure_monitor_quickstarts] for additional examples
+
 ## Contributing
 
 For details on contributing to this repository, see the [contributing
@@ -132,3 +157,6 @@ more information, see the [Code of Conduct FAQ][coc_faq] or contact
 [cg]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/resourcemanager/Azure.ResourceManager/docs/CONTRIBUTING.md
 [coc]: https://opensource.microsoft.com/codeofconduct/
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
+[azure_monitor_docs]: https://learn.microsoft.com/azure/azure-monitor/overview
+[azd_docs]: https://learn.microsoft.com/azure/developer/azure-developer-cli/get-started?tabs=localinstall&pivots=programming-language-csharp
+[azure_monitor_quickstarts]: https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.insights
