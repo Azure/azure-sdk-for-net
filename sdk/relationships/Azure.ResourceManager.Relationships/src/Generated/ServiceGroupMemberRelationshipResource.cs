@@ -6,44 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Relationships
 {
     /// <summary>
-    /// A Class representing a ServiceGroupMemberRelationship along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ServiceGroupMemberRelationshipResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetServiceGroupMemberRelationshipResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetServiceGroupMemberRelationship method.
+    /// A class representing a ServiceGroupMemberRelationship along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ServiceGroupMemberRelationshipResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetServiceGroupMemberRelationships method.
     /// </summary>
     public partial class ServiceGroupMemberRelationshipResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="ServiceGroupMemberRelationshipResource"/> instance. </summary>
-        /// <param name="resourceUri"> The resourceUri. </param>
-        /// <param name="name"> The name. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string resourceUri, string name)
-        {
-            var resourceId = $"{resourceUri}/providers/Microsoft.Relationships/serviceGroupMember/{name}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _serviceGroupMemberRelationshipClientDiagnostics;
-        private readonly ServiceGroupMemberRelationshipsRestOperations _serviceGroupMemberRelationshipRestClient;
+        private readonly ClientDiagnostics _serviceGroupMemberRelationshipsClientDiagnostics;
+        private readonly ServiceGroupMemberRelationships _serviceGroupMemberRelationshipsRestClient;
         private readonly ServiceGroupMemberRelationshipData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Relationships/serviceGroupMember";
 
-        /// <summary> Initializes a new instance of the <see cref="ServiceGroupMemberRelationshipResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ServiceGroupMemberRelationshipResource for mocking. </summary>
         protected ServiceGroupMemberRelationshipResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ServiceGroupMemberRelationshipResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceGroupMemberRelationshipResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ServiceGroupMemberRelationshipResource(ArmClient client, ServiceGroupMemberRelationshipData data) : this(client, data.Id)
@@ -52,71 +43,91 @@ namespace Azure.ResourceManager.Relationships
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ServiceGroupMemberRelationshipResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceGroupMemberRelationshipResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ServiceGroupMemberRelationshipResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _serviceGroupMemberRelationshipClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Relationships", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string serviceGroupMemberRelationshipApiVersion);
-            _serviceGroupMemberRelationshipRestClient = new ServiceGroupMemberRelationshipsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, serviceGroupMemberRelationshipApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _serviceGroupMemberRelationshipsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Relationships", ResourceType.Namespace, Diagnostics);
+            _serviceGroupMemberRelationshipsRestClient = new ServiceGroupMemberRelationships(_serviceGroupMemberRelationshipsClientDiagnostics, Pipeline, Endpoint, serviceGroupMemberRelationshipApiVersion ?? "2023-09-01-preview");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual ServiceGroupMemberRelationshipData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="resourceUri"> The resourceUri. </param>
+        /// <param name="name"> The name. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string resourceUri, string name)
+        {
+            string resourceId = $"{resourceUri}/providers/Microsoft.Relationships/serviceGroupMember/{name}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Get a ServiceGroupMemberRelationship
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.Relationships/serviceGroupMember/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.Relationships/serviceGroupMember/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServiceGroupMemberRelationship_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServiceGroupMemberRelationships_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-09-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceGroupMemberRelationshipResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ServiceGroupMemberRelationshipResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ServiceGroupMemberRelationshipResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _serviceGroupMemberRelationshipClientDiagnostics.CreateScope("ServiceGroupMemberRelationshipResource.Get");
+            using DiagnosticScope scope = _serviceGroupMemberRelationshipsClientDiagnostics.CreateScope("ServiceGroupMemberRelationshipResource.Get");
             scope.Start();
             try
             {
-                var response = await _serviceGroupMemberRelationshipRestClient.GetAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _serviceGroupMemberRelationshipsRestClient.CreateGetRequest(Id.Parent, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ServiceGroupMemberRelationshipData> response = Response.FromValue(ServiceGroupMemberRelationshipData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ServiceGroupMemberRelationshipResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -130,33 +141,41 @@ namespace Azure.ResourceManager.Relationships
         /// Get a ServiceGroupMemberRelationship
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.Relationships/serviceGroupMember/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.Relationships/serviceGroupMember/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServiceGroupMemberRelationship_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServiceGroupMemberRelationships_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-09-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceGroupMemberRelationshipResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ServiceGroupMemberRelationshipResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ServiceGroupMemberRelationshipResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _serviceGroupMemberRelationshipClientDiagnostics.CreateScope("ServiceGroupMemberRelationshipResource.Get");
+            using DiagnosticScope scope = _serviceGroupMemberRelationshipsClientDiagnostics.CreateScope("ServiceGroupMemberRelationshipResource.Get");
             scope.Start();
             try
             {
-                var response = _serviceGroupMemberRelationshipRestClient.Get(Id.Parent, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _serviceGroupMemberRelationshipsRestClient.CreateGetRequest(Id.Parent, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ServiceGroupMemberRelationshipData> response = Response.FromValue(ServiceGroupMemberRelationshipData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ServiceGroupMemberRelationshipResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -170,20 +189,20 @@ namespace Azure.ResourceManager.Relationships
         /// Delete a ServiceGroupMemberRelationship
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.Relationships/serviceGroupMember/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.Relationships/serviceGroupMember/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServiceGroupMemberRelationship_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServiceGroupMemberRelationships_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-09-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceGroupMemberRelationshipResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ServiceGroupMemberRelationshipResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -191,14 +210,21 @@ namespace Azure.ResourceManager.Relationships
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _serviceGroupMemberRelationshipClientDiagnostics.CreateScope("ServiceGroupMemberRelationshipResource.Delete");
+            using DiagnosticScope scope = _serviceGroupMemberRelationshipsClientDiagnostics.CreateScope("ServiceGroupMemberRelationshipResource.Delete");
             scope.Start();
             try
             {
-                var response = await _serviceGroupMemberRelationshipRestClient.DeleteAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new RelationshipsArmOperation(_serviceGroupMemberRelationshipClientDiagnostics, Pipeline, _serviceGroupMemberRelationshipRestClient.CreateDeleteRequest(Id.Parent, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _serviceGroupMemberRelationshipsRestClient.CreateDeleteRequest(Id.Parent, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                RelationshipsArmOperation operation = new RelationshipsArmOperation(_serviceGroupMemberRelationshipsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -212,20 +238,20 @@ namespace Azure.ResourceManager.Relationships
         /// Delete a ServiceGroupMemberRelationship
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.Relationships/serviceGroupMember/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.Relationships/serviceGroupMember/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServiceGroupMemberRelationship_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServiceGroupMemberRelationships_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-09-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceGroupMemberRelationshipResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ServiceGroupMemberRelationshipResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -233,14 +259,21 @@ namespace Azure.ResourceManager.Relationships
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _serviceGroupMemberRelationshipClientDiagnostics.CreateScope("ServiceGroupMemberRelationshipResource.Delete");
+            using DiagnosticScope scope = _serviceGroupMemberRelationshipsClientDiagnostics.CreateScope("ServiceGroupMemberRelationshipResource.Delete");
             scope.Start();
             try
             {
-                var response = _serviceGroupMemberRelationshipRestClient.Delete(Id.Parent, Id.Name, cancellationToken);
-                var operation = new RelationshipsArmOperation(_serviceGroupMemberRelationshipClientDiagnostics, Pipeline, _serviceGroupMemberRelationshipRestClient.CreateDeleteRequest(Id.Parent, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _serviceGroupMemberRelationshipsRestClient.CreateDeleteRequest(Id.Parent, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                RelationshipsArmOperation operation = new RelationshipsArmOperation(_serviceGroupMemberRelationshipsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -251,23 +284,23 @@ namespace Azure.ResourceManager.Relationships
         }
 
         /// <summary>
-        /// Create a ServiceGroupMemberRelationship
+        /// Update a ServiceGroupMemberRelationship.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.Relationships/serviceGroupMember/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.Relationships/serviceGroupMember/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServiceGroupMemberRelationship_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServiceGroupMemberRelationships_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-09-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceGroupMemberRelationshipResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ServiceGroupMemberRelationshipResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -279,14 +312,27 @@ namespace Azure.ResourceManager.Relationships
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _serviceGroupMemberRelationshipClientDiagnostics.CreateScope("ServiceGroupMemberRelationshipResource.Update");
+            using DiagnosticScope scope = _serviceGroupMemberRelationshipsClientDiagnostics.CreateScope("ServiceGroupMemberRelationshipResource.Update");
             scope.Start();
             try
             {
-                var response = await _serviceGroupMemberRelationshipRestClient.CreateOrUpdateAsync(Id.Parent, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new RelationshipsArmOperation<ServiceGroupMemberRelationshipResource>(new ServiceGroupMemberRelationshipOperationSource(Client), _serviceGroupMemberRelationshipClientDiagnostics, Pipeline, _serviceGroupMemberRelationshipRestClient.CreateCreateOrUpdateRequest(Id.Parent, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _serviceGroupMemberRelationshipsRestClient.CreateCreateOrUpdateRequest(Id.Parent, Id.Name, ServiceGroupMemberRelationshipData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                RelationshipsArmOperation<ServiceGroupMemberRelationshipResource> operation = new RelationshipsArmOperation<ServiceGroupMemberRelationshipResource>(
+                    new ServiceGroupMemberRelationshipOperationSource(Client),
+                    _serviceGroupMemberRelationshipsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -297,23 +343,23 @@ namespace Azure.ResourceManager.Relationships
         }
 
         /// <summary>
-        /// Create a ServiceGroupMemberRelationship
+        /// Update a ServiceGroupMemberRelationship.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.Relationships/serviceGroupMember/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.Relationships/serviceGroupMember/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServiceGroupMemberRelationship_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServiceGroupMemberRelationships_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-09-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceGroupMemberRelationshipResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ServiceGroupMemberRelationshipResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -325,14 +371,27 @@ namespace Azure.ResourceManager.Relationships
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _serviceGroupMemberRelationshipClientDiagnostics.CreateScope("ServiceGroupMemberRelationshipResource.Update");
+            using DiagnosticScope scope = _serviceGroupMemberRelationshipsClientDiagnostics.CreateScope("ServiceGroupMemberRelationshipResource.Update");
             scope.Start();
             try
             {
-                var response = _serviceGroupMemberRelationshipRestClient.CreateOrUpdate(Id.Parent, Id.Name, data, cancellationToken);
-                var operation = new RelationshipsArmOperation<ServiceGroupMemberRelationshipResource>(new ServiceGroupMemberRelationshipOperationSource(Client), _serviceGroupMemberRelationshipClientDiagnostics, Pipeline, _serviceGroupMemberRelationshipRestClient.CreateCreateOrUpdateRequest(Id.Parent, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _serviceGroupMemberRelationshipsRestClient.CreateCreateOrUpdateRequest(Id.Parent, Id.Name, ServiceGroupMemberRelationshipData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                RelationshipsArmOperation<ServiceGroupMemberRelationshipResource> operation = new RelationshipsArmOperation<ServiceGroupMemberRelationshipResource>(
+                    new ServiceGroupMemberRelationshipOperationSource(Client),
+                    _serviceGroupMemberRelationshipsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)

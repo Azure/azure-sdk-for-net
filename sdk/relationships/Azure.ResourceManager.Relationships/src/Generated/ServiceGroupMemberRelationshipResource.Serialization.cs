@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Relationships
 {
+    /// <summary></summary>
     public partial class ServiceGroupMemberRelationshipResource : IJsonModel<ServiceGroupMemberRelationshipData>
     {
-        private static ServiceGroupMemberRelationshipData s_dataDeserializationInstance;
-        private static ServiceGroupMemberRelationshipData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ServiceGroupMemberRelationshipData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ServiceGroupMemberRelationshipData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ServiceGroupMemberRelationshipData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ServiceGroupMemberRelationshipData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ServiceGroupMemberRelationshipData>)Data).Write(writer, options);
 
-        ServiceGroupMemberRelationshipData IJsonModel<ServiceGroupMemberRelationshipData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ServiceGroupMemberRelationshipData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ServiceGroupMemberRelationshipData IJsonModel<ServiceGroupMemberRelationshipData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ServiceGroupMemberRelationshipData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ServiceGroupMemberRelationshipData>(Data, options, AzureResourceManagerRelationshipsContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ServiceGroupMemberRelationshipData IPersistableModel<ServiceGroupMemberRelationshipData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ServiceGroupMemberRelationshipData>(data, options, AzureResourceManagerRelationshipsContext.Default);
 
-        string IPersistableModel<ServiceGroupMemberRelationshipData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ServiceGroupMemberRelationshipData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ServiceGroupMemberRelationshipData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

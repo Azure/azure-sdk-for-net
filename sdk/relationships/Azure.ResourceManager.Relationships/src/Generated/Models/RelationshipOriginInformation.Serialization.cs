@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Relationships;
 
 namespace Azure.ResourceManager.Relationships.Models
 {
-    public partial class RelationshipOriginInformation : IUtf8JsonSerializable, IJsonModel<RelationshipOriginInformation>
+    /// <summary> Provides information about the origin of a relationship. </summary>
+    public partial class RelationshipOriginInformation : IJsonModel<RelationshipOriginInformation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RelationshipOriginInformation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual RelationshipOriginInformation PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RelationshipOriginInformation>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeRelationshipOriginInformation(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RelationshipOriginInformation)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RelationshipOriginInformation>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRelationshipsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(RelationshipOriginInformation)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<RelationshipOriginInformation>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RelationshipOriginInformation IPersistableModel<RelationshipOriginInformation>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<RelationshipOriginInformation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RelationshipOriginInformation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +69,11 @@ namespace Azure.ResourceManager.Relationships.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RelationshipOriginInformation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RelationshipOriginInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RelationshipOriginInformation)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W")
             {
                 writer.WritePropertyName("relationshipOriginType"u8);
@@ -44,15 +84,15 @@ namespace Azure.ResourceManager.Relationships.Models
                 writer.WritePropertyName("discoveryEngine"u8);
                 writer.WriteStringValue(DiscoveryEngine);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -61,80 +101,52 @@ namespace Azure.ResourceManager.Relationships.Models
             }
         }
 
-        RelationshipOriginInformation IJsonModel<RelationshipOriginInformation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RelationshipOriginInformation IJsonModel<RelationshipOriginInformation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual RelationshipOriginInformation JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RelationshipOriginInformation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RelationshipOriginInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RelationshipOriginInformation)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeRelationshipOriginInformation(document.RootElement, options);
         }
 
-        internal static RelationshipOriginInformation DeserializeRelationshipOriginInformation(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static RelationshipOriginInformation DeserializeRelationshipOriginInformation(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            RelationshipOrigin relationshipOriginType = default;
+            RelationshipOrigins relationshipOriginType = default;
             string discoveryEngine = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("relationshipOriginType"u8))
+                if (prop.NameEquals("relationshipOriginType"u8))
                 {
-                    relationshipOriginType = new RelationshipOrigin(property.Value.GetString());
+                    relationshipOriginType = new RelationshipOrigins(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("discoveryEngine"u8))
+                if (prop.NameEquals("discoveryEngine"u8))
                 {
-                    discoveryEngine = property.Value.GetString();
+                    discoveryEngine = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new RelationshipOriginInformation(relationshipOriginType, discoveryEngine, serializedAdditionalRawData);
+            return new RelationshipOriginInformation(relationshipOriginType, discoveryEngine, additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<RelationshipOriginInformation>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<RelationshipOriginInformation>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRelationshipsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(RelationshipOriginInformation)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        RelationshipOriginInformation IPersistableModel<RelationshipOriginInformation>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<RelationshipOriginInformation>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeRelationshipOriginInformation(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(RelationshipOriginInformation)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<RelationshipOriginInformation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

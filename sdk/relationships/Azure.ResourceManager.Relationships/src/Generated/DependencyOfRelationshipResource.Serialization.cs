@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Relationships
 {
+    /// <summary></summary>
     public partial class DependencyOfRelationshipResource : IJsonModel<DependencyOfRelationshipData>
     {
-        private static DependencyOfRelationshipData s_dataDeserializationInstance;
-        private static DependencyOfRelationshipData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<DependencyOfRelationshipData> s_dataDeserializationInstance;
 
+        private static IJsonModel<DependencyOfRelationshipData> DataDeserializationInstance => s_dataDeserializationInstance ??= new DependencyOfRelationshipData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DependencyOfRelationshipData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DependencyOfRelationshipData>)Data).Write(writer, options);
 
-        DependencyOfRelationshipData IJsonModel<DependencyOfRelationshipData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DependencyOfRelationshipData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DependencyOfRelationshipData IJsonModel<DependencyOfRelationshipData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<DependencyOfRelationshipData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DependencyOfRelationshipData>(Data, options, AzureResourceManagerRelationshipsContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         DependencyOfRelationshipData IPersistableModel<DependencyOfRelationshipData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DependencyOfRelationshipData>(data, options, AzureResourceManagerRelationshipsContext.Default);
 
-        string IPersistableModel<DependencyOfRelationshipData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DependencyOfRelationshipData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DependencyOfRelationshipData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

@@ -8,8 +8,10 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Relationships
 {
@@ -20,42 +22,38 @@ namespace Azure.ResourceManager.Relationships
     /// </summary>
     public partial class DependencyOfRelationshipCollection : ArmCollection
     {
-        private readonly ClientDiagnostics _dependencyOfRelationshipClientDiagnostics;
-        private readonly DependencyOfRelationshipsRestOperations _dependencyOfRelationshipRestClient;
+        private readonly ClientDiagnostics _dependencyOfRelationshipsClientDiagnostics;
+        private readonly DependencyOfRelationships _dependencyOfRelationshipsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="DependencyOfRelationshipCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of DependencyOfRelationshipCollection for mocking. </summary>
         protected DependencyOfRelationshipCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DependencyOfRelationshipCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DependencyOfRelationshipCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DependencyOfRelationshipCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _dependencyOfRelationshipClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Relationships", DependencyOfRelationshipResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(DependencyOfRelationshipResource.ResourceType, out string dependencyOfRelationshipApiVersion);
-            _dependencyOfRelationshipRestClient = new DependencyOfRelationshipsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dependencyOfRelationshipApiVersion);
+            _dependencyOfRelationshipsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Relationships", DependencyOfRelationshipResource.ResourceType.Namespace, Diagnostics);
+            _dependencyOfRelationshipsRestClient = new DependencyOfRelationships(_dependencyOfRelationshipsClientDiagnostics, Pipeline, Endpoint, dependencyOfRelationshipApiVersion ?? "2023-09-01-preview");
         }
 
         /// <summary>
         /// Create a DependencyOfRelationship
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.Relationships/dependencyOf/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.Relationships/dependencyOf/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DependencyOfRelationship_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> DependencyOfRelationships_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DependencyOfRelationshipResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -63,21 +61,34 @@ namespace Azure.ResourceManager.Relationships
         /// <param name="name"> Name of dependencyOf relationship. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<DependencyOfRelationshipResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string name, DependencyOfRelationshipData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _dependencyOfRelationshipClientDiagnostics.CreateScope("DependencyOfRelationshipCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _dependencyOfRelationshipsClientDiagnostics.CreateScope("DependencyOfRelationshipCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _dependencyOfRelationshipRestClient.CreateOrUpdateAsync(Id, name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new RelationshipsArmOperation<DependencyOfRelationshipResource>(new DependencyOfRelationshipOperationSource(Client), _dependencyOfRelationshipClientDiagnostics, Pipeline, _dependencyOfRelationshipRestClient.CreateCreateOrUpdateRequest(Id, name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dependencyOfRelationshipsRestClient.CreateCreateOrUpdateRequest(Id, name, DependencyOfRelationshipData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                RelationshipsArmOperation<DependencyOfRelationshipResource> operation = new RelationshipsArmOperation<DependencyOfRelationshipResource>(
+                    new DependencyOfRelationshipOperationSource(Client),
+                    _dependencyOfRelationshipsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -91,20 +102,16 @@ namespace Azure.ResourceManager.Relationships
         /// Create a DependencyOfRelationship
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.Relationships/dependencyOf/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.Relationships/dependencyOf/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DependencyOfRelationship_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> DependencyOfRelationships_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DependencyOfRelationshipResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -112,21 +119,34 @@ namespace Azure.ResourceManager.Relationships
         /// <param name="name"> Name of dependencyOf relationship. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<DependencyOfRelationshipResource> CreateOrUpdate(WaitUntil waitUntil, string name, DependencyOfRelationshipData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _dependencyOfRelationshipClientDiagnostics.CreateScope("DependencyOfRelationshipCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _dependencyOfRelationshipsClientDiagnostics.CreateScope("DependencyOfRelationshipCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _dependencyOfRelationshipRestClient.CreateOrUpdate(Id, name, data, cancellationToken);
-                var operation = new RelationshipsArmOperation<DependencyOfRelationshipResource>(new DependencyOfRelationshipOperationSource(Client), _dependencyOfRelationshipClientDiagnostics, Pipeline, _dependencyOfRelationshipRestClient.CreateCreateOrUpdateRequest(Id, name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dependencyOfRelationshipsRestClient.CreateCreateOrUpdateRequest(Id, name, DependencyOfRelationshipData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                RelationshipsArmOperation<DependencyOfRelationshipResource> operation = new RelationshipsArmOperation<DependencyOfRelationshipResource>(
+                    new DependencyOfRelationshipOperationSource(Client),
+                    _dependencyOfRelationshipsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -140,38 +160,42 @@ namespace Azure.ResourceManager.Relationships
         /// Get a DependencyOfRelationship
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.Relationships/dependencyOf/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.Relationships/dependencyOf/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DependencyOfRelationship_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DependencyOfRelationships_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DependencyOfRelationshipResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> Name of dependencyOf relationship. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<DependencyOfRelationshipResource>> GetAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _dependencyOfRelationshipClientDiagnostics.CreateScope("DependencyOfRelationshipCollection.Get");
+            using DiagnosticScope scope = _dependencyOfRelationshipsClientDiagnostics.CreateScope("DependencyOfRelationshipCollection.Get");
             scope.Start();
             try
             {
-                var response = await _dependencyOfRelationshipRestClient.GetAsync(Id, name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dependencyOfRelationshipsRestClient.CreateGetRequest(Id, name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DependencyOfRelationshipData> response = Response.FromValue(DependencyOfRelationshipData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DependencyOfRelationshipResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -185,38 +209,42 @@ namespace Azure.ResourceManager.Relationships
         /// Get a DependencyOfRelationship
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.Relationships/dependencyOf/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.Relationships/dependencyOf/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DependencyOfRelationship_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DependencyOfRelationships_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DependencyOfRelationshipResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> Name of dependencyOf relationship. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<DependencyOfRelationshipResource> Get(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _dependencyOfRelationshipClientDiagnostics.CreateScope("DependencyOfRelationshipCollection.Get");
+            using DiagnosticScope scope = _dependencyOfRelationshipsClientDiagnostics.CreateScope("DependencyOfRelationshipCollection.Get");
             scope.Start();
             try
             {
-                var response = _dependencyOfRelationshipRestClient.Get(Id, name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dependencyOfRelationshipsRestClient.CreateGetRequest(Id, name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DependencyOfRelationshipData> response = Response.FromValue(DependencyOfRelationshipData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DependencyOfRelationshipResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -230,36 +258,50 @@ namespace Azure.ResourceManager.Relationships
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.Relationships/dependencyOf/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.Relationships/dependencyOf/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DependencyOfRelationship_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DependencyOfRelationships_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DependencyOfRelationshipResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> Name of dependencyOf relationship. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _dependencyOfRelationshipClientDiagnostics.CreateScope("DependencyOfRelationshipCollection.Exists");
+            using DiagnosticScope scope = _dependencyOfRelationshipsClientDiagnostics.CreateScope("DependencyOfRelationshipCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _dependencyOfRelationshipRestClient.GetAsync(Id, name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dependencyOfRelationshipsRestClient.CreateGetRequest(Id, name, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<DependencyOfRelationshipData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DependencyOfRelationshipData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DependencyOfRelationshipData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -273,36 +315,50 @@ namespace Azure.ResourceManager.Relationships
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.Relationships/dependencyOf/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.Relationships/dependencyOf/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DependencyOfRelationship_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DependencyOfRelationships_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DependencyOfRelationshipResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> Name of dependencyOf relationship. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _dependencyOfRelationshipClientDiagnostics.CreateScope("DependencyOfRelationshipCollection.Exists");
+            using DiagnosticScope scope = _dependencyOfRelationshipsClientDiagnostics.CreateScope("DependencyOfRelationshipCollection.Exists");
             scope.Start();
             try
             {
-                var response = _dependencyOfRelationshipRestClient.Get(Id, name, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dependencyOfRelationshipsRestClient.CreateGetRequest(Id, name, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<DependencyOfRelationshipData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DependencyOfRelationshipData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DependencyOfRelationshipData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -316,38 +372,54 @@ namespace Azure.ResourceManager.Relationships
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.Relationships/dependencyOf/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.Relationships/dependencyOf/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DependencyOfRelationship_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DependencyOfRelationships_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DependencyOfRelationshipResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> Name of dependencyOf relationship. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<DependencyOfRelationshipResource>> GetIfExistsAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _dependencyOfRelationshipClientDiagnostics.CreateScope("DependencyOfRelationshipCollection.GetIfExists");
+            using DiagnosticScope scope = _dependencyOfRelationshipsClientDiagnostics.CreateScope("DependencyOfRelationshipCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _dependencyOfRelationshipRestClient.GetAsync(Id, name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dependencyOfRelationshipsRestClient.CreateGetRequest(Id, name, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<DependencyOfRelationshipData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DependencyOfRelationshipData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DependencyOfRelationshipData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<DependencyOfRelationshipResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new DependencyOfRelationshipResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -361,38 +433,54 @@ namespace Azure.ResourceManager.Relationships
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.Relationships/dependencyOf/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.Relationships/dependencyOf/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DependencyOfRelationship_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DependencyOfRelationships_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DependencyOfRelationshipResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> Name of dependencyOf relationship. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<DependencyOfRelationshipResource> GetIfExists(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _dependencyOfRelationshipClientDiagnostics.CreateScope("DependencyOfRelationshipCollection.GetIfExists");
+            using DiagnosticScope scope = _dependencyOfRelationshipsClientDiagnostics.CreateScope("DependencyOfRelationshipCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _dependencyOfRelationshipRestClient.Get(Id, name, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dependencyOfRelationshipsRestClient.CreateGetRequest(Id, name, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<DependencyOfRelationshipData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DependencyOfRelationshipData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DependencyOfRelationshipData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<DependencyOfRelationshipResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new DependencyOfRelationshipResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

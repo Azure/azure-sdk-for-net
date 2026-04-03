@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Relationships;
 
 namespace Azure.ResourceManager.Relationships.Models
 {
@@ -14,53 +15,82 @@ namespace Azure.ResourceManager.Relationships.Models
     public readonly partial struct ProvisioningState : IEquatable<ProvisioningState>
     {
         private readonly string _value;
+        /// <summary> Resource has been created. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> Resource creation failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> Resource creation was canceled. </summary>
+        private const string CanceledValue = "Canceled";
+        /// <summary> The resource is being provisioned. </summary>
+        private const string ProvisioningValue = "Provisioning";
+        /// <summary> The resource is being updated. </summary>
+        private const string UpdatingValue = "Updating";
+        /// <summary> The resource is being deleted. </summary>
+        private const string DeletingValue = "Deleting";
+        /// <summary> The resource provisioning request has been accepted. </summary>
+        private const string AcceptedValue = "Accepted";
 
         /// <summary> Initializes a new instance of <see cref="ProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SucceededValue = "Succeeded";
-        private const string FailedValue = "Failed";
-        private const string CanceledValue = "Canceled";
-        private const string ProvisioningValue = "Provisioning";
-        private const string UpdatingValue = "Updating";
-        private const string DeletingValue = "Deleting";
-        private const string AcceptedValue = "Accepted";
+            _value = value;
+        }
 
         /// <summary> Resource has been created. </summary>
         public static ProvisioningState Succeeded { get; } = new ProvisioningState(SucceededValue);
+
         /// <summary> Resource creation failed. </summary>
         public static ProvisioningState Failed { get; } = new ProvisioningState(FailedValue);
+
         /// <summary> Resource creation was canceled. </summary>
         public static ProvisioningState Canceled { get; } = new ProvisioningState(CanceledValue);
+
         /// <summary> The resource is being provisioned. </summary>
         public static ProvisioningState Provisioning { get; } = new ProvisioningState(ProvisioningValue);
+
         /// <summary> The resource is being updated. </summary>
         public static ProvisioningState Updating { get; } = new ProvisioningState(UpdatingValue);
+
         /// <summary> The resource is being deleted. </summary>
         public static ProvisioningState Deleting { get; } = new ProvisioningState(DeletingValue);
+
         /// <summary> The resource provisioning request has been accepted. </summary>
         public static ProvisioningState Accepted { get; } = new ProvisioningState(AcceptedValue);
+
         /// <summary> Determines if two <see cref="ProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ProvisioningState left, ProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ProvisioningState left, ProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ProvisioningState(string value) => new ProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ProvisioningState?(string value) => value == null ? null : new ProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

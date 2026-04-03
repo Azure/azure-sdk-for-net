@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Relationships
 {
-    internal class DependencyOfRelationshipOperationSource : IOperationSource<DependencyOfRelationshipResource>
+    /// <summary></summary>
+    internal partial class DependencyOfRelationshipOperationSource : IOperationSource<DependencyOfRelationshipResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal DependencyOfRelationshipOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         DependencyOfRelationshipResource IOperationSource<DependencyOfRelationshipResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DependencyOfRelationshipData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerRelationshipsContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            DependencyOfRelationshipData data = DependencyOfRelationshipData.DeserializeDependencyOfRelationshipData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new DependencyOfRelationshipResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<DependencyOfRelationshipResource> IOperationSource<DependencyOfRelationshipResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DependencyOfRelationshipData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerRelationshipsContext.Default);
-            return await Task.FromResult(new DependencyOfRelationshipResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            DependencyOfRelationshipData data = DependencyOfRelationshipData.DeserializeDependencyOfRelationshipData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new DependencyOfRelationshipResource(_client, data);
         }
     }
 }

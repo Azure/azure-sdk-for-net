@@ -8,7 +8,9 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Relationships.Mocking;
 
 namespace Azure.ResourceManager.Relationships
@@ -16,212 +18,20 @@ namespace Azure.ResourceManager.Relationships
     /// <summary> A class to add extension methods to Azure.ResourceManager.Relationships. </summary>
     public static partial class RelationshipsExtensions
     {
+        /// <param name="client"></param>
         private static MockableRelationshipsArmClient GetMockableRelationshipsArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new MockableRelationshipsArmClient(client0));
+            return client.GetCachedClient(client0 => new MockableRelationshipsArmClient(client0, ResourceIdentifier.Root));
         }
 
         /// <summary>
-        /// Gets a collection of DependencyOfRelationshipResources in the ArmClient.
+        /// Gets an object representing a <see cref="DependencyOfRelationshipResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRelationshipsArmClient.GetDependencyOfRelationships(ResourceIdentifier)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableRelationshipsArmClient.GetDependencyOfRelationshipResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> An object representing collection of DependencyOfRelationshipResources and their operations over a DependencyOfRelationshipResource. </returns>
-        public static DependencyOfRelationshipCollection GetDependencyOfRelationships(this ArmClient client, ResourceIdentifier scope)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableRelationshipsArmClient(client).GetDependencyOfRelationships(scope);
-        }
-
-        /// <summary>
-        /// Get a DependencyOfRelationship
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.Relationships/dependencyOf/{name}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DependencyOfRelationship_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DependencyOfRelationshipResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRelationshipsArmClient.GetDependencyOfRelationshipAsync(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="name"> Name of dependencyOf relationship. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<DependencyOfRelationshipResource>> GetDependencyOfRelationshipAsync(this ArmClient client, ResourceIdentifier scope, string name, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return await GetMockableRelationshipsArmClient(client).GetDependencyOfRelationshipAsync(scope, name, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a DependencyOfRelationship
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.Relationships/dependencyOf/{name}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DependencyOfRelationship_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DependencyOfRelationshipResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRelationshipsArmClient.GetDependencyOfRelationship(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="name"> Name of dependencyOf relationship. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public static Response<DependencyOfRelationshipResource> GetDependencyOfRelationship(this ArmClient client, ResourceIdentifier scope, string name, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableRelationshipsArmClient(client).GetDependencyOfRelationship(scope, name, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a collection of ServiceGroupMemberRelationshipResources in the ArmClient.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRelationshipsArmClient.GetServiceGroupMemberRelationships(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> An object representing collection of ServiceGroupMemberRelationshipResources and their operations over a ServiceGroupMemberRelationshipResource. </returns>
-        public static ServiceGroupMemberRelationshipCollection GetServiceGroupMemberRelationships(this ArmClient client, ResourceIdentifier scope)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableRelationshipsArmClient(client).GetServiceGroupMemberRelationships(scope);
-        }
-
-        /// <summary>
-        /// Get a ServiceGroupMemberRelationship
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.Relationships/serviceGroupMember/{name}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServiceGroupMemberRelationship_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceGroupMemberRelationshipResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRelationshipsArmClient.GetServiceGroupMemberRelationshipAsync(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="name"> Name of ServiceGroupMember relationship. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<ServiceGroupMemberRelationshipResource>> GetServiceGroupMemberRelationshipAsync(this ArmClient client, ResourceIdentifier scope, string name, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return await GetMockableRelationshipsArmClient(client).GetServiceGroupMemberRelationshipAsync(scope, name, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a ServiceGroupMemberRelationship
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.Relationships/serviceGroupMember/{name}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServiceGroupMemberRelationship_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceGroupMemberRelationshipResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRelationshipsArmClient.GetServiceGroupMemberRelationship(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="name"> Name of ServiceGroupMember relationship. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public static Response<ServiceGroupMemberRelationshipResource> GetServiceGroupMemberRelationship(this ArmClient client, ResourceIdentifier scope, string name, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableRelationshipsArmClient(client).GetServiceGroupMemberRelationship(scope, name, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="DependencyOfRelationshipResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DependencyOfRelationshipResource.CreateResourceIdentifier" /> to create a <see cref="DependencyOfRelationshipResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRelationshipsArmClient.GetDependencyOfRelationshipResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="DependencyOfRelationshipResource"/> object. </returns>
@@ -233,14 +43,71 @@ namespace Azure.ResourceManager.Relationships
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ServiceGroupMemberRelationshipResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServiceGroupMemberRelationshipResource.CreateResourceIdentifier" /> to create a <see cref="ServiceGroupMemberRelationshipResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets a collection of <see cref="DependencyOfRelationshipCollection"/> objects within the specified scope.
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRelationshipsArmClient.GetServiceGroupMemberRelationshipResource(ResourceIdentifier)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableRelationshipsArmClient.GetDependencyOfRelationships(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a collection of <see cref="DependencyOfRelationshipResource"/> objects. </returns>
+        public static DependencyOfRelationshipCollection GetDependencyOfRelationships(this ArmClient client, ResourceIdentifier scope)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableRelationshipsArmClient(client).GetDependencyOfRelationships(scope);
+        }
+
+        /// <summary>
+        /// Get a DependencyOfRelationship
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableRelationshipsArmClient.GetDependencyOfRelationship(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="name"> Name of dependencyOf relationship. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<DependencyOfRelationshipResource> GetDependencyOfRelationship(this ArmClient client, ResourceIdentifier scope, string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableRelationshipsArmClient(client).GetDependencyOfRelationship(scope, name, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get a DependencyOfRelationship
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableRelationshipsArmClient.GetDependencyOfRelationshipAsync(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="name"> Name of dependencyOf relationship. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<DependencyOfRelationshipResource>> GetDependencyOfRelationshipAsync(this ArmClient client, ResourceIdentifier scope, string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return await GetMockableRelationshipsArmClient(client).GetDependencyOfRelationshipAsync(scope, name, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ServiceGroupMemberRelationshipResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableRelationshipsArmClient.GetServiceGroupMemberRelationshipResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="ServiceGroupMemberRelationshipResource"/> object. </returns>
@@ -249,6 +116,64 @@ namespace Azure.ResourceManager.Relationships
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableRelationshipsArmClient(client).GetServiceGroupMemberRelationshipResource(id);
+        }
+
+        /// <summary>
+        /// Gets a collection of <see cref="ServiceGroupMemberRelationshipCollection"/> objects within the specified scope.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableRelationshipsArmClient.GetServiceGroupMemberRelationships(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a collection of <see cref="ServiceGroupMemberRelationshipResource"/> objects. </returns>
+        public static ServiceGroupMemberRelationshipCollection GetServiceGroupMemberRelationships(this ArmClient client, ResourceIdentifier scope)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableRelationshipsArmClient(client).GetServiceGroupMemberRelationships(scope);
+        }
+
+        /// <summary>
+        /// Get a ServiceGroupMemberRelationship
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableRelationshipsArmClient.GetServiceGroupMemberRelationship(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="name"> Name of ServiceGroupMember relationship. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<ServiceGroupMemberRelationshipResource> GetServiceGroupMemberRelationship(this ArmClient client, ResourceIdentifier scope, string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableRelationshipsArmClient(client).GetServiceGroupMemberRelationship(scope, name, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get a ServiceGroupMemberRelationship
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableRelationshipsArmClient.GetServiceGroupMemberRelationshipAsync(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="name"> Name of ServiceGroupMember relationship. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<ServiceGroupMemberRelationshipResource>> GetServiceGroupMemberRelationshipAsync(this ArmClient client, ResourceIdentifier scope, string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return await GetMockableRelationshipsArmClient(client).GetServiceGroupMemberRelationshipAsync(scope, name, cancellationToken).ConfigureAwait(false);
         }
     }
 }

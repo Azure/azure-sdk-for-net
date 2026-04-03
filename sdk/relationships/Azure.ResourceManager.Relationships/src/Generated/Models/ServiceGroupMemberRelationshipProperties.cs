@@ -8,58 +8,24 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Relationships;
 
 namespace Azure.ResourceManager.Relationships.Models
 {
     /// <summary> ServiceGroupMember relationship properties. </summary>
     public partial class ServiceGroupMemberRelationshipProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ServiceGroupMemberRelationshipProperties"/>. </summary>
-        /// <param name="sourceId"> The relationship source resource id. </param>
         /// <param name="targetId"> The relationship target resource id. </param>
-        /// <param name="originInformation"> Information about the origin of the relationship. </param>
-        /// <param name="metadata"> Metadata about the relationship. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetId"/> is null. </exception>
-        public ServiceGroupMemberRelationshipProperties(ResourceIdentifier sourceId, ResourceIdentifier targetId, RelationshipOriginInformation originInformation, RelationshipMetadata metadata)
+        public ServiceGroupMemberRelationshipProperties(ResourceIdentifier targetId)
         {
             Argument.AssertNotNull(targetId, nameof(targetId));
 
-            SourceId = sourceId;
             TargetId = targetId;
-            OriginInformation = originInformation;
-            Metadata = metadata;
         }
 
         /// <summary> Initializes a new instance of <see cref="ServiceGroupMemberRelationshipProperties"/>. </summary>
@@ -69,8 +35,8 @@ namespace Azure.ResourceManager.Relationships.Models
         /// <param name="originInformation"> Information about the origin of the relationship. </param>
         /// <param name="metadata"> Metadata about the relationship. </param>
         /// <param name="provisioningState"> The provisioning state of the relationship. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceGroupMemberRelationshipProperties(ResourceIdentifier sourceId, ResourceIdentifier targetId, string targetTenant, RelationshipOriginInformation originInformation, RelationshipMetadata metadata, ProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceGroupMemberRelationshipProperties(ResourceIdentifier sourceId, ResourceIdentifier targetId, string targetTenant, RelationshipOriginInformation originInformation, RelationshipMetadata metadata, ProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SourceId = sourceId;
             TargetId = targetId;
@@ -78,24 +44,24 @@ namespace Azure.ResourceManager.Relationships.Models
             OriginInformation = originInformation;
             Metadata = metadata;
             ProvisioningState = provisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ServiceGroupMemberRelationshipProperties"/> for deserialization. </summary>
-        internal ServiceGroupMemberRelationshipProperties()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The relationship source resource id. </summary>
         public ResourceIdentifier SourceId { get; }
+
         /// <summary> The relationship target resource id. </summary>
         public ResourceIdentifier TargetId { get; set; }
+
         /// <summary> The relationship target tenant id. </summary>
         public string TargetTenant { get; set; }
+
         /// <summary> Information about the origin of the relationship. </summary>
         public RelationshipOriginInformation OriginInformation { get; }
+
         /// <summary> Metadata about the relationship. </summary>
         public RelationshipMetadata Metadata { get; }
+
         /// <summary> The provisioning state of the relationship. </summary>
         public ProvisioningState? ProvisioningState { get; }
     }

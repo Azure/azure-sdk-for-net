@@ -8,183 +8,29 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Relationships;
 
 namespace Azure.ResourceManager.Relationships.Mocking
 {
-    /// <summary> A class to add extension methods to ArmClient. </summary>
+    /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockableRelationshipsArmClient : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableRelationshipsArmClient"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableRelationshipsArmClient for mocking. </summary>
         protected MockableRelationshipsArmClient()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableRelationshipsArmClient"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableRelationshipsArmClient"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableRelationshipsArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        internal MockableRelationshipsArmClient(ArmClient client) : this(client, ResourceIdentifier.Root)
-        {
-        }
-
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary> Gets a collection of DependencyOfRelationshipResources in the ArmClient. </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> An object representing collection of DependencyOfRelationshipResources and their operations over a DependencyOfRelationshipResource. </returns>
-        public virtual DependencyOfRelationshipCollection GetDependencyOfRelationships(ResourceIdentifier scope)
-        {
-            return new DependencyOfRelationshipCollection(Client, scope);
-        }
-
-        /// <summary>
-        /// Get a DependencyOfRelationship
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.Relationships/dependencyOf/{name}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DependencyOfRelationship_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DependencyOfRelationshipResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="name"> Name of dependencyOf relationship. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<DependencyOfRelationshipResource>> GetDependencyOfRelationshipAsync(ResourceIdentifier scope, string name, CancellationToken cancellationToken = default)
-        {
-            return await GetDependencyOfRelationships(scope).GetAsync(name, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a DependencyOfRelationship
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.Relationships/dependencyOf/{name}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DependencyOfRelationship_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DependencyOfRelationshipResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="name"> Name of dependencyOf relationship. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<DependencyOfRelationshipResource> GetDependencyOfRelationship(ResourceIdentifier scope, string name, CancellationToken cancellationToken = default)
-        {
-            return GetDependencyOfRelationships(scope).Get(name, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of ServiceGroupMemberRelationshipResources in the ArmClient. </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> An object representing collection of ServiceGroupMemberRelationshipResources and their operations over a ServiceGroupMemberRelationshipResource. </returns>
-        public virtual ServiceGroupMemberRelationshipCollection GetServiceGroupMemberRelationships(ResourceIdentifier scope)
-        {
-            return new ServiceGroupMemberRelationshipCollection(Client, scope);
-        }
-
-        /// <summary>
-        /// Get a ServiceGroupMemberRelationship
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.Relationships/serviceGroupMember/{name}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServiceGroupMemberRelationship_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceGroupMemberRelationshipResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="name"> Name of ServiceGroupMember relationship. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ServiceGroupMemberRelationshipResource>> GetServiceGroupMemberRelationshipAsync(ResourceIdentifier scope, string name, CancellationToken cancellationToken = default)
-        {
-            return await GetServiceGroupMemberRelationships(scope).GetAsync(name, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a ServiceGroupMemberRelationship
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.Relationships/serviceGroupMember/{name}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServiceGroupMemberRelationship_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceGroupMemberRelationshipResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="name"> Name of ServiceGroupMember relationship. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ServiceGroupMemberRelationshipResource> GetServiceGroupMemberRelationship(ResourceIdentifier scope, string name, CancellationToken cancellationToken = default)
-        {
-            return GetServiceGroupMemberRelationships(scope).Get(name, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="DependencyOfRelationshipResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DependencyOfRelationshipResource.CreateResourceIdentifier" /> to create a <see cref="DependencyOfRelationshipResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="DependencyOfRelationshipResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DependencyOfRelationshipResource"/> object. </returns>
         public virtual DependencyOfRelationshipResource GetDependencyOfRelationshipResource(ResourceIdentifier id)
@@ -193,16 +39,85 @@ namespace Azure.ResourceManager.Relationships.Mocking
             return new DependencyOfRelationshipResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="ServiceGroupMemberRelationshipResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServiceGroupMemberRelationshipResource.CreateResourceIdentifier" /> to create a <see cref="ServiceGroupMemberRelationshipResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets a collection of <see cref="DependencyOfRelationshipCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="DependencyOfRelationshipResource"/> objects. </returns>
+        public virtual DependencyOfRelationshipCollection GetDependencyOfRelationships(ResourceIdentifier scope)
+        {
+            return new DependencyOfRelationshipCollection(Client, scope);
+        }
+
+        /// <summary> Get a DependencyOfRelationship. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="name"> Name of dependencyOf relationship. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DependencyOfRelationshipResource> GetDependencyOfRelationship(ResourceIdentifier scope, string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return GetDependencyOfRelationships(scope).Get(name, cancellationToken);
+        }
+
+        /// <summary> Get a DependencyOfRelationship. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="name"> Name of dependencyOf relationship. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DependencyOfRelationshipResource>> GetDependencyOfRelationshipAsync(ResourceIdentifier scope, string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return await GetDependencyOfRelationships(scope).GetAsync(name, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ServiceGroupMemberRelationshipResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ServiceGroupMemberRelationshipResource"/> object. </returns>
         public virtual ServiceGroupMemberRelationshipResource GetServiceGroupMemberRelationshipResource(ResourceIdentifier id)
         {
             ServiceGroupMemberRelationshipResource.ValidateResourceId(id);
             return new ServiceGroupMemberRelationshipResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of <see cref="ServiceGroupMemberRelationshipCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="ServiceGroupMemberRelationshipResource"/> objects. </returns>
+        public virtual ServiceGroupMemberRelationshipCollection GetServiceGroupMemberRelationships(ResourceIdentifier scope)
+        {
+            return new ServiceGroupMemberRelationshipCollection(Client, scope);
+        }
+
+        /// <summary> Get a ServiceGroupMemberRelationship. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="name"> Name of ServiceGroupMember relationship. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ServiceGroupMemberRelationshipResource> GetServiceGroupMemberRelationship(ResourceIdentifier scope, string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return GetServiceGroupMemberRelationships(scope).Get(name, cancellationToken);
+        }
+
+        /// <summary> Get a ServiceGroupMemberRelationship. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="name"> Name of ServiceGroupMember relationship. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ServiceGroupMemberRelationshipResource>> GetServiceGroupMemberRelationshipAsync(ResourceIdentifier scope, string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return await GetServiceGroupMemberRelationships(scope).GetAsync(name, cancellationToken).ConfigureAwait(false);
         }
     }
 }

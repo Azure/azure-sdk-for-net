@@ -10,13 +10,60 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Relationships;
 
 namespace Azure.ResourceManager.Relationships.Models
 {
-    public partial class DependencyOfRelationshipProperties : IUtf8JsonSerializable, IJsonModel<DependencyOfRelationshipProperties>
+    /// <summary> dependencyOf relationship properties. </summary>
+    public partial class DependencyOfRelationshipProperties : IJsonModel<DependencyOfRelationshipProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DependencyOfRelationshipProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="DependencyOfRelationshipProperties"/> for deserialization. </summary>
+        internal DependencyOfRelationshipProperties()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DependencyOfRelationshipProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DependencyOfRelationshipProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDependencyOfRelationshipProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DependencyOfRelationshipProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DependencyOfRelationshipProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRelationshipsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DependencyOfRelationshipProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DependencyOfRelationshipProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DependencyOfRelationshipProperties IPersistableModel<DependencyOfRelationshipProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DependencyOfRelationshipProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DependencyOfRelationshipProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +75,11 @@ namespace Azure.ResourceManager.Relationships.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DependencyOfRelationshipProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DependencyOfRelationshipProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DependencyOfRelationshipProperties)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W")
             {
                 writer.WritePropertyName("sourceId"u8);
@@ -61,15 +107,15 @@ namespace Azure.ResourceManager.Relationships.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -78,22 +124,27 @@ namespace Azure.ResourceManager.Relationships.Models
             }
         }
 
-        DependencyOfRelationshipProperties IJsonModel<DependencyOfRelationshipProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DependencyOfRelationshipProperties IJsonModel<DependencyOfRelationshipProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DependencyOfRelationshipProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DependencyOfRelationshipProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DependencyOfRelationshipProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DependencyOfRelationshipProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDependencyOfRelationshipProperties(document.RootElement, options);
         }
 
-        internal static DependencyOfRelationshipProperties DeserializeDependencyOfRelationshipProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DependencyOfRelationshipProperties DeserializeDependencyOfRelationshipProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -104,50 +155,48 @@ namespace Azure.ResourceManager.Relationships.Models
             RelationshipOriginInformation originInformation = default;
             RelationshipMetadata metadata = default;
             ProvisioningState? provisioningState = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("sourceId"u8))
+                if (prop.NameEquals("sourceId"u8))
                 {
-                    sourceId = new ResourceIdentifier(property.Value.GetString());
+                    sourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("targetId"u8))
+                if (prop.NameEquals("targetId"u8))
                 {
-                    targetId = new ResourceIdentifier(property.Value.GetString());
+                    targetId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("targetTenant"u8))
+                if (prop.NameEquals("targetTenant"u8))
                 {
-                    targetTenant = property.Value.GetString();
+                    targetTenant = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("originInformation"u8))
+                if (prop.NameEquals("originInformation"u8))
                 {
-                    originInformation = RelationshipOriginInformation.DeserializeRelationshipOriginInformation(property.Value, options);
+                    originInformation = RelationshipOriginInformation.DeserializeRelationshipOriginInformation(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("metadata"u8))
+                if (prop.NameEquals("metadata"u8))
                 {
-                    metadata = RelationshipMetadata.DeserializeRelationshipMetadata(property.Value, options);
+                    metadata = RelationshipMetadata.DeserializeRelationshipMetadata(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("provisioningState"u8))
+                if (prop.NameEquals("provisioningState"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    provisioningState = new ProvisioningState(property.Value.GetString());
+                    provisioningState = new ProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new DependencyOfRelationshipProperties(
                 sourceId,
                 targetId,
@@ -155,38 +204,7 @@ namespace Azure.ResourceManager.Relationships.Models
                 originInformation,
                 metadata,
                 provisioningState,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<DependencyOfRelationshipProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DependencyOfRelationshipProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRelationshipsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DependencyOfRelationshipProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        DependencyOfRelationshipProperties IPersistableModel<DependencyOfRelationshipProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DependencyOfRelationshipProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeDependencyOfRelationshipProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DependencyOfRelationshipProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<DependencyOfRelationshipProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
