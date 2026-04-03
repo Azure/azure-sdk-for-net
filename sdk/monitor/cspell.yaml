@@ -5,4 +5,5 @@ overrides:
     words:
       - azprovision
       - nopri
+      - resourceid
       - uucp
