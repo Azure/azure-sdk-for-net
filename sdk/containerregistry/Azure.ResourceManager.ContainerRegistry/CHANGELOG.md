@@ -4,11 +4,18 @@
 
 ### Features Added
 
+- Updated API version to 2026-01-01-preview.
+
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+- Migrated from AutoRest/Swagger to TypeSpec-based generation.
+- Added support for Archive and ArchiveVersion resources.
+- Added support for ExportPipeline, ImportPipeline and PipelineRun resources.
+- Added missing `[Obsolete]` attribute to `ContainerRegistryAgentPoolPatch` for consistency with other deprecated RegistryTasks types.
 
 ## 1.5.0-beta.2 (2026-03-19)
 

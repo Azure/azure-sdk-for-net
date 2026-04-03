@@ -13,100 +13,308 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevCenter
 {
-    /// <summary>
-    /// A class representing the DevCenterPool data model.
-    /// A pool of Virtual Machines.
-    /// </summary>
+    /// <summary> A pool of Virtual Machines. </summary>
     public partial class DevCenterPoolData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DevCenterPoolData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public DevCenterPoolData(AzureLocation location) : base(location)
         {
-            HealthStatusDetails = new ChangeTrackingList<DevCenterHealthStatusDetail>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DevCenterPoolData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="devBoxDefinitionName"> Name of a Dev Box definition in parent Project of this Pool. </param>
-        /// <param name="networkConnectionName"> Name of a Network Connection in parent Project of this Pool. </param>
-        /// <param name="licenseType"> Specifies the license type indicating the caller has already acquired licenses for the Dev Boxes that will be created. </param>
-        /// <param name="localAdministrator"> Indicates whether owners of Dev Boxes in this pool are added as local administrators on the Dev Box. </param>
-        /// <param name="stopOnDisconnect"> Stop on disconnect configuration settings for Dev Boxes created in this pool. </param>
-        /// <param name="healthStatus"> Overall health status of the Pool. Indicates whether or not the Pool is available to create Dev Boxes. </param>
-        /// <param name="healthStatusDetails"> Details on the Pool health status to help diagnose issues. This is only populated when the pool status indicates the pool is in a non-healthy state. </param>
-        /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DevCenterPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string devBoxDefinitionName, string networkConnectionName, DevCenterLicenseType? licenseType, LocalAdminStatus? localAdministrator, StopOnDisconnectConfiguration stopOnDisconnect, DevCenterHealthStatus? healthStatus, IReadOnlyList<DevCenterHealthStatusDetail> healthStatusDetails, DevCenterProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Pool properties. </param>
+        internal DevCenterPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, PoolProperties properties) : base(id, name, resourceType, systemData, tags, location)
         {
-            DevBoxDefinitionName = devBoxDefinitionName;
-            NetworkConnectionName = networkConnectionName;
-            LicenseType = licenseType;
-            LocalAdministrator = localAdministrator;
-            StopOnDisconnect = stopOnDisconnect;
-            HealthStatus = healthStatus;
-            HealthStatusDetails = healthStatusDetails;
-            ProvisioningState = provisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DevCenterPoolData"/> for deserialization. </summary>
-        internal DevCenterPoolData()
+        /// <summary> Pool properties. </summary>
+        internal PoolProperties Properties { get; set; }
+
+        /// <summary> Indicates if the pool is created from an existing Dev Box Definition or if one is provided directly. </summary>
+        public DevCenterPoolDevBoxDefinitionType? DevBoxDefinitionType
         {
+            get
+            {
+                return Properties is null ? default : Properties.DevBoxDefinitionType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PoolProperties();
+                }
+                Properties.DevBoxDefinitionType = value.Value;
+            }
         }
 
-        /// <summary> Name of a Dev Box definition in parent Project of this Pool. </summary>
-        public string DevBoxDefinitionName { get; set; }
+        /// <summary> Name of a Dev Box definition in parent Project of this Pool. Will be ignored if devBoxDefinitionType is Value. </summary>
+        public string DevBoxDefinitionName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DevBoxDefinitionName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PoolProperties();
+                }
+                Properties.DevBoxDefinitionName = value;
+            }
+        }
+
+        /// <summary> A definition of the machines that are created from this Pool. Will be ignored if devBoxDefinitionType is Reference or not provided. </summary>
+        public DevCenterPoolDevBoxDefinitionDetail DevBoxDefinition
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DevBoxDefinition;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PoolProperties();
+                }
+                Properties.DevBoxDefinition = value;
+            }
+        }
+
         /// <summary> Name of a Network Connection in parent Project of this Pool. </summary>
-        public string NetworkConnectionName { get; set; }
+        public string NetworkConnectionName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NetworkConnectionName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PoolProperties();
+                }
+                Properties.NetworkConnectionName = value;
+            }
+        }
+
         /// <summary> Specifies the license type indicating the caller has already acquired licenses for the Dev Boxes that will be created. </summary>
-        public DevCenterLicenseType? LicenseType { get; set; }
+        public DevCenterLicenseType? LicenseType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LicenseType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PoolProperties();
+                }
+                Properties.LicenseType = value.Value;
+            }
+        }
+
         /// <summary> Indicates whether owners of Dev Boxes in this pool are added as local administrators on the Dev Box. </summary>
-        public LocalAdminStatus? LocalAdministrator { get; set; }
+        public LocalAdminStatus? LocalAdministrator
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LocalAdministrator;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PoolProperties();
+                }
+                Properties.LocalAdministrator = value.Value;
+            }
+        }
+
         /// <summary> Stop on disconnect configuration settings for Dev Boxes created in this pool. </summary>
-        public StopOnDisconnectConfiguration StopOnDisconnect { get; set; }
+        public StopOnDisconnectConfiguration StopOnDisconnect
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StopOnDisconnect;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PoolProperties();
+                }
+                Properties.StopOnDisconnect = value;
+            }
+        }
+
+        /// <summary> Stop on no connect configuration settings for Dev Boxes created in this pool. </summary>
+        public DevCenterStopOnNoConnectConfiguration StopOnNoConnect
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StopOnNoConnect;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PoolProperties();
+                }
+                Properties.StopOnNoConnect = value;
+            }
+        }
+
+        /// <summary> Indicates whether Dev Boxes in this pool are created with single sign on enabled. The also requires that single sign on be enabled on the tenant. </summary>
+        public DevCenterSingleSignOnStatus? SingleSignOnStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SingleSignOnStatus;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PoolProperties();
+                }
+                Properties.SingleSignOnStatus = value.Value;
+            }
+        }
+
+        /// <summary> The display name of the pool. </summary>
+        public string DisplayName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DisplayName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PoolProperties();
+                }
+                Properties.DisplayName = value;
+            }
+        }
+
+        /// <summary> Indicates whether the pool uses a Virtual Network managed by Microsoft or a customer provided network. </summary>
+        public DevCenterVirtualNetworkType? VirtualNetworkType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VirtualNetworkType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PoolProperties();
+                }
+                Properties.VirtualNetworkType = value.Value;
+            }
+        }
+
+        /// <summary> The regions of the managed virtual network (required when managedNetworkType is Managed). </summary>
+        public IList<string> ManagedVirtualNetworkRegions
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new PoolProperties();
+                }
+                return Properties.ManagedVirtualNetworkRegions;
+            }
+        }
+
+        /// <summary> Active hours configuration settings for Dev Boxes created in this pool. </summary>
+        public DevCenterActiveHoursConfiguration ActiveHoursConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ActiveHoursConfiguration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PoolProperties();
+                }
+                Properties.ActiveHoursConfiguration = value;
+            }
+        }
+
+        /// <summary> Indicates whether Dev Box Tunnel is enabled for a the pool. </summary>
+        public DevCenterDevBoxTunnelEnableStatus? DevBoxTunnelEnableStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DevBoxTunnelEnableStatus;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PoolProperties();
+                }
+                Properties.DevBoxTunnelEnableStatus = value.Value;
+            }
+        }
+
         /// <summary> Overall health status of the Pool. Indicates whether or not the Pool is available to create Dev Boxes. </summary>
-        public DevCenterHealthStatus? HealthStatus { get; }
+        public DevCenterHealthStatus? HealthStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HealthStatus;
+            }
+        }
+
         /// <summary> Details on the Pool health status to help diagnose issues. This is only populated when the pool status indicates the pool is in a non-healthy state. </summary>
-        public IReadOnlyList<DevCenterHealthStatusDetail> HealthStatusDetails { get; }
+        public IReadOnlyList<DevCenterHealthStatusDetail> HealthStatusDetails
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new PoolProperties();
+                }
+                return Properties.HealthStatusDetails;
+            }
+        }
+
+        /// <summary> Indicates the number of provisioned Dev Boxes in this pool. </summary>
+        public int? DevBoxCount
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DevBoxCount;
+            }
+        }
+
         /// <summary> The provisioning state of the resource. </summary>
-        public DevCenterProvisioningState? ProvisioningState { get; }
+        public DevCenterProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
     }
 }
