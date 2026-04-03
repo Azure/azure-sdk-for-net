@@ -10,11 +10,20 @@ steps:
   - ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
     # 1. Check if CODEOWNERS changed; skip everything if it hasn't or if opened by azure-sdk
     - pwsh: |
-        $prCreator = "$(Build.RequestedFor)"
-        if ($prCreator -eq "azure-sdk") {
-          Write-Host "PR opened by azure-sdk. Skipping CODEOWNERS section check."
-          Write-Host "##vso[task.setvariable variable=ShouldCheckCodeownersEdits]false"
-          exit 0
+        $prNumber = "$(System.PullRequest.PullRequestNumber)"
+        $repoName = "$(Build.Repository.Name)"
+        $prAuthorJson = gh pr view $prNumber --repo $repoName --json author 2>&1
+        if ($LASTEXITCODE -eq 0) {
+          $prAuthor = ($prAuthorJson | ConvertFrom-Json).author.login
+          Write-Host "PR author: $prAuthor"
+          if ($prAuthor -ieq "azure-sdk") {
+            Write-Host "PR opened by azure-sdk. Skipping CODEOWNERS section check."
+            Write-Host "##vso[task.setvariable variable=ShouldCheckCodeownersEdits]false"
+            exit 0
+          }
+        } else {
+          Write-Host "Could not determine PR author via gh CLI: $prAuthorJson"
+          Write-Host "Continuing with CODEOWNERS section check."
         }
 
         $scriptPath = [System.IO.Path]::Combine("${{ parameters.SourceRootPath }}", "eng", "common", "scripts", "get-changedfiles.ps1")
