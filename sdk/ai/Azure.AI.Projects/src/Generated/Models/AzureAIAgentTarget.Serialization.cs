@@ -10,7 +10,8 @@ using Azure.AI.Projects;
 
 namespace Azure.AI.Projects.Evaluation
 {
-    internal partial class AzureAIAgentTarget : EvaluationTarget, IJsonModel<AzureAIAgentTarget>
+    /// <summary> Represents a target specifying an Azure AI agent. </summary>
+    public partial class AzureAIAgentTarget : EvaluationTarget, IJsonModel<AzureAIAgentTarget>
     {
         /// <summary> Initializes a new instance of <see cref="AzureAIAgentTarget"/> for deserialization. </summary>
         internal AzureAIAgentTarget()
