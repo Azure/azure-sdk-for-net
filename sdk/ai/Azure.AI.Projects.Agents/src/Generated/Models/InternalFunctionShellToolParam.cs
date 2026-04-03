@@ -8,7 +8,7 @@ using Azure.AI.Projects.Agents;
 
 namespace OpenAI
 {
-    internal partial class InternalFunctionShellToolParam : AgentTool
+    internal partial class InternalFunctionShellToolParam : ProjectsAgentTool
     {
         /// <summary> Initializes a new instance of <see cref="InternalFunctionShellToolParam"/>. </summary>
         public InternalFunctionShellToolParam() : base(ToolType.Shell)

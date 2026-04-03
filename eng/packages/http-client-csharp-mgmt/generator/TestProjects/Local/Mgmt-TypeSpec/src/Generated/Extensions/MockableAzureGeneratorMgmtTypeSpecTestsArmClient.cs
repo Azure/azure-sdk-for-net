@@ -602,6 +602,51 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             return new SharedConfigResource(Client, id);
         }
 
+        /// <summary> Gets an object representing a <see cref="PolyDeviceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="PolyDeviceResource"/> object. </returns>
+        public virtual PolyDeviceResource GetPolyDeviceResource(ResourceIdentifier id)
+        {
+            PolyDeviceResource.ValidateResourceId(id);
+            return new PolyDeviceResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of <see cref="PolyDeviceCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="PolyDeviceResource"/> objects. </returns>
+        public virtual PolyDeviceCollection GetPolyDevices(ResourceIdentifier scope)
+        {
+            return new PolyDeviceCollection(Client, scope);
+        }
+
+        /// <summary> Get a PolyDevice. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="deviceName"> The name of the PolyDevice. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<PolyDeviceResource> GetPolyDevice(ResourceIdentifier scope, string deviceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
+
+            return GetPolyDevices(scope).Get(deviceName, cancellationToken);
+        }
+
+        /// <summary> Get a PolyDevice. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="deviceName"> The name of the PolyDevice. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<PolyDeviceResource>> GetPolyDeviceAsync(ResourceIdentifier scope, string deviceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
+
+            return await GetPolyDevices(scope).GetAsync(deviceName, cancellationToken).ConfigureAwait(false);
+        }
+
         /// <summary>
         /// CheckNameAvailability
         /// <list type="bullet">

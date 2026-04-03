@@ -381,14 +381,14 @@ namespace Azure.ResourceManager.AppService.Models
         internal AppServiceApiDefinitionInfo ApiDefinition { get; set; }
         /// <summary> The URL of the API definition. </summary>
         [WirePath("apiDefinition.url")]
-        public Uri ApiDefinitionUri
+        public string ApiDefinitionUriStringValue
         {
-            get => ApiDefinition is null ? default : ApiDefinition.Uri;
+            get => ApiDefinition is null ? default : ApiDefinition.ApiDefinitionUriStringValue;
             set
             {
                 if (ApiDefinition is null)
                     ApiDefinition = new AppServiceApiDefinitionInfo();
-                ApiDefinition.Uri = value;
+                ApiDefinition.ApiDefinitionUriStringValue = value;
             }
         }
 

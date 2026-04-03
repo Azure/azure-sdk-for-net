@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ServiceBus;
 
 namespace Azure.ResourceManager.ServiceBus.Models
 {
@@ -14,47 +15,67 @@ namespace Azure.ResourceManager.ServiceBus.Models
     public readonly partial struct ServiceBusResourceAssociationAccessMode : IEquatable<ServiceBusResourceAssociationAccessMode>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ServiceBusResourceAssociationAccessMode"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ServiceBusResourceAssociationAccessMode(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string NoAssociationModeValue = "NoAssociationMode";
         private const string EnforcedModeValue = "EnforcedMode";
         private const string LearningModeValue = "LearningMode";
         private const string AuditModeValue = "AuditMode";
         private const string UnspecifiedModeValue = "UnspecifiedMode";
 
-        /// <summary> NoAssociationMode. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceBusResourceAssociationAccessMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ServiceBusResourceAssociationAccessMode(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the NoAssociationMode. </summary>
         public static ServiceBusResourceAssociationAccessMode NoAssociationMode { get; } = new ServiceBusResourceAssociationAccessMode(NoAssociationModeValue);
-        /// <summary> EnforcedMode. </summary>
+
+        /// <summary> Gets the EnforcedMode. </summary>
         public static ServiceBusResourceAssociationAccessMode EnforcedMode { get; } = new ServiceBusResourceAssociationAccessMode(EnforcedModeValue);
-        /// <summary> LearningMode. </summary>
+
+        /// <summary> Gets the LearningMode. </summary>
         public static ServiceBusResourceAssociationAccessMode LearningMode { get; } = new ServiceBusResourceAssociationAccessMode(LearningModeValue);
-        /// <summary> AuditMode. </summary>
+
+        /// <summary> Gets the AuditMode. </summary>
         public static ServiceBusResourceAssociationAccessMode AuditMode { get; } = new ServiceBusResourceAssociationAccessMode(AuditModeValue);
-        /// <summary> UnspecifiedMode. </summary>
+
+        /// <summary> Gets the UnspecifiedMode. </summary>
         public static ServiceBusResourceAssociationAccessMode UnspecifiedMode { get; } = new ServiceBusResourceAssociationAccessMode(UnspecifiedModeValue);
+
         /// <summary> Determines if two <see cref="ServiceBusResourceAssociationAccessMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ServiceBusResourceAssociationAccessMode left, ServiceBusResourceAssociationAccessMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ServiceBusResourceAssociationAccessMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ServiceBusResourceAssociationAccessMode left, ServiceBusResourceAssociationAccessMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ServiceBusResourceAssociationAccessMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ServiceBusResourceAssociationAccessMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ServiceBusResourceAssociationAccessMode(string value) => new ServiceBusResourceAssociationAccessMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ServiceBusResourceAssociationAccessMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ServiceBusResourceAssociationAccessMode?(string value) => value == null ? null : new ServiceBusResourceAssociationAccessMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ServiceBusResourceAssociationAccessMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ServiceBusResourceAssociationAccessMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -127,13 +127,25 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         public const int Tags_AiCloudRole_MaxLength = 256;
         public const int Tags_AiCloudRoleInstance_MaxLength = 256;
         public const int Tags_AiInternalSdkVersion_MaxLength = 64;
+        public const int Tags_AiSessionId_MaxLength = 64;
+        public const int Tags_AiDeviceId_MaxLength = 1024;
+        public const int Tags_AiDeviceModel_MaxLength = 256;
+        public const int Tags_AiDeviceType_MaxLength = 64;
+        public const int Tags_AiDeviceOsVersion_MaxLength = 256;
+        public const int Tags_AiOperationSyntheticSource_MaxLength = 1024;
+        public const int Tags_AiUserAccountId_MaxLength = 1024;
 
         /// <summary>
-        /// GenAI semantic convention property keys that are exempt from value truncation.
+        /// Maximum value length for GenAI semantic convention properties (256 KB).
         /// These properties may carry large payloads (e.g. full prompt/completion content)
-        /// and must not be truncated.
+        /// and are truncated to a higher limit than standard properties.
         /// </summary>
-        public static readonly HashSet<string> TruncationExemptProperties = new HashSet<string>(StringComparer.Ordinal)
+        public const int GenAi_Properties_MaxValueLength = 256 * 1024;
+
+        /// <summary>
+        /// GenAI semantic convention property keys that receive a higher truncation limit.
+        /// </summary>
+        public static readonly HashSet<string> GenAiProperties = new HashSet<string>(StringComparer.Ordinal)
         {
             "gen_ai.input.messages",
             "gen_ai.output.messages",

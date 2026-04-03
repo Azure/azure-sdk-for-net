@@ -21,11 +21,23 @@ namespace Azure.Generator.Provisioning
         private IReadOnlyList<ProvisioningResourceProvider>? _resources;
         private Dictionary<string, ProvisioningResourceProvider>? _resourcesByIdPattern;
         private Dictionary<InputModelType, List<ProvisioningResourceProvider>>? _resourcesByModel;
+        private BuiltInRoleProvider? _builtInRole;
+
+        /// <summary>
+        /// Gets the BuiltInRole type provider if any resources define RBAC roles.
+        /// </summary>
+        internal BuiltInRoleProvider? BuiltInRole => GetNullableValue(ref _builtInRole);
 
         private T GetValue<T>(ref T? field) where T : class
         {
-            InitializeResources(ref _resources, ref _resourcesByIdPattern, ref _resourcesByModel);
+            InitializeResources(ref _resources, ref _resourcesByIdPattern, ref _resourcesByModel, ref _builtInRole);
             return field!;
+        }
+
+        private T? GetNullableValue<T>(ref T? field) where T : class
+        {
+            InitializeResources(ref _resources, ref _resourcesByIdPattern, ref _resourcesByModel, ref _builtInRole);
+            return field;
         }
 
         /// <summary>
@@ -33,10 +45,11 @@ namespace Azure.Generator.Provisioning
         /// </summary>
         internal IReadOnlyList<ProvisioningResourceProvider> Resources => GetValue(ref _resources);
 
-        private static void InitializeResources(
+        private void InitializeResources(
             ref IReadOnlyList<ProvisioningResourceProvider>? resources,
             ref Dictionary<string, ProvisioningResourceProvider>? resourcesByIdPattern,
-            ref Dictionary<InputModelType, List<ProvisioningResourceProvider>>? resourcesByModel)
+            ref Dictionary<InputModelType, List<ProvisioningResourceProvider>>? resourcesByModel,
+            ref BuiltInRoleProvider? builtInRole)
         {
             if (resources != null)
                 return;
@@ -45,7 +58,8 @@ namespace Azure.Generator.Provisioning
             var byIdPattern = new Dictionary<string, ProvisioningResourceProvider>();
             var byModel = new Dictionary<InputModelType, List<ProvisioningResourceProvider>>();
 
-            foreach (var metadata in ProvisioningGenerator.Instance.InputLibrary.ArmProviderSchema.Resources)
+            var allMetadata = ProvisioningGenerator.Instance.InputLibrary.ArmProviderSchema.Resources;
+            foreach (var metadata in allMetadata)
             {
                 if (metadata.ResourceModel == null)
                     continue;
@@ -61,6 +75,12 @@ namespace Azure.Generator.Provisioning
                 }
                 modelList.Add(resource);
             }
+
+            // Initialize BuiltInRole from input metadata — this is safe to do here since
+            // it's constructed purely from input values, and must be available before any
+            // resource provider's methods are materialized.
+            var serviceName = ProvisioningGenerator.Instance.TypeFactory.ResourceProviderName;
+            builtInRole = BuiltInRoleProvider.TryCreate(serviceName, allMetadata);
 
             resources = list;
             resourcesByIdPattern = byIdPattern;
@@ -110,6 +130,12 @@ namespace Azure.Generator.Provisioning
             {
                 providers.Add(resource);
                 ProvisioningGenerator.Instance.AddTypeToKeep(resource.Name);
+            }
+
+            // Add BuiltInRole struct if any resources have RBAC roles defined.
+            if (BuiltInRole != null)
+            {
+                providers.Add(BuiltInRole);
             }
 
             // Build models and enums via TypeFactory — our overridden CreateModel/CreateEnum

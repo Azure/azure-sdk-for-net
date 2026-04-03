@@ -36,7 +36,7 @@ public class AgentsTests : AgentsTestBase
     public async Task TestAgentCRUD()
     {
         AgentAdministrationClient agentsClient = GetTestClient();
-        AgentDefinition emptyAgentDefinition = new DeclarativeAgentDefinition(TestEnvironment.FOUNDRY_MODEL_NAME);
+        ProjectsAgentDefinition emptyAgentDefinition = new DeclarativeAgentDefinition(TestEnvironment.FOUNDRY_MODEL_NAME);
 
         const string emptyPromptAgentName = "TestNoVersionAgentFromDotnetTests";
         try
@@ -47,22 +47,22 @@ public class AgentsTests : AgentsTestBase
         {
             // We do not have the agent to begin with.
         }
-        AgentVersion newAgentVersion = await agentsClient.CreateAgentVersionAsync(
+        ProjectsAgentVersion newAgentVersion = await agentsClient.CreateAgentVersionAsync(
             emptyPromptAgentName,
-            new AgentVersionCreationOptions(emptyAgentDefinition)
+            new ProjectsAgentVersionCreationOptions(emptyAgentDefinition)
             {
                 Metadata = { ["delete_me"] = "please " },
             });
         Assert.That(newAgentVersion?.Id, Is.Not.Null.And.Not.Empty);
 
-        AgentRecord retrievedAgent = await agentsClient.GetAgentAsync(emptyPromptAgentName);
+        ProjectsAgentRecord retrievedAgent = await agentsClient.GetAgentAsync(emptyPromptAgentName);
         Assert.That(retrievedAgent?.Id, Is.EqualTo(newAgentVersion.Name));
 
         await agentsClient.DeleteAgentAsync(newAgentVersion.Name);
 
-        AgentVersion agentVersion = await agentsClient.CreateAgentVersionAsync(AGENT_NAME, new AgentVersionCreationOptions(emptyAgentDefinition));
+        ProjectsAgentVersion agentVersion = await agentsClient.CreateAgentVersionAsync(AGENT_NAME, new ProjectsAgentVersionCreationOptions(emptyAgentDefinition));
         Assert.That(AGENT_NAME, Is.EqualTo(agentVersion.Name));
-        AgentVersion agentVersionObject_ = await agentsClient.GetAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+        ProjectsAgentVersion agentVersionObject_ = await agentsClient.GetAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         Assert.That(AGENT_NAME, Is.EqualTo(agentVersionObject_.Name));
         Assert.That(agentVersion.Version, Is.EqualTo(agentVersionObject_.Version));
         Assert.That(agentVersion.Description, Is.Empty);

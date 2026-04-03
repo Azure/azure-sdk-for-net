@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Initializes a new instance of <see cref="ElasticAccountListResult"/>. </summary>
         /// <param name="value"> The ElasticAccount items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal ElasticAccountListResult(IEnumerable<ElasticAccountData> value)
+        internal ElasticAccountListResult(IEnumerable<NetAppElasticAccountData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="value"> The ElasticAccount items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ElasticAccountListResult(IReadOnlyList<ElasticAccountData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ElasticAccountListResult(IReadOnlyList<NetAppElasticAccountData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> The ElasticAccount items on this page. </summary>
-        public IReadOnlyList<ElasticAccountData> Value { get; }
+        public IReadOnlyList<NetAppElasticAccountData> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }

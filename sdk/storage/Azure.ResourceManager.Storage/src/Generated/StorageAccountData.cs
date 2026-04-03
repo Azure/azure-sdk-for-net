@@ -14,354 +14,589 @@ using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
 {
-    /// <summary>
-    /// A class representing the StorageAccount data model.
-    /// The storage account.
-    /// </summary>
+    /// <summary> The storage account. </summary>
     public partial class StorageAccountData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="StorageAccountData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public StorageAccountData(AzureLocation location) : base(location)
         {
             Zones = new ChangeTrackingList<string>();
-            PrivateEndpointConnections = new ChangeTrackingList<StoragePrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="StorageAccountData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Properties of the storage account. </param>
         /// <param name="sku"> Gets the SKU. </param>
         /// <param name="kind"> Gets the Kind. </param>
         /// <param name="identity"> The identity of the resource. </param>
         /// <param name="extendedLocation"> The extendedLocation of the resource. </param>
-        /// <param name="zones"> Optional. Gets or sets the pinned logical availability zone for the storage account. </param>
+        /// <param name="zones"> The availability zones. </param>
         /// <param name="placement"> Optional. Gets or sets the zonal placement details for the storage account. </param>
-        /// <param name="storageAccountProvisioningState"> Gets the status of the storage account at the time the operation was called. </param>
-        /// <param name="primaryEndpoints"> Gets the URLs that are used to perform a retrieval of a public blob, queue, or table object. Note that Standard_ZRS and Premium_LRS accounts only return the blob endpoint. </param>
-        /// <param name="primaryLocation"> Gets the location of the primary data center for the storage account. </param>
-        /// <param name="statusOfPrimary"> Gets the status indicating whether the primary location of the storage account is available or unavailable. </param>
-        /// <param name="lastGeoFailoverOn"> Gets the timestamp of the most recent instance of a failover to the secondary location. Only the most recent timestamp is retained. This element is not returned if there has never been a failover instance. Only available if the accountType is Standard_GRS or Standard_RAGRS. </param>
-        /// <param name="secondaryLocation"> Gets the location of the geo-replicated secondary for the storage account. Only available if the accountType is Standard_GRS or Standard_RAGRS. </param>
-        /// <param name="statusOfSecondary"> Gets the status indicating whether the secondary location of the storage account is available or unavailable. Only available if the SKU name is Standard_GRS or Standard_RAGRS. </param>
-        /// <param name="createdOn"> Gets the creation date and time of the storage account in UTC. </param>
-        /// <param name="customDomain"> Gets the custom domain the user assigned to this storage account. </param>
-        /// <param name="sasPolicy"> SasPolicy assigned to the storage account. </param>
-        /// <param name="keyPolicy"> KeyPolicy assigned to the storage account. </param>
-        /// <param name="keyCreationTime"> Storage account keys creation time. </param>
-        /// <param name="secondaryEndpoints"> Gets the URLs that are used to perform a retrieval of a public blob, queue, or table object from the secondary location of the storage account. Only available if the SKU name is Standard_RAGRS. </param>
-        /// <param name="encryption"> Encryption settings to be used for server-side encryption for the storage account. </param>
-        /// <param name="accessTier"> Required for storage accounts where kind = BlobStorage. The access tier is used for billing. The 'Premium' access tier is the default value for premium block blobs storage account type and it cannot be changed for the premium block blobs storage account type. </param>
-        /// <param name="azureFilesIdentityBasedAuthentication"> Provides the identity based authentication settings for Azure Files. </param>
-        /// <param name="enableHttpsTrafficOnly"> Allows https traffic only to storage service if sets to true. </param>
-        /// <param name="networkRuleSet"> Network rule set. </param>
-        /// <param name="isSftpEnabled"> Enables Secure File Transfer Protocol, if set to true. </param>
-        /// <param name="isLocalUserEnabled"> Enables local users feature, if set to true. </param>
-        /// <param name="isExtendedGroupEnabled"> Enables extended group support with local users feature, if set to true. </param>
-        /// <param name="isHnsEnabled"> Account HierarchicalNamespace enabled if sets to true. </param>
-        /// <param name="geoReplicationStats"> Geo Replication Stats. </param>
-        /// <param name="isFailoverInProgress"> If the failover is in progress, the value will be true, otherwise, it will be null. </param>
-        /// <param name="largeFileSharesState"> Allow large file shares if sets to Enabled. It cannot be disabled once it is enabled. </param>
-        /// <param name="privateEndpointConnections"> List of private endpoint connection associated with the specified storage account. </param>
-        /// <param name="routingPreference"> Maintains information about the network routing choice opted by the user for data transfer. </param>
-        /// <param name="dualStackEndpointPreference"> Maintains information about the Internet protocol opted by the user. </param>
-        /// <param name="blobRestoreStatus"> Blob restore status. </param>
-        /// <param name="allowBlobPublicAccess"> Allow or disallow public access to all blobs or containers in the storage account. The default interpretation is false for this property. </param>
-        /// <param name="minimumTlsVersion"> Set the minimum TLS version to be permitted on requests to storage. The default interpretation is TLS 1.0 for this property. </param>
-        /// <param name="allowSharedKeyAccess"> Indicates whether the storage account permits requests to be authorized with the account access key via Shared Key. If false, then all requests, including shared access signatures, must be authorized with Azure Active Directory (Azure AD). The default value is null, which is equivalent to true. </param>
-        /// <param name="isNfsV3Enabled"> NFS 3.0 protocol support enabled if set to true. </param>
-        /// <param name="allowCrossTenantReplication"> Allow or disallow cross AAD tenant object replication. Set this property to true for new or existing accounts only if object replication policies will involve storage accounts in different AAD tenants. The default interpretation is false for new accounts to follow best security practices by default. </param>
-        /// <param name="isDefaultToOAuthAuthentication"> A boolean flag which indicates whether the default authentication is OAuth or not. The default interpretation is false for this property. </param>
-        /// <param name="publicNetworkAccess"> Allow, disallow, or let Network Security Perimeter configuration to evaluate public network access to Storage Account. </param>
-        /// <param name="immutableStorageWithVersioning"> The property is immutable and can only be set to true at the account creation time. When set to true, it enables object level immutability for all the containers in the account by default. </param>
-        /// <param name="allowedCopyScope"> Restrict copy to and from Storage Accounts within an AAD tenant or with Private Links to the same VNet. </param>
-        /// <param name="storageAccountSkuConversionStatus"> This property is readOnly and is set by server during asynchronous storage account sku conversion operations. </param>
-        /// <param name="dnsEndpointType"> Allows you to specify the type of endpoint. Set this to AzureDNSZone to create a large number of accounts in a single subscription, which creates accounts in an Azure DNS Zone and the endpoint URL will have an alphanumeric DNS Zone identifier. </param>
-        /// <param name="isSkuConversionBlocked"> This property will be set to true or false on an event of ongoing migration. Default value is null. </param>
-        /// <param name="isAccountMigrationInProgress"> If customer initiated account migration is in progress, the value will be true else it will be null. </param>
-        /// <param name="geoPriorityReplicationStatus"> Status indicating whether Geo Priority Replication is enabled for the account. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StorageAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, StorageSku sku, StorageKind? kind, ManagedServiceIdentity identity, ExtendedLocation extendedLocation, IList<string> zones, Placement placement, StorageAccountProvisioningState? storageAccountProvisioningState, StorageAccountEndpoints primaryEndpoints, AzureLocation? primaryLocation, StorageAccountStatus? statusOfPrimary, DateTimeOffset? lastGeoFailoverOn, AzureLocation? secondaryLocation, StorageAccountStatus? statusOfSecondary, DateTimeOffset? createdOn, StorageCustomDomain customDomain, StorageAccountSasPolicy sasPolicy, StorageAccountKeyPolicy keyPolicy, StorageAccountKeyCreationTime keyCreationTime, StorageAccountEndpoints secondaryEndpoints, StorageAccountEncryption encryption, StorageAccountAccessTier? accessTier, FilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication, bool? enableHttpsTrafficOnly, StorageAccountNetworkRuleSet networkRuleSet, bool? isSftpEnabled, bool? isLocalUserEnabled, bool? isExtendedGroupEnabled, bool? isHnsEnabled, GeoReplicationStatistics geoReplicationStats, bool? isFailoverInProgress, LargeFileSharesState? largeFileSharesState, IReadOnlyList<StoragePrivateEndpointConnectionData> privateEndpointConnections, StorageRoutingPreference routingPreference, DualStackEndpointPreference dualStackEndpointPreference, BlobRestoreStatus blobRestoreStatus, bool? allowBlobPublicAccess, StorageMinimumTlsVersion? minimumTlsVersion, bool? allowSharedKeyAccess, bool? isNfsV3Enabled, bool? allowCrossTenantReplication, bool? isDefaultToOAuthAuthentication, StoragePublicNetworkAccess? publicNetworkAccess, ImmutableStorageAccount immutableStorageWithVersioning, AllowedCopyScope? allowedCopyScope, StorageAccountSkuConversionStatus storageAccountSkuConversionStatus, StorageDnsEndpointType? dnsEndpointType, bool? isSkuConversionBlocked, bool? isAccountMigrationInProgress, GeoPriorityReplicationStatus geoPriorityReplicationStatus, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal StorageAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, StorageAccountProperties properties, StorageSku sku, StorageKind? kind, ManagedServiceIdentity identity, ExtendedLocation extendedLocation, IList<string> zones, Placement placement) : base(id, name, resourceType, systemData, tags, location)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
             Sku = sku;
             Kind = kind;
             Identity = identity;
             ExtendedLocation = extendedLocation;
             Zones = zones;
             Placement = placement;
-            StorageAccountProvisioningState = storageAccountProvisioningState;
-            PrimaryEndpoints = primaryEndpoints;
-            PrimaryLocation = primaryLocation;
-            StatusOfPrimary = statusOfPrimary;
-            LastGeoFailoverOn = lastGeoFailoverOn;
-            SecondaryLocation = secondaryLocation;
-            StatusOfSecondary = statusOfSecondary;
-            CreatedOn = createdOn;
-            CustomDomain = customDomain;
-            SasPolicy = sasPolicy;
-            KeyPolicy = keyPolicy;
-            KeyCreationTime = keyCreationTime;
-            SecondaryEndpoints = secondaryEndpoints;
-            Encryption = encryption;
-            AccessTier = accessTier;
-            AzureFilesIdentityBasedAuthentication = azureFilesIdentityBasedAuthentication;
-            EnableHttpsTrafficOnly = enableHttpsTrafficOnly;
-            NetworkRuleSet = networkRuleSet;
-            IsSftpEnabled = isSftpEnabled;
-            IsLocalUserEnabled = isLocalUserEnabled;
-            IsExtendedGroupEnabled = isExtendedGroupEnabled;
-            IsHnsEnabled = isHnsEnabled;
-            GeoReplicationStats = geoReplicationStats;
-            IsFailoverInProgress = isFailoverInProgress;
-            LargeFileSharesState = largeFileSharesState;
-            PrivateEndpointConnections = privateEndpointConnections;
-            RoutingPreference = routingPreference;
-            DualStackEndpointPreference = dualStackEndpointPreference;
-            BlobRestoreStatus = blobRestoreStatus;
-            AllowBlobPublicAccess = allowBlobPublicAccess;
-            MinimumTlsVersion = minimumTlsVersion;
-            AllowSharedKeyAccess = allowSharedKeyAccess;
-            IsNfsV3Enabled = isNfsV3Enabled;
-            AllowCrossTenantReplication = allowCrossTenantReplication;
-            IsDefaultToOAuthAuthentication = isDefaultToOAuthAuthentication;
-            PublicNetworkAccess = publicNetworkAccess;
-            ImmutableStorageWithVersioning = immutableStorageWithVersioning;
-            AllowedCopyScope = allowedCopyScope;
-            StorageAccountSkuConversionStatus = storageAccountSkuConversionStatus;
-            DnsEndpointType = dnsEndpointType;
-            IsSkuConversionBlocked = isSkuConversionBlocked;
-            IsAccountMigrationInProgress = isAccountMigrationInProgress;
-            GeoPriorityReplicationStatus = geoPriorityReplicationStatus;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="StorageAccountData"/> for deserialization. </summary>
-        internal StorageAccountData()
-        {
-        }
+        /// <summary> Properties of the storage account. </summary>
+        [WirePath("properties")]
+        internal StorageAccountProperties Properties { get; set; }
 
         /// <summary> Gets the SKU. </summary>
         [WirePath("sku")]
         public StorageSku Sku { get; }
+
         /// <summary> Gets the Kind. </summary>
         [WirePath("kind")]
         public StorageKind? Kind { get; }
+
         /// <summary> The identity of the resource. </summary>
         [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
+
         /// <summary> The extendedLocation of the resource. </summary>
         [WirePath("extendedLocation")]
         public ExtendedLocation ExtendedLocation { get; set; }
-        /// <summary> Optional. Gets or sets the pinned logical availability zone for the storage account. </summary>
+
+        /// <summary> The availability zones. </summary>
         [WirePath("zones")]
         public IList<string> Zones { get; }
+
         /// <summary> Optional. Gets or sets the zonal placement details for the storage account. </summary>
+        [WirePath("placement")]
         internal Placement Placement { get; set; }
-        /// <summary> The availability zone pinning policy for the storage account. </summary>
-        [WirePath("placement.zonePlacementPolicy")]
-        public StorageAccountZonePlacementPolicy? ZonePlacementPolicy
+
+        /// <summary> Gets the URLs that are used to perform a retrieval of a public blob, queue, or table object. Note that Standard_ZRS and Premium_LRS accounts only return the blob endpoint. </summary>
+        [WirePath("properties.primaryEndpoints")]
+        public StorageAccountEndpoints PrimaryEndpoints
         {
-            get => Placement is null ? default : Placement.ZonePlacementPolicy;
-            set
+            get
             {
-                if (Placement is null)
-                    Placement = new Placement();
-                Placement.ZonePlacementPolicy = value;
+                return Properties is null ? default : Properties.PrimaryEndpoints;
             }
         }
 
-        /// <summary> Gets the status of the storage account at the time the operation was called. </summary>
-        [WirePath("properties.provisioningState")]
-        public StorageAccountProvisioningState? StorageAccountProvisioningState { get; }
-        /// <summary> Gets the URLs that are used to perform a retrieval of a public blob, queue, or table object. Note that Standard_ZRS and Premium_LRS accounts only return the blob endpoint. </summary>
-        [WirePath("properties.primaryEndpoints")]
-        public StorageAccountEndpoints PrimaryEndpoints { get; }
         /// <summary> Gets the location of the primary data center for the storage account. </summary>
         [WirePath("properties.primaryLocation")]
-        public AzureLocation? PrimaryLocation { get; }
+        public AzureLocation? PrimaryLocation
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrimaryLocation;
+            }
+        }
+
         /// <summary> Gets the status indicating whether the primary location of the storage account is available or unavailable. </summary>
         [WirePath("properties.statusOfPrimary")]
-        public StorageAccountStatus? StatusOfPrimary { get; }
+        public StorageAccountStatus? StatusOfPrimary
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StatusOfPrimary;
+            }
+        }
+
         /// <summary> Gets the timestamp of the most recent instance of a failover to the secondary location. Only the most recent timestamp is retained. This element is not returned if there has never been a failover instance. Only available if the accountType is Standard_GRS or Standard_RAGRS. </summary>
         [WirePath("properties.lastGeoFailoverTime")]
-        public DateTimeOffset? LastGeoFailoverOn { get; }
+        public DateTimeOffset? LastGeoFailoverOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LastGeoFailoverOn;
+            }
+        }
+
         /// <summary> Gets the location of the geo-replicated secondary for the storage account. Only available if the accountType is Standard_GRS or Standard_RAGRS. </summary>
         [WirePath("properties.secondaryLocation")]
-        public AzureLocation? SecondaryLocation { get; }
+        public AzureLocation? SecondaryLocation
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SecondaryLocation;
+            }
+        }
+
         /// <summary> Gets the status indicating whether the secondary location of the storage account is available or unavailable. Only available if the SKU name is Standard_GRS or Standard_RAGRS. </summary>
         [WirePath("properties.statusOfSecondary")]
-        public StorageAccountStatus? StatusOfSecondary { get; }
+        public StorageAccountStatus? StatusOfSecondary
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StatusOfSecondary;
+            }
+        }
+
         /// <summary> Gets the creation date and time of the storage account in UTC. </summary>
         [WirePath("properties.creationTime")]
-        public DateTimeOffset? CreatedOn { get; }
+        public DateTimeOffset? CreatedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreatedOn;
+            }
+        }
+
         /// <summary> Gets the custom domain the user assigned to this storage account. </summary>
         [WirePath("properties.customDomain")]
-        public StorageCustomDomain CustomDomain { get; }
+        public StorageCustomDomain CustomDomain
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CustomDomain;
+            }
+        }
+
         /// <summary> SasPolicy assigned to the storage account. </summary>
         [WirePath("properties.sasPolicy")]
-        public StorageAccountSasPolicy SasPolicy { get; }
-        /// <summary> KeyPolicy assigned to the storage account. </summary>
-        internal StorageAccountKeyPolicy KeyPolicy { get; }
-        /// <summary> The key expiration period in days. </summary>
-        [WirePath("properties.keyPolicy.keyExpirationPeriodInDays")]
-        public int? KeyExpirationPeriodInDays
+        public StorageAccountSasPolicy SasPolicy
         {
-            get => KeyPolicy?.KeyExpirationPeriodInDays;
+            get
+            {
+                return Properties is null ? default : Properties.SasPolicy;
+            }
         }
 
         /// <summary> Storage account keys creation time. </summary>
         [WirePath("properties.keyCreationTime")]
-        public StorageAccountKeyCreationTime KeyCreationTime { get; }
+        public StorageAccountKeyCreationTime KeyCreationTime
+        {
+            get
+            {
+                return Properties is null ? default : Properties.KeyCreationTime;
+            }
+        }
+
         /// <summary> Gets the URLs that are used to perform a retrieval of a public blob, queue, or table object from the secondary location of the storage account. Only available if the SKU name is Standard_RAGRS. </summary>
         [WirePath("properties.secondaryEndpoints")]
-        public StorageAccountEndpoints SecondaryEndpoints { get; }
+        public StorageAccountEndpoints SecondaryEndpoints
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SecondaryEndpoints;
+            }
+        }
+
         /// <summary> Encryption settings to be used for server-side encryption for the storage account. </summary>
         [WirePath("properties.encryption")]
-        public StorageAccountEncryption Encryption { get; }
+        public StorageAccountEncryption Encryption
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Encryption;
+            }
+        }
+
         /// <summary> Required for storage accounts where kind = BlobStorage. The access tier is used for billing. The 'Premium' access tier is the default value for premium block blobs storage account type and it cannot be changed for the premium block blobs storage account type. </summary>
         [WirePath("properties.accessTier")]
-        public StorageAccountAccessTier? AccessTier { get; }
+        public StorageAccountAccessTier? AccessTier
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AccessTier;
+            }
+        }
+
         /// <summary> Provides the identity based authentication settings for Azure Files. </summary>
         [WirePath("properties.azureFilesIdentityBasedAuthentication")]
-        public FilesIdentityBasedAuthentication AzureFilesIdentityBasedAuthentication { get; set; }
-        /// <summary> Allows https traffic only to storage service if sets to true. </summary>
-        [WirePath("properties.supportsHttpsTrafficOnly")]
-        public bool? EnableHttpsTrafficOnly { get; set; }
-        /// <summary> Network rule set. </summary>
-        [WirePath("properties.networkAcls")]
-        public StorageAccountNetworkRuleSet NetworkRuleSet { get; }
-        /// <summary> Enables Secure File Transfer Protocol, if set to true. </summary>
-        [WirePath("properties.isSftpEnabled")]
-        public bool? IsSftpEnabled { get; set; }
-        /// <summary> Enables local users feature, if set to true. </summary>
-        [WirePath("properties.isLocalUserEnabled")]
-        public bool? IsLocalUserEnabled { get; set; }
-        /// <summary> Enables extended group support with local users feature, if set to true. </summary>
-        [WirePath("properties.enableExtendedGroups")]
-        public bool? IsExtendedGroupEnabled { get; set; }
-        /// <summary> Account HierarchicalNamespace enabled if sets to true. </summary>
-        [WirePath("properties.isHnsEnabled")]
-        public bool? IsHnsEnabled { get; set; }
-        /// <summary> Geo Replication Stats. </summary>
-        [WirePath("properties.geoReplicationStats")]
-        public GeoReplicationStatistics GeoReplicationStats { get; }
-        /// <summary> If the failover is in progress, the value will be true, otherwise, it will be null. </summary>
-        [WirePath("properties.failoverInProgress")]
-        public bool? IsFailoverInProgress { get; }
-        /// <summary> Allow large file shares if sets to Enabled. It cannot be disabled once it is enabled. </summary>
-        [WirePath("properties.largeFileSharesState")]
-        public LargeFileSharesState? LargeFileSharesState { get; set; }
-        /// <summary> List of private endpoint connection associated with the specified storage account. </summary>
-        [WirePath("properties.privateEndpointConnections")]
-        public IReadOnlyList<StoragePrivateEndpointConnectionData> PrivateEndpointConnections { get; }
-        /// <summary> Maintains information about the network routing choice opted by the user for data transfer. </summary>
-        [WirePath("properties.routingPreference")]
-        public StorageRoutingPreference RoutingPreference { get; set; }
-        /// <summary> Maintains information about the Internet protocol opted by the user. </summary>
-        internal DualStackEndpointPreference DualStackEndpointPreference { get; set; }
-        /// <summary> A boolean flag which indicates whether IPv6 storage endpoints are to be published. </summary>
-        [WirePath("properties.dualStackEndpointPreference.publishIpv6Endpoint")]
-        public bool? IsIPv6EndpointToBePublished
+        public FilesIdentityBasedAuthentication AzureFilesIdentityBasedAuthentication
         {
-            get => DualStackEndpointPreference is null ? default : DualStackEndpointPreference.IsIPv6EndpointToBePublished;
+            get
+            {
+                return Properties is null ? default : Properties.AzureFilesIdentityBasedAuthentication;
+            }
             set
             {
-                if (DualStackEndpointPreference is null)
-                    DualStackEndpointPreference = new DualStackEndpointPreference();
-                DualStackEndpointPreference.IsIPv6EndpointToBePublished = value;
+                if (Properties is null)
+                {
+                    Properties = new StorageAccountProperties();
+                }
+                Properties.AzureFilesIdentityBasedAuthentication = value;
+            }
+        }
+
+        /// <summary> Allows https traffic only to storage service if sets to true. </summary>
+        [WirePath("properties.supportsHttpsTrafficOnly")]
+        public bool? EnableHttpsTrafficOnly
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnableHttpsTrafficOnly;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageAccountProperties();
+                }
+                Properties.EnableHttpsTrafficOnly = value.Value;
+            }
+        }
+
+        /// <summary> Network rule set. </summary>
+        [WirePath("properties.networkAcls")]
+        public StorageAccountNetworkRuleSet NetworkRuleSet
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NetworkRuleSet;
+            }
+        }
+
+        /// <summary> Enables Secure File Transfer Protocol, if set to true. </summary>
+        [WirePath("properties.isSftpEnabled")]
+        public bool? IsSftpEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsSftpEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageAccountProperties();
+                }
+                Properties.IsSftpEnabled = value.Value;
+            }
+        }
+
+        /// <summary> Enables local users feature, if set to true. </summary>
+        [WirePath("properties.isLocalUserEnabled")]
+        public bool? IsLocalUserEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsLocalUserEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageAccountProperties();
+                }
+                Properties.IsLocalUserEnabled = value.Value;
+            }
+        }
+
+        /// <summary> Account HierarchicalNamespace enabled if sets to true. </summary>
+        [WirePath("properties.isHnsEnabled")]
+        public bool? IsHnsEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsHnsEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageAccountProperties();
+                }
+                Properties.IsHnsEnabled = value.Value;
+            }
+        }
+
+        /// <summary> Geo Replication Stats. </summary>
+        [WirePath("properties.geoReplicationStats")]
+        public GeoReplicationStatistics GeoReplicationStats
+        {
+            get
+            {
+                return Properties is null ? default : Properties.GeoReplicationStats;
+            }
+        }
+
+        /// <summary> Allow large file shares if sets to Enabled. It cannot be disabled once it is enabled. </summary>
+        [WirePath("properties.largeFileSharesState")]
+        public LargeFileSharesState? LargeFileSharesState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LargeFileSharesState;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageAccountProperties();
+                }
+                Properties.LargeFileSharesState = value.Value;
+            }
+        }
+
+        /// <summary> List of private endpoint connection associated with the specified storage account. </summary>
+        [WirePath("properties.privateEndpointConnections")]
+        public IReadOnlyList<StoragePrivateEndpointConnectionData> PrivateEndpointConnections
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageAccountProperties();
+                }
+                return Properties.PrivateEndpointConnections;
+            }
+        }
+
+        /// <summary> Maintains information about the network routing choice opted by the user for data transfer. </summary>
+        [WirePath("properties.routingPreference")]
+        public StorageRoutingPreference RoutingPreference
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RoutingPreference;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageAccountProperties();
+                }
+                Properties.RoutingPreference = value;
             }
         }
 
         /// <summary> Blob restore status. </summary>
         [WirePath("properties.blobRestoreStatus")]
-        public BlobRestoreStatus BlobRestoreStatus { get; }
+        public BlobRestoreStatus BlobRestoreStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BlobRestoreStatus;
+            }
+        }
+
         /// <summary> Allow or disallow public access to all blobs or containers in the storage account. The default interpretation is false for this property. </summary>
         [WirePath("properties.allowBlobPublicAccess")]
-        public bool? AllowBlobPublicAccess { get; set; }
+        public bool? AllowBlobPublicAccess
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AllowBlobPublicAccess;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageAccountProperties();
+                }
+                Properties.AllowBlobPublicAccess = value.Value;
+            }
+        }
+
         /// <summary> Set the minimum TLS version to be permitted on requests to storage. The default interpretation is TLS 1.0 for this property. </summary>
         [WirePath("properties.minimumTlsVersion")]
-        public StorageMinimumTlsVersion? MinimumTlsVersion { get; set; }
+        public StorageMinimumTlsVersion? MinimumTlsVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MinimumTlsVersion;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageAccountProperties();
+                }
+                Properties.MinimumTlsVersion = value.Value;
+            }
+        }
+
         /// <summary> Indicates whether the storage account permits requests to be authorized with the account access key via Shared Key. If false, then all requests, including shared access signatures, must be authorized with Azure Active Directory (Azure AD). The default value is null, which is equivalent to true. </summary>
         [WirePath("properties.allowSharedKeyAccess")]
-        public bool? AllowSharedKeyAccess { get; set; }
-        /// <summary> NFS 3.0 protocol support enabled if set to true. </summary>
-        [WirePath("properties.isNfsV3Enabled")]
-        public bool? IsNfsV3Enabled { get; set; }
+        public bool? AllowSharedKeyAccess
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AllowSharedKeyAccess;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageAccountProperties();
+                }
+                Properties.AllowSharedKeyAccess = value.Value;
+            }
+        }
+
         /// <summary> Allow or disallow cross AAD tenant object replication. Set this property to true for new or existing accounts only if object replication policies will involve storage accounts in different AAD tenants. The default interpretation is false for new accounts to follow best security practices by default. </summary>
         [WirePath("properties.allowCrossTenantReplication")]
-        public bool? AllowCrossTenantReplication { get; set; }
-        /// <summary> A boolean flag which indicates whether the default authentication is OAuth or not. The default interpretation is false for this property. </summary>
-        [WirePath("properties.defaultToOAuthAuthentication")]
-        public bool? IsDefaultToOAuthAuthentication { get; set; }
+        public bool? AllowCrossTenantReplication
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AllowCrossTenantReplication;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageAccountProperties();
+                }
+                Properties.AllowCrossTenantReplication = value.Value;
+            }
+        }
+
         /// <summary> Allow, disallow, or let Network Security Perimeter configuration to evaluate public network access to Storage Account. </summary>
         [WirePath("properties.publicNetworkAccess")]
-        public StoragePublicNetworkAccess? PublicNetworkAccess { get; set; }
+        public StoragePublicNetworkAccess? PublicNetworkAccess
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PublicNetworkAccess;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageAccountProperties();
+                }
+                Properties.PublicNetworkAccess = value.Value;
+            }
+        }
+
         /// <summary> The property is immutable and can only be set to true at the account creation time. When set to true, it enables object level immutability for all the containers in the account by default. </summary>
         [WirePath("properties.immutableStorageWithVersioning")]
-        public ImmutableStorageAccount ImmutableStorageWithVersioning { get; set; }
+        public ImmutableStorageAccount ImmutableStorageWithVersioning
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ImmutableStorageWithVersioning;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageAccountProperties();
+                }
+                Properties.ImmutableStorageWithVersioning = value;
+            }
+        }
+
         /// <summary> Restrict copy to and from Storage Accounts within an AAD tenant or with Private Links to the same VNet. </summary>
         [WirePath("properties.allowedCopyScope")]
-        public AllowedCopyScope? AllowedCopyScope { get; set; }
+        public AllowedCopyScope? AllowedCopyScope
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AllowedCopyScope;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageAccountProperties();
+                }
+                Properties.AllowedCopyScope = value.Value;
+            }
+        }
+
         /// <summary> This property is readOnly and is set by server during asynchronous storage account sku conversion operations. </summary>
         [WirePath("properties.storageAccountSkuConversionStatus")]
-        public StorageAccountSkuConversionStatus StorageAccountSkuConversionStatus { get; set; }
+        public StorageAccountSkuConversionStatus StorageAccountSkuConversionStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StorageAccountSkuConversionStatus;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageAccountProperties();
+                }
+                Properties.StorageAccountSkuConversionStatus = value;
+            }
+        }
+
         /// <summary> Allows you to specify the type of endpoint. Set this to AzureDNSZone to create a large number of accounts in a single subscription, which creates accounts in an Azure DNS Zone and the endpoint URL will have an alphanumeric DNS Zone identifier. </summary>
         [WirePath("properties.dnsEndpointType")]
-        public StorageDnsEndpointType? DnsEndpointType { get; set; }
+        public StorageDnsEndpointType? DnsEndpointType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DnsEndpointType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageAccountProperties();
+                }
+                Properties.DnsEndpointType = value.Value;
+            }
+        }
+
         /// <summary> This property will be set to true or false on an event of ongoing migration. Default value is null. </summary>
         [WirePath("properties.isSkuConversionBlocked")]
-        public bool? IsSkuConversionBlocked { get; }
-        /// <summary> If customer initiated account migration is in progress, the value will be true else it will be null. </summary>
-        [WirePath("properties.accountMigrationInProgress")]
-        public bool? IsAccountMigrationInProgress { get; }
-        /// <summary> Status indicating whether Geo Priority Replication is enabled for the account. </summary>
-        internal GeoPriorityReplicationStatus GeoPriorityReplicationStatus { get; set; }
+        public bool? IsSkuConversionBlocked
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsSkuConversionBlocked;
+            }
+        }
+
+        /// <summary> The key expiration period in days. </summary>
+        [WirePath("properties.keyPolicy.keyExpirationPeriodInDays")]
+        public int? KeyExpirationPeriodInDays
+        {
+            get
+            {
+                return Properties is null ? default : Properties.KeyExpirationPeriodInDays;
+            }
+        }
+
         /// <summary> Indicates whether Blob Geo Priority Replication is enabled for the storage account. </summary>
         [WirePath("properties.geoPriorityReplicationStatus.isBlobEnabled")]
         public bool? IsBlobEnabled
         {
-            get => GeoPriorityReplicationStatus is null ? default : GeoPriorityReplicationStatus.IsBlobEnabled;
+            get
+            {
+                return Properties is null ? default : Properties.IsBlobEnabled;
+            }
             set
             {
-                if (GeoPriorityReplicationStatus is null)
-                    GeoPriorityReplicationStatus = new GeoPriorityReplicationStatus();
-                GeoPriorityReplicationStatus.IsBlobEnabled = value;
+                if (Properties is null)
+                {
+                    Properties = new StorageAccountProperties();
+                }
+                Properties.IsBlobEnabled = value.Value;
+            }
+        }
+
+        /// <summary> The availability zone pinning policy for the storage account. </summary>
+        [WirePath("placement.zonePlacementPolicy")]
+        public StorageAccountZonePlacementPolicy? ZonePlacementPolicy
+        {
+            get
+            {
+                return Placement is null ? default : Placement.ZonePlacementPolicy;
+            }
+            set
+            {
+                if (Placement is null)
+                {
+                    Placement = new Placement();
+                }
+                Placement.ZonePlacementPolicy = value;
             }
         }
     }
