@@ -173,10 +173,17 @@ namespace Azure.Core.Tests
             try
             {
                 // Wait until all requests are in the handler (past TryAddRef, holding refs)
-                for (int i = 0; i < 5; i++)
+                using var waitTimeout = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+                try
                 {
-                    Assert.IsTrue(await requestsInHandler.WaitAsync(TimeSpan.FromSeconds(10)),
-                        "Timed out waiting for requests to enter handler");
+                    for (int i = 0; i < 5; i++)
+                    {
+                        await requestsInHandler.WaitAsync(waitTimeout.Token);
+                    }
+                }
+                catch (OperationCanceledException)
+                {
+                    Assert.Fail("Timed out waiting for requests to enter handler");
                 }
 
                 // Update transport while requests are definitely in-flight
@@ -281,10 +288,17 @@ namespace Azure.Core.Tests
             try
             {
                 // Wait until all requests are in the handler (past TryAddRef, holding refs)
-                for (int i = 0; i < requestCount; i++)
+                using var waitTimeout = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+                try
                 {
-                    Assert.IsTrue(await requestsInHandler.WaitAsync(TimeSpan.FromSeconds(10)),
-                        "Timed out waiting for requests to enter handler");
+                    for (int i = 0; i < requestCount; i++)
+                    {
+                        await requestsInHandler.WaitAsync(waitTimeout.Token);
+                    }
+                }
+                catch (OperationCanceledException)
+                {
+                    Assert.Fail("Timed out waiting for requests to enter handler");
                 }
 
                 // Perform multiple updates while requests hold refs to the old wrapper
