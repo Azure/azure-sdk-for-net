@@ -65,6 +65,10 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <term> Operation Id. </term>
         /// <description> PrivateLinkResources_GetPrivateLinkResource. </description>
         /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="groupName"> The name of the private link associated with the Azure resource. </param>
@@ -109,6 +113,10 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <item>
         /// <term> Operation Id. </term>
         /// <description> PrivateLinkResources_GetPrivateLinkResource. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -155,6 +163,10 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <term> Operation Id. </term>
         /// <description> PrivateLinkResources_ListPrivateLinkResources. </description>
         /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -179,6 +191,10 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <term> Operation Id. </term>
         /// <description> PrivateLinkResources_ListPrivateLinkResources. </description>
         /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -202,6 +218,10 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <item>
         /// <term> Operation Id. </term>
         /// <description> PrivateLinkResources_GetPrivateLinkResource. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -256,6 +276,10 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <term> Operation Id. </term>
         /// <description> PrivateLinkResources_GetPrivateLinkResource. </description>
         /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="groupName"> The name of the private link associated with the Azure resource. </param>
@@ -308,6 +332,10 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <item>
         /// <term> Operation Id. </term>
         /// <description> PrivateLinkResources_GetPrivateLinkResource. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -365,6 +393,10 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <item>
         /// <term> Operation Id. </term>
         /// <description> PrivateLinkResources_GetPrivateLinkResource. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

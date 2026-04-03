@@ -103,6 +103,10 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <description> PrivateLinkResources_GetPrivateLinkResource. </description>
         /// </item>
         /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// <item>
         /// <term> Resource. </term>
         /// <description> <see cref="ContainerRegistryPrivateLinkResource"/>. </description>
         /// </item>
@@ -145,6 +149,10 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <item>
         /// <term> Operation Id. </term>
         /// <description> PrivateLinkResources_GetPrivateLinkResource. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

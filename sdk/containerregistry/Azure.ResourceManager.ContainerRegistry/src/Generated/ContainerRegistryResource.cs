@@ -105,6 +105,10 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <description> Registries_Get. </description>
         /// </item>
         /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// <item>
         /// <term> Resource. </term>
         /// <description> <see cref="ContainerRegistryResource"/>. </description>
         /// </item>
@@ -149,6 +153,10 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <description> Registries_Get. </description>
         /// </item>
         /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// <item>
         /// <term> Resource. </term>
         /// <description> <see cref="ContainerRegistryResource"/>. </description>
         /// </item>
@@ -191,6 +199,10 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <item>
         /// <term> Operation Id. </term>
         /// <description> Registries_Update. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -248,6 +260,10 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <description> Registries_Update. </description>
         /// </item>
         /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// <item>
         /// <term> Resource. </term>
         /// <description> <see cref="ContainerRegistryResource"/>. </description>
         /// </item>
@@ -303,6 +319,10 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <description> Registries_Delete. </description>
         /// </item>
         /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// <item>
         /// <term> Resource. </term>
         /// <description> <see cref="ContainerRegistryResource"/>. </description>
         /// </item>
@@ -348,6 +368,10 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <description> Registries_Delete. </description>
         /// </item>
         /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// <item>
         /// <term> Resource. </term>
         /// <description> <see cref="ContainerRegistryResource"/>. </description>
         /// </item>
@@ -391,6 +415,10 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <item>
         /// <term> Operation Id. </term>
         /// <description> Registries_GenerateCredentials. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -448,6 +476,10 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <description> Registries_GenerateCredentials. </description>
         /// </item>
         /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// <item>
         /// <term> Resource. </term>
         /// <description> <see cref="ContainerRegistryResource"/>. </description>
         /// </item>
@@ -503,6 +535,10 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <description> Registries_ImportImage. </description>
         /// </item>
         /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// <item>
         /// <term> Resource. </term>
         /// <description> <see cref="ContainerRegistryResource"/>. </description>
         /// </item>
@@ -550,6 +586,10 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <item>
         /// <term> Operation Id. </term>
         /// <description> Registries_ImportImage. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -601,6 +641,10 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <description> Registries_ListCredentials. </description>
         /// </item>
         /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// <item>
         /// <term> Resource. </term>
         /// <description> <see cref="ContainerRegistryResource"/>. </description>
         /// </item>
@@ -643,6 +687,10 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <item>
         /// <term> Operation Id. </term>
         /// <description> Registries_ListCredentials. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -689,6 +737,10 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <description> Registries_ListUsages. </description>
         /// </item>
         /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// <item>
         /// <term> Resource. </term>
         /// <description> <see cref="ContainerRegistryResource"/>. </description>
         /// </item>
@@ -717,6 +769,10 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <description> Registries_ListUsages. </description>
         /// </item>
         /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// <item>
         /// <term> Resource. </term>
         /// <description> <see cref="ContainerRegistryResource"/>. </description>
         /// </item>
@@ -743,6 +799,10 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <item>
         /// <term> Operation Id. </term>
         /// <description> Registries_RegenerateCredential. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -791,6 +851,10 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <item>
         /// <term> Operation Id. </term>
         /// <description> Registries_RegenerateCredential. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

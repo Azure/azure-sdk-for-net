@@ -106,6 +106,10 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <description> Webhooks_Get. </description>
         /// </item>
         /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// <item>
         /// <term> Resource. </term>
         /// <description> <see cref="ContainerRegistryWebhookResource"/>. </description>
         /// </item>
@@ -150,6 +154,10 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <description> Webhooks_Get. </description>
         /// </item>
         /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// <item>
         /// <term> Resource. </term>
         /// <description> <see cref="ContainerRegistryWebhookResource"/>. </description>
         /// </item>
@@ -192,6 +200,10 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <item>
         /// <term> Operation Id. </term>
         /// <description> Webhooks_Update. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -249,6 +261,10 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <description> Webhooks_Update. </description>
         /// </item>
         /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// <item>
         /// <term> Resource. </term>
         /// <description> <see cref="ContainerRegistryWebhookResource"/>. </description>
         /// </item>
@@ -304,6 +320,10 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <description> Webhooks_Delete. </description>
         /// </item>
         /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// <item>
         /// <term> Resource. </term>
         /// <description> <see cref="ContainerRegistryWebhookResource"/>. </description>
         /// </item>
@@ -347,6 +367,10 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <item>
         /// <term> Operation Id. </term>
         /// <description> Webhooks_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -394,6 +418,10 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <description> Webhooks_GetCallbackConfig. </description>
         /// </item>
         /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// <item>
         /// <term> Resource. </term>
         /// <description> <see cref="ContainerRegistryWebhookResource"/>. </description>
         /// </item>
@@ -436,6 +464,10 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <item>
         /// <term> Operation Id. </term>
         /// <description> Webhooks_GetCallbackConfig. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -482,6 +514,10 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <description> Webhooks_ListEvents. </description>
         /// </item>
         /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// <item>
         /// <term> Resource. </term>
         /// <description> <see cref="ContainerRegistryWebhookResource"/>. </description>
         /// </item>
@@ -516,6 +552,10 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <description> Webhooks_ListEvents. </description>
         /// </item>
         /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// <item>
         /// <term> Resource. </term>
         /// <description> <see cref="ContainerRegistryWebhookResource"/>. </description>
         /// </item>
@@ -548,6 +588,10 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <item>
         /// <term> Operation Id. </term>
         /// <description> Webhooks_Ping. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -592,6 +636,10 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <item>
         /// <term> Operation Id. </term>
         /// <description> Webhooks_Ping. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

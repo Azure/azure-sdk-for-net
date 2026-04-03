@@ -105,6 +105,10 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <description> Archives_Get. </description>
         /// </item>
         /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// <item>
         /// <term> Resource. </term>
         /// <description> <see cref="ContainerRegistryArchiveResource"/>. </description>
         /// </item>
@@ -149,6 +153,10 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <description> Archives_Get. </description>
         /// </item>
         /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// <item>
         /// <term> Resource. </term>
         /// <description> <see cref="ContainerRegistryArchiveResource"/>. </description>
         /// </item>
@@ -191,6 +199,10 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <item>
         /// <term> Operation Id. </term>
         /// <description> Archives_Update. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -241,6 +253,10 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <description> Archives_Update. </description>
         /// </item>
         /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// <item>
         /// <term> Resource. </term>
         /// <description> <see cref="ContainerRegistryArchiveResource"/>. </description>
         /// </item>
@@ -289,6 +305,10 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <description> Archives_Delete. </description>
         /// </item>
         /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// <item>
         /// <term> Resource. </term>
         /// <description> <see cref="ContainerRegistryArchiveResource"/>. </description>
         /// </item>
@@ -332,6 +352,10 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <item>
         /// <term> Operation Id. </term>
         /// <description> Archives_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

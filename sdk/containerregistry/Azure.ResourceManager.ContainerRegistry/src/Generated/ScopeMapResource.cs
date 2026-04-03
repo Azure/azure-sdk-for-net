@@ -104,6 +104,10 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <description> ScopeMaps_Get. </description>
         /// </item>
         /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// <item>
         /// <term> Resource. </term>
         /// <description> <see cref="ScopeMapResource"/>. </description>
         /// </item>
@@ -148,6 +152,10 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <description> ScopeMaps_Get. </description>
         /// </item>
         /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// <item>
         /// <term> Resource. </term>
         /// <description> <see cref="ScopeMapResource"/>. </description>
         /// </item>
@@ -190,6 +198,10 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <item>
         /// <term> Operation Id. </term>
         /// <description> ScopeMaps_Update. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -247,6 +259,10 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <description> ScopeMaps_Update. </description>
         /// </item>
         /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// <item>
         /// <term> Resource. </term>
         /// <description> <see cref="ScopeMapResource"/>. </description>
         /// </item>
@@ -302,6 +318,10 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <description> ScopeMaps_Delete. </description>
         /// </item>
         /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// <item>
         /// <term> Resource. </term>
         /// <description> <see cref="ScopeMapResource"/>. </description>
         /// </item>
@@ -345,6 +365,10 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <item>
         /// <term> Operation Id. </term>
         /// <description> ScopeMaps_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
