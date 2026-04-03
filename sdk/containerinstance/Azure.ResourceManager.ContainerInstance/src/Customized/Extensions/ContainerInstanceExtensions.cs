@@ -1,6 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+// Backward-compat extension methods for ContainerInstance (ApiCompat MembersMustExist).
+// The old API exposed these as extension methods on ArmClient, ResourceGroupResource, and SubscriptionResource.
+// The TypeSpec migration renamed/restructured resource types, so these shims preserve the old signatures.
+
 #nullable disable
 
 using System;

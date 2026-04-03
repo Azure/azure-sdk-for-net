@@ -1,6 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+// Backward-compat shim methods for MockableContainerInstanceResourceGroupResource (ApiCompat MembersMustExist).
+// Preserves old method signatures that delegate to renamed generated methods.
+
 #nullable disable
 
 using System.ComponentModel;

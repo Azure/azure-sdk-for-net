@@ -1,6 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+// Generator bug workaround: NGroupContainerGroupPropertyContainer was generated with bogus
+// inheritance and missing interface implementations. This file provides correct serialization.
+
 #nullable disable
 
 #pragma warning disable CS1591

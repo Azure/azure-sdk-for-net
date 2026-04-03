@@ -1,6 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+// Backward-compat stub: ContainerGroupProfileRevisionCollection was removed in TypeSpec migration.
+// The old API exposed this as a separate collection type; revisions are now accessed through CGProfileCollection.
+
 #nullable disable
 
 #pragma warning disable CS1591

@@ -1,6 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+// Backward-compat ModelFactory: the generated ModelFactory was excluded from compilation (generator bug)
+// and this custom implementation provides stub factory methods for the old API surface (ApiCompat MembersMustExist).
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

@@ -1,6 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+// Generator bug workaround: ContainerHttpHeader was generated with bogus inheritance and missing
+// interface implementations (IJsonModel/IPersistableModel). This file provides correct serialization.
+
 #nullable disable
 
 #pragma warning disable CS1591

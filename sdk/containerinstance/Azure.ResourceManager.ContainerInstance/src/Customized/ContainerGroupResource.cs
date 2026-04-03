@@ -1,6 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+// Backward-compat: AttachContainer convenience method from old API (ApiCompat MembersMustExist).
+// Delegates to the renamed Attach method.
+
 using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;

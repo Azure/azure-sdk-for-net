@@ -1,6 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+// Backward-compat stub: ContainerGroupProfileRevisionResource was removed in TypeSpec migration.
+// The old API exposed this as a separate resource type; revisions are now accessed through CGProfileResource.
+
 #nullable disable
 
 #pragma warning disable CS1591
