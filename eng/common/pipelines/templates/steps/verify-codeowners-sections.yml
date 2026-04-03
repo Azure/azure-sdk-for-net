@@ -36,7 +36,7 @@ steps:
         $prNumber = "$(System.PullRequest.PullRequestNumber)"
         $repoName = "$(Build.Repository.Name)"
         $prUrl = "https://api.github.com/repos/$repoName/pulls/$prNumber"
-        $prData = Invoke-RestMethod -Uri $prUrl
+        $prData = Invoke-RestMethod -Uri $prUrl -MaximumRetryCount 10 -RetryIntervalSec 6
         $prAuthor = $prData.user.login
         Write-Host "PR author: $prAuthor"
 
