@@ -1,4 +1,8 @@
 ﻿using System.Reflection;
+using System.Reflection.Metadata;
+using System.Reflection.Metadata.Ecma335;
+using System.Reflection.PortableExecutable;
+using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -37,6 +41,11 @@ if (!File.Exists(armDllPath))
     return 1;
 }
 var armAssembly = mlc.LoadFromAssemblyPath(armDllPath);
+
+// Open PE reader for IL-level analysis (extracting ResourceType values and ResourceId patterns)
+using var peStream = File.OpenRead(dllPath);
+using var peReader = new PEReader(peStream);
+var mdReader = peReader.GetMetadataReader();
 
 Console.Error.WriteLine($"Loaded: {targetAssembly.GetName().Name} v{targetAssembly.GetName().Version}");
 Console.Error.WriteLine($"Loaded: {armAssembly.GetName().Name} v{armAssembly.GetName().Version}");
@@ -80,11 +89,23 @@ foreach (var resType in resourceTypes)
 {
     var info = new ResourceInfo { Name = resType.Name, FullName = resType.FullName! };
 
-    // Get ResourceType static field
-    var resourceTypeField = resType.GetField("ResourceType", BindingFlags.Public | BindingFlags.Static);
-    if (resourceTypeField != null)
+    // Get ResourceType value by scanning the static constructor IL
+    var resourceTypeValue = ExtractResourceTypeFromCctor(peReader, mdReader, resType.FullName!);
+    if (resourceTypeValue != null)
     {
-        info.ResourceTypeField = resourceTypeField.FieldType.FullName;
+        info.ResourceType = resourceTypeValue;
+    }
+
+    // Get ResourceId pattern from CreateResourceIdentifier method
+    var createIdMethod = resType.GetMethod("CreateResourceIdentifier", BindingFlags.Public | BindingFlags.Static);
+    if (createIdMethod != null)
+    {
+        var paramNames = createIdMethod.GetParameters().Select(p => p.Name!).ToArray();
+        var resourceIdPattern = ExtractResourceIdPattern(peReader, mdReader, resType.FullName!, paramNames);
+        if (resourceIdPattern != null)
+        {
+            info.ResourceId = resourceIdPattern;
+        }
     }
 
     // Get Data property type
@@ -204,6 +225,10 @@ foreach (var r in resources)
     Console.Error.WriteLine($"- **{r.Name}**{parentStr}{scopeStr}");
     if (r.DataType != null)
         Console.Error.WriteLine($"  - Data: {r.DataType} (tracked: {r.IsTrackedResource})");
+    if (r.ResourceType != null)
+        Console.Error.WriteLine($"  - ResourceType: {r.ResourceType}");
+    if (r.ResourceId != null)
+        Console.Error.WriteLine($"  - ResourceId: {r.ResourceId}");
     if (r.ChildCollections.Count > 0)
     {
         Console.Error.WriteLine($"  - Children:");
@@ -227,11 +252,99 @@ static bool IsAssignableTo(Type type, Type baseType)
     return false;
 }
 
+// Helper: Extract the ResourceType string value from a type's static constructor IL
+static string? ExtractResourceTypeFromCctor(PEReader peReader, MetadataReader mdReader, string typeFullName)
+{
+    var typeDef = FindTypeDefinition(mdReader, typeFullName);
+    if (typeDef == null) return null;
+
+    foreach (var methodHandle in typeDef.Value.GetMethods())
+    {
+        var methodDef = mdReader.GetMethodDefinition(methodHandle);
+        if (mdReader.GetString(methodDef.Name) != ".cctor") continue;
+
+        var strings = ExtractStringsFromIL(peReader, mdReader, methodDef);
+        // ResourceType string contains '/' but doesn't start with '/' (e.g., "Microsoft.ContainerInstance/containerGroups")
+        return strings.FirstOrDefault(s => s.Contains('/') && !s.StartsWith("/"));
+    }
+    return null;
+}
+
+// Helper: Extract the resource ID pattern from CreateResourceIdentifier method
+static string? ExtractResourceIdPattern(PEReader peReader, MetadataReader mdReader, string typeFullName, string[] paramNames)
+{
+    var typeDef = FindTypeDefinition(mdReader, typeFullName);
+    if (typeDef == null) return null;
+
+    foreach (var methodHandle in typeDef.Value.GetMethods())
+    {
+        var methodDef = mdReader.GetMethodDefinition(methodHandle);
+        if (mdReader.GetString(methodDef.Name) != "CreateResourceIdentifier") continue;
+
+        var strings = ExtractStringsFromIL(peReader, mdReader, methodDef);
+        if (strings.Count == 0) return null;
+
+        // Interleave literal segments with parameter placeholders
+        var sb = new StringBuilder();
+        for (int i = 0; i < strings.Count; i++)
+        {
+            sb.Append(strings[i]);
+            if (i < paramNames.Length)
+                sb.Append('{').Append(paramNames[i]).Append('}');
+        }
+        return sb.ToString();
+    }
+    return null;
+}
+
+// Helper: Find a TypeDefinition by full name in the metadata reader
+static TypeDefinition? FindTypeDefinition(MetadataReader mdReader, string typeFullName)
+{
+    foreach (var handle in mdReader.TypeDefinitions)
+    {
+        var typeDef = mdReader.GetTypeDefinition(handle);
+        var ns = typeDef.Namespace.IsNil ? "" : mdReader.GetString(typeDef.Namespace);
+        var name = mdReader.GetString(typeDef.Name);
+        var fullName = string.IsNullOrEmpty(ns) ? name : $"{ns}.{name}";
+        if (fullName == typeFullName) return typeDef;
+    }
+    return null;
+}
+
+// Helper: Extract all string literals from a method's IL bytecode
+static List<string> ExtractStringsFromIL(PEReader peReader, MetadataReader mdReader, MethodDefinition methodDef)
+{
+    var strings = new List<string>();
+    var rva = methodDef.RelativeVirtualAddress;
+    if (rva == 0) return strings;
+
+    var body = peReader.GetMethodBody(rva);
+    var ilReader = body.GetILReader();
+    var il = ilReader.ReadBytes(ilReader.RemainingBytes);
+
+    for (int i = 0; i < il.Length - 4; i++)
+    {
+        if (il[i] == 0x72) // ldstr opcode
+        {
+            int token = il[i + 1] | (il[i + 2] << 8) | (il[i + 3] << 16) | (il[i + 4] << 24);
+            var handle = MetadataTokens.Handle(token);
+            if (handle.Kind == HandleKind.UserString)
+            {
+                strings.Add(mdReader.GetUserString((UserStringHandle)handle));
+            }
+            i += 4;
+        }
+    }
+
+    return strings;
+}
+
 class ResourceInfo
 {
     public string Name { get; set; } = "";
     public string FullName { get; set; } = "";
-    public string? ResourceTypeField { get; set; }
+    public string? ResourceType { get; set; }
+    public string? ResourceId { get; set; }
     public string? DataType { get; set; }
     public bool IsTrackedResource { get; set; }
     public string? CollectionType { get; set; }
