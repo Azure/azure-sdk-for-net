@@ -143,8 +143,8 @@ namespace Azure.ResourceManager.Hci.Models
             }
             NetworkConfiguration network = default;
             string hostName = default;
-            WebProxyConfiguration webProxy = default;
-            TimeConfiguration time = default;
+            HciWebProxyConfiguration webProxy = default;
+            HciTimeConfiguration time = default;
             StorageConfiguration storage = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    webProxy = WebProxyConfiguration.DeserializeWebProxyConfiguration(prop.Value, options);
+                    webProxy = HciWebProxyConfiguration.DeserializeHciWebProxyConfiguration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("time"u8))
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    time = TimeConfiguration.DeserializeTimeConfiguration(prop.Value, options);
+                    time = HciTimeConfiguration.DeserializeHciTimeConfiguration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("storage"u8))

@@ -14,7 +14,7 @@ using Azure.ResourceManager.Hci.Models;
 
 namespace Azure.ResourceManager.Hci
 {
-    internal partial class KubernetesVersionsGetBySubscriptionLocationResourceCollectionResultOfT : Pageable<KubernetesVersion>
+    internal partial class KubernetesVersionsGetBySubscriptionLocationResourceCollectionResultOfT : Pageable<HciKubernetesVersion>
     {
         private readonly KubernetesVersions _client;
         private readonly Guid _subscriptionId;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of KubernetesVersionsGetBySubscriptionLocationResourceCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<KubernetesVersion>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<HciKubernetesVersion>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Hci
                     yield break;
                 }
                 KubernetesVersionListResult result = KubernetesVersionListResult.FromResponse(response);
-                yield return Page<KubernetesVersion>.FromValues((IReadOnlyList<KubernetesVersion>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<HciKubernetesVersion>.FromValues((IReadOnlyList<HciKubernetesVersion>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

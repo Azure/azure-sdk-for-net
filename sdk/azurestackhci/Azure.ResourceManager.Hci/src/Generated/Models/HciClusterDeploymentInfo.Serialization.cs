@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Hci.Models
             HciClusterDeploymentSecuritySettings securitySettings = default;
             DeploymentSettingObservability observability = default;
             HciDeploymentCluster cluster = default;
-            IdentityProvider? identityProvider = default;
+            HciIdentityProvider? identityProvider = default;
             DeploymentSettingStorage storage = default;
             string namingPrefix = default;
             string domainFqdn = default;
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.Hci.Models
             IList<EceDeploymentSecrets> secrets = default;
             OptionalServices optionalServices = default;
             IList<LocalAvailabilityZones> localAvailabilityZones = default;
-            AssemblyInfo assemblyInfo = default;
+            HciAssemblyInfo assemblyInfo = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    identityProvider = new IdentityProvider(prop.Value.GetString());
+                    identityProvider = new HciIdentityProvider(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("storage"u8))
@@ -410,7 +410,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    assemblyInfo = AssemblyInfo.DeserializeAssemblyInfo(prop.Value, options);
+                    assemblyInfo = HciAssemblyInfo.DeserializeHciAssemblyInfo(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

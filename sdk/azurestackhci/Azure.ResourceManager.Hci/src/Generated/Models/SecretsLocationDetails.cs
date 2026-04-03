@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="secretsType"> Type of secrets to store. </param>
         /// <param name="secretsLocation"> secrets location. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="secretsLocation"/> is null. </exception>
-        public SecretsLocationDetails(SecretsType secretsType, string secretsLocation)
+        public SecretsLocationDetails(HciSecretsType secretsType, string secretsLocation)
         {
             Argument.AssertNotNull(secretsLocation, nameof(secretsLocation));
 
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="secretsType"> Type of secrets to store. </param>
         /// <param name="secretsLocation"> secrets location. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SecretsLocationDetails(SecretsType secretsType, string secretsLocation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SecretsLocationDetails(HciSecretsType secretsType, string secretsLocation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SecretsType = secretsType;
             SecretsLocation = secretsLocation;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Type of secrets to store. </summary>
         [WirePath("secretsType")]
-        public SecretsType SecretsType { get; set; }
+        public HciSecretsType SecretsType { get; set; }
 
         /// <summary> secrets location. </summary>
         [WirePath("secretsLocation")]

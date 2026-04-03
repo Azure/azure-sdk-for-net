@@ -20,13 +20,13 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Initializes a new instance of <see cref="NetworkConfiguration"/>. </summary>
         public NetworkConfiguration()
         {
-            NetworkAdapters = new ChangeTrackingList<NetworkAdapter>();
+            NetworkAdapters = new ChangeTrackingList<HciNetworkAdapter>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkConfiguration"/>. </summary>
         /// <param name="networkAdapters"> List of network adapters. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkConfiguration(IList<NetworkAdapter> networkAdapters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetworkConfiguration(IList<HciNetworkAdapter> networkAdapters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NetworkAdapters = networkAdapters;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -34,6 +34,6 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> List of network adapters. </summary>
         [WirePath("networkAdapters")]
-        public IList<NetworkAdapter> NetworkAdapters { get; }
+        public IList<HciNetworkAdapter> NetworkAdapters { get; }
     }
 }

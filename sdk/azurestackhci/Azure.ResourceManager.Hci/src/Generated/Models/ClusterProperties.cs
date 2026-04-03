@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="identityProvider"> Identity Provider for the cluster. </param>
         /// <param name="storageType"> Storage type of the cluster. Indicates whether the cluster uses S2D, SAN, or a combination. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ClusterProperties(HciProvisioningState? provisioningState, HciClusterStatus? status, HciClusterConnectivityStatus? connectivityStatus, Guid? cloudId, string ring, string cloudManagementEndpoint, Guid? aadClientId, Guid? aadTenantId, Guid? aadApplicationObjectId, Guid? aadServicePrincipalObjectId, SoftwareAssuranceProperties softwareAssuranceProperties, bool? isManagementCluster, LogCollectionProperties logCollectionProperties, RemoteSupportProperties remoteSupportProperties, HciClusterDesiredProperties desiredProperties, HciClusterReportedProperties reportedProperties, IsolatedVmAttestationConfiguration isolatedVmAttestationConfiguration, float? trialDaysRemaining, string billingModel, ClusterBillingProperties billingProperties, DateTimeOffset? registrationTimestamp, DateTimeOffset? lastSyncTimestamp, DateTimeOffset? lastBillingTimestamp, string serviceEndpoint, string resourceProviderObjectId, IList<SecretsLocationDetails> secretsLocations, ClusterPattern? clusterPattern, ConfidentialVmProperties confidentialVmProperties, ClusterSdnProperties sdnProperties, IList<LocalAvailabilityZones> localAvailabilityZones, IdentityProvider? identityProvider, StorageType? storageType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ClusterProperties(HciProvisioningState? provisioningState, HciClusterStatus? status, HciClusterConnectivityStatus? connectivityStatus, Guid? cloudId, string ring, string cloudManagementEndpoint, Guid? aadClientId, Guid? aadTenantId, Guid? aadApplicationObjectId, Guid? aadServicePrincipalObjectId, SoftwareAssuranceProperties softwareAssuranceProperties, bool? isManagementCluster, LogCollectionProperties logCollectionProperties, RemoteSupportProperties remoteSupportProperties, HciClusterDesiredProperties desiredProperties, HciClusterReportedProperties reportedProperties, IsolatedVmAttestationConfiguration isolatedVmAttestationConfiguration, float? trialDaysRemaining, string billingModel, ClusterBillingProperties billingProperties, DateTimeOffset? registrationTimestamp, DateTimeOffset? lastSyncTimestamp, DateTimeOffset? lastBillingTimestamp, string serviceEndpoint, string resourceProviderObjectId, IList<SecretsLocationDetails> secretsLocations, ClusterPattern? clusterPattern, ConfidentialVmProperties confidentialVmProperties, ClusterSdnProperties sdnProperties, IList<LocalAvailabilityZones> localAvailabilityZones, HciIdentityProvider? identityProvider, HciStorageType? storageType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             Status = status;
@@ -217,11 +217,11 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Identity Provider for the cluster. </summary>
         [WirePath("identityProvider")]
-        public IdentityProvider? IdentityProvider { get; }
+        public HciIdentityProvider? IdentityProvider { get; }
 
         /// <summary> Storage type of the cluster. Indicates whether the cluster uses S2D, SAN, or a combination. </summary>
         [WirePath("storageType")]
-        public StorageType? StorageType { get; }
+        public HciStorageType? StorageType { get; }
 
         /// <summary> The next billing model to be applied to the cluster. </summary>
         [WirePath("billingProperties.nextBillingModel")]

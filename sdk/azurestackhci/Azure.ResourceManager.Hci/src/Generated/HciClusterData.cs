@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.Hci
 
         /// <summary> Identity Provider for the cluster. </summary>
         [WirePath("properties.identityProvider")]
-        public IdentityProvider? IdentityProvider
+        public HciIdentityProvider? IdentityProvider
         {
             get
             {
@@ -438,7 +438,7 @@ namespace Azure.ResourceManager.Hci
 
         /// <summary> Storage type of the cluster. Indicates whether the cluster uses S2D, SAN, or a combination. </summary>
         [WirePath("properties.storageType")]
-        public StorageType? StorageType
+        public HciStorageType? StorageType
         {
             get
             {

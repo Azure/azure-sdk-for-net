@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation> ClaimDevicesAsync(WaitUntil waitUntil, ClaimDeviceRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> ClaimDevicesAsync(WaitUntil waitUntil, ClaimDeviceContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _devicePoolsRestClient.CreateClaimDevicesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ClaimDeviceRequest.ToRequestContent(content), context);
+                HttpMessage message = _devicePoolsRestClient.CreateClaimDevicesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ClaimDeviceContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HciArmOperation operation = new HciArmOperation(_devicePoolsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation ClaimDevices(WaitUntil waitUntil, ClaimDeviceRequest content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation ClaimDevices(WaitUntil waitUntil, ClaimDeviceContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -495,7 +495,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _devicePoolsRestClient.CreateClaimDevicesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ClaimDeviceRequest.ToRequestContent(content), context);
+                HttpMessage message = _devicePoolsRestClient.CreateClaimDevicesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ClaimDeviceContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HciArmOperation operation = new HciArmOperation(_devicePoolsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -536,7 +536,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation> ReleaseDevicesAsync(WaitUntil waitUntil, ReleaseDeviceRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> ReleaseDevicesAsync(WaitUntil waitUntil, ReleaseDeviceContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -548,7 +548,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _devicePoolsRestClient.CreateReleaseDevicesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ReleaseDeviceRequest.ToRequestContent(content), context);
+                HttpMessage message = _devicePoolsRestClient.CreateReleaseDevicesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ReleaseDeviceContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HciArmOperation operation = new HciArmOperation(_devicePoolsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -589,7 +589,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation ReleaseDevices(WaitUntil waitUntil, ReleaseDeviceRequest content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation ReleaseDevices(WaitUntil waitUntil, ReleaseDeviceContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -601,7 +601,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _devicePoolsRestClient.CreateReleaseDevicesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ReleaseDeviceRequest.ToRequestContent(content), context);
+                HttpMessage message = _devicePoolsRestClient.CreateReleaseDevicesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ReleaseDeviceContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HciArmOperation operation = new HciArmOperation(_devicePoolsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)

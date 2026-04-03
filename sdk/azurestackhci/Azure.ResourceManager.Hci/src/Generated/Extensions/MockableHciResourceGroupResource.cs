@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// <param name="content"> Ownership vouchers to be validated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<ValidateOwnershipVouchersResponse>> ValidateAsync(AzureLocation location, ValidateOwnershipVouchersRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ValidateOwnershipVouchersResult>> ValidateAsync(AzureLocation location, ValidateOwnershipVouchersContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -268,9 +268,9 @@ namespace Azure.ResourceManager.Hci.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = OwnershipVouchersRestClient.CreateValidateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, location, ValidateOwnershipVouchersRequest.ToRequestContent(content), context);
+                HttpMessage message = OwnershipVouchersRestClient.CreateValidateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, location, ValidateOwnershipVouchersContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ValidateOwnershipVouchersResponse> response = Response.FromValue(ValidateOwnershipVouchersResponse.FromResponse(result), result);
+                Response<ValidateOwnershipVouchersResult> response = Response.FromValue(ValidateOwnershipVouchersResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// <param name="content"> Ownership vouchers to be validated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<ValidateOwnershipVouchersResponse> Validate(AzureLocation location, ValidateOwnershipVouchersRequest content, CancellationToken cancellationToken = default)
+        public virtual Response<ValidateOwnershipVouchersResult> Validate(AzureLocation location, ValidateOwnershipVouchersContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -317,9 +317,9 @@ namespace Azure.ResourceManager.Hci.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = OwnershipVouchersRestClient.CreateValidateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, location, ValidateOwnershipVouchersRequest.ToRequestContent(content), context);
+                HttpMessage message = OwnershipVouchersRestClient.CreateValidateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, location, ValidateOwnershipVouchersContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ValidateOwnershipVouchersResponse> response = Response.FromValue(ValidateOwnershipVouchersResponse.FromResponse(result), result);
+                Response<ValidateOwnershipVouchersResult> response = Response.FromValue(ValidateOwnershipVouchersResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

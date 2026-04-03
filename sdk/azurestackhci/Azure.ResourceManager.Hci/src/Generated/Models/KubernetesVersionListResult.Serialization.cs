@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Hci.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (KubernetesVersion item in Value)
+            foreach (HciKubernetesVersion item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            IList<KubernetesVersion> value = default;
+            IList<HciKubernetesVersion> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<KubernetesVersion> array = new List<KubernetesVersion>();
+                    List<HciKubernetesVersion> array = new List<HciKubernetesVersion>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(KubernetesVersion.DeserializeKubernetesVersion(item, options));
+                        array.Add(HciKubernetesVersion.DeserializeHciKubernetesVersion(item, options));
                     }
                     value = array;
                     continue;

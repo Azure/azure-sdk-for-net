@@ -316,8 +316,8 @@ namespace Azure.ResourceManager.Hci.Models
             ConfidentialVmProperties confidentialVmProperties = default;
             ClusterSdnProperties sdnProperties = default;
             IList<LocalAvailabilityZones> localAvailabilityZones = default;
-            IdentityProvider? identityProvider = default;
-            StorageType? storageType = default;
+            HciIdentityProvider? identityProvider = default;
+            HciStorageType? storageType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -587,7 +587,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    identityProvider = new IdentityProvider(prop.Value.GetString());
+                    identityProvider = new HciIdentityProvider(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("storageType"u8))
@@ -596,7 +596,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    storageType = new StorageType(prop.Value.GetString());
+                    storageType = new HciStorageType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="volumeType"> Volume provisioning type. Allowed values are 'Fixed', 'ThinProvisioned'. </param>
         /// <param name="overprovisioningRatio"> Overprovisioning ratio for S2D storage. Allowed values are '0', '1', '2'. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StorageS2dConfig(VolumeType? volumeType, OverprovisioningRatio? overprovisioningRatio, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StorageS2dConfig(HciVolumeType? volumeType, OverprovisioningRatio? overprovisioningRatio, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VolumeType = volumeType;
             OverprovisioningRatio = overprovisioningRatio;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Volume provisioning type. Allowed values are 'Fixed', 'ThinProvisioned'. </summary>
         [WirePath("volumeType")]
-        public VolumeType? VolumeType { get; set; }
+        public HciVolumeType? VolumeType { get; set; }
 
         /// <summary> Overprovisioning ratio for S2D storage. Allowed values are '0', '1', '2'. </summary>
         [WirePath("overprovisioningRatio")]

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Hci.Models
         public DeploymentSettingInfrastructureNetwork()
         {
             IPPools = new ChangeTrackingList<DeploymentSettingIPPools>();
-            DnsZones = new ChangeTrackingList<DnsZones>();
+            DnsZones = new ChangeTrackingList<HciDnsZones>();
             DnsServers = new ChangeTrackingList<string>();
         }
 
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="dnsServers"> IPv4 address of the DNS servers in your environment. </param>
         /// <param name="useDhcp"> Allows customers to use DHCP for Hosts and Cluster IPs. If not declared, the deployment will default to static IPs. When true, GW and DNS servers are not required. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeploymentSettingInfrastructureNetwork(string subnetMask, string gateway, IList<DeploymentSettingIPPools> ipPools, DnsServerConfig? dnsServerConfig, IList<DnsZones> dnsZones, IList<string> dnsServers, bool? useDhcp, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeploymentSettingInfrastructureNetwork(string subnetMask, string gateway, IList<DeploymentSettingIPPools> ipPools, DnsServerConfig? dnsServerConfig, IList<HciDnsZones> dnsZones, IList<string> dnsServers, bool? useDhcp, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SubnetMask = subnetMask;
             Gateway = gateway;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Details of the DNS Zones to be configured. </summary>
         [WirePath("dnsZones")]
-        public IList<DnsZones> DnsZones { get; }
+        public IList<HciDnsZones> DnsZones { get; }
 
         /// <summary> IPv4 address of the DNS servers in your environment. </summary>
         [WirePath("dnsServers")]

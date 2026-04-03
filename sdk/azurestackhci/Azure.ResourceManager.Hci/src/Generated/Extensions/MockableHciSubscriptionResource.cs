@@ -517,8 +517,8 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// </summary>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="KubernetesVersion"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<KubernetesVersion> GetBySubscriptionLocationResourceAsync(AzureLocation location, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="HciKubernetesVersion"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<HciKubernetesVersion> GetBySubscriptionLocationResourceAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -546,8 +546,8 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// </summary>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="KubernetesVersion"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<KubernetesVersion> GetBySubscriptionLocationResource(AzureLocation location, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="HciKubernetesVersion"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<HciKubernetesVersion> GetBySubscriptionLocationResource(AzureLocation location, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {

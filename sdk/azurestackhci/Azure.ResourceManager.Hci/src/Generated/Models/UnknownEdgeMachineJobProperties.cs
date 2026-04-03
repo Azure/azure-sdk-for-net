@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="status"> Status of Edge device job. </param>
         /// <param name="error"> error details. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownEdgeMachineJobProperties(EdgeMachineJobType jobType, EceDeploymentMode? deploymentMode, HciProvisioningState? provisioningState, string jobId, DateTimeOffset? startTimeUtc, DateTimeOffset? endTimeUtc, JobStatus? status, ResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(jobType != default ? jobType : "unknown", deploymentMode, provisioningState, jobId, startTimeUtc, endTimeUtc, status, error, additionalBinaryDataProperties)
+        internal UnknownEdgeMachineJobProperties(EdgeMachineJobType jobType, EceDeploymentMode? deploymentMode, HciProvisioningState? provisioningState, string jobId, DateTimeOffset? startTimeUtc, DateTimeOffset? endTimeUtc, HciJobStatus? status, ResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(jobType != default ? jobType : "unknown", deploymentMode, provisioningState, jobId, startTimeUtc, endTimeUtc, status, error, additionalBinaryDataProperties)
         {
         }
     }

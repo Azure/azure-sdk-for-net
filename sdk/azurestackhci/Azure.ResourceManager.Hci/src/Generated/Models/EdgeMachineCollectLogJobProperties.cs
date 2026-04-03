@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="toDate"> To date for log collection. </param>
         /// <param name="lastLogGenerated"> To date for log collection. </param>
         /// <param name="reportedProperties"> log collection job reported properties. </param>
-        internal EdgeMachineCollectLogJobProperties(EdgeMachineJobType jobType, EceDeploymentMode? deploymentMode, HciProvisioningState? provisioningState, string jobId, DateTimeOffset? startTimeUtc, DateTimeOffset? endTimeUtc, JobStatus? status, ResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties, DateTimeOffset fromDate, DateTimeOffset toDate, DateTimeOffset? lastLogGenerated, EdgeMachineCollectLogJobReportedProperties reportedProperties) : base(jobType, deploymentMode, provisioningState, jobId, startTimeUtc, endTimeUtc, status, error, additionalBinaryDataProperties)
+        internal EdgeMachineCollectLogJobProperties(EdgeMachineJobType jobType, EceDeploymentMode? deploymentMode, HciProvisioningState? provisioningState, string jobId, DateTimeOffset? startTimeUtc, DateTimeOffset? endTimeUtc, HciJobStatus? status, ResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties, DateTimeOffset fromDate, DateTimeOffset toDate, DateTimeOffset? lastLogGenerated, EdgeMachineCollectLogJobReportedProperties reportedProperties) : base(jobType, deploymentMode, provisioningState, jobId, startTimeUtc, endTimeUtc, status, error, additionalBinaryDataProperties)
         {
             FromDate = fromDate;
             ToDate = toDate;

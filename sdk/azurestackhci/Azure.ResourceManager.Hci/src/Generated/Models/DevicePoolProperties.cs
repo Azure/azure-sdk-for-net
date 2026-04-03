@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Initializes a new instance of <see cref="DevicePoolProperties"/>. </summary>
         public DevicePoolProperties()
         {
-            Devices = new ChangeTrackingList<DeviceDetail>();
-            OperationDetails = new ChangeTrackingList<OperationDetail>();
+            Devices = new ChangeTrackingList<HciDeviceDetail>();
+            OperationDetails = new ChangeTrackingList<HciOperationDetail>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DevicePoolProperties"/>. </summary>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="managedResourceGroup"> Managed resource group name for the pool. </param>
         /// <param name="operationDetails"> operation status details for device pool. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DevicePoolProperties(HciProvisioningState? provisioningState, string cloudId, IList<DeviceDetail> devices, ResourceIdentifier customLocationResourceId, string customLocationName, string managedResourceGroup, IReadOnlyList<OperationDetail> operationDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DevicePoolProperties(HciProvisioningState? provisioningState, string cloudId, IList<HciDeviceDetail> devices, ResourceIdentifier customLocationResourceId, string customLocationName, string managedResourceGroup, IReadOnlyList<HciOperationDetail> operationDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             CloudId = cloudId;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> List of machines in device pool. </summary>
         [WirePath("devices")]
-        public IList<DeviceDetail> Devices { get; }
+        public IList<HciDeviceDetail> Devices { get; }
 
         /// <summary> Custom Location Resource Id for the pool. </summary>
         [WirePath("customLocationResourceId")]
@@ -72,6 +72,6 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> operation status details for device pool. </summary>
         [WirePath("operationDetails")]
-        public IReadOnlyList<OperationDetail> OperationDetails { get; }
+        public IReadOnlyList<HciOperationDetail> OperationDetails { get; }
     }
 }

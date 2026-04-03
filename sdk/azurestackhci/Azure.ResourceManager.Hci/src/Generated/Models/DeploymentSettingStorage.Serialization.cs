@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Hci.Models
                 return null;
             }
             string configurationMode = default;
-            StorageType? storageType = default;
+            HciStorageType? storageType = default;
             StorageS2dConfig s2d = default;
             StorageSanConfig san = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    storageType = new StorageType(prop.Value.GetString());
+                    storageType = new HciStorageType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("s2d"u8))

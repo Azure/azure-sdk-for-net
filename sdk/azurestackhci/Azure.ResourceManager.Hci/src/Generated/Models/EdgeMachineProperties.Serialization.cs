@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 writer.WritePropertyName("operationDetails"u8);
                 writer.WriteStartArray();
-                foreach (OperationDetail item in OperationDetails)
+                foreach (HciOperationDetail item in OperationDetails)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -208,15 +208,15 @@ namespace Azure.ResourceManager.Hci.Models
             ResourceIdentifier arcMachineResourceGroupId = default;
             ResourceIdentifier arcMachineResourceId = default;
             ResourceIdentifier arcGatewayResourceId = default;
-            SiteDetails siteDetails = default;
+            HciSiteDetails siteDetails = default;
             OwnershipVoucherDetails ownershipVoucherDetails = default;
-            ProvisioningDetails provisioningDetails = default;
+            HciProvisioningDetails provisioningDetails = default;
             string devicePoolResourceId = default;
             EdgeMachineState? machineState = default;
             EdgeMachineConnectivityStatus? connectivityStatus = default;
             string claimedBy = default;
             EdgeMachineReportedProperties reportedProperties = default;
-            IReadOnlyList<OperationDetail> operationDetails = default;
+            IReadOnlyList<HciOperationDetail> operationDetails = default;
             DateTimeOffset? lastSyncTimestamp = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    siteDetails = SiteDetails.DeserializeSiteDetails(prop.Value, options);
+                    siteDetails = HciSiteDetails.DeserializeHciSiteDetails(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("ownershipVoucherDetails"u8))
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    provisioningDetails = ProvisioningDetails.DeserializeProvisioningDetails(prop.Value, options);
+                    provisioningDetails = HciProvisioningDetails.DeserializeHciProvisioningDetails(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("devicePoolResourceId"u8))
@@ -341,10 +341,10 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    List<OperationDetail> array = new List<OperationDetail>();
+                    List<HciOperationDetail> array = new List<HciOperationDetail>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(OperationDetail.DeserializeOperationDetail(item, options));
+                        array.Add(HciOperationDetail.DeserializeHciOperationDetail(item, options));
                     }
                     operationDetails = array;
                     continue;
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.Hci.Models
                 connectivityStatus,
                 claimedBy,
                 reportedProperties,
-                operationDetails ?? new ChangeTrackingList<OperationDetail>(),
+                operationDetails ?? new ChangeTrackingList<HciOperationDetail>(),
                 lastSyncTimestamp,
                 additionalBinaryDataProperties);
         }

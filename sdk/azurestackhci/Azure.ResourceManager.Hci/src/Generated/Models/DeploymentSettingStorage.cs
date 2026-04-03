@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="s2d"> S2D (Storage Spaces Direct) configuration. Applicable when StorageType is 'S2D' or 'SANS2D'. </param>
         /// <param name="san"> SAN (Storage Area Network) configuration. Applicable when StorageType is 'SAN' or 'SANS2D'. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeploymentSettingStorage(string configurationMode, StorageType? storageType, StorageS2dConfig s2d, StorageSanConfig san, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeploymentSettingStorage(string configurationMode, HciStorageType? storageType, StorageS2dConfig s2d, StorageSanConfig san, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ConfigurationMode = configurationMode;
             StorageType = storageType;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Storage type for the HCI Cluster. Allowed values are 'S2D', 'SAN', 'SANS2D'. </summary>
         [WirePath("storageType")]
-        public StorageType? StorageType { get; set; }
+        public HciStorageType? StorageType { get; set; }
 
         /// <summary> S2D (Storage Spaces Direct) configuration. Applicable when StorageType is 'S2D' or 'SANS2D'. </summary>
         [WirePath("s2d")]

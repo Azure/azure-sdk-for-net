@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 writer.WritePropertyName("dnsZones"u8);
                 writer.WriteStartArray();
-                foreach (DnsZones item in DnsZones)
+                foreach (HciDnsZones item in DnsZones)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Hci.Models
             string gateway = default;
             IList<DeploymentSettingIPPools> ipPools = default;
             DnsServerConfig? dnsServerConfig = default;
-            IList<DnsZones> dnsZones = default;
+            IList<HciDnsZones> dnsZones = default;
             IList<string> dnsServers = default;
             bool? useDhcp = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -220,10 +220,10 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    List<DnsZones> array = new List<DnsZones>();
+                    List<HciDnsZones> array = new List<HciDnsZones>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Models.DnsZones.DeserializeDnsZones(item, options));
+                        array.Add(HciDnsZones.DeserializeHciDnsZones(item, options));
                     }
                     dnsZones = array;
                     continue;
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Hci.Models
                 gateway,
                 ipPools ?? new ChangeTrackingList<DeploymentSettingIPPools>(),
                 dnsServerConfig,
-                dnsZones ?? new ChangeTrackingList<DnsZones>(),
+                dnsZones ?? new ChangeTrackingList<HciDnsZones>(),
                 dnsServers ?? new ChangeTrackingList<string>(),
                 useDhcp,
                 additionalBinaryDataProperties);

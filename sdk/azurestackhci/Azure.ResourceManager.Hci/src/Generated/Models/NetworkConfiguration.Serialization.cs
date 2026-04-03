@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 writer.WritePropertyName("networkAdapters"u8);
                 writer.WriteStartArray();
-                foreach (NetworkAdapter item in NetworkAdapters)
+                foreach (HciNetworkAdapter item in NetworkAdapters)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            IList<NetworkAdapter> networkAdapters = default;
+            IList<HciNetworkAdapter> networkAdapters = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -136,10 +136,10 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    List<NetworkAdapter> array = new List<NetworkAdapter>();
+                    List<HciNetworkAdapter> array = new List<HciNetworkAdapter>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(NetworkAdapter.DeserializeNetworkAdapter(item, options));
+                        array.Add(HciNetworkAdapter.DeserializeHciNetworkAdapter(item, options));
                     }
                     networkAdapters = array;
                     continue;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Hci.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new NetworkConfiguration(networkAdapters ?? new ChangeTrackingList<NetworkAdapter>(), additionalBinaryDataProperties);
+            return new NetworkConfiguration(networkAdapters ?? new ChangeTrackingList<HciNetworkAdapter>(), additionalBinaryDataProperties);
         }
     }
 }

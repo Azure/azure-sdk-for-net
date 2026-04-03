@@ -498,7 +498,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="content"> Change ring request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<HciClusterResource>> ChangeRingAsync(WaitUntil waitUntil, ChangeRingRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<HciClusterResource>> ChangeRingAsync(WaitUntil waitUntil, ChangeRingContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -510,7 +510,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clustersRestClient.CreateChangeRingRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ChangeRingRequest.ToRequestContent(content), context);
+                HttpMessage message = _clustersRestClient.CreateChangeRingRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ChangeRingContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HciArmOperation<HciClusterResource> operation = new HciArmOperation<HciClusterResource>(
                     new HciClusterOperationSource(Client),
@@ -557,7 +557,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="content"> Change ring request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<HciClusterResource> ChangeRing(WaitUntil waitUntil, ChangeRingRequest content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<HciClusterResource> ChangeRing(WaitUntil waitUntil, ChangeRingContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -569,7 +569,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clustersRestClient.CreateChangeRingRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ChangeRingRequest.ToRequestContent(content), context);
+                HttpMessage message = _clustersRestClient.CreateChangeRingRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ChangeRingContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HciArmOperation<HciClusterResource> operation = new HciArmOperation<HciClusterResource>(
                     new HciClusterOperationSource(Client),
@@ -1080,7 +1080,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<HciClusterResource>> UpdateSecretsLocationsAsync(WaitUntil waitUntil, SecretsLocationsChangeRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<HciClusterResource>> UpdateSecretsLocationsAsync(WaitUntil waitUntil, SecretsLocationsChangeContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -1092,7 +1092,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clustersRestClient.CreateUpdateSecretsLocationsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SecretsLocationsChangeRequest.ToRequestContent(content), context);
+                HttpMessage message = _clustersRestClient.CreateUpdateSecretsLocationsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SecretsLocationsChangeContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HciArmOperation<HciClusterResource> operation = new HciArmOperation<HciClusterResource>(
                     new HciClusterOperationSource(Client),
@@ -1139,7 +1139,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<HciClusterResource> UpdateSecretsLocations(WaitUntil waitUntil, SecretsLocationsChangeRequest content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<HciClusterResource> UpdateSecretsLocations(WaitUntil waitUntil, SecretsLocationsChangeContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -1151,7 +1151,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clustersRestClient.CreateUpdateSecretsLocationsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SecretsLocationsChangeRequest.ToRequestContent(content), context);
+                HttpMessage message = _clustersRestClient.CreateUpdateSecretsLocationsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SecretsLocationsChangeContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HciArmOperation<HciClusterResource> operation = new HciArmOperation<HciClusterResource>(
                     new HciClusterOperationSource(Client),

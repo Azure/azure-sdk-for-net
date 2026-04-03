@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="localAvailabilityZones"> Local Availability Zone information for HCI cluster. </param>
         /// <param name="assemblyInfo"> Assembly Package details for Validated Solution Recipe for AzureStackHCI Cluster. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HciClusterDeploymentInfo(HciClusterDeploymentSecuritySettings securitySettings, DeploymentSettingObservability observability, HciDeploymentCluster cluster, IdentityProvider? identityProvider, DeploymentSettingStorage storage, string namingPrefix, string domainFqdn, IList<DeploymentSettingInfrastructureNetwork> infrastructureNetwork, IList<DeploymentSettingPhysicalNodes> physicalNodes, DeploymentSettingHostNetwork hostNetwork, SdnIntegration sdnIntegration, bool? isManagementCluster, string adouPath, string secretsLocation, IList<EceDeploymentSecrets> secrets, OptionalServices optionalServices, IList<LocalAvailabilityZones> localAvailabilityZones, AssemblyInfo assemblyInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HciClusterDeploymentInfo(HciClusterDeploymentSecuritySettings securitySettings, DeploymentSettingObservability observability, HciDeploymentCluster cluster, HciIdentityProvider? identityProvider, DeploymentSettingStorage storage, string namingPrefix, string domainFqdn, IList<DeploymentSettingInfrastructureNetwork> infrastructureNetwork, IList<DeploymentSettingPhysicalNodes> physicalNodes, DeploymentSettingHostNetwork hostNetwork, SdnIntegration sdnIntegration, bool? isManagementCluster, string adouPath, string secretsLocation, IList<EceDeploymentSecrets> secrets, OptionalServices optionalServices, IList<LocalAvailabilityZones> localAvailabilityZones, HciAssemblyInfo assemblyInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SecuritySettings = securitySettings;
             Observability = observability;
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Identity Provider for the cluster. </summary>
         [WirePath("identityProvider")]
-        public IdentityProvider? IdentityProvider { get; set; }
+        public HciIdentityProvider? IdentityProvider { get; set; }
 
         /// <summary> Storage config to deploy AzureStackHCI Cluster. </summary>
         [WirePath("storage")]
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Assembly Package details for Validated Solution Recipe for AzureStackHCI Cluster. </summary>
         [WirePath("assemblyInfo")]
-        public AssemblyInfo AssemblyInfo { get; set; }
+        public HciAssemblyInfo AssemblyInfo { get; set; }
 
         /// <summary> network controller config for SDN Integration to deploy AzureStackHCI Cluster. </summary>
         [WirePath("sdnIntegration.networkController")]

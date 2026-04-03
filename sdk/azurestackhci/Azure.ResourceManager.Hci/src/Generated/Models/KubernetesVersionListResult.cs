@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Initializes a new instance of <see cref="KubernetesVersionListResult"/>. </summary>
         /// <param name="value"> The KubernetesVersion items on this page. </param>
-        internal KubernetesVersionListResult(IEnumerable<KubernetesVersion> value)
+        internal KubernetesVersionListResult(IEnumerable<HciKubernetesVersion> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="value"> The KubernetesVersion items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KubernetesVersionListResult(IList<KubernetesVersion> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KubernetesVersionListResult(IList<HciKubernetesVersion> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> The KubernetesVersion items on this page. </summary>
         [WirePath("value")]
-        public IList<KubernetesVersion> Value { get; }
+        public IList<HciKubernetesVersion> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         [WirePath("nextLink")]

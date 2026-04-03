@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="status"> Status of Cluster job. </param>
         /// <param name="reportedProperties"> Reported properties for job. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownClusterJobProperties(HciJobType jobType, EceDeploymentMode? deploymentMode, HciProvisioningState? provisioningState, string jobId, DateTimeOffset? startTimeUtc, DateTimeOffset? endTimeUtc, JobStatus? status, JobReportedProperties reportedProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(jobType != default ? jobType : "unknown", deploymentMode, provisioningState, jobId, startTimeUtc, endTimeUtc, status, reportedProperties, additionalBinaryDataProperties)
+        internal UnknownClusterJobProperties(HciJobType jobType, EceDeploymentMode? deploymentMode, HciProvisioningState? provisioningState, string jobId, DateTimeOffset? startTimeUtc, DateTimeOffset? endTimeUtc, HciJobStatus? status, JobReportedProperties reportedProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(jobType != default ? jobType : "unknown", deploymentMode, provisioningState, jobId, startTimeUtc, endTimeUtc, status, reportedProperties, additionalBinaryDataProperties)
         {
         }
     }

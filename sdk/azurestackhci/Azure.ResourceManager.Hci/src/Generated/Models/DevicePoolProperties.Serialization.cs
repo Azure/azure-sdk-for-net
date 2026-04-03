@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 writer.WritePropertyName("devices"u8);
                 writer.WriteStartArray();
-                foreach (DeviceDetail item in Devices)
+                foreach (HciDeviceDetail item in Devices)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 writer.WritePropertyName("operationDetails"u8);
                 writer.WriteStartArray();
-                foreach (OperationDetail item in OperationDetails)
+                foreach (HciOperationDetail item in OperationDetails)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -164,11 +164,11 @@ namespace Azure.ResourceManager.Hci.Models
             }
             HciProvisioningState? provisioningState = default;
             string cloudId = default;
-            IList<DeviceDetail> devices = default;
+            IList<HciDeviceDetail> devices = default;
             ResourceIdentifier customLocationResourceId = default;
             string customLocationName = default;
             string managedResourceGroup = default;
-            IReadOnlyList<OperationDetail> operationDetails = default;
+            IReadOnlyList<HciOperationDetail> operationDetails = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -192,10 +192,10 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    List<DeviceDetail> array = new List<DeviceDetail>();
+                    List<HciDeviceDetail> array = new List<HciDeviceDetail>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(DeviceDetail.DeserializeDeviceDetail(item, options));
+                        array.Add(HciDeviceDetail.DeserializeHciDeviceDetail(item, options));
                     }
                     devices = array;
                     continue;
@@ -225,10 +225,10 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    List<OperationDetail> array = new List<OperationDetail>();
+                    List<HciOperationDetail> array = new List<HciOperationDetail>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(OperationDetail.DeserializeOperationDetail(item, options));
+                        array.Add(HciOperationDetail.DeserializeHciOperationDetail(item, options));
                     }
                     operationDetails = array;
                     continue;
@@ -241,11 +241,11 @@ namespace Azure.ResourceManager.Hci.Models
             return new DevicePoolProperties(
                 provisioningState,
                 cloudId,
-                devices ?? new ChangeTrackingList<DeviceDetail>(),
+                devices ?? new ChangeTrackingList<HciDeviceDetail>(),
                 customLocationResourceId,
                 customLocationName,
                 managedResourceGroup,
-                operationDetails ?? new ChangeTrackingList<OperationDetail>(),
+                operationDetails ?? new ChangeTrackingList<HciOperationDetail>(),
                 additionalBinaryDataProperties);
         }
     }

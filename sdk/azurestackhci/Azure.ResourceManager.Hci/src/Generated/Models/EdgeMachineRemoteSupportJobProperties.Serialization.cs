@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Hci.Models
             string jobId = default;
             DateTimeOffset? startTimeUtc = default;
             DateTimeOffset? endTimeUtc = default;
-            JobStatus? status = default;
+            HciJobStatus? status = default;
             ResponseError error = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             RemoteSupportAccessLevel accessLevel = default;
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    status = new JobStatus(prop.Value.GetString());
+                    status = new HciJobStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("error"u8))

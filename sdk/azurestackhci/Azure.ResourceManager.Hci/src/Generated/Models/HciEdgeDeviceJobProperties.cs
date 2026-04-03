@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="status"> Status of Edge device job. </param>
         /// <param name="jobType"> Job Type to support polymorphic resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HciEdgeDeviceJobProperties(EceDeploymentMode? deploymentMode, HciProvisioningState? provisioningState, string jobId, DateTimeOffset? startTimeUtc, DateTimeOffset? endTimeUtc, JobStatus? status, HciEdgeDeviceJobType jobType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HciEdgeDeviceJobProperties(EceDeploymentMode? deploymentMode, HciProvisioningState? provisioningState, string jobId, DateTimeOffset? startTimeUtc, DateTimeOffset? endTimeUtc, HciJobStatus? status, HciEdgeDeviceJobType jobType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DeploymentMode = deploymentMode;
             ProvisioningState = provisioningState;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Status of Edge device job. </summary>
         [WirePath("status")]
-        public JobStatus? Status { get; }
+        public HciJobStatus? Status { get; }
 
         /// <summary> Job Type to support polymorphic resource. </summary>
         [WirePath("jobType")]

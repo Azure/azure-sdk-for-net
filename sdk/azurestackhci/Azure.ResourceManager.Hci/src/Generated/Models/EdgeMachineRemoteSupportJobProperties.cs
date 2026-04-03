@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="expirationTimestamp"> Remote support expiration timestamp. </param>
         /// <param name="type"> Remote support type. </param>
         /// <param name="reportedProperties"> log collection job reported properties. </param>
-        internal EdgeMachineRemoteSupportJobProperties(EdgeMachineJobType jobType, EceDeploymentMode? deploymentMode, HciProvisioningState? provisioningState, string jobId, DateTimeOffset? startTimeUtc, DateTimeOffset? endTimeUtc, JobStatus? status, ResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties, RemoteSupportAccessLevel accessLevel, DateTimeOffset expirationTimestamp, RemoteSupportType @type, EdgeMachineRemoteSupportJobReportedProperties reportedProperties) : base(jobType, deploymentMode, provisioningState, jobId, startTimeUtc, endTimeUtc, status, error, additionalBinaryDataProperties)
+        internal EdgeMachineRemoteSupportJobProperties(EdgeMachineJobType jobType, EceDeploymentMode? deploymentMode, HciProvisioningState? provisioningState, string jobId, DateTimeOffset? startTimeUtc, DateTimeOffset? endTimeUtc, HciJobStatus? status, ResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties, RemoteSupportAccessLevel accessLevel, DateTimeOffset expirationTimestamp, RemoteSupportType @type, EdgeMachineRemoteSupportJobReportedProperties reportedProperties) : base(jobType, deploymentMode, provisioningState, jobId, startTimeUtc, endTimeUtc, status, error, additionalBinaryDataProperties)
         {
             AccessLevel = accessLevel;
             ExpirationTimestamp = expirationTimestamp;

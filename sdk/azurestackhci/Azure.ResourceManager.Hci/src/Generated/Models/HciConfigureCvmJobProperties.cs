@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="reportedProperties"> Reported properties for job. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="confidentialVmIntent"> Defines the customer's intent for updating confidential VM properties. </param>
-        internal HciConfigureCvmJobProperties(HciJobType jobType, EceDeploymentMode? deploymentMode, HciProvisioningState? provisioningState, string jobId, DateTimeOffset? startTimeUtc, DateTimeOffset? endTimeUtc, JobStatus? status, JobReportedProperties reportedProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties, ConfidentialVmIntent confidentialVmIntent) : base(jobType, deploymentMode, provisioningState, jobId, startTimeUtc, endTimeUtc, status, reportedProperties, additionalBinaryDataProperties)
+        internal HciConfigureCvmJobProperties(HciJobType jobType, EceDeploymentMode? deploymentMode, HciProvisioningState? provisioningState, string jobId, DateTimeOffset? startTimeUtc, DateTimeOffset? endTimeUtc, HciJobStatus? status, JobReportedProperties reportedProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties, ConfidentialVmIntent confidentialVmIntent) : base(jobType, deploymentMode, provisioningState, jobId, startTimeUtc, endTimeUtc, status, reportedProperties, additionalBinaryDataProperties)
         {
             ConfidentialVmIntent = confidentialVmIntent;
         }

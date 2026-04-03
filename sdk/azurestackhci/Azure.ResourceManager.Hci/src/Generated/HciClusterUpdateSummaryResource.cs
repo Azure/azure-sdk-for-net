@@ -524,7 +524,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation> CheckUpdatesAsync(WaitUntil waitUntil, CheckUpdatesRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> CheckUpdatesAsync(WaitUntil waitUntil, CheckUpdatesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -536,7 +536,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _updateSummariesOperationGroupRestClient.CreateCheckUpdatesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, CheckUpdatesRequest.ToRequestContent(content), context);
+                HttpMessage message = _updateSummariesOperationGroupRestClient.CreateCheckUpdatesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, CheckUpdatesContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HciArmOperation operation = new HciArmOperation(_updateSummariesOperationGroupClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -577,7 +577,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation CheckUpdates(WaitUntil waitUntil, CheckUpdatesRequest content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation CheckUpdates(WaitUntil waitUntil, CheckUpdatesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -589,7 +589,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _updateSummariesOperationGroupRestClient.CreateCheckUpdatesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, CheckUpdatesRequest.ToRequestContent(content), context);
+                HttpMessage message = _updateSummariesOperationGroupRestClient.CreateCheckUpdatesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, CheckUpdatesContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HciArmOperation operation = new HciArmOperation(_updateSummariesOperationGroupClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)

@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="sbeDeploymentPackageInfo"> Solution builder extension (SBE) deployment package information. </param>
         /// <param name="extensionProfile"> Extension details for edge machine. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EdgeMachineReportedProperties(DateTimeOffset? lastUpdated, EdgeMachineNetworkProfile networkProfile, OsProfile osProfile, HardwareProfile hardwareProfile, StorageProfile storageProfile, SbeDeploymentPackageInfo sbeDeploymentPackageInfo, ExtensionProfile extensionProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EdgeMachineReportedProperties(DateTimeOffset? lastUpdated, EdgeMachineNetworkProfile networkProfile, HciDeploymentOSProfile osProfile, HciDeploymentHardwareProfile hardwareProfile, StorageProfile storageProfile, SbeDeploymentPackageInfo sbeDeploymentPackageInfo, ExtensionProfile extensionProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             LastUpdated = lastUpdated;
             NetworkProfile = networkProfile;
@@ -53,11 +53,11 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> OS Properties for edge machine. </summary>
         [WirePath("osProfile")]
-        public OsProfile OsProfile { get; }
+        public HciDeploymentOSProfile OsProfile { get; }
 
         /// <summary> Hardware related information for edge machine. </summary>
         [WirePath("hardwareProfile")]
-        public HardwareProfile HardwareProfile { get; }
+        public HciDeploymentHardwareProfile HardwareProfile { get; }
 
         /// <summary> Storage related information for edge machine. </summary>
         [WirePath("storageProfile")]

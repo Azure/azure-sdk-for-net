@@ -701,7 +701,7 @@ namespace Azure.ResourceManager.Hci
         /// Validates ownership vouchers.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableHciResourceGroupResource.ValidateAsync(AzureLocation, ValidateOwnershipVouchersRequest, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableHciResourceGroupResource.ValidateAsync(AzureLocation, ValidateOwnershipVouchersContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -709,7 +709,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="content"> Ownership vouchers to be validated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static async Task<Response<ValidateOwnershipVouchersResponse>> ValidateAsync(this ResourceGroupResource resourceGroupResource, AzureLocation location, ValidateOwnershipVouchersRequest content, CancellationToken cancellationToken = default)
+        public static async Task<Response<ValidateOwnershipVouchersResult>> ValidateAsync(this ResourceGroupResource resourceGroupResource, AzureLocation location, ValidateOwnershipVouchersContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -720,7 +720,7 @@ namespace Azure.ResourceManager.Hci
         /// Validates ownership vouchers.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableHciResourceGroupResource.Validate(AzureLocation, ValidateOwnershipVouchersRequest, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableHciResourceGroupResource.Validate(AzureLocation, ValidateOwnershipVouchersContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -728,7 +728,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="content"> Ownership vouchers to be validated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static Response<ValidateOwnershipVouchersResponse> Validate(this ResourceGroupResource resourceGroupResource, AzureLocation location, ValidateOwnershipVouchersRequest content, CancellationToken cancellationToken = default)
+        public static Response<ValidateOwnershipVouchersResult> Validate(this ResourceGroupResource resourceGroupResource, AzureLocation location, ValidateOwnershipVouchersContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -1086,8 +1086,8 @@ namespace Azure.ResourceManager.Hci
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="KubernetesVersion"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<KubernetesVersion> GetBySubscriptionLocationResourceAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="HciKubernetesVersion"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<HciKubernetesVersion> GetBySubscriptionLocationResourceAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -1105,8 +1105,8 @@ namespace Azure.ResourceManager.Hci
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="KubernetesVersion"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<KubernetesVersion> GetBySubscriptionLocationResource(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="HciKubernetesVersion"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<HciKubernetesVersion> GetBySubscriptionLocationResource(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 

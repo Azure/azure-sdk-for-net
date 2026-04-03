@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="status"> Status of Cluster job. </param>
         /// <param name="reportedProperties"> Reported properties for job. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ClusterJobProperties(HciJobType jobType, EceDeploymentMode? deploymentMode, HciProvisioningState? provisioningState, string jobId, DateTimeOffset? startTimeUtc, DateTimeOffset? endTimeUtc, JobStatus? status, JobReportedProperties reportedProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ClusterJobProperties(HciJobType jobType, EceDeploymentMode? deploymentMode, HciProvisioningState? provisioningState, string jobId, DateTimeOffset? startTimeUtc, DateTimeOffset? endTimeUtc, HciJobStatus? status, JobReportedProperties reportedProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             JobType = jobType;
             DeploymentMode = deploymentMode;
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Status of Cluster job. </summary>
         [WirePath("status")]
-        public JobStatus? Status { get; }
+        public HciJobStatus? Status { get; }
 
         /// <summary> Reported properties for job. </summary>
         [WirePath("reportedProperties")]

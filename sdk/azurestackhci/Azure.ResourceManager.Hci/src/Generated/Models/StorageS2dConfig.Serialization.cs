@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            VolumeType? volumeType = default;
+            HciVolumeType? volumeType = default;
             OverprovisioningRatio? overprovisioningRatio = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    volumeType = new VolumeType(prop.Value.GetString());
+                    volumeType = new HciVolumeType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("overprovisioningRatio"u8))

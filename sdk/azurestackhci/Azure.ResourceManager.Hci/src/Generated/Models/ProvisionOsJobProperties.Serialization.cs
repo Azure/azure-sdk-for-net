@@ -122,10 +122,10 @@ namespace Azure.ResourceManager.Hci.Models
             string jobId = default;
             DateTimeOffset? startTimeUtc = default;
             DateTimeOffset? endTimeUtc = default;
-            JobStatus? status = default;
+            HciJobStatus? status = default;
             ResponseError error = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            ProvisioningRequest provisioningRequest = default;
+            ProvisioningContent provisioningRequest = default;
             ProvisionOsReportedProperties reportedProperties = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    status = new JobStatus(prop.Value.GetString());
+                    status = new HciJobStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("error"u8))
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
                 if (prop.NameEquals("provisioningRequest"u8))
                 {
-                    provisioningRequest = ProvisioningRequest.DeserializeProvisioningRequest(prop.Value, options);
+                    provisioningRequest = ProvisioningContent.DeserializeProvisioningContent(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("reportedProperties"u8))

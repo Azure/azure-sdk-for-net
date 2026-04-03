@@ -125,14 +125,14 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            SecretsType secretsType = default;
+            HciSecretsType secretsType = default;
             string secretsLocation = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("secretsType"u8))
                 {
-                    secretsType = new SecretsType(prop.Value.GetString());
+                    secretsType = new HciSecretsType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("secretsLocation"u8))

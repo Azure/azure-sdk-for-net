@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Initializes a new instance of <see cref="DownloadOsJobProperties"/>. </summary>
         /// <param name="downloadRequest"> Download OS request. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="downloadRequest"/> is null. </exception>
-        public DownloadOsJobProperties(DownloadRequest downloadRequest) : base(EdgeMachineJobType.DownloadOs)
+        public DownloadOsJobProperties(DownloadContent downloadRequest) : base(EdgeMachineJobType.DownloadOs)
         {
             Argument.AssertNotNull(downloadRequest, nameof(downloadRequest));
 
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="downloadRequest"> Download OS request. </param>
         /// <param name="reportedProperties"> Reported Properties for Download Os job. </param>
-        internal DownloadOsJobProperties(EdgeMachineJobType jobType, EceDeploymentMode? deploymentMode, HciProvisioningState? provisioningState, string jobId, DateTimeOffset? startTimeUtc, DateTimeOffset? endTimeUtc, JobStatus? status, ResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties, DownloadRequest downloadRequest, ProvisionOsReportedProperties reportedProperties) : base(jobType, deploymentMode, provisioningState, jobId, startTimeUtc, endTimeUtc, status, error, additionalBinaryDataProperties)
+        internal DownloadOsJobProperties(EdgeMachineJobType jobType, EceDeploymentMode? deploymentMode, HciProvisioningState? provisioningState, string jobId, DateTimeOffset? startTimeUtc, DateTimeOffset? endTimeUtc, HciJobStatus? status, ResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties, DownloadContent downloadRequest, ProvisionOsReportedProperties reportedProperties) : base(jobType, deploymentMode, provisioningState, jobId, startTimeUtc, endTimeUtc, status, error, additionalBinaryDataProperties)
         {
             DownloadRequest = downloadRequest;
             ReportedProperties = reportedProperties;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Download OS request. </summary>
         [WirePath("downloadRequest")]
-        public DownloadRequest DownloadRequest { get; set; }
+        public DownloadContent DownloadRequest { get; set; }
 
         /// <summary> Reported Properties for Download Os job. </summary>
         [WirePath("reportedProperties")]

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="time"> Time configuration. </param>
         /// <param name="storage"> Storage configuration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TargetDeviceConfiguration(NetworkConfiguration network, string hostName, WebProxyConfiguration webProxy, TimeConfiguration time, StorageConfiguration storage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TargetDeviceConfiguration(NetworkConfiguration network, string hostName, HciWebProxyConfiguration webProxy, HciTimeConfiguration time, StorageConfiguration storage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Network = network;
             HostName = hostName;
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Web proxy configuration. </summary>
         [WirePath("webProxy")]
-        public WebProxyConfiguration WebProxy { get; set; }
+        public HciWebProxyConfiguration WebProxy { get; set; }
 
         /// <summary> Time configuration. </summary>
         [WirePath("time")]
-        public TimeConfiguration Time { get; set; }
+        public HciTimeConfiguration Time { get; set; }
 
         /// <summary> Storage configuration. </summary>
         [WirePath("storage")]
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> List of network adapters. </summary>
         [WirePath("network.networkAdapters")]
-        public IList<NetworkAdapter> NetworkAdapters
+        public IList<HciNetworkAdapter> NetworkAdapters
         {
             get
             {

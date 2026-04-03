@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Initializes a new instance of <see cref="EdgeMachineProperties"/>. </summary>
         public EdgeMachineProperties()
         {
-            OperationDetails = new ChangeTrackingList<OperationDetail>();
+            OperationDetails = new ChangeTrackingList<HciOperationDetail>();
         }
 
         /// <summary> Initializes a new instance of <see cref="EdgeMachineProperties"/>. </summary>
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="operationDetails"> operation status details for edge machine. </param>
         /// <param name="lastSyncTimestamp"> Last time data updated to service. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EdgeMachineProperties(EdgeMachineKind? edgeMachineKind, HciProvisioningState? provisioningState, string cloudId, ResourceIdentifier arcMachineResourceGroupId, ResourceIdentifier arcMachineResourceId, ResourceIdentifier arcGatewayResourceId, SiteDetails siteDetails, OwnershipVoucherDetails ownershipVoucherDetails, ProvisioningDetails provisioningDetails, string devicePoolResourceId, EdgeMachineState? machineState, EdgeMachineConnectivityStatus? connectivityStatus, string claimedBy, EdgeMachineReportedProperties reportedProperties, IReadOnlyList<OperationDetail> operationDetails, DateTimeOffset? lastSyncTimestamp, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EdgeMachineProperties(EdgeMachineKind? edgeMachineKind, HciProvisioningState? provisioningState, string cloudId, ResourceIdentifier arcMachineResourceGroupId, ResourceIdentifier arcMachineResourceId, ResourceIdentifier arcGatewayResourceId, HciSiteDetails siteDetails, OwnershipVoucherDetails ownershipVoucherDetails, HciProvisioningDetails provisioningDetails, string devicePoolResourceId, EdgeMachineState? machineState, EdgeMachineConnectivityStatus? connectivityStatus, string claimedBy, EdgeMachineReportedProperties reportedProperties, IReadOnlyList<HciOperationDetail> operationDetails, DateTimeOffset? lastSyncTimestamp, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EdgeMachineKind = edgeMachineKind;
             ProvisioningState = provisioningState;
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Service fetches common configuration from site. </summary>
         [WirePath("siteDetails")]
-        public SiteDetails SiteDetails { get; set; }
+        public HciSiteDetails SiteDetails { get; set; }
 
         /// <summary> Ownership voucher details for provisioned machine. </summary>
         [WirePath("ownershipVoucherDetails")]
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Details for device provisioning. </summary>
         [WirePath("provisioningDetails")]
-        public ProvisioningDetails ProvisioningDetails { get; set; }
+        public HciProvisioningDetails ProvisioningDetails { get; set; }
 
         /// <summary> A machine can only be assigned to single device pool. </summary>
         [WirePath("devicePoolResourceId")]
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> operation status details for edge machine. </summary>
         [WirePath("operationDetails")]
-        public IReadOnlyList<OperationDetail> OperationDetails { get; }
+        public IReadOnlyList<HciOperationDetail> OperationDetails { get; }
 
         /// <summary> Last time data updated to service. </summary>
         [WirePath("lastSyncTimestamp")]

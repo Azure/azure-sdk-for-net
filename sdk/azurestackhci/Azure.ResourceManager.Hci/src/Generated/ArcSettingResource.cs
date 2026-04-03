@@ -815,7 +815,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="content"> Request for reconciling Arc Settings. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<ArcSettingResource>> ReconcileAsync(WaitUntil waitUntil, ReconcileArcSettingsRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ArcSettingResource>> ReconcileAsync(WaitUntil waitUntil, ReconcileArcSettingsContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -827,7 +827,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _arcSettingsRestClient.CreateReconcileRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ReconcileArcSettingsRequest.ToRequestContent(content), context);
+                HttpMessage message = _arcSettingsRestClient.CreateReconcileRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ReconcileArcSettingsContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HciArmOperation<ArcSettingResource> operation = new HciArmOperation<ArcSettingResource>(
                     new ArcSettingOperationSource(Client),
@@ -874,7 +874,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="content"> Request for reconciling Arc Settings. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<ArcSettingResource> Reconcile(WaitUntil waitUntil, ReconcileArcSettingsRequest content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ArcSettingResource> Reconcile(WaitUntil waitUntil, ReconcileArcSettingsContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -886,7 +886,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _arcSettingsRestClient.CreateReconcileRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ReconcileArcSettingsRequest.ToRequestContent(content), context);
+                HttpMessage message = _arcSettingsRestClient.CreateReconcileRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ReconcileArcSettingsContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HciArmOperation<ArcSettingResource> operation = new HciArmOperation<ArcSettingResource>(
                     new ArcSettingOperationSource(Client),

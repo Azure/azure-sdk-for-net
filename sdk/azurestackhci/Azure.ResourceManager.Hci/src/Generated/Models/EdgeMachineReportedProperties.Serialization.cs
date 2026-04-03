@@ -153,8 +153,8 @@ namespace Azure.ResourceManager.Hci.Models
             }
             DateTimeOffset? lastUpdated = default;
             EdgeMachineNetworkProfile networkProfile = default;
-            OsProfile osProfile = default;
-            HardwareProfile hardwareProfile = default;
+            HciDeploymentOSProfile osProfile = default;
+            HciDeploymentHardwareProfile hardwareProfile = default;
             StorageProfile storageProfile = default;
             SbeDeploymentPackageInfo sbeDeploymentPackageInfo = default;
             ExtensionProfile extensionProfile = default;
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    osProfile = OsProfile.DeserializeOsProfile(prop.Value, options);
+                    osProfile = HciDeploymentOSProfile.DeserializeHciDeploymentOSProfile(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("hardwareProfile"u8))
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    hardwareProfile = HardwareProfile.DeserializeHardwareProfile(prop.Value, options);
+                    hardwareProfile = HciDeploymentHardwareProfile.DeserializeHciDeploymentHardwareProfile(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("storageProfile"u8))
