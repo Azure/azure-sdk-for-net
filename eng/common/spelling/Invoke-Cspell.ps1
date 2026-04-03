@@ -94,6 +94,11 @@ process {
   $filesToCheck += $FileList
  }
 end {
+  Write-Verbose "Files to check:"
+  foreach ($file in $filesToCheck) {
+    Write-Verbose "  $file"
+  }
+
   $fileListPath = (New-TemporaryFile).FullName
   $filesToCheck | Out-File -FilePath $fileListPath -Encoding utf8
 
