@@ -95,18 +95,17 @@ end {
   $filesToCheck | Out-File -FilePath $fileListPath -Encoding utf8
 
   try {
-    $command = "npm --prefix $PackageInstallCache exec --no -- cspell $JobType --config $CSpellConfigPath --no-must-find-files --root $SpellCheckRoot --file-list $fileListPath"
-    Write-Host $command
-    $cspellOutput = npm --prefix $PackageInstallCache `
-      exec  `
-      --no `
-      '--' `
-      cspell `
-      $JobType `
-      --config $CSpellConfigPath `
-      --no-must-find-files `
-      --root $SpellCheckRoot `
-      --file-list $fileListPath
+    $cspellArgs = @(
+      '--prefix', $PackageInstallCache,
+      'exec', '--no', '--',
+      'cspell', $JobType,
+      '--config', $CSpellConfigPath,
+      '--no-must-find-files',
+      '--root', $SpellCheckRoot,
+      '--file-list', $fileListPath
+    )
+    Write-Host "npm $cspellArgs"
+    $cspellOutput = npm @cspellArgs
   } finally {
     Remove-Item -Path $fileListPath -Force -ErrorAction SilentlyContinue | Out-Null
   }
