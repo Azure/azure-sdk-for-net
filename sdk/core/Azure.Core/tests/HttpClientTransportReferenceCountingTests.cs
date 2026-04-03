@@ -140,6 +140,7 @@ namespace Azure.Core.Tests
             var responseCount = 0;
             var requestsInHandler = new SemaphoreSlim(0);
             var releaseRequests = new ManualResetEventSlim(false);
+            using var overallTimeout = new CancellationTokenSource(TimeSpan.FromSeconds(5));
 
             Func<HttpPipelineTransportOptions, HttpClient> clientFactory = _ =>
             {
@@ -147,7 +148,7 @@ namespace Azure.Core.Tests
                 {
                     Interlocked.Increment(ref requestCount);
                     requestsInHandler.Release();
-                    releaseRequests.Wait();
+                    releaseRequests.Wait(overallTimeout.Token);
                     Interlocked.Increment(ref responseCount);
                     return new HttpResponseMessage(System.Net.HttpStatusCode.OK);
                 });
@@ -173,12 +174,11 @@ namespace Azure.Core.Tests
             try
             {
                 // Wait until all requests are in the handler (past TryAddRef, holding refs)
-                using var waitTimeout = new CancellationTokenSource(TimeSpan.FromSeconds(10));
                 try
                 {
                     for (int i = 0; i < 5; i++)
                     {
-                        await requestsInHandler.WaitAsync(waitTimeout.Token);
+                        await requestsInHandler.WaitAsync(overallTimeout.Token);
                     }
                 }
                 catch (OperationCanceledException)
@@ -255,6 +255,7 @@ namespace Azure.Core.Tests
             var updateCount = 0;
             var requestsInHandler = new SemaphoreSlim(0);
             var releaseRequests = new ManualResetEventSlim(false);
+            using var overallTimeout = new CancellationTokenSource(TimeSpan.FromSeconds(5));
 
             Func<HttpPipelineTransportOptions, HttpClient> clientFactory = _ =>
             {
@@ -262,7 +263,7 @@ namespace Azure.Core.Tests
                 var handler = new MockHttpHandler(req =>
                 {
                     requestsInHandler.Release();
-                    releaseRequests.Wait();
+                    releaseRequests.Wait(overallTimeout.Token);
                     return new HttpResponseMessage(System.Net.HttpStatusCode.OK);
                 });
                 return new HttpClient(handler);
@@ -288,12 +289,11 @@ namespace Azure.Core.Tests
             try
             {
                 // Wait until all requests are in the handler (past TryAddRef, holding refs)
-                using var waitTimeout = new CancellationTokenSource(TimeSpan.FromSeconds(10));
                 try
                 {
                     for (int i = 0; i < requestCount; i++)
                     {
-                        await requestsInHandler.WaitAsync(waitTimeout.Token);
+                        await requestsInHandler.WaitAsync(overallTimeout.Token);
                     }
                 }
                 catch (OperationCanceledException)
