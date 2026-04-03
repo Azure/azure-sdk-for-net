@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _clusterRp, _clusterResourceName, _clusterName, _publisherId, _offerId, _planId, _releaseTrain, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _clusterRp, _clusterResourceName, _clusterName, _publisherId, _offerId, _planId, _releaseTrain, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ExtensionTypeInterfaceCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ClusterExtensionTypeCollection.GetAll");
             scope.Start();
             try
             {

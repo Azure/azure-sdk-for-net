@@ -38,10 +38,82 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
         }
 
         /// <summary>
-        /// Gets a collection of ExtensionTypeInterfaces in the <see cref="ResourceGroupResource"/>
+        /// Gets an object representing a <see cref="LocationExtensionTypeResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableKubernetesConfigurationExtensionTypesResourceGroupResource.GetExtensionTypeInterfaces(string, string, string)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableKubernetesConfigurationExtensionTypesArmClient.GetLocationExtensionTypeResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="LocationExtensionTypeResource"/> object. </returns>
+        public static LocationExtensionTypeResource GetLocationExtensionTypeResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableKubernetesConfigurationExtensionTypesArmClient(client).GetLocationExtensionTypeResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ClusterExtensionTypeResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableKubernetesConfigurationExtensionTypesArmClient.GetClusterExtensionTypeResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ClusterExtensionTypeResource"/> object. </returns>
+        public static ClusterExtensionTypeResource GetClusterExtensionTypeResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableKubernetesConfigurationExtensionTypesArmClient(client).GetClusterExtensionTypeResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="LocationExtensionTypeVersionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableKubernetesConfigurationExtensionTypesArmClient.GetLocationExtensionTypeVersionResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="LocationExtensionTypeVersionResource"/> object. </returns>
+        public static LocationExtensionTypeVersionResource GetLocationExtensionTypeVersionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableKubernetesConfigurationExtensionTypesArmClient(client).GetLocationExtensionTypeVersionResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ClusterExtensionTypeVersionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableKubernetesConfigurationExtensionTypesArmClient.GetClusterExtensionTypeVersionResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ClusterExtensionTypeVersionResource"/> object. </returns>
+        public static ClusterExtensionTypeVersionResource GetClusterExtensionTypeVersionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableKubernetesConfigurationExtensionTypesArmClient(client).GetClusterExtensionTypeVersionResource(id);
+        }
+
+        /// <summary>
+        /// Gets a collection of ClusterExtensionTypes in the <see cref="ResourceGroupResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableKubernetesConfigurationExtensionTypesResourceGroupResource.GetClusterExtensionTypes(string, string, string)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -49,19 +121,19 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
         /// <param name="clusterResourceName"> The clusterResourceName for the resource. </param>
         /// <param name="clusterName"> The clusterName for the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of ExtensionTypeInterfaces and their operations over a ExtensionTypeInterfaceResource. </returns>
-        public static ExtensionTypeInterfaceCollection GetExtensionTypeInterfaces(this ResourceGroupResource resourceGroupResource, string clusterRp, string clusterResourceName, string clusterName)
+        /// <returns> An object representing collection of ClusterExtensionTypes and their operations over a ClusterExtensionTypeResource. </returns>
+        public static ClusterExtensionTypeCollection GetClusterExtensionTypes(this ResourceGroupResource resourceGroupResource, string clusterRp, string clusterResourceName, string clusterName)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableKubernetesConfigurationExtensionTypesResourceGroupResource(resourceGroupResource).GetExtensionTypeInterfaces(clusterRp, clusterResourceName, clusterName);
+            return GetMockableKubernetesConfigurationExtensionTypesResourceGroupResource(resourceGroupResource).GetClusterExtensionTypes(clusterRp, clusterResourceName, clusterName);
         }
 
         /// <summary>
         /// Get an Extension Type installable to the cluster based region and type for the cluster.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableKubernetesConfigurationExtensionTypesResourceGroupResource.GetExtensionTypeInterfaceAsync(string, string, string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableKubernetesConfigurationExtensionTypesResourceGroupResource.GetClusterExtensionTypeAsync(string, string, string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -72,18 +144,18 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<ExtensionTypeInterfaceResource>> GetExtensionTypeInterfaceAsync(this ResourceGroupResource resourceGroupResource, string clusterRp, string clusterResourceName, string clusterName, string extensionTypeName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ClusterExtensionTypeResource>> GetClusterExtensionTypeAsync(this ResourceGroupResource resourceGroupResource, string clusterRp, string clusterResourceName, string clusterName, string extensionTypeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableKubernetesConfigurationExtensionTypesResourceGroupResource(resourceGroupResource).GetExtensionTypeInterfaceAsync(clusterRp, clusterResourceName, clusterName, extensionTypeName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableKubernetesConfigurationExtensionTypesResourceGroupResource(resourceGroupResource).GetClusterExtensionTypeAsync(clusterRp, clusterResourceName, clusterName, extensionTypeName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get an Extension Type installable to the cluster based region and type for the cluster.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableKubernetesConfigurationExtensionTypesResourceGroupResource.GetExtensionTypeInterface(string, string, string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableKubernetesConfigurationExtensionTypesResourceGroupResource.GetClusterExtensionType(string, string, string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -94,36 +166,36 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<ExtensionTypeInterfaceResource> GetExtensionTypeInterface(this ResourceGroupResource resourceGroupResource, string clusterRp, string clusterResourceName, string clusterName, string extensionTypeName, CancellationToken cancellationToken = default)
+        public static Response<ClusterExtensionTypeResource> GetClusterExtensionType(this ResourceGroupResource resourceGroupResource, string clusterRp, string clusterResourceName, string clusterName, string extensionTypeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableKubernetesConfigurationExtensionTypesResourceGroupResource(resourceGroupResource).GetExtensionTypeInterface(clusterRp, clusterResourceName, clusterName, extensionTypeName, cancellationToken);
+            return GetMockableKubernetesConfigurationExtensionTypesResourceGroupResource(resourceGroupResource).GetClusterExtensionType(clusterRp, clusterResourceName, clusterName, extensionTypeName, cancellationToken);
         }
 
         /// <summary>
-        /// Gets a collection of ExtensionTypeInterfaces in the <see cref="SubscriptionResource"/>
+        /// Gets a collection of LocationExtensionTypes in the <see cref="SubscriptionResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableKubernetesConfigurationExtensionTypesSubscriptionResource.GetExtensionTypeInterfaces(string)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableKubernetesConfigurationExtensionTypesSubscriptionResource.GetLocationExtensionTypes(string)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="location"> The location for the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An object representing collection of ExtensionTypeInterfaces and their operations over a ExtensionTypeInterfaceResource. </returns>
-        public static ExtensionTypeInterfaceCollection GetExtensionTypeInterfaces(this SubscriptionResource subscriptionResource, string location)
+        /// <returns> An object representing collection of LocationExtensionTypes and their operations over a LocationExtensionTypeResource. </returns>
+        public static LocationExtensionTypeCollection GetLocationExtensionTypes(this SubscriptionResource subscriptionResource, string location)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableKubernetesConfigurationExtensionTypesSubscriptionResource(subscriptionResource).GetExtensionTypeInterfaces(location);
+            return GetMockableKubernetesConfigurationExtensionTypesSubscriptionResource(subscriptionResource).GetLocationExtensionTypes(location);
         }
 
         /// <summary>
         /// Get an extension type for the location.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableKubernetesConfigurationExtensionTypesSubscriptionResource.GetExtensionTypeInterfaceAsync(string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableKubernetesConfigurationExtensionTypesSubscriptionResource.GetLocationExtensionTypeAsync(string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -132,18 +204,18 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<ExtensionTypeInterfaceResource>> GetExtensionTypeInterfaceAsync(this SubscriptionResource subscriptionResource, string location, string extensionTypeName, CancellationToken cancellationToken = default)
+        public static async Task<Response<LocationExtensionTypeResource>> GetLocationExtensionTypeAsync(this SubscriptionResource subscriptionResource, string location, string extensionTypeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableKubernetesConfigurationExtensionTypesSubscriptionResource(subscriptionResource).GetExtensionTypeInterfaceAsync(location, extensionTypeName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableKubernetesConfigurationExtensionTypesSubscriptionResource(subscriptionResource).GetLocationExtensionTypeAsync(location, extensionTypeName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get an extension type for the location.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableKubernetesConfigurationExtensionTypesSubscriptionResource.GetExtensionTypeInterface(string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableKubernetesConfigurationExtensionTypesSubscriptionResource.GetLocationExtensionType(string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -152,11 +224,11 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<ExtensionTypeInterfaceResource> GetExtensionTypeInterface(this SubscriptionResource subscriptionResource, string location, string extensionTypeName, CancellationToken cancellationToken = default)
+        public static Response<LocationExtensionTypeResource> GetLocationExtensionType(this SubscriptionResource subscriptionResource, string location, string extensionTypeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableKubernetesConfigurationExtensionTypesSubscriptionResource(subscriptionResource).GetExtensionTypeInterface(location, extensionTypeName, cancellationToken);
+            return GetMockableKubernetesConfigurationExtensionTypesSubscriptionResource(subscriptionResource).GetLocationExtensionType(location, extensionTypeName, cancellationToken);
         }
     }
 }

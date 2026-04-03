@@ -19,51 +19,51 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ExtensionTypeInterfaceResource"/> and their operations.
-    /// Each <see cref="ExtensionTypeInterfaceResource"/> in the collection will belong to the same instance of <see cref="ExtensionTypeInterfaceResource"/>.
-    /// To get a <see cref="ExtensionTypeInterfaceCollection"/> instance call the GetExtensionTypeInterfaces method from an instance of <see cref="ExtensionTypeInterfaceResource"/>.
+    /// A class representing a collection of <see cref="LocationExtensionTypeVersionResource"/> and their operations.
+    /// Each <see cref="LocationExtensionTypeVersionResource"/> in the collection will belong to the same instance of <see cref="LocationExtensionTypeResource"/>.
+    /// To get a <see cref="LocationExtensionTypeVersionCollection"/> instance call the GetLocationExtensionTypeVersions method from an instance of <see cref="LocationExtensionTypeResource"/>.
     /// </summary>
-    public partial class ExtensionTypeInterfaceCollection : ArmCollection, IEnumerable<ExtensionTypeInterfaceResource>, IAsyncEnumerable<ExtensionTypeInterfaceResource>
+    public partial class LocationExtensionTypeVersionCollection : ArmCollection, IEnumerable<LocationExtensionTypeVersionResource>, IAsyncEnumerable<LocationExtensionTypeVersionResource>
     {
         private readonly ClientDiagnostics _extensionTypeInterfaceClientDiagnostics;
         private readonly ExtensionTypeInterface _extensionTypeInterfaceRestClient;
 
-        /// <summary> Initializes a new instance of ExtensionTypeInterfaceCollection for mocking. </summary>
-        protected ExtensionTypeInterfaceCollection()
+        /// <summary> Initializes a new instance of LocationExtensionTypeVersionCollection for mocking. </summary>
+        protected LocationExtensionTypeVersionCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExtensionTypeInterfaceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="LocationExtensionTypeVersionCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ExtensionTypeInterfaceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal LocationExtensionTypeVersionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            this.TryGetApiVersion(ExtensionTypeInterfaceResource.ResourceType, out string extensionTypeInterfaceApiVersion);
-            _extensionTypeInterfaceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes", ExtensionTypeInterfaceResource.ResourceType.Namespace, Diagnostics);
-            _extensionTypeInterfaceRestClient = new ExtensionTypeInterface(_extensionTypeInterfaceClientDiagnostics, Pipeline, Endpoint, extensionTypeInterfaceApiVersion ?? "2024-11-01-preview");
-            ExtensionTypeInterfaceCollection.ValidateResourceId(id);
+            TryGetApiVersion(LocationExtensionTypeVersionResource.ResourceType, out string locationExtensionTypeVersionApiVersion);
+            _extensionTypeInterfaceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes", LocationExtensionTypeVersionResource.ResourceType.Namespace, Diagnostics);
+            _extensionTypeInterfaceRestClient = new ExtensionTypeInterface(_extensionTypeInterfaceClientDiagnostics, Pipeline, Endpoint, locationExtensionTypeVersionApiVersion ?? "2024-11-01-preview");
+            ValidateResourceId(id);
         }
 
         /// <param name="id"></param>
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ExtensionTypeInterfaceResource.ResourceType)
+            if (id.ResourceType != LocationExtensionTypeResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ExtensionTypeInterfaceResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, LocationExtensionTypeResource.ResourceType), id);
             }
         }
 
         /// <summary>
-        /// Get details of a version for an Extension Type installable to the cluster.
+        /// Get details of a version for an extension type and location
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{clusterRp}/{clusterResourceName}/{clusterName}/providers/Microsoft.KubernetesConfiguration/extensionTypes/{extensionTypeName}/versions/{versionNumber}. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.KubernetesConfiguration/locations/{location}/extensionTypes/{extensionTypeName}/versions/{versionNumber}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ExtensionTypeVersionForReleaseTrainOperationGroup_ClusterGetVersion. </description>
+        /// <description> ExtensionTypeVersionForReleaseTrains_GetVersion. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -75,11 +75,11 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="versionNumber"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="versionNumber"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<ExtensionTypeInterfaceResource>> GetAsync(string versionNumber, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LocationExtensionTypeVersionResource>> GetAsync(string versionNumber, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(versionNumber, nameof(versionNumber));
 
-            using DiagnosticScope scope = _extensionTypeInterfaceClientDiagnostics.CreateScope("ExtensionTypeInterfaceCollection.Get");
+            using DiagnosticScope scope = _extensionTypeInterfaceClientDiagnostics.CreateScope("LocationExtensionTypeVersionCollection.Get");
             scope.Start();
             try
             {
@@ -87,14 +87,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extensionTypeInterfaceRestClient.CreateClusterGetVersionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.Name, Id.Parent.ResourceType.Type, Id.Name, versionNumber, context);
+                HttpMessage message = _extensionTypeInterfaceRestClient.CreateGetVersionRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, versionNumber, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ExtensionTypeVersionForReleaseTrainData> response = Response.FromValue(ExtensionTypeVersionForReleaseTrainData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ExtensionTypeInterfaceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new LocationExtensionTypeVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -104,15 +104,15 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
         }
 
         /// <summary>
-        /// Get details of a version for an Extension Type installable to the cluster.
+        /// Get details of a version for an extension type and location
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{clusterRp}/{clusterResourceName}/{clusterName}/providers/Microsoft.KubernetesConfiguration/extensionTypes/{extensionTypeName}/versions/{versionNumber}. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.KubernetesConfiguration/locations/{location}/extensionTypes/{extensionTypeName}/versions/{versionNumber}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ExtensionTypeVersionForReleaseTrainOperationGroup_ClusterGetVersion. </description>
+        /// <description> ExtensionTypeVersionForReleaseTrains_GetVersion. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -124,11 +124,11 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="versionNumber"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="versionNumber"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<ExtensionTypeInterfaceResource> Get(string versionNumber, CancellationToken cancellationToken = default)
+        public virtual Response<LocationExtensionTypeVersionResource> Get(string versionNumber, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(versionNumber, nameof(versionNumber));
 
-            using DiagnosticScope scope = _extensionTypeInterfaceClientDiagnostics.CreateScope("ExtensionTypeInterfaceCollection.Get");
+            using DiagnosticScope scope = _extensionTypeInterfaceClientDiagnostics.CreateScope("LocationExtensionTypeVersionCollection.Get");
             scope.Start();
             try
             {
@@ -136,14 +136,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extensionTypeInterfaceRestClient.CreateClusterGetVersionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.Name, Id.Parent.ResourceType.Type, Id.Name, versionNumber, context);
+                HttpMessage message = _extensionTypeInterfaceRestClient.CreateGetVersionRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, versionNumber, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ExtensionTypeVersionForReleaseTrainData> response = Response.FromValue(ExtensionTypeVersionForReleaseTrainData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ExtensionTypeInterfaceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new LocationExtensionTypeVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -153,15 +153,15 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
         }
 
         /// <summary>
-        /// List the version for an Extension Type installable to the cluster.
+        /// List the versions for an extension type and location.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{clusterRp}/{clusterResourceName}/{clusterName}/providers/Microsoft.KubernetesConfiguration/extensionTypes/{extensionTypeName}/versions. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.KubernetesConfiguration/locations/{location}/extensionTypes/{extensionTypeName}/versions. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ExtensionTypeVersionForReleaseTrainOperationGroup_ClusterListVersions. </description>
+        /// <description> ExtensionTypeVersionForReleaseTrains_ListVersions. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -170,40 +170,39 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
         /// </list>
         /// </summary>
         /// <param name="releaseTrain"> Filter results by release train (default value is stable). </param>
+        /// <param name="clusterType"> Filter results by the cluster type for extension types. </param>
         /// <param name="majorVersion"> Filter results by the major version of an extension type. </param>
         /// <param name="showLatest"> Filter results by only the latest version (based on other query parameters). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ExtensionTypeInterfaceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ExtensionTypeInterfaceResource> GetAllAsync(string releaseTrain = default, string majorVersion = default, bool? showLatest = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="LocationExtensionTypeVersionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<LocationExtensionTypeVersionResource> GetAllAsync(string releaseTrain = default, string clusterType = default, string majorVersion = default, bool? showLatest = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ExtensionTypeVersionForReleaseTrainData, ExtensionTypeInterfaceResource>(new ExtensionTypeInterfaceClusterListVersionsAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ExtensionTypeVersionForReleaseTrainData, LocationExtensionTypeVersionResource>(new ExtensionTypeInterfaceGetVersionsAsyncCollectionResultOfT(
                 _extensionTypeInterfaceRestClient,
                 Id.SubscriptionId,
-                Id.ResourceGroupName,
-                Id.Parent.ResourceType.Namespace,
                 Id.Parent.Name,
-                Id.Parent.ResourceType.Type,
                 Id.Name,
                 releaseTrain,
+                clusterType,
                 majorVersion,
                 showLatest,
-                context), data => new ExtensionTypeInterfaceResource(Client, data));
+                context), data => new LocationExtensionTypeVersionResource(Client, data));
         }
 
         /// <summary>
-        /// List the version for an Extension Type installable to the cluster.
+        /// List the versions for an extension type and location.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{clusterRp}/{clusterResourceName}/{clusterName}/providers/Microsoft.KubernetesConfiguration/extensionTypes/{extensionTypeName}/versions. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.KubernetesConfiguration/locations/{location}/extensionTypes/{extensionTypeName}/versions. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ExtensionTypeVersionForReleaseTrainOperationGroup_ClusterListVersions. </description>
+        /// <description> ExtensionTypeVersionForReleaseTrains_ListVersions. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -212,28 +211,27 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
         /// </list>
         /// </summary>
         /// <param name="releaseTrain"> Filter results by release train (default value is stable). </param>
+        /// <param name="clusterType"> Filter results by the cluster type for extension types. </param>
         /// <param name="majorVersion"> Filter results by the major version of an extension type. </param>
         /// <param name="showLatest"> Filter results by only the latest version (based on other query parameters). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ExtensionTypeInterfaceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ExtensionTypeInterfaceResource> GetAll(string releaseTrain = default, string majorVersion = default, bool? showLatest = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="LocationExtensionTypeVersionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<LocationExtensionTypeVersionResource> GetAll(string releaseTrain = default, string clusterType = default, string majorVersion = default, bool? showLatest = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ExtensionTypeVersionForReleaseTrainData, ExtensionTypeInterfaceResource>(new ExtensionTypeInterfaceClusterListVersionsCollectionResultOfT(
+            return new PageableWrapper<ExtensionTypeVersionForReleaseTrainData, LocationExtensionTypeVersionResource>(new ExtensionTypeInterfaceGetVersionsCollectionResultOfT(
                 _extensionTypeInterfaceRestClient,
                 Id.SubscriptionId,
-                Id.ResourceGroupName,
-                Id.Parent.ResourceType.Namespace,
                 Id.Parent.Name,
-                Id.Parent.ResourceType.Type,
                 Id.Name,
                 releaseTrain,
+                clusterType,
                 majorVersion,
                 showLatest,
-                context), data => new ExtensionTypeInterfaceResource(Client, data));
+                context), data => new LocationExtensionTypeVersionResource(Client, data));
         }
 
         /// <summary>
@@ -241,11 +239,11 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{clusterRp}/{clusterResourceName}/{clusterName}/providers/Microsoft.KubernetesConfiguration/extensionTypes/{extensionTypeName}/versions/{versionNumber}. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.KubernetesConfiguration/locations/{location}/extensionTypes/{extensionTypeName}/versions/{versionNumber}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ExtensionTypeVersionForReleaseTrainOperationGroup_ClusterGetVersion. </description>
+        /// <description> ExtensionTypeVersionForReleaseTrains_GetVersion. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -261,7 +259,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
         {
             Argument.AssertNotNullOrEmpty(versionNumber, nameof(versionNumber));
 
-            using DiagnosticScope scope = _extensionTypeInterfaceClientDiagnostics.CreateScope("ExtensionTypeInterfaceCollection.Exists");
+            using DiagnosticScope scope = _extensionTypeInterfaceClientDiagnostics.CreateScope("LocationExtensionTypeVersionCollection.Exists");
             scope.Start();
             try
             {
@@ -269,7 +267,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extensionTypeInterfaceRestClient.CreateClusterGetVersionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.Name, Id.Parent.ResourceType.Type, Id.Name, versionNumber, context);
+                HttpMessage message = _extensionTypeInterfaceRestClient.CreateGetVersionRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, versionNumber, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ExtensionTypeVersionForReleaseTrainData> response = default;
@@ -298,11 +296,11 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{clusterRp}/{clusterResourceName}/{clusterName}/providers/Microsoft.KubernetesConfiguration/extensionTypes/{extensionTypeName}/versions/{versionNumber}. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.KubernetesConfiguration/locations/{location}/extensionTypes/{extensionTypeName}/versions/{versionNumber}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ExtensionTypeVersionForReleaseTrainOperationGroup_ClusterGetVersion. </description>
+        /// <description> ExtensionTypeVersionForReleaseTrains_GetVersion. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -318,7 +316,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
         {
             Argument.AssertNotNullOrEmpty(versionNumber, nameof(versionNumber));
 
-            using DiagnosticScope scope = _extensionTypeInterfaceClientDiagnostics.CreateScope("ExtensionTypeInterfaceCollection.Exists");
+            using DiagnosticScope scope = _extensionTypeInterfaceClientDiagnostics.CreateScope("LocationExtensionTypeVersionCollection.Exists");
             scope.Start();
             try
             {
@@ -326,7 +324,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extensionTypeInterfaceRestClient.CreateClusterGetVersionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.Name, Id.Parent.ResourceType.Type, Id.Name, versionNumber, context);
+                HttpMessage message = _extensionTypeInterfaceRestClient.CreateGetVersionRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, versionNumber, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ExtensionTypeVersionForReleaseTrainData> response = default;
@@ -355,11 +353,11 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{clusterRp}/{clusterResourceName}/{clusterName}/providers/Microsoft.KubernetesConfiguration/extensionTypes/{extensionTypeName}/versions/{versionNumber}. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.KubernetesConfiguration/locations/{location}/extensionTypes/{extensionTypeName}/versions/{versionNumber}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ExtensionTypeVersionForReleaseTrainOperationGroup_ClusterGetVersion. </description>
+        /// <description> ExtensionTypeVersionForReleaseTrains_GetVersion. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -371,11 +369,11 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="versionNumber"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="versionNumber"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<ExtensionTypeInterfaceResource>> GetIfExistsAsync(string versionNumber, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<LocationExtensionTypeVersionResource>> GetIfExistsAsync(string versionNumber, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(versionNumber, nameof(versionNumber));
 
-            using DiagnosticScope scope = _extensionTypeInterfaceClientDiagnostics.CreateScope("ExtensionTypeInterfaceCollection.GetIfExists");
+            using DiagnosticScope scope = _extensionTypeInterfaceClientDiagnostics.CreateScope("LocationExtensionTypeVersionCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -383,7 +381,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extensionTypeInterfaceRestClient.CreateClusterGetVersionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.Name, Id.Parent.ResourceType.Type, Id.Name, versionNumber, context);
+                HttpMessage message = _extensionTypeInterfaceRestClient.CreateGetVersionRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, versionNumber, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ExtensionTypeVersionForReleaseTrainData> response = default;
@@ -400,9 +398,9 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<ExtensionTypeInterfaceResource>(response.GetRawResponse());
+                    return new NoValueResponse<LocationExtensionTypeVersionResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new ExtensionTypeInterfaceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new LocationExtensionTypeVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -416,11 +414,11 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{clusterRp}/{clusterResourceName}/{clusterName}/providers/Microsoft.KubernetesConfiguration/extensionTypes/{extensionTypeName}/versions/{versionNumber}. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.KubernetesConfiguration/locations/{location}/extensionTypes/{extensionTypeName}/versions/{versionNumber}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ExtensionTypeVersionForReleaseTrainOperationGroup_ClusterGetVersion. </description>
+        /// <description> ExtensionTypeVersionForReleaseTrains_GetVersion. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -432,11 +430,11 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="versionNumber"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="versionNumber"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<ExtensionTypeInterfaceResource> GetIfExists(string versionNumber, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<LocationExtensionTypeVersionResource> GetIfExists(string versionNumber, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(versionNumber, nameof(versionNumber));
 
-            using DiagnosticScope scope = _extensionTypeInterfaceClientDiagnostics.CreateScope("ExtensionTypeInterfaceCollection.GetIfExists");
+            using DiagnosticScope scope = _extensionTypeInterfaceClientDiagnostics.CreateScope("LocationExtensionTypeVersionCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -444,7 +442,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extensionTypeInterfaceRestClient.CreateClusterGetVersionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.Name, Id.Parent.ResourceType.Type, Id.Name, versionNumber, context);
+                HttpMessage message = _extensionTypeInterfaceRestClient.CreateGetVersionRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, versionNumber, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ExtensionTypeVersionForReleaseTrainData> response = default;
@@ -461,9 +459,9 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<ExtensionTypeInterfaceResource>(response.GetRawResponse());
+                    return new NoValueResponse<LocationExtensionTypeVersionResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new ExtensionTypeInterfaceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new LocationExtensionTypeVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -472,20 +470,20 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
             }
         }
 
-        IEnumerator<ExtensionTypeInterfaceResource> IEnumerable<ExtensionTypeInterfaceResource>.GetEnumerator()
+        IEnumerator<LocationExtensionTypeVersionResource> IEnumerable<LocationExtensionTypeVersionResource>.GetEnumerator()
         {
-            return this.GetAll().GetEnumerator();
+            return GetAll().GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return this.GetAll().GetEnumerator();
+            return GetAll().GetEnumerator();
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<ExtensionTypeInterfaceResource> IAsyncEnumerable<ExtensionTypeInterfaceResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<LocationExtensionTypeVersionResource> IAsyncEnumerable<LocationExtensionTypeVersionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
-            return this.GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

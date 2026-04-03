@@ -31,14 +31,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes.Mocking
         {
         }
 
-        /// <summary> Gets a collection of ExtensionTypeInterfaces in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <summary> Gets a collection of ClusterExtensionTypes in the <see cref="ResourceGroupResource"/>. </summary>
         /// <param name="clusterRp"> The clusterRp for the resource. </param>
         /// <param name="clusterResourceName"> The clusterResourceName for the resource. </param>
         /// <param name="clusterName"> The clusterName for the resource. </param>
-        /// <returns> An object representing collection of ExtensionTypeInterfaces and their operations over a ExtensionTypeInterfaceResource. </returns>
-        public virtual ExtensionTypeInterfaceCollection GetExtensionTypeInterfaces(string clusterRp, string clusterResourceName, string clusterName)
+        /// <returns> An object representing collection of ClusterExtensionTypes and their operations over a ClusterExtensionTypeResource. </returns>
+        public virtual ClusterExtensionTypeCollection GetClusterExtensionTypes(string clusterRp, string clusterResourceName, string clusterName)
         {
-            return GetCachedClient(client => new ExtensionTypeInterfaceCollection(client, Id, clusterRp, clusterResourceName, clusterName));
+            return GetCachedClient(client => new ClusterExtensionTypeCollection(client, Id, clusterRp, clusterResourceName, clusterName));
         }
 
         /// <summary>
@@ -66,11 +66,11 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="extensionTypeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="extensionTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ExtensionTypeInterfaceResource>> GetExtensionTypeInterfaceAsync(string clusterRp, string clusterResourceName, string clusterName, string extensionTypeName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ClusterExtensionTypeResource>> GetClusterExtensionTypeAsync(string clusterRp, string clusterResourceName, string clusterName, string extensionTypeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(extensionTypeName, nameof(extensionTypeName));
 
-            return await GetExtensionTypeInterfaces(clusterRp, clusterResourceName, clusterName).GetAsync(extensionTypeName, cancellationToken).ConfigureAwait(false);
+            return await GetClusterExtensionTypes(clusterRp, clusterResourceName, clusterName).GetAsync(extensionTypeName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -98,11 +98,11 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="extensionTypeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="extensionTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ExtensionTypeInterfaceResource> GetExtensionTypeInterface(string clusterRp, string clusterResourceName, string clusterName, string extensionTypeName, CancellationToken cancellationToken = default)
+        public virtual Response<ClusterExtensionTypeResource> GetClusterExtensionType(string clusterRp, string clusterResourceName, string clusterName, string extensionTypeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(extensionTypeName, nameof(extensionTypeName));
 
-            return GetExtensionTypeInterfaces(clusterRp, clusterResourceName, clusterName).Get(extensionTypeName, cancellationToken);
+            return GetClusterExtensionTypes(clusterRp, clusterResourceName, clusterName).Get(extensionTypeName, cancellationToken);
         }
     }
 }

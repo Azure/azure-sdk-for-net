@@ -16,10 +16,11 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(ClusterExtensionTypeResource))]
+    [ModelReaderWriterBuildable(typeof(ClusterExtensionTypeVersionResource))]
     [ModelReaderWriterBuildable(typeof(ExtensionTypeClusterScopeSettings))]
     [ModelReaderWriterBuildable(typeof(ExtensionTypeClusterScopeSettingsProperties))]
     [ModelReaderWriterBuildable(typeof(ExtensionTypeData))]
-    [ModelReaderWriterBuildable(typeof(ExtensionTypeInterfaceResource))]
     [ModelReaderWriterBuildable(typeof(ExtensionTypePlanInfo))]
     [ModelReaderWriterBuildable(typeof(ExtensionTypeProperties))]
     [ModelReaderWriterBuildable(typeof(ExtensionTypesList))]
@@ -29,6 +30,8 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
     [ModelReaderWriterBuildable(typeof(ExtensionTypeVersionForReleaseTrainProperties))]
     [ModelReaderWriterBuildable(typeof(ExtensionTypeVersionsList))]
     [ModelReaderWriterBuildable(typeof(ExtensionTypeVersionUnsupportedKubernetesMatrixItem))]
+    [ModelReaderWriterBuildable(typeof(LocationExtensionTypeResource))]
+    [ModelReaderWriterBuildable(typeof(LocationExtensionTypeVersionResource))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerKubernetesConfigurationExtensionTypesContext : ModelReaderWriterContext
