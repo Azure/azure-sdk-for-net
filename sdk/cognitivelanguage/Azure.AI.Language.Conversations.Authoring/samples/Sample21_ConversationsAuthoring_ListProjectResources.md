@@ -18,7 +18,7 @@ For details on how to set up AAD authentication, refer to the [Create a client u
 
 ## List Project Resources
 
-To list all Azure resources assigned to a specific project, call `GetProjectResources` on the `ConversationAnalysisAuthoringClient`.
+To list all Azure resources assigned to a specific project, call `GetDeploymentResources` on the `ConversationAnalysisAuthoring` client.
 
 ```C# Snippet:Sample21_ConversationsAuthoring_ListProjectResources
 string projectName = "{projectName}";
@@ -37,7 +37,7 @@ foreach (ConversationAuthoringAssignedDeploymentResource resource in pageable)
 
 ## List Project Resources Async
 
-To list project resources asynchronously, call `GetProjectResourcesAsync`.
+To list project resources asynchronously, call `GetDeploymentResourcesAsync`.
 
 ```C# Snippet:Sample21_ConversationsAuthoring_ListProjectResourcesAsync
 string projectName = "{projectName}";

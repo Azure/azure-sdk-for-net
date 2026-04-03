@@ -272,8 +272,8 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [source_samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations.Authoring/samples
 [source_migration]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations.Authoring/MigrationGuide.md
 [source_root]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations.Authoring/src
-[package]: https://www.nuget.org/packages/
-[text_refdocs]: https://learn.microsoft.com/dotnet/
+[package]: https://www.nuget.org/packages/Azure.AI.Language.Conversations.Authoring
+[text_refdocs]: https://learn.microsoft.com/dotnet/api/overview/azure/ai.language.conversations.authoring-readme
 [text_docs]: https://learn.microsoft.com/azure/ai-services/language-service/conversational-language-understanding/overview
 [azure_sub]: https://azure.microsoft.com/free/dotnet/
 [ConversationAnalysisAuthoring_class]: https://github.com/azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations.Authoring/src/Generated/ConversationAnalysisAuthoring.cs
