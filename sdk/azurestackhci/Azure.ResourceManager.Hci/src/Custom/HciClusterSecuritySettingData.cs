@@ -2,11 +2,11 @@
 // Licensed under the MIT License.
 
 using Azure.ResourceManager.Hci.Models;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Hci
 {
-    [CodeGenSuppress("ProvisioningState")]
+    // Backward compat: the generator excludes ProvisioningState from SecuritySetting's
+    // flattened properties. The old SDK exposed it as a read-write property.
     public partial class HciClusterSecuritySettingData
     {
         /// <summary> Provisioning state. </summary>

@@ -5,6 +5,9 @@ using System;
 
 namespace Azure.ResourceManager.Hci.Models
 {
+    // Backward compat: the GA SDK (1.2.1) exposed StartOn/EndOn/LastUpdatedOn as aliases
+    // for the generated StartTimeUtc/EndTimeUtc/LastUpdatedTimeUtc properties.
+    // Both names must coexist since we can't remove either without a breaking change.
     public partial class HciUpdateStep
     {
         /// <summary> When the step started, or empty if it has not started executing. </summary>

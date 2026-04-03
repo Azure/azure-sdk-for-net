@@ -2,13 +2,14 @@
 // Licensed under the MIT License.
 
 using System;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Hci
 {
-    [CodeGenSuppress("StartOn")]
-    [CodeGenSuppress("EndOn")]
-    [CodeGenSuppress("LastUpdatedOn")]
+    // Backward compat: the GA SDK (1.2.1) exposed StartOn/EndOn/LastUpdatedOn as aliases
+    // for the generated StartTimeUtc/EndTimeUtc/LastUpdatedTimeUtc (flattened from Step via
+    // UpdateRunProperties.progress). Both names must coexist since we can't remove either
+    // without a breaking change. NamePropertiesProgressName is the old autorest flatten name
+    // for properties.progress.name (now just Name).
     public partial class HciClusterUpdateRunData
     {
         /// <summary> Name of the progress step. </summary>

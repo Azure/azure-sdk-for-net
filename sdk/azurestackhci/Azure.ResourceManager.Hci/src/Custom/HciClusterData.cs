@@ -10,6 +10,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Hci
 {
+    // Backward compat: the old SDK exposed identity fields as flattened top-level properties
+    // (e.g. cluster.PrincipalId) instead of nested under cluster.Identity.PrincipalId.
+    // The generator uses the standard ARM ManagedServiceIdentity model which nests them.
     public partial class HciClusterData
     {
         /// <summary> Flattened identity type. </summary>

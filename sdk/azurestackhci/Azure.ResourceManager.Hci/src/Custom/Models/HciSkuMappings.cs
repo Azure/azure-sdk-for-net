@@ -2,13 +2,11 @@
 // Licensed under the MIT License.
 
 using System.ComponentModel;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    [CodeGenSuppress("HciSkuMappings")]
-    [CodeGenSuppress("CatalogPlanId")]
-    [CodeGenSuppress("MarketplaceSkuId")]
+    // Backward compat: the generator does not produce a public constructor or public
+    // CatalogPlanId/MarketplaceSkuId properties for HciSkuMappings. The old SDK had them.
     public partial class HciSkuMappings
     {
         /// <summary> Initializes a new instance of <see cref="HciSkuMappings"/>. </summary>

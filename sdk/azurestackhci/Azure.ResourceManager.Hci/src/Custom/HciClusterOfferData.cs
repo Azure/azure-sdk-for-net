@@ -3,14 +3,12 @@
 
 using System.ComponentModel;
 using Azure.Core;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Hci
 {
-    [CodeGenSuppress("HciClusterOfferData")]
-    [CodeGenSuppress("Content")]
-    [CodeGenSuppress("ContentVersion")]
-    [CodeGenSuppress("PublisherId")]
+    // Backward compat: Offer is a read-only resource (no PUT/PATCH), so the generator only
+    // produces an internal constructor and does not flatten Content, ContentVersion, PublisherId.
+    // The old SDK exposed these as public read-write properties with a public constructor.
     public partial class HciClusterOfferData
     {
         /// <summary> Initializes a new instance of <see cref="HciClusterOfferData"/>. </summary>

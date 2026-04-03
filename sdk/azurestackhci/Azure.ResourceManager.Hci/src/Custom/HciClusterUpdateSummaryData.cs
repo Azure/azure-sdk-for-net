@@ -5,6 +5,9 @@ using System;
 
 namespace Azure.ResourceManager.Hci
 {
+    // Backward compat: the GA SDK (1.2.1) exposed LastCheckedOn/LastUpdatedOn as aliases
+    // for the generated LastChecked/LastUpdated properties.
+    // Both names must coexist since we can't remove either without a breaking change.
     public partial class HciClusterUpdateSummaryData
     {
         /// <summary> Last time the update service successfully checked for updates. </summary>

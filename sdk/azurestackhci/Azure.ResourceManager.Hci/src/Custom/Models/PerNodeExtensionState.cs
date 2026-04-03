@@ -8,6 +8,10 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Hci.Models
 {
+    // Backward compat: the generator produces a constructor with HciExtensionInstanceView and
+    // an InstanceView property. The old SDK used ArcExtensionInstanceView (renamed type) and
+    // ExtensionInstanceView (renamed property). Both suppressions are needed to avoid CS0121
+    // ambiguous constructor and CS0200 read-only InstanceView assignment conflicts.
     [CodeGenSuppress("PerNodeExtensionState", typeof(string), typeof(string), typeof(string), typeof(NodeExtensionState?), typeof(HciExtensionInstanceView), typeof(IDictionary<string, BinaryData>))]
     [CodeGenSuppress("InstanceView")]
     public partial class PerNodeExtensionState

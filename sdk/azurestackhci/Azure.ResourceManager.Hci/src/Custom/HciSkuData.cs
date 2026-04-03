@@ -3,15 +3,12 @@
 
 using System.ComponentModel;
 using Azure.Core;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Hci
 {
-    [CodeGenSuppress("HciSkuData")]
-    [CodeGenSuppress("Content")]
-    [CodeGenSuppress("ContentVersion")]
-    [CodeGenSuppress("OfferId")]
-    [CodeGenSuppress("PublisherId")]
+    // Backward compat: Sku is a read-only resource (no PUT/PATCH), so the generator only
+    // produces an internal constructor and does not flatten Content, ContentVersion, OfferId,
+    // PublisherId. The old SDK exposed these as public read-write properties.
     public partial class HciSkuData
     {
         /// <summary> Initializes a new instance of <see cref="HciSkuData"/>. </summary>

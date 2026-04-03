@@ -3,11 +3,11 @@
 
 using System.ComponentModel;
 using Azure.Core;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Hci
 {
-    [CodeGenSuppress("HciClusterPublisherData")]
+    // Backward compat: Publisher is a read-only resource (no PUT/PATCH), so the generator
+    // only produces an internal constructor. The old SDK had a public parameterless constructor.
     public partial class HciClusterPublisherData
     {
         /// <summary> Initializes a new instance of <see cref="HciClusterPublisherData"/>. </summary>
