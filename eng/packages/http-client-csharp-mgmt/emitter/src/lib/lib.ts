@@ -17,6 +17,30 @@ const diags: { [code: string]: DiagnosticDefinition<DiagnosticMessages> } = {
     messages: {
       default: paramMessage`{message}`
     }
+  },
+  "invalid-resource-read-response": {
+    severity: "error",
+    messages: {
+      default: paramMessage`{message}`
+    }
+  },
+  "non-pageable-list-operation": {
+    severity: "error",
+    messages: {
+      default: paramMessage`{message}`
+    }
+  },
+  "duplicate-resource-id": {
+    severity: "error",
+    messages: {
+      default: paramMessage`{message}`
+    }
+  },
+  "duplicate-resource-name": {
+    severity: "error",
+    messages: {
+      default: paramMessage`{message}`
+    }
   }
 };
 
