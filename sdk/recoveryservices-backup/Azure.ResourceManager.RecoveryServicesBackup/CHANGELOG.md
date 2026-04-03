@@ -10,6 +10,10 @@
 
 - Migrated from AutoRest to TypeSpec-based code generation.
 
+### Bugs Fixed
+
+- Restored tag management operations (`AddTag`, `AddTagAsync`, `RemoveTag`, `RemoveTagAsync`, `SetTags`, `SetTagsAsync`) on `BackupRecoveryPointResource`, which were previously suppressed as a workaround for a code generation issue.
+
 ### Other Changes
 
 ## 1.3.1 (2026-03-20)
