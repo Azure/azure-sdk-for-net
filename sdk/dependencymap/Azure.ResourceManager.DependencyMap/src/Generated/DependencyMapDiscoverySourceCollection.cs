@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DependencyMap
         {
             if (id.ResourceType != DependencyMapResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DependencyMapResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DependencyMapResource.ResourceType), nameof(id));
             }
         }
 

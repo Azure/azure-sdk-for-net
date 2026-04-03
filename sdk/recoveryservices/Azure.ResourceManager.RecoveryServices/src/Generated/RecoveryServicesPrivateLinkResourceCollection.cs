@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.RecoveryServices
         {
             if (id.ResourceType != RecoveryServicesVaultResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, RecoveryServicesVaultResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, RecoveryServicesVaultResource.ResourceType), nameof(id));
             }
         }
 

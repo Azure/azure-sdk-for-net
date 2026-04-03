@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         {
             if (id.ResourceType != InformaticaOrganizationResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, InformaticaOrganizationResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, InformaticaOrganizationResource.ResourceType), nameof(id));
             }
         }
 

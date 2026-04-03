@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Nginx
         {
             if (id.ResourceType != NginxDeploymentResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, NginxDeploymentResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, NginxDeploymentResource.ResourceType), nameof(id));
             }
         }
 
