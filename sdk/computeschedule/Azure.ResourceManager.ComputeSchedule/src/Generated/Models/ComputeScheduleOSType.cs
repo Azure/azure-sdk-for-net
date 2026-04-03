@@ -12,7 +12,7 @@ using Azure.ResourceManager.ComputeSchedule;
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
     /// <summary> The supported operating system types for flex VM creation. </summary>
-    public readonly partial struct OsType : IEquatable<OsType>
+    public readonly partial struct ComputeScheduleOSType : IEquatable<ComputeScheduleOSType>
     {
         private readonly string _value;
         /// <summary> Windows operating system. </summary>
@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <summary> Linux operating system. </summary>
         private const string LinuxValue = "Linux";
 
-        /// <summary> Initializes a new instance of <see cref="OsType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeScheduleOSType"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public OsType(string value)
+        public ComputeScheduleOSType(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,35 +31,35 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         }
 
         /// <summary> Windows operating system. </summary>
-        public static OsType Windows { get; } = new OsType(WindowsValue);
+        public static ComputeScheduleOSType Windows { get; } = new ComputeScheduleOSType(WindowsValue);
 
         /// <summary> Linux operating system. </summary>
-        public static OsType Linux { get; } = new OsType(LinuxValue);
+        public static ComputeScheduleOSType Linux { get; } = new ComputeScheduleOSType(LinuxValue);
 
-        /// <summary> Determines if two <see cref="OsType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="ComputeScheduleOSType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(OsType left, OsType right) => left.Equals(right);
+        public static bool operator ==(ComputeScheduleOSType left, ComputeScheduleOSType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="OsType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="ComputeScheduleOSType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(OsType left, OsType right) => !left.Equals(right);
+        public static bool operator !=(ComputeScheduleOSType left, ComputeScheduleOSType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="OsType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ComputeScheduleOSType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OsType(string value) => new OsType(value);
+        public static implicit operator ComputeScheduleOSType(string value) => new ComputeScheduleOSType(value);
 
-        /// <summary> Converts a string to a <see cref="OsType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ComputeScheduleOSType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OsType?(string value) => value == null ? null : new OsType(value);
+        public static implicit operator ComputeScheduleOSType?(string value) => value == null ? null : new ComputeScheduleOSType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is OsType other && Equals(other);
+        public override bool Equals(object obj) => obj is ComputeScheduleOSType other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(OsType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ComputeScheduleOSType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

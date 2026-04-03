@@ -18,6 +18,11 @@ namespace Azure.ResourceManager.ComputeSchedule
     /// </summary>
     [ModelReaderWriterBuildable(typeof(CancelOperationsContent))]
     [ModelReaderWriterBuildable(typeof(CancelOperationsResult))]
+    [ModelReaderWriterBuildable(typeof(ComputeScheduleFlexProperties))]
+    [ModelReaderWriterBuildable(typeof(ComputeSchedulePriorityProfile))]
+    [ModelReaderWriterBuildable(typeof(ComputeScheduleVmSizeProfile))]
+    [ModelReaderWriterBuildable(typeof(ComputeScheduleZoneAllocationPolicy))]
+    [ModelReaderWriterBuildable(typeof(ComputeScheduleZonePreference))]
     [ModelReaderWriterBuildable(typeof(CreateFlexResourceOperationResult))]
     [ModelReaderWriterBuildable(typeof(CreateResourceOperationResult))]
     [ModelReaderWriterBuildable(typeof(DeallocateResourceOperationResult))]
@@ -29,7 +34,6 @@ namespace Azure.ResourceManager.ComputeSchedule
     [ModelReaderWriterBuildable(typeof(ExecuteHibernateContent))]
     [ModelReaderWriterBuildable(typeof(ExecuteStartContent))]
     [ModelReaderWriterBuildable(typeof(FallbackOperationInfo))]
-    [ModelReaderWriterBuildable(typeof(FlexProperties))]
     [ModelReaderWriterBuildable(typeof(GetOperationErrorsContent))]
     [ModelReaderWriterBuildable(typeof(GetOperationErrorsResult))]
     [ModelReaderWriterBuildable(typeof(GetOperationStatusContent))]
@@ -47,7 +51,6 @@ namespace Azure.ResourceManager.ComputeSchedule
     [ModelReaderWriterBuildable(typeof(OccurrenceResultSummary))]
     [ModelReaderWriterBuildable(typeof(OperationErrorDetails))]
     [ModelReaderWriterBuildable(typeof(OperationErrorsResult))]
-    [ModelReaderWriterBuildable(typeof(PriorityProfile))]
     [ModelReaderWriterBuildable(typeof(ResourceListResponse))]
     [ModelReaderWriterBuildable(typeof(ResourceOperationDetails))]
     [ModelReaderWriterBuildable(typeof(ResourceOperationError))]
@@ -84,9 +87,6 @@ namespace Azure.ResourceManager.ComputeSchedule
     [ModelReaderWriterBuildable(typeof(UserRequestResources))]
     [ModelReaderWriterBuildable(typeof(UserRequestRetryPolicy))]
     [ModelReaderWriterBuildable(typeof(UserRequestSchedule))]
-    [ModelReaderWriterBuildable(typeof(VmSizeProfile))]
-    [ModelReaderWriterBuildable(typeof(ZoneAllocationPolicy))]
-    [ModelReaderWriterBuildable(typeof(ZonePreference))]
     public partial class AzureResourceManagerComputeScheduleContext : ModelReaderWriterContext
     {
     }

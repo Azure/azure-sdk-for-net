@@ -20,26 +20,26 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
 
         /// <summary> Initializes a new instance of <see cref="CreateFlexResourceOperationResult"/>. </summary>
         /// <param name="description"> The description of the operation response. </param>
-        /// <param name="type"> The type of resources used in the create flex request eg virtual machines. </param>
+        /// <param name="resourceType"> The type of resources used in the create flex request eg virtual machines. </param>
         /// <param name="location"> The location of the create flex request eg westus. </param>
-        internal CreateFlexResourceOperationResult(string description, string @type, AzureLocation location)
+        internal CreateFlexResourceOperationResult(string description, string resourceType, AzureLocation location)
         {
             Description = description;
-            Type = @type;
+            ResourceType = resourceType;
             Location = location;
             Results = new ChangeTrackingList<ResourceOperationResult>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CreateFlexResourceOperationResult"/>. </summary>
         /// <param name="description"> The description of the operation response. </param>
-        /// <param name="type"> The type of resources used in the create flex request eg virtual machines. </param>
+        /// <param name="resourceType"> The type of resources used in the create flex request eg virtual machines. </param>
         /// <param name="location"> The location of the create flex request eg westus. </param>
         /// <param name="results"> The results from the create flex request if no errors exist. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CreateFlexResourceOperationResult(string description, string @type, AzureLocation location, IList<ResourceOperationResult> results, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CreateFlexResourceOperationResult(string description, string resourceType, AzureLocation location, IList<ResourceOperationResult> results, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
-            Type = @type;
+            ResourceType = resourceType;
             Location = location;
             Results = results;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         public string Description { get; }
 
         /// <summary> The type of resources used in the create flex request eg virtual machines. </summary>
-        public string Type { get; }
+        public string ResourceType { get; }
 
         /// <summary> The location of the create flex request eg westus. </summary>
         public AzureLocation Location { get; }

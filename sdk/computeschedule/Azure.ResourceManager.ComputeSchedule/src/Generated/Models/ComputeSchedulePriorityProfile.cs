@@ -11,21 +11,21 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
     /// <summary> The priority profile for flex VM creation. </summary>
-    public partial class PriorityProfile
+    public partial class ComputeSchedulePriorityProfile
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="PriorityProfile"/>. </summary>
-        public PriorityProfile()
+        /// <summary> Initializes a new instance of <see cref="ComputeSchedulePriorityProfile"/>. </summary>
+        public ComputeSchedulePriorityProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="PriorityProfile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeSchedulePriorityProfile"/>. </summary>
         /// <param name="type"> The priority type for VM allocation. </param>
         /// <param name="allocationStrategy"> The allocation strategy for VM size selection. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PriorityProfile(PriorityType? @type, AllocationStrategy? allocationStrategy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComputeSchedulePriorityProfile(ComputeSchedulePriorityType? @type, ComputeScheduleAllocationStrategy? allocationStrategy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             AllocationStrategy = allocationStrategy;
@@ -33,9 +33,9 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         }
 
         /// <summary> The priority type for VM allocation. </summary>
-        public PriorityType? Type { get; set; }
+        public ComputeSchedulePriorityType? Type { get; set; }
 
         /// <summary> The allocation strategy for VM size selection. </summary>
-        public AllocationStrategy? AllocationStrategy { get; set; }
+        public ComputeScheduleAllocationStrategy? AllocationStrategy { get; set; }
     }
 }

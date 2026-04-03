@@ -12,7 +12,7 @@ using Azure.ResourceManager.ComputeSchedule;
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
     /// <summary> The priority type for VM allocation. </summary>
-    public readonly partial struct PriorityType : IEquatable<PriorityType>
+    public readonly partial struct ComputeSchedulePriorityType : IEquatable<ComputeSchedulePriorityType>
     {
         private readonly string _value;
         /// <summary> Regular priority VMs. </summary>
@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <summary> Spot priority VMs. </summary>
         private const string SpotValue = "Spot";
 
-        /// <summary> Initializes a new instance of <see cref="PriorityType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeSchedulePriorityType"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public PriorityType(string value)
+        public ComputeSchedulePriorityType(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,35 +31,35 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         }
 
         /// <summary> Regular priority VMs. </summary>
-        public static PriorityType Regular { get; } = new PriorityType(RegularValue);
+        public static ComputeSchedulePriorityType Regular { get; } = new ComputeSchedulePriorityType(RegularValue);
 
         /// <summary> Spot priority VMs. </summary>
-        public static PriorityType Spot { get; } = new PriorityType(SpotValue);
+        public static ComputeSchedulePriorityType Spot { get; } = new ComputeSchedulePriorityType(SpotValue);
 
-        /// <summary> Determines if two <see cref="PriorityType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="ComputeSchedulePriorityType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(PriorityType left, PriorityType right) => left.Equals(right);
+        public static bool operator ==(ComputeSchedulePriorityType left, ComputeSchedulePriorityType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="PriorityType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="ComputeSchedulePriorityType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(PriorityType left, PriorityType right) => !left.Equals(right);
+        public static bool operator !=(ComputeSchedulePriorityType left, ComputeSchedulePriorityType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="PriorityType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ComputeSchedulePriorityType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PriorityType(string value) => new PriorityType(value);
+        public static implicit operator ComputeSchedulePriorityType(string value) => new ComputeSchedulePriorityType(value);
 
-        /// <summary> Converts a string to a <see cref="PriorityType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ComputeSchedulePriorityType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PriorityType?(string value) => value == null ? null : new PriorityType(value);
+        public static implicit operator ComputeSchedulePriorityType?(string value) => value == null ? null : new ComputeSchedulePriorityType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is PriorityType other && Equals(other);
+        public override bool Equals(object obj) => obj is ComputeSchedulePriorityType other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(PriorityType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ComputeSchedulePriorityType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

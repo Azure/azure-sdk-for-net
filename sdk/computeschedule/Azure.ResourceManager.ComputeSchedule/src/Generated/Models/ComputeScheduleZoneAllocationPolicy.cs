@@ -12,22 +12,22 @@ using Azure.ResourceManager.ComputeSchedule;
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
     /// <summary> The zone allocation policy for distributing VMs across availability zones. </summary>
-    public partial class ZoneAllocationPolicy
+    public partial class ComputeScheduleZoneAllocationPolicy
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ZoneAllocationPolicy"/>. </summary>
-        public ZoneAllocationPolicy()
+        /// <summary> Initializes a new instance of <see cref="ComputeScheduleZoneAllocationPolicy"/>. </summary>
+        public ComputeScheduleZoneAllocationPolicy()
         {
-            ZonePreferences = new ChangeTrackingList<ZonePreference>();
+            ZonePreferences = new ChangeTrackingList<ComputeScheduleZonePreference>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ZoneAllocationPolicy"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeScheduleZoneAllocationPolicy"/>. </summary>
         /// <param name="distributionStrategy"> The distribution strategy for zone allocation. </param>
         /// <param name="zonePreferences"> The zone preferences for allocation priority. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ZoneAllocationPolicy(DistributionStrategy? distributionStrategy, IList<ZonePreference> zonePreferences, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComputeScheduleZoneAllocationPolicy(ComputeScheduleDistributionStrategy? distributionStrategy, IList<ComputeScheduleZonePreference> zonePreferences, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DistributionStrategy = distributionStrategy;
             ZonePreferences = zonePreferences;
@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         }
 
         /// <summary> The distribution strategy for zone allocation. </summary>
-        public DistributionStrategy? DistributionStrategy { get; set; }
+        public ComputeScheduleDistributionStrategy? DistributionStrategy { get; set; }
 
         /// <summary> The zone preferences for allocation priority. </summary>
-        public IList<ZonePreference> ZonePreferences { get; }
+        public IList<ComputeScheduleZonePreference> ZonePreferences { get; }
     }
 }

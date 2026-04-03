@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             IList<IDictionary<string, BinaryData>> resourceOverrides = default;
             int resourceCount = default;
             string resourcePrefix = default;
-            FlexProperties flexProperties = default;
+            ComputeScheduleFlexProperties flexProperties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 }
                 if (prop.NameEquals("flexProperties"u8))
                 {
-                    flexProperties = FlexProperties.DeserializeFlexProperties(prop.Value, options);
+                    flexProperties = ComputeScheduleFlexProperties.DeserializeComputeScheduleFlexProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

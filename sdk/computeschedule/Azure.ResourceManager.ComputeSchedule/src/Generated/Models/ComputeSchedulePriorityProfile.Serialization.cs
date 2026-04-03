@@ -13,52 +13,52 @@ using Azure.ResourceManager.ComputeSchedule;
 
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
-    /// <summary> The zone allocation policy for distributing VMs across availability zones. </summary>
-    public partial class ZoneAllocationPolicy : IJsonModel<ZoneAllocationPolicy>
+    /// <summary> The priority profile for flex VM creation. </summary>
+    public partial class ComputeSchedulePriorityProfile : IJsonModel<ComputeSchedulePriorityProfile>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ZoneAllocationPolicy PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ComputeSchedulePriorityProfile PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ZoneAllocationPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeSchedulePriorityProfile>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeZoneAllocationPolicy(document.RootElement, options);
+                        return DeserializeComputeSchedulePriorityProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ZoneAllocationPolicy)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputeSchedulePriorityProfile)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ZoneAllocationPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeSchedulePriorityProfile>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeScheduleContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ZoneAllocationPolicy)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputeSchedulePriorityProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ZoneAllocationPolicy>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ComputeSchedulePriorityProfile>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ZoneAllocationPolicy IPersistableModel<ZoneAllocationPolicy>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ComputeSchedulePriorityProfile IPersistableModel<ComputeSchedulePriorityProfile>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ZoneAllocationPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ComputeSchedulePriorityProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ZoneAllocationPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ComputeSchedulePriorityProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,25 +69,20 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ZoneAllocationPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeSchedulePriorityProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ZoneAllocationPolicy)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputeSchedulePriorityProfile)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(DistributionStrategy))
+            if (Optional.IsDefined(Type))
             {
-                writer.WritePropertyName("distributionStrategy"u8);
-                writer.WriteStringValue(DistributionStrategy.Value.ToString());
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(Type.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(ZonePreferences))
+            if (Optional.IsDefined(AllocationStrategy))
             {
-                writer.WritePropertyName("zonePreferences"u8);
-                writer.WriteStartArray();
-                foreach (ZonePreference item in ZonePreferences)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
+                writer.WritePropertyName("allocationStrategy"u8);
+                writer.WriteStringValue(AllocationStrategy.Value.ToString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -108,55 +103,50 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ZoneAllocationPolicy IJsonModel<ZoneAllocationPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ComputeSchedulePriorityProfile IJsonModel<ComputeSchedulePriorityProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ZoneAllocationPolicy JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ComputeSchedulePriorityProfile JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ZoneAllocationPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeSchedulePriorityProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ZoneAllocationPolicy)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputeSchedulePriorityProfile)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeZoneAllocationPolicy(document.RootElement, options);
+            return DeserializeComputeSchedulePriorityProfile(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ZoneAllocationPolicy DeserializeZoneAllocationPolicy(JsonElement element, ModelReaderWriterOptions options)
+        internal static ComputeSchedulePriorityProfile DeserializeComputeSchedulePriorityProfile(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            DistributionStrategy? distributionStrategy = default;
-            IList<ZonePreference> zonePreferences = default;
+            ComputeSchedulePriorityType? @type = default;
+            ComputeScheduleAllocationStrategy? allocationStrategy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("distributionStrategy"u8))
+                if (prop.NameEquals("type"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    distributionStrategy = new DistributionStrategy(prop.Value.GetString());
+                    @type = new ComputeSchedulePriorityType(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("zonePreferences"u8))
+                if (prop.NameEquals("allocationStrategy"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    List<ZonePreference> array = new List<ZonePreference>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(ZonePreference.DeserializeZonePreference(item, options));
-                    }
-                    zonePreferences = array;
+                    allocationStrategy = new ComputeScheduleAllocationStrategy(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -164,7 +154,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ZoneAllocationPolicy(distributionStrategy, zonePreferences ?? new ChangeTrackingList<ZonePreference>(), additionalBinaryDataProperties);
+            return new ComputeSchedulePriorityProfile(@type, allocationStrategy, additionalBinaryDataProperties);
         }
     }
 }

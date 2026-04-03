@@ -13,17 +13,17 @@ using Azure.ResourceManager.ComputeSchedule;
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
     /// <summary> The flex properties for flexible VM creation. </summary>
-    public partial class FlexProperties
+    public partial class ComputeScheduleFlexProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="FlexProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeScheduleFlexProperties"/>. </summary>
         /// <param name="vmSizeProfiles"> The list of VM size profiles to use for flex creation. </param>
         /// <param name="osType"> The operating system type for the VMs. </param>
         /// <param name="priorityProfile"> The priority profile for VM allocation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vmSizeProfiles"/> or <paramref name="priorityProfile"/> is null. </exception>
-        public FlexProperties(IEnumerable<VmSizeProfile> vmSizeProfiles, OsType osType, PriorityProfile priorityProfile)
+        public ComputeScheduleFlexProperties(IEnumerable<ComputeScheduleVmSizeProfile> vmSizeProfiles, ComputeScheduleOSType osType, ComputeSchedulePriorityProfile priorityProfile)
         {
             Argument.AssertNotNull(vmSizeProfiles, nameof(vmSizeProfiles));
             Argument.AssertNotNull(priorityProfile, nameof(priorityProfile));
@@ -33,13 +33,13 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             PriorityProfile = priorityProfile;
         }
 
-        /// <summary> Initializes a new instance of <see cref="FlexProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeScheduleFlexProperties"/>. </summary>
         /// <param name="vmSizeProfiles"> The list of VM size profiles to use for flex creation. </param>
         /// <param name="osType"> The operating system type for the VMs. </param>
         /// <param name="priorityProfile"> The priority profile for VM allocation. </param>
         /// <param name="zoneAllocationPolicy"> The zone allocation policy for distributing VMs across availability zones. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FlexProperties(IList<VmSizeProfile> vmSizeProfiles, OsType osType, PriorityProfile priorityProfile, ZoneAllocationPolicy zoneAllocationPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComputeScheduleFlexProperties(IList<ComputeScheduleVmSizeProfile> vmSizeProfiles, ComputeScheduleOSType osType, ComputeSchedulePriorityProfile priorityProfile, ComputeScheduleZoneAllocationPolicy zoneAllocationPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VmSizeProfiles = vmSizeProfiles;
             OsType = osType;
@@ -49,15 +49,15 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         }
 
         /// <summary> The list of VM size profiles to use for flex creation. </summary>
-        public IList<VmSizeProfile> VmSizeProfiles { get; }
+        public IList<ComputeScheduleVmSizeProfile> VmSizeProfiles { get; }
 
         /// <summary> The operating system type for the VMs. </summary>
-        public OsType OsType { get; }
+        public ComputeScheduleOSType OsType { get; }
 
         /// <summary> The priority profile for VM allocation. </summary>
-        public PriorityProfile PriorityProfile { get; }
+        public ComputeSchedulePriorityProfile PriorityProfile { get; }
 
         /// <summary> The zone allocation policy for distributing VMs across availability zones. </summary>
-        public ZoneAllocationPolicy ZoneAllocationPolicy { get; set; }
+        public ComputeScheduleZoneAllocationPolicy ZoneAllocationPolicy { get; set; }
     }
 }

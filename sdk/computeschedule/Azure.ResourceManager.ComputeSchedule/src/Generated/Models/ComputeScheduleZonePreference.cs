@@ -12,16 +12,16 @@ using Azure.ResourceManager.ComputeSchedule;
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
     /// <summary> A zone preference with a zone identifier and rank. </summary>
-    public partial class ZonePreference
+    public partial class ComputeScheduleZonePreference
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ZonePreference"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeScheduleZonePreference"/>. </summary>
         /// <param name="zone"> The zone identifier. </param>
         /// <param name="rank"> The rank of this zone in the priority order. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="zone"/> is null. </exception>
-        public ZonePreference(string zone, int rank)
+        public ComputeScheduleZonePreference(string zone, int rank)
         {
             Argument.AssertNotNull(zone, nameof(zone));
 
@@ -29,11 +29,11 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             Rank = rank;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ZonePreference"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeScheduleZonePreference"/>. </summary>
         /// <param name="zone"> The zone identifier. </param>
         /// <param name="rank"> The rank of this zone in the priority order. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ZonePreference(string zone, int rank, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComputeScheduleZonePreference(string zone, int rank, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Zone = zone;
             Rank = rank;

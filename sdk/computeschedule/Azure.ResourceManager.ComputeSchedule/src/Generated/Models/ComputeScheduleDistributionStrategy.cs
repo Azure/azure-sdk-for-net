@@ -12,7 +12,7 @@ using Azure.ResourceManager.ComputeSchedule;
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
     /// <summary> The distribution strategy for zone allocation. </summary>
-    public readonly partial struct DistributionStrategy : IEquatable<DistributionStrategy>
+    public readonly partial struct ComputeScheduleDistributionStrategy : IEquatable<ComputeScheduleDistributionStrategy>
     {
         private readonly string _value;
         /// <summary> Platform attempts to place as many VMs as possible in a single zone, falls back to multiple zones if needed. </summary>
@@ -24,10 +24,10 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <summary> Platform must evenly distribute VMs across zones, request is rejected if exact balance cannot be achieved. </summary>
         private const string StrictBalancedValue = "StrictBalanced";
 
-        /// <summary> Initializes a new instance of <see cref="DistributionStrategy"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeScheduleDistributionStrategy"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DistributionStrategy(string value)
+        public ComputeScheduleDistributionStrategy(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -35,41 +35,41 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         }
 
         /// <summary> Platform attempts to place as many VMs as possible in a single zone, falls back to multiple zones if needed. </summary>
-        public static DistributionStrategy BestEffortSingleZone { get; } = new DistributionStrategy(BestEffortSingleZoneValue);
+        public static ComputeScheduleDistributionStrategy BestEffortSingleZone { get; } = new ComputeScheduleDistributionStrategy(BestEffortSingleZoneValue);
 
         /// <summary> Platform uses customer-provided zone rankings to allocate VMs. </summary>
-        public static DistributionStrategy Prioritized { get; } = new DistributionStrategy(PrioritizedValue);
+        public static ComputeScheduleDistributionStrategy Prioritized { get; } = new ComputeScheduleDistributionStrategy(PrioritizedValue);
 
         /// <summary> Platform attempts to evenly distribute VMs across all available zones with best effort. </summary>
-        public static DistributionStrategy BestEffortBalanced { get; } = new DistributionStrategy(BestEffortBalancedValue);
+        public static ComputeScheduleDistributionStrategy BestEffortBalanced { get; } = new ComputeScheduleDistributionStrategy(BestEffortBalancedValue);
 
         /// <summary> Platform must evenly distribute VMs across zones, request is rejected if exact balance cannot be achieved. </summary>
-        public static DistributionStrategy StrictBalanced { get; } = new DistributionStrategy(StrictBalancedValue);
+        public static ComputeScheduleDistributionStrategy StrictBalanced { get; } = new ComputeScheduleDistributionStrategy(StrictBalancedValue);
 
-        /// <summary> Determines if two <see cref="DistributionStrategy"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="ComputeScheduleDistributionStrategy"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(DistributionStrategy left, DistributionStrategy right) => left.Equals(right);
+        public static bool operator ==(ComputeScheduleDistributionStrategy left, ComputeScheduleDistributionStrategy right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="DistributionStrategy"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="ComputeScheduleDistributionStrategy"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(DistributionStrategy left, DistributionStrategy right) => !left.Equals(right);
+        public static bool operator !=(ComputeScheduleDistributionStrategy left, ComputeScheduleDistributionStrategy right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="DistributionStrategy"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ComputeScheduleDistributionStrategy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DistributionStrategy(string value) => new DistributionStrategy(value);
+        public static implicit operator ComputeScheduleDistributionStrategy(string value) => new ComputeScheduleDistributionStrategy(value);
 
-        /// <summary> Converts a string to a <see cref="DistributionStrategy"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ComputeScheduleDistributionStrategy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DistributionStrategy?(string value) => value == null ? null : new DistributionStrategy(value);
+        public static implicit operator ComputeScheduleDistributionStrategy?(string value) => value == null ? null : new ComputeScheduleDistributionStrategy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is DistributionStrategy other && Equals(other);
+        public override bool Equals(object obj) => obj is ComputeScheduleDistributionStrategy other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(DistributionStrategy other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ComputeScheduleDistributionStrategy other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

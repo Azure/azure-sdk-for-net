@@ -705,11 +705,11 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<CreateFlexResourceOperationResult>> VirtualMachinesExecuteCreateFlexAsync(AzureLocation locationparameter, ExecuteCreateFlexContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CreateFlexResourceOperationResult>> ExecuteVirtualMachineCreateFlexOperationAsync(AzureLocation locationparameter, ExecuteCreateFlexContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = ScheduledActionsClientDiagnostics.CreateScope("MockableComputeScheduleSubscriptionResource.VirtualMachinesExecuteCreateFlex");
+            using DiagnosticScope scope = ScheduledActionsClientDiagnostics.CreateScope("MockableComputeScheduleSubscriptionResource.ExecuteVirtualMachineCreateFlexOperation");
             scope.Start();
             try
             {
@@ -717,7 +717,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ScheduledActionsRestClient.CreateVirtualMachinesExecuteCreateFlexRequest(Guid.Parse(Id.SubscriptionId), locationparameter, ExecuteCreateFlexContent.ToRequestContent(content), context);
+                HttpMessage message = ScheduledActionsRestClient.CreateExecuteVirtualMachineCreateFlexOperationRequest(Guid.Parse(Id.SubscriptionId), locationparameter, ExecuteCreateFlexContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CreateFlexResourceOperationResult> response = Response.FromValue(CreateFlexResourceOperationResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -754,11 +754,11 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<CreateFlexResourceOperationResult> VirtualMachinesExecuteCreateFlex(AzureLocation locationparameter, ExecuteCreateFlexContent content, CancellationToken cancellationToken = default)
+        public virtual Response<CreateFlexResourceOperationResult> ExecuteVirtualMachineCreateFlexOperation(AzureLocation locationparameter, ExecuteCreateFlexContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = ScheduledActionsClientDiagnostics.CreateScope("MockableComputeScheduleSubscriptionResource.VirtualMachinesExecuteCreateFlex");
+            using DiagnosticScope scope = ScheduledActionsClientDiagnostics.CreateScope("MockableComputeScheduleSubscriptionResource.ExecuteVirtualMachineCreateFlexOperation");
             scope.Start();
             try
             {
@@ -766,7 +766,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ScheduledActionsRestClient.CreateVirtualMachinesExecuteCreateFlexRequest(Guid.Parse(Id.SubscriptionId), locationparameter, ExecuteCreateFlexContent.ToRequestContent(content), context);
+                HttpMessage message = ScheduledActionsRestClient.CreateExecuteVirtualMachineCreateFlexOperationRequest(Guid.Parse(Id.SubscriptionId), locationparameter, ExecuteCreateFlexContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CreateFlexResourceOperationResult> response = Response.FromValue(CreateFlexResourceOperationResult.FromResponse(result), result);
                 if (response.Value == null)

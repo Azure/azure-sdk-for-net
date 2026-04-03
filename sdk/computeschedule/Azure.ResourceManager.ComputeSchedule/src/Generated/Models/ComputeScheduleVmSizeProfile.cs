@@ -12,16 +12,16 @@ using Azure.ResourceManager.ComputeSchedule;
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
     /// <summary> A VM size profile with a name and rank for flex VM creation. </summary>
-    public partial class VmSizeProfile
+    public partial class ComputeScheduleVmSizeProfile
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="VmSizeProfile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeScheduleVmSizeProfile"/>. </summary>
         /// <param name="name"> The name of the VM size, eg Standard_D2ads_v5. </param>
         /// <param name="rank"> The rank of this VM size in the priority order. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public VmSizeProfile(string name, int rank)
+        public ComputeScheduleVmSizeProfile(string name, int rank)
         {
             Argument.AssertNotNull(name, nameof(name));
 
@@ -29,11 +29,11 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             Rank = rank;
         }
 
-        /// <summary> Initializes a new instance of <see cref="VmSizeProfile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeScheduleVmSizeProfile"/>. </summary>
         /// <param name="name"> The name of the VM size, eg Standard_D2ads_v5. </param>
         /// <param name="rank"> The rank of this VM size in the priority order. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VmSizeProfile(string name, int rank, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComputeScheduleVmSizeProfile(string name, int rank, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Rank = rank;

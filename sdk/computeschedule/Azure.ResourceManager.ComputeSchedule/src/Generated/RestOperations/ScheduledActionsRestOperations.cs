@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.ComputeSchedule
             return message;
         }
 
-        internal HttpMessage CreateVirtualMachinesExecuteCreateFlexRequest(Guid subscriptionId, AzureLocation locationparameter, RequestContent content, RequestContext context)
+        internal HttpMessage CreateExecuteVirtualMachineCreateFlexOperationRequest(Guid subscriptionId, AzureLocation locationparameter, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

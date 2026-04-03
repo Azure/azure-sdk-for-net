@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="resourceCount"> Number of VMs to be created. </param>
         /// <param name="flexProperties"> The flex properties for flexible VM creation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="flexProperties"/> is null. </exception>
-        public ResourceProvisionFlexPayload(int resourceCount, FlexProperties flexProperties)
+        public ResourceProvisionFlexPayload(int resourceCount, ComputeScheduleFlexProperties flexProperties)
         {
             Argument.AssertNotNull(flexProperties, nameof(flexProperties));
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="resourcePrefix"> If resourceOverrides doesn't contain name, service will create name based on prefix and resourceCount. </param>
         /// <param name="flexProperties"> The flex properties for flexible VM creation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceProvisionFlexPayload(IDictionary<string, BinaryData> baseProfile, IList<IDictionary<string, BinaryData>> resourceOverrides, int resourceCount, string resourcePrefix, FlexProperties flexProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResourceProvisionFlexPayload(IDictionary<string, BinaryData> baseProfile, IList<IDictionary<string, BinaryData>> resourceOverrides, int resourceCount, string resourcePrefix, ComputeScheduleFlexProperties flexProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BaseProfile = baseProfile;
             ResourceOverrides = resourceOverrides;
@@ -112,6 +112,6 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         public string ResourcePrefix { get; set; }
 
         /// <summary> The flex properties for flexible VM creation. </summary>
-        public FlexProperties FlexProperties { get; }
+        public ComputeScheduleFlexProperties FlexProperties { get; }
     }
 }

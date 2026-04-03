@@ -14,56 +14,56 @@ using Azure.ResourceManager.ComputeSchedule;
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
     /// <summary> The flex properties for flexible VM creation. </summary>
-    public partial class FlexProperties : IJsonModel<FlexProperties>
+    public partial class ComputeScheduleFlexProperties : IJsonModel<ComputeScheduleFlexProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="FlexProperties"/> for deserialization. </summary>
-        internal FlexProperties()
+        /// <summary> Initializes a new instance of <see cref="ComputeScheduleFlexProperties"/> for deserialization. </summary>
+        internal ComputeScheduleFlexProperties()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual FlexProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ComputeScheduleFlexProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FlexProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeScheduleFlexProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeFlexProperties(document.RootElement, options);
+                        return DeserializeComputeScheduleFlexProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FlexProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputeScheduleFlexProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FlexProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeScheduleFlexProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeScheduleContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(FlexProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputeScheduleFlexProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<FlexProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ComputeScheduleFlexProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        FlexProperties IPersistableModel<FlexProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ComputeScheduleFlexProperties IPersistableModel<ComputeScheduleFlexProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<FlexProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ComputeScheduleFlexProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<FlexProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ComputeScheduleFlexProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,14 +74,14 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FlexProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeScheduleFlexProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FlexProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputeScheduleFlexProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("vmSizeProfiles"u8);
             writer.WriteStartArray();
-            foreach (VmSizeProfile item in VmSizeProfiles)
+            foreach (ComputeScheduleVmSizeProfile item in VmSizeProfiles)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -114,54 +114,54 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        FlexProperties IJsonModel<FlexProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ComputeScheduleFlexProperties IJsonModel<ComputeScheduleFlexProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual FlexProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ComputeScheduleFlexProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FlexProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeScheduleFlexProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FlexProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputeScheduleFlexProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeFlexProperties(document.RootElement, options);
+            return DeserializeComputeScheduleFlexProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static FlexProperties DeserializeFlexProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static ComputeScheduleFlexProperties DeserializeComputeScheduleFlexProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<VmSizeProfile> vmSizeProfiles = default;
-            OsType osType = default;
-            PriorityProfile priorityProfile = default;
-            ZoneAllocationPolicy zoneAllocationPolicy = default;
+            IList<ComputeScheduleVmSizeProfile> vmSizeProfiles = default;
+            ComputeScheduleOSType osType = default;
+            ComputeSchedulePriorityProfile priorityProfile = default;
+            ComputeScheduleZoneAllocationPolicy zoneAllocationPolicy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("vmSizeProfiles"u8))
                 {
-                    List<VmSizeProfile> array = new List<VmSizeProfile>();
+                    List<ComputeScheduleVmSizeProfile> array = new List<ComputeScheduleVmSizeProfile>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(VmSizeProfile.DeserializeVmSizeProfile(item, options));
+                        array.Add(ComputeScheduleVmSizeProfile.DeserializeComputeScheduleVmSizeProfile(item, options));
                     }
                     vmSizeProfiles = array;
                     continue;
                 }
                 if (prop.NameEquals("osType"u8))
                 {
-                    osType = new OsType(prop.Value.GetString());
+                    osType = new ComputeScheduleOSType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("priorityProfile"u8))
                 {
-                    priorityProfile = PriorityProfile.DeserializePriorityProfile(prop.Value, options);
+                    priorityProfile = ComputeSchedulePriorityProfile.DeserializeComputeSchedulePriorityProfile(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("zoneAllocationPolicy"u8))
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     {
                         continue;
                     }
-                    zoneAllocationPolicy = ZoneAllocationPolicy.DeserializeZoneAllocationPolicy(prop.Value, options);
+                    zoneAllocationPolicy = ComputeScheduleZoneAllocationPolicy.DeserializeComputeScheduleZoneAllocationPolicy(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new FlexProperties(vmSizeProfiles, osType, priorityProfile, zoneAllocationPolicy, additionalBinaryDataProperties);
+            return new ComputeScheduleFlexProperties(vmSizeProfiles, osType, priorityProfile, zoneAllocationPolicy, additionalBinaryDataProperties);
         }
     }
 }
