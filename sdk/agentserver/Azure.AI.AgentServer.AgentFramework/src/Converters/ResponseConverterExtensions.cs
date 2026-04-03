@@ -74,15 +74,9 @@ public static class ResponseConverterExtensions
                         idGenerator.GenerateFunctionOutputId(),
                         createdBy);
                     break;
-                case FunctionApprovalRequestContent functionApprovalRequestContent:
+                case ToolApprovalRequestContent toolApprovalRequestContent:
                     // human-in-the-loop approval request
-                    yield return functionApprovalRequestContent.ToHumanInTheLoopFunctionCallItemResource(
-                        idGenerator.GenerateMessageId(),
-                        createdBy);
-                    break;
-                case McpServerToolApprovalRequestContent mcpServerToolApprovalRequestContent:
-                    // human-in-the-loop
-                    yield return mcpServerToolApprovalRequestContent.ToHumanInTheLoopFunctionCallItemResource(
+                    yield return toolApprovalRequestContent.ToHumanInTheLoopFunctionCallItemResource(
                         idGenerator.GenerateMessageId(),
                         createdBy);
                     break;

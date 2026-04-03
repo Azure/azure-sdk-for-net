@@ -55,12 +55,12 @@ namespace Azure.AI.AgentServer.AgentFramework.Converters
         /// <summary>
         /// Convert a HITL request to an ItemResource
         /// </summary>
-        /// <param name="content">The FunctionApprovalRequestContent to convert.</param>
+        /// <param name="content">The ToolApprovalRequestContent to convert.</param>
         /// <param name="id">The ID for the resource.</param>
         /// <param name="createdBy">Optional information about the creator of the item.</param>
         /// <returns>An ItemResource representing the HITL request.</returns>
         public static FunctionToolCallItemResource ToHumanInTheLoopFunctionCallItemResource(
-            this FunctionApprovalRequestContent content,
+            this ToolApprovalRequestContent content,
             string id,
             CreatedBy? createdBy = null)
         {
@@ -70,47 +70,23 @@ namespace Azure.AI.AgentServer.AgentFramework.Converters
                 createdBy: createdBy,
                 serializedAdditionalRawData: null,
                 status: FunctionToolCallItemResourceStatus.InProgress,
-                callId: content.Id,
-                name: ResponsesExtensions.HumanInTheLoopFunctionName,
-                arguments: JsonSerializer.Serialize(content.FunctionCall, Json)
-                );
-        }
-
-        /// <summary>
-        /// Convert a MCP HITL request to an ItemResource
-        /// </summary>
-        /// <param name="content">MCP Tool approval request</param>
-        /// <param name="id">The ID for the resource.</param>
-        /// <param name="createdBy">Optional information about the creator of the item.</param>
-        /// <returns>An ItemResource representing the HITL request.</returns>
-        public static FunctionToolCallItemResource ToHumanInTheLoopFunctionCallItemResource(
-            this McpServerToolApprovalRequestContent content,
-            string id,
-            CreatedBy? createdBy = null)
-        {
-            return new FunctionToolCallItemResource(
-                type: ItemType.FunctionCall,
-                id: id,
-                createdBy: createdBy,
-                serializedAdditionalRawData: null,
-                status: FunctionToolCallItemResourceStatus.InProgress,
-                callId: content.Id,
+                callId: content.RequestId,
                 name: ResponsesExtensions.HumanInTheLoopFunctionName,
                 arguments: JsonSerializer.Serialize(content.ToolCall, Json)
                 );
         }
 
         /// <summary>
-        /// Filter FunctionApprovalRequestContents from an agent's session messages.
+        /// Filter ToolApprovalRequestContents from an agent's session messages.
         /// </summary>
         /// <param name="agent">The AI agent.</param>
         /// <param name="session">The agent session.</param>
-        /// <returns>A dictionary with function call_id and FunctionApprovalRequests that are pending for approval.</returns>
-        public static Dictionary<string, UserInputRequestContent> GetPendingUserInputRequestContents(
+        /// <returns>A dictionary with function call_id and ToolApprovalRequests that are pending for approval.</returns>
+        public static Dictionary<string, ToolApprovalRequestContent> GetPendingUserInputRequestContents(
             AIAgent agent,
             AgentSession? session)
         {
-            var res = new Dictionary<string, UserInputRequestContent>();
+            var res = new Dictionary<string, ToolApprovalRequestContent>();
             if (session == null)
             {
                 return res;
@@ -132,14 +108,14 @@ namespace Azure.AI.AgentServer.AgentFramework.Converters
             {
                 foreach (var content in message.Contents)
                 {
-                    if (content is UserInputRequestContent userRequestContent)
+                    if (content is ToolApprovalRequestContent userRequestContent)
                     {
-                        res[userRequestContent.Id] = userRequestContent;
+                        res[userRequestContent.RequestId] = userRequestContent;
                     }
-                    else if (content is UserInputResponseContent userInputResponseContent)
+                    else if (content is ToolApprovalResponseContent userInputResponseContent)
                     {
-                        // Remove the UserInputRequestContent that has been responded to
-                        res.Remove(userInputResponseContent.Id);
+                        // Remove the ToolApprovalRequestContent that has been responded to
+                        res.Remove(userInputResponseContent.RequestId);
                     }
                 }
             }
@@ -150,11 +126,11 @@ namespace Azure.AI.AgentServer.AgentFramework.Converters
         /// Validate a HITL response and convert it to a ChatMessage
         /// </summary>
         /// <param name="request">CreateResponse request payload</param>
-        /// <param name="pendingRequests">Dictionary of pending function approval requests</param>
+        /// <param name="pendingRequests">Dictionary of pending tool approval requests</param>
         /// <returns>A ChatMessage representing the validated HITL response.</returns>
         public static List<ChatMessage>? ValidateAndConvertResponse(
             this CreateResponseRequest request,
-            Dictionary<string, UserInputRequestContent>? pendingRequests)
+            Dictionary<string, ToolApprovalRequestContent>? pendingRequests)
         {
             if (pendingRequests == null || pendingRequests.Count == 0)
             {
@@ -171,28 +147,16 @@ namespace Azure.AI.AgentServer.AgentFramework.Converters
                 if (item is FunctionToolCallOutputItemParam funcCallOutputItem)
                 {
                     if (funcCallOutputItem.CallId != null &&
-                        pendingRequests.TryGetValue(funcCallOutputItem.CallId, out var userInputRequest))
+                        pendingRequests.TryGetValue(funcCallOutputItem.CallId, out var approvalRequest))
                     {
-                        if (userInputRequest is FunctionApprovalRequestContent functionApprovalRequest)
+                        var response = funcCallOutputItem.ConvertToolApprovalResponse(approvalRequest);
+                        if (response != null)
                         {
-                            var response = funcCallOutputItem.ConvertFunctionCallApprovalResponse(functionApprovalRequest);
-                            if (response != null)
-                            {
-                                content.Add(response);
-                                continue;
-                            }
+                            content.Add(response);
+                            continue;
                         }
-                        else if (userInputRequest is McpServerToolApprovalRequestContent mcpToolApprovalRequest)
-                        {
-                            var response = funcCallOutputItem.ConvertMcpToolApprovalResponse(mcpToolApprovalRequest);
-                            if (response != null)
-                            {
-                                content.Add(response);
-                                continue;
-                            }
-                        }
-                        // It is not a FunctionApprovalRequestContent or parsing result failed
-                        var functionCallOutput = new FunctionResultContent(userInputRequest.Id, funcCallOutputItem.Output);
+                        // Parsing result failed, fall back to FunctionResultContent
+                        var functionCallOutput = new FunctionResultContent(approvalRequest.RequestId, funcCallOutputItem.Output);
                         content.Add(functionCallOutput);
                     }
                 }
@@ -209,28 +173,10 @@ namespace Azure.AI.AgentServer.AgentFramework.Converters
         /// is successful; otherwise, returns null.
         /// </summary>
         /// <param name="funcCallOutputItem">function call output item parameter from user</param>
-        /// <param name="requestContent">FunctionApprovalRequestContent that requesting input</param>
-        /// <returns>FunctionApprovalResponseContent if the user input is parsed successfully. otherwise, null</returns>
-        private static FunctionApprovalResponseContent? ConvertFunctionCallApprovalResponse(
-                 this FunctionToolCallOutputItemParam funcCallOutputItem, FunctionApprovalRequestContent requestContent)
-        {
-            var parsed = TryParseApprovalResponse(funcCallOutputItem?.Output, out var approvalResult);
-            if (parsed)
-            {
-                return requestContent.CreateResponse(approvalResult);
-            }
-            return null;
-        }
-
-        /// <summary>
-        /// Converts a function tool call output item and request content into an approval response content if parsing
-        /// is successful; otherwise, returns null.
-        /// </summary>
-        /// <param name="funcCallOutputItem">The function tool call output item to parse.</param>
-        /// <param name="requestContent">The original approval request content.</param>
-        /// <returns>An approval response content if parsing succeeds; otherwise, null.</returns>
-        private static McpServerToolApprovalResponseContent? ConvertMcpToolApprovalResponse(
-            this FunctionToolCallOutputItemParam funcCallOutputItem, McpServerToolApprovalRequestContent requestContent)
+        /// <param name="requestContent">ToolApprovalRequestContent that requesting input</param>
+        /// <returns>ToolApprovalResponseContent if the user input is parsed successfully. otherwise, null</returns>
+        private static ToolApprovalResponseContent? ConvertToolApprovalResponse(
+                 this FunctionToolCallOutputItemParam funcCallOutputItem, ToolApprovalRequestContent requestContent)
         {
             var parsed = TryParseApprovalResponse(funcCallOutputItem?.Output, out var approvalResult);
             if (parsed)

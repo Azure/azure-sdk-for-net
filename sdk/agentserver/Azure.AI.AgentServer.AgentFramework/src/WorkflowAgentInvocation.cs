@@ -144,21 +144,21 @@ public class WorkflowAgentInvocation(
         return Task.FromResult<IReadOnlyCollection<ChatMessage>>(request.GetInputMessages());
     }
 
-    private static Dictionary<string, UserInputRequestContent> GetPendingUserInputRequestContents(
+    private static Dictionary<string, ToolApprovalRequestContent> GetPendingUserInputRequestContents(
         IEnumerable<ChatMessage> messages)
     {
-        var res = new Dictionary<string, UserInputRequestContent>();
+        var res = new Dictionary<string, ToolApprovalRequestContent>();
         foreach (var message in messages)
         {
             foreach (var content in message.Contents)
             {
-                if (content is UserInputRequestContent userRequestContent)
+                if (content is ToolApprovalRequestContent userRequestContent)
                 {
-                    res[userRequestContent.Id] = userRequestContent;
+                    res[userRequestContent.RequestId] = userRequestContent;
                 }
-                else if (content is UserInputResponseContent userInputResponseContent)
+                else if (content is ToolApprovalResponseContent userInputResponseContent)
                 {
-                    res.Remove(userInputResponseContent.Id);
+                    res.Remove(userInputResponseContent.RequestId);
                 }
             }
         }

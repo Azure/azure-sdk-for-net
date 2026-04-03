@@ -90,8 +90,7 @@ public class ItemResourceGenerator
         {
             FunctionCallContent => GenerateFunctionCallEvents(p.Source, onItemResource),
             FunctionResultContent => GenerateFunctionCallOutputEvents(p.Source, onItemResource),
-            FunctionApprovalRequestContent => GenerateHumanInTheLoopEvents(p.Source, onItemResource),
-            McpServerToolApprovalRequestContent => GenerateHumanInTheLoopEvents(p.Source, onItemResource),
+            ToolApprovalRequestContent => GenerateHumanInTheLoopEvents(p.Source, onItemResource),
             TextContent => GenerateAssistantMessageEvents(p.Source, onItemResource),
             _ => null!
         };
@@ -118,7 +117,7 @@ public class ItemResourceGenerator
                             NotifyOnUsageUpdate(usageContent.Details.ToResponseUsage()!);
                         }
                         continue;
-                    case FunctionCallContent or FunctionResultContent or TextContent or FunctionApprovalRequestContent:
+                    case FunctionCallContent or FunctionResultContent or TextContent or ToolApprovalRequestContent:
                         yield return (update, content);
                         break;
                 }
@@ -179,8 +178,7 @@ public class ItemResourceGenerator
         string? authorName = null;
         await foreach (var (update, content) in source.WithCancellation(CancellationToken).ConfigureAwait(false))
         {
-            if (content is not FunctionApprovalRequestContent functionCallContent ||
-                content is not McpServerToolApprovalRequestContent mcpServerToolApprovalRequestContent)
+            if (content is not ToolApprovalRequestContent approvalRequestContent)
             {
                 continue;
             }
@@ -190,11 +188,7 @@ public class ItemResourceGenerator
 
             var groupSeq = GroupSeq.Next();
             var createdBy = CreateCreatedBy(authorName);
-            var item = functionCallContent != null
-                            ? functionCallContent.ToHumanInTheLoopFunctionCallItemResource(
-                                Context.IdGenerator.GenerateFunctionCallId(),
-                                createdBy)
-                            : mcpServerToolApprovalRequestContent.ToHumanInTheLoopFunctionCallItemResource(
+            var item = approvalRequestContent.ToHumanInTheLoopFunctionCallItemResource(
                                 Context.IdGenerator.GenerateFunctionCallId(),
                                 createdBy);
             onItemResource(item);

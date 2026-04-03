@@ -1,5 +1,11 @@
 # Release History
 
+## 1.0.0-beta.12 (Unreleased)
+
+### Other Changes
+
+- Update Microsoft.Agents.AI, Microsoft.Agents.AI.Workflows, Microsoft.Agents.AI.OpenAI packages to 1.0.0
+
 ## 1.0.0-beta.11 (2026-03-13)
 
 ### Bugs Fixed
