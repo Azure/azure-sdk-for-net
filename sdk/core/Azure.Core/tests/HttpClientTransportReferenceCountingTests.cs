@@ -140,7 +140,7 @@ namespace Azure.Core.Tests
             var responseCount = 0;
             var requestsInHandler = new SemaphoreSlim(0);
             var releaseRequests = new ManualResetEventSlim(false);
-            using var overallTimeout = new CancellationTokenSource(TimeSpan.FromSeconds(5));
+            using var overallTimeout = new CancellationTokenSource(TimeSpan.FromSeconds(10));
 
             Func<HttpPipelineTransportOptions, HttpClient> clientFactory = _ =>
             {
@@ -157,18 +157,18 @@ namespace Azure.Core.Tests
 
             using var transport = new HttpClientTransport(clientFactory);
 
-            // Act - Start multiple concurrent requests
+            // Act - Start multiple concurrent requests on dedicated threads to avoid thread pool starvation
             var tasks = new List<Task>();
             for (int i = 0; i < 5; i++)
             {
-                tasks.Add(Task.Run(async () =>
+                tasks.Add(Task.Factory.StartNew(async () =>
                 {
                     var request = transport.CreateRequest();
                     request.Uri.Reset(new Uri("https://example.com"));
                     var message = new HttpMessage(request, ResponseClassifier.Shared);
                     await ProcessSyncOrAsync(transport, message);
                     Assert.AreEqual(200, message.Response.Status);
-                }));
+                }, CancellationToken.None, TaskCreationOptions.LongRunning, TaskScheduler.Default).Unwrap());
             }
 
             try
@@ -255,7 +255,7 @@ namespace Azure.Core.Tests
             var updateCount = 0;
             var requestsInHandler = new SemaphoreSlim(0);
             var releaseRequests = new ManualResetEventSlim(false);
-            using var overallTimeout = new CancellationTokenSource(TimeSpan.FromSeconds(5));
+            using var overallTimeout = new CancellationTokenSource(TimeSpan.FromSeconds(10));
 
             Func<HttpPipelineTransportOptions, HttpClient> clientFactory = _ =>
             {
@@ -271,19 +271,19 @@ namespace Azure.Core.Tests
 
             using var transport = new HttpClientTransport(clientFactory);
 
-            // Act - Start concurrent requests that will block in the handler
+            // Act - Start concurrent requests on dedicated threads to avoid thread pool starvation
             const int requestCount = 10;
             var tasks = new List<Task>();
             for (int i = 0; i < requestCount; i++)
             {
-                tasks.Add(Task.Run(async () =>
+                tasks.Add(Task.Factory.StartNew(async () =>
                 {
                     var request = transport.CreateRequest();
                     request.Uri.Reset(new Uri("https://example.com"));
                     var message = new HttpMessage(request, ResponseClassifier.Shared);
                     await ProcessSyncOrAsync(transport, message);
                     Assert.AreEqual(200, message.Response.Status);
-                }));
+                }, CancellationToken.None, TaskCreationOptions.LongRunning, TaskScheduler.Default).Unwrap());
             }
 
             try
