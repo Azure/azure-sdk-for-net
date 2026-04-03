@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 writer.WriteStringValue(ProtectedAccountKeyName2);
             }
             writer.WritePropertyName("blobEndpoint"u8);
-            writer.WriteStringValue(BlobEndpoint);
+            writer.WriteStringValue(BlobEndpoint.AbsoluteUri);
             writer.WritePropertyName("queueEndpoint"u8);
-            writer.WriteStringValue(QueueEndpoint);
+            writer.WriteStringValue(QueueEndpoint.AbsoluteUri);
             writer.WritePropertyName("tableEndpoint"u8);
-            writer.WriteStringValue(TableEndpoint);
+            writer.WriteStringValue(TableEndpoint.AbsoluteUri);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -139,9 +139,9 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             string storageAccountName = default;
             string protectedAccountKeyName = default;
             string protectedAccountKeyName2 = default;
-            string blobEndpoint = default;
-            string queueEndpoint = default;
-            string tableEndpoint = default;
+            Uri blobEndpoint = default;
+            Uri queueEndpoint = default;
+            Uri tableEndpoint = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -162,17 +162,17 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
                 if (prop.NameEquals("blobEndpoint"u8))
                 {
-                    blobEndpoint = prop.Value.GetString();
+                    blobEndpoint = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("queueEndpoint"u8))
                 {
-                    queueEndpoint = prop.Value.GetString();
+                    queueEndpoint = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("tableEndpoint"u8))
                 {
-                    tableEndpoint = prop.Value.GetString();
+                    tableEndpoint = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (options.Format != "W")

@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <param name="queueEndpoint"> The queue endpoint of the azure storage account. </param>
         /// <param name="tableEndpoint"> The table endpoint of the azure storage account. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageAccountName"/>, <paramref name="protectedAccountKeyName"/>, <paramref name="blobEndpoint"/>, <paramref name="queueEndpoint"/> or <paramref name="tableEndpoint"/> is null. </exception>
-        public DiagnosticsStorageAccountConfig(string storageAccountName, string protectedAccountKeyName, string blobEndpoint, string queueEndpoint, string tableEndpoint)
+        public DiagnosticsStorageAccountConfig(string storageAccountName, string protectedAccountKeyName, Uri blobEndpoint, Uri queueEndpoint, Uri tableEndpoint)
         {
             Argument.AssertNotNull(storageAccountName, nameof(storageAccountName));
             Argument.AssertNotNull(protectedAccountKeyName, nameof(protectedAccountKeyName));
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <param name="queueEndpoint"> The queue endpoint of the azure storage account. </param>
         /// <param name="tableEndpoint"> The table endpoint of the azure storage account. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DiagnosticsStorageAccountConfig(string storageAccountName, string protectedAccountKeyName, string protectedAccountKeyName2, string blobEndpoint, string queueEndpoint, string tableEndpoint, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DiagnosticsStorageAccountConfig(string storageAccountName, string protectedAccountKeyName, string protectedAccountKeyName2, Uri blobEndpoint, Uri queueEndpoint, Uri tableEndpoint, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StorageAccountName = storageAccountName;
             ProtectedAccountKeyName = protectedAccountKeyName;
@@ -68,12 +68,12 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         public string ProtectedAccountKeyName2 { get; set; }
 
         /// <summary> The blob endpoint of the azure storage account. </summary>
-        public string BlobEndpoint { get; set; }
+        public Uri BlobEndpoint { get; set; }
 
         /// <summary> The queue endpoint of the azure storage account. </summary>
-        public string QueueEndpoint { get; set; }
+        public Uri QueueEndpoint { get; set; }
 
         /// <summary> The table endpoint of the azure storage account. </summary>
-        public string TableEndpoint { get; set; }
+        public Uri TableEndpoint { get; set; }
     }
 }

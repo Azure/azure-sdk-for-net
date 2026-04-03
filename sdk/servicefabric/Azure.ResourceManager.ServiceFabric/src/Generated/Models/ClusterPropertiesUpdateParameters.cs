@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <param name="clientCertificateCommonNames"> The list of client certificates referenced by common name that are allowed to manage the cluster. This will overwrite the existing list. </param>
         /// <param name="clientCertificateThumbprints"> The list of client certificates referenced by thumbprint that are allowed to manage the cluster. This will overwrite the existing list. </param>
         /// <param name="clusterCodeVersion"> The Service Fabric runtime version of the cluster. This property can only by set the user when <b>upgradeMode</b> is set to 'Manual'. To get list of available Service Fabric versions for new clusters use [ClusterVersion API](https://learn.microsoft.com/rest/api/servicefabric/cluster-versions/list). To get the list of available version for existing clusters use <b>availableClusterVersions</b>. </param>
-        /// <param name="eventStoreServiceEnabled"> Indicates if the event store service is enabled. </param>
+        /// <param name="isEventStoreServiceEnabled"> Indicates if the event store service is enabled. </param>
         /// <param name="fabricSettings"> The list of custom fabric settings to configure the cluster. This will overwrite the existing list. </param>
         /// <param name="nodeTypes"> The list of node types in the cluster. This will overwrite the existing list. </param>
         /// <param name="reliabilityLevel">
@@ -48,15 +48,15 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <param name="upgradeMode"> The upgrade mode of the cluster when new Service Fabric runtime version is available. </param>
         /// <param name="sfZonalUpgradeMode"> This property controls the logical grouping of VMs in upgrade domains (UDs). This property can't be modified if a node type with multiple Availability Zones is already present in the cluster. </param>
         /// <param name="vmssZonalUpgradeMode"> This property defines the upgrade mode for the virtual machine scale set, it is mandatory if a node type with multiple Availability Zones is added. </param>
-        /// <param name="infrastructureServiceManager"> Indicates if infrastructure service manager is enabled. </param>
+        /// <param name="isInfrastructureServiceManagerEnabled"> Indicates if infrastructure service manager is enabled. </param>
         /// <param name="upgradeWave"> Indicates when new cluster runtime version upgrades will be applied after they are released. By default is Wave0. Only applies when <b>upgradeMode</b> is set to 'Automatic'. </param>
-        /// <param name="upgradePauseStartTimestampUtc"> The start timestamp to pause runtime version upgrades on the cluster (UTC). </param>
-        /// <param name="upgradePauseEndTimestampUtc"> The end timestamp of pause runtime version upgrades on the cluster (UTC). </param>
-        /// <param name="waveUpgradePaused"> Boolean to pause automatic runtime version upgrades to the cluster. </param>
+        /// <param name="upgradePauseStartOn"> The start timestamp to pause runtime version upgrades on the cluster (UTC). </param>
+        /// <param name="upgradePauseEndOn"> The end timestamp of pause runtime version upgrades on the cluster (UTC). </param>
+        /// <param name="isWaveUpgradePaused"> Boolean to pause automatic runtime version upgrades to the cluster. </param>
         /// <param name="notifications"> Indicates a list of notification channels for cluster events. </param>
         /// <param name="enableHttpGatewayExclusiveAuthMode"> If true, token-based authentication is not allowed on the HttpGatewayEndpoint. This is required to support TLS versions 1.3 and above. If token-based authentication is used, HttpGatewayTokenAuthEndpointPort must be defined. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ClusterPropertiesUpdateParameters(IList<ClusterAddOnFeature> addOnFeatures, ClusterCertificateDescription certificate, ClusterServerCertificateCommonNames certificateCommonNames, IList<ClusterClientCertificateCommonName> clientCertificateCommonNames, IList<ClusterClientCertificateThumbprint> clientCertificateThumbprints, string clusterCodeVersion, bool? eventStoreServiceEnabled, IList<SettingsSectionDescription> fabricSettings, IList<ClusterNodeTypeDescription> nodeTypes, ClusterReliabilityLevel? reliabilityLevel, ClusterCertificateDescription reverseProxyCertificate, ClusterUpgradePolicy upgradeDescription, ApplicationTypeVersionsCleanupPolicy applicationTypeVersionsCleanupPolicy, ClusterUpgradeMode? upgradeMode, SfZonalUpgradeMode? sfZonalUpgradeMode, VmssZonalUpgradeMode? vmssZonalUpgradeMode, bool? infrastructureServiceManager, ClusterUpgradeCadence? upgradeWave, DateTimeOffset? upgradePauseStartTimestampUtc, DateTimeOffset? upgradePauseEndTimestampUtc, bool? waveUpgradePaused, IList<ClusterNotification> notifications, bool? enableHttpGatewayExclusiveAuthMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ClusterPropertiesUpdateParameters(IList<ClusterAddOnFeature> addOnFeatures, ClusterCertificateDescription certificate, ClusterServerCertificateCommonNames certificateCommonNames, IList<ClusterClientCertificateCommonName> clientCertificateCommonNames, IList<ClusterClientCertificateThumbprint> clientCertificateThumbprints, string clusterCodeVersion, bool? isEventStoreServiceEnabled, IList<SettingsSectionDescription> fabricSettings, IList<ClusterNodeTypeDescription> nodeTypes, ClusterReliabilityLevel? reliabilityLevel, ClusterCertificateDescription reverseProxyCertificate, ClusterUpgradePolicy upgradeDescription, ApplicationTypeVersionsCleanupPolicy applicationTypeVersionsCleanupPolicy, ClusterUpgradeMode? upgradeMode, SfZonalUpgradeMode? sfZonalUpgradeMode, VmssZonalUpgradeMode? vmssZonalUpgradeMode, bool? isInfrastructureServiceManagerEnabled, ClusterUpgradeCadence? upgradeWave, DateTimeOffset? upgradePauseStartOn, DateTimeOffset? upgradePauseEndOn, bool? isWaveUpgradePaused, IList<ClusterNotification> notifications, bool? enableHttpGatewayExclusiveAuthMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AddOnFeatures = addOnFeatures;
             Certificate = certificate;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             ClientCertificateCommonNames = clientCertificateCommonNames;
             ClientCertificateThumbprints = clientCertificateThumbprints;
             ClusterCodeVersion = clusterCodeVersion;
-            EventStoreServiceEnabled = eventStoreServiceEnabled;
+            IsEventStoreServiceEnabled = isEventStoreServiceEnabled;
             FabricSettings = fabricSettings;
             NodeTypes = nodeTypes;
             ReliabilityLevel = reliabilityLevel;
@@ -74,11 +74,11 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             UpgradeMode = upgradeMode;
             SfZonalUpgradeMode = sfZonalUpgradeMode;
             VmssZonalUpgradeMode = vmssZonalUpgradeMode;
-            InfrastructureServiceManager = infrastructureServiceManager;
+            IsInfrastructureServiceManagerEnabled = isInfrastructureServiceManagerEnabled;
             UpgradeWave = upgradeWave;
-            UpgradePauseStartTimestampUtc = upgradePauseStartTimestampUtc;
-            UpgradePauseEndTimestampUtc = upgradePauseEndTimestampUtc;
-            WaveUpgradePaused = waveUpgradePaused;
+            UpgradePauseStartOn = upgradePauseStartOn;
+            UpgradePauseEndOn = upgradePauseEndOn;
+            IsWaveUpgradePaused = isWaveUpgradePaused;
             Notifications = notifications;
             EnableHttpGatewayExclusiveAuthMode = enableHttpGatewayExclusiveAuthMode;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         public string ClusterCodeVersion { get; set; }
 
         /// <summary> Indicates if the event store service is enabled. </summary>
-        public bool? EventStoreServiceEnabled { get; set; }
+        public bool? IsEventStoreServiceEnabled { get; set; }
 
         /// <summary> The list of custom fabric settings to configure the cluster. This will overwrite the existing list. </summary>
         public IList<SettingsSectionDescription> FabricSettings { get; } = new ChangeTrackingList<SettingsSectionDescription>();
@@ -136,19 +136,19 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         public VmssZonalUpgradeMode? VmssZonalUpgradeMode { get; set; }
 
         /// <summary> Indicates if infrastructure service manager is enabled. </summary>
-        public bool? InfrastructureServiceManager { get; set; }
+        public bool? IsInfrastructureServiceManagerEnabled { get; set; }
 
         /// <summary> Indicates when new cluster runtime version upgrades will be applied after they are released. By default is Wave0. Only applies when <b>upgradeMode</b> is set to 'Automatic'. </summary>
         public ClusterUpgradeCadence? UpgradeWave { get; set; }
 
         /// <summary> The start timestamp to pause runtime version upgrades on the cluster (UTC). </summary>
-        public DateTimeOffset? UpgradePauseStartTimestampUtc { get; set; }
+        public DateTimeOffset? UpgradePauseStartOn { get; set; }
 
         /// <summary> The end timestamp of pause runtime version upgrades on the cluster (UTC). </summary>
-        public DateTimeOffset? UpgradePauseEndTimestampUtc { get; set; }
+        public DateTimeOffset? UpgradePauseEndOn { get; set; }
 
         /// <summary> Boolean to pause automatic runtime version upgrades to the cluster. </summary>
-        public bool? WaveUpgradePaused { get; set; }
+        public bool? IsWaveUpgradePaused { get; set; }
 
         /// <summary> Indicates a list of notification channels for cluster events. </summary>
         public IList<ClusterNotification> Notifications { get; } = new ChangeTrackingList<ClusterNotification>();

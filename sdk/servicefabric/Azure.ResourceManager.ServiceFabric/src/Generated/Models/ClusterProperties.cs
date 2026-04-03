@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <param name="managementEndpoint"> The http management endpoint of the cluster. </param>
         /// <param name="nodeTypes"> The list of node types in the cluster. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="managementEndpoint"/> or <paramref name="nodeTypes"/> is null. </exception>
-        public ClusterProperties(string managementEndpoint, IEnumerable<ClusterNodeTypeDescription> nodeTypes)
+        public ClusterProperties(Uri managementEndpoint, IEnumerable<ClusterNodeTypeDescription> nodeTypes)
         {
             Argument.AssertNotNull(managementEndpoint, nameof(managementEndpoint));
             Argument.AssertNotNull(nodeTypes, nameof(nodeTypes));
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <list type="bullet"><item><description>WaitingForNodes - Indicates that the cluster resource is created and the resource provider is waiting for Service Fabric VM extension to boot up and report to it.</description></item><item><description>Deploying - Indicates that the Service Fabric runtime is being installed on the VMs. Cluster resource will be in this state until the cluster boots up and system services are up.</description></item><item><description>BaselineUpgrade - Indicates that the cluster is upgrading to establishes the cluster version. This upgrade is automatically initiated when the cluster boots up for the first time.</description></item><item><description>UpdatingUserConfiguration - Indicates that the cluster is being upgraded with the user provided configuration.</description></item><item><description>UpdatingUserCertificate - Indicates that the cluster is being upgraded with the user provided certificate.</description></item><item><description>UpdatingInfrastructure - Indicates that the cluster is being upgraded with the latest Service Fabric runtime version. This happens only when the <b>upgradeMode</b> is set to 'Automatic'.</description></item><item><description>EnforcingClusterVersion - Indicates that cluster is on a different version than expected and the cluster is being upgraded to the expected version.</description></item><item><description>UpgradeServiceUnreachable - Indicates that the system service in the cluster is no longer polling the Resource Provider. Clusters in this state cannot be managed by the Resource Provider.</description></item><item><description>AutoScale - Indicates that the ReliabilityLevel of the cluster is being adjusted.</description></item><item><description>Ready - Indicates that the cluster is in a stable state.</description></item></list>
         /// </param>
         /// <param name="diagnosticsStorageAccountConfig"> The storage account information for storing Service Fabric diagnostic logs. </param>
-        /// <param name="eventStoreServiceEnabled"> Indicates if the event store service is enabled. </param>
+        /// <param name="isEventStoreServiceEnabled"> Indicates if the event store service is enabled. </param>
         /// <param name="fabricSettings"> The list of custom fabric settings to configure the cluster. </param>
         /// <param name="managementEndpoint"> The http management endpoint of the cluster. </param>
         /// <param name="nodeTypes"> The list of node types in the cluster. </param>
@@ -68,17 +68,17 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <param name="upgradeMode"> The upgrade mode of the cluster when new Service Fabric runtime version is available. </param>
         /// <param name="applicationTypeVersionsCleanupPolicy"> The policy used to clean up unused versions. </param>
         /// <param name="vmImage"> The VM image VMSS has been configured with. Generic names such as Windows or Linux can be used. </param>
-        /// <param name="sfZonalUpgradeMode"> This property controls the logical grouping of VMs in upgrade domains (UDs). This property can't be modified if a node type with multiple Availability Zones is already present in the cluster. </param>
+        /// <param name="serviceFabricZonalUpgradeMode"> This property controls the logical grouping of VMs in upgrade domains (UDs). This property can't be modified if a node type with multiple Availability Zones is already present in the cluster. </param>
         /// <param name="vmssZonalUpgradeMode"> This property defines the upgrade mode for the virtual machine scale set, it is mandatory if a node type with multiple Availability Zones is added. </param>
-        /// <param name="infrastructureServiceManager"> Indicates if infrastructure service manager is enabled. </param>
+        /// <param name="isInfrastructureServiceManagerEnabled"> Indicates if infrastructure service manager is enabled. </param>
         /// <param name="upgradeWave"> Indicates when new cluster runtime version upgrades will be applied after they are released. By default is Wave0. Only applies when <b>upgradeMode</b> is set to 'Automatic'. </param>
-        /// <param name="upgradePauseStartTimestampUtc"> Indicates the start date and time to pause automatic runtime version upgrades on the cluster for an specific period of time on the cluster (UTC). </param>
-        /// <param name="upgradePauseEndTimestampUtc"> Indicates the end date and time to pause automatic runtime version upgrades on the cluster for an specific period of time on the cluster (UTC). </param>
-        /// <param name="waveUpgradePaused"> Boolean to pause automatic runtime version upgrades to the cluster. </param>
+        /// <param name="upgradePauseStartOn"> Indicates the start date and time to pause automatic runtime version upgrades on the cluster for an specific period of time on the cluster (UTC). </param>
+        /// <param name="upgradePauseEndOn"> Indicates the end date and time to pause automatic runtime version upgrades on the cluster for an specific period of time on the cluster (UTC). </param>
+        /// <param name="isWaveUpgradePaused"> Boolean to pause automatic runtime version upgrades to the cluster. </param>
         /// <param name="notifications"> Indicates a list of notification channels for cluster events. </param>
         /// <param name="enableHttpGatewayExclusiveAuthMode"> If true, token-based authentication is not allowed on the HttpGatewayEndpoint. This is required to support TLS versions 1.3 and above. If token-based authentication is used, HttpGatewayTokenAuthEndpointPort must be defined. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ClusterProperties(IList<ClusterAddOnFeature> addOnFeatures, IReadOnlyList<ClusterVersionDetails> availableClusterVersions, ClusterAadSetting azureActiveDirectory, ClusterCertificateDescription certificate, ClusterServerCertificateCommonNames certificateCommonNames, IList<ClusterClientCertificateCommonName> clientCertificateCommonNames, IList<ClusterClientCertificateThumbprint> clientCertificateThumbprints, string clusterCodeVersion, string clusterEndpoint, string clusterId, ServiceFabricClusterState? clusterState, DiagnosticsStorageAccountConfig diagnosticsStorageAccountConfig, bool? eventStoreServiceEnabled, IList<SettingsSectionDescription> fabricSettings, string managementEndpoint, IList<ClusterNodeTypeDescription> nodeTypes, ServiceFabricProvisioningState? provisioningState, ClusterReliabilityLevel? reliabilityLevel, ClusterCertificateDescription reverseProxyCertificate, ClusterServerCertificateCommonNames reverseProxyCertificateCommonNames, ClusterUpgradePolicy upgradeDescription, ClusterUpgradeMode? upgradeMode, ApplicationTypeVersionsCleanupPolicy applicationTypeVersionsCleanupPolicy, string vmImage, SfZonalUpgradeMode? sfZonalUpgradeMode, VmssZonalUpgradeMode? vmssZonalUpgradeMode, bool? infrastructureServiceManager, ClusterUpgradeCadence? upgradeWave, DateTimeOffset? upgradePauseStartTimestampUtc, DateTimeOffset? upgradePauseEndTimestampUtc, bool? waveUpgradePaused, IList<ClusterNotification> notifications, bool? enableHttpGatewayExclusiveAuthMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ClusterProperties(IList<ClusterAddOnFeature> addOnFeatures, IReadOnlyList<ClusterVersionDetails> availableClusterVersions, ClusterAadSetting azureActiveDirectory, ClusterCertificateDescription certificate, ClusterServerCertificateCommonNames certificateCommonNames, IList<ClusterClientCertificateCommonName> clientCertificateCommonNames, IList<ClusterClientCertificateThumbprint> clientCertificateThumbprints, string clusterCodeVersion, Uri clusterEndpoint, string clusterId, ServiceFabricClusterState? clusterState, DiagnosticsStorageAccountConfig diagnosticsStorageAccountConfig, bool? isEventStoreServiceEnabled, IList<SettingsSectionDescription> fabricSettings, Uri managementEndpoint, IList<ClusterNodeTypeDescription> nodeTypes, ServiceFabricProvisioningState? provisioningState, ClusterReliabilityLevel? reliabilityLevel, ClusterCertificateDescription reverseProxyCertificate, ClusterServerCertificateCommonNames reverseProxyCertificateCommonNames, ClusterUpgradePolicy upgradeDescription, ClusterUpgradeMode? upgradeMode, ApplicationTypeVersionsCleanupPolicy applicationTypeVersionsCleanupPolicy, string vmImage, SfZonalUpgradeMode? serviceFabricZonalUpgradeMode, VmssZonalUpgradeMode? vmssZonalUpgradeMode, bool? isInfrastructureServiceManagerEnabled, ClusterUpgradeCadence? upgradeWave, DateTimeOffset? upgradePauseStartOn, DateTimeOffset? upgradePauseEndOn, bool? isWaveUpgradePaused, IList<ClusterNotification> notifications, bool? enableHttpGatewayExclusiveAuthMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AddOnFeatures = addOnFeatures;
             AvailableClusterVersions = availableClusterVersions;
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             ClusterId = clusterId;
             ClusterState = clusterState;
             DiagnosticsStorageAccountConfig = diagnosticsStorageAccountConfig;
-            EventStoreServiceEnabled = eventStoreServiceEnabled;
+            IsEventStoreServiceEnabled = isEventStoreServiceEnabled;
             FabricSettings = fabricSettings;
             ManagementEndpoint = managementEndpoint;
             NodeTypes = nodeTypes;
@@ -104,13 +104,13 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             UpgradeMode = upgradeMode;
             ApplicationTypeVersionsCleanupPolicy = applicationTypeVersionsCleanupPolicy;
             VmImage = vmImage;
-            SfZonalUpgradeMode = sfZonalUpgradeMode;
+            ServiceFabricZonalUpgradeMode = serviceFabricZonalUpgradeMode;
             VmssZonalUpgradeMode = vmssZonalUpgradeMode;
-            InfrastructureServiceManager = infrastructureServiceManager;
+            IsInfrastructureServiceManagerEnabled = isInfrastructureServiceManagerEnabled;
             UpgradeWave = upgradeWave;
-            UpgradePauseStartTimestampUtc = upgradePauseStartTimestampUtc;
-            UpgradePauseEndTimestampUtc = upgradePauseEndTimestampUtc;
-            WaveUpgradePaused = waveUpgradePaused;
+            UpgradePauseStartOn = upgradePauseStartOn;
+            UpgradePauseEndOn = upgradePauseEndOn;
+            IsWaveUpgradePaused = isWaveUpgradePaused;
             Notifications = notifications;
             EnableHttpGatewayExclusiveAuthMode = enableHttpGatewayExclusiveAuthMode;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         public string ClusterCodeVersion { get; set; }
 
         /// <summary> The Azure Resource Provider endpoint. A system service in the cluster connects to this  endpoint. </summary>
-        public string ClusterEndpoint { get; }
+        public Uri ClusterEndpoint { get; }
 
         /// <summary> A service generated unique identifier for the cluster resource. </summary>
         public string ClusterId { get; }
@@ -156,13 +156,13 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         public DiagnosticsStorageAccountConfig DiagnosticsStorageAccountConfig { get; set; }
 
         /// <summary> Indicates if the event store service is enabled. </summary>
-        public bool? EventStoreServiceEnabled { get; set; }
+        public bool? IsEventStoreServiceEnabled { get; set; }
 
         /// <summary> The list of custom fabric settings to configure the cluster. </summary>
         public IList<SettingsSectionDescription> FabricSettings { get; } = new ChangeTrackingList<SettingsSectionDescription>();
 
         /// <summary> The http management endpoint of the cluster. </summary>
-        public string ManagementEndpoint { get; set; }
+        public Uri ManagementEndpoint { get; set; }
 
         /// <summary> The list of node types in the cluster. </summary>
         public IList<ClusterNodeTypeDescription> NodeTypes { get; } = new ChangeTrackingList<ClusterNodeTypeDescription>();
@@ -195,25 +195,25 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         public string VmImage { get; set; }
 
         /// <summary> This property controls the logical grouping of VMs in upgrade domains (UDs). This property can't be modified if a node type with multiple Availability Zones is already present in the cluster. </summary>
-        public SfZonalUpgradeMode? SfZonalUpgradeMode { get; set; }
+        public SfZonalUpgradeMode? ServiceFabricZonalUpgradeMode { get; set; }
 
         /// <summary> This property defines the upgrade mode for the virtual machine scale set, it is mandatory if a node type with multiple Availability Zones is added. </summary>
         public VmssZonalUpgradeMode? VmssZonalUpgradeMode { get; set; }
 
         /// <summary> Indicates if infrastructure service manager is enabled. </summary>
-        public bool? InfrastructureServiceManager { get; set; }
+        public bool? IsInfrastructureServiceManagerEnabled { get; set; }
 
         /// <summary> Indicates when new cluster runtime version upgrades will be applied after they are released. By default is Wave0. Only applies when <b>upgradeMode</b> is set to 'Automatic'. </summary>
         public ClusterUpgradeCadence? UpgradeWave { get; set; }
 
         /// <summary> Indicates the start date and time to pause automatic runtime version upgrades on the cluster for an specific period of time on the cluster (UTC). </summary>
-        public DateTimeOffset? UpgradePauseStartTimestampUtc { get; set; }
+        public DateTimeOffset? UpgradePauseStartOn { get; set; }
 
         /// <summary> Indicates the end date and time to pause automatic runtime version upgrades on the cluster for an specific period of time on the cluster (UTC). </summary>
-        public DateTimeOffset? UpgradePauseEndTimestampUtc { get; set; }
+        public DateTimeOffset? UpgradePauseEndOn { get; set; }
 
         /// <summary> Boolean to pause automatic runtime version upgrades to the cluster. </summary>
-        public bool? WaveUpgradePaused { get; set; }
+        public bool? IsWaveUpgradePaused { get; set; }
 
         /// <summary> Indicates a list of notification channels for cluster events. </summary>
         public IList<ClusterNotification> Notifications { get; } = new ChangeTrackingList<ClusterNotification>();

@@ -146,10 +146,10 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 writer.WritePropertyName("isStateless"u8);
                 writer.WriteBooleanValue(IsStateless.Value);
             }
-            if (Optional.IsDefined(MultipleAvailabilityZones))
+            if (Optional.IsDefined(IsMultipleAvailabilityZonesSupported))
             {
                 writer.WritePropertyName("multipleAvailabilityZones"u8);
-                writer.WriteBooleanValue(MultipleAvailabilityZones.Value);
+                writer.WriteBooleanValue(IsMultipleAvailabilityZonesSupported.Value);
             }
             if (Optional.IsDefined(HttpGatewayTokenAuthEndpointPort))
             {
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             int vmInstanceCount = default;
             int? reverseProxyEndpointPort = default;
             bool? isStateless = default;
-            bool? multipleAvailabilityZones = default;
+            bool? isMultipleAvailabilityZonesSupported = default;
             int? httpGatewayTokenAuthEndpointPort = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     {
                         continue;
                     }
-                    multipleAvailabilityZones = prop.Value.GetBoolean();
+                    isMultipleAvailabilityZonesSupported = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("httpGatewayTokenAuthEndpointPort"u8))
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 vmInstanceCount,
                 reverseProxyEndpointPort,
                 isStateless,
-                multipleAvailabilityZones,
+                isMultipleAvailabilityZonesSupported,
                 httpGatewayTokenAuthEndpointPort,
                 additionalBinaryDataProperties);
         }

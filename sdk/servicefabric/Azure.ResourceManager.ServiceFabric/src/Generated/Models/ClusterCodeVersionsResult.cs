@@ -58,11 +58,11 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         }
 
         /// <summary> The date of expiry of support of the version. </summary>
-        public string SupportExpiryUtc
+        public string SupportExpireOn
         {
             get
             {
-                return Properties.SupportExpiryUtc;
+                return Properties.SupportExpireOn;
             }
         }
 

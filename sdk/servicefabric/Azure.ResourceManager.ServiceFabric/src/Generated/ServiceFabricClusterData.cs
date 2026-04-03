@@ -16,15 +16,6 @@ namespace Azure.ResourceManager.ServiceFabric
     /// <summary> The cluster resource. </summary>
     public partial class ServiceFabricClusterData : TrackedResourceData
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
-        /// <summary> Initializes a new instance of <see cref="ServiceFabricClusterData"/>. </summary>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        public ServiceFabricClusterData(AzureLocation location) : base(location)
-        {
-        }
-
         /// <summary> Initializes a new instance of <see cref="ServiceFabricClusterData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -34,193 +25,18 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The cluster resource properties. </param>
-        /// <param name="eTag"> Azure resource etag. </param>
-        internal ServiceFabricClusterData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, ClusterProperties properties, string eTag) : base(id, name, resourceType, systemData, tags, location)
+        internal ServiceFabricClusterData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, ClusterProperties properties) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
-            ETag = eTag;
-        }
-
-        /// <summary> The cluster resource properties. </summary>
-        internal ClusterProperties Properties { get; set; }
-
-        /// <summary> Azure resource etag. </summary>
-        public string ETag { get; }
-
-        /// <summary> The list of add-on features to enable in the cluster. </summary>
-        public IList<ClusterAddOnFeature> AddOnFeatures
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new ClusterProperties();
-                }
-                return Properties.AddOnFeatures;
-            }
-        }
-
-        /// <summary> The Service Fabric runtime versions available for this cluster. </summary>
-        public IReadOnlyList<ClusterVersionDetails> AvailableClusterVersions
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new ClusterProperties();
-                }
-                return Properties.AvailableClusterVersions;
-            }
-        }
-
-        /// <summary> The AAD authentication settings of the cluster. </summary>
-        public ClusterAadSetting AzureActiveDirectory
-        {
-            get
-            {
-                return Properties is null ? default : Properties.AzureActiveDirectory;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ClusterProperties();
-                }
-                Properties.AzureActiveDirectory = value;
-            }
-        }
-
-        /// <summary> The certificate to use for securing the cluster. The certificate provided will be used for node to node security within the cluster, SSL certificate for cluster management endpoint and default admin client. </summary>
-        public ClusterCertificateDescription Certificate
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Certificate;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ClusterProperties();
-                }
-                Properties.Certificate = value;
-            }
-        }
-
-        /// <summary> Describes a list of server certificates referenced by common name that are used to secure the cluster. </summary>
-        public ClusterServerCertificateCommonNames CertificateCommonNames
-        {
-            get
-            {
-                return Properties is null ? default : Properties.CertificateCommonNames;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ClusterProperties();
-                }
-                Properties.CertificateCommonNames = value;
-            }
-        }
-
-        /// <summary> The list of client certificates referenced by common name that are allowed to manage the cluster. </summary>
-        public IList<ClusterClientCertificateCommonName> ClientCertificateCommonNames
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new ClusterProperties();
-                }
-                return Properties.ClientCertificateCommonNames;
-            }
-        }
-
-        /// <summary> The list of client certificates referenced by thumbprint that are allowed to manage the cluster. </summary>
-        public IList<ClusterClientCertificateThumbprint> ClientCertificateThumbprints
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new ClusterProperties();
-                }
-                return Properties.ClientCertificateThumbprints;
-            }
-        }
-
-        /// <summary> The Service Fabric runtime version of the cluster. This property can only by set the user when <b>upgradeMode</b> is set to 'Manual'. To get list of available Service Fabric versions for new clusters use [ClusterVersion API](https://learn.microsoft.com/rest/api/servicefabric/cluster-versions/list). To get the list of available version for existing clusters use <b>availableClusterVersions</b>. </summary>
-        public string ClusterCodeVersion
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ClusterCodeVersion;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ClusterProperties();
-                }
-                Properties.ClusterCodeVersion = value;
-            }
-        }
-
-        /// <summary> The Azure Resource Provider endpoint. A system service in the cluster connects to this  endpoint. </summary>
-        public string ClusterEndpoint
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ClusterEndpoint;
-            }
-        }
-
-        /// <summary> A service generated unique identifier for the cluster resource. </summary>
-        public string ClusterId
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ClusterId;
-            }
-        }
-
-        /// <summary>
-        /// The current state of the cluster.
-        /// <list type="bullet"><item><description>WaitingForNodes - Indicates that the cluster resource is created and the resource provider is waiting for Service Fabric VM extension to boot up and report to it.</description></item><item><description>Deploying - Indicates that the Service Fabric runtime is being installed on the VMs. Cluster resource will be in this state until the cluster boots up and system services are up.</description></item><item><description>BaselineUpgrade - Indicates that the cluster is upgrading to establishes the cluster version. This upgrade is automatically initiated when the cluster boots up for the first time.</description></item><item><description>UpdatingUserConfiguration - Indicates that the cluster is being upgraded with the user provided configuration.</description></item><item><description>UpdatingUserCertificate - Indicates that the cluster is being upgraded with the user provided certificate.</description></item><item><description>UpdatingInfrastructure - Indicates that the cluster is being upgraded with the latest Service Fabric runtime version. This happens only when the <b>upgradeMode</b> is set to 'Automatic'.</description></item><item><description>EnforcingClusterVersion - Indicates that cluster is on a different version than expected and the cluster is being upgraded to the expected version.</description></item><item><description>UpgradeServiceUnreachable - Indicates that the system service in the cluster is no longer polling the Resource Provider. Clusters in this state cannot be managed by the Resource Provider.</description></item><item><description>AutoScale - Indicates that the ReliabilityLevel of the cluster is being adjusted.</description></item><item><description>Ready - Indicates that the cluster is in a stable state.</description></item></list>
-        /// </summary>
-        public ServiceFabricClusterState? ClusterState
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ClusterState;
-            }
-        }
-
-        /// <summary> The storage account information for storing Service Fabric diagnostic logs. </summary>
-        public DiagnosticsStorageAccountConfig DiagnosticsStorageAccountConfig
-        {
-            get
-            {
-                return Properties is null ? default : Properties.DiagnosticsStorageAccountConfig;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ClusterProperties();
-                }
-                Properties.DiagnosticsStorageAccountConfig = value;
-            }
         }
 
         /// <summary> Indicates if the event store service is enabled. </summary>
-        public bool? EventStoreServiceEnabled
+        public bool? IsEventStoreServiceEnabled
         {
             get
             {
-                return Properties is null ? default : Properties.EventStoreServiceEnabled;
+                return Properties is null ? default : Properties.IsEventStoreServiceEnabled;
             }
             set
             {
@@ -228,173 +44,16 @@ namespace Azure.ResourceManager.ServiceFabric
                 {
                     Properties = new ClusterProperties();
                 }
-                Properties.EventStoreServiceEnabled = value.Value;
-            }
-        }
-
-        /// <summary> The list of custom fabric settings to configure the cluster. </summary>
-        public IList<SettingsSectionDescription> FabricSettings
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new ClusterProperties();
-                }
-                return Properties.FabricSettings;
-            }
-        }
-
-        /// <summary> The http management endpoint of the cluster. </summary>
-        public string ManagementEndpoint
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ManagementEndpoint;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ClusterProperties();
-                }
-                Properties.ManagementEndpoint = value;
-            }
-        }
-
-        /// <summary> The list of node types in the cluster. </summary>
-        public IList<ClusterNodeTypeDescription> NodeTypes
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new ClusterProperties();
-                }
-                return Properties.NodeTypes;
-            }
-        }
-
-        /// <summary> The provisioning state of the cluster resource. </summary>
-        public ServiceFabricProvisioningState? ProvisioningState
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ProvisioningState;
-            }
-        }
-
-        /// <summary>
-        /// The reliability level sets the replica set size of system services. Learn about [ReliabilityLevel](https://docs.microsoft.com/azure/service-fabric/service-fabric-cluster-capacity).
-        /// <list type="bullet"><item><description>None - Run the System services with a target replica set count of 1. This should only be used for test clusters.</description></item><item><description>Bronze - Run the System services with a target replica set count of 3. This should only be used for test clusters.</description></item><item><description>Silver - Run the System services with a target replica set count of 5.</description></item><item><description>Gold - Run the System services with a target replica set count of 7.</description></item><item><description>Platinum - Run the System services with a target replica set count of 9.</description></item></list>
-        /// </summary>
-        public ClusterReliabilityLevel? ReliabilityLevel
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ReliabilityLevel;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ClusterProperties();
-                }
-                Properties.ReliabilityLevel = value.Value;
-            }
-        }
-
-        /// <summary> The server certificate used by reverse proxy. </summary>
-        public ClusterCertificateDescription ReverseProxyCertificate
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ReverseProxyCertificate;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ClusterProperties();
-                }
-                Properties.ReverseProxyCertificate = value;
-            }
-        }
-
-        /// <summary> Describes a list of server certificates referenced by common name that are used to secure the cluster. </summary>
-        public ClusterServerCertificateCommonNames ReverseProxyCertificateCommonNames
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ReverseProxyCertificateCommonNames;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ClusterProperties();
-                }
-                Properties.ReverseProxyCertificateCommonNames = value;
-            }
-        }
-
-        /// <summary> The policy to use when upgrading the cluster. </summary>
-        public ClusterUpgradePolicy UpgradeDescription
-        {
-            get
-            {
-                return Properties is null ? default : Properties.UpgradeDescription;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ClusterProperties();
-                }
-                Properties.UpgradeDescription = value;
-            }
-        }
-
-        /// <summary> The upgrade mode of the cluster when new Service Fabric runtime version is available. </summary>
-        public ClusterUpgradeMode? UpgradeMode
-        {
-            get
-            {
-                return Properties is null ? default : Properties.UpgradeMode;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ClusterProperties();
-                }
-                Properties.UpgradeMode = value.Value;
-            }
-        }
-
-        /// <summary> The VM image VMSS has been configured with. Generic names such as Windows or Linux can be used. </summary>
-        public string VmImage
-        {
-            get
-            {
-                return Properties is null ? default : Properties.VmImage;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ClusterProperties();
-                }
-                Properties.VmImage = value;
+                Properties.IsEventStoreServiceEnabled = value.Value;
             }
         }
 
         /// <summary> This property controls the logical grouping of VMs in upgrade domains (UDs). This property can't be modified if a node type with multiple Availability Zones is already present in the cluster. </summary>
-        public SfZonalUpgradeMode? SfZonalUpgradeMode
+        public SfZonalUpgradeMode? ServiceFabricZonalUpgradeMode
         {
             get
             {
-                return Properties is null ? default : Properties.SfZonalUpgradeMode;
+                return Properties is null ? default : Properties.ServiceFabricZonalUpgradeMode;
             }
             set
             {
@@ -402,33 +61,16 @@ namespace Azure.ResourceManager.ServiceFabric
                 {
                     Properties = new ClusterProperties();
                 }
-                Properties.SfZonalUpgradeMode = value.Value;
-            }
-        }
-
-        /// <summary> This property defines the upgrade mode for the virtual machine scale set, it is mandatory if a node type with multiple Availability Zones is added. </summary>
-        public VmssZonalUpgradeMode? VmssZonalUpgradeMode
-        {
-            get
-            {
-                return Properties is null ? default : Properties.VmssZonalUpgradeMode;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ClusterProperties();
-                }
-                Properties.VmssZonalUpgradeMode = value.Value;
+                Properties.ServiceFabricZonalUpgradeMode = value.Value;
             }
         }
 
         /// <summary> Indicates if infrastructure service manager is enabled. </summary>
-        public bool? InfrastructureServiceManager
+        public bool? IsInfrastructureServiceManagerEnabled
         {
             get
             {
-                return Properties is null ? default : Properties.InfrastructureServiceManager;
+                return Properties is null ? default : Properties.IsInfrastructureServiceManagerEnabled;
             }
             set
             {
@@ -436,33 +78,16 @@ namespace Azure.ResourceManager.ServiceFabric
                 {
                     Properties = new ClusterProperties();
                 }
-                Properties.InfrastructureServiceManager = value.Value;
-            }
-        }
-
-        /// <summary> Indicates when new cluster runtime version upgrades will be applied after they are released. By default is Wave0. Only applies when <b>upgradeMode</b> is set to 'Automatic'. </summary>
-        public ClusterUpgradeCadence? UpgradeWave
-        {
-            get
-            {
-                return Properties is null ? default : Properties.UpgradeWave;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ClusterProperties();
-                }
-                Properties.UpgradeWave = value.Value;
+                Properties.IsInfrastructureServiceManagerEnabled = value.Value;
             }
         }
 
         /// <summary> Indicates the start date and time to pause automatic runtime version upgrades on the cluster for an specific period of time on the cluster (UTC). </summary>
-        public DateTimeOffset? UpgradePauseStartTimestampUtc
+        public DateTimeOffset? UpgradePauseStartOn
         {
             get
             {
-                return Properties is null ? default : Properties.UpgradePauseStartTimestampUtc;
+                return Properties is null ? default : Properties.UpgradePauseStartOn;
             }
             set
             {
@@ -470,16 +95,16 @@ namespace Azure.ResourceManager.ServiceFabric
                 {
                     Properties = new ClusterProperties();
                 }
-                Properties.UpgradePauseStartTimestampUtc = value.Value;
+                Properties.UpgradePauseStartOn = value.Value;
             }
         }
 
         /// <summary> Indicates the end date and time to pause automatic runtime version upgrades on the cluster for an specific period of time on the cluster (UTC). </summary>
-        public DateTimeOffset? UpgradePauseEndTimestampUtc
+        public DateTimeOffset? UpgradePauseEndOn
         {
             get
             {
-                return Properties is null ? default : Properties.UpgradePauseEndTimestampUtc;
+                return Properties is null ? default : Properties.UpgradePauseEndOn;
             }
             set
             {
@@ -487,16 +112,16 @@ namespace Azure.ResourceManager.ServiceFabric
                 {
                     Properties = new ClusterProperties();
                 }
-                Properties.UpgradePauseEndTimestampUtc = value.Value;
+                Properties.UpgradePauseEndOn = value.Value;
             }
         }
 
         /// <summary> Boolean to pause automatic runtime version upgrades to the cluster. </summary>
-        public bool? WaveUpgradePaused
+        public bool? IsWaveUpgradePaused
         {
             get
             {
-                return Properties is null ? default : Properties.WaveUpgradePaused;
+                return Properties is null ? default : Properties.IsWaveUpgradePaused;
             }
             set
             {
@@ -504,54 +129,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 {
                     Properties = new ClusterProperties();
                 }
-                Properties.WaveUpgradePaused = value.Value;
-            }
-        }
-
-        /// <summary> Indicates a list of notification channels for cluster events. </summary>
-        public IList<ClusterNotification> Notifications
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new ClusterProperties();
-                }
-                return Properties.Notifications;
-            }
-        }
-
-        /// <summary> If true, token-based authentication is not allowed on the HttpGatewayEndpoint. This is required to support TLS versions 1.3 and above. If token-based authentication is used, HttpGatewayTokenAuthEndpointPort must be defined. </summary>
-        public bool? EnableHttpGatewayExclusiveAuthMode
-        {
-            get
-            {
-                return Properties is null ? default : Properties.EnableHttpGatewayExclusiveAuthMode;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ClusterProperties();
-                }
-                Properties.EnableHttpGatewayExclusiveAuthMode = value.Value;
-            }
-        }
-
-        /// <summary> Number of unused versions per application type to keep. </summary>
-        public long? MaxUnusedVersionsToKeep
-        {
-            get
-            {
-                return Properties is null ? default : Properties.MaxUnusedVersionsToKeep;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ClusterProperties();
-                }
-                Properties.MaxUnusedVersionsToKeep = value.Value;
+                Properties.IsWaveUpgradePaused = value.Value;
             }
         }
     }

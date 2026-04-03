@@ -131,11 +131,11 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         }
 
         /// <summary> Indicates if the event store service is enabled. </summary>
-        public bool? EventStoreServiceEnabled
+        public bool? IsEventStoreServiceEnabled
         {
             get
             {
-                return Properties is null ? default : Properties.EventStoreServiceEnabled;
+                return Properties is null ? default : Properties.IsEventStoreServiceEnabled;
             }
             set
             {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 {
                     Properties = new ClusterPropertiesUpdateParameters();
                 }
-                Properties.EventStoreServiceEnabled = value.Value;
+                Properties.IsEventStoreServiceEnabled = value.Value;
             }
         }
 
@@ -279,11 +279,11 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         }
 
         /// <summary> Indicates if infrastructure service manager is enabled. </summary>
-        public bool? InfrastructureServiceManager
+        public bool? IsInfrastructureServiceManagerEnabled
         {
             get
             {
-                return Properties is null ? default : Properties.InfrastructureServiceManager;
+                return Properties is null ? default : Properties.IsInfrastructureServiceManagerEnabled;
             }
             set
             {
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 {
                     Properties = new ClusterPropertiesUpdateParameters();
                 }
-                Properties.InfrastructureServiceManager = value.Value;
+                Properties.IsInfrastructureServiceManagerEnabled = value.Value;
             }
         }
 
@@ -313,11 +313,11 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         }
 
         /// <summary> The start timestamp to pause runtime version upgrades on the cluster (UTC). </summary>
-        public DateTimeOffset? UpgradePauseStartTimestampUtc
+        public DateTimeOffset? UpgradePauseStartOn
         {
             get
             {
-                return Properties is null ? default : Properties.UpgradePauseStartTimestampUtc;
+                return Properties is null ? default : Properties.UpgradePauseStartOn;
             }
             set
             {
@@ -325,16 +325,16 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 {
                     Properties = new ClusterPropertiesUpdateParameters();
                 }
-                Properties.UpgradePauseStartTimestampUtc = value.Value;
+                Properties.UpgradePauseStartOn = value.Value;
             }
         }
 
         /// <summary> The end timestamp of pause runtime version upgrades on the cluster (UTC). </summary>
-        public DateTimeOffset? UpgradePauseEndTimestampUtc
+        public DateTimeOffset? UpgradePauseEndOn
         {
             get
             {
-                return Properties is null ? default : Properties.UpgradePauseEndTimestampUtc;
+                return Properties is null ? default : Properties.UpgradePauseEndOn;
             }
             set
             {
@@ -342,16 +342,16 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 {
                     Properties = new ClusterPropertiesUpdateParameters();
                 }
-                Properties.UpgradePauseEndTimestampUtc = value.Value;
+                Properties.UpgradePauseEndOn = value.Value;
             }
         }
 
         /// <summary> Boolean to pause automatic runtime version upgrades to the cluster. </summary>
-        public bool? WaveUpgradePaused
+        public bool? IsWaveUpgradePaused
         {
             get
             {
-                return Properties is null ? default : Properties.WaveUpgradePaused;
+                return Properties is null ? default : Properties.IsWaveUpgradePaused;
             }
             set
             {
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 {
                     Properties = new ClusterPropertiesUpdateParameters();
                 }
-                Properties.WaveUpgradePaused = value.Value;
+                Properties.IsWaveUpgradePaused = value.Value;
             }
         }
 

@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
         /// <summary> Initializes a new instance of <see cref="ClusterVersionDetails"/>. </summary>
         /// <param name="codeVersion"> The Service Fabric runtime version of the cluster. </param>
-        /// <param name="supportExpiryUtc"> The date of expiry of support of the version. </param>
+        /// <param name="supportExpireOn"> The date of expiry of support of the version. </param>
         /// <param name="environment"> Indicates if this version is for Windows or Linux operating system. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ClusterVersionDetails(string codeVersion, string supportExpiryUtc, ClusterEnvironment? environment, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ClusterVersionDetails(string codeVersion, string supportExpireOn, ClusterEnvironment? environment, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CodeVersion = codeVersion;
-            SupportExpiryUtc = supportExpiryUtc;
+            SupportExpireOn = supportExpireOn;
             Environment = environment;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         public string CodeVersion { get; }
 
         /// <summary> The date of expiry of support of the version. </summary>
-        public string SupportExpiryUtc { get; }
+        public string SupportExpireOn { get; }
 
         /// <summary> Indicates if this version is for Windows or Linux operating system. </summary>
         public ClusterEnvironment? Environment { get; }

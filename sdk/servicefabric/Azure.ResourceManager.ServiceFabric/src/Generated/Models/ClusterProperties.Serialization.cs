@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             if (options.Format != "W" && Optional.IsDefined(ClusterEndpoint))
             {
                 writer.WritePropertyName("clusterEndpoint"u8);
-                writer.WriteStringValue(ClusterEndpoint);
+                writer.WriteStringValue(ClusterEndpoint.AbsoluteUri);
             }
             if (options.Format != "W" && Optional.IsDefined(ClusterId))
             {
@@ -159,10 +159,10 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 writer.WritePropertyName("diagnosticsStorageAccountConfig"u8);
                 writer.WriteObjectValue(DiagnosticsStorageAccountConfig, options);
             }
-            if (Optional.IsDefined(EventStoreServiceEnabled))
+            if (Optional.IsDefined(IsEventStoreServiceEnabled))
             {
                 writer.WritePropertyName("eventStoreServiceEnabled"u8);
-                writer.WriteBooleanValue(EventStoreServiceEnabled.Value);
+                writer.WriteBooleanValue(IsEventStoreServiceEnabled.Value);
             }
             if (Optional.IsCollectionDefined(FabricSettings))
             {
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("managementEndpoint"u8);
-            writer.WriteStringValue(ManagementEndpoint);
+            writer.WriteStringValue(ManagementEndpoint.AbsoluteUri);
             writer.WritePropertyName("nodeTypes"u8);
             writer.WriteStartArray();
             foreach (ClusterNodeTypeDescription item in NodeTypes)
@@ -223,40 +223,40 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 writer.WritePropertyName("vmImage"u8);
                 writer.WriteStringValue(VmImage);
             }
-            if (Optional.IsDefined(SfZonalUpgradeMode))
+            if (Optional.IsDefined(ServiceFabricZonalUpgradeMode))
             {
                 writer.WritePropertyName("sfZonalUpgradeMode"u8);
-                writer.WriteStringValue(SfZonalUpgradeMode.Value.ToString());
+                writer.WriteStringValue(ServiceFabricZonalUpgradeMode.Value.ToString());
             }
             if (Optional.IsDefined(VmssZonalUpgradeMode))
             {
                 writer.WritePropertyName("vmssZonalUpgradeMode"u8);
                 writer.WriteStringValue(VmssZonalUpgradeMode.Value.ToString());
             }
-            if (Optional.IsDefined(InfrastructureServiceManager))
+            if (Optional.IsDefined(IsInfrastructureServiceManagerEnabled))
             {
                 writer.WritePropertyName("infrastructureServiceManager"u8);
-                writer.WriteBooleanValue(InfrastructureServiceManager.Value);
+                writer.WriteBooleanValue(IsInfrastructureServiceManagerEnabled.Value);
             }
             if (Optional.IsDefined(UpgradeWave))
             {
                 writer.WritePropertyName("upgradeWave"u8);
                 writer.WriteStringValue(UpgradeWave.Value.ToString());
             }
-            if (Optional.IsDefined(UpgradePauseStartTimestampUtc))
+            if (Optional.IsDefined(UpgradePauseStartOn))
             {
                 writer.WritePropertyName("upgradePauseStartTimestampUtc"u8);
-                writer.WriteStringValue(UpgradePauseStartTimestampUtc.Value, "O");
+                writer.WriteStringValue(UpgradePauseStartOn.Value, "O");
             }
-            if (Optional.IsDefined(UpgradePauseEndTimestampUtc))
+            if (Optional.IsDefined(UpgradePauseEndOn))
             {
                 writer.WritePropertyName("upgradePauseEndTimestampUtc"u8);
-                writer.WriteStringValue(UpgradePauseEndTimestampUtc.Value, "O");
+                writer.WriteStringValue(UpgradePauseEndOn.Value, "O");
             }
-            if (Optional.IsDefined(WaveUpgradePaused))
+            if (Optional.IsDefined(IsWaveUpgradePaused))
             {
                 writer.WritePropertyName("waveUpgradePaused"u8);
-                writer.WriteBooleanValue(WaveUpgradePaused.Value);
+                writer.WriteBooleanValue(IsWaveUpgradePaused.Value);
             }
             if (Optional.IsCollectionDefined(Notifications))
             {
@@ -323,13 +323,13 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             IList<ClusterClientCertificateCommonName> clientCertificateCommonNames = default;
             IList<ClusterClientCertificateThumbprint> clientCertificateThumbprints = default;
             string clusterCodeVersion = default;
-            string clusterEndpoint = default;
+            Uri clusterEndpoint = default;
             string clusterId = default;
             ServiceFabricClusterState? clusterState = default;
             DiagnosticsStorageAccountConfig diagnosticsStorageAccountConfig = default;
-            bool? eventStoreServiceEnabled = default;
+            bool? isEventStoreServiceEnabled = default;
             IList<SettingsSectionDescription> fabricSettings = default;
-            string managementEndpoint = default;
+            Uri managementEndpoint = default;
             IList<ClusterNodeTypeDescription> nodeTypes = default;
             ServiceFabricProvisioningState? provisioningState = default;
             ClusterReliabilityLevel? reliabilityLevel = default;
@@ -339,13 +339,13 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             ClusterUpgradeMode? upgradeMode = default;
             ApplicationTypeVersionsCleanupPolicy applicationTypeVersionsCleanupPolicy = default;
             string vmImage = default;
-            SfZonalUpgradeMode? sfZonalUpgradeMode = default;
+            SfZonalUpgradeMode? serviceFabricZonalUpgradeMode = default;
             VmssZonalUpgradeMode? vmssZonalUpgradeMode = default;
-            bool? infrastructureServiceManager = default;
+            bool? isInfrastructureServiceManagerEnabled = default;
             ClusterUpgradeCadence? upgradeWave = default;
-            DateTimeOffset? upgradePauseStartTimestampUtc = default;
-            DateTimeOffset? upgradePauseEndTimestampUtc = default;
-            bool? waveUpgradePaused = default;
+            DateTimeOffset? upgradePauseStartOn = default;
+            DateTimeOffset? upgradePauseEndOn = default;
+            bool? isWaveUpgradePaused = default;
             IList<ClusterNotification> notifications = default;
             bool? enableHttpGatewayExclusiveAuthMode = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -441,7 +441,11 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
                 if (prop.NameEquals("clusterEndpoint"u8))
                 {
-                    clusterEndpoint = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    clusterEndpoint = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("clusterId"u8))
@@ -473,7 +477,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     {
                         continue;
                     }
-                    eventStoreServiceEnabled = prop.Value.GetBoolean();
+                    isEventStoreServiceEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("fabricSettings"u8))
@@ -492,7 +496,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
                 if (prop.NameEquals("managementEndpoint"u8))
                 {
-                    managementEndpoint = prop.Value.GetString();
+                    managementEndpoint = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("nodeTypes"u8))
@@ -579,7 +583,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     {
                         continue;
                     }
-                    sfZonalUpgradeMode = new SfZonalUpgradeMode(prop.Value.GetString());
+                    serviceFabricZonalUpgradeMode = new SfZonalUpgradeMode(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("vmssZonalUpgradeMode"u8))
@@ -597,7 +601,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     {
                         continue;
                     }
-                    infrastructureServiceManager = prop.Value.GetBoolean();
+                    isInfrastructureServiceManagerEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("upgradeWave"u8))
@@ -615,7 +619,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     {
                         continue;
                     }
-                    upgradePauseStartTimestampUtc = prop.Value.GetDateTimeOffset("O");
+                    upgradePauseStartOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("upgradePauseEndTimestampUtc"u8))
@@ -624,7 +628,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     {
                         continue;
                     }
-                    upgradePauseEndTimestampUtc = prop.Value.GetDateTimeOffset("O");
+                    upgradePauseEndOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("waveUpgradePaused"u8))
@@ -633,7 +637,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     {
                         continue;
                     }
-                    waveUpgradePaused = prop.Value.GetBoolean();
+                    isWaveUpgradePaused = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("notifications"u8))
@@ -677,7 +681,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 clusterId,
                 clusterState,
                 diagnosticsStorageAccountConfig,
-                eventStoreServiceEnabled,
+                isEventStoreServiceEnabled,
                 fabricSettings ?? new ChangeTrackingList<SettingsSectionDescription>(),
                 managementEndpoint,
                 nodeTypes,
@@ -689,13 +693,13 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 upgradeMode,
                 applicationTypeVersionsCleanupPolicy,
                 vmImage,
-                sfZonalUpgradeMode,
+                serviceFabricZonalUpgradeMode,
                 vmssZonalUpgradeMode,
-                infrastructureServiceManager,
+                isInfrastructureServiceManagerEnabled,
                 upgradeWave,
-                upgradePauseStartTimestampUtc,
-                upgradePauseEndTimestampUtc,
-                waveUpgradePaused,
+                upgradePauseStartOn,
+                upgradePauseEndOn,
+                isWaveUpgradePaused,
                 notifications ?? new ChangeTrackingList<ClusterNotification>(),
                 enableHttpGatewayExclusiveAuthMode,
                 additionalBinaryDataProperties);

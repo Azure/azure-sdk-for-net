@@ -53,10 +53,10 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <param name="vmInstanceCount"> VMInstanceCount should be 1 to n, where n indicates the number of VM instances corresponding to this nodeType. VMInstanceCount = 0 can be done only in these scenarios: NodeType is a secondary nodeType. Durability = Bronze or Durability &gt;= Bronze and InfrastructureServiceManager = true. If VMInstanceCount = 0, implies the VMs for this nodeType will not be used for the initial cluster size computation. </param>
         /// <param name="reverseProxyEndpointPort"> The endpoint used by reverse proxy. </param>
         /// <param name="isStateless"> Indicates if the node type can only host Stateless workloads. </param>
-        /// <param name="multipleAvailabilityZones"> Indicates if the node type is enabled to support multiple zones. </param>
+        /// <param name="isMultipleAvailabilityZonesSupported"> Indicates if the node type is enabled to support multiple zones. </param>
         /// <param name="httpGatewayTokenAuthEndpointPort"> The port used for token-auth based HTTPS connections to the cluster. Cannot be set to the same port as HttpGatewayEndpoint. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ClusterNodeTypeDescription(string name, IDictionary<string, string> placementProperties, IDictionary<string, string> capacities, int clientConnectionEndpointPort, int httpGatewayEndpointPort, ClusterDurabilityLevel? durabilityLevel, ClusterEndpointRangeDescription applicationPorts, ClusterEndpointRangeDescription ephemeralPorts, bool isPrimary, int vmInstanceCount, int? reverseProxyEndpointPort, bool? isStateless, bool? multipleAvailabilityZones, int? httpGatewayTokenAuthEndpointPort, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ClusterNodeTypeDescription(string name, IDictionary<string, string> placementProperties, IDictionary<string, string> capacities, int clientConnectionEndpointPort, int httpGatewayEndpointPort, ClusterDurabilityLevel? durabilityLevel, ClusterEndpointRangeDescription applicationPorts, ClusterEndpointRangeDescription ephemeralPorts, bool isPrimary, int vmInstanceCount, int? reverseProxyEndpointPort, bool? isStateless, bool? isMultipleAvailabilityZonesSupported, int? httpGatewayTokenAuthEndpointPort, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             PlacementProperties = placementProperties;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             VmInstanceCount = vmInstanceCount;
             ReverseProxyEndpointPort = reverseProxyEndpointPort;
             IsStateless = isStateless;
-            MultipleAvailabilityZones = multipleAvailabilityZones;
+            IsMultipleAvailabilityZonesSupported = isMultipleAvailabilityZonesSupported;
             HttpGatewayTokenAuthEndpointPort = httpGatewayTokenAuthEndpointPort;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         public bool? IsStateless { get; set; }
 
         /// <summary> Indicates if the node type is enabled to support multiple zones. </summary>
-        public bool? MultipleAvailabilityZones { get; set; }
+        public bool? IsMultipleAvailabilityZonesSupported { get; set; }
 
         /// <summary> The port used for token-auth based HTTPS connections to the cluster. Cannot be set to the same port as HttpGatewayEndpoint. </summary>
         public int? HttpGatewayTokenAuthEndpointPort { get; set; }

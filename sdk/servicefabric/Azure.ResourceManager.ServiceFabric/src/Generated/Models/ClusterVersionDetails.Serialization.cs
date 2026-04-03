@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 writer.WritePropertyName("codeVersion"u8);
                 writer.WriteStringValue(CodeVersion);
             }
-            if (Optional.IsDefined(SupportExpiryUtc))
+            if (Optional.IsDefined(SupportExpireOn))
             {
                 writer.WritePropertyName("supportExpiryUtc"u8);
-                writer.WriteStringValue(SupportExpiryUtc);
+                writer.WriteStringValue(SupportExpireOn);
             }
             if (Optional.IsDefined(Environment))
             {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 return null;
             }
             string codeVersion = default;
-            string supportExpiryUtc = default;
+            string supportExpireOn = default;
             ClusterEnvironment? environment = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
                 if (prop.NameEquals("supportExpiryUtc"u8))
                 {
-                    supportExpiryUtc = prop.Value.GetString();
+                    supportExpireOn = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("environment"u8))
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ClusterVersionDetails(codeVersion, supportExpiryUtc, environment, additionalBinaryDataProperties);
+            return new ClusterVersionDetails(codeVersion, supportExpireOn, environment, additionalBinaryDataProperties);
         }
     }
 }
