@@ -8,12 +8,11 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ContainerRegistry
 {
     /// <summary></summary>
-    public partial class ContainerRegistryResource : ArmResource, IJsonModel<ContainerRegistryData>
+    public partial class ContainerRegistryResource : IJsonModel<ContainerRegistryData>
     {
         private static IJsonModel<ContainerRegistryData> s_dataDeserializationInstance;
 

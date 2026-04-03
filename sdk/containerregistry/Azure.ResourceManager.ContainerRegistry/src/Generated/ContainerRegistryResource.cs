@@ -1200,6 +1200,42 @@ namespace Azure.ResourceManager.ContainerRegistry
             return GetContainerRegistryPrivateLinkResources().Get(groupName, cancellationToken);
         }
 
+        /// <summary> Gets a collection of ContainerRegistryArchives in the <see cref="ContainerRegistryResource"/>. </summary>
+        /// <param name="packageType"> The packageType for the resource. </param>
+        /// <returns> An object representing collection of ContainerRegistryArchives and their operations over a ContainerRegistryArchiveResource. </returns>
+        public virtual ContainerRegistryArchiveCollection GetContainerRegistryArchives(string packageType)
+        {
+            return new ContainerRegistryArchiveCollection(Client, Id, packageType);
+        }
+
+        /// <summary> Gets the properties of the archive. </summary>
+        /// <param name="packageType"> The packageType for the resource. </param>
+        /// <param name="archiveName"> The name of the archive resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="archiveName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="archiveName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ContainerRegistryArchiveResource>> GetContainerRegistryArchiveAsync(string packageType, string archiveName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(archiveName, nameof(archiveName));
+
+            return await GetContainerRegistryArchives(packageType).GetAsync(archiveName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets the properties of the archive. </summary>
+        /// <param name="packageType"> The packageType for the resource. </param>
+        /// <param name="archiveName"> The name of the archive resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="archiveName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="archiveName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ContainerRegistryArchiveResource> GetContainerRegistryArchive(string packageType, string archiveName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(archiveName, nameof(archiveName));
+
+            return GetContainerRegistryArchives(packageType).Get(archiveName, cancellationToken);
+        }
+
         /// <summary> Gets a collection of ContainerRegistryCacheRules in the <see cref="ContainerRegistryResource"/>. </summary>
         /// <returns> An object representing collection of ContainerRegistryCacheRules and their operations over a ContainerRegistryCacheRuleResource. </returns>
         public virtual ContainerRegistryCacheRuleCollection GetContainerRegistryCacheRules()
