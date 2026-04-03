@@ -84,10 +84,6 @@ begin {
     Copy-Item "$PSScriptRoot/package-lock.json" $PackageInstallCache
   }
 
-  if (!(Test-Path "$PackageInstallCache/node_modules")) {
-    npm --prefix $PackageInstallCache ci | Write-Host
-  }
-
   $filesToCheck = @()
  }
 process {
@@ -101,6 +97,8 @@ end {
 
   $fileListPath = (New-TemporaryFile).FullName
   $filesToCheck | Out-File -FilePath $fileListPath -Encoding utf8
+
+  npm --prefix $PackageInstallCache ci | Write-Host
 
   try {
     $cspellArgs = @(
