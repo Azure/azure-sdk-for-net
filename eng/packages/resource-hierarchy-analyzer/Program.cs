@@ -157,8 +157,9 @@ foreach (var resType in resourceTypes)
                 ParameterCount = method.GetParameters().Length
             });
         }
-        else if (IsAssignableTo(returnType, armResourceType))
+        else if (IsAssignableTo(returnType, armResourceType) && returnType.FullName != resType.FullName)
         {
+            // Exclude self-referencing Get methods (e.g., AvailabilitySetResource.Get() → AvailabilitySetResource)
             info.ChildResources.Add(new ChildRef
             {
                 MethodName = method.Name,
