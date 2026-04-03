@@ -43,10 +43,10 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> The private link resource required member names. </summary>
         [WirePath("requiredMembers")]
-        public IReadOnlyList<string> RequiredMembers { get; }
+        public IReadOnlyList<string> RequiredMembers { get; } = new ChangeTrackingList<string>();
 
         /// <summary> The private link resource Private link DNS zone name. </summary>
         [WirePath("requiredZoneNames")]
-        public IList<string> RequiredZoneNames { get; }
+        public IList<string> RequiredZoneNames { get; } = new ChangeTrackingList<string>();
     }
 }

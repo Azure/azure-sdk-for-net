@@ -13,3 +13,5 @@ extends:
       safeName: AzureProvisioningKubernetesConfiguration
     - name: Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes
       safeName: AzureResourceManagerKubernetesConfigurationPrivateLinkScopes
+    - name: Azure.ResourceManager.KubernetesConfiguration.Extensions
+      safeName: AzureResourceManagerKubernetesConfigurationExtensions
