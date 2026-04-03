@@ -21,11 +21,11 @@ namespace Azure.ResourceManager.AppService.Models
         {
             get
             {
-                if (AzureStorageUrlValue is null)
+                if (AzureStorageUriStringValue is null)
                     return null;
-                return Uri.TryCreate(AzureStorageUrlValue, UriKind.Absolute, out var uri) ? uri : null;
+                return Uri.TryCreate(AzureStorageUriStringValue, UriKind.Absolute, out var uri) ? uri : null;
             }
-            set => AzureStorageUrlValue = value?.AbsoluteUri;
+            set => AzureStorageUriStringValue = value?.AbsoluteUri;
         }
     }
 }

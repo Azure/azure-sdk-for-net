@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.AppService.Models
                 throw new FormatException($"The model {nameof(AppServiceApiDefinitionInfo)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(ApiDefinitionUrl))
+            if (Optional.IsDefined(ApiDefinitionUriStringValue))
             {
                 writer.WritePropertyName("url"u8);
-                writer.WriteStringValue(ApiDefinitionUrl);
+                writer.WriteStringValue(ApiDefinitionUriStringValue);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.AppService.Models
 
             builder.AppendLine("{");
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ApiDefinitionUrl), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ApiDefinitionUriStringValue), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  url: ");
@@ -115,17 +115,17 @@ namespace Azure.ResourceManager.AppService.Models
             }
             else
             {
-                if (Optional.IsDefined(ApiDefinitionUrl))
+                if (Optional.IsDefined(ApiDefinitionUriStringValue))
                 {
                     builder.Append("  url: ");
-                    if (ApiDefinitionUrl.Contains(Environment.NewLine))
+                    if (ApiDefinitionUriStringValue.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
-                        builder.AppendLine($"{ApiDefinitionUrl}'''");
+                        builder.AppendLine($"{ApiDefinitionUriStringValue}'''");
                     }
                     else
                     {
-                        builder.AppendLine($"'{ApiDefinitionUrl}'");
+                        builder.AppendLine($"'{ApiDefinitionUriStringValue}'");
                     }
                 }
             }

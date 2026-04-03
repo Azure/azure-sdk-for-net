@@ -702,8 +702,8 @@ rename-mapping:
   WorkflowTriggerListCallbackUrlQueries.sp: SasPermission
   WorkflowTriggerListCallbackUrlQueries.sv: SasVersion
   WorkflowTriggerListCallbackUrlQueries: WorkflowTriggerListCallbackUriQueries
-  ApiDefinitionInfo.url: ApiDefinitionUrl | string
-  FunctionsDeploymentStorage.value: AzureStorageUrlValue | string
+  ApiDefinitionInfo.url: ApiDefinitionUriStringValue | string
+  FunctionsDeploymentStorage.value: AzureStorageUriStringValue | string
 
 prepend-rp-prefix:
   - ApiDefinitionInfo

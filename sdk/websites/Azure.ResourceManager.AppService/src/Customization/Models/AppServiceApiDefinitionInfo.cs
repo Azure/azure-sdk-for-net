@@ -19,11 +19,11 @@ namespace Azure.ResourceManager.AppService.Models
         {
             get
             {
-                if (ApiDefinitionUrl is null)
+                if (ApiDefinitionUriStringValue is null)
                     return null;
-                return Uri.TryCreate(ApiDefinitionUrl, UriKind.Absolute, out var uri) ? uri : null;
+                return Uri.TryCreate(ApiDefinitionUriStringValue, UriKind.Absolute, out var uri) ? uri : null;
             }
-            set => ApiDefinitionUrl = value?.AbsoluteUri;
+            set => ApiDefinitionUriStringValue = value?.AbsoluteUri;
         }
     }
 }

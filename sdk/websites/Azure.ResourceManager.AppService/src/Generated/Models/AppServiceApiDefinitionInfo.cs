@@ -51,15 +51,15 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AppServiceApiDefinitionInfo"/>. </summary>
-        /// <param name="apiDefinitionUrl"> The URL of the API definition. </param>
+        /// <param name="apiDefinitionUriStringValue"> The URL of the API definition. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AppServiceApiDefinitionInfo(string apiDefinitionUrl, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AppServiceApiDefinitionInfo(string apiDefinitionUriStringValue, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            ApiDefinitionUrl = apiDefinitionUrl;
+            ApiDefinitionUriStringValue = apiDefinitionUriStringValue;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The URL of the API definition. </summary>
-        public string ApiDefinitionUrl { get; set; }
+        public string ApiDefinitionUriStringValue { get; set; }
     }
 }

@@ -40,10 +40,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(StorageType.Value.ToString());
             }
-            if (Optional.IsDefined(AzureStorageUrlValue))
+            if (Optional.IsDefined(AzureStorageUriStringValue))
             {
                 writer.WritePropertyName("value"u8);
-                writer.WriteStringValue(AzureStorageUrlValue);
+                writer.WriteStringValue(AzureStorageUriStringValue);
             }
             if (Optional.IsDefined(Authentication))
             {
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AzureStorageUrlValue), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AzureStorageUriStringValue), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  value: ");
@@ -160,17 +160,17 @@ namespace Azure.ResourceManager.AppService.Models
             }
             else
             {
-                if (Optional.IsDefined(AzureStorageUrlValue))
+                if (Optional.IsDefined(AzureStorageUriStringValue))
                 {
                     builder.Append("  value: ");
-                    if (AzureStorageUrlValue.Contains(Environment.NewLine))
+                    if (AzureStorageUriStringValue.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
-                        builder.AppendLine($"{AzureStorageUrlValue}'''");
+                        builder.AppendLine($"{AzureStorageUriStringValue}'''");
                     }
                     else
                     {
-                        builder.AppendLine($"'{AzureStorageUrlValue}'");
+                        builder.AppendLine($"'{AzureStorageUriStringValue}'");
                     }
                 }
             }
