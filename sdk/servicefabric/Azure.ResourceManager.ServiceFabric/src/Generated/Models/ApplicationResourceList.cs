@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
         /// <summary> Initializes a new instance of <see cref="ApplicationResourceList"/>. </summary>
         /// <param name="value"> The ApplicationResource items on this page. </param>
-        internal ApplicationResourceList(IEnumerable<ServiceFabricApplicationData> value)
+        internal ApplicationResourceList(IEnumerable<ApplicationResourceData> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <param name="value"> The ApplicationResource items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationResourceList(IList<ServiceFabricApplicationData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApplicationResourceList(IList<ApplicationResourceData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         }
 
         /// <summary> The ApplicationResource items on this page. </summary>
-        public IList<ServiceFabricApplicationData> Value { get; }
+        public IList<ApplicationResourceData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }

@@ -15,7 +15,7 @@ using Azure.ResourceManager.ServiceFabric.Models;
 
 namespace Azure.ResourceManager.ServiceFabric
 {
-    internal partial class ApplicationsGetAllAsyncCollectionResultOfT : AsyncPageable<ServiceFabricApplicationData>
+    internal partial class ApplicationsGetAllAsyncCollectionResultOfT : AsyncPageable<ApplicationResourceData>
     {
         private readonly Applications _client;
         private readonly string _subscriptionId;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of ApplicationsGetAllAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<ServiceFabricApplicationData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<ApplicationResourceData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ServiceFabric
                     yield break;
                 }
                 ApplicationResourceList result = ApplicationResourceList.FromResponse(response);
-                yield return Page<ServiceFabricApplicationData>.FromValues((IReadOnlyList<ServiceFabricApplicationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<ApplicationResourceData>.FromValues((IReadOnlyList<ApplicationResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ServiceFabric
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _clusterName, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _clusterName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ServiceFabricApplicationCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ApplicationResourceCollection.GetAll");
             scope.Start();
             try
             {

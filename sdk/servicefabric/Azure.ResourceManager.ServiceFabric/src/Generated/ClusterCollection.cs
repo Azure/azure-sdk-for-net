@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<ClusterResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string clusterName, ServiceFabricClusterData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ClusterResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string clusterName, ClusterData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
             Argument.AssertNotNull(data, nameof(data));
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clustersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, ServiceFabricClusterData.ToRequestContent(data), context);
+                HttpMessage message = _clustersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, ClusterData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ServiceFabricArmOperation<ClusterResource> operation = new ServiceFabricArmOperation<ClusterResource>(
                     new ClusterOperationSource(Client),
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<ClusterResource> CreateOrUpdate(WaitUntil waitUntil, string clusterName, ServiceFabricClusterData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ClusterResource> CreateOrUpdate(WaitUntil waitUntil, string clusterName, ClusterData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
             Argument.AssertNotNull(data, nameof(data));
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clustersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, ServiceFabricClusterData.ToRequestContent(data), context);
+                HttpMessage message = _clustersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, ClusterData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ServiceFabricArmOperation<ClusterResource> operation = new ServiceFabricArmOperation<ClusterResource>(
                     new ClusterOperationSource(Client),
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 };
                 HttpMessage message = _clustersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ServiceFabricClusterData> response = Response.FromValue(ServiceFabricClusterData.FromResponse(result), result);
+                Response<ClusterData> response = Response.FromValue(ClusterData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 };
                 HttpMessage message = _clustersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ServiceFabricClusterData> response = Response.FromValue(ServiceFabricClusterData.FromResponse(result), result);
+                Response<ClusterData> response = Response.FromValue(ClusterData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.ServiceFabric
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ServiceFabricClusterData, ClusterResource>(new ClustersGetByResourceGroupAsyncCollectionResultOfT(_clustersRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new ClusterResource(Client, data));
+            return new AsyncPageableWrapper<ClusterData, ClusterResource>(new ClustersGetByResourceGroupAsyncCollectionResultOfT(_clustersRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new ClusterResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.ServiceFabric
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ServiceFabricClusterData, ClusterResource>(new ClustersGetByResourceGroupCollectionResultOfT(_clustersRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new ClusterResource(Client, data));
+            return new PageableWrapper<ClusterData, ClusterResource>(new ClustersGetByResourceGroupCollectionResultOfT(_clustersRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new ClusterResource(Client, data));
         }
 
         /// <summary>
@@ -361,14 +361,14 @@ namespace Azure.ResourceManager.ServiceFabric
                 HttpMessage message = _clustersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<ServiceFabricClusterData> response = default;
+                Response<ClusterData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ServiceFabricClusterData.FromResponse(result), result);
+                        response = Response.FromValue(ClusterData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ServiceFabricClusterData)null, result);
+                        response = Response.FromValue((ClusterData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -418,14 +418,14 @@ namespace Azure.ResourceManager.ServiceFabric
                 HttpMessage message = _clustersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<ServiceFabricClusterData> response = default;
+                Response<ClusterData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ServiceFabricClusterData.FromResponse(result), result);
+                        response = Response.FromValue(ClusterData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ServiceFabricClusterData)null, result);
+                        response = Response.FromValue((ClusterData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -475,14 +475,14 @@ namespace Azure.ResourceManager.ServiceFabric
                 HttpMessage message = _clustersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<ServiceFabricClusterData> response = default;
+                Response<ClusterData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ServiceFabricClusterData.FromResponse(result), result);
+                        response = Response.FromValue(ClusterData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ServiceFabricClusterData)null, result);
+                        response = Response.FromValue((ClusterData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -536,14 +536,14 @@ namespace Azure.ResourceManager.ServiceFabric
                 HttpMessage message = _clustersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<ServiceFabricClusterData> response = default;
+                Response<ClusterData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ServiceFabricClusterData.FromResponse(result), result);
+                        response = Response.FromValue(ClusterData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ServiceFabricClusterData)null, result);
+                        response = Response.FromValue((ClusterData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);

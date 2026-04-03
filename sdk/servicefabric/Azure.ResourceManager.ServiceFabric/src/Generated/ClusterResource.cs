@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ServiceFabric
     {
         private readonly ClientDiagnostics _clustersClientDiagnostics;
         private readonly Clusters _clustersRestClient;
-        private readonly ServiceFabricClusterData _data;
+        private readonly ClusterData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ServiceFabric/clusters";
 
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <summary> Initializes a new instance of <see cref="ClusterResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ClusterResource(ArmClient client, ServiceFabricClusterData data) : this(client, data.Id)
+        internal ClusterResource(ArmClient client, ClusterData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ServiceFabric
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual ServiceFabricClusterData Data
+        public virtual ClusterData Data
         {
             get
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 };
                 HttpMessage message = _clustersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ServiceFabricClusterData> response = Response.FromValue(ServiceFabricClusterData.FromResponse(result), result);
+                Response<ClusterData> response = Response.FromValue(ClusterData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 };
                 HttpMessage message = _clustersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ServiceFabricClusterData> response = Response.FromValue(ServiceFabricClusterData.FromResponse(result), result);
+                Response<ClusterData> response = Response.FromValue(ClusterData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="patch"> The parameters which contains the property value and property name which used to update the cluster configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<ArmOperation<ClusterResource>> UpdateAsync(WaitUntil waitUntil, ServiceFabricClusterPatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ClusterResource>> UpdateAsync(WaitUntil waitUntil, ClusterPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clustersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ServiceFabricClusterPatch.ToRequestContent(patch), context);
+                HttpMessage message = _clustersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ClusterPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ServiceFabricArmOperation<ClusterResource> operation = new ServiceFabricArmOperation<ClusterResource>(
                     new ClusterOperationSource(Client),
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="patch"> The parameters which contains the property value and property name which used to update the cluster configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual ArmOperation<ClusterResource> Update(WaitUntil waitUntil, ServiceFabricClusterPatch patch, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ClusterResource> Update(WaitUntil waitUntil, ClusterPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clustersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ServiceFabricClusterPatch.ToRequestContent(patch), context);
+                HttpMessage message = _clustersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ClusterPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ServiceFabricArmOperation<ClusterResource> operation = new ServiceFabricArmOperation<ClusterResource>(
                     new ClusterOperationSource(Client),
@@ -532,13 +532,13 @@ namespace Azure.ResourceManager.ServiceFabric
                     };
                     HttpMessage message = _clustersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<ServiceFabricClusterData> response = Response.FromValue(ServiceFabricClusterData.FromResponse(result), result);
+                    Response<ClusterData> response = Response.FromValue(ClusterData.FromResponse(result), result);
                     return Response.FromValue(new ClusterResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    ServiceFabricClusterData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    ServiceFabricClusterPatch patch = new ServiceFabricClusterPatch();
+                    ClusterData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    ClusterPatch patch = new ClusterPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -580,13 +580,13 @@ namespace Azure.ResourceManager.ServiceFabric
                     };
                     HttpMessage message = _clustersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<ServiceFabricClusterData> response = Response.FromValue(ServiceFabricClusterData.FromResponse(result), result);
+                    Response<ClusterData> response = Response.FromValue(ClusterData.FromResponse(result), result);
                     return Response.FromValue(new ClusterResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    ServiceFabricClusterData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    ServiceFabricClusterPatch patch = new ServiceFabricClusterPatch();
+                    ClusterData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    ClusterPatch patch = new ClusterPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -627,13 +627,13 @@ namespace Azure.ResourceManager.ServiceFabric
                     };
                     HttpMessage message = _clustersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<ServiceFabricClusterData> response = Response.FromValue(ServiceFabricClusterData.FromResponse(result), result);
+                    Response<ClusterData> response = Response.FromValue(ClusterData.FromResponse(result), result);
                     return Response.FromValue(new ClusterResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    ServiceFabricClusterData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    ServiceFabricClusterPatch patch = new ServiceFabricClusterPatch();
+                    ClusterData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    ClusterPatch patch = new ClusterPatch();
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<ClusterResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -670,13 +670,13 @@ namespace Azure.ResourceManager.ServiceFabric
                     };
                     HttpMessage message = _clustersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<ServiceFabricClusterData> response = Response.FromValue(ServiceFabricClusterData.FromResponse(result), result);
+                    Response<ClusterData> response = Response.FromValue(ClusterData.FromResponse(result), result);
                     return Response.FromValue(new ClusterResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    ServiceFabricClusterData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    ServiceFabricClusterPatch patch = new ServiceFabricClusterPatch();
+                    ClusterData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    ClusterPatch patch = new ClusterPatch();
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<ClusterResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -712,13 +712,13 @@ namespace Azure.ResourceManager.ServiceFabric
                     };
                     HttpMessage message = _clustersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<ServiceFabricClusterData> response = Response.FromValue(ServiceFabricClusterData.FromResponse(result), result);
+                    Response<ClusterData> response = Response.FromValue(ClusterData.FromResponse(result), result);
                     return Response.FromValue(new ClusterResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    ServiceFabricClusterData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    ServiceFabricClusterPatch patch = new ServiceFabricClusterPatch();
+                    ClusterData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    ClusterPatch patch = new ClusterPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -758,13 +758,13 @@ namespace Azure.ResourceManager.ServiceFabric
                     };
                     HttpMessage message = _clustersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<ServiceFabricClusterData> response = Response.FromValue(ServiceFabricClusterData.FromResponse(result), result);
+                    Response<ClusterData> response = Response.FromValue(ClusterData.FromResponse(result), result);
                     return Response.FromValue(new ClusterResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    ServiceFabricClusterData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    ServiceFabricClusterPatch patch = new ServiceFabricClusterPatch();
+                    ClusterData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    ClusterPatch patch = new ClusterPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -781,11 +781,11 @@ namespace Azure.ResourceManager.ServiceFabric
             }
         }
 
-        /// <summary> Gets a collection of ServiceFabricApplicationTypes in the <see cref="ClusterResource"/>. </summary>
-        /// <returns> An object representing collection of ServiceFabricApplicationTypes and their operations over a ServiceFabricApplicationTypeResource. </returns>
-        public virtual ServiceFabricApplicationTypeCollection GetServiceFabricApplicationTypes()
+        /// <summary> Gets a collection of ApplicationTypeResources in the <see cref="ClusterResource"/>. </summary>
+        /// <returns> An object representing collection of ApplicationTypeResources and their operations over a ApplicationTypeResource. </returns>
+        public virtual ApplicationTypeResourceCollection GetApplicationTypeResources()
         {
-            return GetCachedClient(client => new ServiceFabricApplicationTypeCollection(client, Id));
+            return GetCachedClient(client => new ApplicationTypeResourceCollection(client, Id));
         }
 
         /// <summary> Get a Service Fabric application type name resource created or in the process of being created in the Service Fabric cluster resource. </summary>
@@ -794,11 +794,11 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <exception cref="ArgumentNullException"> <paramref name="applicationTypeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="applicationTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ServiceFabricApplicationTypeResource>> GetServiceFabricApplicationTypeAsync(string applicationTypeName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApplicationTypeResource>> GetApplicationTypeResourceAsync(string applicationTypeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationTypeName, nameof(applicationTypeName));
 
-            return await GetServiceFabricApplicationTypes().GetAsync(applicationTypeName, cancellationToken).ConfigureAwait(false);
+            return await GetApplicationTypeResources().GetAsync(applicationTypeName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get a Service Fabric application type name resource created or in the process of being created in the Service Fabric cluster resource. </summary>
@@ -807,31 +807,18 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <exception cref="ArgumentNullException"> <paramref name="applicationTypeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="applicationTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ServiceFabricApplicationTypeResource> GetServiceFabricApplicationType(string applicationTypeName, CancellationToken cancellationToken = default)
+        public virtual Response<ApplicationTypeResource> GetApplicationTypeResource(string applicationTypeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationTypeName, nameof(applicationTypeName));
 
-            return GetServiceFabricApplicationTypes().Get(applicationTypeName, cancellationToken);
+            return GetApplicationTypeResources().Get(applicationTypeName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ServiceFabricApplications in the <see cref="ClusterResource"/>. </summary>
-        /// <returns> An object representing collection of ServiceFabricApplications and their operations over a ServiceFabricApplicationResource. </returns>
-        public virtual ServiceFabricApplicationCollection GetServiceFabricApplications()
+        /// <summary> Gets a collection of ApplicationResources in the <see cref="ClusterResource"/>. </summary>
+        /// <returns> An object representing collection of ApplicationResources and their operations over a ApplicationResource. </returns>
+        public virtual ApplicationResourceCollection GetApplicationResources()
         {
-            return GetCachedClient(client => new ServiceFabricApplicationCollection(client, Id));
-        }
-
-        /// <summary> Get a Service Fabric application resource created or in the process of being created in the Service Fabric cluster resource. </summary>
-        /// <param name="applicationName"> The name of the application resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ServiceFabricApplicationResource>> GetServiceFabricApplicationAsync(string applicationName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
-
-            return await GetServiceFabricApplications().GetAsync(applicationName, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(client => new ApplicationResourceCollection(client, Id));
         }
 
         /// <summary> Get a Service Fabric application resource created or in the process of being created in the Service Fabric cluster resource. </summary>
@@ -840,11 +827,24 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ServiceFabricApplicationResource> GetServiceFabricApplication(string applicationName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApplicationResource>> GetApplicationResourceAsync(string applicationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
 
-            return GetServiceFabricApplications().Get(applicationName, cancellationToken);
+            return await GetApplicationResources().GetAsync(applicationName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get a Service Fabric application resource created or in the process of being created in the Service Fabric cluster resource. </summary>
+        /// <param name="applicationName"> The name of the application resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ApplicationResource> GetApplicationResource(string applicationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
+
+            return GetApplicationResources().Get(applicationName, cancellationToken);
         }
     }
 }

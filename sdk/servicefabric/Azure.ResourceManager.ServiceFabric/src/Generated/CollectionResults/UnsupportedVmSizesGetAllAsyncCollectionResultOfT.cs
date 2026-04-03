@@ -15,7 +15,7 @@ using Azure.ResourceManager.ServiceFabric.Models;
 
 namespace Azure.ResourceManager.ServiceFabric
 {
-    internal partial class UnsupportedVmSizesGetAllAsyncCollectionResultOfT : AsyncPageable<ServiceFabricVmSizeResourceData>
+    internal partial class UnsupportedVmSizesGetAllAsyncCollectionResultOfT : AsyncPageable<VMSizeResourceData>
     {
         private readonly UnsupportedVmSizes _client;
         private readonly string _subscriptionId;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of UnsupportedVmSizesGetAllAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<ServiceFabricVmSizeResourceData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<VMSizeResourceData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ServiceFabric
                     yield break;
                 }
                 VMSizesResult result = VMSizesResult.FromResponse(response);
-                yield return Page<ServiceFabricVmSizeResourceData>.FromValues((IReadOnlyList<ServiceFabricVmSizeResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<VMSizeResourceData>.FromValues((IReadOnlyList<VMSizeResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ServiceFabric
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _location, _context) : _client.CreateGetAllRequest(_subscriptionId, _location, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ServiceFabricVmSizeResourceCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("VMSizeResourceCollection.GetAll");
             scope.Start();
             try
             {
