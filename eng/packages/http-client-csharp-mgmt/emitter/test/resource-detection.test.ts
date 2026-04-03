@@ -2835,6 +2835,164 @@ interface TenantTranscripts {
     );
   });
 
+  it("@subscriptionResource model used in tenant-scoped LegacyOperations - legacy detection", async () => {
+    // This test validates the legacy buildArmProviderSchema behavior when a model decorated
+    // with @subscriptionResource is used in legacy operations at both subscription and
+    // tenant scopes. This mirrors the Support SDK's SupportTicketDetails pattern where the
+    // same model is used by SupportTickets (subscription) and SupportTicketsNoSubscription
+    // (tenant).
+    //
+    // resolveArmResources is invoked below to ensure it runs without throwing, but we
+    // intentionally do not assert on its output yet. There is a known behavioral gap where
+    // resolveArmResources merges subscription- and tenant-scoped operations for the same
+    // model into fewer resources, while buildArmProviderSchema keeps them as distinct
+    // resources per scope. Once that gap is closed, this test should be updated to add
+    // explicit assertions comparing the two schemas.
+    const program = await typeSpecCompile(
+      `
+/** A support ticket resource - decorated as @subscriptionResource */
+#suppress "@azure-tools/typespec-azure-core/no-legacy-usage" "Testing cross-scope"
+@subscriptionResource
+model SupportTicketDetails is ProxyResource<SupportTicketProperties> {
+  ...ResourceNameParameter<
+    Resource = SupportTicketDetails,
+    KeyName = "supportTicketName",
+    SegmentName = "supportTickets",
+    NamePattern = ""
+  >;
+}
+/** Support ticket properties */
+model SupportTicketProperties {
+  /** Description */
+  description?: string;
+}
+
+// Subscription-scoped ticket operations (includes SubscriptionIdParameter)
+#suppress "@azure-tools/typespec-azure-core/no-legacy-usage" "Testing cross-scope"
+alias SubTicketOps = Azure.ResourceManager.Legacy.LegacyOperations<
+  {
+    ...ApiVersionParameter;
+    ...SubscriptionIdParameter;
+    ...Azure.ResourceManager.Legacy.Provider;
+  },
+  {
+    @segment("supportTickets")
+    @key
+    @TypeSpec.Http.path
+    supportTicketName: string;
+  }
+>;
+
+// Tenant-scoped ticket operations (no SubscriptionIdParameter)
+#suppress "@azure-tools/typespec-azure-core/no-legacy-usage" "Testing cross-scope"
+alias TenantTicketOps = Azure.ResourceManager.Legacy.LegacyOperations<
+  {
+    ...ApiVersionParameter;
+    ...Azure.ResourceManager.Legacy.Provider;
+  },
+  {
+    @segment("supportTickets")
+    @key
+    @TypeSpec.Http.path
+    supportTicketName: string;
+  }
+>;
+
+@armResourceOperations
+interface SupportTickets {
+  get is SubTicketOps.Read<SupportTicketDetails>;
+  list is SubTicketOps.List<SupportTicketDetails>;
+}
+
+@armResourceOperations
+interface SupportTicketsNoSubscription {
+  get is TenantTicketOps.Read<SupportTicketDetails>;
+  list is TenantTicketOps.List<SupportTicketDetails>;
+}
+`,
+      runner
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const root = createModel(sdkContext);
+
+    // === Test buildArmProviderSchema (legacy detection) ===
+    const armProviderSchema = buildArmProviderSchema(sdkContext, root);
+    ok(armProviderSchema);
+
+    // Legacy detection should separate these into 2 resources (one per scope)
+    strictEqual(
+      armProviderSchema.resources.length,
+      2,
+      "Legacy detection should produce 2 resources (subscription + tenant)"
+    );
+
+    // Find each resource by its path pattern
+    const subTicket = armProviderSchema.resources.find(
+      (r) =>
+        r.metadata.resourceIdPattern.includes("/subscriptions/") &&
+        r.metadata.resourceIdPattern.endsWith(
+          "/supportTickets/{supportTicketName}"
+        )
+    );
+    const tenantTicket = armProviderSchema.resources.find(
+      (r) =>
+        !r.metadata.resourceIdPattern.includes("/subscriptions/") &&
+        r.metadata.resourceIdPattern.endsWith(
+          "/supportTickets/{supportTicketName}"
+        )
+    );
+
+    ok(subTicket, "Should have subscription-scoped ticket");
+    ok(tenantTicket, "Should have tenant-scoped ticket");
+
+    // The subscription-scoped resource correctly gets "Subscription"
+    strictEqual(
+      subTicket.metadata.resourceScope,
+      "Subscription",
+      "Subscription ticket resourceScope"
+    );
+
+    // With method-first priority, the tenant-scoped resource correctly gets "Tenant"
+    // derived from the Read method's operationScope, not from the model's @subscriptionResource decorator
+    strictEqual(
+      tenantTicket.metadata.resourceScope,
+      "Tenant",
+      "Tenant ticket resourceScope (method-derived scope wins over decorator)"
+    );
+
+    // Verify that the methods themselves correctly have Tenant scope
+    for (const method of tenantTicket.metadata.methods) {
+      strictEqual(
+        method.operationScope,
+        "Tenant",
+        `Tenant ticket method ${method.kind} should have Tenant operationScope`
+      );
+    }
+
+    // Verify subscription ticket methods have Subscription scope
+    for (const method of subTicket.metadata.methods) {
+      strictEqual(
+        method.operationScope,
+        "Subscription",
+        `Subscription ticket method ${method.kind} should have Subscription operationScope`
+      );
+    }
+
+    // === Test resolveArmResources ===
+    const resolvedSchema = resolveArmResources(program, sdkContext);
+    ok(resolvedSchema);
+
+    // Compare the entire schemas using deep equality
+    // TODO -- resolveArmResources merges cross-scope operations for the same model into a single resource,
+    // while the legacy detection correctly separates them into distinct resources per scope.
+    // This is a known gap in resolveArmResources for cross-scope LegacyOperations patterns.
+    // deepStrictEqual(
+    //   normalizeSchemaForComparison(resolvedSchema),
+    //   normalizeSchemaForComparison(armProviderSchema)
+    // );
+  });
+
   it("name constraints with all decorators via NamePattern and direct decorators", async () => {
     const program = await typeSpecCompile(
       `
