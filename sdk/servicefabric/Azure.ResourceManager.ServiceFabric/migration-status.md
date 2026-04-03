@@ -19,14 +19,31 @@ The property-level renames and model-level renames work correctly.
 **To revisit:** When the mgmt generator is fixed to handle `@@clientName` on resources with custom
 `@customAzureResource` base types, uncomment the resource renames in `client.tsp` and regenerate.
 
-## Current ApiCompat Status (267 errors remaining)
+## Known Emitter Regression — Data Class Base Type
 
-| Category | Count (×3 TFMs) | Root Cause | Fix |
-|----------|----------------|------------|-----|
-| TypesMustExist | 54 | Resource type renames skipped (generator bug) | Generator fix needed |
-| MembersMustExist | 204 | Flattened properties, changed types, missing constructors | Custom code shims |
-| CannotSealType | 6 | Types that became sealed | Custom code |
-| CannotRemoveBaseTypeOrInterface | 3 | Data classes inherit custom ProxyResource instead of TrackedResourceData | Generator bug |
+Emitter `1.0.0-alpha.20260402.2` generates `ArmResource` as the base class for Data types of
+resources extending custom `@customAzureResource ProxyResource`. These should inherit
+`ServiceFabricProxyResource`. A manual `sed` fix is applied post-generation.
+
+## Current ApiCompat Status (231 errors = 77 unique × 3 TFMs)
+
+| Category | Count (unique) | Root Cause | Fix |
+|----------|---------------|------------|-----|
+| TypesMustExist | 18 | Resource type renames (15) + patch model renames (3) | Generator fix needed |
+| MembersMustExist | 58 | Method signature changes (17 ClusterVersions), type changes (12 BinaryData, 5 TimeSpan), resource rename methods (24) | Accept as migration breaking changes |
+| CannotRemoveBaseTypeOrInterface | 1 | ClusterCodeVersionsResult no longer inherits ResourceData | Accept; @@hierarchyBuilding caused cascading side effects |
+
+## Fixes Applied This Session
+
+### TypeSpec client.tsp changes
+- `@@alternateType` for `AzureActiveDirectory.tenantId` → `Azure.Core.uuid` (System.Guid)
+- `@@alternateType` for `ApplicationUserAssignedIdentity.principalId` → `Azure.Core.uuid` (System.Guid)
+- `@@alternateType` for `ClusterVersionDetails.supportExpiryUtc` → `utcDateTime` (System.DateTimeOffset)
+
+### SDK-side fixes
+- Fixed emitter regression: Data class base changed from ServiceFabricProxyResource to ArmResource
+- Fixed PartitionSchemeDescription/ServicePlacementPolicyDescription constructor: `internal` → `protected`
+- Added ClusterData constructor overload for regenerated serialization code
 
 ## Spec Changes Applied (client.tsp)
 
@@ -69,7 +86,7 @@ The property-level renames and model-level renames work correctly.
 | Phase 3 — Legacy config removed | ✅ | autorest.md deleted, IncludeAutorestDependency removed |
 | Phase 4 — Custom code updated | ✅ | No custom code existed |
 | Phase 5 — Code generation | ✅ | Generation succeeds |
-| Phase 6 — Build-Fix Cycle | 🔄 | Compilation passes, 543 ApiCompat errors remaining |
+| Phase 6 — Build-Fix Cycle | 🔄 | Compilation passes, 231 ApiCompat errors (77 unique) remaining |
 | Phase 7 — CI & Changelog | ⏭️ | |
 | Phase 8 — Test project build | ⏭️ | |
 | Phase 9 — Test execution | ⏭️ | |
@@ -84,6 +101,7 @@ The property-level renames and model-level renames work correctly.
 3. **Duplicate methods** - MockableServiceFabricArmClient and ServiceFabricExtensions generate duplicate `GetClusterVersionResource` methods.
 4. **ClusterVersionCollection wrong types** - Multiple type mismatches (ClusterVersionsEnvironment→string, ClusterCodeVersionsListResult→ClusterData, missing GetEnumerator).
 5. **MockableServiceFabricSubscriptionResource** - Missing constructor argument for ClusterVersionCollection.
+6. **Data class base type regression** - Emitter generates `ArmResource` instead of `ServiceFabricProxyResource` for Data classes. Manual sed fix applied post-generation.
 
 ## Spec Changes Made
 
