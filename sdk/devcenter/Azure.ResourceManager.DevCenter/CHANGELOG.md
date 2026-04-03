@@ -10,6 +10,9 @@
 
 ### Other Changes
 
+- Migrated SDK code generation from AutoRest to the new TypeSpec-based management plane generator (MPG). This is an internal infrastructure change and does not affect the public API surface.
+- Updated README with DevCenter-specific key concepts, resource hierarchy descriptions, and runnable code examples for common operations.
+
 ## 1.0.2 (2025-03-11)
 
 ### Features Added
