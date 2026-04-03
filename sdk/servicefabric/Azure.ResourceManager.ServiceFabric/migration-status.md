@@ -3,13 +3,52 @@
 **Tracking Issue:** [#55604](https://github.com/Azure/azure-sdk-for-net/issues/55604)
 **Last Updated:** 2026-04-03
 
-## PRs
+## Known Generator Bug — Resource Type Renames Blocked
 
-| PR | URL | Status |
-|----|-----|--------|
-| **Spec** | Not created (branch: `servicefabric-mpg-migration` on `live1206/azure-rest-api-specs`) | Draft |
-| **SDK** | Not created (branch: `servicefabric-mpg-migration` on `live1206/azure-sdk-for-net`) | Draft |
-| **Generator** | N/A | N/A |
+`@@clientName` on resource models extending custom `@customAzureResource ProxyResource` causes the
+mgmt generator to produce empty stub Resource classes (missing `ResourceType`, `Data`, constructors,
+and all operations). This affects ALL resource types in this package because the spec defines a custom
+`ProxyResource` model with `string id/name/type` fields.
+
+**Impact:** Cannot rename resource types from `ClusterResource` → `ServiceFabricClusterResource`, etc.
+This is a **breaking change** from the old API which used the `ServiceFabric` prefix on all resource types.
+
+**Workaround applied:** Resource type `@@clientName` decorators are commented out in `client.tsp`.
+The property-level renames and model-level renames work correctly.
+
+**To revisit:** When the mgmt generator is fixed to handle `@@clientName` on resources with custom
+`@customAzureResource` base types, uncomment the resource renames in `client.tsp` and regenerate.
+
+## Current ApiCompat Status (267 errors remaining)
+
+| Category | Count (×3 TFMs) | Root Cause | Fix |
+|----------|----------------|------------|-----|
+| TypesMustExist | 54 | Resource type renames skipped (generator bug) | Generator fix needed |
+| MembersMustExist | 204 | Flattened properties, changed types, missing constructors | Custom code shims |
+| CannotSealType | 6 | Types that became sealed | Custom code |
+| CannotRemoveBaseTypeOrInterface | 3 | Data classes inherit custom ProxyResource instead of TrackedResourceData | Generator bug |
+
+## Spec Changes Applied (client.tsp)
+
+- `@@clientName` for `ProxyResource` → `ServiceFabricProxyResource` (csharp)
+- `@@clientName` for `ArmProxyResource` (common types, csharp)
+- 12 model type renames (e.g., `AzureActiveDirectory` → `ClusterAadSetting`)
+- 14 enum/union renames (e.g., `AddOnFeatures` → `ClusterAddOnFeature`)
+- 8 property renames (e.g., `sfZonalUpgradeMode` → `ServiceFabricZonalUpgradeMode`)
+- 5 `@@access(public)` decorators
+- 5 `@@alternateType` for URI properties
+- Removed `model-namespace: false` from tspconfig.yaml
+
+## SDK Workarounds (Customization/)
+
+- `MockableServiceFabricArmClient.cs` — duplicate `GetClusterVersionResource` removed
+- `ServiceFabricExtensions.cs` — duplicate `GetClusterVersionResource` removed
+- `ServiceFabricExtensionsHelper.cs` — missing `GetMockableServiceFabricArmClient` helper
+- `ClusterVersionCollection.cs` — `ClusterVersionsEnvironment` → `string`, `IEnumerable` fix
+- `ApplicationResource.cs` etc — `data.Id` string → `new ResourceIdentifier(data.Id)`
+- `ClusterData.cs` — `string id` → `new ResourceIdentifier(id)`
+- `VMSizeResourceData.cs` — `string id` → `new ResourceIdentifier(id)`
+- `MockableServiceFabricSubscriptionResource.cs` — missing constructor arg
 
 ## Branches
 
