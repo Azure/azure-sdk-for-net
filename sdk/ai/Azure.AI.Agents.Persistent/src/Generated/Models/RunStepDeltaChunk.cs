@@ -30,7 +30,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="object"> The object type, which is always `thread.run.step.delta`. </param>
         /// <param name="delta"> The delta containing the fields that have changed on the run step. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RunStepDeltaChunk(string id, string @object, RunStepDelta delta, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RunStepDeltaChunk(string id, RunStepDeltaChunkObject @object, RunStepDelta delta, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Object = @object;

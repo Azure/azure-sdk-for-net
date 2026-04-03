@@ -18,11 +18,6 @@ namespace Azure.AI.Agents.Persistent
     [PersistableModelProxy(typeof(UnknownRunStepDetails))]
     public abstract partial class RunStepDetails : IJsonModel<RunStepDetails>
     {
-        /// <summary> Initializes a new instance of <see cref="RunStepDetails"/> for deserialization. </summary>
-        internal RunStepDetails()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual RunStepDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

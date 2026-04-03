@@ -89,7 +89,7 @@ namespace Azure.AI.Agents.Persistent
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
             writer.WritePropertyName("object"u8);
-            writer.WriteStringValue(Object);
+            writer.WriteStringValue(Object.ToString());
             writer.WritePropertyName("created_at"u8);
             writer.WriteNumberValue(CreatedAt, "U");
             writer.WritePropertyName("name"u8);
@@ -182,7 +182,7 @@ namespace Azure.AI.Agents.Persistent
                 return null;
             }
             string id = default;
-            string @object = default;
+            PersistentAgentsVectorStoreObject @object = default;
             DateTimeOffset createdAt = default;
             string name = default;
             int usageBytes = default;
@@ -202,7 +202,7 @@ namespace Azure.AI.Agents.Persistent
                 }
                 if (prop.NameEquals("object"u8))
                 {
-                    @object = prop.Value.GetString();
+                    @object = new PersistentAgentsVectorStoreObject(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("created_at"u8))

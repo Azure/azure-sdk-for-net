@@ -18,11 +18,6 @@ namespace Azure.AI.Agents.Persistent
     [PersistableModelProxy(typeof(UnknownVectorStoreChunkingStrategyResponse))]
     public abstract partial class VectorStoreChunkingStrategyResponse : IJsonModel<VectorStoreChunkingStrategyResponse>
     {
-        /// <summary> Initializes a new instance of <see cref="VectorStoreChunkingStrategyResponse"/> for deserialization. </summary>
-        internal VectorStoreChunkingStrategyResponse()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual VectorStoreChunkingStrategyResponse PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

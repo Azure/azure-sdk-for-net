@@ -42,5 +42,10 @@ namespace Azure.AI.Agents.Persistent
         /// </summary>
         [CodeGenMember("_additionalBinaryDataProperties")]
         internal protected IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
+        // Backward-compat: old API exposed this as a protected internal field.
+#pragma warning disable SA1401
+        protected internal IDictionary<string, BinaryData> SerializedAdditionalRawData;
+#pragma warning restore SA1401
     }
 }

@@ -14,48 +14,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.AI.Agents.Persistent
 {
-    // ── SerializedAdditionalRawData shims ─────────────────────────────────────
-    // The old contract exposed protected internal SerializedAdditionalRawData { get; set; }.
-    // The new generator uses a field named _additionalBinaryDataProperties instead.
-    // These shims restore the old property name.
-
-    public abstract partial class MessageDeltaTextAnnotation
-    {
-        /// <summary> Backward-compat: old name for additional-data bag. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        protected internal IDictionary<string, BinaryData> SerializedAdditionalRawData
-        {
-            get => _additionalBinaryDataProperties;
-            set => _additionalBinaryDataProperties = value;
-        }
-    }
-
-    public abstract partial class RunStepDeltaToolCall
-    {
-        /// <summary> Backward-compat: old name for additional-data bag. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        protected internal IDictionary<string, BinaryData> SerializedAdditionalRawData
-        {
-            get => _additionalBinaryDataProperties;
-            set => _additionalBinaryDataProperties = value;
-        }
-    }
-
-    // ── RequiredToolCall constructor shim ──────────────────────────────────────
-    // The old contract had protected RequiredToolCall(string id).
-    // The new generator emits private protected RequiredToolCall(string id).
-    // We suppress the generated ctor and restore the protected visibility.
-
-    [CodeGenSuppress("RequiredToolCall", typeof(string))]
-    public abstract partial class RequiredToolCall
-    {
-        // Backward-compat: restore protected visibility for the (string id) constructor.
-        protected RequiredToolCall(string id) : base((string)null)
-        {
-            Id = id;
-        }
-    }
-
     // ── Property getter shims ─────────────────────────────────────────────────
     // The old contract had properties returning extensible enum struct types
     // (e.g. AzureFunctionBindingType). The new generator emits string properties.

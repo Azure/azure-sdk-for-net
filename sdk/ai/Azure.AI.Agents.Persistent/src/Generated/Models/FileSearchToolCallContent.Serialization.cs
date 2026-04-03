@@ -79,7 +79,7 @@ namespace Azure.AI.Agents.Persistent
                 throw new FormatException($"The model {nameof(FileSearchToolCallContent)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type);
+            writer.WriteStringValue(Type.ToString());
             writer.WritePropertyName("text"u8);
             writer.WriteStringValue(Text);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
@@ -124,14 +124,14 @@ namespace Azure.AI.Agents.Persistent
             {
                 return null;
             }
-            string @type = default;
+            FileSearchToolCallContentType @type = default;
             string text = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    @type = new FileSearchToolCallContentType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("text"u8))

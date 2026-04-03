@@ -364,7 +364,7 @@ namespace Azure.AI.Agents.Persistent
         /// <returns> A new <see cref="Persistent.AzureFunctionBinding"/> instance for mocking. </returns>
         public static AzureFunctionBinding AzureFunctionBinding(AzureFunctionStorageQueue storageQueue = default)
         {
-            return new AzureFunctionBinding("storage_queue", storageQueue, additionalBinaryDataProperties: null);
+            return new AzureFunctionBinding("AzureFunctionBindingType.StorageQueue", storageQueue, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The structure for keeping storage queue name and URI. </summary>
@@ -554,7 +554,7 @@ namespace Azure.AI.Agents.Persistent
         /// <returns> A new <see cref="Persistent.ResponseFormatJsonSchemaType"/> instance for mocking. </returns>
         public static ResponseFormatJsonSchemaType ResponseFormatJsonSchemaType(ResponseFormatJsonSchema jsonSchema = default)
         {
-            return new ResponseFormatJsonSchemaType("json_schema", jsonSchema, additionalBinaryDataProperties: null);
+            return new ResponseFormatJsonSchemaType("ResponseFormatJsonSchemaTypeType.JsonSchema", jsonSchema, additionalBinaryDataProperties: null);
         }
 
         /// <summary> A description of what the response format is for, used by the model to determine how to respond in the format. </summary>
@@ -1382,7 +1382,7 @@ namespace Azure.AI.Agents.Persistent
         /// <returns> A new <see cref="Persistent.FileSearchToolCallContent"/> instance for mocking. </returns>
         public static FileSearchToolCallContent FileSearchToolCallContent(string text = default)
         {
-            return new FileSearchToolCallContent("text", text, additionalBinaryDataProperties: null);
+            return new FileSearchToolCallContent("FileSearchToolCallContentType.Text", text, additionalBinaryDataProperties: null);
         }
 
         /// <summary>
@@ -1733,7 +1733,7 @@ namespace Azure.AI.Agents.Persistent
 
             return new PersistentAgentsVectorStore(
                 id,
-                "vector_store",
+                "PersistentAgentsVectorStoreObject.VectorStore",
                 createdAt,
                 name,
                 usageBytes,
@@ -1827,7 +1827,7 @@ namespace Azure.AI.Agents.Persistent
         {
             return new VectorStoreFile(
                 id,
-                "vector_store.file",
+                "VectorStoreFileObject.VectorStoreFile",
                 usageBytes,
                 createdAt,
                 vectorStoreId,
@@ -1883,7 +1883,7 @@ namespace Azure.AI.Agents.Persistent
         {
             return new VectorStoreFileBatch(
                 id,
-                "vector_store.files_batch",
+                "VectorStoreFileBatchObject.VectorStoreFilesBatch",
                 createdAt,
                 vectorStoreId,
                 status,
@@ -1897,7 +1897,7 @@ namespace Azure.AI.Agents.Persistent
         /// <returns> A new <see cref="Persistent.MessageDeltaChunk"/> instance for mocking. </returns>
         public static MessageDeltaChunk MessageDeltaChunk(string id = default, MessageDelta delta = default)
         {
-            return new MessageDeltaChunk(id, "thread.message.delta", delta, additionalBinaryDataProperties: null);
+            return new MessageDeltaChunk(id, "MessageDeltaChunkObject.ThreadMessageDelta", delta, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Represents the typed 'delta' payload within a streaming message delta chunk. </summary>
@@ -2059,7 +2059,7 @@ namespace Azure.AI.Agents.Persistent
         /// <returns> A new <see cref="Persistent.RunStepDeltaChunk"/> instance for mocking. </returns>
         public static RunStepDeltaChunk RunStepDeltaChunk(string id = default, RunStepDelta delta = default)
         {
-            return new RunStepDeltaChunk(id, "thread.run.step.delta", delta, additionalBinaryDataProperties: null);
+            return new RunStepDeltaChunk(id, "RunStepDeltaChunkObject.ThreadRunStepDelta", delta, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Represents the delta payload in a streaming run step delta chunk. </summary>

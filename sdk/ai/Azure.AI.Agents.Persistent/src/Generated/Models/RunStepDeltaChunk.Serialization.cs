@@ -81,7 +81,7 @@ namespace Azure.AI.Agents.Persistent
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
             writer.WritePropertyName("object"u8);
-            writer.WriteStringValue(Object);
+            writer.WriteStringValue(Object.ToString());
             writer.WritePropertyName("delta"u8);
             writer.WriteObjectValue(Delta, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
@@ -127,7 +127,7 @@ namespace Azure.AI.Agents.Persistent
                 return null;
             }
             string id = default;
-            string @object = default;
+            RunStepDeltaChunkObject @object = default;
             RunStepDelta delta = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -139,7 +139,7 @@ namespace Azure.AI.Agents.Persistent
                 }
                 if (prop.NameEquals("object"u8))
                 {
-                    @object = prop.Value.GetString();
+                    @object = new RunStepDeltaChunkObject(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("delta"u8))

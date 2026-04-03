@@ -18,11 +18,6 @@ namespace Azure.AI.Agents.Persistent
     [PersistableModelProxy(typeof(UnknownMessageContent))]
     public abstract partial class MessageContent : IJsonModel<MessageContent>
     {
-        /// <summary> Initializes a new instance of <see cref="MessageContent"/> for deserialization. </summary>
-        internal MessageContent()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual MessageContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

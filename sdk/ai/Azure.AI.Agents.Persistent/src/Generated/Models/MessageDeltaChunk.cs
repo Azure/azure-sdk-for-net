@@ -30,7 +30,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="object"> The object type, which is always `thread.message.delta`. </param>
         /// <param name="delta"> The delta containing the fields that have changed on the Message. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MessageDeltaChunk(string id, string @object, MessageDelta delta, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MessageDeltaChunk(string id, MessageDeltaChunkObject @object, MessageDelta delta, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Object = @object;

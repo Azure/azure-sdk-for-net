@@ -18,11 +18,6 @@ namespace Azure.AI.Agents.Persistent
     [PersistableModelProxy(typeof(UnknownOpenApiAuthDetails))]
     public abstract partial class OpenApiAuthDetails : IJsonModel<OpenApiAuthDetails>
     {
-        /// <summary> Initializes a new instance of <see cref="OpenApiAuthDetails"/> for deserialization. </summary>
-        internal OpenApiAuthDetails()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual OpenApiAuthDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

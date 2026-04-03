@@ -18,11 +18,6 @@ namespace Azure.AI.Agents.Persistent
     [PersistableModelProxy(typeof(UnknownRunStepCodeInterpreterToolCallOutput))]
     public abstract partial class RunStepCodeInterpreterToolCallOutput : IJsonModel<RunStepCodeInterpreterToolCallOutput>
     {
-        /// <summary> Initializes a new instance of <see cref="RunStepCodeInterpreterToolCallOutput"/> for deserialization. </summary>
-        internal RunStepCodeInterpreterToolCallOutput()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual RunStepCodeInterpreterToolCallOutput PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

@@ -18,11 +18,6 @@ namespace Azure.AI.Agents.Persistent
     [PersistableModelProxy(typeof(UnknownRequiredAction))]
     public abstract partial class RequiredAction : IJsonModel<RequiredAction>
     {
-        /// <summary> Initializes a new instance of <see cref="RequiredAction"/> for deserialization. </summary>
-        internal RequiredAction()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual RequiredAction PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

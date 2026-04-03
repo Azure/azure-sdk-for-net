@@ -18,11 +18,6 @@ namespace Azure.AI.Agents.Persistent
     [PersistableModelProxy(typeof(UnknownRequiredToolCall))]
     public abstract partial class RequiredToolCall : RequiredAction, IJsonModel<RequiredToolCall>
     {
-        /// <summary> Initializes a new instance of <see cref="RequiredToolCall"/> for deserialization. </summary>
-        internal RequiredToolCall()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override RequiredAction PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

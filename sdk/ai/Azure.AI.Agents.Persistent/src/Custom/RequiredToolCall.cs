@@ -17,10 +17,12 @@ namespace Azure.AI.Agents.Persistent;
 /// <item> <see cref="RequiredFunctionToolCall"/> </item>
 /// </list>
 /// </remarks>
+[CodeGenSuppress("RequiredToolCall", typeof(string))]
 public abstract partial class RequiredToolCall : RequiredAction
 {
-    // Generator bug workaround: the generated private protected ctor references
-    // undeclared variable @type. Provide the field so it compiles.
-    // This will be used by the generated constructor: base(@type)
-    private static readonly string @type = null;
+    // Backward-compat: old contract had protected RequiredToolCall(string id)
+    protected RequiredToolCall(string id) : base((string)null)
+    {
+        Id = id;
+    }
 }

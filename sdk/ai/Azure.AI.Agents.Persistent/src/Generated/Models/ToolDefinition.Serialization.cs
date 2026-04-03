@@ -18,11 +18,6 @@ namespace Azure.AI.Agents.Persistent
     [PersistableModelProxy(typeof(UnknownToolDefinition))]
     public abstract partial class ToolDefinition : IJsonModel<ToolDefinition>
     {
-        /// <summary> Initializes a new instance of <see cref="ToolDefinition"/> for deserialization. </summary>
-        internal ToolDefinition()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ToolDefinition PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
