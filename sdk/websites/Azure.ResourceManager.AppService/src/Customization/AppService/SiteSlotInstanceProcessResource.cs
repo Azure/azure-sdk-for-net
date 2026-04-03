@@ -30,10 +30,6 @@ namespace Azure.ResourceManager.AppService
         /// <description>WebApps_ListInstanceProcessThreadsSlot</description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-12-01</description>
-        /// </item>
-        /// <item>
         /// <term>Resource</term>
         /// <description><see cref="SiteSlotInstanceProcessResource"/></description>
         /// </item>
@@ -58,10 +54,6 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_ListInstanceProcessThreadsSlot</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

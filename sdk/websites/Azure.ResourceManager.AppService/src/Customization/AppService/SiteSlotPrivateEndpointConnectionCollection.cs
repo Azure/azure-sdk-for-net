@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #nullable disable
@@ -9,37 +9,27 @@ using System.ComponentModel;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Xml.Linq;
 using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary>
-    /// A class representing a collection of <see cref="HostingEnvironmentPrivateEndpointConnectionResource"/> and their operations.
-    /// Each <see cref="HostingEnvironmentPrivateEndpointConnectionResource"/> in the collection will belong to the same instance of <see cref="AppServiceEnvironmentResource"/>.
-    /// To get a <see cref="HostingEnvironmentPrivateEndpointConnectionCollection"/> instance call the GetHostingEnvironmentPrivateEndpointConnections method from an instance of <see cref="AppServiceEnvironmentResource"/>.
-    /// </summary>
-    public partial class HostingEnvironmentPrivateEndpointConnectionCollection
+    public partial class SiteSlotPrivateEndpointConnectionCollection
     {
         /// <summary>
         /// Description for Approves or rejects a private endpoint connection
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/privateEndpointConnections/{privateEndpointConnectionName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/privateEndpointConnections/{privateEndpointConnectionName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AppServiceEnvironments_ApproveOrRejectPrivateEndpointConnection</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>WebApps_ApproveOrRejectPrivateEndpointConnectionSlot</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="HostingEnvironmentPrivateEndpointConnectionResource"/></description>
+        /// <description><see cref="SiteSlotPrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -50,7 +40,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> or <paramref name="info"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<ArmOperation<HostingEnvironmentPrivateEndpointConnectionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string privateEndpointConnectionName, PrivateLinkConnectionApprovalRequestInfo info, CancellationToken cancellationToken)
+        public virtual async Task<ArmOperation<SiteSlotPrivateEndpointConnectionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string privateEndpointConnectionName, PrivateLinkConnectionApprovalRequestInfo info, CancellationToken cancellationToken)
             => await CreateOrUpdateAsync(waitUntil, privateEndpointConnectionName, new RemotePrivateEndpointConnectionARMResourceData(info.Id, info.Name, info.ResourceType, info.SystemData, null, null, info.PrivateLinkServiceConnectionState, new List<IPAddress>(), info.Kind, null), cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -58,19 +48,15 @@ namespace Azure.ResourceManager.AppService
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/privateEndpointConnections/{privateEndpointConnectionName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/privateEndpointConnections/{privateEndpointConnectionName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AppServiceEnvironments_ApproveOrRejectPrivateEndpointConnection</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-02-01</description>
+        /// <description>WebApps_ApproveOrRejectPrivateEndpointConnectionSlot</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="HostingEnvironmentPrivateEndpointConnectionResource"/></description>
+        /// <description><see cref="SiteSlotPrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -81,7 +67,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> or <paramref name="info"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual ArmOperation<HostingEnvironmentPrivateEndpointConnectionResource> CreateOrUpdate(WaitUntil waitUntil, string privateEndpointConnectionName, PrivateLinkConnectionApprovalRequestInfo info, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SiteSlotPrivateEndpointConnectionResource> CreateOrUpdate(WaitUntil waitUntil, string privateEndpointConnectionName, PrivateLinkConnectionApprovalRequestInfo info, CancellationToken cancellationToken)
             => CreateOrUpdate(waitUntil, privateEndpointConnectionName, new RemotePrivateEndpointConnectionARMResourceData(info.Id, info.Name, info.ResourceType, info.SystemData, null, null, info.PrivateLinkServiceConnectionState, new List<IPAddress>(), info.Kind, null), cancellationToken);
     }
 }

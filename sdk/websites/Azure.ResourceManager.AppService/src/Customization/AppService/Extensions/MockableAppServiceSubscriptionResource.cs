@@ -116,10 +116,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <term>Operation Id</term>
         /// <description>CheckNameAvailability</description>
         /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Name availability request. </param>
@@ -149,10 +145,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CheckNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
         /// </item>
         /// </list>
         /// </summary>
