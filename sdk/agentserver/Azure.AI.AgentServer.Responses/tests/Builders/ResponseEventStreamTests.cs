@@ -277,7 +277,7 @@ public class ResponseEventStreamTests
     }
 
     [Test]
-    public void EmitCompleted_WithAccumulatedOutput_ComputesOutputText()
+    public void EmitCompleted_WithAccumulatedOutput_DoesNotSetOutputText()
     {
         var stream = CreateStream();
 
@@ -291,7 +291,8 @@ public class ResponseEventStreamTests
 
         var evt = stream.EmitCompleted();
 
-        Assert.That(evt.Response.OutputText, Is.EqualTo("Hello world"));
+        // output_text is a client SDK convenience property; the server never sets it.
+        Assert.That(evt.Response.OutputText, Is.Null);
     }
 
     // ── T016: EmitFailed Tests ────────────────────────────────
@@ -324,7 +325,7 @@ public class ResponseEventStreamTests
     }
 
     [Test]
-    public void EmitFailed_ComputesOutputTextFromAccumulated()
+    public void EmitFailed_DoesNotSetOutputText()
     {
         var stream = CreateStream();
 
@@ -337,7 +338,8 @@ public class ResponseEventStreamTests
 
         var evt = stream.EmitFailed(ResponseErrorCode.ServerError, "err");
 
-        Assert.That(evt.Response.OutputText, Is.EqualTo("partial"));
+        // output_text is a client SDK convenience property; the server never sets it.
+        Assert.That(evt.Response.OutputText, Is.Null);
     }
 
     // ── T017: EmitIncomplete Tests ────────────────────────────
@@ -368,7 +370,7 @@ public class ResponseEventStreamTests
     }
 
     [Test]
-    public void EmitIncomplete_ComputesOutputTextFromAccumulated()
+    public void EmitIncomplete_DoesNotSetOutputText()
     {
         var stream = CreateStream();
 
@@ -381,6 +383,7 @@ public class ResponseEventStreamTests
 
         var evt = stream.EmitIncomplete(ResponseIncompleteDetailsReason.MaxOutputTokens);
 
-        Assert.That(evt.Response.OutputText, Is.EqualTo("so far"));
+        // output_text is a client SDK convenience property; the server never sets it.
+        Assert.That(evt.Response.OutputText, Is.Null);
     }
 }

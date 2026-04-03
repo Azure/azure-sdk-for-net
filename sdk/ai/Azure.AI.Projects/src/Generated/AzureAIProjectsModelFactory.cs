@@ -567,13 +567,54 @@ namespace Azure.AI.Projects
 
         /// <summary>
         /// Base class for targets with discriminator support.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: 
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Evaluation.AzureAIModelTarget"/> and <see cref="Evaluation.AzureAIAgentTarget"/>.
         /// </summary>
         /// <param name="type"> The type of target. </param>
         /// <returns> A new <see cref="Evaluation.EvaluationTarget"/> instance for mocking. </returns>
         public static EvaluationTarget EvaluationTarget(string @type = default)
         {
             return new UnknownEvaluationTarget(@type, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Represents a target specifying an Azure AI model for operations requiring model selection. </summary>
+        /// <param name="model"> The unique identifier of the Azure AI model. </param>
+        /// <param name="samplingParams"> The parameters used to control the sampling behavior of the model during text generation. </param>
+        /// <returns> A new <see cref="Evaluation.AzureAIModelTarget"/> instance for mocking. </returns>
+        public static AzureAIModelTarget AzureAIModelTarget(string model = default, ModelSamplingParams samplingParams = default)
+        {
+            return new AzureAIModelTarget("azure_ai_model", additionalBinaryDataProperties: null, model, samplingParams);
+        }
+
+        /// <summary> Represents a set of parameters used to control the sampling behavior of a language model during text generation. </summary>
+        /// <param name="temperature"> The temperature parameter for sampling. </param>
+        /// <param name="topP"> The top-p parameter for nucleus sampling. </param>
+        /// <param name="seed"> The random seed for reproducibility. </param>
+        /// <param name="maxCompletionTokens"> The maximum number of tokens allowed in the completion. </param>
+        /// <returns> A new <see cref="Evaluation.ModelSamplingParams"/> instance for mocking. </returns>
+        public static ModelSamplingParams ModelSamplingParams(float temperature = default, float topP = default, int seed = default, int maxCompletionTokens = default)
+        {
+            return new ModelSamplingParams(temperature, topP, seed, maxCompletionTokens, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Represents a target specifying an Azure AI agent. </summary>
+        /// <param name="name"> The unique identifier of the Azure AI agent. </param>
+        /// <param name="version"> The version of the Azure AI agent. </param>
+        /// <param name="toolDescriptions"> The parameters used to control the sampling behavior of the agent during text generation. </param>
+        /// <returns> A new <see cref="Evaluation.AzureAIAgentTarget"/> instance for mocking. </returns>
+        public static AzureAIAgentTarget AzureAIAgentTarget(string name = default, string version = default, IEnumerable<ToolDescription> toolDescriptions = default)
+        {
+            toolDescriptions ??= new ChangeTrackingList<ToolDescription>();
+
+            return new AzureAIAgentTarget("azure_ai_agent", additionalBinaryDataProperties: null, name, version, toolDescriptions.ToList());
+        }
+
+        /// <summary> Description of a tool that can be used by an agent. </summary>
+        /// <param name="name"> The name of the tool. </param>
+        /// <param name="description"> A brief description of the tool's purpose. </param>
+        /// <returns> A new <see cref="Projects.ToolDescription"/> instance for mocking. </returns>
+        public static ToolDescription ToolDescription(string name = default, string description = default)
+        {
+            return new ToolDescription(name, description, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Taxonomy category definition. </summary>

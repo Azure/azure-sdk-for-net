@@ -36,5 +36,32 @@ namespace Azure.ResourceManager.Purview
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
         }
+
+        /// <summary> The private link resource group identifier. </summary>
+        public string GroupId
+        {
+            get
+            {
+                return Properties.GroupId;
+            }
+        }
+
+        /// <summary> This translates to how many Private IPs should be created for each privately linkable resource. </summary>
+        public IReadOnlyList<string> RequiredMembers
+        {
+            get
+            {
+                return Properties.RequiredMembers;
+            }
+        }
+
+        /// <summary> The required zone names for private link resource. </summary>
+        public IReadOnlyList<string> RequiredZoneNames
+        {
+            get
+            {
+                return Properties.RequiredZoneNames;
+            }
+        }
     }
 }
