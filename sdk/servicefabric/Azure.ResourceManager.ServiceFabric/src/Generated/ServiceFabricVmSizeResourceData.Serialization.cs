@@ -13,62 +13,63 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.ServiceFabric.Models;
 
 namespace Azure.ResourceManager.ServiceFabric
 {
     /// <summary> Describes a VM Sizes. </summary>
-    public partial class VMSizeResourceData : ResourceData, IJsonModel<VMSizeResourceData>
+    public partial class ServiceFabricVmSizeResourceData : ResourceData, IJsonModel<ServiceFabricVmSizeResourceData>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VMSizeResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceFabricVmSizeResourceData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeVMSizeResourceData(document.RootElement, options);
+                        return DeserializeServiceFabricVmSizeResourceData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VMSizeResourceData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceFabricVmSizeResourceData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VMSizeResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceFabricVmSizeResourceData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceFabricContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(VMSizeResourceData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceFabricVmSizeResourceData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<VMSizeResourceData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ServiceFabricVmSizeResourceData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VMSizeResourceData IPersistableModel<VMSizeResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (VMSizeResourceData)PersistableModelCreateCore(data, options);
+        ServiceFabricVmSizeResourceData IPersistableModel<ServiceFabricVmSizeResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ServiceFabricVmSizeResourceData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<VMSizeResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ServiceFabricVmSizeResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="VMSizeResourceData"/> from. </param>
-        internal static VMSizeResourceData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ServiceFabricVmSizeResourceData"/> from. </param>
+        internal static ServiceFabricVmSizeResourceData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeVMSizeResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeServiceFabricVmSizeResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<VMSizeResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ServiceFabricVmSizeResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -79,10 +80,10 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VMSizeResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceFabricVmSizeResourceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VMSizeResourceData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceFabricVmSizeResourceData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (options.Format != "W" && Optional.IsDefined(Properties))
@@ -94,24 +95,24 @@ namespace Azure.ResourceManager.ServiceFabric
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VMSizeResourceData IJsonModel<VMSizeResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (VMSizeResourceData)JsonModelCreateCore(ref reader, options);
+        ServiceFabricVmSizeResourceData IJsonModel<ServiceFabricVmSizeResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ServiceFabricVmSizeResourceData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VMSizeResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceFabricVmSizeResourceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VMSizeResourceData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceFabricVmSizeResourceData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeVMSizeResourceData(document.RootElement, options);
+            return DeserializeServiceFabricVmSizeResourceData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static VMSizeResourceData DeserializeVMSizeResourceData(JsonElement element, ModelReaderWriterOptions options)
+        internal static ServiceFabricVmSizeResourceData DeserializeServiceFabricVmSizeResourceData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -159,7 +160,7 @@ namespace Azure.ResourceManager.ServiceFabric
                     {
                         continue;
                     }
-                    properties = ServiceFabric.VMSize.DeserializeVMSize(prop.Value, options);
+                    properties = Models.VMSize.DeserializeVMSize(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -167,7 +168,7 @@ namespace Azure.ResourceManager.ServiceFabric
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new VMSizeResourceData(
+            return new ServiceFabricVmSizeResourceData(
                 id,
                 name,
                 resourceType,

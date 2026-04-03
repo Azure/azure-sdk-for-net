@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ServiceFabric;
 
-namespace Azure.ResourceManager.ServiceFabric
+namespace Azure.ResourceManager.ServiceFabric.Models
 {
     /// <summary> Describes a user assigned identity for the application. </summary>
     public partial class ApplicationUserAssignedIdentity

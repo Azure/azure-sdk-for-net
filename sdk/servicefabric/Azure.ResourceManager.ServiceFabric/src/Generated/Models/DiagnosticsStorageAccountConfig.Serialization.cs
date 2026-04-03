@@ -9,8 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.ResourceManager.ServiceFabric;
 
-namespace Azure.ResourceManager.ServiceFabric
+namespace Azure.ResourceManager.ServiceFabric.Models
 {
     /// <summary> The storage account information for storing Service Fabric diagnostic logs. </summary>
     public partial class DiagnosticsStorageAccountConfig : IJsonModel<DiagnosticsStorageAccountConfig>

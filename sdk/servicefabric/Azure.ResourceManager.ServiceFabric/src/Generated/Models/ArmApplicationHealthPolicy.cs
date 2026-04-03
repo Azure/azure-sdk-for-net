@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ServiceFabric;
 
-namespace Azure.ResourceManager.ServiceFabric
+namespace Azure.ResourceManager.ServiceFabric.Models
 {
     /// <summary> Defines a health policy used to evaluate the health of an application or one of its children entities. </summary>
     public partial class ArmApplicationHealthPolicy

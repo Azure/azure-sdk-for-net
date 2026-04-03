@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ServiceFabric;
 
-namespace Azure.ResourceManager.ServiceFabric
+namespace Azure.ResourceManager.ServiceFabric.Models
 {
     /// <summary> Describes the server certificate details using common name. </summary>
     public partial class ClusterServerCertificateCommonName

@@ -9,8 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.ResourceManager.ServiceFabric;
 
-namespace Azure.ResourceManager.ServiceFabric
+namespace Azure.ResourceManager.ServiceFabric.Models
 {
     /// <summary> Describes a user assigned identity for the application. </summary>
     public partial class ApplicationUserAssignedIdentity : IJsonModel<ApplicationUserAssignedIdentity>

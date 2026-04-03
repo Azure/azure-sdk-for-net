@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ServiceFabric;
 
-namespace Azure.ResourceManager.ServiceFabric
+namespace Azure.ResourceManager.ServiceFabric.Models
 {
     /// <summary> The storage account information for storing Service Fabric diagnostic logs. </summary>
     public partial class DiagnosticsStorageAccountConfig

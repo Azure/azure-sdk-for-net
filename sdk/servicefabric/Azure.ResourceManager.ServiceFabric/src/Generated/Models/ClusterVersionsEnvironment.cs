@@ -7,8 +7,9 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ServiceFabric;
 
-namespace Azure.ResourceManager.ServiceFabric
+namespace Azure.ResourceManager.ServiceFabric.Models
 {
     /// <summary> The operating system or environment of the cluster version. </summary>
     public readonly partial struct ClusterVersionsEnvironment : IEquatable<ClusterVersionsEnvironment>

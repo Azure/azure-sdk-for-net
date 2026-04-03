@@ -7,8 +7,9 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ServiceFabric;
 
-namespace Azure.ResourceManager.ServiceFabric
+namespace Azure.ResourceManager.ServiceFabric.Models
 {
     /// <summary> The notification channel indicates the type of receivers subscribed to the notification, either user or subscription. </summary>
     public readonly partial struct ClusterNotificationChannel : IEquatable<ClusterNotificationChannel>

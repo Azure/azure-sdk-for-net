@@ -9,8 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.ResourceManager.ServiceFabric;
 
-namespace Azure.ResourceManager.ServiceFabric
+namespace Azure.ResourceManager.ServiceFabric.Models
 {
     /// <summary> The properties of the application type version resource. </summary>
     internal partial class ApplicationTypeVersionResourceProperties : IJsonModel<ApplicationTypeVersionResourceProperties>

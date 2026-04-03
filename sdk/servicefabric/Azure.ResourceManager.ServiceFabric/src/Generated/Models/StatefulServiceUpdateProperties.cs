@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.ServiceFabric
+namespace Azure.ResourceManager.ServiceFabric.Models
 {
     /// <summary> The properties of a stateful service resource for patch operations. </summary>
     public partial class StatefulServiceUpdateProperties : ServiceResourceUpdateProperties

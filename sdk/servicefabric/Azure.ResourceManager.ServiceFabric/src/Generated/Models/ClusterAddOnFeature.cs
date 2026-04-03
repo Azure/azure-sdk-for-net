@@ -7,8 +7,9 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ServiceFabric;
 
-namespace Azure.ResourceManager.ServiceFabric
+namespace Azure.ResourceManager.ServiceFabric.Models
 {
     /// <summary> Available cluster add-on features. </summary>
     public readonly partial struct ClusterAddOnFeature : IEquatable<ClusterAddOnFeature>

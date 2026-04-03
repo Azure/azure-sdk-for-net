@@ -7,8 +7,9 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ServiceFabric;
 
-namespace Azure.ResourceManager.ServiceFabric
+namespace Azure.ResourceManager.ServiceFabric.Models
 {
     /// <summary> Cluster operating system, the default will be Windows. </summary>
     public readonly partial struct ClusterEnvironment : IEquatable<ClusterEnvironment>

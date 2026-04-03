@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.ServiceFabric
+namespace Azure.ResourceManager.ServiceFabric.Models
 {
     /// <summary> Describes the partition scheme of a singleton-partitioned, or non-partitioned service. </summary>
     public partial class SingletonPartitionSchemeDescription : PartitionSchemeDescription

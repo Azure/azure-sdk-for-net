@@ -7,8 +7,9 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ServiceFabric;
 
-namespace Azure.ResourceManager.ServiceFabric
+namespace Azure.ResourceManager.ServiceFabric.Models
 {
     /// <summary> The local certificate store location. </summary>
     public readonly partial struct ClusterCertificateStoreName : IEquatable<ClusterCertificateStoreName>

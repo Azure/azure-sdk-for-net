@@ -18,40 +18,40 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.ServiceFabric
 {
     /// <summary>
-    /// A class representing a VMSizeResource along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="VMSizeResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetVMSizeResources method.
+    /// A class representing a ServiceFabricVmSizeResource along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ServiceFabricVmSizeResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetServiceFabricVmSizeResources method.
     /// </summary>
-    public partial class VMSizeResource : ArmResource
+    public partial class ServiceFabricVmSizeResource : ArmResource
     {
         private readonly ClientDiagnostics _unsupportedVmSizesClientDiagnostics;
         private readonly UnsupportedVmSizes _unsupportedVmSizesRestClient;
-        private readonly VMSizeResourceData _data;
+        private readonly ServiceFabricVmSizeResourceData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ServiceFabric/locations/unsupportedVmSizes";
 
-        /// <summary> Initializes a new instance of VMSizeResource for mocking. </summary>
-        protected VMSizeResource()
+        /// <summary> Initializes a new instance of ServiceFabricVmSizeResource for mocking. </summary>
+        protected ServiceFabricVmSizeResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="VMSizeResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricVmSizeResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal VMSizeResource(ArmClient client, VMSizeResourceData data) : this(client, data.Id)
+        internal ServiceFabricVmSizeResource(ArmClient client, ServiceFabricVmSizeResourceData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="VMSizeResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricVmSizeResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal VMSizeResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ServiceFabricVmSizeResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string vmSizeResourceApiVersion);
+            TryGetApiVersion(ResourceType, out string serviceFabricVmSizeResourceApiVersion);
             _unsupportedVmSizesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceFabric", ResourceType.Namespace, Diagnostics);
-            _unsupportedVmSizesRestClient = new UnsupportedVmSizes(_unsupportedVmSizesClientDiagnostics, Pipeline, Endpoint, vmSizeResourceApiVersion ?? "2026-03-01-preview");
+            _unsupportedVmSizesRestClient = new UnsupportedVmSizes(_unsupportedVmSizesClientDiagnostics, Pipeline, Endpoint, serviceFabricVmSizeResourceApiVersion ?? "2026-03-01-preview");
             ValidateResourceId(id);
         }
 
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ServiceFabric
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual VMSizeResourceData Data
+        public virtual ServiceFabricVmSizeResourceData Data
         {
             get
             {
@@ -108,14 +108,14 @@ namespace Azure.ResourceManager.ServiceFabric
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="VMSizeResource"/>. </description>
+        /// <description> <see cref="ServiceFabricVmSizeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<VMSizeResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceFabricVmSizeResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _unsupportedVmSizesClientDiagnostics.CreateScope("VMSizeResource.Get");
+            using DiagnosticScope scope = _unsupportedVmSizesClientDiagnostics.CreateScope("ServiceFabricVmSizeResource.Get");
             scope.Start();
             try
             {
@@ -125,12 +125,12 @@ namespace Azure.ResourceManager.ServiceFabric
                 };
                 HttpMessage message = _unsupportedVmSizesRestClient.CreateGetRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<VMSizeResourceData> response = Response.FromValue(VMSizeResourceData.FromResponse(result), result);
+                Response<ServiceFabricVmSizeResourceData> response = Response.FromValue(ServiceFabricVmSizeResourceData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new VMSizeResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceFabricVmSizeResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -156,14 +156,14 @@ namespace Azure.ResourceManager.ServiceFabric
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="VMSizeResource"/>. </description>
+        /// <description> <see cref="ServiceFabricVmSizeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<VMSizeResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<ServiceFabricVmSizeResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _unsupportedVmSizesClientDiagnostics.CreateScope("VMSizeResource.Get");
+            using DiagnosticScope scope = _unsupportedVmSizesClientDiagnostics.CreateScope("ServiceFabricVmSizeResource.Get");
             scope.Start();
             try
             {
@@ -173,12 +173,12 @@ namespace Azure.ResourceManager.ServiceFabric
                 };
                 HttpMessage message = _unsupportedVmSizesRestClient.CreateGetRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<VMSizeResourceData> response = Response.FromValue(VMSizeResourceData.FromResponse(result), result);
+                Response<ServiceFabricVmSizeResourceData> response = Response.FromValue(ServiceFabricVmSizeResourceData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new VMSizeResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceFabricVmSizeResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

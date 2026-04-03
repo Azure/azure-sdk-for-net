@@ -9,8 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.ResourceManager.ServiceFabric;
 
-namespace Azure.ResourceManager.ServiceFabric
+namespace Azure.ResourceManager.ServiceFabric.Models
 {
     /// <summary> Specifies a metric to load balance a service during runtime. </summary>
     public partial class ServiceLoadMetricDescription : IJsonModel<ServiceLoadMetricDescription>

@@ -7,8 +7,9 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ServiceFabric;
 
-namespace Azure.ResourceManager.ServiceFabric
+namespace Azure.ResourceManager.ServiceFabric.Models
 {
     /// <summary> Indicates when new cluster runtime version upgrades will be applied after they are released. By default is Wave0. </summary>
     public readonly partial struct ClusterUpgradeCadence : IEquatable<ClusterUpgradeCadence>

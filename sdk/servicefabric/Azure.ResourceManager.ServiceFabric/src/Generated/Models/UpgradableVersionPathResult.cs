@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ServiceFabric;
 
-namespace Azure.ResourceManager.ServiceFabric
+namespace Azure.ResourceManager.ServiceFabric.Models
 {
     /// <summary> The list of intermediate cluster code versions for an upgrade or downgrade, or minimum and maximum upgradable version if no target was given. </summary>
     public partial class UpgradableVersionPathResult
@@ -25,13 +26,13 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <summary> Initializes a new instance of <see cref="UpgradableVersionPathResult"/>. </summary>
         /// <param name="supportedPath"> The list of intermediate cluster code versions for an upgrade or downgrade. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UpgradableVersionPathResult(IList<string> supportedPath, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal UpgradableVersionPathResult(IReadOnlyList<string> supportedPath, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SupportedPath = supportedPath;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The list of intermediate cluster code versions for an upgrade or downgrade. </summary>
-        public IList<string> SupportedPath { get; }
+        public IReadOnlyList<string> SupportedPath { get; }
     }
 }

@@ -7,7 +7,6 @@ using Azure.ResourceManager.ServiceFabric.Mocking;
 
 namespace Azure.ResourceManager.ServiceFabric
 {
-    // Generator bug: missing GetMockableServiceFabricArmClient helper method
     public static partial class ServiceFabricExtensions
     {
         private static MockableServiceFabricArmClient GetMockableServiceFabricArmClient(ArmClient client)

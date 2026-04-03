@@ -7,8 +7,9 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ServiceFabric;
 
-namespace Azure.ResourceManager.ServiceFabric
+namespace Azure.ResourceManager.ServiceFabric.Models
 {
     /// <summary> The upgrade mode of the cluster when new Service Fabric runtime version is available. </summary>
     public readonly partial struct ClusterUpgradeMode : IEquatable<ClusterUpgradeMode>

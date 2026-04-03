@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.ServiceFabric
+namespace Azure.ResourceManager.ServiceFabric.Models
 {
     /// <summary> Represents the health policy used to evaluate the health of services belonging to a service type. </summary>
     public partial class ServiceTypeHealthPolicy

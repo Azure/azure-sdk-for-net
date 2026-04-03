@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.ServiceFabric
+namespace Azure.ResourceManager.ServiceFabric.Models
 {
     /// <summary> The type of managed identity for the resource. </summary>
     public enum ManagedIdentityType

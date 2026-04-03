@@ -9,8 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.ResourceManager.ServiceFabric;
 
-namespace Azure.ResourceManager.ServiceFabric
+namespace Azure.ResourceManager.ServiceFabric.Models
 {
     /// <summary> Represents the delta health policy used to evaluate the health of services belonging to a service type when upgrading the cluster. </summary>
     public partial class ServiceTypeDeltaHealthPolicy : IJsonModel<ServiceTypeDeltaHealthPolicy>

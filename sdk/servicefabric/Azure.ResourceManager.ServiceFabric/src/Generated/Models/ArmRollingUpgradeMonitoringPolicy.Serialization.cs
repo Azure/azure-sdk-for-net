@@ -9,8 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.ResourceManager.ServiceFabric;
 
-namespace Azure.ResourceManager.ServiceFabric
+namespace Azure.ResourceManager.ServiceFabric.Models
 {
     /// <summary> The policy used for monitoring the application upgrade. </summary>
     public partial class ArmRollingUpgradeMonitoringPolicy : IJsonModel<ArmRollingUpgradeMonitoringPolicy>

@@ -7,8 +7,9 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ServiceFabric;
 
-namespace Azure.ResourceManager.ServiceFabric
+namespace Azure.ResourceManager.ServiceFabric.Models
 {
     /// <summary> The activation Mode of the service package. </summary>
     public readonly partial struct ArmServicePackageActivationMode : IEquatable<ArmServicePackageActivationMode>

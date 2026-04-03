@@ -10,8 +10,9 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
+using Azure.ResourceManager.ServiceFabric;
 
-namespace Azure.ResourceManager.ServiceFabric
+namespace Azure.ResourceManager.ServiceFabric.Models
 {
     /// <summary> Describes the result of the request to list VM Sizes for Service Fabric Clusters. </summary>
     internal partial class VMSizesResult : IJsonModel<VMSizesResult>
@@ -88,7 +89,7 @@ namespace Azure.ResourceManager.ServiceFabric
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (VMSizeResourceData item in Value)
+            foreach (ServiceFabricVmSizeResourceData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -140,17 +141,17 @@ namespace Azure.ResourceManager.ServiceFabric
             {
                 return null;
             }
-            IList<VMSizeResourceData> value = default;
+            IList<ServiceFabricVmSizeResourceData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<VMSizeResourceData> array = new List<VMSizeResourceData>();
+                    List<ServiceFabricVmSizeResourceData> array = new List<ServiceFabricVmSizeResourceData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(VMSizeResourceData.DeserializeVMSizeResourceData(item, options));
+                        array.Add(ServiceFabricVmSizeResourceData.DeserializeServiceFabricVmSizeResourceData(item, options));
                     }
                     value = array;
                     continue;

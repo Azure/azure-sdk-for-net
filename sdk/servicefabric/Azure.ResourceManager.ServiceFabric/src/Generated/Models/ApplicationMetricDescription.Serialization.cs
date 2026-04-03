@@ -9,8 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.ResourceManager.ServiceFabric;
 
-namespace Azure.ResourceManager.ServiceFabric
+namespace Azure.ResourceManager.ServiceFabric.Models
 {
     /// <summary> Describes capacity information for a custom resource balancing metric. This can be used to limit the total consumption of this metric by the services of this application. </summary>
     public partial class ApplicationMetricDescription : IJsonModel<ApplicationMetricDescription>

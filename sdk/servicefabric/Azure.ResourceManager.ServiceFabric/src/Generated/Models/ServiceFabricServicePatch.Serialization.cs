@@ -12,8 +12,9 @@ using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.ServiceFabric;
 
-namespace Azure.ResourceManager.ServiceFabric
+namespace Azure.ResourceManager.ServiceFabric.Models
 {
     /// <summary> The service resource for patch operations. </summary>
     public partial class ServiceFabricServicePatch : ServiceFabricProxyResource, IJsonModel<ServiceFabricServicePatch>

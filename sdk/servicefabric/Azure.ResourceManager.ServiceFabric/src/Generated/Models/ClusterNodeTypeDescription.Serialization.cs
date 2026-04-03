@@ -9,8 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.ResourceManager.ServiceFabric;
 
-namespace Azure.ResourceManager.ServiceFabric
+namespace Azure.ResourceManager.ServiceFabric.Models
 {
     /// <summary> Describes a node type in the cluster, each node type represents sub set of nodes in the cluster. </summary>
     public partial class ClusterNodeTypeDescription : IJsonModel<ClusterNodeTypeDescription>

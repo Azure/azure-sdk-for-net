@@ -7,17 +7,23 @@
     <Description>Microsoft Azure Resource Manager client SDK for Azure resource provider Microsoft.ServiceFabric.</Description>
     <PackageTags>azure;management;arm;resource manager;servicefabric</PackageTags>
   </PropertyGroup>
-  <!-- Workaround for generator bugs: string id, broken ClusterVersionCollection, missing VMSizeResourceData properties -->
+  <!-- Workaround for generator bugs -->
   <ItemGroup>
+    <!-- string id in Data constructors instead of ResourceIdentifier -->
     <Compile Remove="Generated/ServiceFabricClusterData.cs" />
-    <Compile Remove="Generated/ClusterVersionCollection.cs" />
+    <Compile Remove="Generated/ServiceFabricVmSizeResourceData.cs" />
+    <!-- data.Id returns string from custom ProxyResource base -->
     <Compile Remove="Generated/ServiceFabricApplicationResource.cs" />
     <Compile Remove="Generated/ServiceFabricApplicationTypeResource.cs" />
     <Compile Remove="Generated/ServiceFabricApplicationTypeVersionResource.cs" />
     <Compile Remove="Generated/ServiceFabricServiceResource.cs" />
-    <Compile Remove="Generated/VMSizeResourceData.cs" />
-    <Compile Remove="Generated/VMSizeResourceData.Serialization.cs" />
-    <Compile Remove="Generated/ArmServiceFabricModelFactory.cs" />
+    <!-- IEnumerable implementation calls non-enumerable GetAll() -->
+    <Compile Remove="Generated/ClusterVersionCollection.cs" />
+    <!-- Duplicate GetClusterVersionResource + missing helper method -->
+    <Compile Remove="Generated/Extensions/MockableServiceFabricArmClient.cs" />
     <Compile Remove="Generated/Extensions/ServiceFabricExtensions.cs" />
+    <!-- ClusterVersionCollection constructor mismatch + ManagedIdentity type mismatch -->
+    <Compile Remove="Generated/Extensions/MockableServiceFabricSubscriptionResource.cs" />
+    <Compile Remove="Generated/ArmServiceFabricModelFactory.cs" />
   </ItemGroup>
 </Project>

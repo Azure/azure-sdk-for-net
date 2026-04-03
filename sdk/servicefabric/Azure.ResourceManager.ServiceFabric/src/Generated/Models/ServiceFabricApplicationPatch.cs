@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.ServiceFabric
+namespace Azure.ResourceManager.ServiceFabric.Models
 {
     /// <summary> The application resource for patch operations. </summary>
     public partial class ServiceFabricApplicationPatch : ServiceFabricProxyResource

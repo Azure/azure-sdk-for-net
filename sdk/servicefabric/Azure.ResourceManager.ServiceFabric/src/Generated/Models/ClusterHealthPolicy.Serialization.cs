@@ -9,8 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.ResourceManager.ServiceFabric;
 
-namespace Azure.ResourceManager.ServiceFabric
+namespace Azure.ResourceManager.ServiceFabric.Models
 {
     /// <summary> Defines a health policy used to evaluate the health of the cluster or of a cluster node. </summary>
     public partial class ClusterHealthPolicy : IJsonModel<ClusterHealthPolicy>

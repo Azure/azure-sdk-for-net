@@ -7,8 +7,9 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ServiceFabric;
 
-namespace Azure.ResourceManager.ServiceFabric
+namespace Azure.ResourceManager.ServiceFabric.Models
 {
     /// <summary> The provisioning state of the cluster resource. </summary>
     public readonly partial struct ServiceFabricProvisioningState : IEquatable<ServiceFabricProvisioningState>

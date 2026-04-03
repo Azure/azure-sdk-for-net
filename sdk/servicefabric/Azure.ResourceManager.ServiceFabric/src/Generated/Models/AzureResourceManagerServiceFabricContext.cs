@@ -8,6 +8,7 @@
 using System.ClientModel.Primitives;
 using Azure;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.ServiceFabric.Models;
 
 namespace Azure.ResourceManager.ServiceFabric
 {
@@ -71,6 +72,8 @@ namespace Azure.ResourceManager.ServiceFabric
     [ModelReaderWriterBuildable(typeof(ServiceFabricServiceData))]
     [ModelReaderWriterBuildable(typeof(ServiceFabricServicePatch))]
     [ModelReaderWriterBuildable(typeof(ServiceFabricServiceResource))]
+    [ModelReaderWriterBuildable(typeof(ServiceFabricVmSizeResource))]
+    [ModelReaderWriterBuildable(typeof(ServiceFabricVmSizeResourceData))]
     [ModelReaderWriterBuildable(typeof(ServiceLoadMetricDescription))]
     [ModelReaderWriterBuildable(typeof(ServicePlacementPolicyDescription))]
     [ModelReaderWriterBuildable(typeof(ServiceResourceList))]
@@ -94,10 +97,8 @@ namespace Azure.ResourceManager.ServiceFabric
     [ModelReaderWriterBuildable(typeof(UnknownServiceResourceUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(UpgradableVersionPathResult))]
     [ModelReaderWriterBuildable(typeof(UpgradableVersionsDescription))]
-    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
+    [ModelReaderWriterBuildable(typeof(Models.UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(VMSize))]
-    [ModelReaderWriterBuildable(typeof(VMSizeResource))]
-    [ModelReaderWriterBuildable(typeof(VMSizeResourceData))]
     [ModelReaderWriterBuildable(typeof(VMSizesResult))]
     public partial class AzureResourceManagerServiceFabricContext : ModelReaderWriterContext
     {

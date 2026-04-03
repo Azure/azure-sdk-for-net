@@ -7,8 +7,9 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ServiceFabric;
 
-namespace Azure.ResourceManager.ServiceFabric
+namespace Azure.ResourceManager.ServiceFabric.Models
 {
     /// <summary> The service correlation scheme. </summary>
     public readonly partial struct ServiceCorrelationScheme : IEquatable<ServiceCorrelationScheme>

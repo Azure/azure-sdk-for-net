@@ -7,8 +7,9 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ServiceFabric;
 
-namespace Azure.ResourceManager.ServiceFabric
+namespace Azure.ResourceManager.ServiceFabric.Models
 {
     /// <summary> Enumerates the ways that a service can be partitioned. </summary>
     internal readonly partial struct ApplicationPartitionScheme : IEquatable<ApplicationPartitionScheme>

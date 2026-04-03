@@ -11,8 +11,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.ServiceFabric;
 
-namespace Azure.ResourceManager.ServiceFabric
+namespace Azure.ResourceManager.ServiceFabric.Models
 {
     /// <summary> The resource model definition for proxy-only resource. </summary>
     public partial class ServiceFabricProxyResource : IJsonModel<ServiceFabricProxyResource>

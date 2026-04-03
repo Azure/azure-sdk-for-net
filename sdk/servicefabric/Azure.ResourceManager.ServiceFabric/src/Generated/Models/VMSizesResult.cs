@@ -8,8 +8,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.ServiceFabric;
 
-namespace Azure.ResourceManager.ServiceFabric
+namespace Azure.ResourceManager.ServiceFabric.Models
 {
     /// <summary> Describes the result of the request to list VM Sizes for Service Fabric Clusters. </summary>
     internal partial class VMSizesResult
@@ -19,7 +20,7 @@ namespace Azure.ResourceManager.ServiceFabric
 
         /// <summary> Initializes a new instance of <see cref="VMSizesResult"/>. </summary>
         /// <param name="value"> The VMSizeResource items on this page. </param>
-        internal VMSizesResult(IEnumerable<VMSizeResourceData> value)
+        internal VMSizesResult(IEnumerable<ServiceFabricVmSizeResourceData> value)
         {
             Value = value.ToList();
         }
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="value"> The VMSizeResource items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VMSizesResult(IList<VMSizeResourceData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VMSizesResult(IList<ServiceFabricVmSizeResourceData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.ServiceFabric
         }
 
         /// <summary> The VMSizeResource items on this page. </summary>
-        public IList<VMSizeResourceData> Value { get; }
+        public IList<ServiceFabricVmSizeResourceData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }

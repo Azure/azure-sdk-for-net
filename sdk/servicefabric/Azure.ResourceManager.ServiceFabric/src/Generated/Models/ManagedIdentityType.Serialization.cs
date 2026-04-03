@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.ResourceManager.ServiceFabric
+namespace Azure.ResourceManager.ServiceFabric.Models
 {
     internal static partial class ManagedIdentityTypeExtensions
     {

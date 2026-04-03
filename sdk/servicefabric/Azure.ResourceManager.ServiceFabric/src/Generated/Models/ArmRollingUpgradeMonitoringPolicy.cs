@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.ServiceFabric
+namespace Azure.ResourceManager.ServiceFabric.Models
 {
     /// <summary> The policy used for monitoring the application upgrade. </summary>
     public partial class ArmRollingUpgradeMonitoringPolicy

@@ -7,8 +7,9 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ServiceFabric;
 
-namespace Azure.ResourceManager.ServiceFabric
+namespace Azure.ResourceManager.ServiceFabric.Models
 {
     /// <summary> The type of placement policy for a service fabric service. Following are the possible values. </summary>
     internal readonly partial struct ServicePlacementPolicyType : IEquatable<ServicePlacementPolicyType>

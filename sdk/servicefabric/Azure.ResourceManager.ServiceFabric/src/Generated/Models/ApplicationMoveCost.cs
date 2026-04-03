@@ -7,8 +7,9 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ServiceFabric;
 
-namespace Azure.ResourceManager.ServiceFabric
+namespace Azure.ResourceManager.ServiceFabric.Models
 {
     /// <summary> Specifies the move cost for the service. </summary>
     public readonly partial struct ApplicationMoveCost : IEquatable<ApplicationMoveCost>

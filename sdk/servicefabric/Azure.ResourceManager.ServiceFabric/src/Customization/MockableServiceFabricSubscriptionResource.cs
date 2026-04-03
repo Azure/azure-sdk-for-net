@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.ServiceFabric.Mocking
         /// <returns> An object representing collection of ClusterVersions and their operations over a ClusterVersionResource. </returns>
         public virtual ClusterVersionCollection GetClusterVersions(string location)
         {
-            return GetCachedClient(client => new ClusterVersionCollection(client, Id, location));
+            return GetCachedClient(client => new ClusterVersionCollection(client, Id, location, default));
         }
 
         /// <summary>

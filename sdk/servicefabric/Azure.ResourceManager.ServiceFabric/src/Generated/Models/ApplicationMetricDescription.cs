@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.ServiceFabric
+namespace Azure.ResourceManager.ServiceFabric.Models
 {
     /// <summary> Describes capacity information for a custom resource balancing metric. This can be used to limit the total consumption of this metric by the services of this application. </summary>
     public partial class ApplicationMetricDescription

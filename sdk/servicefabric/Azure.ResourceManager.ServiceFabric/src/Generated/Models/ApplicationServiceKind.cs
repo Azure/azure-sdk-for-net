@@ -7,8 +7,9 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ServiceFabric;
 
-namespace Azure.ResourceManager.ServiceFabric
+namespace Azure.ResourceManager.ServiceFabric.Models
 {
     /// <summary> The kind of service (Stateless or Stateful). </summary>
     internal readonly partial struct ApplicationServiceKind : IEquatable<ApplicationServiceKind>

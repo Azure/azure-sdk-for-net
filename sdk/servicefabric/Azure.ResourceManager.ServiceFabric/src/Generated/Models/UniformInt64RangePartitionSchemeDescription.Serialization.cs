@@ -9,8 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.ResourceManager.ServiceFabric;
 
-namespace Azure.ResourceManager.ServiceFabric
+namespace Azure.ResourceManager.ServiceFabric.Models
 {
     /// <summary> Describes a partitioning scheme where an integer range is allocated evenly across a number of partitions. </summary>
     public partial class UniformInt64RangePartitionSchemeDescription : PartitionSchemeDescription, IJsonModel<UniformInt64RangePartitionSchemeDescription>

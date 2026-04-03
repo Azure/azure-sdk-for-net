@@ -10,8 +10,9 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
+using Azure.ResourceManager.ServiceFabric;
 
-namespace Azure.ResourceManager.ServiceFabric
+namespace Azure.ResourceManager.ServiceFabric.Models
 {
     /// <summary> The list of intermediate cluster code versions for an upgrade or downgrade, or minimum and maximum upgradable version if no target was given. </summary>
     public partial class UpgradableVersionPathResult : IJsonModel<UpgradableVersionPathResult>
@@ -138,7 +139,7 @@ namespace Azure.ResourceManager.ServiceFabric
             {
                 return null;
             }
-            IList<string> supportedPath = default;
+            IReadOnlyList<string> supportedPath = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
