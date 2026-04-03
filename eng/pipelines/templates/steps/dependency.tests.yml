@@ -4,7 +4,7 @@ parameters:
   default: "$(Build.ArtifactStagingDirectory)"
 - name: NumOfTestProjectsPerJob
   type: number
-  default: 10
+  default: 20
 - name: OutputProjectFilePath
   type: string
   default: "$(System.DefaultWorkingDirectory)/projects.txt"
