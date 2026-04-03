@@ -7,8 +7,8 @@
 
 | PR | URL | Status |
 |----|-----|--------|
-| **Spec** | Not created | Draft |
-| **SDK** | Not created | Draft |
+| **Spec** | Not created (branch: `servicefabric-mpg-migration` on `live1206/azure-rest-api-specs`) | Draft |
+| **SDK** | Not created (branch: `servicefabric-mpg-migration` on `live1206/azure-sdk-for-net`) | Draft |
 | **Generator** | N/A | N/A |
 
 ## Branches
@@ -30,7 +30,7 @@
 | Phase 3 — Legacy config removed | ✅ | autorest.md deleted, IncludeAutorestDependency removed |
 | Phase 4 — Custom code updated | ✅ | No custom code existed |
 | Phase 5 — Code generation | ✅ | Generation succeeds |
-| Phase 6 — Build-Fix Cycle | 🔄 | Generator bugs: string id, duplicate methods, ClusterVersion issues |
+| Phase 6 — Build-Fix Cycle | 🔄 | Compilation passes, 543 ApiCompat errors remaining |
 | Phase 7 — CI & Changelog | ⏭️ | |
 | Phase 8 — Test project build | ⏭️ | |
 | Phase 9 — Test execution | ⏭️ | |
