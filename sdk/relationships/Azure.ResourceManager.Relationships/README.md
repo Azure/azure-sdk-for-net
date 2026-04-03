@@ -56,8 +56,80 @@ Documentation is available to help you learn how to use this package:
 
 ## Examples
 
-Code samples for using the management library for .NET can be found in the following locations
-- [.NET Management Library Code Samples](https://aka.ms/azuresdk-net-mgmt-samples)
+### Create a DependencyOf relationship
+
+A `DependencyOf` relationship declares that one Azure resource depends on another, enabling dependency mapping and change-impact analysis.
+
+```C# Snippet:Relationships_CreateDependencyOf
+TokenCredential cred = new DefaultAzureCredential();
+ArmClient client = new ArmClient(cred);
+
+// The source resource — the resource that depends on another
+string sourceResourceUri = "subscriptions/<subscription-id>/resourceGroups/myResourceGroup/providers/Microsoft.DocumentDb/databaseAccounts/my-db-account";
+DependencyOfRelationshipCollection collection = client.GetDependencyOfRelationships(new ResourceIdentifier(sourceResourceUri));
+
+// The target resource — the resource that the source depends on
+string targetResourceUri = "/subscriptions/<subscription-id>/resourceGroups/myResourceGroup/providers/Microsoft.Web/staticSites/my-static-site";
+DependencyOfRelationshipData data = new DependencyOfRelationshipData
+{
+    Properties = new DependencyOfRelationshipProperties(new ResourceIdentifier(targetResourceUri))
+};
+
+ArmOperation<DependencyOfRelationshipResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, "myDependency", data);
+DependencyOfRelationshipResource relationship = lro.Value;
+Console.WriteLine($"Created relationship: {relationship.Data.Id}");
+```
+
+### Get a DependencyOf relationship
+
+```C# Snippet:Relationships_GetDependencyOf
+TokenCredential cred = new DefaultAzureCredential();
+ArmClient client = new ArmClient(cred);
+
+string sourceResourceUri = "subscriptions/<subscription-id>/resourceGroups/myResourceGroup/providers/Microsoft.DocumentDb/databaseAccounts/my-db-account";
+DependencyOfRelationshipCollection collection = client.GetDependencyOfRelationships(new ResourceIdentifier(sourceResourceUri));
+
+DependencyOfRelationshipResource relationship = await collection.GetAsync("myDependency");
+Console.WriteLine($"Relationship target: {relationship.Data.Properties.TargetId}");
+```
+
+### Delete a DependencyOf relationship
+
+```C# Snippet:Relationships_DeleteDependencyOf
+TokenCredential cred = new DefaultAzureCredential();
+ArmClient client = new ArmClient(cred);
+
+string sourceResourceUri = "subscriptions/<subscription-id>/resourceGroups/myResourceGroup/providers/Microsoft.DocumentDb/databaseAccounts/my-db-account";
+DependencyOfRelationshipCollection collection = client.GetDependencyOfRelationships(new ResourceIdentifier(sourceResourceUri));
+
+DependencyOfRelationshipResource relationship = await collection.GetAsync("myDependency");
+await relationship.DeleteAsync(WaitUntil.Completed);
+Console.WriteLine("Relationship deleted.");
+```
+
+### Add a resource to a service group
+
+A `ServiceGroupMember` relationship adds an Azure resource as a member of a service group, enabling grouping for health triage and compliance reporting.
+
+```C# Snippet:Relationships_CreateServiceGroupMember
+TokenCredential cred = new DefaultAzureCredential();
+ArmClient client = new ArmClient(cred);
+
+// The member resource — the resource to add to a service group
+string memberResourceUri = "subscriptions/<subscription-id>/resourceGroups/myResourceGroup/providers/Microsoft.DocumentDb/databaseAccounts/my-db-account";
+ServiceGroupMemberRelationshipCollection collection = client.GetServiceGroupMemberRelationships(new ResourceIdentifier(memberResourceUri));
+
+// The service group to add the resource to
+string serviceGroupId = "/providers/Microsoft.Management/serviceGroups/myServiceGroup";
+ServiceGroupMemberRelationshipData data = new ServiceGroupMemberRelationshipData
+{
+    Properties = new ServiceGroupMemberRelationshipProperties(new ResourceIdentifier(serviceGroupId))
+};
+
+ArmOperation<ServiceGroupMemberRelationshipResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, "myMembership", data);
+ServiceGroupMemberRelationshipResource membership = lro.Value;
+Console.WriteLine($"Added resource to service group: {membership.Data.Id}");
+```
 
 ## Troubleshooting
 
