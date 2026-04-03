@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes.Models
 
         /// <summary> Initializes a new instance of <see cref="KubernetesConfigurationPrivateLinkScopesPrivateEndpointConnectionListResult"/>. </summary>
         /// <param name="value"> The PrivateEndpointConnection items on this page. </param>
-        internal KubernetesConfigurationPrivateLinkScopesPrivateEndpointConnectionListResult(IEnumerable<KubernetesConfigurationPrivateLinkScopesPrivateEndpointConnectionData> value)
+        internal KubernetesConfigurationPrivateLinkScopesPrivateEndpointConnectionListResult(IEnumerable<KubernetesConfigurationPrivateEndpointConnectionData> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes.Models
         /// <param name="value"> The PrivateEndpointConnection items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KubernetesConfigurationPrivateLinkScopesPrivateEndpointConnectionListResult(IList<KubernetesConfigurationPrivateLinkScopesPrivateEndpointConnectionData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KubernetesConfigurationPrivateLinkScopesPrivateEndpointConnectionListResult(IList<KubernetesConfigurationPrivateEndpointConnectionData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes.Models
         }
 
         /// <summary> The PrivateEndpointConnection items on this page. </summary>
-        public IList<KubernetesConfigurationPrivateLinkScopesPrivateEndpointConnectionData> Value { get; }
+        public IList<KubernetesConfigurationPrivateEndpointConnectionData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }

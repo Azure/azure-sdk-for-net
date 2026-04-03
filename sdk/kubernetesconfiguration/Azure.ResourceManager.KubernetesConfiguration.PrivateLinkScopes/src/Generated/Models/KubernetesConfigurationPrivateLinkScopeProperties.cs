@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes.Models
             Argument.AssertNotNull(clusterResourceId, nameof(clusterResourceId));
 
             ClusterResourceId = clusterResourceId;
-            PrivateEndpointConnections = new ChangeTrackingList<KubernetesConfigurationPrivateLinkScopesPrivateEndpointConnectionData>();
+            PrivateEndpointConnections = new ChangeTrackingList<KubernetesConfigurationPrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="KubernetesConfigurationPrivateLinkScopeProperties"/>. </summary>
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes.Models
         /// <param name="privateLinkScopeId"> The Guid id of the private link scope. </param>
         /// <param name="privateEndpointConnections"> The collection of associated Private Endpoint Connections. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KubernetesConfigurationPrivateLinkScopeProperties(KubernetesConfigurationPrivateLinkScopePublicNetworkAccessType? publicNetworkAccess, KubernetesConfigurationPrivateLinkScopeProvisioningState? provisioningState, ResourceIdentifier clusterResourceId, Guid? privateLinkScopeId, IReadOnlyList<KubernetesConfigurationPrivateLinkScopesPrivateEndpointConnectionData> privateEndpointConnections, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KubernetesConfigurationPrivateLinkScopeProperties(KubernetesConfigurationPrivateLinkScopePublicNetworkAccessType? publicNetworkAccess, KubernetesConfigurationPrivateLinkScopeProvisioningState? provisioningState, ResourceIdentifier clusterResourceId, Guid? privateLinkScopeId, IReadOnlyList<KubernetesConfigurationPrivateEndpointConnectionData> privateEndpointConnections, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PublicNetworkAccess = publicNetworkAccess;
             ProvisioningState = provisioningState;
@@ -59,6 +59,6 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes.Models
         public Guid? PrivateLinkScopeId { get; }
 
         /// <summary> The collection of associated Private Endpoint Connections. </summary>
-        public IReadOnlyList<KubernetesConfigurationPrivateLinkScopesPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
+        public IReadOnlyList<KubernetesConfigurationPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
     }
 }

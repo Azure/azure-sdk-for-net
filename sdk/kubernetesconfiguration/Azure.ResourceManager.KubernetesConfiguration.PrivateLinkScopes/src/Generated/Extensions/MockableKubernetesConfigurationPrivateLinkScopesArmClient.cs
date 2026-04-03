@@ -35,22 +35,22 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes.Mockin
             return new KubernetesConfigurationPrivateLinkScopeResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="PrivateLinkResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="KubernetesConfigurationPrivateLinkResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PrivateLinkResource"/> object. </returns>
-        public virtual PrivateLinkResource GetPrivateLinkResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="KubernetesConfigurationPrivateLinkResource"/> object. </returns>
+        public virtual KubernetesConfigurationPrivateLinkResource GetKubernetesConfigurationPrivateLinkResource(ResourceIdentifier id)
         {
-            PrivateLinkResource.ValidateResourceId(id);
-            return new PrivateLinkResource(Client, id);
+            KubernetesConfigurationPrivateLinkResource.ValidateResourceId(id);
+            return new KubernetesConfigurationPrivateLinkResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="PrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="KubernetesConfigurationPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PrivateEndpointConnectionResource"/> object. </returns>
-        public virtual PrivateEndpointConnectionResource GetPrivateEndpointConnectionResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="KubernetesConfigurationPrivateEndpointConnectionResource"/> object. </returns>
+        public virtual KubernetesConfigurationPrivateEndpointConnectionResource GetKubernetesConfigurationPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            PrivateEndpointConnectionResource.ValidateResourceId(id);
-            return new PrivateEndpointConnectionResource(Client, id);
+            KubernetesConfigurationPrivateEndpointConnectionResource.ValidateResourceId(id);
+            return new KubernetesConfigurationPrivateEndpointConnectionResource(Client, id);
         }
     }
 }

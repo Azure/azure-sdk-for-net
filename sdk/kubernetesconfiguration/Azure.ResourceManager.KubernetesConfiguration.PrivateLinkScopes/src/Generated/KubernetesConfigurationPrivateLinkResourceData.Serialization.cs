@@ -17,69 +17,59 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes
 {
-    /// <summary> The Private Endpoint Connection resource. </summary>
-    public partial class KubernetesConfigurationPrivateLinkScopesPrivateEndpointConnectionData : ResourceData, IJsonModel<KubernetesConfigurationPrivateLinkScopesPrivateEndpointConnectionData>
+    /// <summary> A private link resource. </summary>
+    public partial class KubernetesConfigurationPrivateLinkResourceData : ResourceData, IJsonModel<KubernetesConfigurationPrivateLinkResourceData>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<KubernetesConfigurationPrivateLinkScopesPrivateEndpointConnectionData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KubernetesConfigurationPrivateLinkResourceData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeKubernetesConfigurationPrivateLinkScopesPrivateEndpointConnectionData(document.RootElement, options);
+                        return DeserializeKubernetesConfigurationPrivateLinkResourceData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KubernetesConfigurationPrivateLinkScopesPrivateEndpointConnectionData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KubernetesConfigurationPrivateLinkResourceData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<KubernetesConfigurationPrivateLinkScopesPrivateEndpointConnectionData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KubernetesConfigurationPrivateLinkResourceData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerKubernetesConfigurationPrivateLinkScopesContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(KubernetesConfigurationPrivateLinkScopesPrivateEndpointConnectionData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KubernetesConfigurationPrivateLinkResourceData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<KubernetesConfigurationPrivateLinkScopesPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<KubernetesConfigurationPrivateLinkResourceData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        KubernetesConfigurationPrivateLinkScopesPrivateEndpointConnectionData IPersistableModel<KubernetesConfigurationPrivateLinkScopesPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => (KubernetesConfigurationPrivateLinkScopesPrivateEndpointConnectionData)PersistableModelCreateCore(data, options);
+        KubernetesConfigurationPrivateLinkResourceData IPersistableModel<KubernetesConfigurationPrivateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (KubernetesConfigurationPrivateLinkResourceData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<KubernetesConfigurationPrivateLinkScopesPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<KubernetesConfigurationPrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="kubernetesConfigurationPrivateLinkScopesPrivateEndpointConnectionData"> The <see cref="KubernetesConfigurationPrivateLinkScopesPrivateEndpointConnectionData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(KubernetesConfigurationPrivateLinkScopesPrivateEndpointConnectionData kubernetesConfigurationPrivateLinkScopesPrivateEndpointConnectionData)
-        {
-            if (kubernetesConfigurationPrivateLinkScopesPrivateEndpointConnectionData == null)
-            {
-                return null;
-            }
-            return RequestContent.Create(kubernetesConfigurationPrivateLinkScopesPrivateEndpointConnectionData, ModelSerializationExtensions.WireOptions);
-        }
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="KubernetesConfigurationPrivateLinkScopesPrivateEndpointConnectionData"/> from. </param>
-        internal static KubernetesConfigurationPrivateLinkScopesPrivateEndpointConnectionData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="KubernetesConfigurationPrivateLinkResourceData"/> from. </param>
+        internal static KubernetesConfigurationPrivateLinkResourceData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeKubernetesConfigurationPrivateLinkScopesPrivateEndpointConnectionData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeKubernetesConfigurationPrivateLinkResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<KubernetesConfigurationPrivateLinkScopesPrivateEndpointConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<KubernetesConfigurationPrivateLinkResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -90,10 +80,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<KubernetesConfigurationPrivateLinkScopesPrivateEndpointConnectionData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KubernetesConfigurationPrivateLinkResourceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KubernetesConfigurationPrivateLinkScopesPrivateEndpointConnectionData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(KubernetesConfigurationPrivateLinkResourceData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -105,24 +95,24 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        KubernetesConfigurationPrivateLinkScopesPrivateEndpointConnectionData IJsonModel<KubernetesConfigurationPrivateLinkScopesPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (KubernetesConfigurationPrivateLinkScopesPrivateEndpointConnectionData)JsonModelCreateCore(ref reader, options);
+        KubernetesConfigurationPrivateLinkResourceData IJsonModel<KubernetesConfigurationPrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (KubernetesConfigurationPrivateLinkResourceData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<KubernetesConfigurationPrivateLinkScopesPrivateEndpointConnectionData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KubernetesConfigurationPrivateLinkResourceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KubernetesConfigurationPrivateLinkScopesPrivateEndpointConnectionData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(KubernetesConfigurationPrivateLinkResourceData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeKubernetesConfigurationPrivateLinkScopesPrivateEndpointConnectionData(document.RootElement, options);
+            return DeserializeKubernetesConfigurationPrivateLinkResourceData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static KubernetesConfigurationPrivateLinkScopesPrivateEndpointConnectionData DeserializeKubernetesConfigurationPrivateLinkScopesPrivateEndpointConnectionData(JsonElement element, ModelReaderWriterOptions options)
+        internal static KubernetesConfigurationPrivateLinkResourceData DeserializeKubernetesConfigurationPrivateLinkResourceData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -133,7 +123,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            PrivateEndpointConnectionProperties properties = default;
+            KubernetesConfigurationPrivateLinkScopesPrivateLinkResourceProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -174,7 +164,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes
                     {
                         continue;
                     }
-                    properties = PrivateEndpointConnectionProperties.DeserializePrivateEndpointConnectionProperties(prop.Value, options);
+                    properties = KubernetesConfigurationPrivateLinkScopesPrivateLinkResourceProperties.DeserializeKubernetesConfigurationPrivateLinkScopesPrivateLinkResourceProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -182,7 +172,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new KubernetesConfigurationPrivateLinkScopesPrivateEndpointConnectionData(
+            return new KubernetesConfigurationPrivateLinkResourceData(
                 id,
                 name,
                 resourceType,

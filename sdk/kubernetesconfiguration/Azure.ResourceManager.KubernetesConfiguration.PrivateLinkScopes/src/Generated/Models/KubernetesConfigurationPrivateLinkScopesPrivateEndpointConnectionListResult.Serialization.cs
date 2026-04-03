@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (KubernetesConfigurationPrivateLinkScopesPrivateEndpointConnectionData item in Value)
+            foreach (KubernetesConfigurationPrivateEndpointConnectionData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes.Models
             {
                 return null;
             }
-            IList<KubernetesConfigurationPrivateLinkScopesPrivateEndpointConnectionData> value = default;
+            IList<KubernetesConfigurationPrivateEndpointConnectionData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<KubernetesConfigurationPrivateLinkScopesPrivateEndpointConnectionData> array = new List<KubernetesConfigurationPrivateLinkScopesPrivateEndpointConnectionData>();
+                    List<KubernetesConfigurationPrivateEndpointConnectionData> array = new List<KubernetesConfigurationPrivateEndpointConnectionData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(KubernetesConfigurationPrivateLinkScopesPrivateEndpointConnectionData.DeserializeKubernetesConfigurationPrivateLinkScopesPrivateEndpointConnectionData(item, options));
+                        array.Add(KubernetesConfigurationPrivateEndpointConnectionData.DeserializeKubernetesConfigurationPrivateEndpointConnectionData(item, options));
                     }
                     value = array;
                     continue;

@@ -669,11 +669,11 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes
             }
         }
 
-        /// <summary> Gets a collection of PrivateLinkResources in the <see cref="KubernetesConfigurationPrivateLinkScopeResource"/>. </summary>
-        /// <returns> An object representing collection of PrivateLinkResources and their operations over a PrivateLinkResource. </returns>
-        public virtual PrivateLinkResourceCollection GetPrivateLinkResources()
+        /// <summary> Gets a collection of KubernetesConfigurationPrivateLinkResources in the <see cref="KubernetesConfigurationPrivateLinkScopeResource"/>. </summary>
+        /// <returns> An object representing collection of KubernetesConfigurationPrivateLinkResources and their operations over a KubernetesConfigurationPrivateLinkResource. </returns>
+        public virtual KubernetesConfigurationPrivateLinkResourceCollection GetKubernetesConfigurationPrivateLinkResources()
         {
-            return GetCachedClient(client => new PrivateLinkResourceCollection(client, Id));
+            return GetCachedClient(client => new KubernetesConfigurationPrivateLinkResourceCollection(client, Id));
         }
 
         /// <summary> Gets the private link resources that need to be created for a Azure Monitor PrivateLinkScope. </summary>
@@ -682,11 +682,11 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<PrivateLinkResource>> GetPrivateLinkResourceAsync(string groupName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<KubernetesConfigurationPrivateLinkResource>> GetKubernetesConfigurationPrivateLinkResourceAsync(string groupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
-            return await GetPrivateLinkResources().GetAsync(groupName, cancellationToken).ConfigureAwait(false);
+            return await GetKubernetesConfigurationPrivateLinkResources().GetAsync(groupName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets the private link resources that need to be created for a Azure Monitor PrivateLinkScope. </summary>
@@ -695,31 +695,18 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<PrivateLinkResource> GetPrivateLinkResource(string groupName, CancellationToken cancellationToken = default)
+        public virtual Response<KubernetesConfigurationPrivateLinkResource> GetKubernetesConfigurationPrivateLinkResource(string groupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
-            return GetPrivateLinkResources().Get(groupName, cancellationToken);
+            return GetKubernetesConfigurationPrivateLinkResources().Get(groupName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of PrivateEndpointConnections in the <see cref="KubernetesConfigurationPrivateLinkScopeResource"/>. </summary>
-        /// <returns> An object representing collection of PrivateEndpointConnections and their operations over a PrivateEndpointConnectionResource. </returns>
-        public virtual PrivateEndpointConnectionCollection GetPrivateEndpointConnections()
+        /// <summary> Gets a collection of KubernetesConfigurationPrivateEndpointConnections in the <see cref="KubernetesConfigurationPrivateLinkScopeResource"/>. </summary>
+        /// <returns> An object representing collection of KubernetesConfigurationPrivateEndpointConnections and their operations over a KubernetesConfigurationPrivateEndpointConnectionResource. </returns>
+        public virtual KubernetesConfigurationPrivateEndpointConnectionCollection GetKubernetesConfigurationPrivateEndpointConnections()
         {
-            return GetCachedClient(client => new PrivateEndpointConnectionCollection(client, Id));
-        }
-
-        /// <summary> Gets a private endpoint connection. </summary>
-        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<PrivateEndpointConnectionResource>> GetPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
-
-            return await GetPrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(client => new KubernetesConfigurationPrivateEndpointConnectionCollection(client, Id));
         }
 
         /// <summary> Gets a private endpoint connection. </summary>
@@ -728,11 +715,24 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<PrivateEndpointConnectionResource> GetPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<KubernetesConfigurationPrivateEndpointConnectionResource>> GetKubernetesConfigurationPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            return GetPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
+            return await GetKubernetesConfigurationPrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets a private endpoint connection. </summary>
+        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<KubernetesConfigurationPrivateEndpointConnectionResource> GetKubernetesConfigurationPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
+
+            return GetKubernetesConfigurationPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
         }
     }
 }

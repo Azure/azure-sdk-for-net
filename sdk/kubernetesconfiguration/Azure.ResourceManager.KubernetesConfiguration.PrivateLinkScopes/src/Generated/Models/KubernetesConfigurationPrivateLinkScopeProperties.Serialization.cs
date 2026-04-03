@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes.Models
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();
-                foreach (KubernetesConfigurationPrivateLinkScopesPrivateEndpointConnectionData item in PrivateEndpointConnections)
+                foreach (KubernetesConfigurationPrivateEndpointConnectionData item in PrivateEndpointConnections)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes.Models
             KubernetesConfigurationPrivateLinkScopeProvisioningState? provisioningState = default;
             ResourceIdentifier clusterResourceId = default;
             Guid? privateLinkScopeId = default;
-            IReadOnlyList<KubernetesConfigurationPrivateLinkScopesPrivateEndpointConnectionData> privateEndpointConnections = default;
+            IReadOnlyList<KubernetesConfigurationPrivateEndpointConnectionData> privateEndpointConnections = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -195,10 +195,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes.Models
                     {
                         continue;
                     }
-                    List<KubernetesConfigurationPrivateLinkScopesPrivateEndpointConnectionData> array = new List<KubernetesConfigurationPrivateLinkScopesPrivateEndpointConnectionData>();
+                    List<KubernetesConfigurationPrivateEndpointConnectionData> array = new List<KubernetesConfigurationPrivateEndpointConnectionData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(KubernetesConfigurationPrivateLinkScopesPrivateEndpointConnectionData.DeserializeKubernetesConfigurationPrivateLinkScopesPrivateEndpointConnectionData(item, options));
+                        array.Add(KubernetesConfigurationPrivateEndpointConnectionData.DeserializeKubernetesConfigurationPrivateEndpointConnectionData(item, options));
                     }
                     privateEndpointConnections = array;
                     continue;
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes.Models
                 provisioningState,
                 clusterResourceId,
                 privateLinkScopeId,
-                privateEndpointConnections ?? new ChangeTrackingList<KubernetesConfigurationPrivateLinkScopesPrivateEndpointConnectionData>(),
+                privateEndpointConnections ?? new ChangeTrackingList<KubernetesConfigurationPrivateEndpointConnectionData>(),
                 additionalBinaryDataProperties);
         }
     }

@@ -19,28 +19,28 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes
 {
     /// <summary>
-    /// A class representing a collection of <see cref="PrivateLinkResource"/> and their operations.
-    /// Each <see cref="PrivateLinkResource"/> in the collection will belong to the same instance of <see cref="KubernetesConfigurationPrivateLinkScopeResource"/>.
-    /// To get a <see cref="PrivateLinkResourceCollection"/> instance call the GetPrivateLinkResources method from an instance of <see cref="KubernetesConfigurationPrivateLinkScopeResource"/>.
+    /// A class representing a collection of <see cref="KubernetesConfigurationPrivateLinkResource"/> and their operations.
+    /// Each <see cref="KubernetesConfigurationPrivateLinkResource"/> in the collection will belong to the same instance of <see cref="KubernetesConfigurationPrivateLinkScopeResource"/>.
+    /// To get a <see cref="KubernetesConfigurationPrivateLinkResourceCollection"/> instance call the GetKubernetesConfigurationPrivateLinkResources method from an instance of <see cref="KubernetesConfigurationPrivateLinkScopeResource"/>.
     /// </summary>
-    public partial class PrivateLinkResourceCollection : ArmCollection, IEnumerable<PrivateLinkResource>, IAsyncEnumerable<PrivateLinkResource>
+    public partial class KubernetesConfigurationPrivateLinkResourceCollection : ArmCollection, IEnumerable<KubernetesConfigurationPrivateLinkResource>, IAsyncEnumerable<KubernetesConfigurationPrivateLinkResource>
     {
         private readonly ClientDiagnostics _privateLinkResourcesClientDiagnostics;
         private readonly PrivateLinkResources _privateLinkResourcesRestClient;
 
-        /// <summary> Initializes a new instance of PrivateLinkResourceCollection for mocking. </summary>
-        protected PrivateLinkResourceCollection()
+        /// <summary> Initializes a new instance of KubernetesConfigurationPrivateLinkResourceCollection for mocking. </summary>
+        protected KubernetesConfigurationPrivateLinkResourceCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="PrivateLinkResourceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesConfigurationPrivateLinkResourceCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal PrivateLinkResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal KubernetesConfigurationPrivateLinkResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(PrivateLinkResource.ResourceType, out string privateLinkResourceApiVersion);
-            _privateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes", PrivateLinkResource.ResourceType.Namespace, Diagnostics);
-            _privateLinkResourcesRestClient = new PrivateLinkResources(_privateLinkResourcesClientDiagnostics, Pipeline, Endpoint, privateLinkResourceApiVersion ?? "2024-11-01-preview");
+            TryGetApiVersion(KubernetesConfigurationPrivateLinkResource.ResourceType, out string kubernetesConfigurationPrivateLinkResourceApiVersion);
+            _privateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes", KubernetesConfigurationPrivateLinkResource.ResourceType.Namespace, Diagnostics);
+            _privateLinkResourcesRestClient = new PrivateLinkResources(_privateLinkResourcesClientDiagnostics, Pipeline, Endpoint, kubernetesConfigurationPrivateLinkResourceApiVersion ?? "2024-11-01-preview");
             ValidateResourceId(id);
         }
 
@@ -75,11 +75,11 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<PrivateLinkResource>> GetAsync(string groupName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<KubernetesConfigurationPrivateLinkResource>> GetAsync(string groupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
-            using DiagnosticScope scope = _privateLinkResourcesClientDiagnostics.CreateScope("PrivateLinkResourceCollection.Get");
+            using DiagnosticScope scope = _privateLinkResourcesClientDiagnostics.CreateScope("KubernetesConfigurationPrivateLinkResourceCollection.Get");
             scope.Start();
             try
             {
@@ -89,12 +89,12 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes
                 };
                 HttpMessage message = _privateLinkResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<KubernetesConfigurationPrivateLinkScopesPrivateLinkResourceData> response = Response.FromValue(KubernetesConfigurationPrivateLinkScopesPrivateLinkResourceData.FromResponse(result), result);
+                Response<KubernetesConfigurationPrivateLinkResourceData> response = Response.FromValue(KubernetesConfigurationPrivateLinkResourceData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new PrivateLinkResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new KubernetesConfigurationPrivateLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -124,11 +124,11 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<PrivateLinkResource> Get(string groupName, CancellationToken cancellationToken = default)
+        public virtual Response<KubernetesConfigurationPrivateLinkResource> Get(string groupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
-            using DiagnosticScope scope = _privateLinkResourcesClientDiagnostics.CreateScope("PrivateLinkResourceCollection.Get");
+            using DiagnosticScope scope = _privateLinkResourcesClientDiagnostics.CreateScope("KubernetesConfigurationPrivateLinkResourceCollection.Get");
             scope.Start();
             try
             {
@@ -138,12 +138,12 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes
                 };
                 HttpMessage message = _privateLinkResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<KubernetesConfigurationPrivateLinkScopesPrivateLinkResourceData> response = Response.FromValue(KubernetesConfigurationPrivateLinkScopesPrivateLinkResourceData.FromResponse(result), result);
+                Response<KubernetesConfigurationPrivateLinkResourceData> response = Response.FromValue(KubernetesConfigurationPrivateLinkResourceData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new PrivateLinkResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new KubernetesConfigurationPrivateLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -170,14 +170,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PrivateLinkResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="KubernetesConfigurationPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<KubernetesConfigurationPrivateLinkResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<KubernetesConfigurationPrivateLinkScopesPrivateLinkResourceData, PrivateLinkResource>(new PrivateLinkResourcesGetByPrivateLinkScopeAsyncCollectionResultOfT(_privateLinkResourcesRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new PrivateLinkResource(Client, data));
+            return new AsyncPageableWrapper<KubernetesConfigurationPrivateLinkResourceData, KubernetesConfigurationPrivateLinkResource>(new PrivateLinkResourcesGetByPrivateLinkScopeAsyncCollectionResultOfT(_privateLinkResourcesRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new KubernetesConfigurationPrivateLinkResource(Client, data));
         }
 
         /// <summary>
@@ -198,14 +198,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PrivateLinkResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="KubernetesConfigurationPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<KubernetesConfigurationPrivateLinkResource> GetAll(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<KubernetesConfigurationPrivateLinkScopesPrivateLinkResourceData, PrivateLinkResource>(new PrivateLinkResourcesGetByPrivateLinkScopeCollectionResultOfT(_privateLinkResourcesRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new PrivateLinkResource(Client, data));
+            return new PageableWrapper<KubernetesConfigurationPrivateLinkResourceData, KubernetesConfigurationPrivateLinkResource>(new PrivateLinkResourcesGetByPrivateLinkScopeCollectionResultOfT(_privateLinkResourcesRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new KubernetesConfigurationPrivateLinkResource(Client, data));
         }
 
         /// <summary>
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes
         {
             Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
-            using DiagnosticScope scope = _privateLinkResourcesClientDiagnostics.CreateScope("PrivateLinkResourceCollection.Exists");
+            using DiagnosticScope scope = _privateLinkResourcesClientDiagnostics.CreateScope("KubernetesConfigurationPrivateLinkResourceCollection.Exists");
             scope.Start();
             try
             {
@@ -244,14 +244,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes
                 HttpMessage message = _privateLinkResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<KubernetesConfigurationPrivateLinkScopesPrivateLinkResourceData> response = default;
+                Response<KubernetesConfigurationPrivateLinkResourceData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(KubernetesConfigurationPrivateLinkScopesPrivateLinkResourceData.FromResponse(result), result);
+                        response = Response.FromValue(KubernetesConfigurationPrivateLinkResourceData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((KubernetesConfigurationPrivateLinkScopesPrivateLinkResourceData)null, result);
+                        response = Response.FromValue((KubernetesConfigurationPrivateLinkResourceData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes
         {
             Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
-            using DiagnosticScope scope = _privateLinkResourcesClientDiagnostics.CreateScope("PrivateLinkResourceCollection.Exists");
+            using DiagnosticScope scope = _privateLinkResourcesClientDiagnostics.CreateScope("KubernetesConfigurationPrivateLinkResourceCollection.Exists");
             scope.Start();
             try
             {
@@ -301,14 +301,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes
                 HttpMessage message = _privateLinkResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<KubernetesConfigurationPrivateLinkScopesPrivateLinkResourceData> response = default;
+                Response<KubernetesConfigurationPrivateLinkResourceData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(KubernetesConfigurationPrivateLinkScopesPrivateLinkResourceData.FromResponse(result), result);
+                        response = Response.FromValue(KubernetesConfigurationPrivateLinkResourceData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((KubernetesConfigurationPrivateLinkScopesPrivateLinkResourceData)null, result);
+                        response = Response.FromValue((KubernetesConfigurationPrivateLinkResourceData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -343,11 +343,11 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<PrivateLinkResource>> GetIfExistsAsync(string groupName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<KubernetesConfigurationPrivateLinkResource>> GetIfExistsAsync(string groupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
-            using DiagnosticScope scope = _privateLinkResourcesClientDiagnostics.CreateScope("PrivateLinkResourceCollection.GetIfExists");
+            using DiagnosticScope scope = _privateLinkResourcesClientDiagnostics.CreateScope("KubernetesConfigurationPrivateLinkResourceCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -358,23 +358,23 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes
                 HttpMessage message = _privateLinkResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<KubernetesConfigurationPrivateLinkScopesPrivateLinkResourceData> response = default;
+                Response<KubernetesConfigurationPrivateLinkResourceData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(KubernetesConfigurationPrivateLinkScopesPrivateLinkResourceData.FromResponse(result), result);
+                        response = Response.FromValue(KubernetesConfigurationPrivateLinkResourceData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((KubernetesConfigurationPrivateLinkScopesPrivateLinkResourceData)null, result);
+                        response = Response.FromValue((KubernetesConfigurationPrivateLinkResourceData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<PrivateLinkResource>(response.GetRawResponse());
+                    return new NoValueResponse<KubernetesConfigurationPrivateLinkResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new PrivateLinkResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new KubernetesConfigurationPrivateLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -404,11 +404,11 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<PrivateLinkResource> GetIfExists(string groupName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<KubernetesConfigurationPrivateLinkResource> GetIfExists(string groupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
-            using DiagnosticScope scope = _privateLinkResourcesClientDiagnostics.CreateScope("PrivateLinkResourceCollection.GetIfExists");
+            using DiagnosticScope scope = _privateLinkResourcesClientDiagnostics.CreateScope("KubernetesConfigurationPrivateLinkResourceCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -419,23 +419,23 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes
                 HttpMessage message = _privateLinkResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<KubernetesConfigurationPrivateLinkScopesPrivateLinkResourceData> response = default;
+                Response<KubernetesConfigurationPrivateLinkResourceData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(KubernetesConfigurationPrivateLinkScopesPrivateLinkResourceData.FromResponse(result), result);
+                        response = Response.FromValue(KubernetesConfigurationPrivateLinkResourceData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((KubernetesConfigurationPrivateLinkScopesPrivateLinkResourceData)null, result);
+                        response = Response.FromValue((KubernetesConfigurationPrivateLinkResourceData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<PrivateLinkResource>(response.GetRawResponse());
+                    return new NoValueResponse<KubernetesConfigurationPrivateLinkResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new PrivateLinkResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new KubernetesConfigurationPrivateLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -444,7 +444,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes
             }
         }
 
-        IEnumerator<PrivateLinkResource> IEnumerable<PrivateLinkResource>.GetEnumerator()
+        IEnumerator<KubernetesConfigurationPrivateLinkResource> IEnumerable<KubernetesConfigurationPrivateLinkResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -455,7 +455,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<PrivateLinkResource> IAsyncEnumerable<PrivateLinkResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<KubernetesConfigurationPrivateLinkResource> IAsyncEnumerable<KubernetesConfigurationPrivateLinkResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

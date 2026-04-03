@@ -14,7 +14,7 @@ using Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes.Models;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes
 {
-    internal partial class PrivateEndpointConnectionsGetByPrivateLinkScopeCollectionResultOfT : Pageable<KubernetesConfigurationPrivateLinkScopesPrivateEndpointConnectionData>
+    internal partial class PrivateEndpointConnectionsGetByPrivateLinkScopeCollectionResultOfT : Pageable<KubernetesConfigurationPrivateEndpointConnectionData>
     {
         private readonly PrivateEndpointConnections _client;
         private readonly string _subscriptionId;
@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of PrivateEndpointConnectionsGetByPrivateLinkScopeCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<KubernetesConfigurationPrivateLinkScopesPrivateEndpointConnectionData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<KubernetesConfigurationPrivateEndpointConnectionData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Response response = GetNextResponse(pageSizeHint, null);
             KubernetesConfigurationPrivateLinkScopesPrivateEndpointConnectionListResult result = KubernetesConfigurationPrivateLinkScopesPrivateEndpointConnectionListResult.FromResponse(response);
-            yield return Page<KubernetesConfigurationPrivateLinkScopesPrivateEndpointConnectionData>.FromValues((IReadOnlyList<KubernetesConfigurationPrivateLinkScopesPrivateEndpointConnectionData>)result.Value, null, response);
+            yield return Page<KubernetesConfigurationPrivateEndpointConnectionData>.FromValues((IReadOnlyList<KubernetesConfigurationPrivateEndpointConnectionData>)result.Value, null, response);
         }
 
         /// <summary> Get next page. </summary>
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes
         private Response GetNextResponse(int? pageSizeHint, string continuationToken)
         {
             HttpMessage message = _client.CreateGetByPrivateLinkScopeRequest(_subscriptionId, _resourceGroupName, _scopeName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("PrivateEndpointConnectionCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("KubernetesConfigurationPrivateEndpointConnectionCollection.GetAll");
             scope.Start();
             try
             {

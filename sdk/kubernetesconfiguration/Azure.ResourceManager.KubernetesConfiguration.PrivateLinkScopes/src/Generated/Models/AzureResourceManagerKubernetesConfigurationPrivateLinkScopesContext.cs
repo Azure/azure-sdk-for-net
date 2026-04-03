@@ -16,21 +16,21 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(KubernetesConfigurationPrivateEndpointConnectionData))]
+    [ModelReaderWriterBuildable(typeof(KubernetesConfigurationPrivateEndpointConnectionResource))]
+    [ModelReaderWriterBuildable(typeof(KubernetesConfigurationPrivateLinkResource))]
+    [ModelReaderWriterBuildable(typeof(KubernetesConfigurationPrivateLinkResourceData))]
     [ModelReaderWriterBuildable(typeof(KubernetesConfigurationPrivateLinkScopeData))]
     [ModelReaderWriterBuildable(typeof(KubernetesConfigurationPrivateLinkScopeListResult))]
     [ModelReaderWriterBuildable(typeof(KubernetesConfigurationPrivateLinkScopePatch))]
     [ModelReaderWriterBuildable(typeof(KubernetesConfigurationPrivateLinkScopeProperties))]
     [ModelReaderWriterBuildable(typeof(KubernetesConfigurationPrivateLinkScopeResource))]
-    [ModelReaderWriterBuildable(typeof(KubernetesConfigurationPrivateLinkScopesPrivateEndpointConnectionData))]
     [ModelReaderWriterBuildable(typeof(KubernetesConfigurationPrivateLinkScopesPrivateEndpointConnectionListResult))]
-    [ModelReaderWriterBuildable(typeof(KubernetesConfigurationPrivateLinkScopesPrivateLinkResourceData))]
     [ModelReaderWriterBuildable(typeof(KubernetesConfigurationPrivateLinkScopesPrivateLinkResourceListResult))]
     [ModelReaderWriterBuildable(typeof(KubernetesConfigurationPrivateLinkScopesPrivateLinkResourceProperties))]
     [ModelReaderWriterBuildable(typeof(KubernetesConfigurationPrivateLinkScopesPrivateLinkServiceConnectionState))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpoint))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionProperties))]
-    [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionResource))]
-    [ModelReaderWriterBuildable(typeof(PrivateLinkResource))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerKubernetesConfigurationPrivateLinkScopesContext : ModelReaderWriterContext

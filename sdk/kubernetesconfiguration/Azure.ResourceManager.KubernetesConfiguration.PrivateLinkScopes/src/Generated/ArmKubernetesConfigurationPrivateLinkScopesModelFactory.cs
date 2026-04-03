@@ -49,9 +49,9 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes.Models
         /// <param name="privateLinkScopeId"> The Guid id of the private link scope. </param>
         /// <param name="privateEndpointConnections"> The collection of associated Private Endpoint Connections. </param>
         /// <returns> A new <see cref="Models.KubernetesConfigurationPrivateLinkScopeProperties"/> instance for mocking. </returns>
-        public static KubernetesConfigurationPrivateLinkScopeProperties KubernetesConfigurationPrivateLinkScopeProperties(KubernetesConfigurationPrivateLinkScopePublicNetworkAccessType? publicNetworkAccess = default, KubernetesConfigurationPrivateLinkScopeProvisioningState? provisioningState = default, ResourceIdentifier clusterResourceId = default, Guid? privateLinkScopeId = default, IEnumerable<KubernetesConfigurationPrivateLinkScopesPrivateEndpointConnectionData> privateEndpointConnections = default)
+        public static KubernetesConfigurationPrivateLinkScopeProperties KubernetesConfigurationPrivateLinkScopeProperties(KubernetesConfigurationPrivateLinkScopePublicNetworkAccessType? publicNetworkAccess = default, KubernetesConfigurationPrivateLinkScopeProvisioningState? provisioningState = default, ResourceIdentifier clusterResourceId = default, Guid? privateLinkScopeId = default, IEnumerable<KubernetesConfigurationPrivateEndpointConnectionData> privateEndpointConnections = default)
         {
-            privateEndpointConnections ??= new ChangeTrackingList<KubernetesConfigurationPrivateLinkScopesPrivateEndpointConnectionData>();
+            privateEndpointConnections ??= new ChangeTrackingList<KubernetesConfigurationPrivateEndpointConnectionData>();
 
             return new KubernetesConfigurationPrivateLinkScopeProperties(
                 publicNetworkAccess,
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes.Models
         /// <param name="privateLinkServiceConnectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
         /// <param name="privateEndpointId"> The resource identifier of the private endpoint. </param>
-        /// <returns> A new <see cref="PrivateLinkScopes.KubernetesConfigurationPrivateLinkScopesPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static KubernetesConfigurationPrivateLinkScopesPrivateEndpointConnectionData KubernetesConfigurationPrivateLinkScopesPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, KubernetesConfigurationPrivateLinkScopesPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default, KubernetesConfigurationPrivateLinkScopesPrivateEndpointConnectionProvisioningState? provisioningState = default, ResourceIdentifier privateEndpointId = default)
+        /// <returns> A new <see cref="PrivateLinkScopes.KubernetesConfigurationPrivateEndpointConnectionData"/> instance for mocking. </returns>
+        public static KubernetesConfigurationPrivateEndpointConnectionData KubernetesConfigurationPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, KubernetesConfigurationPrivateLinkScopesPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default, KubernetesConfigurationPrivateLinkScopesPrivateEndpointConnectionProvisioningState? provisioningState = default, ResourceIdentifier privateEndpointId = default)
         {
-            return new KubernetesConfigurationPrivateLinkScopesPrivateEndpointConnectionData(
+            return new KubernetesConfigurationPrivateEndpointConnectionData(
                 id,
                 name,
                 resourceType,
@@ -98,10 +98,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes.Models
         /// <param name="groupId"> The private link resource group id. </param>
         /// <param name="requiredMembers"> The private link resource required member names. </param>
         /// <param name="requiredZoneNames"> The private link resource private link DNS zone name. </param>
-        /// <returns> A new <see cref="PrivateLinkScopes.KubernetesConfigurationPrivateLinkScopesPrivateLinkResourceData"/> instance for mocking. </returns>
-        public static KubernetesConfigurationPrivateLinkScopesPrivateLinkResourceData KubernetesConfigurationPrivateLinkScopesPrivateLinkResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string groupId = default, IEnumerable<string> requiredMembers = default, IEnumerable<string> requiredZoneNames = default)
+        /// <returns> A new <see cref="PrivateLinkScopes.KubernetesConfigurationPrivateLinkResourceData"/> instance for mocking. </returns>
+        public static KubernetesConfigurationPrivateLinkResourceData KubernetesConfigurationPrivateLinkResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string groupId = default, IEnumerable<string> requiredMembers = default, IEnumerable<string> requiredZoneNames = default)
         {
-            return new KubernetesConfigurationPrivateLinkScopesPrivateLinkResourceData(
+            return new KubernetesConfigurationPrivateLinkResourceData(
                 id,
                 name,
                 resourceType,
