@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Concurrent;
+using Azure.AI.AgentServer.Core;
 using Azure.AI.AgentServer.Responses.Models;
 using Microsoft.Extensions.Options;
 
@@ -84,6 +85,7 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
     /// <inheritdoc/>
     public override Task CreateResponseAsync(
         CreateResponseRequest request,
+        IsolationContext isolation,
         CancellationToken cancellationToken = default)
     {
         var response = request.Response;
@@ -128,7 +130,7 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
     }
 
     /// <inheritdoc/>
-    public override Task<Models.ResponseObject> GetResponseAsync(string responseId, CancellationToken cancellationToken = default)
+    public override Task<Models.ResponseObject> GetResponseAsync(string responseId, IsolationContext isolation, CancellationToken cancellationToken = default)
     {
         // Deleted response → 400 (distinguish from never-existed → 404)
         bool isDeleted;
@@ -151,7 +153,7 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
     }
 
     /// <inheritdoc/>
-    public override Task UpdateResponseAsync(Models.ResponseObject response, CancellationToken cancellationToken = default)
+    public override Task UpdateResponseAsync(Models.ResponseObject response, IsolationContext isolation, CancellationToken cancellationToken = default)
     {
         _responses[response.Id] = response;
 
@@ -170,7 +172,7 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
     }
 
     /// <inheritdoc/>
-    public override Task DeleteResponseAsync(string responseId, CancellationToken cancellationToken = default)
+    public override Task DeleteResponseAsync(string responseId, IsolationContext isolation, CancellationToken cancellationToken = default)
     {
         if (!_responses.TryRemove(responseId, out _))
         {
@@ -194,6 +196,7 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
     /// <inheritdoc/>
     public override Task<AgentsPagedResultOutputItem> GetInputItemsAsync(
         string responseId,
+        IsolationContext isolation,
         int limit = 20,
         bool ascending = false,
         string? after = null,
@@ -285,6 +288,7 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
     /// <inheritdoc/>
     public override Task<IEnumerable<OutputItem?>> GetItemsAsync(
         IEnumerable<string> itemIds,
+        IsolationContext isolation,
         CancellationToken cancellationToken = default)
     {
         var results = itemIds.Select(id => _itemStore.TryGetValue(id, out var item) ? item : null);
@@ -296,6 +300,7 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
         string? previousResponseId,
         string? conversationId,
         int limit,
+        IsolationContext isolation,
         CancellationToken cancellationToken = default)
     {
         // previousResponseId path: return history + input + output of the previous response

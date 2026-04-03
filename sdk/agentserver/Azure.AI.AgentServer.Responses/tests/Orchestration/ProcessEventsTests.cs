@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Runtime.CompilerServices;
+using Azure.AI.AgentServer.Core;
 using Azure.AI.AgentServer.Responses.Internal;
 using Azure.AI.AgentServer.Responses.Models;
 using Azure.AI.AgentServer.Responses.Tests.Helpers;
@@ -203,7 +204,7 @@ public class ProcessEventsTests : IDisposable
         await ConsumeProcessedEvents(new CreateResponse(), execution, context, publisher);
 
         // Background + store: should have persisted at response.created time
-        var stored = await _provider.GetResponseAsync("resp_proc_08");
+        var stored = await _provider.GetResponseAsync("resp_proc_08", IsolationContext.Empty);
         Assert.That(stored, Is.Not.Null);
     }
 

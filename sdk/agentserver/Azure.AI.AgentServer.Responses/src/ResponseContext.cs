@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.AI.AgentServer.Core;
 using Azure.AI.AgentServer.Responses.Models;
 using Microsoft.Extensions.Primitives;
 
@@ -63,6 +64,14 @@ public class ResponseContext
     /// <returns>The resolved history items, or an empty list if no conversation context exists.</returns>
     public virtual Task<IReadOnlyList<OutputItem>> GetHistoryAsync(CancellationToken cancellationToken = default)
         => Task.FromResult<IReadOnlyList<OutputItem>>(Array.Empty<OutputItem>());
+
+    /// <summary>
+    /// Gets the platform-injected isolation keys for this request.
+    /// Handlers use these opaque partition keys to scope user-private and
+    /// conversation-shared state. Returns <see cref="IsolationContext.Empty"/>
+    /// when the platform headers are absent (e.g., local development).
+    /// </summary>
+    public virtual IsolationContext Isolation { get; } = IsolationContext.Empty;
 
     /// <summary>
     /// Gets the forwarded client headers (those prefixed with <c>x-client-</c>)

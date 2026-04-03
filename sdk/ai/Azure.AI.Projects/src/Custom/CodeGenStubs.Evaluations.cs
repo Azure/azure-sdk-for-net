@@ -7,8 +7,8 @@ namespace Azure.AI.Projects.Evaluation;
 [CodeGenType("AgentClusterInsightRequest")] public partial class AgentClusterInsightRequest { }
 [CodeGenType("AgentClusterInsightResult")] public partial class AgentClusterInsightResult { }
 [CodeGenType("AttackStrategy")] public readonly partial struct AttackStrategy { }
-[CodeGenType("AzureAIAgentTarget")] internal partial class AzureAIAgentTarget { }
-[CodeGenType("AzureAIModelTarget")] internal partial class AzureAIModelTarget { }
+[CodeGenType("AzureAIAgentTarget")] public partial class AzureAIAgentTarget { }
+[CodeGenType("AzureAIModelTarget")] public partial class AzureAIModelTarget { }
 [CodeGenType("AzureOpenAIModelConfiguration")] public partial class AzureOpenAIModelConfiguration { }
 [CodeGenType("ChartCoordinate")] public partial class ChartCoordinate { }
 [CodeGenType("ContinuousEvaluationRuleAction")] public partial class ContinuousEvaluationRuleAction { }
@@ -54,7 +54,7 @@ namespace Azure.AI.Projects.Evaluation;
 [CodeGenType("InsightSummary")] public partial class InsightSummary { }
 [CodeGenType("InsightType")] public readonly partial struct InsightType { }
 [CodeGenType("ListVersionsRequestType")] public readonly partial struct ListVersionsRequestType { }
-[CodeGenType("ModelSamplingParams")] internal partial class ModelSamplingParams { }
+[CodeGenType("ModelSamplingParams")] public partial class ModelSamplingParams { }
 [CodeGenType("MonthlyRecurrenceSchedule")] public partial class MonthlyRecurrenceSchedule { }
 [CodeGenType("OneTimeTrigger")] public partial class OneTimeTrigger { }
 [CodeGenType("OperationStatus")] public readonly partial struct OperationStatus { }
