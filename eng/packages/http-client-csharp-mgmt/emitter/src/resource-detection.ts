@@ -8,7 +8,6 @@ import {
   InputModelType
 } from "@typespec/http-client-csharp";
 import {
-  calculateResourceTypeFromPath,
   NonResourceMethod,
   ResourceMetadata,
   ResourceMethod,
@@ -180,12 +179,12 @@ export function buildArmProviderSchema(
 
             // Try to match based on resource type segments
             // Extract the resource type part (after "/providers/")
-            const existingResourceType =
-              calculateResourceTypeFromPath(existingPath);
+            const existingResourceType = new RequestPath(existingPath)
+              .resourceType;
             let operationResourceType = "";
             try {
-              operationResourceType =
-                calculateResourceTypeFromPath(operationPath);
+              operationResourceType = new RequestPath(operationPath)
+                .resourceType;
             } catch {
               // If we can't calculate resource type, try string matching
             }
@@ -205,12 +204,7 @@ export function buildArmProviderSchema(
         const bestPrefixMatch = findLongestPrefixMatch(
           new RequestPath(operationPath),
           existingPathsForModel,
-          (path) => {
-            const lastSlash = path.lastIndexOf("/");
-            return lastSlash > 0
-              ? new RequestPath(path.substring(0, lastSlash))
-              : undefined;
-          }
+          (path) => new RequestPath(path).parentPath
         );
 
         // Selection strategy:

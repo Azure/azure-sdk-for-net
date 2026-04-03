@@ -226,6 +226,19 @@ export class RequestPath {
     return ResourceScope.Tenant;
   }
 
+  /**
+   * Returns a new RequestPath with the last segment removed (the "parent" or "collection" path).
+   * E.g., for ".../virtualMachines/{vmName}", returns ".../virtualMachines".
+   * Returns undefined if the path has no segments.
+   */
+  get parentPath(): RequestPath | undefined {
+    if (this.length === 0) return undefined;
+    const lastSlash = this.path.lastIndexOf("/");
+    return lastSlash > 0
+      ? new RequestPath(this.path.substring(0, lastSlash))
+      : undefined;
+  }
+
   toString(): string {
     return this.path;
   }

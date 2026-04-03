@@ -3,7 +3,6 @@
 
 import {
   isVariableSegment,
-  isPrefix,
   findLongestPrefixMatch,
   RequestPath
 } from "./utils.js";
@@ -576,7 +575,7 @@ export function assignNonResourceMethodsToResources(
       }
     } else {
       // Both prefix and model ID matching failed — try matching by resource type.
-      if (method.operationPath.path.includes("/providers/")) {
+      if (method.operationPath.scopePath !== undefined) {
         const operationType = method.operationPath.resourceType;
         const match = resources.find((r) => {
           if (
@@ -700,16 +699,12 @@ function relocateCrossResourceListActions(
       for (const candidate of validResources) {
         if (candidate === resource) continue;
         if (
-          !isPrefix(method.operationPath, candidate.metadata.resourceIdPattern)
+          !method.operationPath.isPrefixOf(candidate.metadata.resourceIdPattern)
         )
           continue;
         // Ensure the difference is exactly one segment (the resource name)
-        const opSegments = method.operationPath
-          .split("/")
-          .filter((s) => s.length > 0);
-        const resSegments = candidate.metadata.resourceIdPattern
-          .split("/")
-          .filter((s) => s.length > 0);
+        const opSegments = method.operationPath.segments;
+        const resSegments = candidate.metadata.resourceIdPattern.segments;
         if (resSegments.length !== opSegments.length + 1) continue;
         // The additional segment must be a variable segment (e.g. `{resourceName}`)
         const lastSegment = resSegments[resSegments.length - 1];

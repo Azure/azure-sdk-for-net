@@ -3469,7 +3469,7 @@ interface Containers {
     );
     strictEqual(listOnContainer!.kind, "List");
     ok(
-      listOnContainer!.operationPath.includes("/containers"),
+      listOnContainer!.operationPath.path.includes("/containers"),
       "The List method should be the relocated containers operation"
     );
 

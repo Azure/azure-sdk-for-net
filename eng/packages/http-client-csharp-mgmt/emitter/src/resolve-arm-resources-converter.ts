@@ -57,7 +57,7 @@ import {
   getClientType,
   SdkModelType
 } from "@azure-tools/typespec-client-generator-core";
-import { isPrefix, findLongestPrefixMatch, RequestPath } from "./utils.js";
+import { findLongestPrefixMatch, RequestPath } from "./utils.js";
 import { getAllSdkClients } from "./sdk-client-utils.js";
 import {
   extensionResourceOperationName,
@@ -496,9 +496,9 @@ function convertResolvedResourceToMetadata(
     parentResourceModelId: undefined,
     // TODO: Temporary - waiting for resolveArmResources API update to include singleton information
     // Once the API includes this, we can remove this extraction logic
-    singletonResourceName: extractSingletonName(
+    singletonResourceName: new RequestPath(
       resolvedResource.resourceInstancePath
-    ),
+    ).singletonName,
     resourceName: resourceName,
     nameConstraints,
     apiVersions,
@@ -569,26 +569,21 @@ function formatResourceType(resourceType: ResourceType): string {
   return `${resourceType.provider}/${resourceType.types.join("/")}`;
 }
 
-/**
- * Extract singleton resource name from path if it exists.
- * Delegates to RequestPath.singletonName for the actual computation.
- */
-function extractSingletonName(path: string): string | undefined {
-  return new RequestPath(path).singletonName;
-}
-
 function calculateResourceScope(
   operationPath: string,
   resolvedResource: ResolvedResource
 ): RequestPath | undefined {
-  if (isPrefix(resolvedResource.resourceInstancePath, operationPath)) {
-    return new RequestPath(resolvedResource.resourceInstancePath);
+  const opPath = new RequestPath(operationPath);
+  const instancePath = new RequestPath(resolvedResource.resourceInstancePath);
+  if (instancePath.isPrefixOf(opPath)) {
+    return instancePath;
   }
 
   let parent = resolvedResource.parent;
   while (parent) {
-    if (isPrefix(parent.resourceInstancePath, operationPath)) {
-      return new RequestPath(parent.resourceInstancePath);
+    const parentPath = new RequestPath(parent.resourceInstancePath);
+    if (parentPath.isPrefixOf(opPath)) {
+      return parentPath;
     }
     parent = parent.parent;
   }
@@ -706,16 +701,13 @@ function assignListOperationsToResources(
             if (pattern.length === 0) return undefined;
             // Strip the last segment (the key variable like {resourceName})
             // so we compare against the collection/type segment
-            const lastSlash = pattern.path.lastIndexOf("/");
-            return lastSlash > 0
-              ? new RequestPath(pattern.path.substring(0, lastSlash))
-              : undefined;
+            return pattern.parentPath;
           }
         );
 
         // Fall back to resource type matching if prefix matching didn't find a match
-        if (!targetResource && listOp.path.includes("/providers/")) {
-          const listPath = new RequestPath(listOp.path);
+        const listPath = new RequestPath(listOp.path);
+        if (!targetResource && listPath.scopePath !== undefined) {
           const listType = listPath.resourceType;
           targetResource = resourcesForModel.find((r) => {
             if (!listPath.hasSameScopeNesting(r.metadata.resourceIdPattern)) {
