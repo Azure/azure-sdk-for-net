@@ -10,6 +10,7 @@
     <GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
     <BaseOutputPath>bin\</BaseOutputPath>
     <BaseIntermediateOutputPath>obj\</BaseIntermediateOutputPath>
+    <NoWarn>$(NoWarn);MSB3539</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
