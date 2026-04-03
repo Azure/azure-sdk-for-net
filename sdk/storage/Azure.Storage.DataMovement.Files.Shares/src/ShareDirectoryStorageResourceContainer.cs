@@ -97,9 +97,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
         protected override StorageResourceCheckpointDetails GetSourceCheckpointDetails()
         {
-            return new ShareFileSourceCheckpointDetails(
-                shareProtocol: ResourceOptions?.ShareProtocol ?? ShareProtocol.Smb,
-                options: ResourceOptions);
+            return new ShareFileSourceCheckpointDetails(shareProtocol: ResourceOptions?.ShareProtocol ?? ShareProtocol.Smb);
         }
 
         protected override StorageResourceCheckpointDetails GetDestinationCheckpointDetails()

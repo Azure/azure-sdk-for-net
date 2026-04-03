@@ -16,16 +16,14 @@ namespace Azure.Storage.DataMovement.Files.Shares
         {
             // Prior to Source Files Schema Version 1, the SourceCheckpointDetails was empty and Version was not present.
             internal const int SchemaVersion_1 = 1;
-            internal const int SchemaVersion_2 = 2;
-            internal const int SchemaVersion = SchemaVersion_2;
+            internal const int SchemaVersion = SchemaVersion_1;
 
             internal const int VersionEncodedSize = IntSizeInBytes;
             internal const int ShareProtocolEncodedSize = OneByte;
 
             internal const int VersionIndex = 0;
             internal const int ShareProtocolIndex = VersionIndex + VersionEncodedSize;
-            internal const int VariableLengthStartIndex = ShareProtocolIndex + ShareProtocolEncodedSize;
-            internal const int DataSize = VariableLengthStartIndex;
+            internal const int DataSize = ShareProtocolIndex + ShareProtocolEncodedSize;
         }
 
         internal class DestinationCheckpointDetails
