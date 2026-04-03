@@ -1,4 +1,4 @@
 directory: specification/postgresqlhsc/resource-manager/Microsoft.DBforPostgreSQL/PostgresqlHsc
-commit: a4d3f7f09294078228f8993561b50cde3762bcd0
+commit: 87c678569b62d27fcf0e95cd51d84cc3bff4af85
 repo: haiyuazhang/azure-rest-api-specs
 emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json"
