@@ -8,44 +8,63 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.ServiceFabric.Models
+namespace Azure.ResourceManager.ServiceFabric
 {
     /// <summary> Cluster operating system, the default will be Windows. </summary>
     public readonly partial struct ClusterEnvironment : IEquatable<ClusterEnvironment>
     {
         private readonly string _value;
+        /// <summary> Windows operating system. </summary>
+        private const string WindowsValue = "Windows";
+        /// <summary> Linux operating system. </summary>
+        private const string LinuxValue = "Linux";
 
         /// <summary> Initializes a new instance of <see cref="ClusterEnvironment"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ClusterEnvironment(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string WindowsValue = "Windows";
-        private const string LinuxValue = "Linux";
-
-        /// <summary> Windows. </summary>
+        /// <summary> Windows operating system. </summary>
         public static ClusterEnvironment Windows { get; } = new ClusterEnvironment(WindowsValue);
-        /// <summary> Linux. </summary>
+
+        /// <summary> Linux operating system. </summary>
         public static ClusterEnvironment Linux { get; } = new ClusterEnvironment(LinuxValue);
+
         /// <summary> Determines if two <see cref="ClusterEnvironment"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ClusterEnvironment left, ClusterEnvironment right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ClusterEnvironment"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ClusterEnvironment left, ClusterEnvironment right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ClusterEnvironment"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ClusterEnvironment"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ClusterEnvironment(string value) => new ClusterEnvironment(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ClusterEnvironment"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ClusterEnvironment?(string value) => value == null ? null : new ClusterEnvironment(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ClusterEnvironment other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ClusterEnvironment other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

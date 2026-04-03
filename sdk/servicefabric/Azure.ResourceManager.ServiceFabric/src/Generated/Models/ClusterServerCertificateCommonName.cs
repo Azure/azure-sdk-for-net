@@ -8,48 +8,19 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.ServiceFabric.Models
+namespace Azure.ResourceManager.ServiceFabric
 {
     /// <summary> Describes the server certificate details using common name. </summary>
     public partial class ClusterServerCertificateCommonName
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ClusterServerCertificateCommonName"/>. </summary>
         /// <param name="certificateCommonName"> The common name of the server certificate. </param>
         /// <param name="certificateIssuerThumbprint"> The issuer thumbprint of the server certificate. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateCommonName"/> or <paramref name="certificateIssuerThumbprint"/> is null. </exception>
-        public ClusterServerCertificateCommonName(string certificateCommonName, BinaryData certificateIssuerThumbprint)
+        public ClusterServerCertificateCommonName(string certificateCommonName, string certificateIssuerThumbprint)
         {
             Argument.AssertNotNull(certificateCommonName, nameof(certificateCommonName));
             Argument.AssertNotNull(certificateIssuerThumbprint, nameof(certificateIssuerThumbprint));
@@ -61,51 +32,18 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <summary> Initializes a new instance of <see cref="ClusterServerCertificateCommonName"/>. </summary>
         /// <param name="certificateCommonName"> The common name of the server certificate. </param>
         /// <param name="certificateIssuerThumbprint"> The issuer thumbprint of the server certificate. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ClusterServerCertificateCommonName(string certificateCommonName, BinaryData certificateIssuerThumbprint, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ClusterServerCertificateCommonName(string certificateCommonName, string certificateIssuerThumbprint, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CertificateCommonName = certificateCommonName;
             CertificateIssuerThumbprint = certificateIssuerThumbprint;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ClusterServerCertificateCommonName"/> for deserialization. </summary>
-        internal ClusterServerCertificateCommonName()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The common name of the server certificate. </summary>
         public string CertificateCommonName { get; set; }
-        /// <summary>
-        /// The issuer thumbprint of the server certificate.
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData CertificateIssuerThumbprint { get; set; }
+
+        /// <summary> The issuer thumbprint of the server certificate. </summary>
+        public string CertificateIssuerThumbprint { get; set; }
     }
 }
