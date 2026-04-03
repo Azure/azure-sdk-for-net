@@ -9,7 +9,7 @@
 ### Bugs Fixed
 
 - Fix deserialization when `AppServiceApiDefinitionInfo.Uri` is not a valid URI.
-- Fix deserialization when `FunctionAppStorage.Value` is not a valid URI.
+- Fix deserialization when `FunctionAppStorage.Value` is not a valid URI. Added a new property `FunctionAppStorage.AzureStorageUriStringValue` (string) to replace `FunctionAppStorage.Value` (Uri). The old `Value` property has been hidden but is still available.
 
 ### Other Changes
 
