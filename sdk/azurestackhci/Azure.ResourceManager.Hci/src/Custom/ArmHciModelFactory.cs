@@ -11,9 +11,8 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    // TODO: remove when https://github.com/Azure/azure-sdk-for-net/issues/57525 is resolved
+    // TODO: remove when https://github.com/Azure/azure-sdk-for-net/issues/57755 is resolved
     [CodeGenSuppress("PerNodeExtensionState", typeof(string), typeof(string), typeof(string), typeof(NodeExtensionState?), typeof(ArcExtensionInstanceView))]
-    // ExtensionProfile is internal (read-only model), but generator emits public factory method referencing it
     [CodeGenSuppress("HciReportedProperties", typeof(HciEdgeDeviceState?), typeof(ExtensionProfile), typeof(DateTimeOffset?), typeof(ConfidentialVmProfile), typeof(HciNetworkProfile), typeof(HciOSProfile), typeof(SbeDeploymentPackageInfo), typeof(HciStorageProfile), typeof(string))]
     public static partial class ArmHciModelFactory
     {
