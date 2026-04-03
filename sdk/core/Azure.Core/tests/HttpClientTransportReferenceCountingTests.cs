@@ -170,18 +170,23 @@ namespace Azure.Core.Tests
                 }));
             }
 
-            // Wait until all requests are in the handler (past TryAddRef, holding refs)
-            for (int i = 0; i < 5; i++)
+            try
             {
-                Assert.IsTrue(await requestsInHandler.WaitAsync(TimeSpan.FromSeconds(10)),
-                    "Timed out waiting for requests to enter handler");
+                // Wait until all requests are in the handler (past TryAddRef, holding refs)
+                for (int i = 0; i < 5; i++)
+                {
+                    Assert.IsTrue(await requestsInHandler.WaitAsync(TimeSpan.FromSeconds(10)),
+                        "Timed out waiting for requests to enter handler");
+                }
+
+                // Update transport while requests are definitely in-flight
+                transport.Update(new HttpPipelineTransportOptions());
             }
-
-            // Update transport while requests are definitely in-flight
-            transport.Update(new HttpPipelineTransportOptions());
-
-            // Allow all requests to complete
-            releaseRequests.Set();
+            finally
+            {
+                // Always unblock handler threads to prevent test hangs on failure
+                releaseRequests.Set();
+            }
 
             // Wait for all requests to complete
             await Task.WhenAll(tasks);
@@ -273,21 +278,26 @@ namespace Azure.Core.Tests
                 }));
             }
 
-            // Wait until all requests are in the handler (past TryAddRef, holding refs)
-            for (int i = 0; i < requestCount; i++)
+            try
             {
-                Assert.IsTrue(await requestsInHandler.WaitAsync(TimeSpan.FromSeconds(10)),
-                    "Timed out waiting for requests to enter handler");
-            }
+                // Wait until all requests are in the handler (past TryAddRef, holding refs)
+                for (int i = 0; i < requestCount; i++)
+                {
+                    Assert.IsTrue(await requestsInHandler.WaitAsync(TimeSpan.FromSeconds(10)),
+                        "Timed out waiting for requests to enter handler");
+                }
 
-            // Perform multiple updates while requests hold refs to the old wrapper
-            for (int i = 0; i < 3; i++)
+                // Perform multiple updates while requests hold refs to the old wrapper
+                for (int i = 0; i < 3; i++)
+                {
+                    transport.Update(new HttpPipelineTransportOptions());
+                }
+            }
+            finally
             {
-                transport.Update(new HttpPipelineTransportOptions());
+                // Always unblock handler threads to prevent test hangs on failure
+                releaseRequests.Set();
             }
-
-            // Allow all blocked requests to complete
-            releaseRequests.Set();
 
             // Wait for all requests to complete - they should succeed despite updates
             await Task.WhenAll(tasks);
