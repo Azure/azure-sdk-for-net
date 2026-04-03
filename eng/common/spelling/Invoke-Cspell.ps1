@@ -98,6 +98,7 @@ end {
 
   npm --prefix $PackageInstallCache ci | Write-Host
 
+  $fileListPath = $null
   try {
     $fileListPath = (New-TemporaryFile).FullName
     $filesToCheck | Out-File -FilePath $fileListPath -Encoding utf8
@@ -114,7 +115,9 @@ end {
     Write-Host "npm $cspellArgs"
     $cspellOutput = npm @cspellArgs
   } finally {
-    Remove-Item -Path $fileListPath -Force -ErrorAction SilentlyContinue
+    if ($fileListPath) {
+      Remove-Item -Path $fileListPath -Force -ErrorAction SilentlyContinue
+    }
   }
 
   if (!$LeavePackageInstallCache) {
