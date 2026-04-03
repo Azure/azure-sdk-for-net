@@ -539,7 +539,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests
 
             try
             {
-                result = await subscriptionResource.VirtualMachinesExecuteCreateFlexAsync(location, content);
+                result = await subscriptionResource.ExecuteVirtualMachineCreateFlexOperationAsync(location, content);
             }
             catch (RequestFailedException ex)
             {

@@ -459,18 +459,18 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
                 RetryPolicy = new UserRequestRetryPolicy() { RetryCount = 1 }
             };
 
-            var flexProperties = new FlexProperties(
+            var flexProperties = new ComputeScheduleFlexProperties(
                 new[]
                 {
-                    new VmSizeProfile("Standard_D2ads_v5", 0),
-                    new VmSizeProfile("Standard_E2ads_v5", 1),
-                    new VmSizeProfile("Standard_D2ds_v5", 2),
+                    new ComputeScheduleVmSizeProfile("Standard_D2ads_v5", 0),
+                    new ComputeScheduleVmSizeProfile("Standard_E2ads_v5", 1),
+                    new ComputeScheduleVmSizeProfile("Standard_D2ds_v5", 2),
                 },
-                OsType.Windows,
-                new PriorityProfile
+                ComputeScheduleOSType.Windows,
+                new ComputeSchedulePriorityProfile
                 {
-                    Type = PriorityType.Regular,
-                    AllocationStrategy = AllocationStrategy.Prioritized,
+                    Type = ComputeSchedulePriorityType.Regular,
+                    AllocationStrategy = ComputeScheduleAllocationStrategy.Prioritized,
                 });
 
             var resourceConfigParameters = new ResourceProvisionFlexPayload(1, flexProperties)
