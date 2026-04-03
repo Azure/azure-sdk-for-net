@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Text.Json;
+using Azure.AI.AgentServer.Core;
 using Azure.AI.AgentServer.Responses.Internal;
 using Azure.AI.AgentServer.Responses.Models;
 using Microsoft.Extensions.Options;
@@ -303,28 +304,28 @@ public class ResponseContextImplTests
         public void SetHistoryItemIds(string previousResponseId, string[] ids)
             => _historyItemIds[previousResponseId] = ids;
 
-        public override Task CreateResponseAsync(CreateResponseRequest request, CancellationToken ct = default)
+        public override Task CreateResponseAsync(CreateResponseRequest request, IsolationContext isolation, CancellationToken ct = default)
             => Task.CompletedTask;
 
-        public override Task<Models.ResponseObject> GetResponseAsync(string responseId, CancellationToken ct = default)
+        public override Task<Models.ResponseObject> GetResponseAsync(string responseId, IsolationContext isolation, CancellationToken ct = default)
             => throw new ResourceNotFoundException("not found");
 
-        public override Task UpdateResponseAsync(Models.ResponseObject response, CancellationToken ct = default)
+        public override Task UpdateResponseAsync(Models.ResponseObject response, IsolationContext isolation, CancellationToken ct = default)
             => Task.CompletedTask;
 
-        public override Task DeleteResponseAsync(string responseId, CancellationToken ct = default)
+        public override Task DeleteResponseAsync(string responseId, IsolationContext isolation, CancellationToken ct = default)
             => throw new ResourceNotFoundException("not found");
 
-        public override Task<AgentsPagedResultOutputItem> GetInputItemsAsync(string responseId, int limit = 20, bool ascending = false, string? after = null, string? before = null, CancellationToken ct = default)
+        public override Task<AgentsPagedResultOutputItem> GetInputItemsAsync(string responseId, IsolationContext isolation, int limit = 20, bool ascending = false, string? after = null, string? before = null, CancellationToken ct = default)
             => Task.FromResult(ResponsesModelFactory.AgentsPagedResultOutputItem(data: Array.Empty<OutputItem>(), hasMore: false));
 
-        public override Task<IEnumerable<OutputItem?>> GetItemsAsync(IEnumerable<string> itemIds, CancellationToken ct = default)
+        public override Task<IEnumerable<OutputItem?>> GetItemsAsync(IEnumerable<string> itemIds, IsolationContext isolation, CancellationToken ct = default)
         {
             var results = itemIds.Select(id => _items.TryGetValue(id, out var item) ? item : null);
             return Task.FromResult(results);
         }
 
-        public override Task<IEnumerable<string>> GetHistoryItemIdsAsync(string? previousResponseId, string? conversationId, int limit, CancellationToken ct = default)
+        public override Task<IEnumerable<string>> GetHistoryItemIdsAsync(string? previousResponseId, string? conversationId, int limit, IsolationContext isolation, CancellationToken ct = default)
         {
             if (previousResponseId is not null && _historyItemIds.TryGetValue(previousResponseId, out var ids))
             {
@@ -340,17 +341,17 @@ public class ResponseContextImplTests
         public int GetHistoryItemIdsCallCount { get; private set; }
         public int LastHistoryLimit { get; private set; }
 
-        public override Task<IEnumerable<OutputItem?>> GetItemsAsync(IEnumerable<string> itemIds, CancellationToken ct = default)
+        public override Task<IEnumerable<OutputItem?>> GetItemsAsync(IEnumerable<string> itemIds, IsolationContext isolation, CancellationToken ct = default)
         {
             GetItemsCallCount++;
-            return base.GetItemsAsync(itemIds, ct);
+            return base.GetItemsAsync(itemIds, isolation, ct);
         }
 
-        public override Task<IEnumerable<string>> GetHistoryItemIdsAsync(string? previousResponseId, string? conversationId, int limit, CancellationToken ct = default)
+        public override Task<IEnumerable<string>> GetHistoryItemIdsAsync(string? previousResponseId, string? conversationId, int limit, IsolationContext isolation, CancellationToken ct = default)
         {
             GetHistoryItemIdsCallCount++;
             LastHistoryLimit = limit;
-            return base.GetHistoryItemIdsAsync(previousResponseId, conversationId, limit, ct);
+            return base.GetHistoryItemIdsAsync(previousResponseId, conversationId, limit, isolation, ct);
         }
     }
 }

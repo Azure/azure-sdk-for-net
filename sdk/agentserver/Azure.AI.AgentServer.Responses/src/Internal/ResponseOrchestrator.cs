@@ -3,6 +3,7 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
+using Azure.AI.AgentServer.Core;
 using Azure.AI.AgentServer.Responses.Models;
 using Microsoft.Extensions.Logging;
 
@@ -124,9 +125,10 @@ internal sealed class ResponseOrchestrator
     /// Encapsulates all guard logic: store check, background check, completion check.
     /// </summary>
     /// <param name="responseId">The response ID to look up.</param>
+    /// <param name="isolation">The platform isolation context. Use <see cref="IsolationContext.Empty"/> when not applicable.</param>
     /// <returns>The Response snapshot.</returns>
     /// <exception cref="ResourceNotFoundException">If the response cannot be retrieved.</exception>
-    public async Task<Models.ResponseObject> GetAsync(string responseId)
+    public async Task<Models.ResponseObject> GetAsync(string responseId, IsolationContext isolation)
     {
         // If the response is in-flight, apply in-flight guards and return a snapshot.
         if (_tracker.TryGet(responseId, out var execution) && execution is not null)
@@ -151,7 +153,7 @@ internal sealed class ResponseOrchestrator
 
         // Not in-flight — fall through to the durable store.
         // Provider throws ResourceNotFoundException if the ID doesn't exist.
-        return await _provider.GetResponseAsync(responseId);
+        return await _provider.GetResponseAsync(responseId, isolation);
     }
 
     /// <summary>
@@ -160,17 +162,18 @@ internal sealed class ResponseOrchestrator
     /// idempotency, winddown wait, output clearing.
     /// </summary>
     /// <param name="responseId">The response ID to cancel.</param>
+    /// <param name="isolation">The platform isolation context. Use <see cref="IsolationContext.Empty"/> when not applicable.</param>
     /// <returns>The cancelled Response snapshot.</returns>
     /// <exception cref="ResourceNotFoundException">If the response is not found.</exception>
     /// <exception cref="BadRequestException">If the response cannot be cancelled.</exception>
-    public async Task<Models.ResponseObject> CancelAsync(string responseId)
+    public async Task<Models.ResponseObject> CancelAsync(string responseId, IsolationContext isolation)
     {
         if (!_tracker.TryGet(responseId, out var execution) || execution is null)
         {
             // Not in-flight — check durable store for terminal state.
             // If it exists and is already terminal, return as-is (idempotent).
             // If it doesn't exist, provider throws ResourceNotFoundException.
-            var persisted = await _provider.GetResponseAsync(responseId);
+            var persisted = await _provider.GetResponseAsync(responseId, isolation);
 
             // Already completed / failed / cancelled / incomplete — not cancellable.
             return persisted.Status switch
@@ -300,7 +303,7 @@ internal sealed class ResponseOrchestrator
                     await publisher.OnNextAsync(evt);
 
                     var (inputItems, historyItemIds) = await ResolveItemsForPersistenceAsync(context);
-                    await _provider.CreateResponseAsync(new CreateResponseRequest(execution.Response!, inputItems, historyItemIds));
+                    await _provider.CreateResponseAsync(new CreateResponseRequest(execution.Response!, inputItems, historyItemIds), context.Isolation);
 
                     // Signal that response.created has been processed — unblocks
                     // the bg non-streaming endpoint path waiting for the handler's response.
@@ -719,13 +722,13 @@ internal sealed class ResponseOrchestrator
                 if (execution.IsBackground)
                 {
                     // Background mode: Create already happened at response.created time — update.
-                    await _provider.UpdateResponseAsync(execution.Response);
+                    await _provider.UpdateResponseAsync(execution.Response, execution.Context?.Isolation ?? IsolationContext.Empty);
                 }
                 else if (IsNonCancelledTerminal(execution.Response.Status))
                 {
                     // Default mode: single persist at non-cancelled terminal state.
                     var (inputItems, historyItemIds) = await ResolveItemsForPersistenceAsync(execution.Context);
-                    await _provider.CreateResponseAsync(new CreateResponseRequest(execution.Response, inputItems, historyItemIds));
+                    await _provider.CreateResponseAsync(new CreateResponseRequest(execution.Response, inputItems, historyItemIds), execution.Context?.Isolation ?? IsolationContext.Empty);
                 }
             }
         }

@@ -67,16 +67,16 @@ public class DefaultModeProtocolTests : ProtocolTestBase
     }
 
     [Test]
-    // Validates: B22 — Output text matching (output_text matches handler-emitted text)
-    public async Task POST_Responses_OutputText_MatchesHandlerOutput()
+    // Validates that output_text (a client SDK convenience property) is NOT returned by the server.
+    public async Task POST_Responses_OutputText_NotReturnedByServer()
     {
         Handler.EventFactory = (req, ctx, ct) => TextEchoStream(req, ctx);
 
         var response = await PostResponsesAsync(new { model = "test", input = "Hello world" });
 
         using var doc = await ParseJsonAsync(response);
-        var outputText = doc.RootElement.GetProperty("output_text").GetString();
-        Assert.That(outputText, Is.EqualTo("Echo: Hello world"));
+        // output_text is a client SDK convenience property; the server should never return it.
+        Assert.That(doc.RootElement.TryGetProperty("output_text", out _), Is.False);
     }
 
     [Test]
