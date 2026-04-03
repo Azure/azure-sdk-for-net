@@ -1,6 +1,6 @@
 # Azure SDK for .NET Libraries Inventory
 
-> **Auto-generated** by `Library_Inventory` on 2026-04-03 09:20:51 UTC.
+> **Auto-generated** by `Library_Inventory` on 2026-04-03 09:47:01 UTC.
 > Run that script to refresh this file.
 
 ## Table of Contents
