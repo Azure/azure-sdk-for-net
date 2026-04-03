@@ -113,7 +113,7 @@ end {
     Write-Host "npm $cspellArgs"
     $cspellOutput = npm @cspellArgs
   } finally {
-    Remove-Item -Path $fileListPath -Force -ErrorAction SilentlyContinue | Out-Null
+    Remove-Item -Path $fileListPath -Force -ErrorAction SilentlyContinue
   }
 
   if (!$LeavePackageInstallCache) {
