@@ -153,10 +153,10 @@ namespace Azure.Search.Documents.Tests
             var service = new SearchIndexerClient(endpoint, new AzureKeyCredential("fake"));
 
             ArgumentException ex = Assert.Throws<ArgumentNullException>(() => service.GetDataSourceConnection(null));
-            Assert.AreEqual("name", ex.ParamName);
+            Assert.AreEqual("dataSourceConnectionName", ex.ParamName);
 
             ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.GetDataSourceConnectionAsync(null));
-            Assert.AreEqual("name", ex.ParamName);
+            Assert.AreEqual("dataSourceConnectionName", ex.ParamName);
         }
 
         [Test]
@@ -268,10 +268,10 @@ namespace Azure.Search.Documents.Tests
             var service = new SearchIndexerClient(endpoint, new AzureKeyCredential("fake"));
 
             ArgumentException ex = Assert.Throws<ArgumentNullException>(() => service.GetIndexer(null));
-            Assert.AreEqual("name", ex.ParamName);
+            Assert.AreEqual("indexerName", ex.ParamName);
 
             ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.GetIndexerAsync(null));
-            Assert.AreEqual("name", ex.ParamName);
+            Assert.AreEqual("indexerName", ex.ParamName);
         }
 
         [Test]
@@ -302,10 +302,10 @@ namespace Azure.Search.Documents.Tests
             var service = new SearchIndexerClient(endpoint, new AzureKeyCredential("fake"));
 
             ArgumentException ex = Assert.Throws<ArgumentNullException>(() => service.ResetIndexer(null));
-            Assert.AreEqual("name", ex.ParamName);
+            Assert.AreEqual("indexerName", ex.ParamName);
 
             ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.ResetIndexerAsync(null));
-            Assert.AreEqual("name", ex.ParamName);
+            Assert.AreEqual("indexerName", ex.ParamName);
         }
 
         [Test]
@@ -316,10 +316,10 @@ namespace Azure.Search.Documents.Tests
             var service = new SearchIndexerClient(endpoint, new AzureKeyCredential("fake"));
 
             ArgumentException ex = Assert.Throws<ArgumentNullException>(() => service.RunIndexer(null));
-            Assert.AreEqual("name", ex.ParamName);
+            Assert.AreEqual("indexerName", ex.ParamName);
 
             ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.RunIndexerAsync(null));
-            Assert.AreEqual("name", ex.ParamName);
+            Assert.AreEqual("indexerName", ex.ParamName);
         }
 
         [Test]
@@ -358,10 +358,10 @@ namespace Azure.Search.Documents.Tests
             var service = new SearchIndexerClient(endpoint, new AzureKeyCredential("fake"));
 
             ArgumentException ex = Assert.Throws<ArgumentNullException>(() => service.GetSkillset(null));
-            Assert.AreEqual("name", ex.ParamName);
+            Assert.AreEqual("skillsetName", ex.ParamName);
 
             ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.GetSkillsetAsync(null));
-            Assert.AreEqual("name", ex.ParamName);
+            Assert.AreEqual("skillsetName", ex.ParamName);
         }
 
         [Test]
