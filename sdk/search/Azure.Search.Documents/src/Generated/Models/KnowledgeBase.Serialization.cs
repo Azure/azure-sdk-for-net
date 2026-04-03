@@ -71,9 +71,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(knowledgeBase, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(knowledgeBase, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="KnowledgeBase"/> from. </param>

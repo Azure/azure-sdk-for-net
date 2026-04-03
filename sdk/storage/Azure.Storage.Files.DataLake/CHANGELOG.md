@@ -1,6 +1,6 @@
 # Release History
 
-## 12.26.0-beta.2 (Unreleased)
+## 12.27.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,13 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 12.27.0-beta.1 (2026-03-24)
+
+### Features Added
+- Added support for service version 2026-06-06.
+- Added DataLakePathClient, DataLakeFileClient, and DataLakeDirectoryClient.GetSystemProperties() and .GetSystemPropertiesAsync().
+- Added DataLakePathClient, DataLakeFileClient, and DataLakeDirectoryClient.GetTags(), .GetTagsAsync(), .SetTags(), and .SetTagsAsync().
 
 ## 12.26.0-beta.1 (2026-01-20)
 

@@ -163,10 +163,19 @@ try {
         Rename-Item $sdkNodeModules $sdkNodeModulesBackup -Force
     }
     
-    # Create junction from TempTypeSpecFiles/node_modules to mgmt package's node_modules
+    # Create a link from TempTypeSpecFiles/node_modules to mgmt package's node_modules
+    # Use Junction on Windows (works without elevation) and SymbolicLink on Linux/macOS
     $linkPath = Join-Path $tempTypeSpecDir "node_modules"
     if (Test-Path $linkPath) { Remove-Item $linkPath -Recurse -Force }
-    New-Item -ItemType Junction -Path $linkPath -Target (Join-Path $MgmtPackageRoot "node_modules") | Out-Null
+    $linkTarget = Join-Path $MgmtPackageRoot "node_modules"
+    if ($IsWindows) {
+        New-Item -ItemType Junction -Path $linkPath -Target $linkTarget -ErrorAction Stop | Out-Null
+    } else {
+        New-Item -ItemType SymbolicLink -Path $linkPath -Target $linkTarget -ErrorAction Stop | Out-Null
+    }
+    if (-not (Test-Path $linkPath)) {
+        throw "Failed to create link from '$linkPath' to '$linkTarget'"
+    }
     
     try {
         # Run tsp compile using local emitter path

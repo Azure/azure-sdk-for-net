@@ -12,7 +12,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Text.RegularExpressions;
-using Azure.AI.Projects.OpenAI;
+using Azure.AI.Extensions.OpenAI;
 using Azure.AI.Projects.Tests.Utils;
 using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
@@ -166,7 +166,7 @@ namespace Azure.AI.Projects.Tests
         protected AIProjectClient GetTestProjectClient(Dictionary<string, string> headers = default, bool useDefaultEndpoint = false)
         {
             AIProjectClientOptions projectClientOptions = CreateTestProjectClientOptions(headers: headers);
-            Uri endpoint = new(TestEnvironment.PROJECT_ENDPOINT);
+            Uri endpoint = new(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT);
             if (useDefaultEndpoint)
             {
                 string[] segments = endpoint.Segments;
@@ -179,7 +179,7 @@ namespace Azure.AI.Projects.Tests
         protected AIProjectClient GetTestProjectClientForLegacyAgents(Dictionary<string, string> headers = default)
         {
             AIProjectClientOptions projectClientOptions = CreateTestProjectClientOptions(headers: headers);
-            return CreateProxyFromClient(new AIProjectClient(new(TestEnvironment.PROJECT_ENDPOINT), GetTestTokenProvider(), projectClientOptions));
+            return CreateProxyFromClient(new AIProjectClient(new(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT), GetTestTokenProvider(), projectClientOptions));
         }
 
         /// <summary>
@@ -190,7 +190,7 @@ namespace Azure.AI.Projects.Tests
         {
             options ??= new AIProjectClientOptions();
 
-            var endpoint = TestEnvironment.PROJECT_ENDPOINT;
+            var endpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
             var credential = TestEnvironment.Credential;
 
             var client = new AIProjectClient(new Uri(endpoint), credential, options);

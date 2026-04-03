@@ -2,13 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
-using System.ClientModel;
-using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Azure.AI.Projects
 {
+    [CodeGenType("AIProjectIndexesOperations")]
     public partial class AIProjectIndexesOperations
     {
         /// <summary>

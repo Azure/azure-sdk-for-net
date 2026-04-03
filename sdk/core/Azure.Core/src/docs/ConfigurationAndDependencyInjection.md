@@ -253,7 +253,7 @@ the `Credential` section as well.
     "CredentialSource": "AzureCliCredential",
     "TenantId": "00000000-0000-0000-0000-000000000000",
     "Subscription": "my-subscription-name",
-    "CredentialProcessTimeout": "00:00:30"
+    "ProcessTimeout": "00:00:30"
   }
 }
 ```
@@ -264,7 +264,7 @@ the `Credential` section as well.
   "Credential": {
     "CredentialSource": "AzureDeveloperCliCredential",
     "TenantId": "00000000-0000-0000-0000-000000000000",
-    "CredentialProcessTimeout": "00:00:30"
+    "ProcessTimeout": "00:00:30"
   }
 }
 ```
@@ -276,8 +276,8 @@ the `Credential` section as well.
     "CredentialSource": "AzurePipelinesCredential",
     "TenantId": "00000000-0000-0000-0000-000000000000",
     "ClientId": "00000000-0000-0000-0000-000000000000",
-    "AzurePipelinesServiceConnectionId": "00000000-0000-0000-0000-000000000000",
-    "AzurePipelinesSystemAccessToken": "$(System.AccessToken)",
+    "ServiceConnectionId": "00000000-0000-0000-0000-000000000000",
+    "SystemAccessToken": "$(System.AccessToken)",
     "DisableInstanceDiscovery": false,
     "TokenCachePersistenceOptions": {
       "Name": "my-app-cache",
@@ -293,7 +293,7 @@ the `Credential` section as well.
   "Credential": {
     "CredentialSource": "AzurePowerShellCredential",
     "TenantId": "00000000-0000-0000-0000-000000000000",
-    "CredentialProcessTimeout": "00:00:30"
+    "ProcessTimeout": "00:00:30"
   }
 }
 ```
@@ -316,16 +316,27 @@ the `Credential` section as well.
 }
 ```
 
+> `BrokerCredential` requires the `Azure.Identity.Broker` package.
+
 **EnvironmentCredential:**
 ```json
 {
   "Credential": {
     "CredentialSource": "EnvironmentCredential",
     "TenantId": "00000000-0000-0000-0000-000000000000",
+    "ClientId": "00000000-0000-0000-0000-000000000000",
+    "ClientSecret": "...",
+    "ClientCertificatePath": "/path/to/cert.pem",
+    "ClientCertificatePassword": "...",
+    "SendCertificateChain": false,
     "DisableInstanceDiscovery": false
   }
 }
 ```
+
+> `EnvironmentCredential` resolves authentication in priority order: client secret → client
+> certificate. Only one set of auth properties needs to be configured.
+> Username/password (ROPC) authentication is not supported via configuration.
 
 **InteractiveBrowserCredential:**
 ```json
@@ -394,13 +405,15 @@ the `Credential` section as well.
 }
 ```
 
+> `VisualStudioCodeCredential` requires the `Azure.Identity.Broker` package.
+
 **VisualStudioCredential:**
 ```json
 {
   "Credential": {
     "CredentialSource": "VisualStudioCredential",
     "TenantId": "00000000-0000-0000-0000-000000000000",
-    "CredentialProcessTimeout": "00:00:30"
+    "ProcessTimeout": "00:00:30"
   }
 }
 ```
@@ -412,11 +425,15 @@ the `Credential` section as well.
     "CredentialSource": "WorkloadIdentityCredential",
     "TenantId": "00000000-0000-0000-0000-000000000000",
     "ClientId": "00000000-0000-0000-0000-000000000000",
+    "TokenFilePath": "/path/to/token",
     "IsAzureProxyEnabled": false,
     "DisableInstanceDiscovery": false
   }
 }
 ```
+
+> `TokenFilePath` falls back to the `AZURE_FEDERATED_TOKEN_FILE` environment variable
+> when not specified in configuration.
 
 ## Configuration Reference Syntax
 

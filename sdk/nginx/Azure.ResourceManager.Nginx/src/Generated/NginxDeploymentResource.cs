@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Nginx
         {
             TryGetApiVersion(ResourceType, out string nginxDeploymentApiVersion);
             _nginxDeploymentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Nginx", ResourceType.Namespace, Diagnostics);
-            _nginxDeploymentsRestClient = new NginxDeployments(_nginxDeploymentsClientDiagnostics, Pipeline, Endpoint, nginxDeploymentApiVersion ?? "2025-03-01-preview");
+            _nginxDeploymentsRestClient = new NginxDeployments(_nginxDeploymentsClientDiagnostics, Pipeline, Endpoint, nginxDeploymentApiVersion ?? "2025-11-01");
             ValidateResourceId(id);
         }
 
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Nginx
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="patch"> The Nginx deployment update parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<NginxDeploymentResource>> UpdateAsync(WaitUntil waitUntil, NginxDeploymentPatch patch = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<NginxDeploymentResource>> UpdateAsync(WaitUntil waitUntil, NginxDeploymentPatch patch, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _nginxDeploymentsClientDiagnostics.CreateScope("NginxDeploymentResource.Update");
             scope.Start();
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.Nginx
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="patch"> The Nginx deployment update parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<NginxDeploymentResource> Update(WaitUntil waitUntil, NginxDeploymentPatch patch = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<NginxDeploymentResource> Update(WaitUntil waitUntil, NginxDeploymentPatch patch, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _nginxDeploymentsClientDiagnostics.CreateScope("NginxDeploymentResource.Update");
             scope.Start();
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -460,7 +460,7 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -508,7 +508,7 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -540,7 +540,7 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

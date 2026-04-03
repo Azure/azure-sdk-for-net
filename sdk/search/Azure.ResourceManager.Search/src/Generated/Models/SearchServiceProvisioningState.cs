@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Search.Models
     {
         /// <summary> The last provisioning operation has completed successfully. </summary>
         Succeeded,
-        /// <summary> The search service is being provisioned or scaled up or down. </summary>
+        /// <summary> The search service is being provisioned or scaled up or down. For dedicated search services only. </summary>
         Provisioning,
         /// <summary> The last provisioning operation has failed. </summary>
         Failed

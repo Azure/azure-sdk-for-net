@@ -7,45 +7,65 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
-    /// <summary> Enabled allows this resource to be accessed from both public and private networks, Disabled allows this resource to only be accessed via private endpoints. </summary>
+    /// <summary> Enabled to allow this resource to be access from the public network. </summary>
     public readonly partial struct DesktopVirtualizationPublicNetworkAccess : IEquatable<DesktopVirtualizationPublicNetworkAccess>
     {
         private readonly string _value;
+        /// <summary> This resource is accessible from the public network. </summary>
+        private const string EnabledValue = "Enabled";
+        /// <summary> This resource is not accessible from the public network. </summary>
+        private const string DisabledValue = "Disabled";
 
         /// <summary> Initializes a new instance of <see cref="DesktopVirtualizationPublicNetworkAccess"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DesktopVirtualizationPublicNetworkAccess(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string EnabledValue = "Enabled";
-        private const string DisabledValue = "Disabled";
-
-        /// <summary> Enabled. </summary>
+        /// <summary> This resource is accessible from the public network. </summary>
         public static DesktopVirtualizationPublicNetworkAccess Enabled { get; } = new DesktopVirtualizationPublicNetworkAccess(EnabledValue);
-        /// <summary> Disabled. </summary>
+
+        /// <summary> This resource is not accessible from the public network. </summary>
         public static DesktopVirtualizationPublicNetworkAccess Disabled { get; } = new DesktopVirtualizationPublicNetworkAccess(DisabledValue);
+
         /// <summary> Determines if two <see cref="DesktopVirtualizationPublicNetworkAccess"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DesktopVirtualizationPublicNetworkAccess left, DesktopVirtualizationPublicNetworkAccess right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DesktopVirtualizationPublicNetworkAccess"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DesktopVirtualizationPublicNetworkAccess left, DesktopVirtualizationPublicNetworkAccess right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DesktopVirtualizationPublicNetworkAccess"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DesktopVirtualizationPublicNetworkAccess"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DesktopVirtualizationPublicNetworkAccess(string value) => new DesktopVirtualizationPublicNetworkAccess(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DesktopVirtualizationPublicNetworkAccess"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DesktopVirtualizationPublicNetworkAccess?(string value) => value == null ? null : new DesktopVirtualizationPublicNetworkAccess(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DesktopVirtualizationPublicNetworkAccess other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DesktopVirtualizationPublicNetworkAccess other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

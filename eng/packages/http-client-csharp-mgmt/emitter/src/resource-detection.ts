@@ -19,7 +19,9 @@ import {
   convertArmProviderSchemaToArguments,
   postProcessArmResources,
   ParentResourceLookupContext,
-  assignNonResourceMethodsToResources
+  assignNonResourceMethodsToResources,
+  resolveResourceApiVersions,
+  extractRbacRoles
 } from "./resource-metadata.js";
 import {
   DecoratorInfo,
@@ -51,7 +53,14 @@ import {
   subscriptionResource,
   tenantResource
 } from "./sdk-context-options.js";
-import { DecoratorApplication, Model, NoTarget } from "@typespec/compiler";
+import {
+  DecoratorApplication,
+  Model,
+  NoTarget,
+  getPattern,
+  getMinLength,
+  getMaxLength
+} from "@typespec/compiler";
 import {
   resolveArmResources,
   getOperationScopeFromPath
@@ -115,6 +124,16 @@ export function buildArmProviderSchema(
     resourceModels.map((m) => m.crossLanguageDefinitionId)
   );
 
+  // Build a lookup map from methodId to the page item type's crossLanguageDefinitionId
+  // so that relocateCrossResourceListActions can verify type compatibility
+  const methodResponseModelIdMap = new Map<string, string>();
+  for (const [methodId, method] of serviceMethods) {
+    const itemModelId = getPagingItemModelId(method);
+    if (itemModelId) {
+      methodResponseModelIdMap.set(methodId, itemModelId);
+    }
+  }
+
   // Track client names associated with each resource path for name derivation
   const resourcePathToClientName = new Map<string, string>();
 
@@ -135,7 +154,8 @@ export function buildArmProviderSchema(
     const serviceMethod = serviceMethods.get(method.crossLanguageDefinitionId);
     const { kind, modelId, explicitResourceName } = parseResourceOperation(
       serviceMethod,
-      sdkContext
+      sdkContext,
+      resourceModelIds
     );
 
     if (modelId && kind && resourceModelIds.has(modelId)) {
@@ -275,7 +295,10 @@ export function buildArmProviderSchema(
           parentResourceId: undefined, // this will be populated later
           parentResourceModelId: undefined,
           // Use model name as default; will be updated later if multiple paths exist
-          resourceName: model?.name ?? "Unknown"
+          resourceName: model?.name ?? "Unknown",
+          nameConstraints: {},
+          apiVersions: [],
+          rbacRoles: []
         } as ResourceMetadata;
         resourcePathToMetadataMap.set(metadataKey, entry);
       }
@@ -347,12 +370,10 @@ export function buildArmProviderSchema(
 
     // Emit diagnostic for resources without resourceIdPattern
     if (metadata.resourceIdPattern === "" && model) {
-      sdkContext.logger.reportDiagnostic({
+      sdkContext.program.reportDiagnostic({
         code: "general-warning",
-        messageId: "default",
-        format: {
-          message: `Cannot figure out resourceIdPattern from model ${model.name}.`
-        },
+        severity: "warning",
+        message: `Cannot figure out resourceIdPattern from model ${model.name}.`,
         target: NoTarget
       });
     }
@@ -445,7 +466,8 @@ export function buildArmProviderSchema(
   const filteredResources = postProcessArmResources(
     resources,
     nonResourceMethodsArray,
-    parentLookup
+    parentLookup,
+    methodResponseModelIdMap
   );
 
   // Emit diagnostics for resources that were filtered out (non-singleton resources without Read operations)
@@ -454,12 +476,10 @@ export function buildArmProviderSchema(
     if (!resourcesAfterFiltering.has(resource)) {
       const model = resourceModelMap.get(resource.resourceModelId);
       if (model) {
-        sdkContext.logger.reportDiagnostic({
+        sdkContext.program.reportDiagnostic({
           code: "general-warning",
-          messageId: "default",
-          format: {
-            message: `Resource ${model.name} does not have a Get/Read operation and is not a singleton. All operations will be added to parent resource if available, otherwise treated as non-resource methods.`
-          },
+          severity: "warning",
+          message: `Resource ${model.name} does not have a Get/Read operation and is not a singleton. All operations will be added to parent resource if available, otherwise treated as non-resource methods.`,
           target: NoTarget
         });
       }
@@ -504,6 +524,31 @@ export function buildArmProviderSchema(
     // If there's only one resource for this model, keep using the model name (already set)
   }
 
+  // Extract name constraints (@pattern, @minLength, @maxLength) from the resource model's "name" property
+  const methodApiVersionsMap = new Map<string, string[]>(
+    Array.from(serviceMethods.entries()).map(([id, m]) => [id, m.apiVersions])
+  );
+  for (const resource of filteredResources) {
+    const sdkModel = models.get(resource.resourceModelId);
+    const typespecModel = sdkModel?.__raw as Model | undefined;
+    const nameProperty = typespecModel?.properties.get("name");
+    const rawPattern = nameProperty
+      ? getPattern(sdkContext.program, nameProperty)
+      : undefined;
+    resource.metadata.nameConstraints = {
+      pattern: rawPattern || undefined,
+      minLength: nameProperty
+        ? getMinLength(sdkContext.program, nameProperty)
+        : undefined,
+      maxLength: nameProperty
+        ? getMaxLength(sdkContext.program, nameProperty)
+        : undefined
+    };
+
+    // Extract RBAC roles from @@clientOption decorator
+    resource.metadata.rbacRoles = extractRbacRoles(sdkModel);
+  }
+
   // Assign non-resource methods to resources based on operationPath prefix matching.
   // If a non-resource method's path has a prefix matching a resource's resourceIdPattern,
   // move it into that resource as an Action (longest prefix wins).
@@ -511,6 +556,15 @@ export function buildArmProviderSchema(
     filteredResources,
     nonResourceMethodsArray
   );
+
+  // Compute per-resource API versions after all post-processing is complete,
+  // so that merged/moved methods are reflected in the final version set.
+  for (const resource of filteredResources) {
+    resource.metadata.apiVersions = resolveResourceApiVersions(
+      resource.metadata.methods,
+      methodApiVersionsMap
+    );
+  }
 
   return {
     resources: filteredResources,
@@ -529,7 +583,8 @@ function isCRUDKind(kind: ResourceOperationKind): boolean {
 
 function parseResourceOperation(
   serviceMethod: SdkMethod<SdkHttpOperation> | undefined,
-  sdkContext: CSharpEmitterContext
+  sdkContext: CSharpEmitterContext,
+  resourceModelIds?: Set<string>
 ): {
   kind?: ResourceOperationKind;
   modelId?: string;
@@ -578,7 +633,13 @@ function parseResourceOperation(
         };
       case armResourceActionName:
         return {
-          kind: ResourceOperationKind.Action,
+          // If the operation is pageable AND its response item type is a known
+          // resource model, it's a list-children operation (e.g., blobContainersList
+          // modeled as ArmResourceActionSync but returning paged Container resources).
+          // If the item type is NOT a resource model (e.g., metadata), keep it as Action.
+          kind: isPagingActionListingResources(serviceMethod, resourceModelIds)
+            ? ResourceOperationKind.List
+            : ResourceOperationKind.Action,
           modelId: getResourceModelId(sdkContext, decorator),
           explicitResourceName: undefined
         };
@@ -839,6 +900,41 @@ function getResourceModelId(
   );
 }
 
+/**
+ * Extracts the page item model's crossLanguageDefinitionId from a paging method
+ * using the method's response type (which is an array of the item type).
+ * Returns undefined if the item type is not a model.
+ */
+function getPagingItemModelId(
+  method: SdkMethod<SdkHttpOperation>
+): string | undefined {
+  if (method.kind !== "paging" && method.kind !== "lropaging") return undefined;
+  const responseType = method.response?.type;
+  if (
+    responseType?.kind === "array" &&
+    responseType.valueType.kind === "model"
+  ) {
+    return (responseType.valueType as SdkModelType).crossLanguageDefinitionId;
+  }
+  return undefined;
+}
+
+/**
+ * Checks whether a pageable action actually lists resource models.
+ * Returns true only if the method is a paging method AND its page item type
+ * matches a known resource model. This prevents metadata-returning pageable actions
+ * (e.g., NginxDeployments_WafPolicyList returning WafPolicyMetadata) from being
+ * misclassified as List operations.
+ */
+function isPagingActionListingResources(
+  serviceMethod: SdkMethod<SdkHttpOperation> | undefined,
+  resourceModelIds?: Set<string>
+): boolean {
+  if (!serviceMethod || !resourceModelIds) return false;
+  const itemModelId = getPagingItemModelId(serviceMethod);
+  return !!itemModelId && resourceModelIds.has(itemModelId);
+}
+
 function getResourceModelIdCore(
   sdkContext: CSharpEmitterContext,
   decoratorModel: Model,
@@ -848,12 +944,10 @@ function getResourceModelIdCore(
   if (model) {
     return model.crossLanguageDefinitionId;
   } else {
-    sdkContext.logger.reportDiagnostic({
+    sdkContext.program.reportDiagnostic({
       code: "general-error",
-      messageId: "default",
-      format: {
-        message: `Resource model not found for decorator ${decoratorName}`
-      },
+      severity: "error",
+      message: `Resource model not found for decorator ${decoratorName}`,
       target: NoTarget
     });
     return undefined;

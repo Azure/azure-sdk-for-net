@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <RootNamespace>Azure.AI.AgentServer.Core.Tests</RootNamespace>
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+    <Nullable>annotations</Nullable>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="NUnit" />
+    <PackageReference Include="NUnit3TestAdapter" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+
+  </ItemGroup>
+  <ItemGroup Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net8.0'))">
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="$(AzureCoreTestFramework)" />
+  </ItemGroup>
+  <ItemGroup Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net8.0'))">
+    <ProjectReference Include="..\src\Azure.AI.AgentServer.Core.csproj" />
+    <ProjectReference Include="..\..\Azure.AI.AgentServer.Invocations\src\Azure.AI.AgentServer.Invocations.csproj"
+                      Condition="Exists('..\..\Azure.AI.AgentServer.Invocations\src\Azure.AI.AgentServer.Invocations.csproj')" />
+    <ProjectReference Include="..\..\Azure.AI.AgentServer.Responses\src\Azure.AI.AgentServer.Responses.csproj"
+                      Condition="Exists('..\..\Azure.AI.AgentServer.Responses\src\Azure.AI.AgentServer.Responses.csproj')" />
+  </ItemGroup>
+  <!-- Exclude tests requiring Invocations when it is not present -->
+  <ItemGroup Condition="!Exists('..\..\Azure.AI.AgentServer.Invocations\src\Azure.AI.AgentServer.Invocations.csproj')">
+    <Compile Remove="CustomMiddlewareTests.cs" />
+    <Compile Remove="CustomShutdownTests.cs" />
+    <Compile Remove="MultiProtocolCompositionTests.cs" />
+  </ItemGroup>
+  <ItemGroup Condition="!$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net8.0'))">
+    <Compile Remove="**\*.cs" />
+  </ItemGroup>
+</Project>

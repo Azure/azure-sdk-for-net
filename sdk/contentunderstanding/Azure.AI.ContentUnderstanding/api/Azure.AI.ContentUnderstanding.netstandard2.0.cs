@@ -499,6 +499,7 @@ namespace Azure.AI.ContentUnderstanding
     public partial class ContentUnderstandingClient
     {
         protected ContentUnderstandingClient() { }
+        public ContentUnderstandingClient(Azure.AI.ContentUnderstanding.ContentUnderstandingClientSettings settings) { }
         public ContentUnderstandingClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
         public ContentUnderstandingClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.AI.ContentUnderstanding.ContentUnderstandingClientOptions options) { }
         public ContentUnderstandingClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
@@ -564,6 +565,13 @@ namespace Azure.AI.ContentUnderstanding
         {
             V2025_11_01 = 1,
         }
+    }
+    public partial class ContentUnderstandingClientSettings : System.ClientModel.Primitives.ClientSettings
+    {
+        public ContentUnderstandingClientSettings() { }
+        public System.Uri Endpoint { get { throw null; } set { } }
+        public Azure.AI.ContentUnderstanding.ContentUnderstandingClientOptions Options { get { throw null; } set { } }
+        protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
     }
     public partial class ContentUnderstandingDefaults : System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentUnderstanding.ContentUnderstandingDefaults>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentUnderstanding.ContentUnderstandingDefaults>
     {

@@ -24,7 +24,13 @@
  * allowing gradual migration to the standardized API.
  */
 
-import { Program, Operation } from "@typespec/compiler";
+import {
+  Program,
+  Operation,
+  getPattern,
+  getMinLength,
+  getMaxLength
+} from "@typespec/compiler";
 import {
   ResolvedResource,
   ResourceType,
@@ -33,6 +39,7 @@ import {
 import {
   ArmProviderSchema,
   ArmResourceSchema,
+  NameConstraints,
   NonResourceMethod,
   ResourceMetadata,
   ResourceMethod,
@@ -40,14 +47,22 @@ import {
   ResourceScope,
   postProcessArmResources,
   ParentResourceLookupContext,
-  assignNonResourceMethodsToResources
+  assignNonResourceMethodsToResources,
+  calculateResourceTypeFromPath,
+  resolveResourceApiVersions,
+  extractRbacRoles
 } from "./resource-metadata.js";
 import { CSharpEmitterContext } from "@typespec/http-client-csharp";
-import { getCrossLanguageDefinitionId } from "@azure-tools/typespec-client-generator-core";
+import {
+  getCrossLanguageDefinitionId,
+  getClientType,
+  SdkModelType
+} from "@azure-tools/typespec-client-generator-core";
 import {
   isVariableSegment,
   isPrefix,
-  findLongestPrefixMatch
+  findLongestPrefixMatch,
+  countProviderSegments
 } from "./utils.js";
 import { getAllSdkClients } from "./sdk-client-utils.js";
 import {
@@ -82,6 +97,58 @@ export function resolveArmResources(
     ResolvedResource
   >();
 
+  // Build a lookup map from methodId (crossLanguageDefinitionId) to apiVersions
+  // so that we can efficiently resolve per-resource API versions
+  const methodApiVersionsMap = new Map<string, string[]>();
+  // Build a lookup map from methodId to SdkMethod kind (basic, paging, lro, lropaging)
+  // so that we can detect pageable actions that should be classified as List
+  const methodKindMap = new Map<string, string>();
+  // Build a lookup map from methodId to the response item type's crossLanguageDefinitionId
+  // so that we can verify pageable actions return actual resource models
+  const methodResponseModelIdMap = new Map<string, string>();
+  for (const client of getAllSdkClients(sdkContext)) {
+    for (const method of client.methods) {
+      if (!methodApiVersionsMap.has(method.crossLanguageDefinitionId)) {
+        methodApiVersionsMap.set(
+          method.crossLanguageDefinitionId,
+          method.apiVersions
+        );
+      }
+      if (!methodKindMap.has(method.crossLanguageDefinitionId)) {
+        methodKindMap.set(method.crossLanguageDefinitionId, method.kind);
+      }
+      if (
+        (method.kind === "paging" || method.kind === "lropaging") &&
+        !methodResponseModelIdMap.has(method.crossLanguageDefinitionId)
+      ) {
+        const responseType = method.response?.type;
+        if (
+          responseType?.kind === "array" &&
+          responseType.valueType.kind === "model"
+        ) {
+          methodResponseModelIdMap.set(
+            method.crossLanguageDefinitionId,
+            (responseType.valueType as SdkModelType).crossLanguageDefinitionId
+          );
+        }
+      }
+    }
+  }
+
+  // Build the set of resource model IDs for validating pageable action responses
+  const resourceModelIds = new Set<string>();
+  if (provider.resources) {
+    for (const resolvedResource of provider.resources) {
+      const modelId = getCrossLanguageDefinitionId(
+        sdkContext,
+        resolvedResource.type
+      );
+      if (modelId) {
+        resourceModelIds.add(modelId);
+      }
+    }
+  }
+
   if (provider.resources) {
     for (const resolvedResource of provider.resources) {
       // Get the model from SDK context
@@ -102,8 +169,12 @@ export function resolveArmResources(
 
       // Convert to our resource schema format
       const metadata = convertResolvedResourceToMetadata(
+        program,
         sdkContext,
-        resolvedResource
+        resolvedResource,
+        methodKindMap,
+        methodResponseModelIdMap,
+        resourceModelIds
       );
 
       const resource = {
@@ -168,7 +239,8 @@ export function resolveArmResources(
   const filteredResources = postProcessArmResources(
     resources,
     nonResourceMethods,
-    parentLookup
+    parentLookup,
+    methodResponseModelIdMap
   );
 
   // Add provider operations as non-resource methods
@@ -236,6 +308,15 @@ export function resolveArmResources(
   // move it into that resource as an Action (longest prefix wins).
   assignNonResourceMethodsToResources(filteredResources, nonResourceMethods);
 
+  // Compute per-resource API versions after all post-processing is complete,
+  // so that merged/moved methods are reflected in the final version set.
+  for (const resource of filteredResources) {
+    resource.metadata.apiVersions = resolveResourceApiVersions(
+      resource.metadata.methods,
+      methodApiVersionsMap
+    );
+  }
+
   return {
     resources: filteredResources,
     nonResourceMethods
@@ -246,8 +327,12 @@ export function resolveArmResources(
  * Converts a ResolvedResource to ResourceMetadata format
  */
 function convertResolvedResourceToMetadata(
+  program: Program,
   sdkContext: CSharpEmitterContext,
-  resolvedResource: ResolvedResource
+  resolvedResource: ResolvedResource,
+  methodKindMap?: Map<string, string>,
+  methodResponseModelIdMap?: Map<string, string>,
+  resourceModelIds?: Set<string>
 ): ResourceMetadata {
   const methods: ResourceMethod[] = [];
   const resourceScope = convertScopeToResourceScope(resolvedResource.scope);
@@ -345,9 +430,20 @@ function convertResolvedResourceToMetadata(
     for (const actionOp of resolvedResource.operations.actions) {
       const methodId = getMethodIdFromOperation(sdkContext, actionOp.operation);
       if (methodId) {
+        // Classify as List only if the action is pageable AND its response item type
+        // is a known resource model. This prevents metadata-returning pageable actions
+        // from being misclassified as List operations.
+        const sdkMethodKind = methodKindMap?.get(methodId);
+        const responseModelId = methodResponseModelIdMap?.get(methodId);
+        const isResourceList =
+          sdkMethodKind === "paging" &&
+          resourceModelIds !== undefined &&
+          resourceModelIds.has(responseModelId!);
         methods.push({
           methodId,
-          kind: ResourceOperationKind.Action,
+          kind: isResourceList
+            ? ResourceOperationKind.List
+            : ResourceOperationKind.Action,
           operationPath: actionOp.path,
           operationScope: resourceScope,
           resourceScope: calculateResourceScope(actionOp.path, resolvedResource)
@@ -373,6 +469,27 @@ function convertResolvedResourceToMetadata(
     resourceName = explicitName;
   }
 
+  // Extract name constraints from the resource model's "name" property
+  const nameProperty = resolvedResource.type.properties.get("name");
+  const rawPattern = nameProperty
+    ? getPattern(program, nameProperty)
+    : undefined;
+  const nameConstraints: NameConstraints = {
+    pattern: rawPattern || undefined,
+    minLength: nameProperty ? getMinLength(program, nameProperty) : undefined,
+    maxLength: nameProperty ? getMaxLength(program, nameProperty) : undefined
+  };
+
+  // API versions will be computed after post-processing when methods are finalized
+  const apiVersions: string[] = [];
+
+  // Extract RBAC roles from @@clientOption decorator
+  const sdkModel = getClientType(
+    sdkContext,
+    resolvedResource.type
+  ) as SdkModelType;
+  const rbacRoles = extractRbacRoles(sdkModel);
+
   return {
     // we only assign resourceIdPattern when this resource has a read operation, otherwise this is empty
     resourceIdPattern: resourceIdPattern,
@@ -386,7 +503,10 @@ function convertResolvedResourceToMetadata(
     singletonResourceName: extractSingletonName(
       resolvedResource.resourceInstancePath
     ),
-    resourceName: resourceName
+    resourceName: resourceName,
+    nameConstraints,
+    apiVersions,
+    rbacRoles
   };
 }
 
@@ -632,19 +752,19 @@ function assignListOperationsToResources(
           }
         );
 
-        // Fall back to type segment matching if prefix matching didn't find a match
-        if (!targetResource) {
-          const listLastSegment = getLastPathSegment(listOp.path);
-          if (listLastSegment) {
-            targetResource = resourcesForModel.find((r) => {
-              const typeSegment = getResourceTypeSegment(
-                r.metadata.resourceIdPattern
-              );
-              return (
-                typeSegment?.toLowerCase() === listLastSegment.toLowerCase()
-              );
-            });
-          }
+        // Fall back to resource type matching if prefix matching didn't find a match
+        if (!targetResource && listOp.path.includes("/providers/")) {
+          const listType = calculateResourceTypeFromPath(listOp.path);
+          const listProviderDepth = countProviderSegments(listOp.path);
+          targetResource = resourcesForModel.find((r) => {
+            if (
+              countProviderSegments(r.metadata.resourceIdPattern) !==
+              listProviderDepth
+            ) {
+              return false;
+            }
+            return r.metadata.resourceType === listType;
+          });
         }
       }
 
@@ -662,26 +782,4 @@ function assignListOperationsToResources(
       });
     }
   }
-}
-
-/**
- * Gets the resource type segment from a resource ID pattern.
- * The type segment is the second-to-last segment, since the last is the key variable.
- * E.g., for ".../configs/{resourceName}", returns "configs".
- */
-function getResourceTypeSegment(resourceIdPattern: string): string | undefined {
-  const segments = resourceIdPattern.split("/").filter((s) => s !== "");
-  if (segments.length < 2) return undefined;
-  return segments[segments.length - 2];
-}
-
-/**
- * Gets the last segment of a path.
- * For list operation paths, this is the resource type/collection segment.
- * E.g., for ".../configs", returns "configs".
- */
-function getLastPathSegment(path: string): string | undefined {
-  const segments = path.split("/").filter((s) => s !== "");
-  if (segments.length === 0) return undefined;
-  return segments[segments.length - 1];
 }

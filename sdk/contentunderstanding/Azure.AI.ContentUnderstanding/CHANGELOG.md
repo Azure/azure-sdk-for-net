@@ -4,13 +4,27 @@
 
 ### Features Added
 
+- Added `ContentUnderstandingClientSettings` to support creating a `ContentUnderstandingClient` from `IConfiguration`, including configuration-based credential resolution and dependency injection registration.
+
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
 
-## 1.0.0 (2026-02-11)
+## 1.0.2 (2026-03-11)
+
+### Bugs Fixed
+
+- Fixed `GetRehydrationToken()` returning `null` on operations started with `WaitUntil.Started`, preventing cross-process operation handoff ([#56840](https://github.com/Azure/azure-sdk-for-net/issues/56840))
+
+## 1.0.1 (2026-03-06)
+
+### Other Changes
+
+- Set the default initial polling interval to 3 seconds for `Analyze`, `AnalyzeAsync`, `AnalyzeBinary`, and `AnalyzeBinaryAsync` to optimize polling efficiency.
+
+## 1.0.0 (2026-02-27)
 
 ### Features Added
 

@@ -140,6 +140,10 @@ jobs:
         image: $(WINDOWSVMIMAGE)
         os: windows
       steps:
+        - checkout: self
+          fetchFilter: tree:0
+          fetchTags: false
+
         - task: UsePythonVersion@0
           displayName: "Use Python 3.11"
           inputs:
@@ -163,6 +167,11 @@ jobs:
         - template: /eng/common/pipelines/templates/steps/verify-path-length.yml
           parameters:
             SourceDirectory: $(Build.SourcesDirectory)
+
+        - template: /eng/common/pipelines/templates/steps/verify-codeowners-sections.yml
+          parameters:
+            Sections:
+              - 'Client Libraries'
 
         - template: /eng/common/pipelines/templates/steps/eng-common-workflow-enforcer.yml
 

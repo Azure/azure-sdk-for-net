@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -52,14 +53,19 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerRegistryCacheRulePatch"/>. </summary>
+        /// <param name="identity"> The identity of the cache rule. </param>
         /// <param name="credentialSetResourceId"> The ARM resource ID of the credential store which is associated with the Cache rule. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerRegistryCacheRulePatch(ResourceIdentifier credentialSetResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerRegistryCacheRulePatch(ManagedServiceIdentity identity, ResourceIdentifier credentialSetResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+            Identity = identity;
             CredentialSetResourceId = credentialSetResourceId;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> The identity of the cache rule. </summary>
+        [WirePath("identity")]
+        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The ARM resource ID of the credential store which is associated with the Cache rule. </summary>
         [WirePath("properties.credentialSetResourceId")]
         public ResourceIdentifier CredentialSetResourceId { get; set; }

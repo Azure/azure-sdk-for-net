@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Elastic
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="integrationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="integrationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<ElasticOpenAIIntegrationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string integrationName, ElasticOpenAIIntegrationData data = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ElasticOpenAIIntegrationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string integrationName, ElasticOpenAIIntegrationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(integrationName, nameof(integrationName));
 
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Elastic
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="integrationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="integrationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<ElasticOpenAIIntegrationResource> CreateOrUpdate(WaitUntil waitUntil, string integrationName, ElasticOpenAIIntegrationData data = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ElasticOpenAIIntegrationResource> CreateOrUpdate(WaitUntil waitUntil, string integrationName, ElasticOpenAIIntegrationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(integrationName, nameof(integrationName));
 

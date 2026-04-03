@@ -58,6 +58,7 @@ namespace Azure.Search.Documents
     public partial class SearchClient
     {
         protected SearchClient() { }
+        public SearchClient(Azure.Search.Documents.SearchClientSettings settings) { }
         public SearchClient(System.Uri endpoint, string indexName, Azure.AzureKeyCredential credential) { }
         public SearchClient(System.Uri endpoint, string indexName, Azure.AzureKeyCredential credential, Azure.Search.Documents.SearchClientOptions options) { }
         public SearchClient(System.Uri endpoint, string indexName, Azure.Core.TokenCredential tokenCredential) { }
@@ -117,6 +118,14 @@ namespace Azure.Search.Documents
             V2025_09_01 = 4,
             V2025_11_01_Preview = 5,
         }
+    }
+    public partial class SearchClientSettings : System.ClientModel.Primitives.ClientSettings
+    {
+        public SearchClientSettings() { }
+        public System.Uri Endpoint { get { throw null; } set { } }
+        public string IndexName { get { throw null; } set { } }
+        public Azure.Search.Documents.SearchClientOptions Options { get { throw null; } set { } }
+        protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
     }
     public static partial class SearchExtensions
     {
@@ -263,6 +272,7 @@ namespace Azure.Search.Documents.Indexes
     public partial class SearchIndexClient
     {
         protected SearchIndexClient() { }
+        public SearchIndexClient(Azure.Search.Documents.Indexes.SearchIndexClientSettings settings) { }
         public SearchIndexClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
         public SearchIndexClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.Search.Documents.SearchClientOptions options) { }
         public SearchIndexClient(System.Uri endpoint, Azure.Core.TokenCredential tokenCredential) { }
@@ -402,9 +412,17 @@ namespace Azure.Search.Documents.Indexes
         public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Search.Documents.Indexes.Models.SynonymMap>> GetSynonymMaps(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Search.Documents.Indexes.Models.SynonymMap>>> GetSynonymMapsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class SearchIndexClientSettings : System.ClientModel.Primitives.ClientSettings
+    {
+        public SearchIndexClientSettings() { }
+        public System.Uri Endpoint { get { throw null; } set { } }
+        public Azure.Search.Documents.SearchClientOptions Options { get { throw null; } set { } }
+        protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
+    }
     public partial class SearchIndexerClient
     {
         protected SearchIndexerClient() { }
+        public SearchIndexerClient(Azure.Search.Documents.Indexes.SearchIndexerClientSettings settings) { }
         public SearchIndexerClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
         public SearchIndexerClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.Search.Documents.SearchClientOptions options) { }
         public SearchIndexerClient(System.Uri endpoint, Azure.Core.TokenCredential tokenCredential) { }
@@ -502,6 +520,13 @@ namespace Azure.Search.Documents.Indexes
         public virtual Azure.Response RunIndexer(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> RunIndexerAsync(string name, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> RunIndexerAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class SearchIndexerClientSettings : System.ClientModel.Primitives.ClientSettings
+    {
+        public SearchIndexerClientSettings() { }
+        public System.Uri Endpoint { get { throw null; } set { } }
+        public Azure.Search.Documents.SearchClientOptions Options { get { throw null; } set { } }
+        protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
     }
     [System.AttributeUsageAttribute(System.AttributeTargets.Field | System.AttributeTargets.Property, AllowMultiple=false, Inherited=true)]
     public partial class SimpleFieldAttribute : System.Attribute
@@ -1698,7 +1723,6 @@ namespace Azure.Search.Documents.Indexes.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Indexes.Models.ElisionTokenFilter>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Indexes.Models.ElisionTokenFilter>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.ObsoleteAttribute("This type is deprecated. Use EntityRecognitionSkill with SkillVersion.V3 instead.")]
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct EntityCategory : System.IEquatable<Azure.Search.Documents.Indexes.Models.EntityCategory>
     {
@@ -1717,6 +1741,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Search.Documents.Indexes.Models.EntityCategory left, Azure.Search.Documents.Indexes.Models.EntityCategory right) { throw null; }
         public static implicit operator Azure.Search.Documents.Indexes.Models.EntityCategory (string value) { throw null; }
+        public static implicit operator Azure.Search.Documents.Indexes.Models.EntityCategory? (string value) { throw null; }
         public static bool operator !=(Azure.Search.Documents.Indexes.Models.EntityCategory left, Azure.Search.Documents.Indexes.Models.EntityCategory right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1780,7 +1805,6 @@ namespace Azure.Search.Documents.Indexes.Models
             public override string ToString() { throw null; }
         }
     }
-    [System.ObsoleteAttribute("This type is deprecated. Use EntityRecognitionSkill with SkillVersion.V3 instead.")]
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct EntityRecognitionSkillLanguage : System.IEquatable<Azure.Search.Documents.Indexes.Models.EntityRecognitionSkillLanguage>
     {
@@ -1815,6 +1839,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Search.Documents.Indexes.Models.EntityRecognitionSkillLanguage left, Azure.Search.Documents.Indexes.Models.EntityRecognitionSkillLanguage right) { throw null; }
         public static implicit operator Azure.Search.Documents.Indexes.Models.EntityRecognitionSkillLanguage (string value) { throw null; }
+        public static implicit operator Azure.Search.Documents.Indexes.Models.EntityRecognitionSkillLanguage? (string value) { throw null; }
         public static bool operator !=(Azure.Search.Documents.Indexes.Models.EntityRecognitionSkillLanguage left, Azure.Search.Documents.Indexes.Models.EntityRecognitionSkillLanguage right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -4827,7 +4852,6 @@ namespace Azure.Search.Documents.Indexes.Models
             public override string ToString() { throw null; }
         }
     }
-    [System.ObsoleteAttribute("This type is deprecated. Use SentimentSkill with SkillVersion.V3 instead.")]
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SentimentSkillLanguage : System.IEquatable<Azure.Search.Documents.Indexes.Models.SentimentSkillLanguage>
     {
@@ -4854,6 +4878,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Search.Documents.Indexes.Models.SentimentSkillLanguage left, Azure.Search.Documents.Indexes.Models.SentimentSkillLanguage right) { throw null; }
         public static implicit operator Azure.Search.Documents.Indexes.Models.SentimentSkillLanguage (string value) { throw null; }
+        public static implicit operator Azure.Search.Documents.Indexes.Models.SentimentSkillLanguage? (string value) { throw null; }
         public static bool operator !=(Azure.Search.Documents.Indexes.Models.SentimentSkillLanguage left, Azure.Search.Documents.Indexes.Models.SentimentSkillLanguage right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -5955,6 +5980,7 @@ namespace Azure.Search.Documents.KnowledgeBases
     public partial class KnowledgeBaseRetrievalClient
     {
         protected KnowledgeBaseRetrievalClient() { }
+        public KnowledgeBaseRetrievalClient(Azure.Search.Documents.KnowledgeBases.KnowledgeBaseRetrievalClientSettings settings) { }
         public KnowledgeBaseRetrievalClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
         public KnowledgeBaseRetrievalClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.Search.Documents.SearchClientOptions options) { }
         public KnowledgeBaseRetrievalClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
@@ -5972,6 +5998,13 @@ namespace Azure.Search.Documents.KnowledgeBases
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseRetrievalResponse>> RetrieveAsync(Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseRetrievalRequest retrievalRequest, string xMsQuerySourceAuthorization = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> RetrieveAsync(string knowledgeBaseName, Azure.Core.RequestContent content, string querySourceAuthorization = null, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseRetrievalResponse>> RetrieveAsync(string knowledgeBaseName, Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseRetrievalRequest retrievalRequest, string querySourceAuthorization = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class KnowledgeBaseRetrievalClientSettings : System.ClientModel.Primitives.ClientSettings
+    {
+        public KnowledgeBaseRetrievalClientSettings() { }
+        public System.Uri Endpoint { get { throw null; } set { } }
+        public Azure.Search.Documents.SearchClientOptions Options { get { throw null; } set { } }
+        protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
     }
 }
 namespace Azure.Search.Documents.KnowledgeBases.Models

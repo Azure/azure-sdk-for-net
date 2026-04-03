@@ -186,7 +186,7 @@ namespace Azure.Storage.DataMovement.Blobs
             {
                 HttpRange range = new HttpRange(0, completeLength);
                 await BlobClient.AppendBlockFromUriAsync(
-                    sourceResource.Uri,
+                    options?.SourceUri,
                     options: _options.ToAppendBlockFromUriOptions(overwrite, range, options?.SourceAuthentication),
                     cancellationToken: cancellationToken).ConfigureAwait(false);
             }
@@ -229,7 +229,7 @@ namespace Azure.Storage.DataMovement.Blobs
             }
 
             await BlobClient.AppendBlockFromUriAsync(
-                sourceResource.Uri,
+                options?.SourceUri,
                 options: _options.ToAppendBlockFromUriOptions(
                     overwrite,
                     range,
@@ -270,6 +270,17 @@ namespace Azure.Storage.DataMovement.Blobs
         protected override async Task<HttpAuthorization> GetCopyAuthorizationHeaderAsync(CancellationToken cancellationToken = default)
         {
             return await BlobBaseClientInternals.GetCopyAuthorizationTokenAsync(BlobClient, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the SAS URI for the storage resource if available.
+        /// </summary>
+        /// <returns>
+        /// Gets the SAS URI for the storage resource if available. If not available will return default.
+        /// </returns>
+        protected override Uri GetSasWithUri()
+        {
+            return BlobBaseClientInternals.GetSasUri(BlobClient);
         }
 
         /// <summary>

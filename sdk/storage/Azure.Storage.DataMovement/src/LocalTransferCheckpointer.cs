@@ -6,11 +6,11 @@ using System.Buffers;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
-using System.IO.MemoryMappedFiles;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Storage;
 using Azure.Storage.Common;
 using Azure.Storage.DataMovement.JobPlan;
 using Azure.Storage.Shared;
@@ -21,7 +21,7 @@ namespace Azure.Storage.DataMovement
     /// Creates a checkpointer which uses a locally stored file to obtain
     /// the information in order to resume transfers in the future.
     /// </summary>
-    internal class LocalTransferCheckpointer : SerializerTransferCheckpointer
+    internal class LocalTransferCheckpointer : SerializerTransferCheckpointer, IDisposable
     {
         internal string _pathToCheckpointer;
 
@@ -29,6 +29,7 @@ namespace Azure.Storage.DataMovement
         /// Stores references to the memory mapped files stored by IDs.
         /// </summary>
         internal readonly ConcurrentDictionary<string, JobPlanFile> _transferStates;
+        internal int _disposed;
 
         /// <summary>
         /// Initializes a new instance of <see cref="LocalTransferCheckpointer"/> class.
@@ -36,6 +37,7 @@ namespace Azure.Storage.DataMovement
         /// <param name="folderPath">Path to the folder containing the checkpointing information to resume from.</param>
         public LocalTransferCheckpointer(string folderPath)
         {
+            _disposed = 0;
             _transferStates = new ConcurrentDictionary<string, JobPlanFile>();
             if (string.IsNullOrEmpty(folderPath))
             {
@@ -54,6 +56,21 @@ namespace Azure.Storage.DataMovement
             {
                 _pathToCheckpointer = folderPath;
             }
+        }
+
+        public void Dispose()
+        {
+            // Atomically set _disposed to 1 and check if it was already 1
+            if (Interlocked.Exchange(ref _disposed, 1) == 1)
+            {
+                return; // Already disposed
+            }
+
+            foreach (var kvp in _transferStates)
+            {
+                DisposeOfJobPartPlanAndPlanFile(kvp.Value);
+            }
+            _transferStates.Clear();
         }
 
         private bool TryGetJobPlanFile(string transferId, out JobPlanFile result)
@@ -164,31 +181,18 @@ namespace Azure.Storage.DataMovement
             int length,
             CancellationToken cancellationToken = default)
         {
-            int bufferSize = length > 0 ? length : DataMovementConstants.DefaultStreamCopyBufferSize;
-            Stream copiedStream = new PooledMemoryStream(ArrayPool<byte>.Shared, bufferSize);
-
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
             if (!TryGetJobPlanFile(transferId, out JobPlanFile jobPlanFile))
             {
                 throw Errors.MissingTransferIdCheckpointer(transferId);
             }
 
-            await jobPlanFile.WriteLock.WaitAsync(cancellationToken).ConfigureAwait(false);
-            try
-            {
-                using (MemoryMappedFile mmf = MemoryMappedFile.CreateFromFile(jobPlanFile.FilePath))
-                using (MemoryMappedViewStream mmfStream = mmf.CreateViewStream(offset, length, MemoryMappedFileAccess.Read))
-                {
-                    await mmfStream.CopyToAsync(copiedStream, bufferSize, cancellationToken).ConfigureAwait(false);
-                }
-
-                copiedStream.Position = 0;
-                return copiedStream;
-            }
-            finally
-            {
-                jobPlanFile.WriteLock.Release();
-            }
+            return await ReadFromPlanFileAsync(
+                jobPlanFile.FilePath,
+                jobPlanFile.WriteLock,
+                offset,
+                length,
+                cancellationToken).ConfigureAwait(false);
         }
 
         public override async Task<Stream> ReadJobPartPlanFileAsync(
@@ -208,16 +212,46 @@ namespace Azure.Storage.DataMovement
                 throw Errors.MissingPartNumberCheckpointer(transferId, partNumber);
             }
 
+            return await ReadFromPlanFileAsync(
+                jobPartPlanFile.FilePath,
+                jobPartPlanFile.WriteLock,
+                offset,
+                length,
+                cancellationToken).ConfigureAwait(false);
+        }
+
+        private static async Task<Stream> ReadFromPlanFileAsync(
+            string filePath,
+            SemaphoreSlim writeLock,
+            int offset,
+            int length,
+            CancellationToken cancellationToken)
+        {
             int bufferSize = length > 0 ? length : DataMovementConstants.DefaultStreamCopyBufferSize;
             Stream copiedStream = new PooledMemoryStream(ArrayPool<byte>.Shared, bufferSize);
 
-            await jobPartPlanFile.WriteLock.WaitAsync(cancellationToken).ConfigureAwait(false);
+            await writeLock.WaitAsync(cancellationToken).ConfigureAwait(false);
             try
             {
-                using (MemoryMappedFile mmf = MemoryMappedFile.CreateFromFile(jobPartPlanFile.FilePath))
-                using (MemoryMappedViewStream mmfStream = mmf.CreateViewStream(offset, length, MemoryMappedFileAccess.Read))
+                using (FileStream fileStream = new FileStream(
+                    filePath,
+                    FileMode.Open,
+                    FileAccess.Read,
+                    FileShare.Read))
                 {
-                    await mmfStream.CopyToAsync(copiedStream, bufferSize, cancellationToken).ConfigureAwait(false);
+                    if (offset > 0)
+                    {
+                        fileStream.Seek(offset, SeekOrigin.Begin);
+                    }
+
+                    if (length > 0)
+                    {
+                        await fileStream.CopyToExactInternal(copiedStream, length, async: true, cancellationToken).ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        await fileStream.CopyToAsync(copiedStream, bufferSize, cancellationToken).ConfigureAwait(false);
+                    }
                 }
 
                 copiedStream.Position = 0;
@@ -225,7 +259,7 @@ namespace Azure.Storage.DataMovement
             }
             finally
             {
-                jobPartPlanFile.WriteLock.Release();
+                writeLock.Release();
             }
         }
 
@@ -243,11 +277,15 @@ namespace Azure.Storage.DataMovement
                 await jobPlanFile.WriteLock.WaitAsync(cancellationToken).ConfigureAwait(false);
                 try
                 {
-                    using (MemoryMappedFile mmf = MemoryMappedFile.CreateFromFile(jobPlanFile.FilePath, FileMode.Open))
-                    using (MemoryMappedViewAccessor accessor = mmf.CreateViewAccessor(fileOffset, length, MemoryMappedFileAccess.Write))
+                    using (FileStream fileStream = new FileStream(
+                        jobPlanFile.FilePath,
+                        FileMode.Open,
+                        FileAccess.Write,
+                        FileShare.Read))
                     {
-                        accessor.WriteArray(0, buffer, bufferOffset, length);
-                        accessor.Flush();
+                        fileStream.Seek(fileOffset, SeekOrigin.Begin);
+                        await fileStream.WriteAsync(buffer, bufferOffset, length, cancellationToken).ConfigureAwait(false);
+                        await fileStream.FlushAsync(cancellationToken).ConfigureAwait(false);
                     }
                 }
                 finally
@@ -267,19 +305,24 @@ namespace Azure.Storage.DataMovement
 
             List<string> filesToDelete = new List<string>();
 
-            if (TryGetJobPlanFile(transferId, out JobPlanFile jobPlanFile))
-            {
-                filesToDelete.Add(jobPlanFile.FilePath);
-            }
-            else
+            if (!TryGetJobPlanFile(transferId, out JobPlanFile jobPlanFile))
             {
                 return Task.FromResult(false);
             }
 
+            filesToDelete.Add(jobPlanFile.FilePath);
+
+            // Dispose of Job Plan Part Files and after the Job Plan File
             foreach (KeyValuePair<int, JobPartPlanFile> jobPartPair in jobPlanFile.JobParts)
             {
                 filesToDelete.Add(jobPartPair.Value.FilePath);
+                jobPartPair.Value.Dispose();
             }
+
+            jobPlanFile.Dispose();
+
+            // Remove from dictionary after disposing
+            _transferStates.TryRemove(transferId, out _);
 
             bool result = true;
             foreach (string file in filesToDelete)
@@ -302,8 +345,6 @@ namespace Azure.Storage.DataMovement
                     result = false;
                 }
             }
-
-            _transferStates.TryRemove(transferId, out _);
             return Task.FromResult(result);
         }
 
@@ -318,9 +359,6 @@ namespace Azure.Storage.DataMovement
             TransferStatus status,
             CancellationToken cancellationToken = default)
         {
-            long length = DataMovementConstants.IntSizeInBytes;
-            int offset = DataMovementConstants.JobPlanFile.JobStatusIndex;
-
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
 
             if (!TryGetJobPlanFile(transferId, out JobPlanFile jobPlanFile))
@@ -335,26 +373,21 @@ namespace Azure.Storage.DataMovement
                 return;
             }
 
+            await WriteStatusToPlanFileAsync(
+                jobPlanFile.FilePath,
+                jobPlanFile.WriteLock,
+                DataMovementConstants.JobPlanFile.JobStatusIndex,
+                status,
+                cancellationToken).ConfigureAwait(false);
+
             // if paused or other completion state, remove the memory cache but still write state to the plan file for later resume
             if (status.State == TransferState.Completed || status.State == TransferState.Paused)
             {
                 // If TryRemove fails, it's fine it may be because it does not already exist or already has been removed
-                _transferStates.TryRemove(transferId, out _);
-            }
-
-            await jobPlanFile.WriteLock.WaitAsync(cancellationToken).ConfigureAwait(false);
-            try
-            {
-                using (MemoryMappedFile mmf = MemoryMappedFile.CreateFromFile(jobPlanFile.FilePath, FileMode.Open))
-                using (MemoryMappedViewAccessor accessor = mmf.CreateViewAccessor(offset, length))
+                if (_transferStates.TryRemove(transferId, out JobPlanFile removedFile))
                 {
-                    accessor.Write(0, (int)status.ToJobPlanStatus());
-                    accessor.Flush();
+                    DisposeOfJobPartPlanAndPlanFile(removedFile);
                 }
-            }
-            finally
-            {
-                jobPlanFile.WriteLock.Release();
             }
         }
 
@@ -364,9 +397,6 @@ namespace Azure.Storage.DataMovement
             TransferStatus status,
             CancellationToken cancellationToken = default)
         {
-            long length = DataMovementConstants.IntSizeInBytes;
-            int offset = DataMovementConstants.JobPartPlanFile.JobPartStatusIndex;
-
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
 
             if (!TryGetJobPlanFile(transferId, out JobPlanFile jobPlanFile))
@@ -377,19 +407,42 @@ namespace Azure.Storage.DataMovement
             {
                 throw Errors.MissingPartNumberCheckpointer(transferId, partNumber);
             }
-            await file.WriteLock.WaitAsync(cancellationToken).ConfigureAwait(false);
+
+            await WriteStatusToPlanFileAsync(
+                file.FilePath,
+                file.WriteLock,
+                DataMovementConstants.JobPartPlanFile.JobPartStatusIndex,
+                status,
+                cancellationToken).ConfigureAwait(false);
+        }
+
+        private static async Task WriteStatusToPlanFileAsync(
+            string filePath,
+            SemaphoreSlim writeLock,
+            int offset,
+            TransferStatus status,
+            CancellationToken cancellationToken)
+        {
+            await writeLock.WaitAsync(cancellationToken).ConfigureAwait(false);
             try
             {
-                using (MemoryMappedFile mmf = MemoryMappedFile.CreateFromFile(file.FilePath, FileMode.Open))
-                using (MemoryMappedViewAccessor accessor = mmf.CreateViewAccessor(offset, length))
+                using (FileStream fileStream = new FileStream(
+                    filePath,
+                    FileMode.Open,
+                    FileAccess.Write,
+                    FileShare.Read))
                 {
-                    accessor.Write(0, (int)status.ToJobPlanStatus());
-                    accessor.Flush();
+                    fileStream.Seek(offset, SeekOrigin.Begin);
+                    using (BinaryWriter writer = new BinaryWriter(fileStream, System.Text.Encoding.UTF8, leaveOpen: true))
+                    {
+                        writer.Write((int)status.ToJobPlanStatus());
+                    }
+                    await fileStream.FlushAsync(cancellationToken).ConfigureAwait(false);
                 }
             }
             finally
             {
-                file.WriteLock.Release();
+                writeLock.Release();
             }
         }
 
@@ -398,6 +451,11 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         private void RefreshCache()
         {
+            // Dispose all existing items, then clear _transferSates dictionary
+            foreach (var planState in _transferStates)
+            {
+                DisposeOfJobPartPlanAndPlanFile(planState.Value);
+            }
             _transferStates.Clear();
 
             // First, retrieve all valid job plan files
@@ -440,7 +498,11 @@ namespace Azure.Storage.DataMovement
         private void RefreshCache(string transferId)
         {
             // If TryRemove fails, it's fine it may be because it does not already exist or already has been removed
-            _transferStates.TryRemove(transferId, out _);
+            if (_transferStates.TryRemove(transferId, out JobPlanFile existingFile))
+            {
+                DisposeOfJobPartPlanAndPlanFile(existingFile);
+            }
+
             JobPlanFile jobPlanFile = JobPlanFile.LoadExistingJobPlanFile(_pathToCheckpointer, transferId);
             if (!File.Exists(jobPlanFile.FilePath))
             {
@@ -487,6 +549,17 @@ namespace Azure.Storage.DataMovement
             {
                 throw Errors.CollisionJobPlanFile(transferId);
             }
+        }
+
+        private void DisposeOfJobPartPlanAndPlanFile(JobPlanFile jobPlanFile)
+        {
+            // Dispose of all parts
+            foreach (var partKvp in jobPlanFile.JobParts)
+            {
+                partKvp.Value.Dispose();
+            }
+            // Dispose the plan file
+            jobPlanFile.Dispose();
         }
     }
 }

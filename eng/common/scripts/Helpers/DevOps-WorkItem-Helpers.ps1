@@ -430,7 +430,9 @@ function CreateWorkItem($title, $type, $iteration, $area, $fields, $assignedTo, 
   # Add a work item as related if given.
   if ($relatedId)
   {
-    CreateWorkItemRelation $workItemId $relatedId "Related" $outputCommand
+    foreach ($id in $relatedId) {
+      CreateWorkItemRelation $workItemId $relatedId "Related" $outputCommand
+    }
   }
   return $workItem
 }
@@ -443,6 +445,27 @@ function CreateWorkItemRelation($id, $relatedId, $relationType, $outputCommand =
   $parameters += "--target-id", $relatedId
   Write-Host "Updating work item [$relatedId] as [$relationType] of [$id]."
   Invoke-AzBoardsCmd "work-item relation add" $parameters $outputCommand | Out-Null
+}
+
+function GetWorkItemRelatedLinkIds($workItemId, $outputCommand = $false)
+{
+  $parameters = $ReleaseDevOpsCommonParameters
+  $parameters += "--id", $workItemId
+  $response = Invoke-AzBoardsCmd "work-item relation show" $parameters $outputCommand
+
+  $relatedIds = @()
+  if ($response.relations) {
+    foreach ($relation in $response.relations) {
+      if ($relation.rel -eq "Related") {
+        $urlParts = $relation.url -split "/"
+        $relatedId = $urlParts[-1]
+        if ($relatedId -match "^\d+$") {
+          $relatedIds += [int]$relatedId
+        }
+      }
+    }
+  }
+  return $relatedIds
 }
 
 function UpdateWorkItem($id, $fields, $title, $state, $assignedTo, $outputCommand = $true)
@@ -481,6 +504,7 @@ function FindOrCreateClonePackageWorkItem($lang, $pkg, $verMajorMinor, $allowPro
     $latestVersionItem = FindLatestPackageWorkItem -lang $lang -packageName $pkg.Package -outputCommand $outputCommand -tag $tag -ignoreReleasePlannerTests $ignoreReleasePlannerTests -groupId $groupId
     $assignedTo = "me"
     $extraFields = @()
+    $existingRelatedIds = @()
     if ($latestVersionItem) {
       Write-Verbose "Copying data from latest matching [$($latestVersionItem.id)] with version $($latestVersionItem.fields["Custom.PackageVersionMajorMinor"])"
       if ($latestVersionItem.fields["System.AssignedTo"]) {
@@ -499,6 +523,8 @@ function FindOrCreateClonePackageWorkItem($lang, $pkg, $verMajorMinor, $allowPro
       if ($latestVersionItem.fields["Custom.RoadmapState"]) {
         $extraFields += "`"RoadmapState=" +  $latestVersionItem.fields["Custom.RoadmapState"] + "`""
       }
+
+      $existingRelatedIds = GetWorkItemRelatedLinkIds $latestVersionItem.id $outputCommand
     }
 
     if ($allowPrompt) {
@@ -515,6 +541,10 @@ function FindOrCreateClonePackageWorkItem($lang, $pkg, $verMajorMinor, $allowPro
       }
     }
     $workItem = CreateOrUpdatePackageWorkItem $lang $pkg $verMajorMinor -existingItem $null -assignedTo $assignedTo -extraFields $extraFields -outputCommand $outputCommand -relatedId $relatedId -tag $tag -ignoreReleasePlannerTests $ignoreReleasePlannerTests
+
+    foreach ($existingRelatedId in $existingRelatedIds) {
+      CreateWorkItemRelation $workItem.id $existingRelatedId "Related" $outputCommand
+    }
   }
 
   return $workItem

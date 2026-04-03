@@ -28,6 +28,7 @@ namespace Azure.Monitor.Query.Logs
         protected LogsQueryClient() { }
         public LogsQueryClient(Azure.Core.TokenCredential credential) { }
         public LogsQueryClient(Azure.Core.TokenCredential credential, Azure.Monitor.Query.Logs.LogsQueryClientOptions options) { }
+        public LogsQueryClient(Azure.Monitor.Query.Logs.LogsQueryClientSettings settings) { }
         public LogsQueryClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
         public LogsQueryClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Monitor.Query.Logs.LogsQueryClientOptions options) { }
         public System.Uri Endpoint { get { throw null; } }
@@ -52,6 +53,13 @@ namespace Azure.Monitor.Query.Logs
         {
             V1 = 1,
         }
+    }
+    public partial class LogsQueryClientSettings : System.ClientModel.Primitives.ClientSettings
+    {
+        public LogsQueryClientSettings() { }
+        public System.Uri Endpoint { get { throw null; } set { } }
+        public Azure.Monitor.Query.Logs.LogsQueryClientOptions Options { get { throw null; } set { } }
+        protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
     }
     public partial class LogsQueryOptions
     {

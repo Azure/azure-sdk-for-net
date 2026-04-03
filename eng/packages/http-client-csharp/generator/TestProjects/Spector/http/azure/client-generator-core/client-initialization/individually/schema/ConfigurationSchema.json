@@ -1,0 +1,181 @@
+{
+  "type": "object",
+  "properties": {
+    "AzureClients": {
+      "type": "object",
+      "properties": {
+        "IndividuallyNestedWithPathClient": {
+          "type": "object",
+          "description": "Configuration for IndividuallyNestedWithPathClient.",
+          "properties": {
+            "Endpoint": {
+              "type": "string",
+              "format": "uri",
+              "description": "Gets or sets the Endpoint."
+            },
+            "BlobName": {
+              "type": "string"
+            },
+            "Credential": {
+              "$ref": "#/definitions/credential"
+            },
+            "Options": {
+              "$ref": "#/definitions/individuallyNestedWithPathClientOptions"
+            }
+          }
+        },
+        "IndividuallyNestedWithQueryClient": {
+          "type": "object",
+          "description": "Configuration for IndividuallyNestedWithQueryClient.",
+          "properties": {
+            "Endpoint": {
+              "type": "string",
+              "format": "uri",
+              "description": "Gets or sets the Endpoint."
+            },
+            "BlobName": {
+              "type": "string"
+            },
+            "Credential": {
+              "$ref": "#/definitions/credential"
+            },
+            "Options": {
+              "$ref": "#/definitions/individuallyNestedWithQueryClientOptions"
+            }
+          }
+        },
+        "IndividuallyNestedWithHeaderClient": {
+          "type": "object",
+          "description": "Configuration for IndividuallyNestedWithHeaderClient.",
+          "properties": {
+            "Endpoint": {
+              "type": "string",
+              "format": "uri",
+              "description": "Gets or sets the Endpoint."
+            },
+            "Name": {
+              "type": "string"
+            },
+            "Credential": {
+              "$ref": "#/definitions/credential"
+            },
+            "Options": {
+              "$ref": "#/definitions/individuallyNestedWithHeaderClientOptions"
+            }
+          }
+        },
+        "IndividuallyNestedWithMultipleClient": {
+          "type": "object",
+          "description": "Configuration for IndividuallyNestedWithMultipleClient.",
+          "properties": {
+            "Endpoint": {
+              "type": "string",
+              "format": "uri",
+              "description": "Gets or sets the Endpoint."
+            },
+            "Name": {
+              "type": "string"
+            },
+            "Region": {
+              "type": "string"
+            },
+            "Credential": {
+              "$ref": "#/definitions/credential"
+            },
+            "Options": {
+              "$ref": "#/definitions/individuallyNestedWithMultipleClientOptions"
+            }
+          }
+        },
+        "IndividuallyNestedWithMixedClient": {
+          "type": "object",
+          "description": "Configuration for IndividuallyNestedWithMixedClient.",
+          "properties": {
+            "Endpoint": {
+              "type": "string",
+              "format": "uri",
+              "description": "Gets or sets the Endpoint."
+            },
+            "Name": {
+              "type": "string"
+            },
+            "Credential": {
+              "$ref": "#/definitions/credential"
+            },
+            "Options": {
+              "$ref": "#/definitions/individuallyNestedWithMixedClientOptions"
+            }
+          }
+        },
+        "IndividuallyNestedWithParamAliasClient": {
+          "type": "object",
+          "description": "Configuration for IndividuallyNestedWithParamAliasClient.",
+          "properties": {
+            "Endpoint": {
+              "type": "string",
+              "format": "uri",
+              "description": "Gets or sets the Endpoint."
+            },
+            "BlobName": {
+              "type": "string"
+            },
+            "Credential": {
+              "$ref": "#/definitions/credential"
+            },
+            "Options": {
+              "$ref": "#/definitions/individuallyNestedWithParamAliasClientOptions"
+            }
+          }
+        }
+      },
+      "additionalProperties": {
+        "type": "object",
+        "description": "Configuration for a named client instance."
+      }
+    }
+  },
+  "definitions": {
+    "individuallyNestedWithHeaderClientOptions": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/azureOptions"
+        }
+      ]
+    },
+    "individuallyNestedWithMixedClientOptions": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/azureOptions"
+        }
+      ]
+    },
+    "individuallyNestedWithMultipleClientOptions": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/azureOptions"
+        }
+      ]
+    },
+    "individuallyNestedWithParamAliasClientOptions": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/azureOptions"
+        }
+      ]
+    },
+    "individuallyNestedWithPathClientOptions": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/azureOptions"
+        }
+      ]
+    },
+    "individuallyNestedWithQueryClientOptions": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/azureOptions"
+        }
+      ]
+    }
+  }
+}

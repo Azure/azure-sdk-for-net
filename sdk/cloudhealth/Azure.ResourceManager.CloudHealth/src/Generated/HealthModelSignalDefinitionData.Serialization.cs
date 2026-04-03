@@ -67,9 +67,7 @@ namespace Azure.ResourceManager.CloudHealth
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(healthModelSignalDefinitionData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(healthModelSignalDefinitionData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="HealthModelSignalDefinitionData"/> from. </param>

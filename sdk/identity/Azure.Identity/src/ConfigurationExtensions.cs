@@ -35,7 +35,7 @@ namespace Azure.Identity
         /// <typeparam name="TSettings">The type of <see cref="ClientSettings"/>.</typeparam>
         /// <param name="host">The <see cref="IHostApplicationBuilder"/> to add to.</param>
         /// <param name="sectionName">The section of <see cref="IConfiguration"/> to use.</param>
-        public static IHostApplicationBuilder AddAzureClient<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] TClient, TSettings>(
+        public static IClientBuilder AddAzureClient<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] TClient, TSettings>(
             this IHostApplicationBuilder host,
             string sectionName)
                 where TSettings : ClientSettings, new()
@@ -50,7 +50,7 @@ namespace Azure.Identity
         /// <param name="host">The <see cref="IHostApplicationBuilder"/> to add to.</param>
         /// <param name="sectionName">The section of <see cref="IConfiguration"/> to use.</param>
         /// <param name="configureSettings">Factory method to modify the <typeparamref name="TSettings"/> after they are created.</param>
-        public static IHostApplicationBuilder AddAzureClient<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] TClient, TSettings>(
+        public static IClientBuilder AddAzureClient<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] TClient, TSettings>(
             this IHostApplicationBuilder host,
             string sectionName,
             Action<TSettings> configureSettings)
@@ -66,7 +66,7 @@ namespace Azure.Identity
         /// <param name="host">The <see cref="IHostApplicationBuilder"/> to add to.</param>
         /// <param name="key">The unique key to register as.</param>
         /// <param name="sectionName">The section of <see cref="IConfiguration"/> to use.</param>
-        public static IHostApplicationBuilder AddKeyedAzureClient<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] TClient, TSettings>(
+        public static IClientBuilder AddKeyedAzureClient<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] TClient, TSettings>(
             this IHostApplicationBuilder host,
             string key,
             string sectionName)
@@ -83,14 +83,14 @@ namespace Azure.Identity
         /// <param name="key">The unique key to register as.</param>
         /// <param name="sectionName">The section of <see cref="IConfiguration"/> to use.</param>
         /// <param name="configureSettings">Factory method to modify the <typeparamref name="TSettings"/> after they are created.</param>
-        public static IHostApplicationBuilder AddKeyedAzureClient<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] TClient, TSettings>(
+        public static IClientBuilder AddKeyedAzureClient<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] TClient, TSettings>(
             this IHostApplicationBuilder host,
             string key,
             string sectionName,
             Action<TSettings> configureSettings)
                 where TSettings : ClientSettings, new()
                 where TClient : class
-        => host.AddKeyedClient<TClient, TSettings>(key, sectionName, configureSettings).WithAzureCredential();
+            => host.AddKeyedClient<TClient, TSettings>(key, sectionName, configureSettings).WithAzureCredential();
 
         /// <summary>
         /// Sets the <see cref="ClientSettings.CredentialProvider"/> to an instance of <see cref="TokenCredential"/>.
@@ -145,9 +145,9 @@ namespace Azure.Identity
         /// If the same credential configuration has already been registered, the existing credential instance is reused.
         /// </summary>
         /// <param name="clientBuilder">The <see cref="IClientBuilder"/> to add the credential to.</param>
-        public static IHostApplicationBuilder WithAzureCredential(this IClientBuilder clientBuilder)
+        public static IClientBuilder WithAzureCredential(this IClientBuilder clientBuilder)
         {
-            return clientBuilder.PostConfigure(settings =>
+            clientBuilder.PostConfigure(settings =>
             {
                 AddDefaultScope(settings);
                 settings.PostConfigure(config =>
@@ -160,6 +160,7 @@ namespace Azure.Identity
                     });
                 });
             });
+            return clientBuilder;
         }
     }
 }
