@@ -10,16 +10,75 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
 {
-    public partial class EncryptionScopeData : IUtf8JsonSerializable, IJsonModel<EncryptionScopeData>
+    /// <summary> The Encryption Scope resource. </summary>
+    public partial class EncryptionScopeData : ResourceData, IJsonModel<EncryptionScopeData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EncryptionScopeData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<EncryptionScopeData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeEncryptionScopeData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(EncryptionScopeData)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<EncryptionScopeData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(EncryptionScopeData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<EncryptionScopeData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        EncryptionScopeData IPersistableModel<EncryptionScopeData>.Create(BinaryData data, ModelReaderWriterOptions options) => (EncryptionScopeData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<EncryptionScopeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="encryptionScopeData"> The <see cref="EncryptionScopeData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(EncryptionScopeData encryptionScopeData)
+        {
+            if (encryptionScopeData == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(encryptionScopeData, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="EncryptionScopeData"/> from. </param>
+        internal static EncryptionScopeData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeEncryptionScopeData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<EncryptionScopeData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -31,387 +90,105 @@ namespace Azure.ResourceManager.Storage
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EncryptionScopeData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EncryptionScopeData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(EncryptionScopeData)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Source))
+            if (Optional.IsDefined(EncryptionScopeProperties))
             {
-                writer.WritePropertyName("source"u8);
-                writer.WriteStringValue(Source.Value.ToString());
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(EncryptionScopeProperties, options);
             }
-            if (Optional.IsDefined(State))
-            {
-                writer.WritePropertyName("state"u8);
-                writer.WriteStringValue(State.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
-            {
-                writer.WritePropertyName("creationTime"u8);
-                writer.WriteStringValue(CreatedOn.Value, "O");
-            }
-            if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
-            {
-                writer.WritePropertyName("lastModifiedTime"u8);
-                writer.WriteStringValue(LastModifiedOn.Value, "O");
-            }
-            if (Optional.IsDefined(KeyVaultProperties))
-            {
-                writer.WritePropertyName("keyVaultProperties"u8);
-                writer.WriteObjectValue(KeyVaultProperties, options);
-            }
-            if (Optional.IsDefined(RequireInfrastructureEncryption))
-            {
-                writer.WritePropertyName("requireInfrastructureEncryption"u8);
-                writer.WriteBooleanValue(RequireInfrastructureEncryption.Value);
-            }
-            writer.WriteEndObject();
         }
 
-        EncryptionScopeData IJsonModel<EncryptionScopeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        EncryptionScopeData IJsonModel<EncryptionScopeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (EncryptionScopeData)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EncryptionScopeData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EncryptionScopeData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(EncryptionScopeData)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeEncryptionScopeData(document.RootElement, options);
         }
 
-        internal static EncryptionScopeData DeserializeEncryptionScopeData(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static EncryptionScopeData DeserializeEncryptionScopeData(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType type = default;
+            ResourceType resourceType = default;
             SystemData systemData = default;
-            EncryptionScopeSource? source = default;
-            EncryptionScopeState? state = default;
-            DateTimeOffset? creationTime = default;
-            DateTimeOffset? lastModifiedTime = default;
-            EncryptionScopeKeyVaultProperties keyVaultProperties = default;
-            bool? requireInfrastructureEncryption = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            EncryptionScopeProperties encryptionScopeProperties = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    id = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("systemData"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerStorageContext.Default);
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("type"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    resourceType = new ResourceType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("systemData"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        if (property0.NameEquals("source"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            source = new EncryptionScopeSource(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("state"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            state = new EncryptionScopeState(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("creationTime"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            creationTime = property0.Value.GetDateTimeOffset("O");
-                            continue;
-                        }
-                        if (property0.NameEquals("lastModifiedTime"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            lastModifiedTime = property0.Value.GetDateTimeOffset("O");
-                            continue;
-                        }
-                        if (property0.NameEquals("keyVaultProperties"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            keyVaultProperties = EncryptionScopeKeyVaultProperties.DeserializeEncryptionScopeKeyVaultProperties(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("requireInfrastructureEncryption"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            requireInfrastructureEncryption = property0.Value.GetBoolean();
-                            continue;
-                        }
+                        continue;
                     }
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerStorageContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("properties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    encryptionScopeProperties = EncryptionScopeProperties.DeserializeEncryptionScopeProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new EncryptionScopeData(
                 id,
                 name,
-                type,
+                resourceType,
                 systemData,
-                source,
-                state,
-                creationTime,
-                lastModifiedTime,
-                keyVaultProperties,
-                requireInfrastructureEncryption,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties,
+                encryptionScopeProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  name: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Name))
-                {
-                    builder.Append("  name: ");
-                    if (Name.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Name}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Name}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  id: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Id))
-                {
-                    builder.Append("  id: ");
-                    builder.AppendLine($"'{Id.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  systemData: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SystemData))
-                {
-                    builder.Append("  systemData: ");
-                    builder.AppendLine($"'{SystemData.ToString()}'");
-                }
-            }
-
-            builder.Append("  properties:");
-            builder.AppendLine(" {");
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Source), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    source: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Source))
-                {
-                    builder.Append("    source: ");
-                    builder.AppendLine($"'{Source.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(State), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    state: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(State))
-                {
-                    builder.Append("    state: ");
-                    builder.AppendLine($"'{State.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CreatedOn), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    creationTime: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CreatedOn))
-                {
-                    builder.Append("    creationTime: ");
-                    var formattedDateTimeString = TypeFormatters.ToString(CreatedOn.Value, "o");
-                    builder.AppendLine($"'{formattedDateTimeString}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastModifiedOn), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    lastModifiedTime: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(LastModifiedOn))
-                {
-                    builder.Append("    lastModifiedTime: ");
-                    var formattedDateTimeString = TypeFormatters.ToString(LastModifiedOn.Value, "o");
-                    builder.AppendLine($"'{formattedDateTimeString}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KeyVaultProperties), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    keyVaultProperties: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(KeyVaultProperties))
-                {
-                    builder.Append("    keyVaultProperties: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, KeyVaultProperties, options, 4, false, "    keyVaultProperties: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequireInfrastructureEncryption), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    requireInfrastructureEncryption: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(RequireInfrastructureEncryption))
-                {
-                    builder.Append("    requireInfrastructureEncryption: ");
-                    var boolValue = RequireInfrastructureEncryption.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            builder.AppendLine("  }");
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<EncryptionScopeData>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<EncryptionScopeData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(EncryptionScopeData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        EncryptionScopeData IPersistableModel<EncryptionScopeData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<EncryptionScopeData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeEncryptionScopeData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(EncryptionScopeData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<EncryptionScopeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

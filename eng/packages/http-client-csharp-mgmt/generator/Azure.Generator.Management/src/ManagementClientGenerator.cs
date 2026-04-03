@@ -68,10 +68,23 @@ namespace Azure.Generator.Management
         }
 
         private const string EnableWirePathFeatureFlag = "enable-wire-path-attribute";
+        private const string SkipApiVersionOverrideFlag = "skip-api-version-override";
 
         private bool IsWirePathEnabled()
         {
             if (Configuration.AdditionalConfigurationOptions.TryGetValue(EnableWirePathFeatureFlag, out var value)
+                && bool.TryParse(value.ToString(), out var flag))
+            {
+                return flag;
+            }
+            return false;
+        }
+
+        // TODO: This is a temporary workaround until the api-version override issue is properly resolved in Azure.Core.
+        // Once Azure.Core handles api-version correctly during LRO polling, this flag and related logic should be removed.
+        internal bool IsSkipApiVersionOverrideEnabled()
+        {
+            if (Configuration.AdditionalConfigurationOptions.TryGetValue(SkipApiVersionOverrideFlag, out var value)
                 && bool.TryParse(value.ToString(), out var flag))
             {
                 return flag;

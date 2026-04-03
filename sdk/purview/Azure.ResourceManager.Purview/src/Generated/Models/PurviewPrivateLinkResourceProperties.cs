@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Purview;
 
 namespace Azure.ResourceManager.Purview.Models
 {
     /// <summary> A privately linkable resource properties. </summary>
     public partial class PurviewPrivateLinkResourceProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PurviewPrivateLinkResourceProperties"/>. </summary>
         internal PurviewPrivateLinkResourceProperties()
@@ -56,20 +28,22 @@ namespace Azure.ResourceManager.Purview.Models
         /// <param name="groupId"> The private link resource group identifier. </param>
         /// <param name="requiredMembers"> This translates to how many Private IPs should be created for each privately linkable resource. </param>
         /// <param name="requiredZoneNames"> The required zone names for private link resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PurviewPrivateLinkResourceProperties(string groupId, IReadOnlyList<string> requiredMembers, IReadOnlyList<string> requiredZoneNames, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal PurviewPrivateLinkResourceProperties(string groupId, IReadOnlyList<string> requiredMembers, IReadOnlyList<string> requiredZoneNames, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             GroupId = groupId;
             RequiredMembers = requiredMembers;
             RequiredZoneNames = requiredZoneNames;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The private link resource group identifier. </summary>
         public string GroupId { get; }
+
         /// <summary> This translates to how many Private IPs should be created for each privately linkable resource. </summary>
-        public IReadOnlyList<string> RequiredMembers { get; }
+        public IReadOnlyList<string> RequiredMembers { get; } = new ChangeTrackingList<string>();
+
         /// <summary> The required zone names for private link resource. </summary>
-        public IReadOnlyList<string> RequiredZoneNames { get; }
+        public IReadOnlyList<string> RequiredZoneNames { get; } = new ChangeTrackingList<string>();
     }
 }

@@ -39,12 +39,12 @@ public class Sample_FileSearch : ProjectsOpenAITestBase
         File.WriteAllText(
             path: filePath,
             contents: "The word 'apple' uses the code 442345, while the word 'banana' uses the code 673457.");
-        OpenAIFileClient fileClient = projectClient.OpenAI.GetOpenAIFileClient();
+        OpenAIFileClient fileClient = projectClient.ProjectOpenAIClient.GetOpenAIFileClient();
         OpenAIFile uploadedFile = await fileClient.UploadFileAsync(filePath: filePath, purpose: FileUploadPurpose.Assistants);
         File.Delete(filePath);
         #endregion
         #region Snippet:Sample_CreateVectorStore_FileSearch_Async
-        VectorStoreClient vctStoreClient = projectClient.OpenAI.GetVectorStoreClient();
+        VectorStoreClient vctStoreClient = projectClient.ProjectOpenAIClient.GetVectorStoreClient();
         VectorStoreCreationOptions options = new()
         {
             Name = "MySampleStore",
@@ -58,12 +58,12 @@ public class Sample_FileSearch : ProjectsOpenAITestBase
             Instructions = "You are a helpful agent that can help fetch data from files you know about.",
             Tools = { ResponseTool.CreateFileSearchTool(vectorStoreIds: [vectorStore.Id]), }
         };
-        ProjectsAgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+        ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             agentName: "myAgent",
             options: new(agentDefinition));
         #endregion
         #region Snippet:Sample_CreateResponse_FileSearch_Async
-        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
+        ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(agentVersion.Name);
 
         ResponseResult response = await responseClient.CreateResponseAsync("Can you give me the documented codes for 'banana' and 'orange'?");
         #endregion
@@ -74,7 +74,7 @@ public class Sample_FileSearch : ProjectsOpenAITestBase
         #endregion
 
         #region Snippet:Sample_Cleanup_FileSearch_Async
-        await projectClient.Agents.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+        await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         await vctStoreClient.DeleteVectorStoreAsync(vectorStoreId: vectorStore.Id);
         await fileClient.DeleteFileAsync(uploadedFile.Id);
         #endregion
@@ -99,12 +99,12 @@ public class Sample_FileSearch : ProjectsOpenAITestBase
         File.WriteAllText(
             path: filePath,
             contents: "The word 'apple' uses the code 442345, while the word 'banana' uses the code 673457.");
-        OpenAIFileClient fileClient = projectClient.OpenAI.GetOpenAIFileClient();
+        OpenAIFileClient fileClient = projectClient.ProjectOpenAIClient.GetOpenAIFileClient();
         OpenAIFile uploadedFile = fileClient.UploadFile(filePath: filePath, purpose: FileUploadPurpose.Assistants);
         File.Delete(filePath);
         #endregion
         #region Snippet:Sample_CreateVectorStore_FileSearch_Sync
-        VectorStoreClient vctStoreClient = projectClient.OpenAI.GetVectorStoreClient();
+        VectorStoreClient vctStoreClient = projectClient.ProjectOpenAIClient.GetVectorStoreClient();
         VectorStoreCreationOptions options = new()
         {
             Name = "MySampleStore",
@@ -118,12 +118,12 @@ public class Sample_FileSearch : ProjectsOpenAITestBase
             Instructions = "You are a helpful agent that can help fetch data from files you know about.",
             Tools = { ResponseTool.CreateFileSearchTool(vectorStoreIds: [vectorStore.Id]), }
         };
-        ProjectsAgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
+        ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.CreateAgentVersion(
             agentName: "myAgent",
             options: new(agentDefinition));
         #endregion
         #region Snippet:Sample_CreateResponse_FileSearch_Sync
-        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
+        ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(agentVersion.Name);
 
         ResponseResult response = responseClient.CreateResponse("Can you give me the documented codes for 'banana' and 'orange'?");
         #endregion
@@ -134,7 +134,7 @@ public class Sample_FileSearch : ProjectsOpenAITestBase
         #endregion
 
         #region Snippet:Sample_Cleanup_FileSearch_Sync
-        projectClient.Agents.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+        projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         vctStoreClient.DeleteVectorStore(vectorStoreId: vectorStore.Id);
         fileClient.DeleteFile(uploadedFile.Id);
         #endregion

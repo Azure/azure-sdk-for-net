@@ -50,7 +50,7 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.AzureCli
             }
             if (timeout != null)
             {
-                config[$"{prefix}:CredentialProcessTimeout"] = timeout.Value.ToString();
+                config[$"{prefix}:ProcessTimeout"] = timeout.Value.ToString();
             }
 
             ConfigurableCredential credential;

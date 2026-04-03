@@ -11,15 +11,15 @@ using Azure.ResourceManager.Search;
 
 namespace Azure.ResourceManager.Search.Models
 {
-    /// <summary> Sets options that control the availability of semantic search. This configuration is only possible for certain Azure AI Search SKUs in certain locations. </summary>
+    /// <summary> Specifies the availability and billing plan for semantic search on the Azure AI Search service. This configuration is only available for certain pricing tiers in certain regions. </summary>
     public readonly partial struct SearchSemanticSearch : IEquatable<SearchSemanticSearch>
     {
         private readonly string _value;
-        /// <summary> Indicates that semantic reranker is disabled for the search service. This is the default. </summary>
+        /// <summary> Indicates that semantic reranker is disabled for the search service. </summary>
         private const string DisabledValue = "disabled";
-        /// <summary> Enables semantic reranker on a search service and indicates that it is to be used within the limits of the free plan. The free plan would cap the volume of semantic ranking requests and is offered at no extra charge. This is the default for newly provisioned search services. </summary>
+        /// <summary> Enables semantic reranker on a search service and indicates that it is to be used within the limits of the free plan. The free plan would cap the volume of semantic ranking requests and is offered at no extra charge. This is the default for newly provisioned search services. This is the default. </summary>
         private const string FreeValue = "free";
-        /// <summary> Enables semantic reranker on a search service as a billable feature, with higher throughput and volume of semantically reranked queries. </summary>
+        /// <summary> Enables semantic reranker on a search service as a billable feature after the free quota is exhausted, with higher throughput and volume of semantically reranked queries. </summary>
         private const string StandardValue = "standard";
 
         /// <summary> Initializes a new instance of <see cref="SearchSemanticSearch"/>. </summary>
@@ -32,13 +32,13 @@ namespace Azure.ResourceManager.Search.Models
             _value = value;
         }
 
-        /// <summary> Indicates that semantic reranker is disabled for the search service. This is the default. </summary>
+        /// <summary> Indicates that semantic reranker is disabled for the search service. </summary>
         public static SearchSemanticSearch Disabled { get; } = new SearchSemanticSearch(DisabledValue);
 
-        /// <summary> Enables semantic reranker on a search service and indicates that it is to be used within the limits of the free plan. The free plan would cap the volume of semantic ranking requests and is offered at no extra charge. This is the default for newly provisioned search services. </summary>
+        /// <summary> Enables semantic reranker on a search service and indicates that it is to be used within the limits of the free plan. The free plan would cap the volume of semantic ranking requests and is offered at no extra charge. This is the default for newly provisioned search services. This is the default. </summary>
         public static SearchSemanticSearch Free { get; } = new SearchSemanticSearch(FreeValue);
 
-        /// <summary> Enables semantic reranker on a search service as a billable feature, with higher throughput and volume of semantically reranked queries. </summary>
+        /// <summary> Enables semantic reranker on a search service as a billable feature after the free quota is exhausted, with higher throughput and volume of semantically reranked queries. </summary>
         public static SearchSemanticSearch Standard { get; } = new SearchSemanticSearch(StandardValue);
 
         /// <summary> Determines if two <see cref="SearchSemanticSearch"/> values are the same. </summary>

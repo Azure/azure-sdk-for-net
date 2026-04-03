@@ -75,6 +75,22 @@ namespace Microsoft.Azure.WebPubSub.Common
         public string ErrorMessage { get { throw null; } set { } }
     }
     [System.Runtime.Serialization.DataContractAttribute]
+    public partial class JoinedGroupEventRequest : Microsoft.Azure.WebPubSub.Common.WebPubSubEventRequest
+    {
+        public JoinedGroupEventRequest(Microsoft.Azure.WebPubSub.Common.WebPubSubConnectionContext context, string group) : base (default(Microsoft.Azure.WebPubSub.Common.WebPubSubConnectionContext)) { }
+        [System.Runtime.Serialization.DataMemberAttribute(Name="group")]
+        [System.Text.Json.Serialization.JsonPropertyNameAttribute("group")]
+        public string Group { get { throw null; } }
+    }
+    [System.Runtime.Serialization.DataContractAttribute]
+    public partial class LeftGroupEventRequest : Microsoft.Azure.WebPubSub.Common.WebPubSubEventRequest
+    {
+        public LeftGroupEventRequest(Microsoft.Azure.WebPubSub.Common.WebPubSubConnectionContext context, string group) : base (default(Microsoft.Azure.WebPubSub.Common.WebPubSubConnectionContext)) { }
+        [System.Runtime.Serialization.DataMemberAttribute(Name="group")]
+        [System.Text.Json.Serialization.JsonPropertyNameAttribute("group")]
+        public string Group { get { throw null; } }
+    }
+    [System.Runtime.Serialization.DataContractAttribute]
     public partial class MqttConnectEventErrorResponse : Microsoft.Azure.WebPubSub.Common.EventErrorResponse
     {
         public MqttConnectEventErrorResponse(Microsoft.Azure.WebPubSub.Common.MqttConnectEventErrorResponseProperties mqtt) { }
@@ -397,5 +413,6 @@ namespace Microsoft.Azure.WebPubSub.Common
     {
         System = 0,
         User = 1,
+        GroupPresence = 2,
     }
 }

@@ -32,7 +32,7 @@ DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
     Instructions = "You are a helpful assistant. You must always provide citations for answers using the tool and render them as: `\u3010message_idx:search_idx\u2020source\u3011`.",
     Tools = { new AzureAISearchTool(new AzureAISearchToolOptions(indexes: [index])) }
 };
-ProjectsAgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
+ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.CreateAgentVersion(
     agentName: "myAgent",
     options: new(agentDefinition));
 ```
@@ -52,7 +52,7 @@ DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
     Instructions = "You are a helpful assistant. You must always provide citations for answers using the tool and render them as: `\u3010message_idx:search_idx\u2020source\u3011`.",
     Tools = { new AzureAISearchTool(new AzureAISearchToolOptions(indexes: [index])) }
 };
-ProjectsAgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
     agentName: "myAgent",
     options: new(agentDefinition));
 ```
@@ -83,7 +83,7 @@ private static string GetFormattedAnnotation(ResponseItem item)
 
 Synchronous sample:
 ```C# Snippet:Sample_StreamResponse_AzureAISearchStreaming_Sync
-ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
+ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(agentVersion.Name);
 
 string annotation = "";
 string text = "";
@@ -118,7 +118,7 @@ Console.WriteLine($"{text}{annotation}");
 
 Asynchronous sample:
 ```C# Snippet:Sample_StreamResponse_AzureAISearchStreaming_Async
-ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
+ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(agentVersion.Name);
 
 string annotation = "";
 string text = "";
@@ -156,10 +156,10 @@ Console.WriteLine($"{text}{annotation}");
 
 Synchronous sample:
 ```C# Snippet:Sample_Cleanup_AzureAISearchStreaming_Sync
-projectClient.Agents.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_Cleanup_AzureAISearchStreaming_Async
-await projectClient.Agents.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
 ```

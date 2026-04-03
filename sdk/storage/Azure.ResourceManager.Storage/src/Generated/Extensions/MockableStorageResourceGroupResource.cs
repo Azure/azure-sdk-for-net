@@ -8,34 +8,32 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Storage;
 using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableStorageResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableStorageResourceGroupResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableStorageResourceGroupResource for mocking. </summary>
         protected MockableStorageResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableStorageResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableStorageResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableStorageResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary> Gets a collection of StorageAccountResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of StorageAccountResources and their operations over a StorageAccountResource. </returns>
+        /// <summary> Gets a collection of StorageAccounts in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of StorageAccounts and their operations over a StorageAccountResource. </returns>
         public virtual StorageAccountCollection GetStorageAccounts()
         {
             return GetCachedClient(client => new StorageAccountCollection(client, Id));
@@ -45,20 +43,16 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// Returns the properties for the specified storage account including but not limited to name, SKU name, location, and account status. The ListKeys operation should be used to retrieve storage keys.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StorageAccounts_GetProperties</description>
+        /// <term> Operation Id. </term>
+        /// <description> StorageAccounts_GetProperties. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StorageAccountResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -68,8 +62,10 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<StorageAccountResource>> GetStorageAccountAsync(string accountName, StorageAccountExpand? expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StorageAccountResource>> GetStorageAccountAsync(string accountName, StorageAccountExpand? expand = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+
             return await GetStorageAccounts().GetAsync(accountName, expand, cancellationToken).ConfigureAwait(false);
         }
 
@@ -77,20 +73,16 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// Returns the properties for the specified storage account including but not limited to name, SKU name, location, and account status. The ListKeys operation should be used to retrieve storage keys.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StorageAccounts_GetProperties</description>
+        /// <term> Operation Id. </term>
+        /// <description> StorageAccounts_GetProperties. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StorageAccountResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -100,8 +92,10 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<StorageAccountResource> GetStorageAccount(string accountName, StorageAccountExpand? expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<StorageAccountResource> GetStorageAccount(string accountName, StorageAccountExpand? expand = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+
             return GetStorageAccounts().Get(accountName, expand, cancellationToken);
         }
     }

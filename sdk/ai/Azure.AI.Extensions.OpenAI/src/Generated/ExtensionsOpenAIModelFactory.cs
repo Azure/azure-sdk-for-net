@@ -121,9 +121,9 @@ namespace Azure.AI.Extensions.OpenAI
         /// </param>
         /// <param name="results"> The results returned from the memory search. </param>
         /// <returns> A new <see cref="OpenAI.MemorySearchToolCallResponseItem"/> instance for mocking. </returns>
-        public static MemorySearchToolCallResponseItem MemorySearchToolCallResponseItem(string id = default, AgentReference agentReference = default, string responseId = default, MemorySearchToolCallStatus status = default, IEnumerable<MemorySearchItem> results = default)
+        public static MemorySearchToolCallResponseItem MemorySearchToolCallResponseItem(string id = default, AgentReference agentReference = default, string responseId = default, MemorySearchToolCallStatus status = default, IEnumerable<MemoryToolSearchItem> results = default)
         {
-            results ??= new ChangeTrackingList<MemorySearchItem>();
+            results ??= new ChangeTrackingList<MemoryToolSearchItem>();
 
             return new MemorySearchToolCallResponseItem(
                 AgentResponseItemKind.MemorySearchCall,
@@ -137,10 +137,10 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <summary> A retrieved memory item from memory search. </summary>
         /// <param name="memoryItem"> Retrieved memory item. </param>
-        /// <returns> A new <see cref="OpenAI.MemorySearchItem"/> instance for mocking. </returns>
-        public static MemorySearchItem MemorySearchItem(MemoryOutputItem memoryItem = default)
+        /// <returns> A new <see cref="OpenAI.MemoryToolSearchItem"/> instance for mocking. </returns>
+        public static MemoryToolSearchItem MemoryToolSearchItem(MemoryOutputItem memoryItem = default)
         {
-            return new MemorySearchItem(memoryItem, additionalBinaryDataProperties: null);
+            return new MemoryToolSearchItem(memoryItem, additionalBinaryDataProperties: null);
         }
 
         /// <summary>

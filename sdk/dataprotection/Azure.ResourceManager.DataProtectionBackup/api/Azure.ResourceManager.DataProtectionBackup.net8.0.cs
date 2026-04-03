@@ -699,6 +699,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     }
     public partial class AdhocBasedBackupTriggerContext : Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupTriggerContext, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataProtectionBackup.Models.AdhocBasedBackupTriggerContext>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataProtectionBackup.Models.AdhocBasedBackupTriggerContext>
     {
+        public AdhocBasedBackupTriggerContext() { }
         public AdhocBasedBackupTriggerContext(Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupRetentionTag adhocBackupRetentionTagInfo) { }
         public Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupRetentionTag AdhocBackupRetentionTagInfo { get { throw null; } set { } }
         protected override Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupTriggerContext JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

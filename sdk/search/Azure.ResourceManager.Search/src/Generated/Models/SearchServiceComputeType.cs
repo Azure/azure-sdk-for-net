@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Search.Models
         private readonly string _value;
         /// <summary> Create the service with the Default Compute. </summary>
         private const string DefaultValue = "Default";
-        /// <summary> Create the service with Azure Confidential Compute. </summary>
+        /// <summary> Create the dedicated service with Azure Confidential Compute. </summary>
         private const string ConfidentialValue = "Confidential";
 
         /// <summary> Initializes a new instance of <see cref="SearchServiceComputeType"/>. </summary>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Search.Models
         /// <summary> Create the service with the Default Compute. </summary>
         public static SearchServiceComputeType Default { get; } = new SearchServiceComputeType(DefaultValue);
 
-        /// <summary> Create the service with Azure Confidential Compute. </summary>
+        /// <summary> Create the dedicated service with Azure Confidential Compute. </summary>
         public static SearchServiceComputeType Confidential { get; } = new SearchServiceComputeType(ConfidentialValue);
 
         /// <summary> Determines if two <see cref="SearchServiceComputeType"/> values are the same. </summary>

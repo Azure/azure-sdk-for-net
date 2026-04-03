@@ -168,6 +168,11 @@ jobs:
           parameters:
             SourceDirectory: $(Build.SourcesDirectory)
 
+        - template: /eng/common/pipelines/templates/steps/verify-codeowners-sections.yml
+          parameters:
+            Sections:
+              - 'Client Libraries'
+
         - template: /eng/common/pipelines/templates/steps/eng-common-workflow-enforcer.yml
 
     - template: /eng/common/pipelines/templates/jobs/generate-job-matrix.yml
