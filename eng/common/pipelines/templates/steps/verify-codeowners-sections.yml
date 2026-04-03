@@ -8,24 +8,8 @@ parameters:
 
 steps:
   - ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
-    # 1. Check if CODEOWNERS changed; skip everything if it hasn't or if opened by azure-sdk
+    # 1. Check if CODEOWNERS changed; if so, check whether the PR was opened by azure-sdk
     - pwsh: |
-        $prNumber = "$(System.PullRequest.PullRequestNumber)"
-        $repoName = "$(Build.Repository.Name)"
-        $prAuthorJson = gh pr view $prNumber --repo $repoName --json author 2>&1
-        if ($LASTEXITCODE -eq 0) {
-          $prAuthor = ($prAuthorJson | ConvertFrom-Json).author.login
-          Write-Host "PR author: $prAuthor"
-          if ($prAuthor -ieq "azure-sdk") {
-            Write-Host "PR opened by azure-sdk. Skipping CODEOWNERS section check."
-            Write-Host "##vso[task.setvariable variable=ShouldCheckCodeownersEdits]false"
-            exit 0
-          }
-        } else {
-          Write-Host "Could not determine PR author via gh CLI: $prAuthorJson"
-          Write-Host "Continuing with CODEOWNERS section check."
-        }
-
         $scriptPath = [System.IO.Path]::Combine("${{ parameters.SourceRootPath }}", "eng", "common", "scripts", "get-changedfiles.ps1")
         try {
           $changedFiles = & $scriptPath `
@@ -44,10 +28,24 @@ steps:
         if (!$changedFiles) {
           Write-Host "CODEOWNERS file has not changed."
           Write-Host "##vso[task.setvariable variable=ShouldCheckCodeownersEdits]false"
-        } else {
-          Write-Host "CODEOWNERS file has changed."
-          Write-Host "##vso[task.setvariable variable=ShouldCheckCodeownersEdits]true"
+          exit 0
         }
+
+        Write-Host "CODEOWNERS file has changed."
+
+        $prNumber = "$(System.PullRequest.PullRequestNumber)"
+        $repoName = "$(Build.Repository.Name)"
+        $prAuthorJson = gh pr view $prNumber --repo $repoName --json author
+        $prAuthor = ($prAuthorJson | ConvertFrom-Json).author.login
+        Write-Host "PR author: $prAuthor"
+
+        if ($prAuthor -ieq "azure-sdk") {
+          Write-Host "PR opened by azure-sdk. Skipping CODEOWNERS section check."
+          Write-Host "##vso[task.setvariable variable=ShouldCheckCodeownersEdits]false"
+          exit 0
+        }
+
+        Write-Host "##vso[task.setvariable variable=ShouldCheckCodeownersEdits]true"
       displayName: 'Check if CODEOWNERS changed'
       workingDirectory: ${{ parameters.SourceRootPath }}
       condition: and(succeeded(), ne(variables['Skip.VerifyCodeownersSections'], 'true'))
