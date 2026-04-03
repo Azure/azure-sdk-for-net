@@ -35,8 +35,9 @@ steps:
 
         $prNumber = "$(System.PullRequest.PullRequestNumber)"
         $repoName = "$(Build.Repository.Name)"
-        $prAuthorJson = gh pr view $prNumber --repo $repoName --json author
-        $prAuthor = ($prAuthorJson | ConvertFrom-Json).author.login
+        $prUrl = "https://api.github.com/repos/$repoName/pulls/$prNumber"
+        $prData = Invoke-RestMethod -Uri $prUrl
+        $prAuthor = $prData.user.login
         Write-Host "PR author: $prAuthor"
 
         if ($prAuthor -ieq "azure-sdk") {
