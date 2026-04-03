@@ -65,10 +65,6 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <term> Operation Id. </term>
         /// <description> ConnectedRegistries_Create. </description>
         /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
-        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -122,10 +118,6 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <item>
         /// <term> Operation Id. </term>
         /// <description> ConnectedRegistries_Create. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -181,10 +173,6 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <term> Operation Id. </term>
         /// <description> ConnectedRegistries_Get. </description>
         /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
-        /// </item>
         /// </list>
         /// </summary>
         /// <param name="connectedRegistryName"> The name of the connected registry. </param>
@@ -229,10 +217,6 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <item>
         /// <term> Operation Id. </term>
         /// <description> ConnectedRegistries_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -279,10 +263,6 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <term> Operation Id. </term>
         /// <description> ConnectedRegistries_List. </description>
         /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
-        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> An OData filter expression that describes a subset of connectedRegistries to return. The parameters that can be filtered are parent.id (the resource id of the connectedRegistry parent), mode, and connectionState. The supported operator is eq. </param>
@@ -314,10 +294,6 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <term> Operation Id. </term>
         /// <description> ConnectedRegistries_List. </description>
         /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
-        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> An OData filter expression that describes a subset of connectedRegistries to return. The parameters that can be filtered are parent.id (the resource id of the connectedRegistry parent), mode, and connectionState. The supported operator is eq. </param>
@@ -348,10 +324,6 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <item>
         /// <term> Operation Id. </term>
         /// <description> ConnectedRegistries_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -406,10 +378,6 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <term> Operation Id. </term>
         /// <description> ConnectedRegistries_Get. </description>
         /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
-        /// </item>
         /// </list>
         /// </summary>
         /// <param name="connectedRegistryName"> The name of the connected registry. </param>
@@ -462,10 +430,6 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <item>
         /// <term> Operation Id. </term>
         /// <description> ConnectedRegistries_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -523,10 +487,6 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <item>
         /// <term> Operation Id. </term>
         /// <description> ConnectedRegistries_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

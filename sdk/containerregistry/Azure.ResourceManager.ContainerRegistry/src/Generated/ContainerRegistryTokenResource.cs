@@ -104,10 +104,6 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <description> Tokens_Get. </description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
-        /// </item>
-        /// <item>
         /// <term> Resource. </term>
         /// <description> <see cref="ContainerRegistryTokenResource"/>. </description>
         /// </item>
@@ -152,10 +148,6 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <description> Tokens_Get. </description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
-        /// </item>
-        /// <item>
         /// <term> Resource. </term>
         /// <description> <see cref="ContainerRegistryTokenResource"/>. </description>
         /// </item>
@@ -198,10 +190,6 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <item>
         /// <term> Operation Id. </term>
         /// <description> Tokens_Update. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -259,10 +247,6 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <description> Tokens_Update. </description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
-        /// </item>
-        /// <item>
         /// <term> Resource. </term>
         /// <description> <see cref="ContainerRegistryTokenResource"/>. </description>
         /// </item>
@@ -318,10 +302,6 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <description> Tokens_Delete. </description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
-        /// </item>
-        /// <item>
         /// <term> Resource. </term>
         /// <description> <see cref="ContainerRegistryTokenResource"/>. </description>
         /// </item>
@@ -365,10 +345,6 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <item>
         /// <term> Operation Id. </term>
         /// <description> Tokens_Delete. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

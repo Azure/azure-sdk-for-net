@@ -104,10 +104,6 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <description> ConnectedRegistries_Get. </description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
-        /// </item>
-        /// <item>
         /// <term> Resource. </term>
         /// <description> <see cref="ConnectedRegistryResource"/>. </description>
         /// </item>
@@ -152,10 +148,6 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <description> ConnectedRegistries_Get. </description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
-        /// </item>
-        /// <item>
         /// <term> Resource. </term>
         /// <description> <see cref="ConnectedRegistryResource"/>. </description>
         /// </item>
@@ -198,10 +190,6 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <item>
         /// <term> Operation Id. </term>
         /// <description> ConnectedRegistries_Update. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -259,10 +247,6 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <description> ConnectedRegistries_Update. </description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
-        /// </item>
-        /// <item>
         /// <term> Resource. </term>
         /// <description> <see cref="ConnectedRegistryResource"/>. </description>
         /// </item>
@@ -318,10 +302,6 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <description> ConnectedRegistries_Delete. </description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
-        /// </item>
-        /// <item>
         /// <term> Resource. </term>
         /// <description> <see cref="ConnectedRegistryResource"/>. </description>
         /// </item>
@@ -365,10 +345,6 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <item>
         /// <term> Operation Id. </term>
         /// <description> ConnectedRegistries_Delete. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -416,10 +392,6 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <description> ConnectedRegistries_Deactivate. </description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
-        /// </item>
-        /// <item>
         /// <term> Resource. </term>
         /// <description> <see cref="ConnectedRegistryResource"/>. </description>
         /// </item>
@@ -463,10 +435,6 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <item>
         /// <term> Operation Id. </term>
         /// <description> ConnectedRegistries_Deactivate. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -514,10 +482,6 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <description> ConnectedRegistries_Resync. </description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
-        /// </item>
-        /// <item>
         /// <term> Resource. </term>
         /// <description> <see cref="ConnectedRegistryResource"/>. </description>
         /// </item>
@@ -560,10 +524,6 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <item>
         /// <term> Operation Id. </term>
         /// <description> ConnectedRegistries_Resync. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

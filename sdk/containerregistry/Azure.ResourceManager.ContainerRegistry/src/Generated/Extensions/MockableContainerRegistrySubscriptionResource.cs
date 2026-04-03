@@ -51,10 +51,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Mocking
         /// <term> Operation Id. </term>
         /// <description> Registries_List. </description>
         /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
-        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -79,10 +75,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Mocking
         /// <term> Operation Id. </term>
         /// <description> Registries_List. </description>
         /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
-        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -106,10 +98,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Mocking
         /// <item>
         /// <term> Operation Id. </term>
         /// <description> Registries_CheckNameAvailability. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -154,10 +142,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Mocking
         /// <item>
         /// <term> Operation Id. </term>
         /// <description> Registries_CheckNameAvailability. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
