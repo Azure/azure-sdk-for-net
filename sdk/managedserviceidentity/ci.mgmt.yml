@@ -9,3 +9,4 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.ManagedServiceIdentities
       safeName: AzureResourceManagerManagedServiceIdentities
+    TestDependsOnDependency: Azure.ResourceManager.ManagedServiceIdentities

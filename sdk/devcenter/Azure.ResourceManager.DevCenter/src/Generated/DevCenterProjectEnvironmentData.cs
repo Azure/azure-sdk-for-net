@@ -13,103 +13,134 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevCenter
 {
-    /// <summary>
-    /// A class representing the DevCenterProjectEnvironment data model.
-    /// Represents an environment type.
-    /// </summary>
+    /// <summary> Represents an environment type. </summary>
     public partial class DevCenterProjectEnvironmentData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DevCenterProjectEnvironmentData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public DevCenterProjectEnvironmentData(AzureLocation location) : base(location)
         {
-            UserRoleAssignments = new ChangeTrackingDictionary<string, DevCenterUserRoleAssignments>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DevCenterProjectEnvironmentData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Properties of an environment type. </param>
         /// <param name="identity"> Managed identity properties. </param>
-        /// <param name="deploymentTargetId"> Id of a subscription that the environment type will be mapped to. The environment's resources will be deployed into this subscription. </param>
-        /// <param name="status"> Defines whether this Environment Type can be used in this Project. </param>
-        /// <param name="creatorRoleAssignment"> The role definition assigned to the environment creator on backing resources. </param>
-        /// <param name="userRoleAssignments"> Role Assignments created on environment backing resources. This is a mapping from a user object ID to an object of role definition IDs. </param>
-        /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DevCenterProjectEnvironmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ResourceIdentifier deploymentTargetId, EnvironmentTypeEnableStatus? status, ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment creatorRoleAssignment, IDictionary<string, DevCenterUserRoleAssignments> userRoleAssignments, DevCenterProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal DevCenterProjectEnvironmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, ProjectEnvironmentTypeProperties properties, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
             Identity = identity;
-            DeploymentTargetId = deploymentTargetId;
-            Status = status;
-            CreatorRoleAssignment = creatorRoleAssignment;
-            UserRoleAssignments = userRoleAssignments;
-            ProvisioningState = provisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DevCenterProjectEnvironmentData"/> for deserialization. </summary>
-        internal DevCenterProjectEnvironmentData()
-        {
-        }
+        /// <summary> Properties of an environment type. </summary>
+        internal ProjectEnvironmentTypeProperties Properties { get; set; }
 
         /// <summary> Managed identity properties. </summary>
         public ManagedServiceIdentity Identity { get; set; }
+
         /// <summary> Id of a subscription that the environment type will be mapped to. The environment's resources will be deployed into this subscription. </summary>
-        public ResourceIdentifier DeploymentTargetId { get; set; }
+        public ResourceIdentifier DeploymentTargetId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DeploymentTargetId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProjectEnvironmentTypeProperties();
+                }
+                Properties.DeploymentTargetId = value;
+            }
+        }
+
+        /// <summary> The display name of the project environment type. </summary>
+        public string DisplayName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DisplayName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProjectEnvironmentTypeProperties();
+                }
+                Properties.DisplayName = value;
+            }
+        }
+
         /// <summary> Defines whether this Environment Type can be used in this Project. </summary>
-        public EnvironmentTypeEnableStatus? Status { get; set; }
-        /// <summary> The role definition assigned to the environment creator on backing resources. </summary>
-        internal ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment CreatorRoleAssignment { get; set; }
+        public EnvironmentTypeEnableStatus? Status
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Status;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProjectEnvironmentTypeProperties();
+                }
+                Properties.Status = value.Value;
+            }
+        }
+
+        /// <summary> Role Assignments created on environment backing resources. This is a mapping from a user object ID to an object of role definition IDs. </summary>
+        public IDictionary<string, DevCenterUserRoleAssignments> UserRoleAssignments
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProjectEnvironmentTypeProperties();
+                }
+                return Properties.UserRoleAssignments;
+            }
+        }
+
         /// <summary> A map of roles to assign to the environment creator. </summary>
         public IDictionary<string, DevCenterEnvironmentRole> Roles
         {
             get
             {
-                if (CreatorRoleAssignment is null)
-                    CreatorRoleAssignment = new ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment();
-                return CreatorRoleAssignment.Roles;
+                if (Properties is null)
+                {
+                    Properties = new ProjectEnvironmentTypeProperties();
+                }
+                return Properties.Roles;
             }
         }
 
-        /// <summary> Role Assignments created on environment backing resources. This is a mapping from a user object ID to an object of role definition IDs. </summary>
-        public IDictionary<string, DevCenterUserRoleAssignments> UserRoleAssignments { get; }
         /// <summary> The provisioning state of the resource. </summary>
-        public DevCenterProvisioningState? ProvisioningState { get; }
+        public DevCenterProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> The number of environments of this type. </summary>
+        public int? EnvironmentCount
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnvironmentCount;
+            }
+        }
     }
 }

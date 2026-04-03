@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #nullable disable
@@ -6,6 +6,7 @@
 using System.ComponentModel;
 using Azure.ResourceManager.NetworkCloud.Models;
 
+// NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.NetworkCloud
 {
     public partial class NetworkCloudAgentPoolData
@@ -22,5 +23,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 UpgradeSettings.MaxSurge = value;
             }
         }
+        /// <summary> The extended location of the cluster associated with the resource. </summary>
+        public Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation ExtendedLocation { get; set; }
     }
 }

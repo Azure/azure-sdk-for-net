@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
-    internal class NetworkCloudVirtualMachineOperationSource : IOperationSource<NetworkCloudVirtualMachineResource>
+    /// <summary></summary>
+    internal partial class NetworkCloudVirtualMachineOperationSource : IOperationSource<NetworkCloudVirtualMachineResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal NetworkCloudVirtualMachineOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         NetworkCloudVirtualMachineResource IOperationSource<NetworkCloudVirtualMachineResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NetworkCloudVirtualMachineData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkCloudContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            NetworkCloudVirtualMachineData data = NetworkCloudVirtualMachineData.DeserializeNetworkCloudVirtualMachineData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new NetworkCloudVirtualMachineResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<NetworkCloudVirtualMachineResource> IOperationSource<NetworkCloudVirtualMachineResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NetworkCloudVirtualMachineData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkCloudContext.Default);
-            return await Task.FromResult(new NetworkCloudVirtualMachineResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            NetworkCloudVirtualMachineData data = NetworkCloudVirtualMachineData.DeserializeNetworkCloudVirtualMachineData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new NetworkCloudVirtualMachineResource(_client, data);
         }
     }
 }

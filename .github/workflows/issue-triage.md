@@ -14,7 +14,10 @@ on:
 
 permissions: read-all
 
-network: defaults
+network:
+  allowed:
+    - defaults
+    - "api.nuget.org"
 
 safe-outputs:
   add-labels:
@@ -24,6 +27,8 @@ safe-outputs:
   add-comment:
     max: 1
   assign-to-user:
+    max: 1
+  close-issue:
     max: 1
   noop:
     report-as-issue: false
@@ -304,10 +309,54 @@ IF you can confidently predict exactly one category label AND exactly one servic
 
 ELSE:
     - Remove any labels applied in earlier steps, leaving ONLY "needs-triage"
-    - Skip to Step 6
+    - Skip to Step 7
 ```
 
-## Step 4: Owner Lookup and Routing
+## Step 4: Deprecated Package Check
+
+If a confident label prediction was made, check whether the associated NuGet package has been deprecated
+
+### Package Identification
+
+Determine the NuGet package ID conservatively:
+- First, inspect the issue title and body for an explicitly named NuGet package ID (for example, `Azure.Messaging.EventHubs` or `Microsoft.Azure.EventHubs`). If one is present, use that package name directly
+- Otherwise, use the predicted service label and category only to locate the matching service directory under `sdk/`; do NOT assume they map to exactly one package name
+- Under the matched service directory, identify all candidate published package IDs from project metadata (for example, `PackageId` values in `.csproj` files)
+- If this produces exactly one unambiguous package ID, use it for the deprecation lookup
+- If there is no explicit package ID in the issue and the matched service directory contains zero or multiple candidate package IDs, skip the deprecated package check and continue to Step 5
+
+### NuGet Deprecation Lookup
+
+1. Fetch the NuGet registration index using `web-fetch`:
+   `https://api.nuget.org/v3/registration5-gz-semver2/{package-id-lowercase}/index.json`
+2. The registration response contains an `items` array. Each item may contain inline `items` with catalog entries OR an `@id` URL pointing to a separate page. If an item has an `@id` but no inline `items`, fetch that URL to retrieve the page's catalog entries before proceeding
+3. Iterate ALL versions across all pages. Check that every version's `catalogEntry` has a `deprecation` field. If any version lacks a `deprecation` field, the package is NOT considered deprecated — skip to Step 5
+4. On the latest listed non-prerelease version, read `deprecation.message` and attempt to extract a date. The Azure SDK deprecation messages use one of these formats:
+   - `"this package is obsolete as of <MM/DD/YYYY>"`
+   - `"will no longer be maintained after <MM/DD/YYYY>"`
+5. If the message does not contain a date in one of these formats, the package is NOT considered deprecated for triage purposes — skip to Step 5
+
+### Deprecated Package Action
+
+If all versions are deprecated AND a date was extracted:
+
+1. Post a comment (via `add-comment`) with this exact text, substituting values:
+
+```
+This package reached end-of-life on <EXTRACTED DATE> and is no longer supported by Microsoft. Unfortunately, we cannot assist with this issue.
+```
+
+If `deprecation.alternatePackage.id` exists, append:
+
+```
+
+The replacement is `<alternatePackage.id>`. Please consider re-filing your issue against the replacement package.
+```
+
+2. Close the issue (via `close-issue`)
+3. Exit — skip all remaining steps
+
+## Step 5: Owner Lookup and Routing
 
 All issues reaching this step are customer-reported with predicted labels
 
@@ -374,7 +423,7 @@ Scan starts from end of file (line 1230) upward:
 2. `%Mgmt` catch-all (line 912) — requires "Mgmt"; issue has "Client" → no match, continue
 3. `%Event Hubs` (line 329) — requires only "Event Hubs"; issue has "Event Hubs" → ALL labels match ✅ STOP
 
-**Outcome:** Matches `%Event Hubs` (line 329). AzureSdkOwners: @jsquire, ServiceOwners: @axisc @hmlam. Assign @jsquire, add "needs-team-attention", @mention @jsquire in Step 5 comment
+**Outcome:** Matches `%Event Hubs` (line 329). AzureSdkOwners: @jsquire, ServiceOwners: @axisc @hmlam. Assign @jsquire, add "needs-team-attention", @mention @jsquire in Step 6 comment
 
 Note: There is no `%Client` catch-all entry in CODEOWNERS, so "Client" as a category label does not contribute to CODEOWNERS matching. The service label drives the match
 
@@ -390,13 +439,13 @@ IF a matching ServiceLabel entry is found in CODEOWNERS:
             - Pick one AzureSdkOwner at random and assign them using the `assign_to_user` tool
 
         - Add the "needs-team-attention" label
-        - Record all AzureSdkOwners for Step 5
+        - Record all AzureSdkOwners for Step 6
 
     ELSE IF only ServiceOwners are listed (no AzureSdkOwners):
         - Add the "Service Attention" label
         - Add the "needs-team-attention" label
         - Leave the issue unassigned
-        - Record all ServiceOwners for Step 5
+        - Record all ServiceOwners for Step 6
 
     ELSE (matched entry has neither AzureSdkOwners nor ServiceOwners):
         - Add the "needs-team-triage" label
@@ -405,9 +454,9 @@ ELSE (no ServiceLabel entry matches any of the issue's predicted labels):
     - Add the "needs-team-triage" label
 ```
 
-## Step 5: Owner Mention Comment
+## Step 6: Owner Mention Comment
 
-If AzureSdkOwners or ServiceOwners were identified in Step 4, use the `mention_owners` tool to post a routing comment @mentioning them before the analysis comment
+If AzureSdkOwners or ServiceOwners were identified in Step 5, use the `mention_owners` tool to post a routing comment @mentioning them before the analysis comment
 
 **Important:** Use the `mention_owners` tool (NOT `add_comment`) for this step; `mention_owners` preserves @mentions as real pings while `add_comment` neutralizes them
 
@@ -416,12 +465,12 @@ If AzureSdkOwners or ServiceOwners were identified in Step 4, use the `mention_o
 This comment should be concise: a brief routing message and the @mentions only; no analysis or debugging detail
 
 ```
-IF AzureSdkOwners were identified in Step 4:
+IF AzureSdkOwners were identified in Step 5:
     - Use `mention_owners` with:
         message: "Thank you for your feedback. Tagging and routing to the team member best able to assist"
         owners: "owner1, owner2"
 
-ELSE IF ServiceOwners were identified in Step 4 (Service Attention path):
+ELSE IF ServiceOwners were identified in Step 5 (Service Attention path):
     - Use `mention_owners` with:
         message: "Thank you for your feedback. Tagging and routing to the team member best able to assist"
         owners: "owner1, owner2"
@@ -430,11 +479,11 @@ ELSE:
     - Skip this step
 ```
 
-## Step 6: Analysis Comment
+## Step 7: Analysis Comment
 
 Add a single analysis comment to the issue using `add_comment`:
 
-- Keep @mentions exclusively in Step 5; this comment contains analysis only
+- Keep @mentions exclusively in Step 6; this comment contains analysis only
 - Leave issue closure decisions to human reviewers; the "issue-addressed" label is not used during initial triage
 
 Use the following format exactly:

@@ -7,218 +7,445 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NetworkCloud.Models;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
-    /// <summary>
-    /// A class representing the NetworkCloudVirtualMachine data model.
-    /// VirtualMachine represents the on-premises Network Cloud virtual machine.
-    /// </summary>
+    /// <summary> VirtualMachine represents the on-premises Network Cloud virtual machine. </summary>
     public partial class NetworkCloudVirtualMachineData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloudVirtualMachineData"/>. </summary>
-        /// <param name="location"> The location. </param>
-        /// <param name="extendedLocation"> The extended location of the cluster associated with the resource. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="adminUsername"> The name of the administrator to which the ssh public keys will be added into the authorized keys. </param>
         /// <param name="cloudServicesNetworkAttachment"> The cloud service network that provides platform-level services for the virtual machine. </param>
         /// <param name="cpuCores"> The number of CPU cores in the virtual machine. </param>
         /// <param name="memorySizeInGB"> The memory size of the virtual machine. Allocations are measured in gibibytes. </param>
         /// <param name="storageProfile"> The storage profile that specifies size and other parameters about the disks related to the virtual machine. </param>
         /// <param name="vmImage"> The virtual machine image that is currently provisioned to the OS disk, using the full url and tag notation used to pull the image. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="extendedLocation"/>, <paramref name="adminUsername"/>, <paramref name="cloudServicesNetworkAttachment"/>, <paramref name="storageProfile"/> or <paramref name="vmImage"/> is null. </exception>
-        public NetworkCloudVirtualMachineData(AzureLocation location, ExtendedLocation extendedLocation, string adminUsername, NetworkAttachment cloudServicesNetworkAttachment, long cpuCores, long memorySizeInGB, NetworkCloudStorageProfile storageProfile, string vmImage) : base(location)
+        /// <param name="extendedLocation"> The extended location of the resource. This property is required when creating the resource. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="adminUsername"/>, <paramref name="cloudServicesNetworkAttachment"/>, <paramref name="storageProfile"/>, <paramref name="vmImage"/> or <paramref name="extendedLocation"/> is null. </exception>
+        public NetworkCloudVirtualMachineData(AzureLocation location, string adminUsername, NetworkAttachment cloudServicesNetworkAttachment, long cpuCores, long memorySizeInGB, NetworkCloudStorageProfile storageProfile, string vmImage, ExtendedLocation extendedLocation) : base(location)
         {
-            Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
             Argument.AssertNotNull(adminUsername, nameof(adminUsername));
             Argument.AssertNotNull(cloudServicesNetworkAttachment, nameof(cloudServicesNetworkAttachment));
             Argument.AssertNotNull(storageProfile, nameof(storageProfile));
             Argument.AssertNotNull(vmImage, nameof(vmImage));
+            Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
 
+            Properties = new VirtualMachineProperties(
+                adminUsername,
+                cloudServicesNetworkAttachment,
+                cpuCores,
+                memorySizeInGB,
+                storageProfile,
+                vmImage);
             ExtendedLocation = extendedLocation;
-            AdminUsername = adminUsername;
-            CloudServicesNetworkAttachment = cloudServicesNetworkAttachment;
-            CpuCores = cpuCores;
-            MemorySizeInGB = memorySizeInGB;
-            NetworkAttachments = new ChangeTrackingList<NetworkAttachment>();
-            PlacementHints = new ChangeTrackingList<VirtualMachinePlacementHint>();
-            SshPublicKeys = new ChangeTrackingList<NetworkCloudSshPublicKey>();
-            StorageProfile = storageProfile;
-            VmImage = vmImage;
-            Volumes = new ChangeTrackingList<ResourceIdentifier>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloudVirtualMachineData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="etag"> Resource ETag. </param>
-        /// <param name="extendedLocation"> The extended location of the cluster associated with the resource. </param>
-        /// <param name="identity"> The identity for the resource. </param>
-        /// <param name="adminUsername"> The name of the administrator to which the ssh public keys will be added into the authorized keys. </param>
-        /// <param name="availabilityZone"> The cluster availability zone containing this virtual machine. </param>
-        /// <param name="bareMetalMachineId"> The resource ID of the bare metal machine that hosts the virtual machine. </param>
-        /// <param name="bootMethod"> Selects the boot method for the virtual machine. </param>
-        /// <param name="cloudServicesNetworkAttachment"> The cloud service network that provides platform-level services for the virtual machine. </param>
-        /// <param name="clusterId"> The resource ID of the cluster the virtual machine is created for. </param>
-        /// <param name="consoleExtendedLocation"> The extended location to use for creation of a VM console resource. </param>
-        /// <param name="cpuCores"> The number of CPU cores in the virtual machine. </param>
-        /// <param name="detailedStatus"> The more detailed status of the virtual machine. </param>
-        /// <param name="detailedStatusMessage"> The descriptive message about the current detailed status. </param>
-        /// <param name="isolateEmulatorThread"> Field Deprecated, the value will be ignored if provided. The indicator of whether one of the specified CPU cores is isolated to run the emulator thread for this virtual machine. </param>
-        /// <param name="memorySizeInGB"> The memory size of the virtual machine. Allocations are measured in gibibytes. </param>
-        /// <param name="networkAttachments"> The list of network attachments to the virtual machine. </param>
-        /// <param name="networkData"> Field Deprecated: The Base64 encoded cloud-init network data. The networkDataContent property will be used in preference to this property. </param>
-        /// <param name="networkDataContent"> The Base64 encoded cloud-init network data. </param>
-        /// <param name="placementHints"> The scheduling hints for the virtual machine. </param>
-        /// <param name="powerState"> The power state of the virtual machine. </param>
-        /// <param name="provisioningState"> The provisioning state of the virtual machine. </param>
-        /// <param name="sshPublicKeys"> The list of ssh public keys. Each key will be added to the virtual machine using the cloud-init ssh_authorized_keys mechanism for the adminUsername. </param>
-        /// <param name="storageProfile"> The storage profile that specifies size and other parameters about the disks related to the virtual machine. </param>
-        /// <param name="userData"> Field Deprecated: The Base64 encoded cloud-init user data. The userDataContent property will be used in preference to this property. </param>
-        /// <param name="userDataContent"> The Base64 encoded cloud-init user data. </param>
-        /// <param name="virtioInterface"> Field Deprecated, use virtualizationModel instead. The type of the virtio interface. </param>
-        /// <param name="vmDeviceModel"> The type of the device model to use. </param>
-        /// <param name="vmImage"> The virtual machine image that is currently provisioned to the OS disk, using the full url and tag notation used to pull the image. </param>
-        /// <param name="vmImageRepositoryCredentials"> The credentials used to login to the image repository that has access to the specified image. </param>
-        /// <param name="volumes"> The resource IDs of volumes that are attached to the virtual machine. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkCloudVirtualMachineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ExtendedLocation extendedLocation, ManagedServiceIdentity identity, string adminUsername, string availabilityZone, ResourceIdentifier bareMetalMachineId, VirtualMachineBootMethod? bootMethod, NetworkAttachment cloudServicesNetworkAttachment, ResourceIdentifier clusterId, ExtendedLocation consoleExtendedLocation, long cpuCores, VirtualMachineDetailedStatus? detailedStatus, string detailedStatusMessage, VirtualMachineIsolateEmulatorThread? isolateEmulatorThread, long memorySizeInGB, IList<NetworkAttachment> networkAttachments, string networkData, string networkDataContent, IList<VirtualMachinePlacementHint> placementHints, VirtualMachinePowerState? powerState, VirtualMachineProvisioningState? provisioningState, IList<NetworkCloudSshPublicKey> sshPublicKeys, NetworkCloudStorageProfile storageProfile, string userData, string userDataContent, VirtualMachineVirtioInterfaceType? virtioInterface, VirtualMachineDeviceModelType? vmDeviceModel, string vmImage, ImageRepositoryCredentials vmImageRepositoryCredentials, IReadOnlyList<ResourceIdentifier> volumes, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The list of the resource properties. </param>
+        /// <param name="eTag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
+        /// <param name="extendedLocation"> The extended location of the resource. This property is required when creating the resource. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        internal NetworkCloudVirtualMachineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, VirtualMachineProperties properties, ETag? eTag, ExtendedLocation extendedLocation, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
         {
-            ETag = etag;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
+            ETag = eTag;
             ExtendedLocation = extendedLocation;
             Identity = identity;
-            AdminUsername = adminUsername;
-            AvailabilityZone = availabilityZone;
-            BareMetalMachineId = bareMetalMachineId;
-            BootMethod = bootMethod;
-            CloudServicesNetworkAttachment = cloudServicesNetworkAttachment;
-            ClusterId = clusterId;
-            ConsoleExtendedLocation = consoleExtendedLocation;
-            CpuCores = cpuCores;
-            DetailedStatus = detailedStatus;
-            DetailedStatusMessage = detailedStatusMessage;
-            IsolateEmulatorThread = isolateEmulatorThread;
-            MemorySizeInGB = memorySizeInGB;
-            NetworkAttachments = networkAttachments;
-            NetworkData = networkData;
-            NetworkDataContent = networkDataContent;
-            PlacementHints = placementHints;
-            PowerState = powerState;
-            ProvisioningState = provisioningState;
-            SshPublicKeys = sshPublicKeys;
-            StorageProfile = storageProfile;
-            UserData = userData;
-            UserDataContent = userDataContent;
-            VirtioInterface = virtioInterface;
-            VmDeviceModel = vmDeviceModel;
-            VmImage = vmImage;
-            VmImageRepositoryCredentials = vmImageRepositoryCredentials;
-            Volumes = volumes;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetworkCloudVirtualMachineData"/> for deserialization. </summary>
-        internal NetworkCloudVirtualMachineData()
-        {
-        }
+        /// <summary> The list of the resource properties. </summary>
+        internal VirtualMachineProperties Properties { get; set; }
 
-        /// <summary> Resource ETag. </summary>
+        /// <summary> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </summary>
         public ETag? ETag { get; }
-        /// <summary> The extended location of the cluster associated with the resource. </summary>
-        public ExtendedLocation ExtendedLocation { get; set; }
-        /// <summary> The identity for the resource. </summary>
+
+        /// <summary> The managed service identities assigned to this resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
+
         /// <summary> The name of the administrator to which the ssh public keys will be added into the authorized keys. </summary>
-        public string AdminUsername { get; set; }
-        /// <summary> The cluster availability zone containing this virtual machine. </summary>
-        public string AvailabilityZone { get; }
-        /// <summary> The resource ID of the bare metal machine that hosts the virtual machine. </summary>
-        public ResourceIdentifier BareMetalMachineId { get; }
+        public string AdminUsername
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AdminUsername;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineProperties();
+                }
+                Properties.AdminUsername = value;
+            }
+        }
+
         /// <summary> Selects the boot method for the virtual machine. </summary>
-        public VirtualMachineBootMethod? BootMethod { get; set; }
+        public VirtualMachineBootMethod? BootMethod
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BootMethod;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineProperties();
+                }
+                Properties.BootMethod = value.Value;
+            }
+        }
+
         /// <summary> The cloud service network that provides platform-level services for the virtual machine. </summary>
-        public NetworkAttachment CloudServicesNetworkAttachment { get; set; }
-        /// <summary> The resource ID of the cluster the virtual machine is created for. </summary>
-        public ResourceIdentifier ClusterId { get; }
-        /// <summary> The extended location to use for creation of a VM console resource. </summary>
-        public ExtendedLocation ConsoleExtendedLocation { get; set; }
+        public NetworkAttachment CloudServicesNetworkAttachment
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CloudServicesNetworkAttachment;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineProperties();
+                }
+                Properties.CloudServicesNetworkAttachment = value;
+            }
+        }
+
         /// <summary> The number of CPU cores in the virtual machine. </summary>
-        public long CpuCores { get; set; }
-        /// <summary> The more detailed status of the virtual machine. </summary>
-        public VirtualMachineDetailedStatus? DetailedStatus { get; }
-        /// <summary> The descriptive message about the current detailed status. </summary>
-        public string DetailedStatusMessage { get; }
+        public long CpuCores
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CpuCores;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineProperties();
+                }
+                Properties.CpuCores = value;
+            }
+        }
+
         /// <summary> Field Deprecated, the value will be ignored if provided. The indicator of whether one of the specified CPU cores is isolated to run the emulator thread for this virtual machine. </summary>
-        public VirtualMachineIsolateEmulatorThread? IsolateEmulatorThread { get; set; }
+        public VirtualMachineIsolateEmulatorThread? IsolateEmulatorThread
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsolateEmulatorThread;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineProperties();
+                }
+                Properties.IsolateEmulatorThread = value.Value;
+            }
+        }
+
         /// <summary> The memory size of the virtual machine. Allocations are measured in gibibytes. </summary>
-        public long MemorySizeInGB { get; set; }
+        public long MemorySizeInGB
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MemorySizeInGB;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineProperties();
+                }
+                Properties.MemorySizeInGB = value;
+            }
+        }
+
         /// <summary> The list of network attachments to the virtual machine. </summary>
-        public IList<NetworkAttachment> NetworkAttachments { get; }
+        public IList<NetworkAttachment> NetworkAttachments
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineProperties();
+                }
+                return Properties.NetworkAttachments;
+            }
+        }
+
         /// <summary> Field Deprecated: The Base64 encoded cloud-init network data. The networkDataContent property will be used in preference to this property. </summary>
-        public string NetworkData { get; set; }
+        public string NetworkData
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NetworkData;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineProperties();
+                }
+                Properties.NetworkData = value;
+            }
+        }
+
         /// <summary> The Base64 encoded cloud-init network data. </summary>
-        public string NetworkDataContent { get; set; }
+        public string NetworkDataContent
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NetworkDataContent;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineProperties();
+                }
+                Properties.NetworkDataContent = value;
+            }
+        }
+
         /// <summary> The scheduling hints for the virtual machine. </summary>
-        public IList<VirtualMachinePlacementHint> PlacementHints { get; }
-        /// <summary> The power state of the virtual machine. </summary>
-        public VirtualMachinePowerState? PowerState { get; }
-        /// <summary> The provisioning state of the virtual machine. </summary>
-        public VirtualMachineProvisioningState? ProvisioningState { get; }
+        public IList<VirtualMachinePlacementHint> PlacementHints
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineProperties();
+                }
+                return Properties.PlacementHints;
+            }
+        }
+
         /// <summary> The list of ssh public keys. Each key will be added to the virtual machine using the cloud-init ssh_authorized_keys mechanism for the adminUsername. </summary>
-        public IList<NetworkCloudSshPublicKey> SshPublicKeys { get; }
+        public IList<NetworkCloudSshPublicKey> SshPublicKeys
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineProperties();
+                }
+                return Properties.SshPublicKeys;
+            }
+        }
+
         /// <summary> The storage profile that specifies size and other parameters about the disks related to the virtual machine. </summary>
-        public NetworkCloudStorageProfile StorageProfile { get; set; }
+        public NetworkCloudStorageProfile StorageProfile
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StorageProfile;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineProperties();
+                }
+                Properties.StorageProfile = value;
+            }
+        }
+
         /// <summary> Field Deprecated: The Base64 encoded cloud-init user data. The userDataContent property will be used in preference to this property. </summary>
-        public string UserData { get; set; }
+        public string UserData
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UserData;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineProperties();
+                }
+                Properties.UserData = value;
+            }
+        }
+
         /// <summary> The Base64 encoded cloud-init user data. </summary>
-        public string UserDataContent { get; set; }
+        public string UserDataContent
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UserDataContent;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineProperties();
+                }
+                Properties.UserDataContent = value;
+            }
+        }
+
         /// <summary> Field Deprecated, use virtualizationModel instead. The type of the virtio interface. </summary>
-        public VirtualMachineVirtioInterfaceType? VirtioInterface { get; set; }
+        public VirtualMachineVirtioInterfaceType? VirtioInterface
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VirtioInterface;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineProperties();
+                }
+                Properties.VirtioInterface = value.Value;
+            }
+        }
+
         /// <summary> The type of the device model to use. </summary>
-        public VirtualMachineDeviceModelType? VmDeviceModel { get; set; }
+        public VirtualMachineDeviceModelType? VmDeviceModel
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VmDeviceModel;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineProperties();
+                }
+                Properties.VmDeviceModel = value.Value;
+            }
+        }
+
         /// <summary> The virtual machine image that is currently provisioned to the OS disk, using the full url and tag notation used to pull the image. </summary>
-        public string VmImage { get; set; }
+        public string VmImage
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VmImage;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineProperties();
+                }
+                Properties.VmImage = value;
+            }
+        }
+
         /// <summary> The credentials used to login to the image repository that has access to the specified image. </summary>
-        public ImageRepositoryCredentials VmImageRepositoryCredentials { get; set; }
+        public ImageRepositoryCredentials VmImageRepositoryCredentials
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VmImageRepositoryCredentials;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineProperties();
+                }
+                Properties.VmImageRepositoryCredentials = value;
+            }
+        }
+
+        /// <summary> The cluster availability zone containing this virtual machine. </summary>
+        public string AvailabilityZone
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AvailabilityZone;
+            }
+        }
+
+        /// <summary> The resource ID of the bare metal machine that hosts the virtual machine. </summary>
+        public ResourceIdentifier BareMetalMachineId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BareMetalMachineId;
+            }
+        }
+
+        /// <summary> The resource ID of the cluster the virtual machine is created for. </summary>
+        public ResourceIdentifier ClusterId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ClusterId;
+            }
+        }
+
+        /// <summary> The more detailed status of the virtual machine. </summary>
+        public VirtualMachineDetailedStatus? DetailedStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DetailedStatus;
+            }
+        }
+
+        /// <summary> The descriptive message about the current detailed status. </summary>
+        public string DetailedStatusMessage
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DetailedStatusMessage;
+            }
+        }
+
+        /// <summary> The power state of the virtual machine. </summary>
+        public VirtualMachinePowerState? PowerState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PowerState;
+            }
+        }
+
         /// <summary> The resource IDs of volumes that are attached to the virtual machine. </summary>
-        public IReadOnlyList<ResourceIdentifier> Volumes { get; }
+        public IReadOnlyList<ResourceIdentifier> Volumes
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineProperties();
+                }
+                return Properties.Volumes;
+            }
+        }
+
+        /// <summary> The provisioning state of the virtual machine. </summary>
+        public VirtualMachineProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
     }
 }
