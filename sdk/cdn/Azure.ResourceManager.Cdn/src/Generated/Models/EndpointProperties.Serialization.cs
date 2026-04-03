@@ -102,11 +102,11 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(CustomDomains))
+            if (Optional.IsCollectionDefined(DeepCreatedCustomDomains))
             {
                 writer.WritePropertyName("customDomains"u8);
                 writer.WriteStartArray();
-                foreach (DeepCreatedCustomDomain item in CustomDomains)
+                foreach (DeepCreatedCustomDomain item in DeepCreatedCustomDomains)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -160,14 +160,14 @@ namespace Azure.ResourceManager.Cdn.Models
             string probePath = default;
             IList<GeoFilter> geoFilters = default;
             ResourceReference defaultOriginGroup = default;
-            IList<UriSigningKey> urlSigningKeys = default;
+            IList<UriSigningKey> uriSigningKeys = default;
             EndpointDeliveryPolicy deliveryPolicy = default;
             EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink webApplicationFirewallPolicyLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string hostName = default;
             IList<DeepCreatedOrigin> origins = default;
             IList<DeepCreatedOriginGroup> originGroups = default;
-            IList<DeepCreatedCustomDomain> customDomains = default;
+            IList<DeepCreatedCustomDomain> deepCreatedCustomDomains = default;
             EndpointResourceState? resourceState = default;
             CdnEndpointProvisioningState? provisioningState = default;
             foreach (var prop in element.EnumerateObject())
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     {
                         array.Add(UriSigningKey.DeserializeUriSigningKey(item, options));
                     }
-                    urlSigningKeys = array;
+                    uriSigningKeys = array;
                     continue;
                 }
                 if (prop.NameEquals("deliveryPolicy"u8))
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     {
                         array.Add(DeepCreatedCustomDomain.DeserializeDeepCreatedCustomDomain(item, options));
                     }
-                    customDomains = array;
+                    deepCreatedCustomDomains = array;
                     continue;
                 }
                 if (prop.NameEquals("resourceState"u8))
@@ -386,14 +386,14 @@ namespace Azure.ResourceManager.Cdn.Models
                 probePath,
                 geoFilters ?? new ChangeTrackingList<GeoFilter>(),
                 defaultOriginGroup,
-                urlSigningKeys ?? new ChangeTrackingList<UriSigningKey>(),
+                uriSigningKeys ?? new ChangeTrackingList<UriSigningKey>(),
                 deliveryPolicy,
                 webApplicationFirewallPolicyLink,
                 additionalBinaryDataProperties,
                 hostName,
                 origins,
                 originGroups ?? new ChangeTrackingList<DeepCreatedOriginGroup>(),
-                customDomains ?? new ChangeTrackingList<DeepCreatedCustomDomain>(),
+                deepCreatedCustomDomains ?? new ChangeTrackingList<DeepCreatedCustomDomain>(),
                 resourceState,
                 provisioningState);
         }

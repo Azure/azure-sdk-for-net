@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             ContentTypesToCompress = new ChangeTrackingList<string>();
             GeoFilters = new ChangeTrackingList<GeoFilter>();
-            UrlSigningKeys = new ChangeTrackingList<UriSigningKey>();
+            UriSigningKeys = new ChangeTrackingList<UriSigningKey>();
         }
 
         /// <summary> Initializes a new instance of <see cref="EndpointPropertiesUpdateParameters"/>. </summary>
@@ -38,11 +38,11 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="probePath"> Path to a file hosted on the origin which helps accelerate delivery of the dynamic content and calculate the most optimal routes for the CDN. This is relative to the origin path. This property is only relevant when using a single origin. </param>
         /// <param name="geoFilters"> List of rules defining the user's geo access within a CDN endpoint. Each geo filter defines an access rule to a specified path or content, e.g. block APAC for path /pictures/. </param>
         /// <param name="defaultOriginGroup"> A reference to the origin group. </param>
-        /// <param name="urlSigningKeys"> List of keys used to validate the signed URL hashes. </param>
+        /// <param name="uriSigningKeys"> List of keys used to validate the signed URL hashes. </param>
         /// <param name="deliveryPolicy"> A policy that specifies the delivery rules to be used for an endpoint. </param>
         /// <param name="webApplicationFirewallPolicyLink"> Defines the Web Application Firewall policy for the endpoint (if applicable). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EndpointPropertiesUpdateParameters(string originPath, IList<string> contentTypesToCompress, string originHostHeader, bool? isCompressionEnabled, bool? isHttpAllowed, bool? isHttpsAllowed, QueryStringCachingBehavior? queryStringCachingBehavior, OptimizationType? optimizationType, string probePath, IList<GeoFilter> geoFilters, ResourceReference defaultOriginGroup, IList<UriSigningKey> urlSigningKeys, EndpointDeliveryPolicy deliveryPolicy, EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink webApplicationFirewallPolicyLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EndpointPropertiesUpdateParameters(string originPath, IList<string> contentTypesToCompress, string originHostHeader, bool? isCompressionEnabled, bool? isHttpAllowed, bool? isHttpsAllowed, QueryStringCachingBehavior? queryStringCachingBehavior, OptimizationType? optimizationType, string probePath, IList<GeoFilter> geoFilters, ResourceReference defaultOriginGroup, IList<UriSigningKey> uriSigningKeys, EndpointDeliveryPolicy deliveryPolicy, EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink webApplicationFirewallPolicyLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OriginPath = originPath;
             ContentTypesToCompress = contentTypesToCompress;
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Cdn.Models
             ProbePath = probePath;
             GeoFilters = geoFilters;
             DefaultOriginGroup = defaultOriginGroup;
-            UrlSigningKeys = urlSigningKeys;
+            UriSigningKeys = uriSigningKeys;
             DeliveryPolicy = deliveryPolicy;
             WebApplicationFirewallPolicyLink = webApplicationFirewallPolicyLink;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> List of keys used to validate the signed URL hashes. </summary>
         [WirePath("urlSigningKeys")]
-        public IList<UriSigningKey> UrlSigningKeys { get; } = new ChangeTrackingList<UriSigningKey>();
+        public IList<UriSigningKey> UriSigningKeys { get; } = new ChangeTrackingList<UriSigningKey>();
 
         /// <summary> A policy that specifies the delivery rules to be used for an endpoint. </summary>
         [WirePath("deliveryPolicy")]

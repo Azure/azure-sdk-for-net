@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.ResourceManager.Cdn;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -20,7 +21,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of <see cref="OriginGroupUpdatePropertiesParameters"/>. </summary>
         public OriginGroupUpdatePropertiesParameters()
         {
-            Origins = new ChangeTrackingList<ResourceReference>();
+            Origins = new ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of <see cref="OriginGroupUpdatePropertiesParameters"/>. </summary>
@@ -29,7 +30,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="trafficRestorationTimeInMinutes"> Time in minutes to shift the traffic to the endpoint gradually when an unhealthy endpoint comes healthy or a new endpoint is added. Default is 10 mins. This property is currently not supported. </param>
         /// <param name="responseBasedOriginErrorDetectionSettings"> The JSON object that contains the properties to determine origin health using real requests/responses. This property is currently not supported. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OriginGroupUpdatePropertiesParameters(HealthProbeSettings healthProbeSettings, IList<ResourceReference> origins, int? trafficRestorationTimeInMinutes, ResponseBasedOriginErrorDetectionSettings responseBasedOriginErrorDetectionSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OriginGroupUpdatePropertiesParameters(HealthProbeSettings healthProbeSettings, IList<WritableSubResource> origins, int? trafficRestorationTimeInMinutes, ResponseBasedOriginErrorDetectionSettings responseBasedOriginErrorDetectionSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             HealthProbeSettings = healthProbeSettings;
             Origins = origins;
@@ -44,7 +45,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> The source of the content being delivered via CDN within given origin group. </summary>
         [WirePath("origins")]
-        public IList<ResourceReference> Origins { get; } = new ChangeTrackingList<ResourceReference>();
+        public IList<WritableSubResource> Origins { get; } = new ChangeTrackingList<WritableSubResource>();
 
         /// <summary> Time in minutes to shift the traffic to the endpoint gradually when an unhealthy endpoint comes healthy or a new endpoint is added. Default is 10 mins. This property is currently not supported. </summary>
         [WirePath("trafficRestorationTimeToHealedOrNewEndpointsInMinutes")]

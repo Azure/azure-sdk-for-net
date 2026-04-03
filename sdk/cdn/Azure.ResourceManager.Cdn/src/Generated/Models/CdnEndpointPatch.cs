@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> List of keys used to validate the signed URL hashes. </summary>
         [WirePath("properties.urlSigningKeys")]
-        public IList<UriSigningKey> UrlSigningKeys
+        public IList<UriSigningKey> UriSigningKeys
         {
             get
             {
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     Properties = new EndpointPropertiesUpdateParameters();
                 }
-                return Properties.UrlSigningKeys;
+                return Properties.UriSigningKeys;
             }
         }
 

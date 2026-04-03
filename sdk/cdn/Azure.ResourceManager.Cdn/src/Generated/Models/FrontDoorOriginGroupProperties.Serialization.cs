@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WritePropertyName("healthProbeSettings"u8);
                 writer.WriteObjectValue(HealthProbeSettings, options);
             }
-            if (Optional.IsDefined(TrafficRestorationTimeToHealedOrNewEndpointsInMinutes))
+            if (Optional.IsDefined(TrafficRestorationTimeInMinutes))
             {
                 writer.WritePropertyName("trafficRestorationTimeToHealedOrNewEndpointsInMinutes"u8);
-                writer.WriteNumberValue(TrafficRestorationTimeToHealedOrNewEndpointsInMinutes.Value);
+                writer.WriteNumberValue(TrafficRestorationTimeInMinutes.Value);
             }
             if (Optional.IsDefined(SessionAffinityState))
             {
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Cdn.Models
             string profileName = default;
             LoadBalancingSettings loadBalancingSettings = default;
             HealthProbeSettings healthProbeSettings = default;
-            int? trafficRestorationTimeToHealedOrNewEndpointsInMinutes = default;
+            int? trafficRestorationTimeInMinutes = default;
             EnabledState? sessionAffinityState = default;
             OriginAuthenticationProperties authentication = default;
             FrontDoorProvisioningState? provisioningState = default;
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     {
                         continue;
                     }
-                    trafficRestorationTimeToHealedOrNewEndpointsInMinutes = prop.Value.GetInt32();
+                    trafficRestorationTimeInMinutes = prop.Value.GetInt32();
                     continue;
                 }
                 if (prop.NameEquals("sessionAffinityState"u8))
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 profileName,
                 loadBalancingSettings,
                 healthProbeSettings,
-                trafficRestorationTimeToHealedOrNewEndpointsInMinutes,
+                trafficRestorationTimeInMinutes,
                 sessionAffinityState,
                 authentication,
                 provisioningState,

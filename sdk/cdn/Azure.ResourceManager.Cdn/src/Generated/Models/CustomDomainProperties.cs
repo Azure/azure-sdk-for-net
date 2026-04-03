@@ -19,8 +19,11 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Initializes a new instance of <see cref="CustomDomainProperties"/>. </summary>
         /// <param name="hostName"> The host name of the custom domain. Must be a domain name. </param>
-        internal CustomDomainProperties(string hostName)
+        /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> is null. </exception>
+        public CustomDomainProperties(string hostName)
         {
+            Argument.AssertNotNull(hostName, nameof(hostName));
+
             HostName = hostName;
         }
 
@@ -47,7 +50,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> The host name of the custom domain. Must be a domain name. </summary>
         [WirePath("hostName")]
-        public string HostName { get; }
+        public string HostName { get; set; }
 
         /// <summary> Resource status of the custom domain. </summary>
         [WirePath("resourceState")]
@@ -63,11 +66,11 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Certificate parameters for securing custom HTTPS. </summary>
         [WirePath("customHttpsParameters")]
-        public CustomDomainHttpsContent CustomDomainHttpsContent { get; }
+        public CustomDomainHttpsContent CustomDomainHttpsContent { get; set; }
 
         /// <summary> Special validation or data may be required when delivering CDN to some regions due to local compliance reasons. E.g. ICP license number of a custom domain is required to deliver content in China. </summary>
         [WirePath("validationData")]
-        public string ValidationData { get; }
+        public string ValidationData { get; set; }
 
         /// <summary> Provisioning status of Custom Https of the custom domain. </summary>
         [WirePath("provisioningState")]

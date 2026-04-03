@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Cdn.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn
 {
@@ -85,7 +86,7 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary> rule sets referenced by this endpoint. </summary>
         [WirePath("properties.ruleSets")]
-        public IList<ResourceReference> RuleSets
+        public IList<WritableSubResource> RuleSets
         {
             get
             {

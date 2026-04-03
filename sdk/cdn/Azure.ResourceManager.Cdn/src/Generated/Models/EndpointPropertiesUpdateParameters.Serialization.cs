@@ -144,11 +144,11 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WritePropertyName("defaultOriginGroup"u8);
                 writer.WriteObjectValue(DefaultOriginGroup, options);
             }
-            if (Optional.IsCollectionDefined(UrlSigningKeys))
+            if (Optional.IsCollectionDefined(UriSigningKeys))
             {
                 writer.WritePropertyName("urlSigningKeys"u8);
                 writer.WriteStartArray();
-                foreach (UriSigningKey item in UrlSigningKeys)
+                foreach (UriSigningKey item in UriSigningKeys)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Cdn.Models
             string probePath = default;
             IList<GeoFilter> geoFilters = default;
             ResourceReference defaultOriginGroup = default;
-            IList<UriSigningKey> urlSigningKeys = default;
+            IList<UriSigningKey> uriSigningKeys = default;
             EndpointDeliveryPolicy deliveryPolicy = default;
             EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink webApplicationFirewallPolicyLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     {
                         array.Add(UriSigningKey.DeserializeUriSigningKey(item, options));
                     }
-                    urlSigningKeys = array;
+                    uriSigningKeys = array;
                     continue;
                 }
                 if (prop.NameEquals("deliveryPolicy"u8))
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 probePath,
                 geoFilters ?? new ChangeTrackingList<GeoFilter>(),
                 defaultOriginGroup,
-                urlSigningKeys ?? new ChangeTrackingList<UriSigningKey>(),
+                uriSigningKeys ?? new ChangeTrackingList<UriSigningKey>(),
                 deliveryPolicy,
                 webApplicationFirewallPolicyLink,
                 additionalBinaryDataProperties);

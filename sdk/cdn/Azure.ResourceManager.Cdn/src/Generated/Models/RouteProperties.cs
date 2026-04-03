@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Cdn;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -22,7 +23,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public RouteProperties()
         {
             CustomDomains = new ChangeTrackingList<FrontDoorActivatedResourceInfo>();
-            RuleSets = new ChangeTrackingList<ResourceReference>();
+            RuleSets = new ChangeTrackingList<WritableSubResource>();
             SupportedProtocols = new ChangeTrackingList<FrontDoorEndpointProtocol>();
             PatternsToMatch = new ChangeTrackingList<string>();
         }
@@ -44,7 +45,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="provisioningState"> Provisioning status. </param>
         /// <param name="deploymentStatus"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RouteProperties(string endpointName, IList<FrontDoorActivatedResourceInfo> customDomains, ResourceReference originGroup, string originPath, IList<ResourceReference> ruleSets, IList<FrontDoorEndpointProtocol> supportedProtocols, IList<string> patternsToMatch, FrontDoorRouteCacheConfiguration cacheConfiguration, ForwardingProtocol? forwardingProtocol, LinkToDefaultDomain? linkToDefaultDomain, HttpsRedirect? httpsRedirect, EnabledState? enabledState, FrontDoorRouteGrpcState? grpcState, FrontDoorProvisioningState? provisioningState, FrontDoorDeploymentStatus? deploymentStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RouteProperties(string endpointName, IList<FrontDoorActivatedResourceInfo> customDomains, ResourceReference originGroup, string originPath, IList<WritableSubResource> ruleSets, IList<FrontDoorEndpointProtocol> supportedProtocols, IList<string> patternsToMatch, FrontDoorRouteCacheConfiguration cacheConfiguration, ForwardingProtocol? forwardingProtocol, LinkToDefaultDomain? linkToDefaultDomain, HttpsRedirect? httpsRedirect, EnabledState? enabledState, FrontDoorRouteGrpcState? grpcState, FrontDoorProvisioningState? provisioningState, FrontDoorDeploymentStatus? deploymentStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EndpointName = endpointName;
             CustomDomains = customDomains;
@@ -82,7 +83,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> rule sets referenced by this endpoint. </summary>
         [WirePath("ruleSets")]
-        public IList<ResourceReference> RuleSets { get; } = new ChangeTrackingList<ResourceReference>();
+        public IList<WritableSubResource> RuleSets { get; } = new ChangeTrackingList<WritableSubResource>();
 
         /// <summary> List of supported protocols for this route. </summary>
         [WirePath("supportedProtocols")]

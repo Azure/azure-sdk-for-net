@@ -11,6 +11,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Cdn.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn
 {
@@ -78,7 +79,7 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary> Describes Azure CDN endpoints associated with this Web Application Firewall policy. </summary>
         [WirePath("properties.endpointLinks")]
-        public IReadOnlyList<CdnEndpointReference> EndpointLinks
+        public IReadOnlyList<SubResource> EndpointLinks
         {
             get
             {

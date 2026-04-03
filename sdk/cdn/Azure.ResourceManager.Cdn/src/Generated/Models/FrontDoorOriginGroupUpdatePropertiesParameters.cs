@@ -26,16 +26,16 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="profileName"> The name of the profile which holds the origin group. </param>
         /// <param name="loadBalancingSettings"> Load balancing settings for a backend pool. </param>
         /// <param name="healthProbeSettings"> Health probe settings to the origin that is used to determine the health of the origin. </param>
-        /// <param name="trafficRestorationTimeToHealedOrNewEndpointsInMinutes"> Time in minutes to shift the traffic to the endpoint gradually when an unhealthy endpoint comes healthy or a new endpoint is added. Default is 10 mins. This property is currently not supported. </param>
+        /// <param name="trafficRestorationTimeInMinutes"> Time in minutes to shift the traffic to the endpoint gradually when an unhealthy endpoint comes healthy or a new endpoint is added. Default is 10 mins. This property is currently not supported. </param>
         /// <param name="sessionAffinityState"> Whether to allow session affinity on this host. Valid options are 'Enabled' or 'Disabled'. </param>
         /// <param name="authentication"> Authentication settings for origin in origin group. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FrontDoorOriginGroupUpdatePropertiesParameters(string profileName, LoadBalancingSettings loadBalancingSettings, HealthProbeSettings healthProbeSettings, int? trafficRestorationTimeToHealedOrNewEndpointsInMinutes, EnabledState? sessionAffinityState, OriginAuthenticationProperties authentication, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FrontDoorOriginGroupUpdatePropertiesParameters(string profileName, LoadBalancingSettings loadBalancingSettings, HealthProbeSettings healthProbeSettings, int? trafficRestorationTimeInMinutes, EnabledState? sessionAffinityState, OriginAuthenticationProperties authentication, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProfileName = profileName;
             LoadBalancingSettings = loadBalancingSettings;
             HealthProbeSettings = healthProbeSettings;
-            TrafficRestorationTimeToHealedOrNewEndpointsInMinutes = trafficRestorationTimeToHealedOrNewEndpointsInMinutes;
+            TrafficRestorationTimeInMinutes = trafficRestorationTimeInMinutes;
             SessionAffinityState = sessionAffinityState;
             Authentication = authentication;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Time in minutes to shift the traffic to the endpoint gradually when an unhealthy endpoint comes healthy or a new endpoint is added. Default is 10 mins. This property is currently not supported. </summary>
         [WirePath("trafficRestorationTimeToHealedOrNewEndpointsInMinutes")]
-        public int? TrafficRestorationTimeToHealedOrNewEndpointsInMinutes { get; set; }
+        public int? TrafficRestorationTimeInMinutes { get; set; }
 
         /// <summary> Whether to allow session affinity on this host. Valid options are 'Enabled' or 'Disabled'. </summary>
         [WirePath("sessionAffinityState")]

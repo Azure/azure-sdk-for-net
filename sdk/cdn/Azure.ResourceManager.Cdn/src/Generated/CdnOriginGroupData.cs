@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Cdn.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn
 {
@@ -61,7 +62,7 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary> The source of the content being delivered via CDN within given origin group. </summary>
         [WirePath("properties.origins")]
-        public IList<ResourceReference> Origins
+        public IList<WritableSubResource> Origins
         {
             get
             {

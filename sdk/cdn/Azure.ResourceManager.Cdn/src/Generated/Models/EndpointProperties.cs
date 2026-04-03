@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
             Origins = origins.ToList();
             OriginGroups = new ChangeTrackingList<DeepCreatedOriginGroup>();
-            CustomDomains = new ChangeTrackingList<DeepCreatedCustomDomain>();
+            DeepCreatedCustomDomains = new ChangeTrackingList<DeepCreatedCustomDomain>();
         }
 
         /// <summary> Initializes a new instance of <see cref="EndpointProperties"/>. </summary>
@@ -39,22 +39,22 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="probePath"> Path to a file hosted on the origin which helps accelerate delivery of the dynamic content and calculate the most optimal routes for the CDN. This is relative to the origin path. This property is only relevant when using a single origin. </param>
         /// <param name="geoFilters"> List of rules defining the user's geo access within a CDN endpoint. Each geo filter defines an access rule to a specified path or content, e.g. block APAC for path /pictures/. </param>
         /// <param name="defaultOriginGroup"> A reference to the origin group. </param>
-        /// <param name="urlSigningKeys"> List of keys used to validate the signed URL hashes. </param>
+        /// <param name="uriSigningKeys"> List of keys used to validate the signed URL hashes. </param>
         /// <param name="deliveryPolicy"> A policy that specifies the delivery rules to be used for an endpoint. </param>
         /// <param name="webApplicationFirewallPolicyLink"> Defines the Web Application Firewall policy for the endpoint (if applicable). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="hostName"> The host name of the endpoint structured as {endpointName}.{DNSZone}, e.g. contoso.azureedge.net. </param>
         /// <param name="origins"> The source of the content being delivered via CDN. </param>
         /// <param name="originGroups"> The origin groups comprising of origins that are used for load balancing the traffic based on availability. </param>
-        /// <param name="customDomains"> The custom domains under the endpoint. </param>
+        /// <param name="deepCreatedCustomDomains"> The custom domains under the endpoint. </param>
         /// <param name="resourceState"> Resource status of the endpoint. </param>
         /// <param name="provisioningState"> Provisioning status of the endpoint. </param>
-        internal EndpointProperties(string originPath, IList<string> contentTypesToCompress, string originHostHeader, bool? isCompressionEnabled, bool? isHttpAllowed, bool? isHttpsAllowed, QueryStringCachingBehavior? queryStringCachingBehavior, OptimizationType? optimizationType, string probePath, IList<GeoFilter> geoFilters, ResourceReference defaultOriginGroup, IList<UriSigningKey> urlSigningKeys, EndpointDeliveryPolicy deliveryPolicy, EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink webApplicationFirewallPolicyLink, IDictionary<string, BinaryData> additionalBinaryDataProperties, string hostName, IList<DeepCreatedOrigin> origins, IList<DeepCreatedOriginGroup> originGroups, IList<DeepCreatedCustomDomain> customDomains, EndpointResourceState? resourceState, CdnEndpointProvisioningState? provisioningState) : base(originPath, contentTypesToCompress, originHostHeader, isCompressionEnabled, isHttpAllowed, isHttpsAllowed, queryStringCachingBehavior, optimizationType, probePath, geoFilters, defaultOriginGroup, urlSigningKeys, deliveryPolicy, webApplicationFirewallPolicyLink, additionalBinaryDataProperties)
+        internal EndpointProperties(string originPath, IList<string> contentTypesToCompress, string originHostHeader, bool? isCompressionEnabled, bool? isHttpAllowed, bool? isHttpsAllowed, QueryStringCachingBehavior? queryStringCachingBehavior, OptimizationType? optimizationType, string probePath, IList<GeoFilter> geoFilters, ResourceReference defaultOriginGroup, IList<UriSigningKey> uriSigningKeys, EndpointDeliveryPolicy deliveryPolicy, EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink webApplicationFirewallPolicyLink, IDictionary<string, BinaryData> additionalBinaryDataProperties, string hostName, IList<DeepCreatedOrigin> origins, IList<DeepCreatedOriginGroup> originGroups, IList<DeepCreatedCustomDomain> deepCreatedCustomDomains, EndpointResourceState? resourceState, CdnEndpointProvisioningState? provisioningState) : base(originPath, contentTypesToCompress, originHostHeader, isCompressionEnabled, isHttpAllowed, isHttpsAllowed, queryStringCachingBehavior, optimizationType, probePath, geoFilters, defaultOriginGroup, uriSigningKeys, deliveryPolicy, webApplicationFirewallPolicyLink, additionalBinaryDataProperties)
         {
             HostName = hostName;
             Origins = origins;
             OriginGroups = originGroups;
-            CustomDomains = customDomains;
+            DeepCreatedCustomDomains = deepCreatedCustomDomains;
             ResourceState = resourceState;
             ProvisioningState = provisioningState;
         }
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> The custom domains under the endpoint. </summary>
         [WirePath("customDomains")]
-        public IList<DeepCreatedCustomDomain> CustomDomains { get; } = new ChangeTrackingList<DeepCreatedCustomDomain>();
+        public IList<DeepCreatedCustomDomain> DeepCreatedCustomDomains { get; } = new ChangeTrackingList<DeepCreatedCustomDomain>();
 
         /// <summary> Resource status of the endpoint. </summary>
         [WirePath("resourceState")]

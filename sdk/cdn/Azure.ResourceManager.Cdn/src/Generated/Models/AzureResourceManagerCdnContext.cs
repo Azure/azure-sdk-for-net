@@ -9,6 +9,7 @@ using System.ClientModel.Primitives;
 using Azure;
 using Azure.ResourceManager.Cdn.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn
 {
@@ -37,7 +38,6 @@ namespace Azure.ResourceManager.Cdn
     [ModelReaderWriterBuildable(typeof(CdnCustomDomainResource))]
     [ModelReaderWriterBuildable(typeof(CdnEndpointData))]
     [ModelReaderWriterBuildable(typeof(CdnEndpointPatch))]
-    [ModelReaderWriterBuildable(typeof(CdnEndpointReference))]
     [ModelReaderWriterBuildable(typeof(CdnEndpointResource))]
     [ModelReaderWriterBuildable(typeof(CdnManagedHttpsContent))]
     [ModelReaderWriterBuildable(typeof(CdnMigrationToAfdContent))]
@@ -317,6 +317,7 @@ namespace Azure.ResourceManager.Cdn
     [ModelReaderWriterBuildable(typeof(SharedPrivateLinkResourceProperties))]
     [ModelReaderWriterBuildable(typeof(SocketAddressMatchCondition))]
     [ModelReaderWriterBuildable(typeof(SsoUri))]
+    [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SupportedOptimizationTypesListResult))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UnknownCertificateSourceProperties))]
@@ -366,6 +367,7 @@ namespace Azure.ResourceManager.Cdn
     [ModelReaderWriterBuildable(typeof(WebApplicationFirewallPolicy))]
     [ModelReaderWriterBuildable(typeof(WebApplicationFirewallPolicyProperties))]
     [ModelReaderWriterBuildable(typeof(WebApplicationFirewallScrubbingRules))]
+    [ModelReaderWriterBuildable(typeof(WritableSubResource))]
     public partial class AzureResourceManagerCdnContext : ModelReaderWriterContext
     {
     }

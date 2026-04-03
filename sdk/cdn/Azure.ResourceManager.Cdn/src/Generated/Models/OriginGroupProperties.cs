@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.ResourceManager.Cdn;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="resourceState"> Resource status of the origin group. </param>
         /// <param name="provisioningState"> Provisioning status of the origin group. </param>
-        internal OriginGroupProperties(HealthProbeSettings healthProbeSettings, IList<ResourceReference> origins, int? trafficRestorationTimeInMinutes, ResponseBasedOriginErrorDetectionSettings responseBasedOriginErrorDetectionSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties, OriginGroupResourceState? resourceState, OriginGroupProvisioningState? provisioningState) : base(healthProbeSettings, origins, trafficRestorationTimeInMinutes, responseBasedOriginErrorDetectionSettings, additionalBinaryDataProperties)
+        internal OriginGroupProperties(HealthProbeSettings healthProbeSettings, IList<WritableSubResource> origins, int? trafficRestorationTimeInMinutes, ResponseBasedOriginErrorDetectionSettings responseBasedOriginErrorDetectionSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties, OriginGroupResourceState? resourceState, OriginGroupProvisioningState? provisioningState) : base(healthProbeSettings, origins, trafficRestorationTimeInMinutes, responseBasedOriginErrorDetectionSettings, additionalBinaryDataProperties)
         {
             ResourceState = resourceState;
             ProvisioningState = provisioningState;

@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary> List of keys used to validate the signed URL hashes. </summary>
         [WirePath("properties.urlSigningKeys")]
-        public IList<UriSigningKey> UrlSigningKeys
+        public IList<UriSigningKey> UriSigningKeys
         {
             get
             {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     Properties = new EndpointProperties();
                 }
-                return Properties.UrlSigningKeys;
+                return Properties.UriSigningKeys;
             }
         }
 
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary> The custom domains under the endpoint. </summary>
         [WirePath("properties.customDomains")]
-        public IList<DeepCreatedCustomDomain> CustomDomains
+        public IList<DeepCreatedCustomDomain> DeepCreatedCustomDomains
         {
             get
             {
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     Properties = new EndpointProperties();
                 }
-                return Properties.CustomDomains;
+                return Properties.DeepCreatedCustomDomains;
             }
         }
 

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.ResourceManager.Cdn;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -20,7 +21,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of <see cref="CdnWebApplicationFirewallPolicyProperties"/>. </summary>
         public CdnWebApplicationFirewallPolicyProperties()
         {
-            EndpointLinks = new ChangeTrackingList<CdnEndpointReference>();
+            EndpointLinks = new ChangeTrackingList<SubResource>();
             ExtendedProperties = new ChangeTrackingDictionary<string, string>();
         }
 
@@ -34,7 +35,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="provisioningState"> Provisioning state of the WebApplicationFirewallPolicy. </param>
         /// <param name="resourceState"> Resource status of the policy. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CdnWebApplicationFirewallPolicyProperties(WafPolicySettings policySettings, RateLimitRuleList rateLimitSettings, CustomRuleList customSettings, ManagedRuleSetList managedRules, IReadOnlyList<CdnEndpointReference> endpointLinks, IDictionary<string, string> extendedProperties, WebApplicationFirewallPolicyProvisioningState? provisioningState, PolicyResourceState? resourceState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CdnWebApplicationFirewallPolicyProperties(WafPolicySettings policySettings, RateLimitRuleList rateLimitSettings, CustomRuleList customSettings, ManagedRuleSetList managedRules, IReadOnlyList<SubResource> endpointLinks, IDictionary<string, string> extendedProperties, WebApplicationFirewallPolicyProvisioningState? provisioningState, PolicyResourceState? resourceState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PolicySettings = policySettings;
             RateLimitSettings = rateLimitSettings;
@@ -65,7 +66,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Describes Azure CDN endpoints associated with this Web Application Firewall policy. </summary>
         [WirePath("endpointLinks")]
-        public IReadOnlyList<CdnEndpointReference> EndpointLinks { get; } = new ChangeTrackingList<CdnEndpointReference>();
+        public IReadOnlyList<SubResource> EndpointLinks { get; } = new ChangeTrackingList<SubResource>();
 
         /// <summary> Key-Value pair representing additional properties for Web Application Firewall policy. </summary>
         [WirePath("extendedProperties")]

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Cdn
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CdnCustomDomainData"/>. </summary>
-        internal CdnCustomDomainData()
+        public CdnCustomDomainData()
         {
         }
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary> The JSON object that contains the properties of the custom domain to create. </summary>
         [WirePath("properties")]
-        internal CustomDomainProperties Properties { get; }
+        internal CustomDomainProperties Properties { get; set; }
 
         /// <summary> The host name of the custom domain. Must be a domain name. </summary>
         [WirePath("properties.hostName")]
@@ -47,7 +47,15 @@ namespace Azure.ResourceManager.Cdn
         {
             get
             {
-                return Properties.HostName;
+                return Properties is null ? default : Properties.HostName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CustomDomainProperties();
+                }
+                Properties.HostName = value;
             }
         }
 
@@ -57,7 +65,7 @@ namespace Azure.ResourceManager.Cdn
         {
             get
             {
-                return Properties.ResourceState;
+                return Properties is null ? default : Properties.ResourceState;
             }
         }
 
@@ -67,7 +75,7 @@ namespace Azure.ResourceManager.Cdn
         {
             get
             {
-                return Properties.CustomHttpsProvisioningState;
+                return Properties is null ? default : Properties.CustomHttpsProvisioningState;
             }
         }
 
@@ -77,7 +85,7 @@ namespace Azure.ResourceManager.Cdn
         {
             get
             {
-                return Properties.CustomHttpsAvailabilityState;
+                return Properties is null ? default : Properties.CustomHttpsAvailabilityState;
             }
         }
 
@@ -87,7 +95,15 @@ namespace Azure.ResourceManager.Cdn
         {
             get
             {
-                return Properties.CustomDomainHttpsContent;
+                return Properties is null ? default : Properties.CustomDomainHttpsContent;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CustomDomainProperties();
+                }
+                Properties.CustomDomainHttpsContent = value;
             }
         }
 
@@ -97,7 +113,15 @@ namespace Azure.ResourceManager.Cdn
         {
             get
             {
-                return Properties.ValidationData;
+                return Properties is null ? default : Properties.ValidationData;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CustomDomainProperties();
+                }
+                Properties.ValidationData = value;
             }
         }
 
@@ -107,7 +131,7 @@ namespace Azure.ResourceManager.Cdn
         {
             get
             {
-                return Properties.ProvisioningState;
+                return Properties is null ? default : Properties.ProvisioningState;
             }
         }
     }

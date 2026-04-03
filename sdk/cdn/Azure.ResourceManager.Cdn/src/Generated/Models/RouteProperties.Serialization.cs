@@ -8,8 +8,10 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.ResourceManager.Cdn;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -103,9 +105,14 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 writer.WritePropertyName("ruleSets"u8);
                 writer.WriteStartArray();
-                foreach (ResourceReference item in RuleSets)
+                foreach (WritableSubResource item in RuleSets)
                 {
-                    writer.WriteObjectValue(item, options);
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -220,7 +227,7 @@ namespace Azure.ResourceManager.Cdn.Models
             IList<FrontDoorActivatedResourceInfo> customDomains = default;
             ResourceReference originGroup = default;
             string originPath = default;
-            IList<ResourceReference> ruleSets = default;
+            IList<WritableSubResource> ruleSets = default;
             IList<FrontDoorEndpointProtocol> supportedProtocols = default;
             IList<string> patternsToMatch = default;
             FrontDoorRouteCacheConfiguration cacheConfiguration = default;
@@ -273,10 +280,17 @@ namespace Azure.ResourceManager.Cdn.Models
                     {
                         continue;
                     }
-                    List<ResourceReference> array = new List<ResourceReference>();
+                    List<WritableSubResource> array = new List<WritableSubResource>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ResourceReference.DeserializeResourceReference(item, options));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerCdnContext.Default));
+                        }
                     }
                     ruleSets = array;
                     continue;
@@ -398,7 +412,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 customDomains ?? new ChangeTrackingList<FrontDoorActivatedResourceInfo>(),
                 originGroup,
                 originPath,
-                ruleSets ?? new ChangeTrackingList<ResourceReference>(),
+                ruleSets ?? new ChangeTrackingList<WritableSubResource>(),
                 supportedProtocols ?? new ChangeTrackingList<FrontDoorEndpointProtocol>(),
                 patternsToMatch ?? new ChangeTrackingList<string>(),
                 cacheConfiguration,

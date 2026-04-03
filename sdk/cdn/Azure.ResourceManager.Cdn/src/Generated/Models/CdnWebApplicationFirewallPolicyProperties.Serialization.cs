@@ -8,8 +8,10 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.ResourceManager.Cdn;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -98,9 +100,14 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 writer.WritePropertyName("endpointLinks"u8);
                 writer.WriteStartArray();
-                foreach (CdnEndpointReference item in EndpointLinks)
+                foreach (SubResource item in EndpointLinks)
                 {
-                    writer.WriteObjectValue(item, options);
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    ((IJsonModel<SubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -176,7 +183,7 @@ namespace Azure.ResourceManager.Cdn.Models
             RateLimitRuleList rateLimitSettings = default;
             CustomRuleList customSettings = default;
             ManagedRuleSetList managedRules = default;
-            IReadOnlyList<CdnEndpointReference> endpointLinks = default;
+            IReadOnlyList<SubResource> endpointLinks = default;
             IDictionary<string, string> extendedProperties = default;
             WebApplicationFirewallPolicyProvisioningState? provisioningState = default;
             PolicyResourceState? resourceState = default;
@@ -225,10 +232,17 @@ namespace Azure.ResourceManager.Cdn.Models
                     {
                         continue;
                     }
-                    List<CdnEndpointReference> array = new List<CdnEndpointReference>();
+                    List<SubResource> array = new List<SubResource>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(CdnEndpointReference.DeserializeCdnEndpointReference(item, options));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerCdnContext.Default));
+                        }
                     }
                     endpointLinks = array;
                     continue;
@@ -282,7 +296,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 rateLimitSettings,
                 customSettings,
                 managedRules,
-                endpointLinks ?? new ChangeTrackingList<CdnEndpointReference>(),
+                endpointLinks ?? new ChangeTrackingList<SubResource>(),
                 extendedProperties ?? new ChangeTrackingDictionary<string, string>(),
                 provisioningState,
                 resourceState,
