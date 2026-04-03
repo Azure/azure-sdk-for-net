@@ -151,7 +151,7 @@ namespace Azure.AI.Agents.Persistent
                 role,
                 contentJson,
                 attachments,
-                metadata?.ToDictionary(kvp => kvp.Key, kvp => kvp.Value),
+                (IDictionary<string, string>)(metadata?.ToDictionary(kvp => kvp.Key, kvp => kvp.Value)),
                 cancellationToken
             ).ConfigureAwait(false);
         }
@@ -194,7 +194,7 @@ namespace Azure.AI.Agents.Persistent
                 role,
                 contentJson,
                 attachments,
-                metadata?.ToDictionary(kvp => kvp.Key, kvp => kvp.Value),
+                (IDictionary<string, string>)(metadata?.ToDictionary(kvp => kvp.Key, kvp => kvp.Value)),
                 cancellationToken
             );
         }
@@ -240,7 +240,7 @@ namespace Azure.AI.Agents.Persistent
                 role,
                 serializedBlocks,
                 attachments,
-                metadata?.ToDictionary(kvp => kvp.Key, kvp => kvp.Value),
+                (IDictionary<string, string>)(metadata?.ToDictionary(kvp => kvp.Key, kvp => kvp.Value)),
                 cancellationToken
             ).ConfigureAwait(false);
         }
@@ -286,7 +286,7 @@ namespace Azure.AI.Agents.Persistent
                 role,
                 serializedBlocks,
                 attachments,
-                metadata?.ToDictionary(kvp => kvp.Key, kvp => kvp.Value),
+                (IDictionary<string, string>)(metadata?.ToDictionary(kvp => kvp.Key, kvp => kvp.Value)),
                 cancellationToken
             );
         }

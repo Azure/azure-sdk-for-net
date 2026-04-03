@@ -41,9 +41,6 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> The identifier of the message, which can be referenced in API endpoints. </summary>
         public string Id { get; }
 
-        /// <summary> The object type, which is always `thread.message.delta`. </summary>
-        public string Object { get; } = "thread.message.delta";
-
         /// <summary> The delta containing the fields that have changed on the Message. </summary>
         public MessageDelta Delta { get; }
     }

@@ -67,9 +67,6 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> The identifier, which can be referenced in API endpoints. </summary>
         public string Id { get; }
 
-        /// <summary> The object type, which is always `vector_store.file`. </summary>
-        public string Object { get; } = "vector_store.file";
-
         /// <summary>
         /// The total vector store usage in bytes. Note that this may be different from the original file
         /// size.

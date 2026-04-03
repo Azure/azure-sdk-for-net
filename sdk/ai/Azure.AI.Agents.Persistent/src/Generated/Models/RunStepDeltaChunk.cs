@@ -41,9 +41,6 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> The identifier of the run step, which can be referenced in API endpoints. </summary>
         public string Id { get; }
 
-        /// <summary> The object type, which is always `thread.run.step.delta`. </summary>
-        public string Object { get; } = "thread.run.step.delta";
-
         /// <summary> The delta containing the fields that have changed on the run step. </summary>
         public RunStepDelta Delta { get; }
     }

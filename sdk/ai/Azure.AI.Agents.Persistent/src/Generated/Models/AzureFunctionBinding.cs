@@ -37,7 +37,5 @@ namespace Azure.AI.Agents.Persistent
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The type of binding, which is always 'storage_queue'. </summary>
-        public string Type { get; } = "storage_queue";
     }
 }

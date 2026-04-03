@@ -37,9 +37,6 @@ namespace Azure.AI.Agents.Persistent
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Type. </summary>
-        public string Type { get; } = "json_schema";
-
         /// <summary> The JSON schema, describing response format. </summary>
         public ResponseFormatJsonSchema JsonSchema { get; set; }
     }

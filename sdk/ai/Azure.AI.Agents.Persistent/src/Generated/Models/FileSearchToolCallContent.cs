@@ -34,9 +34,6 @@ namespace Azure.AI.Agents.Persistent
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The type of the content. </summary>
-        public string Type { get; } = "text";
-
         /// <summary> The text content of the file. </summary>
         public string Text { get; }
     }
