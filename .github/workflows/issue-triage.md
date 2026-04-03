@@ -318,20 +318,23 @@ If a confident label prediction was made, check whether the associated NuGet pac
 
 ### Package Identification
 
-Map the predicted service label to a NuGet package name using the conventions in this repository:
-- Service label + category "Client" → `Azure.<ServiceGroup>.<Service>` (e.g., "Event Hubs" + "Client" → `Azure.Messaging.EventHubs`)
-- Service label + category "Mgmt" → `Azure.ResourceManager.<Service>` (e.g., "Compute" + "Mgmt" → `Azure.ResourceManager.Compute`)
-- If the issue body explicitly names a NuGet package (e.g., `Microsoft.Azure.EventHubs`), use that package name directly
+Determine the NuGet package ID conservatively:
+- First, inspect the issue title and body for an explicitly named NuGet package ID (for example, `Azure.Messaging.EventHubs` or `Microsoft.Azure.EventHubs`). If one is present, use that package name directly
+- Otherwise, use the predicted service label and category only to locate the matching service directory under `sdk/`; do NOT assume they map to exactly one package name
+- Under the matched service directory, identify all candidate published package IDs from project metadata (for example, `PackageId` values in `.csproj` files)
+- If this produces exactly one unambiguous package ID, use it for the deprecation lookup
+- If there is no explicit package ID in the issue and the matched service directory contains zero or multiple candidate package IDs, skip the deprecated package check and continue to Step 5
 
 ### NuGet Deprecation Lookup
 
 1. Fetch the NuGet registration index using `web-fetch`:
    `https://api.nuget.org/v3/registration5-gz-semver2/{package-id-lowercase}/index.json`
-2. Iterate ALL versions in the registration data. Check that every version's `catalogEntry` has a `deprecation` field. If any version lacks a `deprecation` field, the package is NOT considered deprecated — skip to Step 5
-3. On the latest listed non-prerelease version, read `deprecation.message` and attempt to extract a date. The Azure SDK deprecation messages use one of these formats:
+2. The registration response contains an `items` array. Each item may contain inline `items` with catalog entries OR an `@id` URL pointing to a separate page. If an item has an `@id` but no inline `items`, fetch that URL to retrieve the page's catalog entries before proceeding
+3. Iterate ALL versions across all pages. Check that every version's `catalogEntry` has a `deprecation` field. If any version lacks a `deprecation` field, the package is NOT considered deprecated — skip to Step 5
+4. On the latest listed non-prerelease version, read `deprecation.message` and attempt to extract a date. The Azure SDK deprecation messages use one of these formats:
    - `"this package is obsolete as of <MM/DD/YYYY>"`
    - `"will no longer be maintained after <MM/DD/YYYY>"`
-4. If the message does not contain a date in one of these formats, the package is NOT considered deprecated for triage purposes — skip to Step 5
+5. If the message does not contain a date in one of these formats, the package is NOT considered deprecated for triage purposes — skip to Step 5
 
 ### Deprecated Package Action
 
@@ -340,7 +343,7 @@ If all versions are deprecated AND a date was extracted:
 1. Post a comment (via `add-comment`) with this exact text, substituting values:
 
 ```
-This package reached end-of-life on <EXTRACTED DATE> and is no longer published nor supported by Microsoft. Unfortunately, we cannot assist with this issue.
+This package reached end-of-life on <EXTRACTED DATE> and is no longer supported by Microsoft. Unfortunately, we cannot assist with this issue.
 ```
 
 If `deprecation.alternatePackage.id` exists, append:

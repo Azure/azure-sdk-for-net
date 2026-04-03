@@ -54,7 +54,7 @@ Analyze code changes pushed to main, identify documentation gaps, and file a foc
 - Check for existing samples in `samples/` directories and test-backed snippets
 - Look for new resource types, APIs, or methods that are not documented
 - Compare the CHANGELOG against what the README describes
-- Assess whether the README follows the standard template pattern (see Conventions below)
+- Assess whether the README follows the standard template pattern by comparing it to the canonical package README guidance for this repository (see Step 3 below for the required section structure)
 
 #### Step 3: Decide
 
@@ -116,10 +116,23 @@ For each file that needs changes, provide:
 
 ### Step 2: Add or update code snippets
 
-For each new code example that should appear in the README:
-1. Specify the test file path: `sdk/<service>/<package>/tests/Samples/Sample<Feature>.cs`
-2. Provide the full test method to add, wrapped in `#region Snippet:<SnippetName>` / `#endregion`
-3. Specify the README location where the snippet reference should be inserted: ` ```C# Snippet:<SnippetName> `
+This repository uses a snippet-generation tool that extracts code from test files into README documentation. The coding agent does NOT manually paste code into README — the tooling does that. The flow is:
+
+1. **Write the sample code in a test file** at `sdk/<service>/<package>/tests/Samples/Sample<Feature>.cs`
+   - Wrap the code to be shown in the README with `#region Snippet:<SnippetName>` / `#endregion`
+   - Use `[Test]` (NUnit) attribute on the method
+   - Any test-only code that should NOT appear in the README (cleanup, assertions, test-specific setup) must be wrapped in `#if !SNIPPET` / `#endif` so the snippet generator excludes it
+   - Reference `sdk/keyvault/Azure.Security.KeyVault.Secrets/tests/samples/Sample1_HelloWorld.cs` as a canonical example
+
+2. **Add a snippet placeholder in the README** at the location where the code should appear:
+   `` ```C# Snippet:<SnippetName> ``
+   followed by a closing `` ``` ``
+   The `Update-Snippets.ps1` script will replace the content between these fences with the actual code extracted from the test file
+
+3. For each snippet, provide:
+   - The test file path and the full method body including `#region` / `#endregion` tags
+   - The README location (section heading and line context) where the placeholder should be inserted
+   - The exact `<SnippetName>` — this must match between the test file region and the README placeholder
 
 ### Step 3: Verify README structure
 
@@ -138,10 +151,13 @@ Use `sdk/keyvault/Azure.Security.KeyVault.Secrets/README.md` as the canonical re
 
 ### Step 4: Validate
 
-Run these commands in order and confirm each succeeds before proceeding to the next:
+Run these commands in order. Each must succeed before proceeding to the next. The snippet and API export scripts modify files in-place — those changes must be included in the commit
+
 1. `dotnet build sdk/<service>/<package>/`
 2. `dotnet test sdk/<service>/<package>/ --filter TestCategory!=Live`
-3. `eng/scripts/Update-Snippets.ps1 <service-directory>`
+3. `eng/scripts/Update-Snippets.ps1 <service-directory>` — this reads `#region Snippet:` tags from test files and injects the code into README.md placeholder blocks. Check the git diff after running to confirm README was updated correctly
+4. `eng/scripts/Export-API.ps1 <service-directory>` — regenerates public API listing files under `sdk/<service>/<package>/api/`. Required if any public types or members were added or changed
+5. `dotnet format sdk/<service>/<package>/` — ensures consistent code formatting
 
 </details>
 
