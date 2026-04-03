@@ -36,9 +36,9 @@ namespace Azure.ResourceManager.ContainerInstance
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ContainerInstance.CGProfileResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ContainerInstance.CGProfileResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.ContainerInstance.CGProfileResource> GetCGProfile(string revisionNumber, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ContainerInstance.CGProfileResource>> GetCGProfileAsync(string revisionNumber, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ContainerInstance.CGProfileCollection GetCGProfiles() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ContainerInstance.ContainerGroupProfileRevisionResource> GetContainerGroupProfileRevision(string revisionNumber, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ContainerInstance.ContainerGroupProfileRevisionResource>> GetContainerGroupProfileRevisionAsync(string revisionNumber, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ContainerInstance.ContainerGroupProfileRevisionCollection GetContainerGroupProfileRevisions() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ContainerInstance.CGProfileResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ContainerInstance.CGProfileResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ContainerInstance.CGProfileResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -70,7 +70,6 @@ namespace Azure.ResourceManager.ContainerInstance
     }
     public partial class ContainerGroupData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerInstance.ContainerGroupData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerInstance.ContainerGroupData>
     {
-        protected internal ContainerGroupData() { }
         public ContainerGroupData(Azure.Core.AzureLocation location, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerInstance.Models.ContainerInstanceContainer> containers) { }
         public ContainerGroupData(Azure.Core.AzureLocation location, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerInstance.Models.ContainerInstanceContainer> containers, Azure.ResourceManager.ContainerInstance.Models.ContainerInstanceOperatingSystemType osType) { }
         public string ConfidentialComputeCcePolicy { get { throw null; } set { } }
@@ -140,7 +139,6 @@ namespace Azure.ResourceManager.ContainerInstance
         public System.Collections.Generic.IList<Azure.ResourceManager.ContainerInstance.Models.InitContainerDefinitionContent> InitContainers { get { throw null; } }
         public Azure.ResourceManager.ContainerInstance.Models.ContainerGroupIPAddress IPAddress { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerInstance.Models.ContainerGroupIPAddress IpAddress { get { throw null; } set { } }
-        public new string Location { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerInstance.Models.ContainerInstanceOperatingSystemType? OSType { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerInstance.Models.ContainerInstanceOperatingSystemType OsType { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerInstance.Models.ContainerGroupPriority? Priority { get { throw null; } set { } }
@@ -150,7 +148,6 @@ namespace Azure.ResourceManager.ContainerInstance
         public Azure.ResourceManager.ContainerInstance.Models.ContainerSecurityContextDefinition SecurityContext { get { throw null; } set { } }
         public System.DateTimeOffset? ShutdownGracePeriod { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerInstance.Models.ContainerGroupSku? Sku { get { throw null; } set { } }
-        public new System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public System.DateTimeOffset? TimeToLive { get { throw null; } set { } }
         public bool? UseKrypton { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ContainerInstance.Models.ContainerVolume> Volumes { get { throw null; } }
@@ -173,9 +170,6 @@ namespace Azure.ResourceManager.ContainerInstance
         public virtual new System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ContainerInstance.ContainerGroupProfileResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual new Azure.Response<Azure.ResourceManager.ContainerInstance.ContainerGroupProfileResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual new System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ContainerInstance.ContainerGroupProfileResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.ContainerInstance.ContainerGroupProfileRevisionResource> GetContainerGroupProfileRevision(string revisionNumber, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ContainerInstance.ContainerGroupProfileRevisionResource>> GetContainerGroupProfileRevisionAsync(string revisionNumber, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ContainerInstance.ContainerGroupProfileRevisionCollection GetContainerGroupProfileRevisions() { throw null; }
         public virtual new Azure.Response<Azure.ResourceManager.ContainerInstance.ContainerGroupProfileResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual new System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ContainerInstance.ContainerGroupProfileResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual new Azure.Response<Azure.ResourceManager.ContainerInstance.ContainerGroupProfileResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -260,12 +254,23 @@ namespace Azure.ResourceManager.ContainerInstance
     }
     public static partial class ContainerInstanceExtensions
     {
+        public static Azure.ResourceManager.ArmOperation Delete(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.WaitUntil waitUntil, string resourceGroupName, string virtualNetworkName, string subnetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.WaitUntil waitUntil, string resourceGroupName, string virtualNetworkName, string subnetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.ArmOperation DeleteSubnetServiceAssociationLink(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.WaitUntil waitUntil, string virtualNetworkName, string subnetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteSubnetServiceAssociationLinkAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.WaitUntil waitUntil, string virtualNetworkName, string subnetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.ContainerInstance.Models.CachedImages> GetCachedImages(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.ContainerInstance.Models.CachedImages> GetCachedImagesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.ContainerInstance.Models.CachedImages> GetCachedImagesWithLocation(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.ContainerInstance.Models.CachedImages> GetCachedImagesWithLocationAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.ContainerInstance.Models.ContainerCapabilities> GetCapabilities(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.ContainerInstance.Models.ContainerCapabilities> GetCapabilitiesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.ContainerInstance.Models.ContainerCapabilities> GetCapabilitiesWithLocation(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.ContainerInstance.Models.ContainerCapabilities> GetCapabilitiesWithLocationAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.ContainerInstance.CGProfileResource> GetCGProfile(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string containerGroupProfileName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ContainerInstance.CGProfileResource>> GetCGProfileAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string containerGroupProfileName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.ContainerInstance.CGProfileCollection GetCGProfiles(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.ContainerInstance.CGProfileResource> GetCGProfiles(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.ContainerInstance.CGProfileResource> GetCGProfilesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.ContainerInstance.ContainerGroupResource> GetContainerGroup(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string containerGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ContainerInstance.ContainerGroupResource>> GetContainerGroupAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string containerGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.ContainerInstance.ContainerGroupProfileResource> GetContainerGroupProfile(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string containerGroupProfileName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -286,6 +291,8 @@ namespace Azure.ResourceManager.ContainerInstance
         public static Azure.ResourceManager.ContainerInstance.NGroupCollection GetNGroups(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.ContainerInstance.NGroupResource> GetNGroups(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.ContainerInstance.NGroupResource> GetNGroupsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.ContainerInstance.Models.ContainerInstanceUsage> GetUsage(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.ContainerInstance.Models.ContainerInstanceUsage> GetUsageAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.ContainerInstance.Models.ContainerInstanceUsage> GetUsagesWithLocation(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.ContainerInstance.Models.ContainerInstanceUsage> GetUsagesWithLocationAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -313,10 +320,8 @@ namespace Azure.ResourceManager.ContainerInstance
         public System.Collections.Generic.IList<Azure.ResourceManager.ContainerInstance.Models.ContainerGroupProfileStub> ContainerGroupProfiles { get { throw null; } }
         public Azure.ResourceManager.ContainerInstance.Models.ContainerGroupElasticProfile ElasticProfile { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
-        public new string Location { get { throw null; } set { } }
         public int? PlacementFaultDomainCount { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerInstance.Models.NGroupProvisioningState? ProvisioningState { get { throw null; } }
-        public new System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public Azure.ResourceManager.ContainerInstance.Models.NGroupUpdateProfile UpdateProfile { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Zones { get { throw null; } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -561,7 +566,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     }
     public partial class ContainerEnvironmentVariable : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerInstance.Models.ContainerEnvironmentVariable>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerInstance.Models.ContainerEnvironmentVariable>
     {
-        protected ContainerEnvironmentVariable() { }
         public ContainerEnvironmentVariable(string name) { }
         public string Name { get { throw null; } set { } }
         public string SecureValue { get { throw null; } set { } }
@@ -644,7 +648,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     }
     public partial class ContainerGpuResourceInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerInstance.Models.ContainerGpuResourceInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerInstance.Models.ContainerGpuResourceInfo>
     {
-        protected ContainerGpuResourceInfo() { }
         public ContainerGpuResourceInfo(int count, Azure.ResourceManager.ContainerInstance.Models.ContainerGpuSku sku) { }
         public int Count { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerInstance.Models.ContainerGpuSku Sku { get { throw null; } set { } }
@@ -678,7 +681,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     }
     public partial class ContainerGroupDnsConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerInstance.Models.ContainerGroupDnsConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerInstance.Models.ContainerGroupDnsConfiguration>
     {
-        protected ContainerGroupDnsConfiguration() { }
         public ContainerGroupDnsConfiguration(System.Collections.Generic.IEnumerable<string> nameServers) { }
         public System.Collections.Generic.IList<string> NameServers { get { throw null; } }
         public string Options { get { throw null; } set { } }
@@ -744,36 +746,30 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerInstance.Models.ContainerGroupFileShare>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerInstance.Models.ContainerGroupFileShare>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ContainerGroupFileShareProperties : Azure.ResourceManager.ContainerInstance.Models.FileShareProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerInstance.Models.ContainerGroupFileShareProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerInstance.Models.ContainerGroupFileShareProperties>
+    public partial class ContainerGroupFileShareProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerInstance.Models.ContainerGroupFileShareProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerInstance.Models.ContainerGroupFileShareProperties>
     {
         public ContainerGroupFileShareProperties() { }
+        public Azure.ResourceManager.ContainerInstance.Models.AzureFileShareAccessTier? ShareAccessTier { get { throw null; } set { } }
+        public Azure.ResourceManager.ContainerInstance.Models.AzureFileShareAccessType? ShareAccessType { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.ContainerInstance.Models.ContainerGroupFileShareProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ContainerInstance.Models.ContainerGroupFileShareProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ContainerInstance.Models.ContainerGroupFileShareProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerInstance.Models.ContainerGroupFileShareProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerInstance.Models.ContainerGroupFileShareProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ContainerInstance.Models.ContainerGroupFileShareProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerInstance.Models.ContainerGroupFileShareProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerInstance.Models.ContainerGroupFileShareProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerInstance.Models.ContainerGroupFileShareProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ContainerGroupIdentity : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerInstance.Models.ContainerGroupIdentity>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerInstance.Models.ContainerGroupIdentity>
-    {
-        public ContainerGroupIdentity() { }
-        public string PrincipalId { get { throw null; } }
-        public string TenantId { get { throw null; } }
-        public Azure.ResourceManager.ContainerInstance.Models.ResourceIdentityType? Type { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.ContainerInstance.Models.UserAssignedIdentities> UserAssignedIdentities { get { throw null; } }
-        protected virtual Azure.ResourceManager.ContainerInstance.Models.ContainerGroupIdentity JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ContainerInstance.Models.ContainerGroupIdentity PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ContainerInstance.Models.ContainerGroupIdentity System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerInstance.Models.ContainerGroupIdentity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerInstance.Models.ContainerGroupIdentity>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ContainerInstance.Models.ContainerGroupIdentity System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerInstance.Models.ContainerGroupIdentity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerInstance.Models.ContainerGroupIdentity>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerInstance.Models.ContainerGroupIdentity>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class ContainerGroupIdentityAccessControl : Azure.ResourceManager.ContainerInstance.Models.IdentityAccessControl, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerInstance.Models.ContainerGroupIdentityAccessControl>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerInstance.Models.ContainerGroupIdentityAccessControl>
+    public partial class ContainerGroupIdentityAccessControl : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerInstance.Models.ContainerGroupIdentityAccessControl>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerInstance.Models.ContainerGroupIdentityAccessControl>
     {
         public ContainerGroupIdentityAccessControl() { }
-        public new Azure.ResourceManager.ContainerInstance.Models.ContainerGroupIdentityAccessLevel? Access { get { throw null; } set { } }
+        public Azure.ResourceManager.ContainerInstance.Models.ContainerGroupIdentityAccessLevel? Access { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier Identity { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.ContainerInstance.Models.ContainerGroupIdentityAccessControl JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ContainerInstance.Models.ContainerGroupIdentityAccessControl PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ContainerInstance.Models.ContainerGroupIdentityAccessControl System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerInstance.Models.ContainerGroupIdentityAccessControl>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerInstance.Models.ContainerGroupIdentityAccessControl>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ContainerInstance.Models.ContainerGroupIdentityAccessControl System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerInstance.Models.ContainerGroupIdentityAccessControl>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -808,18 +804,16 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ContainerInstance.Models.ContainerGroupIdentityAccessLevel left, Azure.ResourceManager.ContainerInstance.Models.ContainerGroupIdentityAccessLevel right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ContainerInstance.Models.IdentityAccessLevel (Azure.ResourceManager.ContainerInstance.Models.ContainerGroupIdentityAccessLevel value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ContainerInstance.Models.ContainerGroupIdentityAccessLevel (Azure.ResourceManager.ContainerInstance.Models.IdentityAccessLevel value) { throw null; }
         public static implicit operator Azure.ResourceManager.ContainerInstance.Models.ContainerGroupIdentityAccessLevel (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.ContainerInstance.Models.ContainerGroupIdentityAccessLevel? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ContainerInstance.Models.ContainerGroupIdentityAccessLevel left, Azure.ResourceManager.ContainerInstance.Models.ContainerGroupIdentityAccessLevel right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class ContainerGroupImageRegistryCredential : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerInstance.Models.ContainerGroupImageRegistryCredential>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerInstance.Models.ContainerGroupImageRegistryCredential>
     {
-        protected ContainerGroupImageRegistryCredential() { }
         public ContainerGroupImageRegistryCredential(string server) { }
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release.", false)]
-        public ContainerGroupImageRegistryCredential(string server, string identity) { }
+        public ContainerGroupImageRegistryCredential(string server, string username) { }
         public string Identity { get { throw null; } set { } }
         public System.Uri IdentityUri { get { throw null; } set { } }
         public string Password { get { throw null; } set { } }
@@ -853,7 +847,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     }
     public partial class ContainerGroupIPAddress : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerInstance.Models.ContainerGroupIPAddress>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerInstance.Models.ContainerGroupIPAddress>
     {
-        protected ContainerGroupIPAddress() { }
         public ContainerGroupIPAddress(System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerInstance.Models.ContainerGroupPort> ports, Azure.ResourceManager.ContainerInstance.Models.ContainerGroupIPAddressType type) { }
         public Azure.ResourceManager.ContainerInstance.Models.ContainerGroupIPAddressType AddressType { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerInstance.Models.DnsNameLabelReusePolicy? AutoGeneratedDomainNameLabelScope { get { throw null; } set { } }
@@ -894,7 +887,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     }
     public partial class ContainerGroupLogAnalytics : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerInstance.Models.ContainerGroupLogAnalytics>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerInstance.Models.ContainerGroupLogAnalytics>
     {
-        protected ContainerGroupLogAnalytics() { }
         public ContainerGroupLogAnalytics(string workspaceId, string workspaceKey) { }
         public Azure.ResourceManager.ContainerInstance.Models.ContainerGroupLogAnalyticsLogType? LogType { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }
@@ -966,11 +958,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     {
         public ContainerGroupPatch() { }
         public ContainerGroupPatch(Azure.Core.AzureLocation location) { }
-        public new string Id { get { throw null; } }
-        public new string Location { get { throw null; } set { } }
-        public new string Name { get { throw null; } }
-        public new System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
-        public string Type { get { throw null; } }
         public System.Collections.Generic.IList<string> Zones { get { throw null; } }
         protected virtual Azure.ResourceManager.ContainerInstance.Models.ContainerGroupPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -984,7 +971,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     }
     public partial class ContainerGroupPort : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerInstance.Models.ContainerGroupPort>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerInstance.Models.ContainerGroupPort>
     {
-        protected ContainerGroupPort() { }
         public ContainerGroupPort(int port) { }
         public int Port { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerInstance.Models.ContainerGroupNetworkProtocol? Protocol { get { throw null; } set { } }
@@ -1111,7 +1097,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     }
     public partial class ContainerGroupSecretReference : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerInstance.Models.ContainerGroupSecretReference>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerInstance.Models.ContainerGroupSecretReference>
     {
-        protected ContainerGroupSecretReference() { }
         public ContainerGroupSecretReference(string secretName, Azure.Core.ResourceIdentifier keyVaultId, System.Uri keyVaultUrl) { }
         public Azure.Core.ResourceIdentifier Identity { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
@@ -1147,7 +1132,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     }
     public partial class ContainerGroupSubnetId : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerInstance.Models.ContainerGroupSubnetId>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerInstance.Models.ContainerGroupSubnetId>
     {
-        protected ContainerGroupSubnetId() { }
         public ContainerGroupSubnetId(Azure.Core.ResourceIdentifier id) { }
         public Azure.Core.ResourceIdentifier Id { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
@@ -1212,7 +1196,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     }
     public partial class ContainerInstanceAzureFileVolume : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerInstance.Models.ContainerInstanceAzureFileVolume>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerInstance.Models.ContainerInstanceAzureFileVolume>
     {
-        protected ContainerInstanceAzureFileVolume() { }
         public ContainerInstanceAzureFileVolume(string shareName, string storageAccountName) { }
         public bool? IsReadOnly { get { throw null; } set { } }
         public bool? ReadOnly { get { throw null; } set { } }
@@ -1232,7 +1215,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     }
     public partial class ContainerInstanceContainer : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerInstance.Models.ContainerInstanceContainer>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerInstance.Models.ContainerInstanceContainer>
     {
-        protected ContainerInstanceContainer() { }
         public ContainerInstanceContainer(string name) { }
         public ContainerInstanceContainer(string name, string image, Azure.ResourceManager.ContainerInstance.Models.ContainerResourceRequirements resources) { }
         public System.Collections.Generic.IList<string> Command { get { throw null; } }
@@ -1259,7 +1241,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     }
     public partial class ContainerInstanceGitRepoVolume : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerInstance.Models.ContainerInstanceGitRepoVolume>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerInstance.Models.ContainerInstanceGitRepoVolume>
     {
-        protected ContainerInstanceGitRepoVolume() { }
         public ContainerInstanceGitRepoVolume(string repository) { }
         public string Directory { get { throw null; } set { } }
         public string Repository { get { throw null; } set { } }
@@ -1309,9 +1290,15 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerInstance.Models.ContainerInstanceUsage>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerInstance.Models.ContainerInstanceUsage>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ContainerInstanceUsageName : Azure.ResourceManager.ContainerInstance.Models.UsageName, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerInstance.Models.ContainerInstanceUsageName>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerInstance.Models.ContainerInstanceUsageName>
+    public partial class ContainerInstanceUsageName : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerInstance.Models.ContainerInstanceUsageName>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerInstance.Models.ContainerInstanceUsageName>
     {
         internal ContainerInstanceUsageName() { }
+        public string LocalizedValue { get { throw null; } }
+        public string Value { get { throw null; } }
+        protected virtual Azure.ResourceManager.ContainerInstance.Models.ContainerInstanceUsageName JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ContainerInstance.Models.ContainerInstanceUsageName PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ContainerInstance.Models.ContainerInstanceUsageName System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerInstance.Models.ContainerInstanceUsageName>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerInstance.Models.ContainerInstanceUsageName>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ContainerInstance.Models.ContainerInstanceUsageName System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerInstance.Models.ContainerInstanceUsageName>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1424,7 +1411,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     }
     public partial class ContainerResourceRequestsContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerInstance.Models.ContainerResourceRequestsContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerInstance.Models.ContainerResourceRequestsContent>
     {
-        protected ContainerResourceRequestsContent() { }
         public ContainerResourceRequestsContent(double memoryInGB, double cpu) { }
         public double Cpu { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerInstance.Models.ContainerGpuResourceInfo Gpu { get { throw null; } set { } }
@@ -1441,7 +1427,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     }
     public partial class ContainerResourceRequirements : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerInstance.Models.ContainerResourceRequirements>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerInstance.Models.ContainerResourceRequirements>
     {
-        protected ContainerResourceRequirements() { }
         public ContainerResourceRequirements(Azure.ResourceManager.ContainerInstance.Models.ContainerResourceRequestsContent requests) { }
         public Azure.ResourceManager.ContainerInstance.Models.ContainerResourceLimits Limits { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerInstance.Models.ContainerResourceRequestsContent Requests { get { throw null; } set { } }
@@ -1455,9 +1440,15 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerInstance.Models.ContainerResourceRequirements>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerInstance.Models.ContainerResourceRequirements>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ContainerSecurityContextCapabilitiesDefinition : Azure.ResourceManager.ContainerInstance.Models.SecurityContextCapabilitiesDefinition, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerInstance.Models.ContainerSecurityContextCapabilitiesDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerInstance.Models.ContainerSecurityContextCapabilitiesDefinition>
+    public partial class ContainerSecurityContextCapabilitiesDefinition : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerInstance.Models.ContainerSecurityContextCapabilitiesDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerInstance.Models.ContainerSecurityContextCapabilitiesDefinition>
     {
         public ContainerSecurityContextCapabilitiesDefinition() { }
+        public System.Collections.Generic.IList<string> Add { get { throw null; } }
+        public System.Collections.Generic.IList<string> Drop { get { throw null; } }
+        protected virtual Azure.ResourceManager.ContainerInstance.Models.ContainerSecurityContextCapabilitiesDefinition JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ContainerInstance.Models.ContainerSecurityContextCapabilitiesDefinition PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ContainerInstance.Models.ContainerSecurityContextCapabilitiesDefinition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerInstance.Models.ContainerSecurityContextCapabilitiesDefinition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerInstance.Models.ContainerSecurityContextCapabilitiesDefinition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ContainerInstance.Models.ContainerSecurityContextCapabilitiesDefinition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerInstance.Models.ContainerSecurityContextCapabilitiesDefinition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1520,7 +1511,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     }
     public partial class ContainerVolume : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerInstance.Models.ContainerVolume>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerInstance.Models.ContainerVolume>
     {
-        protected ContainerVolume() { }
         public ContainerVolume(string name) { }
         public Azure.ResourceManager.ContainerInstance.Models.ContainerInstanceAzureFileVolume AzureFile { get { throw null; } set { } }
         public System.BinaryData EmptyDir { get { throw null; } set { } }
@@ -1540,7 +1530,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     }
     public partial class ContainerVolumeMount : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerInstance.Models.ContainerVolumeMount>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerInstance.Models.ContainerVolumeMount>
     {
-        protected ContainerVolumeMount() { }
         public ContainerVolumeMount(string name, string mountPath) { }
         public bool? IsReadOnly { get { throw null; } set { } }
         public string MountPath { get { throw null; } set { } }
@@ -1593,54 +1582,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public static implicit operator Azure.ResourceManager.ContainerInstance.Models.DnsNameLabelReusePolicy (string value) { throw null; }
         public static implicit operator Azure.ResourceManager.ContainerInstance.Models.DnsNameLabelReusePolicy? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ContainerInstance.Models.DnsNameLabelReusePolicy left, Azure.ResourceManager.ContainerInstance.Models.DnsNameLabelReusePolicy right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class FileShareProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerInstance.Models.FileShareProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerInstance.Models.FileShareProperties>
-    {
-        public FileShareProperties() { }
-        public Azure.ResourceManager.ContainerInstance.Models.AzureFileShareAccessTier? ShareAccessTier { get { throw null; } set { } }
-        public Azure.ResourceManager.ContainerInstance.Models.AzureFileShareAccessType? ShareAccessType { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ContainerInstance.Models.FileShareProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ContainerInstance.Models.FileShareProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ContainerInstance.Models.FileShareProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerInstance.Models.FileShareProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerInstance.Models.FileShareProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ContainerInstance.Models.FileShareProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerInstance.Models.FileShareProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerInstance.Models.FileShareProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerInstance.Models.FileShareProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class IdentityAccessControl : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerInstance.Models.IdentityAccessControl>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerInstance.Models.IdentityAccessControl>
-    {
-        public IdentityAccessControl() { }
-        public Azure.ResourceManager.ContainerInstance.Models.IdentityAccessLevel? Access { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier Identity { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ContainerInstance.Models.IdentityAccessControl JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ContainerInstance.Models.IdentityAccessControl PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ContainerInstance.Models.IdentityAccessControl System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerInstance.Models.IdentityAccessControl>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerInstance.Models.IdentityAccessControl>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ContainerInstance.Models.IdentityAccessControl System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerInstance.Models.IdentityAccessControl>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerInstance.Models.IdentityAccessControl>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerInstance.Models.IdentityAccessControl>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct IdentityAccessLevel : System.IEquatable<Azure.ResourceManager.ContainerInstance.Models.IdentityAccessLevel>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public IdentityAccessLevel(string value) { throw null; }
-        public static Azure.ResourceManager.ContainerInstance.Models.IdentityAccessLevel All { get { throw null; } }
-        public static Azure.ResourceManager.ContainerInstance.Models.IdentityAccessLevel System { get { throw null; } }
-        public static Azure.ResourceManager.ContainerInstance.Models.IdentityAccessLevel User { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ContainerInstance.Models.IdentityAccessLevel other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ContainerInstance.Models.IdentityAccessLevel left, Azure.ResourceManager.ContainerInstance.Models.IdentityAccessLevel right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ContainerInstance.Models.IdentityAccessLevel (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ContainerInstance.Models.IdentityAccessLevel? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ContainerInstance.Models.IdentityAccessLevel left, Azure.ResourceManager.ContainerInstance.Models.IdentityAccessLevel right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class InitContainerDefinition : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerInstance.Models.InitContainerDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerInstance.Models.InitContainerDefinition>
@@ -1883,21 +1824,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         SystemAssignedUserAssigned = 2,
         None = 3,
     }
-    public partial class SecurityContextCapabilitiesDefinition : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerInstance.Models.SecurityContextCapabilitiesDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerInstance.Models.SecurityContextCapabilitiesDefinition>
-    {
-        public SecurityContextCapabilitiesDefinition() { }
-        public System.Collections.Generic.IList<string> Add { get { throw null; } }
-        public System.Collections.Generic.IList<string> Drop { get { throw null; } }
-        protected virtual Azure.ResourceManager.ContainerInstance.Models.SecurityContextCapabilitiesDefinition JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ContainerInstance.Models.SecurityContextCapabilitiesDefinition PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ContainerInstance.Models.SecurityContextCapabilitiesDefinition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerInstance.Models.SecurityContextCapabilitiesDefinition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerInstance.Models.SecurityContextCapabilitiesDefinition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ContainerInstance.Models.SecurityContextCapabilitiesDefinition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerInstance.Models.SecurityContextCapabilitiesDefinition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerInstance.Models.SecurityContextCapabilitiesDefinition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerInstance.Models.SecurityContextCapabilitiesDefinition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public partial class StandbyPoolProfileDefinition : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerInstance.Models.StandbyPoolProfileDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerInstance.Models.StandbyPoolProfileDefinition>
     {
         public StandbyPoolProfileDefinition() { }
@@ -1912,21 +1838,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         Azure.ResourceManager.ContainerInstance.Models.StandbyPoolProfileDefinition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerInstance.Models.StandbyPoolProfileDefinition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerInstance.Models.StandbyPoolProfileDefinition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerInstance.Models.StandbyPoolProfileDefinition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class UsageName : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerInstance.Models.UsageName>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerInstance.Models.UsageName>
-    {
-        internal UsageName() { }
-        public string LocalizedValue { get { throw null; } }
-        public string Value { get { throw null; } }
-        protected virtual Azure.ResourceManager.ContainerInstance.Models.UsageName JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ContainerInstance.Models.UsageName PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ContainerInstance.Models.UsageName System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerInstance.Models.UsageName>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerInstance.Models.UsageName>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ContainerInstance.Models.UsageName System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerInstance.Models.UsageName>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerInstance.Models.UsageName>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerInstance.Models.UsageName>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class UserAssignedIdentities : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerInstance.Models.UserAssignedIdentities>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerInstance.Models.UserAssignedIdentities>
     {
