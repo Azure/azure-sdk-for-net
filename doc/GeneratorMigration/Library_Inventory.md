@@ -1,6 +1,6 @@
 # Azure SDK for .NET Libraries Inventory
 
-> **Auto-generated** by `Library_Inventory` on 2026-04-02 05:08:45 UTC.
+> **Auto-generated** by `Library_Inventory` on 2026-04-03 09:47:01 UTC.
 > Run that script to refresh this file.
 
 ## Table of Contents
@@ -16,17 +16,17 @@
 
 ## Summary
 
-- Total libraries: 413
-- Management Plane (MPG): 232
-  - Autorest/Swagger: 108
-  - New Emitter (TypeSpec): 124
+- Total libraries: 397
+- Management Plane (MPG): 231
+  - Autorest/Swagger: 102
+  - New Emitter (TypeSpec): 129
   - Old TypeSpec: 0
-- Data Plane (DPG): 144
-  - Autorest/Swagger: 52
-  - New Emitter (TypeSpec): 40
+- Data Plane (DPG): 128
+  - Autorest/Swagger: 37
+  - New Emitter (TypeSpec): 39
   - Old TypeSpec: 4
-- Provisioning: 37
-  - Reflection-based generator: 33
+- Provisioning: 38
+  - Reflection-based generator: 34
   - TypeSpec-based generator: 2
   - No generator: 2
 - No generator: 48
@@ -36,7 +36,7 @@
 
 Libraries that provide client APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 40 / 44 (90.9%)
+**Migration Status**: 39 / 43 (90.7%)
 
 | Service | Library | New Emitter | Using SCM |
 | ------- | ------- | ----------- | --------- |
@@ -56,7 +56,6 @@ Libraries that provide client APIs for Azure services and have been migrated to 
 | cognitivelanguage | Azure.AI.Language.Text.Authoring | ✅ |  |
 | communication | Azure.Communication.JobRouter | ✅ |  |
 | communication | Azure.Communication.Messages |  |  |
-| communication | Azure.Communication.ProgrammableConnectivity | ✅ |  |
 | confidentialledger | Azure.Security.CodeTransparency | ✅ |  |
 | contentsafety | Azure.AI.ContentSafety | ✅ |  |
 | contentunderstanding | Azure.AI.ContentUnderstanding | ✅ |  |
@@ -88,7 +87,7 @@ Libraries that provide client APIs for Azure services and have been migrated to 
 
 ## Data Plane Libraries (DPG) - Still on Swagger
 
-Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 52
+Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 37
 
 | Service | Library |
 | ------- | ------- |
@@ -97,7 +96,6 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 52
 | cognitivelanguage | Azure.AI.Language.QuestionAnswering |
 | communication | Azure.Communication.AlphaIds |
 | communication | Azure.Communication.CallAutomation |
-| communication | Azure.Communication.CallingServer |
 | communication | Azure.Communication.Chat |
 | communication | Azure.Communication.Email |
 | communication | Azure.Communication.Identity |
@@ -108,41 +106,27 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 52
 | confidentialledger | Azure.Security.ConfidentialLedger |
 | containerregistry | Azure.Containers.ContainerRegistry |
 | core | Azure.Core.TestFramework |
-| deviceupdate | Azure.IoT.DeviceUpdate |
 | digitaltwins | Azure.DigitalTwins.Core |
 | formrecognizer | Azure.AI.FormRecognizer |
-| iot | Azure.IoT.Hub.Service |
 | maps | Azure.Maps.Geolocation |
 | maps | Azure.Maps.Rendering |
 | maps | Azure.Maps.Routing |
 | maps | Azure.Maps.Search |
 | maps | Azure.Maps.TimeZones |
 | maps | Azure.Maps.Weather |
-| metricsadvisor | Azure.AI.MetricsAdvisor |
-| monitor | Azure.Monitor.OpenTelemetry.LiveMetrics |
 | personalizer | Azure.AI.Personalizer |
-| purview | Azure.Analytics.Purview.Account |
-| purview | Azure.Analytics.Purview.Administration |
-| purview | Azure.Analytics.Purview.Catalog |
-| purview | Azure.Analytics.Purview.Scanning |
 | purview | Azure.Analytics.Purview.Sharing |
 | purview | Azure.Analytics.Purview.Workflows |
-| quantum | Azure.Quantum.Jobs |
 | storage | Azure.Storage.Blobs |
 | storage | Azure.Storage.Blobs.Batch |
 | storage | Azure.Storage.Files.DataLake |
 | storage | Azure.Storage.Files.Shares |
 | storage | Azure.Storage.Queues |
-| synapse | Azure.Analytics.Synapse.AccessControl |
 | synapse | Azure.Analytics.Synapse.Artifacts |
-| synapse | Azure.Analytics.Synapse.ManagedPrivateEndpoints |
-| synapse | Azure.Analytics.Synapse.Monitoring |
-| synapse | Azure.Analytics.Synapse.Spark |
 | tables | Azure.Data.Tables |
 | textanalytics | Azure.AI.TextAnalytics |
 | textanalytics | Azure.AI.TextAnalytics.Legacy.Shared |
 | timeseriesinsights | Azure.IoT.TimeSeriesInsights |
-| videoanalyzer | Azure.Media.VideoAnalyzer.Edge |
 | webpubsub | Azure.Messaging.WebPubSub |
 
 
@@ -150,7 +134,7 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 52
 
 Libraries that provide resource management APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 124 / 124 (100%)
+**Migration Status**: 129 / 129 (100%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
@@ -182,6 +166,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | confluent | Azure.ResourceManager.Confluent | ✅ |
 | connectedcache | Azure.ResourceManager.ConnectedCache | ✅ |
 | containerorchestratorruntime | Azure.ResourceManager.ContainerOrchestratorRuntime | ✅ |
+| containerregistry | Azure.ResourceManager.ContainerRegistry | ✅ |
 | containerregistry | Azure.ResourceManager.ContainerRegistry.Tasks | ✅ |
 | containerservice | Azure.ResourceManager.ContainerService | ✅ |
 | databasewatcher | Azure.ResourceManager.DatabaseWatcher | ✅ |
@@ -191,6 +176,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | dellstorage | Azure.ResourceManager.Dell.Storage | ✅ |
 | dependencymap | Azure.ResourceManager.DependencyMap | ✅ |
 | desktopvirtualization | Azure.ResourceManager.DesktopVirtualization | ✅ |
+| devcenter | Azure.ResourceManager.DevCenter | ✅ |
 | deviceprovisioningservices | Azure.ResourceManager.DeviceProvisioningServices | ✅ |
 | deviceregistry | Azure.ResourceManager.DeviceRegistry | ✅ |
 | devopsinfrastructure | Azure.ResourceManager.DevOpsInfrastructure | ✅ |
@@ -219,6 +205,8 @@ Libraries that provide resource management APIs for Azure services and have been
 | informaticadatamanagement | Azure.ResourceManager.InformaticaDataManagement | ✅ |
 | iotoperations | Azure.ResourceManager.IotOperations | ✅ |
 | keyvault | Azure.ResourceManager.KeyVault | ✅ |
+| kubernetesconfiguration | Azure.ResourceManager.KubernetesConfiguration.Extensions | ✅ |
+| kubernetesconfiguration | Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes | ✅ |
 | lambdatesthyperexecute | Azure.ResourceManager.LambdaTestHyperExecute | ✅ |
 | loadtestservice | Azure.ResourceManager.LoadTesting | ✅ |
 | managedops | Azure.ResourceManager.ManagedOps | ✅ |
@@ -226,6 +214,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | mongocluster | Azure.ResourceManager.MongoCluster | ✅ |
 | mongodbatlas | Azure.ResourceManager.MongoDBAtlas | ✅ |
 | mysql | Azure.ResourceManager.MySql | ✅ |
+| networkcloud | Azure.ResourceManager.NetworkCloud | ✅ |
 | networkfunction | Azure.ResourceManager.NetworkFunction | ✅ |
 | newrelicobservability | Azure.ResourceManager.NewRelicObservability | ✅ |
 | nginx | Azure.ResourceManager.Nginx | ✅ |
@@ -282,7 +271,7 @@ Libraries that provide resource management APIs for Azure services and have been
 
 ## Management Plane Libraries (MPG) - Still on Swagger
 
-Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 108
+Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 102
 
 | Service | Library |
 | ------- | ------- |
@@ -291,7 +280,6 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 10
 | analysisservices | Azure.ResourceManager.Analysis |
 | apimanagement | Azure.ResourceManager.ApiManagement |
 | applicationinsights | Azure.ResourceManager.ApplicationInsights |
-| appplatform | Azure.ResourceManager.AppPlatform |
 | arc-scvmm | Azure.ResourceManager.ScVmm |
 | authorization | Azure.ResourceManager.Authorization |
 | automanage | Azure.ResourceManager.Automanage |
@@ -308,7 +296,6 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 10
 | consumption | Azure.ResourceManager.Consumption |
 | containerapps | Azure.ResourceManager.AppContainers |
 | containerinstance | Azure.ResourceManager.ContainerInstance |
-| containerregistry | Azure.ResourceManager.ContainerRegistry |
 | cosmosdb | Azure.ResourceManager.CosmosDB |
 | cosmosdbforpostgresql | Azure.ResourceManager.CosmosDBForPostgreSql |
 | costmanagement | Azure.ResourceManager.CostManagement |
@@ -320,7 +307,6 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 10
 | datamigration | Azure.ResourceManager.DataMigration |
 | datashare | Azure.ResourceManager.DataShare |
 | defendereasm | Azure.ResourceManager.DefenderEasm |
-| devcenter | Azure.ResourceManager.DevCenter |
 | deviceupdate | Azure.ResourceManager.DeviceUpdate |
 | devspaces | Azure.ResourceManager.DevSpaces |
 | digitaltwins | Azure.ResourceManager.DigitalTwins |
@@ -355,12 +341,9 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 10
 | marketplaceordering | Azure.ResourceManager.MarketplaceOrdering |
 | migrationassessment | Azure.ResourceManager.Migration.Assessment |
 | migrationdiscoverysap | Azure.ResourceManager.MigrationDiscoverySap |
-| mobilenetwork | Azure.ResourceManager.MobileNetwork |
 | monitor | Azure.ResourceManager.Monitor |
 | netapp | Azure.ResourceManager.NetApp |
 | network | Azure.ResourceManager.Network |
-| networkanalytics | Azure.ResourceManager.NetworkAnalytics |
-| networkcloud | Azure.ResourceManager.NetworkCloud |
 | openenergyplatform | Azure.ResourceManager.EnergyServices |
 | operationalinsights | Azure.ResourceManager.OperationalInsights |
 | orbital | Azure.ResourceManager.Orbital |
@@ -400,7 +383,7 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 10
 
 Libraries that provide infrastructure-as-code capabilities for Azure services. These libraries allow you to declaratively specify Azure infrastructure natively in .NET and generate Bicep templates for deployment.
 
-**Migration Status**: 2 / 37 migrated to TypeSpec-based generator
+**Migration Status**: 2 / 38 migrated to TypeSpec-based generator
 
 | Service | Library | Mgmt Peer Library | Generator |
 | ------- | ------- | ----------------- | --------- |
@@ -413,7 +396,7 @@ Libraries that provide infrastructure-as-code capabilities for Azure services. T
 | communication | Azure.Provisioning.Communication | Azure.ResourceManager.Communication ✅ | Reflection |
 | compute | Azure.Provisioning.Compute | Azure.ResourceManager.Compute | Reflection |
 | containerapps | Azure.Provisioning.AppContainers | Azure.ResourceManager.AppContainers | Reflection |
-| containerregistry | Azure.Provisioning.ContainerRegistry | Azure.ResourceManager.ContainerRegistry | Reflection |
+| containerregistry | Azure.Provisioning.ContainerRegistry | Azure.ResourceManager.ContainerRegistry ✅ | Reflection |
 | containerservice | Azure.Provisioning.ContainerService | Azure.ResourceManager.ContainerService ✅ | TypeSpec ✅ |
 | cosmosdb | Azure.Provisioning.CosmosDB | Azure.ResourceManager.CosmosDB | Reflection |
 | datafactory | Azure.Provisioning.DataFactory | Azure.ResourceManager.DataFactory | Reflection |
@@ -425,6 +408,7 @@ Libraries that provide infrastructure-as-code capabilities for Azure services. T
 | keyvault | Azure.Provisioning.KeyVault | Azure.ResourceManager.KeyVault ✅ | Reflection |
 | kubernetesconfiguration | Azure.Provisioning.KubernetesConfiguration | Azure.ResourceManager.KubernetesConfiguration | Reflection |
 | kusto | Azure.Provisioning.Kusto | Azure.ResourceManager.Kusto | Reflection |
+| monitor | Azure.Provisioning.Monitor | Azure.ResourceManager.Monitor | Reflection |
 | network | Azure.Provisioning.Network | Azure.ResourceManager.Network | Reflection |
 | operationalinsights | Azure.Provisioning.OperationalInsights | Azure.ResourceManager.OperationalInsights | Reflection |
 | postgresql | Azure.Provisioning.PostgreSql | Azure.ResourceManager.PostgreSql | Reflection |

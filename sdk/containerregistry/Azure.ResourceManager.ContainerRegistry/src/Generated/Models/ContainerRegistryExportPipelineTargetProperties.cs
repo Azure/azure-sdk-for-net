@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     /// <summary> The properties of the export pipeline target. </summary>
     public partial class ContainerRegistryExportPipelineTargetProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerRegistryExportPipelineTargetProperties"/>. </summary>
         public ContainerRegistryExportPipelineTargetProperties()
@@ -59,19 +31,20 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// </param>
         /// <param name="keyVaultUri"> They key vault secret uri to obtain the target storage SAS token. </param>
         /// <param name="storageAccessMode"> The storage access mode used for the customer storage account. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerRegistryExportPipelineTargetProperties(string exportPipelineTargetPropertiesType, Uri uri, Uri keyVaultUri, ContainerRegistryStorageAccessMode? storageAccessMode, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerRegistryExportPipelineTargetProperties(string exportPipelineTargetPropertiesType, Uri uri, Uri keyVaultUri, ContainerRegistryStorageAccessMode? storageAccessMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ExportPipelineTargetPropertiesType = exportPipelineTargetPropertiesType;
             Uri = uri;
             KeyVaultUri = keyVaultUri;
             StorageAccessMode = storageAccessMode;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The type of target for the export pipeline. </summary>
         [WirePath("type")]
         public string ExportPipelineTargetPropertiesType { get; set; }
+
         /// <summary>
         /// The target uri of the export pipeline.
         /// When 'AzureStorageBlob': "https://accountName.blob.core.windows.net/containerName/blobName"
@@ -79,9 +52,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// </summary>
         [WirePath("uri")]
         public Uri Uri { get; set; }
+
         /// <summary> They key vault secret uri to obtain the target storage SAS token. </summary>
         [WirePath("keyVaultUri")]
         public Uri KeyVaultUri { get; set; }
+
         /// <summary> The storage access mode used for the customer storage account. </summary>
         [WirePath("storageAccessMode")]
         public ContainerRegistryStorageAccessMode? StorageAccessMode { get; set; }
