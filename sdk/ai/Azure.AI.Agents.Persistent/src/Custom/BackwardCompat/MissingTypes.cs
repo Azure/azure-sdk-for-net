@@ -227,7 +227,8 @@ namespace Microsoft.Extensions.Azure
             => AgentsPersistentClientBuilderExtensions.AddPersistentAgentsAdministrationClient(builder, endpoint);
 
         /// <summary> Registers a PersistentAgentsAdministrationClient from configuration. </summary>
-#pragma warning disable IL2026, IL3050
+        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
+        [System.Diagnostics.CodeAnalysis.RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         public static global::Azure.Core.Extensions.IAzureClientBuilder<global::Azure.AI.Agents.Persistent.PersistentAgentsAdministrationClient, global::Azure.AI.Agents.Persistent.PersistentAgentsAdministrationClientOptions> AddPersistentAgentsAdministrationClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : global::Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
             => AgentsPersistentClientBuilderExtensions.AddPersistentAgentsAdministrationClient(builder, configuration);
 #pragma warning restore IL2026, IL3050
