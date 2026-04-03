@@ -1,54 +1,9 @@
 # Azure Storage SDK — Coding Conventions
 
-> Complements the repo-level `/.editorconfig`, `/AGENTS.md`, and `/.github/copilot-instructions.md`.
+> This file is a pointer to the canonical storage instructions in `/sdk/storage/.instructions.md`.
 > Read `/sdk/storage/CONTRIBUTING.md` for testing setup and code generation details.
 
-## C# Style
-
-- **Explicit types** — use explicit type names, not `var` (e.g., `BlobClient client = ...` not `var client = ...`)
-- **Private fields** — `_camelCase` (e.g., `private readonly Uri _uri`)
-- **Static fields** — `s_camelCase` (e.g., `private static int s_count`)
-- **Constants** — `PascalCase` (e.g., `private const int MaxRetries = 3`)
-- **Braces** — Allman style: opening brace on its own line for all constructs
-- **Usings** — outside namespace, sorted: `System.*` first, then `Azure.*`, then others. Type aliases last:
-  ```csharp
-  using System;
-  using System.Threading;
-  using Azure.Core;
-  using Azure.Storage.Blobs.Models;
-  using Metadata = System.Collections.Generic.IDictionary<string, string>;
-  ```
-- **No `this.`** — avoid `this.` qualifier on fields, properties, and methods
-- **Modifier order** — `public`, `private`, `protected`, `internal`, `static`, `extern`, `new`, `virtual`, `abstract`, `sealed`, `override`, `readonly`, `unsafe`, `volatile`, `async`
-- **Logical blank lines** — add blank lines between logical sections within method bodies
-- **Long parameter lists** — when a method has more than 3 parameters, put each on its own line
-
-## Azure SDK Patterns
-
-### Client classes
-- Protected parameterless constructor for mocking: `protected BlobClient() { }`
-- Constructor overloads in order: connection string, `Uri`, `Uri` + `StorageSharedKeyCredential`, `Uri` + `TokenCredential`, `Uri` + `AzureSasCredential` — each with optional `*Options` parameter
-- Public methods and properties are `virtual` for testability
-- Organize methods with `#region` directives (e.g., `#region ctors`, `#region Upload`)
-
-### Sync/async pairs
-Every public operation exposes both sync and async variants. The implementation pattern:
-```csharp
-public virtual Response<BlobInfo> Create(..., CancellationToken cancellationToken = default) =>
-    CreateInternal(..., async: false, cancellationToken).EnsureCompleted();
-
-public virtual async Task<Response<BlobInfo>> CreateAsync(..., CancellationToken cancellationToken = default) =>
-    await CreateInternal(..., async: true, cancellationToken).ConfigureAwait(false);
-```
-- Internal method takes `bool async` parameter
-- `CancellationToken` is always the last parameter, named `cancellationToken`, default `= default`
-
-### Models
-- **Response models** — `internal` constructor, properties with `internal set`. Users create test instances via `*ModelFactory`
-- **Options models** — public constructor, all properties settable
-- **Nullable** — use `?` for optional properties (e.g., `public long? ContentLength { get; internal set; }`)
-- **Null-coalescing** — prefer `options ??= new BlobClientOptions()` pattern
-
+For Azure Storage SDK coding conventions and patterns, see `/sdk/storage/.instructions.md`.
 ### Documentation
 - XML docs on all public members: `<summary>`, `<param>`, `<returns>`, `<remarks>`, `<see cref="..."/>`
 - `[EditorBrowsable(EditorBrowsableState.Never)]` on `object` overrides (ToString, Equals, GetHashCode)
