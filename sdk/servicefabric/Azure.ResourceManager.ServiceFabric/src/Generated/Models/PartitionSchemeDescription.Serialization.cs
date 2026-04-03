@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     public abstract partial class PartitionSchemeDescription : IJsonModel<PartitionSchemeDescription>
     {
         /// <summary> Initializes a new instance of <see cref="PartitionSchemeDescription"/> for deserialization. </summary>
-        internal PartitionSchemeDescription()
+        protected PartitionSchemeDescription()
         {
         }
 

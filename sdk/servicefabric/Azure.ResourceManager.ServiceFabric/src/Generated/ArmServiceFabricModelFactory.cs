@@ -65,9 +65,8 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <param name="notifications"> Indicates a list of notification channels for cluster events. </param>
         /// <param name="enableHttpGatewayExclusiveAuthMode"> If true, token-based authentication is not allowed on the HttpGatewayEndpoint. This is required to support TLS versions 1.3 and above. If token-based authentication is used, HttpGatewayTokenAuthEndpointPort must be defined. </param>
         /// <param name="maxUnusedVersionsToKeep"> Number of unused versions per application type to keep. </param>
-        /// <param name="etag"> Azure resource etag. </param>
         /// <returns> A new <see cref="ServiceFabric.ClusterData"/> instance for mocking. </returns>
-        public static ClusterData ClusterData(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, IEnumerable<ClusterAddOnFeature> addOnFeatures = default, IEnumerable<ClusterVersionDetails> availableClusterVersions = default, ClusterAadSetting azureActiveDirectory = default, ClusterCertificateDescription certificate = default, ClusterServerCertificateCommonNames certificateCommonNames = default, IEnumerable<ClusterClientCertificateCommonName> clientCertificateCommonNames = default, IEnumerable<ClusterClientCertificateThumbprint> clientCertificateThumbprints = default, string clusterCodeVersion = default, Uri clusterEndpoint = default, string clusterId = default, ServiceFabricClusterState? clusterState = default, DiagnosticsStorageAccountConfig diagnosticsStorageAccountConfig = default, bool? isEventStoreServiceEnabled = default, IEnumerable<SettingsSectionDescription> fabricSettings = default, Uri managementEndpoint = default, IEnumerable<ClusterNodeTypeDescription> nodeTypes = default, ServiceFabricProvisioningState? provisioningState = default, ClusterReliabilityLevel? reliabilityLevel = default, ClusterCertificateDescription reverseProxyCertificate = default, ClusterServerCertificateCommonNames reverseProxyCertificateCommonNames = default, ClusterUpgradePolicy upgradeDescription = default, ClusterUpgradeMode? upgradeMode = default, string vmImage = default, SfZonalUpgradeMode? serviceFabricZonalUpgradeMode = default, VmssZonalUpgradeMode? vmssZonalUpgradeMode = default, bool? isInfrastructureServiceManagerEnabled = default, ClusterUpgradeCadence? upgradeWave = default, DateTimeOffset? upgradePauseStartOn = default, DateTimeOffset? upgradePauseEndOn = default, bool? isWaveUpgradePaused = default, IEnumerable<ClusterNotification> notifications = default, bool? enableHttpGatewayExclusiveAuthMode = default, long? maxUnusedVersionsToKeep = default, string etag = default)
+        public static ClusterData ClusterData(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, IEnumerable<ClusterAddOnFeature> addOnFeatures = default, IEnumerable<ClusterVersionDetails> availableClusterVersions = default, ClusterAadSetting azureActiveDirectory = default, ClusterCertificateDescription certificate = default, ClusterServerCertificateCommonNames certificateCommonNames = default, IEnumerable<ClusterClientCertificateCommonName> clientCertificateCommonNames = default, IEnumerable<ClusterClientCertificateThumbprint> clientCertificateThumbprints = default, string clusterCodeVersion = default, Uri clusterEndpoint = default, string clusterId = default, ServiceFabricClusterState? clusterState = default, DiagnosticsStorageAccountConfig diagnosticsStorageAccountConfig = default, bool? isEventStoreServiceEnabled = default, IEnumerable<SettingsSectionDescription> fabricSettings = default, Uri managementEndpoint = default, IEnumerable<ClusterNodeTypeDescription> nodeTypes = default, ServiceFabricProvisioningState? provisioningState = default, ClusterReliabilityLevel? reliabilityLevel = default, ClusterCertificateDescription reverseProxyCertificate = default, ClusterServerCertificateCommonNames reverseProxyCertificateCommonNames = default, ClusterUpgradePolicy upgradeDescription = default, ClusterUpgradeMode? upgradeMode = default, string vmImage = default, SfZonalUpgradeMode? serviceFabricZonalUpgradeMode = default, VmssZonalUpgradeMode? vmssZonalUpgradeMode = default, bool? isInfrastructureServiceManagerEnabled = default, ClusterUpgradeCadence? upgradeWave = default, DateTimeOffset? upgradePauseStartOn = default, DateTimeOffset? upgradePauseEndOn = default, bool? isWaveUpgradePaused = default, IEnumerable<ClusterNotification> notifications = default, bool? enableHttpGatewayExclusiveAuthMode = default, long? maxUnusedVersionsToKeep = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -113,8 +112,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     isWaveUpgradePaused,
                     (notifications ?? new ChangeTrackingList<ClusterNotification>()).ToList(),
                     enableHttpGatewayExclusiveAuthMode,
-                    null),
-                etag);
+                    null));
         }
 
         /// <summary> The detail of the Service Fabric runtime version result. </summary>
@@ -122,7 +120,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <param name="supportExpireOn"> The date of expiry of support of the version. </param>
         /// <param name="environment"> Indicates if this version is for Windows or Linux operating system. </param>
         /// <returns> A new <see cref="Models.ClusterVersionDetails"/> instance for mocking. </returns>
-        public static ClusterVersionDetails ClusterVersionDetails(string codeVersion = default, string supportExpireOn = default, ClusterEnvironment? environment = default)
+        public static ClusterVersionDetails ClusterVersionDetails(string codeVersion = default, DateTimeOffset? supportExpireOn = default, ClusterEnvironment? environment = default)
         {
             return new ClusterVersionDetails(codeVersion, supportExpireOn, environment, additionalBinaryDataProperties: null);
         }
@@ -366,10 +364,10 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             return new UpgradableVersionPathResult(supportedPath.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="id"></param>
+        /// <param name="name"></param>
+        /// <param name="resourceType"></param>
+        /// <param name="systemData"></param>
         /// <param name="vmSize"> VM Size name. </param>
         /// <returns> A new <see cref="ServiceFabric.VMSizeResourceData"/> instance for mocking. </returns>
         public static VMSizeResourceData VMSizeResourceData(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string vmSize = default)
@@ -380,7 +378,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                vmSize is null ? default : new VMSize(vmSize, null));
+                default);
         }
 
         /// <param name="id"> Azure resource identifier. </param>
@@ -912,7 +910,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <param name="supportExpireOn"> The date of expiry of support of the version. </param>
         /// <param name="environment"> Indicates if this version is for Windows or Linux operating system. </param>
         /// <returns> A new <see cref="Models.ClusterCodeVersionsResult"/> instance for mocking. </returns>
-        public static ClusterCodeVersionsResult ClusterCodeVersionsResult(string id = default, string name = default, string @type = default, string codeVersion = default, string supportExpireOn = default, ClusterEnvironment? environment = default)
+        public static ClusterCodeVersionsResult ClusterCodeVersionsResult(string id = default, string name = default, string @type = default, string codeVersion = default, DateTimeOffset? supportExpireOn = default, ClusterEnvironment? environment = default)
         {
             return new ClusterCodeVersionsResult(id, name, @type, codeVersion is null && supportExpireOn is null && environment is null ? default : new ClusterVersionDetails(codeVersion, supportExpireOn, environment, null), additionalBinaryDataProperties: null);
         }

@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             if (Optional.IsDefined(SupportExpireOn))
             {
                 writer.WritePropertyName("supportExpiryUtc"u8);
-                writer.WriteStringValue(SupportExpireOn);
+                writer.WriteStringValue(SupportExpireOn.Value, "O");
             }
             if (Optional.IsDefined(Environment))
             {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 return null;
             }
             string codeVersion = default;
-            string supportExpireOn = default;
+            DateTimeOffset? supportExpireOn = default;
             ClusterEnvironment? environment = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -144,7 +144,11 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
                 if (prop.NameEquals("supportExpiryUtc"u8))
                 {
-                    supportExpireOn = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    supportExpireOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("environment"u8))

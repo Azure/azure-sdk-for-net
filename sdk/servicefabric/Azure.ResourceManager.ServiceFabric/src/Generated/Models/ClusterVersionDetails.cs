@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <param name="supportExpireOn"> The date of expiry of support of the version. </param>
         /// <param name="environment"> Indicates if this version is for Windows or Linux operating system. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ClusterVersionDetails(string codeVersion, string supportExpireOn, ClusterEnvironment? environment, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ClusterVersionDetails(string codeVersion, DateTimeOffset? supportExpireOn, ClusterEnvironment? environment, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CodeVersion = codeVersion;
             SupportExpireOn = supportExpireOn;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         public string CodeVersion { get; }
 
         /// <summary> The date of expiry of support of the version. </summary>
-        public string SupportExpireOn { get; }
+        public DateTimeOffset? SupportExpireOn { get; }
 
         /// <summary> Indicates if this version is for Windows or Linux operating system. </summary>
         public ClusterEnvironment? Environment { get; }

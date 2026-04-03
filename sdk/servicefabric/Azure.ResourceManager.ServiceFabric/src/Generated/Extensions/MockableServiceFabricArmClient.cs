@@ -5,97 +5,12 @@
 
 #nullable disable
 
-using Azure.Core;
 using Azure.ResourceManager;
-using Azure.ResourceManager.ServiceFabric;
 
 namespace Azure.ResourceManager.ServiceFabric.Mocking
 {
     /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockableServiceFabricArmClient : ArmResource
     {
-        /// <summary> Initializes a new instance of MockableServiceFabricArmClient for mocking. </summary>
-        protected MockableServiceFabricArmClient()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="MockableServiceFabricArmClient"/> class. </summary>
-        /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal MockableServiceFabricArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
-        {
-        }
-
-        /// <summary> Gets an object representing a <see cref="ClusterResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ClusterResource"/> object. </returns>
-        public virtual ClusterResource GetClusterResource(ResourceIdentifier id)
-        {
-            ClusterResource.ValidateResourceId(id);
-            return new ClusterResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="VMSizeResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VMSizeResource"/> object. </returns>
-        public virtual VMSizeResource GetVMSizeResource(ResourceIdentifier id)
-        {
-            VMSizeResource.ValidateResourceId(id);
-            return new VMSizeResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="ApplicationTypeResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ApplicationTypeResource"/> object. </returns>
-        public virtual ApplicationTypeResource GetApplicationTypeResource(ResourceIdentifier id)
-        {
-            ApplicationTypeResource.ValidateResourceId(id);
-            return new ApplicationTypeResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="ApplicationTypeVersionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ApplicationTypeVersionResource"/> object. </returns>
-        public virtual ApplicationTypeVersionResource GetApplicationTypeVersionResource(ResourceIdentifier id)
-        {
-            ApplicationTypeVersionResource.ValidateResourceId(id);
-            return new ApplicationTypeVersionResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="ApplicationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ApplicationResource"/> object. </returns>
-        public virtual ApplicationResource GetApplicationResource(ResourceIdentifier id)
-        {
-            ApplicationResource.ValidateResourceId(id);
-            return new ApplicationResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="ServiceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServiceResource"/> object. </returns>
-        public virtual ServiceResource GetServiceResource(ResourceIdentifier id)
-        {
-            ServiceResource.ValidateResourceId(id);
-            return new ServiceResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="ClusterVersionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ClusterVersionResource"/> object. </returns>
-        public virtual ClusterVersionResource GetClusterVersionResource(ResourceIdentifier id)
-        {
-            ClusterVersionResource.ValidateResourceId(id);
-            return new ClusterVersionResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="ClusterVersionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ClusterVersionResource"/> object. </returns>
-        public virtual ClusterVersionResource GetClusterVersionResource(ResourceIdentifier id)
-        {
-            ClusterVersionResource.ValidateResourceId(id);
-            return new ClusterVersionResource(Client, id);
-        }
     }
 }

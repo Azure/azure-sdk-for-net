@@ -42,6 +42,11 @@ namespace Azure.ResourceManager.ServiceFabric
             ETag = eTag;
         }
 
+        /// <summary> Initializes a new instance of <see cref="ClusterData"/>. </summary>
+        internal ClusterData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, ClusterProperties properties) : this(id, name, resourceType, systemData, additionalBinaryDataProperties, tags, location, properties, null)
+        {
+        }
+
         /// <summary> The cluster resource properties. </summary>
         internal ClusterProperties Properties { get; set; }
 

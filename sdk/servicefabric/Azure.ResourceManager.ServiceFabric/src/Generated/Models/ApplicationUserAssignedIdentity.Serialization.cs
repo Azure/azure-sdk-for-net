@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 return null;
             }
             string name = default;
-            string principalId = default;
+            Guid principalId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
                 if (prop.NameEquals("principalId"u8))
                 {
-                    principalId = prop.Value.GetString();
+                    principalId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

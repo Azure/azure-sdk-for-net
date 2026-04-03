@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         }
 
         /// <summary> The date of expiry of support of the version. </summary>
-        public string SupportExpireOn
+        public DateTimeOffset? SupportExpireOn
         {
             get
             {

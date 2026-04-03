@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     public abstract partial class ServicePlacementPolicyDescription : IJsonModel<ServicePlacementPolicyDescription>
     {
         /// <summary> Initializes a new instance of <see cref="ServicePlacementPolicyDescription"/> for deserialization. </summary>
-        internal ServicePlacementPolicyDescription()
+        protected ServicePlacementPolicyDescription()
         {
         }
 

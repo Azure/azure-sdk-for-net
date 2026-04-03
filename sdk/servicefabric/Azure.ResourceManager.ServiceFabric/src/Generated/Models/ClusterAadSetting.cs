@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <param name="clusterApplication"> Azure active directory cluster application id. </param>
         /// <param name="clientApplication"> Azure active directory client application id. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ClusterAadSetting(string tenantId, string clusterApplication, string clientApplication, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ClusterAadSetting(Guid? tenantId, string clusterApplication, string clientApplication, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TenantId = tenantId;
             ClusterApplication = clusterApplication;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         }
 
         /// <summary> Azure active directory tenant id. </summary>
-        public string TenantId { get; set; }
+        public Guid? TenantId { get; set; }
 
         /// <summary> Azure active directory cluster application id. </summary>
         public string ClusterApplication { get; set; }

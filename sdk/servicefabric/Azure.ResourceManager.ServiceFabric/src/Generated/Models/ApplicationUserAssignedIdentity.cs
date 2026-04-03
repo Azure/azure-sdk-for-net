@@ -20,11 +20,10 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <summary> Initializes a new instance of <see cref="ApplicationUserAssignedIdentity"/>. </summary>
         /// <param name="name"> The friendly name of user assigned identity. </param>
         /// <param name="principalId"> The principal id of user assigned identity. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="principalId"/> is null. </exception>
-        public ApplicationUserAssignedIdentity(string name, string principalId)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public ApplicationUserAssignedIdentity(string name, Guid principalId)
         {
             Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(principalId, nameof(principalId));
 
             Name = name;
             PrincipalId = principalId;
@@ -34,7 +33,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <param name="name"> The friendly name of user assigned identity. </param>
         /// <param name="principalId"> The principal id of user assigned identity. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationUserAssignedIdentity(string name, string principalId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApplicationUserAssignedIdentity(string name, Guid principalId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             PrincipalId = principalId;
@@ -45,6 +44,6 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         public string Name { get; set; }
 
         /// <summary> The principal id of user assigned identity. </summary>
-        public string PrincipalId { get; set; }
+        public Guid PrincipalId { get; set; }
     }
 }
