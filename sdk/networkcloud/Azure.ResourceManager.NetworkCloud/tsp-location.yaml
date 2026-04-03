@@ -1,4 +1,4 @@
 directory: specification/networkcloud/NetworkCloud.Management
-commit: 48eba0566e759318e67ab948ee40704066c813b3
+commit: a7f8152138adccdbf476061fbebd9d6f70bedd1d
 repo: Azure/azure-rest-api-specs
 emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json
