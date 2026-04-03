@@ -1579,6 +1579,7 @@
     {
       "filename": "**/sdk/monitor/**/*.cs",
       "words": [
+        "azprovision",
         "resourceid"
       ]
     },
