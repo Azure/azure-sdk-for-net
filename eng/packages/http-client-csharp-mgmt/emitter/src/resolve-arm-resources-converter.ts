@@ -860,7 +860,7 @@ function validateAndPruneArmResources(
           code: "invalid-resource-read-response",
           target: NoTarget,
           format: {
-            message: `Read operation '${readMethod.methodId}' for resource '${resource.resourceModelId}' returns model '${responseModelId}' instead of the resource model. The read operation should return the resource's own model type.`
+            message: `Read operation '${readMethod.methodId}' for resource '${resource.resourceModelId}' returns model '${responseModelId}' instead of the resource model. The read operation should return the resource's own model type. See https://github.com/Azure/azure-sdk-for-net/blob/main/eng/packages/http-client-csharp-mgmt/docs/resource-validation-diagnostics.md#invalid-resource-read-response for guidance on how to fix this.`
           }
         });
       }
@@ -874,16 +874,12 @@ function validateAndPruneArmResources(
     );
     for (const listMethod of listMethods) {
       const methodKind = methodKindMap.get(listMethod.methodId);
-      if (
-        methodKind &&
-        methodKind !== "paging" &&
-        methodKind !== "lropaging"
-      ) {
+      if (methodKind && methodKind !== "paging" && methodKind !== "lropaging") {
         $lib.reportDiagnostic(program, {
           code: "non-pageable-list-operation",
           target: NoTarget,
           format: {
-            message: `List operation '${listMethod.methodId}' on resource '${resource.resourceModelId}' is not pageable (kind: '${methodKind}'). All list operations should be pageable.`
+            message: `List operation '${listMethod.methodId}' on resource '${resource.resourceModelId}' is not pageable (kind: '${methodKind}'). All list operations should be pageable. To fix, add the \`@list\` decorator if applicable, or the \`@@markAsPageable\` decorator on \`csharp\` scope. See https://github.com/Azure/azure-sdk-for-net/blob/main/eng/packages/http-client-csharp-mgmt/docs/resource-validation-diagnostics.md#non-pageable-list-operation for details.`
           }
         });
       }
@@ -901,7 +897,7 @@ function validateAndPruneArmResources(
         code: "duplicate-resource-id",
         target: NoTarget,
         format: {
-          message: `Duplicate resource ID pattern '${resourceId}' found for resource models '${existing.resourceModelId}' and '${resource.resourceModelId}'. Each resolved resource must have a unique resource ID.`
+          message: `Duplicate resource ID pattern '${resourceId}' found for resource models '${existing.resourceModelId}' and '${resource.resourceModelId}'. Each resolved resource must have a unique resource ID. See https://github.com/Azure/azure-sdk-for-net/blob/main/eng/packages/http-client-csharp-mgmt/docs/resource-validation-diagnostics.md#duplicate-resource-id for guidance on how to fix this.`
         }
       });
     } else {
@@ -920,7 +916,7 @@ function validateAndPruneArmResources(
         code: "duplicate-resource-name",
         target: NoTarget,
         format: {
-          message: `Duplicate resource name '${resourceName}' found for resource models '${existing.resourceModelId}' and '${resource.resourceModelId}'. Each resolved resource must have a unique resource name.`
+          message: `Duplicate resource name '${resourceName}' found for resource models '${existing.resourceModelId}' and '${resource.resourceModelId}'. Each resolved resource must have a unique resource name. See https://github.com/Azure/azure-sdk-for-net/blob/main/eng/packages/http-client-csharp-mgmt/docs/resource-validation-diagnostics.md#duplicate-resource-name for guidance on how to fix this.`
         }
       });
     } else {
