@@ -450,16 +450,18 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             string destinationPath = "https://storageaccount.file.core.windows.net/share/dir2/file2";
 
             ShareFileSourceCheckpointDetails sourceCheckpoint = new ShareFileSourceCheckpointDetails(
-                shareProtocol: ShareProtocol.Smb,
-                snapshot: DefaultSnapshot);
+                shareProtocol: ShareProtocol.Smb);
 
             ShareFileDestinationCheckpointDetails destCheckpoint = new ShareFileDestinationCheckpointDetails(
                 false, null, false, null, false, null, false, null, false, null, false, null,
                 false, false, null, false, null, false, null, false, null, false, null, ShareProtocol.Smb);
 
+            // Snapshot is now in the URI
+            string sourcePathWithSnapshot = $"{sourcePath}?sharesnapshot={DefaultSnapshot}";
+
             TransferProperties transferProperties = GetProperties(
                 transferId,
-                sourcePath,
+                sourcePathWithSnapshot,
                 destinationPath,
                 ShareProviderId,
                 ShareProviderId,
@@ -473,7 +475,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
 
             // Assert
             Assert.IsNotNull(storageResource);
-            Assert.That(storageResource._options.Snapshot, Is.EqualTo(DefaultSnapshot));
+            Assert.That(storageResource.Uri.Query, Does.Contain($"sharesnapshot={DefaultSnapshot}"));
         }
 
         [Test]
@@ -485,16 +487,18 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             string destinationPath = "https://storageaccount.file.core.windows.net/share/dir2/file2";
 
             ShareFileSourceCheckpointDetails sourceCheckpoint = new ShareFileSourceCheckpointDetails(
-                shareProtocol: ShareProtocol.Smb,
-                snapshot: DefaultSnapshot);
+                shareProtocol: ShareProtocol.Smb);
 
             ShareFileDestinationCheckpointDetails destCheckpoint = new ShareFileDestinationCheckpointDetails(
                 false, null, false, null, false, null, false, null, false, null, false, null,
                 false, false, null, false, null, false, null, false, null, false, null, ShareProtocol.Smb);
 
+            // Snapshot is in the source URI but not destination
+            string sourcePathWithSnapshot = $"{sourcePath}?sharesnapshot={DefaultSnapshot}";
+
             TransferProperties transferProperties = GetProperties(
                 transferId,
-                sourcePath,
+                sourcePathWithSnapshot,
                 destinationPath,
                 ShareProviderId,
                 ShareProviderId,
@@ -509,7 +513,6 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             // Assert
             Assert.IsNotNull(storageResource);
             Assert.That(storageResource.Uri.Query, Does.Not.Contain("sharesnapshot"));
-            Assert.That(storageResource._options.Snapshot, Is.Null);
         }
 
         [Test]
@@ -521,8 +524,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             string destinationPath = "https://storageaccount.file.core.windows.net/share/dir2/file2";
 
             ShareFileSourceCheckpointDetails sourceCheckpoint = new ShareFileSourceCheckpointDetails(
-                shareProtocol: ShareProtocol.Smb,
-                snapshot: null);
+                shareProtocol: ShareProtocol.Smb);
 
             ShareFileDestinationCheckpointDetails destCheckpoint = new ShareFileDestinationCheckpointDetails(
                 false, null, false, null, false, null, false, null, false, null, false, null,
@@ -545,7 +547,6 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             // Assert
             Assert.IsNotNull(storageResource);
             Assert.That(storageResource.Uri.Query, Does.Not.Contain("sharesnapshot"));
-            Assert.That(storageResource._options.Snapshot, Is.Null);
         }
 
         [Test]
@@ -557,16 +558,18 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             string destinationPath = "https://storageaccount.file.core.windows.net/share/dir2";
 
             ShareFileSourceCheckpointDetails sourceCheckpoint = new ShareFileSourceCheckpointDetails(
-                shareProtocol: ShareProtocol.Smb,
-                snapshot: DefaultSnapshot);
+                shareProtocol: ShareProtocol.Smb);
 
             ShareFileDestinationCheckpointDetails destCheckpoint = new ShareFileDestinationCheckpointDetails(
                 false, null, false, null, false, null, false, null, false, null, false, null,
                 false, false, null, false, null, false, null, false, null, false, null, ShareProtocol.Smb);
 
+            // Snapshot is now in the URI
+            string sourcePathWithSnapshot = $"{sourcePath}?sharesnapshot={DefaultSnapshot}";
+
             TransferProperties transferProperties = GetProperties(
                 transferId,
-                sourcePath,
+                sourcePathWithSnapshot,
                 destinationPath,
                 ShareProviderId,
                 ShareProviderId,
@@ -581,7 +584,6 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             // Assert
             Assert.IsNotNull(storageResource);
             Assert.That(storageResource.Uri.AbsoluteUri, Does.Contain($"sharesnapshot={DefaultSnapshot}"));
-            Assert.That(storageResource.ResourceOptions.Snapshot, Is.EqualTo(DefaultSnapshot));
         }
 
         [Test]
@@ -593,16 +595,18 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             string destinationPath = "https://storageaccount.file.core.windows.net/share/dir2";
 
             ShareFileSourceCheckpointDetails sourceCheckpoint = new ShareFileSourceCheckpointDetails(
-                shareProtocol: ShareProtocol.Smb,
-                snapshot: DefaultSnapshot);
+                shareProtocol: ShareProtocol.Smb);
 
             ShareFileDestinationCheckpointDetails destCheckpoint = new ShareFileDestinationCheckpointDetails(
                 false, null, false, null, false, null, false, null, false, null, false, null,
                 false, false, null, false, null, false, null, false, null, false, null, ShareProtocol.Smb);
 
+            // Snapshot is in source URI but not destination
+            string sourcePathWithSnapshot = $"{sourcePath}?sharesnapshot={DefaultSnapshot}";
+
             TransferProperties transferProperties = GetProperties(
                 transferId,
-                sourcePath,
+                sourcePathWithSnapshot,
                 destinationPath,
                 ShareProviderId,
                 ShareProviderId,
@@ -617,7 +621,6 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             // Assert
             Assert.IsNotNull(storageResource);
             Assert.That(storageResource.Uri.Query, Does.Not.Contain("sharesnapshot"));
-            Assert.That(storageResource.ResourceOptions.Snapshot, Is.Null);
         }
 
         [Test]
@@ -629,16 +632,18 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             string destinationPath = "https://storageaccount.file.core.windows.net/share/dir2/file2";
 
             ShareFileSourceCheckpointDetails originalSourceCheckpoint = new ShareFileSourceCheckpointDetails(
-                shareProtocol: ShareProtocol.Nfs,
-                snapshot: DefaultSnapshot);
+                shareProtocol: ShareProtocol.Nfs);
 
             ShareFileDestinationCheckpointDetails destCheckpoint = new ShareFileDestinationCheckpointDetails(
                 false, null, false, null, false, null, false, null, false, null, false, null,
                 false, false, null, false, null, false, null, false, null, false, null, ShareProtocol.Nfs);
 
+            // Snapshot is now in the URI
+            string sourcePathWithSnapshot = $"{sourcePath}?sharesnapshot={DefaultSnapshot}";
+
             TransferProperties transferProperties = GetProperties(
                 transferId,
-                sourcePath,
+                sourcePathWithSnapshot,
                 destinationPath,
                 ShareProviderId,
                 ShareProviderId,
@@ -652,7 +657,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
 
             // Assert
             Assert.IsNotNull(storageResource);
-            Assert.That(storageResource._options.Snapshot, Is.EqualTo(originalSourceCheckpoint.Snapshot));
+            Assert.That(storageResource.Uri.Query, Does.Contain($"sharesnapshot={DefaultSnapshot}"));
             Assert.That(storageResource._options.ShareProtocol, Is.EqualTo(originalSourceCheckpoint.ShareProtocol));
         }
 
@@ -733,6 +738,175 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             Assert.That(storageResource._options.Snapshot, Is.Null);
             Assert.That(storageResource._options.ShareProtocol, Is.EqualTo(ShareProtocol.Nfs));
         }
+
+        #region Snapshot Preservation Tests
+
+        [Test]
+        public async Task RehydrateFile_WithSnapshotInUri_PreservesSnapshot()
+        {
+            // Arrange
+            string transferId = Guid.NewGuid().ToString();
+            string snapshot = "2024-01-01T00:00:00.0000000Z";
+            string sourcePathWithSnapshot = $"https://storageaccount.file.core.windows.net/share/file?sharesnapshot={snapshot}";
+            string destinationPath = "https://storageaccount.file.core.windows.net/share/destfile";
+
+            ShareFileSourceCheckpointDetails sourceCheckpoint = new ShareFileSourceCheckpointDetails(ShareProtocol.Smb);
+            ShareFileDestinationCheckpointDetails destCheckpoint = new ShareFileDestinationCheckpointDetails(
+                false, null, false, null, false, null, false, null, false, null, false, null,
+                false, false, null, false, null, false, null, false, null, false, null, ShareProtocol.Smb);
+
+            TransferProperties transferProperties = GetProperties(
+                transferId,
+                sourcePathWithSnapshot,
+                destinationPath,
+                ShareProviderId,
+                ShareProviderId,
+                isContainer: false,
+                sourceCheckpoint,
+                destCheckpoint).Object;
+
+            // Act
+            ShareFileStorageResource storageResource = (ShareFileStorageResource)
+                await new ShareFilesStorageResourceProvider(_tokenCredential).FromSourceInternalHookAsync(transferProperties);
+
+            // Assert
+            Assert.IsNotNull(storageResource);
+            Assert.That(storageResource.Uri.Query, Does.Contain($"sharesnapshot={snapshot}"));
+            Assert.That(storageResource.ShareFileClient.Uri.Query, Does.Contain($"sharesnapshot={snapshot}"));
+        }
+
+        [Test]
+        public async Task RehydrateFile_NoSnapshotInUri_UriWithoutSnapshot()
+        {
+            // Arrange
+            string transferId = Guid.NewGuid().ToString();
+            string sourcePath = "https://storageaccount.file.core.windows.net/share/file";
+            string destinationPath = "https://storageaccount.file.core.windows.net/share/destfile";
+
+            ShareFileSourceCheckpointDetails sourceCheckpoint = new ShareFileSourceCheckpointDetails(ShareProtocol.Smb);
+            ShareFileDestinationCheckpointDetails destCheckpoint = new ShareFileDestinationCheckpointDetails(
+                false, null, false, null, false, null, false, null, false, null, false, null,
+                false, false, null, false, null, false, null, false, null, false, null, ShareProtocol.Smb);
+
+            TransferProperties transferProperties = GetProperties(
+                transferId,
+                sourcePath,
+                destinationPath,
+                ShareProviderId,
+                ShareProviderId,
+                isContainer: false,
+                sourceCheckpoint,
+                destCheckpoint).Object;
+
+            // Act
+            ShareFileStorageResource storageResource = (ShareFileStorageResource)
+                await new ShareFilesStorageResourceProvider(_tokenCredential).FromSourceInternalHookAsync(transferProperties);
+
+            // Assert
+            Assert.IsNotNull(storageResource);
+            Assert.That(storageResource.Uri.Query, Does.Not.Contain("sharesnapshot="));
+        }
+
+        [Test]
+        public async Task RehydrateFile_SnapshotInUri_DestinationIgnoresSnapshot()
+        {
+            // Arrange - snapshot in source should not appear in destination
+            string transferId = Guid.NewGuid().ToString();
+            string snapshot = "2024-01-15T10:30:00.0000000Z";
+            string sourcePathWithSnapshot = $"https://storageaccount.file.core.windows.net/share/file?sharesnapshot={snapshot}";
+            string destinationPath = "https://storageaccount.file.core.windows.net/share/destfile";
+
+            ShareFileSourceCheckpointDetails sourceCheckpoint = new ShareFileSourceCheckpointDetails(ShareProtocol.Smb);
+            ShareFileDestinationCheckpointDetails destCheckpoint = new ShareFileDestinationCheckpointDetails(
+                false, null, false, null, false, null, false, null, false, null, false, null,
+                false, false, null, false, null, false, null, false, null, false, null, ShareProtocol.Smb);
+
+            TransferProperties transferProperties = GetProperties(
+                transferId,
+                sourcePathWithSnapshot,
+                destinationPath,
+                ShareProviderId,
+                ShareProviderId,
+                isContainer: false,
+                sourceCheckpoint,
+                destCheckpoint).Object;
+
+            // Act - rehydrate as destination
+            ShareFileStorageResource storageResource = (ShareFileStorageResource)
+                await new ShareFilesStorageResourceProvider(_tokenCredential).FromDestinationInternalHookAsync(transferProperties);
+
+            // Assert - destination should not have snapshot
+            Assert.IsNotNull(storageResource);
+            Assert.That(storageResource.Uri.Query, Does.Not.Contain("sharesnapshot="));
+        }
+
+        [Test]
+        public async Task RehydrateDirectory_WithSnapshotInUri_PreservesSnapshot()
+        {
+            // Arrange
+            string transferId = Guid.NewGuid().ToString();
+            string snapshot = "2024-02-20T15:45:00.0000000Z";
+            string sourcePathWithSnapshot = $"https://storageaccount.file.core.windows.net/share/directory?sharesnapshot={snapshot}";
+            string destinationPath = "https://storageaccount.file.core.windows.net/share/destdir";
+
+            ShareFileSourceCheckpointDetails sourceCheckpoint = new ShareFileSourceCheckpointDetails(ShareProtocol.Nfs);
+            ShareFileDestinationCheckpointDetails destCheckpoint = new ShareFileDestinationCheckpointDetails(
+                false, null, false, null, false, null, false, null, false, null, false, null,
+                false, false, null, false, null, false, null, false, null, false, null, ShareProtocol.Nfs);
+
+            TransferProperties transferProperties = GetProperties(
+                transferId,
+                sourcePathWithSnapshot,
+                destinationPath,
+                ShareProviderId,
+                ShareProviderId,
+                isContainer: true,
+                sourceCheckpoint,
+                destCheckpoint).Object;
+
+            // Act
+            ShareDirectoryStorageResourceContainer storageResource = (ShareDirectoryStorageResourceContainer)
+                await new ShareFilesStorageResourceProvider(_tokenCredential).FromSourceInternalHookAsync(transferProperties);
+
+            // Assert
+            Assert.IsNotNull(storageResource);
+            Assert.That(storageResource.Uri.Query, Does.Contain($"sharesnapshot={snapshot}"));
+        }
+
+        [Test]
+        public async Task RehydrateDirectory_SnapshotInUri_DestinationIgnoresSnapshot()
+        {
+            // Arrange
+            string transferId = Guid.NewGuid().ToString();
+            string snapshot = "2024-03-10T09:00:00.0000000Z";
+            string sourcePathWithSnapshot = $"https://storageaccount.file.core.windows.net/share/directory?sharesnapshot={snapshot}";
+            string destinationPath = "https://storageaccount.file.core.windows.net/share/destdir";
+
+            ShareFileSourceCheckpointDetails sourceCheckpoint = new ShareFileSourceCheckpointDetails(ShareProtocol.Smb);
+            ShareFileDestinationCheckpointDetails destCheckpoint = new ShareFileDestinationCheckpointDetails(
+                false, null, false, null, false, null, false, null, false, null, false, null,
+                false, false, null, false, null, false, null, false, null, false, null, ShareProtocol.Smb);
+
+            TransferProperties transferProperties = GetProperties(
+                transferId,
+                sourcePathWithSnapshot,
+                destinationPath,
+                ShareProviderId,
+                ShareProviderId,
+                isContainer: true,
+                sourceCheckpoint,
+                destCheckpoint).Object;
+
+            // Act - rehydrate as destination
+            ShareDirectoryStorageResourceContainer storageResource = (ShareDirectoryStorageResourceContainer)
+                await new ShareFilesStorageResourceProvider(_tokenCredential).FromDestinationInternalHookAsync(transferProperties);
+
+            // Assert - destination should not have snapshot
+            Assert.IsNotNull(storageResource);
+            Assert.That(storageResource.Uri.Query, Does.Not.Contain("sharesnapshot="));
+        }
+
+        #endregion
         #endregion
     }
 }

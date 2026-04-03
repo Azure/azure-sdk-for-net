@@ -2695,15 +2695,15 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             // Act
             var checkpointDetails = resource.GetSourceCheckpointDetails();
 
-            // Assert
+            // Assert - Snapshot should be in URI, not checkpoint details
             Assert.IsInstanceOf<ShareFileSourceCheckpointDetails>(checkpointDetails);
             var shareDetails = (ShareFileSourceCheckpointDetails)checkpointDetails;
-            Assert.AreEqual(snapshotId, shareDetails.Snapshot);
+            Assert.That(resource.Uri.Query, Does.Contain($"sharesnapshot={snapshotId}"));
         }
 
         /// <summary>
         /// Tests that when client URI contains a snapshot and options also specify a snapshot,
-        /// the options snapshot takes precedence in checkpoint details.
+        /// the options snapshot takes precedence in URI.
         /// </summary>
         [Test]
         public void Ctor_WithSnapshotInClientAndOptions_UsesOptionsSnapshot()
@@ -2723,10 +2723,8 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             var options = new ShareFileStorageResourceOptions { Snapshot = snapshot2Id };
             var resource = new ShareFileStorageResource(snapshot1Client, options);
 
-            // Assert: Resource should use snapshot2 from options
-            var checkpointDetails = resource.GetSourceCheckpointDetails();
-            var shareDetails = (ShareFileSourceCheckpointDetails)checkpointDetails;
-            Assert.AreEqual(snapshot2Id, shareDetails.Snapshot);
+            // Assert: Resource should use snapshot2 from options in URI
+            Assert.That(resource.Uri.Query, Does.Contain($"sharesnapshot={snapshot2Id}"));
         }
 
         #endregion

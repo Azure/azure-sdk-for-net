@@ -28,8 +28,7 @@ namespace Azure.Storage.DataMovement.Blobs
 
         private Uri BuildSanitizedUri()
         {
-            // Strip snapshot, version, and SAS from URI for security
-            // Snapshot/version are stored separately in checkpoint details
+            // Strip SAS from URI for security - snapshot and version are preserved automatically
             // SAS should not be exposed in events/logs
             BlobUriBuilder uriBuilder = new BlobUriBuilder(BlobClient.Uri)
             {
@@ -359,18 +358,9 @@ namespace Azure.Storage.DataMovement.Blobs
 
         protected override StorageResourceCheckpointDetails GetSourceCheckpointDetails()
         {
-            // Extract snapshot/version from URI if not provided in options
-            string snapshot = _options?.Snapshot;
-            string versionId = _options?.VersionId;
-
-            if (string.IsNullOrEmpty(snapshot) || string.IsNullOrEmpty(versionId))
-            {
-                BlobUriBuilder uriBuilder = new BlobUriBuilder(BlobClient.Uri);
-                snapshot ??= uriBuilder.Snapshot;
-                versionId ??= uriBuilder.VersionId;
-            }
-
-            return new BlobSourceCheckpointDetails(snapshot: snapshot, versionId: versionId);
+            // Snapshot and versionId are preserved in the URI (from BuildSanitizedUri)
+            // No need to store them separately in checkpoint details
+            return new BlobSourceCheckpointDetails();
         }
 
         protected override StorageResourceCheckpointDetails GetDestinationCheckpointDetails()

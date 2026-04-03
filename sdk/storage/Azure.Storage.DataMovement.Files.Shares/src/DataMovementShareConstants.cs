@@ -21,13 +21,10 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
             internal const int VersionEncodedSize = IntSizeInBytes;
             internal const int ShareProtocolEncodedSize = OneByte;
-            internal const int OffsetLengthEncodedSize = IntSizeInBytes;
 
             internal const int VersionIndex = 0;
             internal const int ShareProtocolIndex = VersionIndex + VersionEncodedSize;
-            internal const int SnapshotOffsetIndex = ShareProtocolIndex + ShareProtocolEncodedSize;
-            internal const int SnapshotLengthIndex = SnapshotOffsetIndex + OffsetLengthEncodedSize;
-            internal const int VariableLengthStartIndex = SnapshotLengthIndex + OffsetLengthEncodedSize;
+            internal const int VariableLengthStartIndex = ShareProtocolIndex + ShareProtocolEncodedSize;
             internal const int DataSize = VariableLengthStartIndex;
         }
 

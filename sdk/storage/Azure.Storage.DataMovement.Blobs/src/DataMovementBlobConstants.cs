@@ -21,13 +21,7 @@ namespace Azure.Storage.DataMovement.Blobs
             internal const int SchemaVersion = 1;
 
             internal const int VersionIndex = 0;
-            internal const int SnapshotOffsetIndex = VersionIndex + IntSizeInBytes;
-            internal const int SnapshotLengthIndex = SnapshotOffsetIndex + IntSizeInBytes;
-
-            internal const int VersionIdOffsetIndex = SnapshotLengthIndex + IntSizeInBytes;
-            internal const int VersionIdLengthIndex = VersionIdOffsetIndex + IntSizeInBytes;
-
-            internal const int VariableLengthStartIndex = VersionIdLengthIndex + IntSizeInBytes;
+            internal const int VariableLengthStartIndex = VersionIndex + IntSizeInBytes;
             internal const int DataSize = VariableLengthStartIndex;
         }
 

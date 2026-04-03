@@ -12,54 +12,19 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
 {
     public class ShareSourceCheckpointDetailsTests
     {
-        private static string defaultSnapshot = "2024-01-15T10:30:00.0000000Z";
-        private byte[] CreateSerializedSetValues_LatestVersion()
-        {
-            using MemoryStream stream = new();
-            using BinaryWriter writer = new(stream);
-
-            byte[] snapshotBytes = StringToByteArray(defaultSnapshot);
-            int snapshotOffset = DataMovementShareConstants.SourceCheckpointDetails.VariableLengthStartIndex;
-
-            writer.Write(DataMovementShareConstants.SourceCheckpointDetails.SchemaVersion);
-            writer.Write((byte)ShareProtocol.Nfs);
-            // With snapshot - write offset/length
-            writer.Write(snapshotOffset); // offset
-            writer.Write(snapshotBytes.Length); // length
-            // Write the actual snapshot bytes
-            writer.Write(snapshotBytes);
-
-            return stream.ToArray();
-        }
-
-        private void AssertEquals(ShareFileSourceCheckpointDetails left, ShareFileSourceCheckpointDetails right)
-        {
-            Assert.That(left.Version, Is.EqualTo(right.Version));
-            Assert.That(left.ShareProtocol, Is.EqualTo(right.ShareProtocol));
-            Assert.That(left.Snapshot, Is.EqualTo(right.Snapshot));
-        }
-
-        private static byte[] StringToByteArray(string value)
-        {
-            return string.IsNullOrEmpty(value) ? Array.Empty<byte>() : Encoding.UTF8.GetBytes(value);
-        }
-
         [Test]
         public void Ctor()
         {
-            ShareFileSourceCheckpointDetails data = new(ShareProtocol.Nfs, snapshot: null);
+            ShareFileSourceCheckpointDetails data = new(ShareProtocol.Nfs);
 
             Assert.That(DataMovementShareConstants.SourceCheckpointDetails.SchemaVersion, Is.EqualTo(data.Version));
             Assert.That(ShareProtocol.Nfs, Is.EqualTo(data.ShareProtocol));
-            Assert.That(data.Snapshot, Is.Null);
         }
 
         [Test]
-        public void Serialize_LatestVersion()
+        public void Serialize()
         {
-            byte[] expected = CreateSerializedSetValues_LatestVersion();
-
-            ShareFileSourceCheckpointDetails data = new(ShareProtocol.Nfs, snapshot: defaultSnapshot);
+            ShareFileSourceCheckpointDetails data = new(ShareProtocol.Nfs);
             byte[] actual;
             using (MemoryStream stream = new())
             {
@@ -67,15 +32,22 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 actual = stream.ToArray();
             }
 
-            Assert.That(expected, Is.EqualTo(actual));
+            // Should only be the fixed size header
+            Assert.That(actual.Length, Is.EqualTo(DataMovementShareConstants.SourceCheckpointDetails.VariableLengthStartIndex));
         }
 
         [Test]
-        public void Deserialize_LatestVersion()
+        public void Deserialize()
         {
-            byte[] serialized = CreateSerializedSetValues_LatestVersion();
-            ShareFileSourceCheckpointDetails deserialized;
+            ShareFileSourceCheckpointDetails original = new(ShareProtocol.Nfs);
+            byte[] serialized;
+            using (MemoryStream stream = new())
+            {
+                original.SerializeInternal(stream);
+                serialized = stream.ToArray();
+            }
 
+            ShareFileSourceCheckpointDetails deserialized;
             using (MemoryStream stream = new(serialized))
             {
                 deserialized = ShareFileSourceCheckpointDetails.Deserialize(stream);
@@ -83,7 +55,6 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
 
             Assert.That(deserialized.Version, Is.EqualTo(DataMovementShareConstants.SourceCheckpointDetails.SchemaVersion));
             Assert.That(deserialized.ShareProtocol, Is.EqualTo(ShareProtocol.Nfs));
-            Assert.That(deserialized.Snapshot, Is.EqualTo(defaultSnapshot));
         }
 
         [Test]
@@ -109,7 +80,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
         [TestCase(4)]
         public void Deserialize_IncorrectSchemaVersion(int incorrectSchemaVersion)
         {
-            ShareFileSourceCheckpointDetails data = new(ShareProtocol.Nfs, snapshot: null);
+            ShareFileSourceCheckpointDetails data = new(ShareProtocol.Nfs);
             data.Version = incorrectSchemaVersion;
 
             using MemoryStream dataStream = new MemoryStream();
@@ -121,103 +92,22 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
         }
 
         [Test]
-        public void RoundTrip_LatestVersion()
+        public void RoundTrip()
         {
-            ShareFileSourceCheckpointDetails original = new(ShareProtocol.Nfs, snapshot: defaultSnapshot);
+            ShareFileSourceCheckpointDetails original = new(ShareProtocol.Nfs);
             using MemoryStream serialized = new();
             original.SerializeInternal(serialized);
             serialized.Position = 0;
             ShareFileSourceCheckpointDetails deserialized = ShareFileSourceCheckpointDetails.Deserialize(serialized);
 
-            AssertEquals(original, deserialized);
-        }
-
-        [Test]
-        public void Serialize_NoSnapshot()
-        {
-            ShareFileSourceCheckpointDetails data = new(ShareProtocol.Smb, snapshot: null);
-
-            byte[] serialized;
-            using (MemoryStream stream = new())
-            {
-                data.SerializeInternal(stream);
-                serialized = stream.ToArray();
-            }
-
-            // Should only be the fixed size header (no variable-length data)
-            Assert.That(serialized.Length, Is.EqualTo(DataMovementShareConstants.SourceCheckpointDetails.VariableLengthStartIndex));
-        }
-
-        [Test]
-        public void Serialize_WithSnapshot()
-        {
-            ShareFileSourceCheckpointDetails data = new(ShareProtocol.Smb, snapshot: defaultSnapshot);
-
-            byte[] serialized;
-            using (MemoryStream stream = new())
-            {
-                data.SerializeInternal(stream);
-                serialized = stream.ToArray();
-            }
-
-            Assert.That(serialized.Length, Is.GreaterThan(DataMovementShareConstants.SourceCheckpointDetails.VariableLengthStartIndex));
-        }
-
-        [Test]
-        public void RoundTrip_NoSnapshot()
-        {
-            ShareFileSourceCheckpointDetails original = new(ShareProtocol.Smb, snapshot: null);
-
-            using MemoryStream serialized = new();
-            original.SerializeInternal(serialized);
-            serialized.Position = 0;
-            ShareFileSourceCheckpointDetails deserialized = ShareFileSourceCheckpointDetails.Deserialize(serialized);
-
-            AssertEquals(original, deserialized);
-        }
-
-        [Test]
-        public void Deserialize_WithSnapshot()
-        {
-            string snapshotValue = "2024-01-15T10:30:00.0000000Z";
-            ShareFileSourceCheckpointDetails original = new(ShareProtocol.Smb, snapshot: snapshotValue);
-
-            byte[] serialized;
-            using (MemoryStream stream = new())
-            {
-                original.SerializeInternal(stream);
-                serialized = stream.ToArray();
-            }
-
-            ShareFileSourceCheckpointDetails deserialized;
-            using (MemoryStream stream = new(serialized))
-            {
-                deserialized = ShareFileSourceCheckpointDetails.Deserialize(stream);
-            }
-
-            Assert.That(deserialized.Version, Is.EqualTo(DataMovementShareConstants.SourceCheckpointDetails.SchemaVersion));
-            Assert.That(deserialized.ShareProtocol, Is.EqualTo(ShareProtocol.Smb));
-            Assert.That(deserialized.Snapshot, Is.EqualTo(snapshotValue));
-        }
-
-        [Test]
-        public void RoundTrip_WithSnapshot()
-        {
-            string snapshotValue = "2024-01-15T10:30:00.0000000Z";
-            ShareFileSourceCheckpointDetails original = new(ShareProtocol.Nfs, snapshot: snapshotValue);
-
-            using MemoryStream serialized = new();
-            original.SerializeInternal(serialized);
-            serialized.Position = 0;
-            ShareFileSourceCheckpointDetails deserialized = ShareFileSourceCheckpointDetails.Deserialize(serialized);
-
-            AssertEquals(original, deserialized);
+            Assert.That(original.Version, Is.EqualTo(deserialized.Version));
+            Assert.That(original.ShareProtocol, Is.EqualTo(deserialized.ShareProtocol));
         }
 
         [Test]
         public void Deserialize_Version1()
         {
-            // Version 1 has version + protocol but no snapshot fields
+            // Version 1 has version + protocol
             using MemoryStream stream = new();
             using BinaryWriter writer = new(stream);
 
@@ -235,7 +125,6 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             // We are expecting that after deserialization, the version is bumped to latest version
             Assert.That(deserialized.Version, Is.EqualTo(DataMovementShareConstants.SourceCheckpointDetails.SchemaVersion));
             Assert.That(deserialized.ShareProtocol, Is.EqualTo(ShareProtocol.Nfs));
-            Assert.That(deserialized.Snapshot, Is.Null);
         }
 
         [Test]
@@ -246,13 +135,12 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
 
             // Assert - Should handle legacy empty checkpoints gracefully (version 0)
             Assert.AreEqual(ShareProtocol.Smb, deserialized.ShareProtocol);
-            Assert.IsNull(deserialized.Snapshot);
         }
 
         [Test]
-        public void Deserialize_Version1_NoSnapshot_BackwardCompatibility()
+        public void Deserialize_Version1_BackwardCompatibility()
         {
-            // Arrange - Create a version 1 checkpoint (no snapshot support)
+            // Arrange - Create a version 1 checkpoint
             using MemoryStream stream = new MemoryStream();
             using (BinaryWriter writer = new BinaryWriter(stream, Encoding.UTF8, leaveOpen: true))
             {
@@ -264,31 +152,18 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             stream.Position = 0;
             ShareFileSourceCheckpointDetails deserialized = ShareFileSourceCheckpointDetails.Deserialize(stream);
 
-            // Assert - Should handle version 1 checkpoint without snapshot field
+            // Assert - Should handle version 1 checkpoint
             Assert.AreEqual(ShareProtocol.Smb, deserialized.ShareProtocol);
-            Assert.IsNull(deserialized.Snapshot);
         }
 
         [Test]
-        public void Length_NoSnapshot()
+        public void Length()
         {
             // Arrange
             ShareFileSourceCheckpointDetails data = new ShareFileSourceCheckpointDetails(ShareProtocol.Nfs);
 
             // Assert
             Assert.AreEqual(DataMovementShareConstants.SourceCheckpointDetails.VariableLengthStartIndex, data.Length);
-        }
-
-        [Test]
-        public void Length_WithSnapshot()
-        {
-            // Arrange
-            ShareFileSourceCheckpointDetails data = new ShareFileSourceCheckpointDetails(ShareProtocol.Nfs, defaultSnapshot);
-            int expectedLength = DataMovementShareConstants.SourceCheckpointDetails.VariableLengthStartIndex
-                + StringToByteArray(defaultSnapshot).Length;
-
-            // Assert
-            Assert.AreEqual(expectedLength, data.Length);
         }
     }
 }

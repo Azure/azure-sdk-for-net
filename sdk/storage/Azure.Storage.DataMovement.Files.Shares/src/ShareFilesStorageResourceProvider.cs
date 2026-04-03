@@ -189,8 +189,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
             ShareFileStorageResourceOptions options = new()
             {
-                ShareProtocol = checkpointDetails.ShareProtocol,
-                Snapshot = checkpointDetails.Snapshot
+                ShareProtocol = checkpointDetails.ShareProtocol
             };
 
             return properties.IsContainer

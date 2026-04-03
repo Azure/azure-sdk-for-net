@@ -25,8 +25,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
         private Uri BuildSanitizedUri()
         {
-            // Strip snapshot and SAS from URI for security
-            // Snapshot is stored separately in checkpoint details
+            // Strip SAS from URI for security - snapshot is preserved automatically
             // SAS should not be exposed in events/logs
             ShareUriBuilder uriBuilder = new ShareUriBuilder(ShareFileClient.Uri)
             {
@@ -356,17 +355,10 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
         protected override StorageResourceCheckpointDetails GetSourceCheckpointDetails()
         {
-            // Extract snapshot from URI if not provided in options
-            string snapshot = _options?.Snapshot;
-            if (string.IsNullOrEmpty(snapshot))
-            {
-                ShareUriBuilder uriBuilder = new ShareUriBuilder(ShareFileClient.Uri);
-                snapshot = uriBuilder.Snapshot;
-            }
-
+            // Snapshot is preserved in the URI (from BuildSanitizedUri)
+            // No need to store it separately in checkpoint details
             return new ShareFileSourceCheckpointDetails(
-                shareProtocol: _options?.ShareProtocol ?? ShareProtocol.Smb,
-                snapshot: snapshot);
+                shareProtocol: _options?.ShareProtocol ?? ShareProtocol.Smb);
         }
 
         protected override StorageResourceCheckpointDetails GetDestinationCheckpointDetails()
