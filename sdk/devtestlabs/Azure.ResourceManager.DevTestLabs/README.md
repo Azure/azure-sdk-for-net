@@ -12,7 +12,7 @@ This library follows the [new Azure SDK guidelines](https://azure.github.io/azur
     - Better error-handling.
     - Support uniform telemetry across all languages.
 
-## Getting started 
+## Getting started
 
 ### Install the package
 
@@ -24,28 +24,127 @@ dotnet add package Azure.ResourceManager.DevTestLabs
 
 ### Prerequisites
 
-* You must have an [Microsoft Azure subscription](https://azure.microsoft.com/free/dotnet/).
+* You must have a [Microsoft Azure subscription](https://azure.microsoft.com/free/dotnet/).
+* An existing Azure resource group where you want to create and manage DevTest Labs.
 
-### Authenticate the Client
+### Authenticate the client
 
-To create an authenticated client and start interacting with Microsoft Azure resources, see the [quickstart guide here](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/dev/mgmt_quickstart.md).
+To authenticate to Azure and create an `ArmClient`, install the [Azure.Identity][azure_identity_nuget] package:
+
+```dotnetcli
+dotnet add package Azure.Identity
+```
+
+Then use `DefaultAzureCredential`, which is appropriate for most scenarios including local development and production environments:
+
+```C# Snippet:DevTestLabs_AuthClient_Namespaces
+using Azure.Identity;
+using Azure.ResourceManager;
+using Azure.ResourceManager.DevTestLabs;
+using Azure.ResourceManager.Resources;
+```
+```C# Snippet:DevTestLabs_AuthClient
+ArmClient armClient = new ArmClient(new DefaultAzureCredential());
+```
+
+More details about authentication can be found in the [Azure Identity documentation][azure_identity_readme] and the [management SDK quickstart guide][mgmt_quickstart].
 
 ## Key concepts
 
-Key concepts of the Microsoft Azure SDK for .NET can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html).
+Key concepts of the Azure .NET SDK can be found [here](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/resourcemanager/Azure.ResourceManager/README.md#key-concepts).
 
 ## Documentation
 
 Documentation is available to help you learn how to use this package:
 
-- [Quickstart](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/dev/mgmt_quickstart.md).
-- [API References](https://learn.microsoft.com/dotnet/api/?view=azure-dotnet).
-- [Authentication](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md).
+- [Quickstart][mgmt_quickstart]
+- [API References](https://learn.microsoft.com/dotnet/api/?view=azure-dotnet)
+- [Authentication][azure_identity_readme]
 
 ## Examples
 
-Code samples for using the management library for .NET can be found in the following locations
-- [.NET Management Library Code Samples](https://aka.ms/azuresdk-net-mgmt-samples)
+### Create a lab
+
+```C# Snippet:DevTestLabs_CreateALab
+DevTestLabCollection labCollection = resourceGroup.GetDevTestLabs();
+string labName = "myLab";
+DevTestLabData labData = new DevTestLabData(location);
+ArmOperation<DevTestLabResource> lro = await labCollection.CreateOrUpdateAsync(WaitUntil.Completed, labName, labData);
+DevTestLabResource lab = lro.Value;
+Console.WriteLine($"Created lab: {lab.Data.Name}");
+```
+
+### Get a lab
+
+```C# Snippet:DevTestLabs_GetALab
+ArmClient armClient = new ArmClient(new DefaultAzureCredential());
+SubscriptionResource subscription = await armClient.GetDefaultSubscriptionAsync();
+ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
+
+string rgName = "myResourceGroup";
+ResourceGroupResource resourceGroup = await rgCollection.GetAsync(rgName);
+DevTestLabCollection labCollection = resourceGroup.GetDevTestLabs();
+
+string labName = "myLab";
+DevTestLabResource lab = await labCollection.GetAsync(labName);
+Console.WriteLine($"Retrieved lab: {lab.Data.Name}, location: {lab.Data.Location}");
+```
+
+### List all labs in a resource group
+
+```C# Snippet:DevTestLabs_ListAllLabs
+ArmClient armClient = new ArmClient(new DefaultAzureCredential());
+SubscriptionResource subscription = await armClient.GetDefaultSubscriptionAsync();
+ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
+
+string rgName = "myResourceGroup";
+ResourceGroupResource resourceGroup = await rgCollection.GetAsync(rgName);
+DevTestLabCollection labCollection = resourceGroup.GetDevTestLabs();
+
+await foreach (DevTestLabResource lab in labCollection.GetAllAsync())
+{
+    Console.WriteLine($"Lab: {lab.Data.Name}");
+}
+```
+
+### Check if a lab exists
+
+```C# Snippet:DevTestLabs_CheckIfLabExists
+ArmClient armClient = new ArmClient(new DefaultAzureCredential());
+SubscriptionResource subscription = await armClient.GetDefaultSubscriptionAsync();
+string rgName = "myResourceGroup";
+ResourceGroupResource resourceGroup = await subscription.GetResourceGroups().GetAsync(rgName);
+
+string labName = "myLab";
+bool exists = await resourceGroup.GetDevTestLabs().ExistsAsync(labName);
+
+if (exists)
+{
+    Console.WriteLine($"Lab '{labName}' exists.");
+}
+else
+{
+    Console.WriteLine($"Lab '{labName}' does not exist.");
+}
+```
+
+### Delete a lab
+
+```C# Snippet:DevTestLabs_DeleteALab
+ArmClient armClient = new ArmClient(new DefaultAzureCredential());
+SubscriptionResource subscription = await armClient.GetDefaultSubscriptionAsync();
+ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
+
+string rgName = "myResourceGroup";
+ResourceGroupResource resourceGroup = await rgCollection.GetAsync(rgName);
+
+string labName = "myLab";
+DevTestLabResource lab = await resourceGroup.GetDevTestLabs().GetAsync(labName);
+await lab.DeleteAsync(WaitUntil.Completed);
+Console.WriteLine($"Deleted lab: {labName}");
+```
+
+For additional samples, see the [tests/Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/devtestlabs/Azure.ResourceManager.DevTestLabs/tests/Samples) folder and the [.NET Management Library Code Samples](https://aka.ms/azuresdk-net-mgmt-samples).
 
 ## Troubleshooting
 
@@ -80,3 +179,6 @@ more information, see the [Code of Conduct FAQ][coc_faq] or contact
 [cg]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/resourcemanager/Azure.ResourceManager/docs/CONTRIBUTING.md
 [coc]: https://opensource.microsoft.com/codeofconduct/
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
+[azure_identity_nuget]: https://www.nuget.org/packages/Azure.Identity
+[azure_identity_readme]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md
+[mgmt_quickstart]: https://github.com/Azure/azure-sdk-for-net/blob/main/doc/dev/mgmt_quickstart.md
