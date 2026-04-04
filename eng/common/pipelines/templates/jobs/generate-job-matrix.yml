@@ -62,6 +62,12 @@ parameters:
 - name: PRMatrixSparseIndirect
   type: boolean
   default: true
+- name: WeightsFile
+  type: string
+  default: ''
+- name: TargetBatchTimeSeconds
+  type: number
+  default: 1800
 # Mappings to OS name required at template compile time by 1es pipeline templates
 - name: Pools
   type: object
@@ -152,7 +158,9 @@ jobs:
               -IndirectFilters '${{ join(''',''', parameters.PRMatrixIndirectFilters) }}' `
               -Replace '${{ join(''',''', parameters.MatrixReplace) }}' `
               -PackagesPerPRJob ${{ parameters.PRJobBatchSize }} `
-              -SparseIndirect $${{ parameters.PRMatrixSparseIndirect }}
+              -SparseIndirect $${{ parameters.PRMatrixSparseIndirect }} `
+              -WeightsFile '${{ parameters.WeightsFile }}' `
+              -TargetBatchTimeSeconds ${{ parameters.TargetBatchTimeSeconds }}
           displayName: Create ${{ pool.name }} PR Matrix
           name: vm_job_matrix_pr_${{ pool.name }}
 

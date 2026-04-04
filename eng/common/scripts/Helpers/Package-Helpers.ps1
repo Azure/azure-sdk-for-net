@@ -266,3 +266,107 @@ function Split-ArrayIntoBatches {
 
   return , $batches
 }
+
+<#
+.SYNOPSIS
+Splits an array into batches balanced by weight using the LPT (Longest Processing Time) algorithm.
+
+.DESCRIPTION
+Instead of splitting by fixed count, this function uses weighted bin-packing to create batches
+that are balanced by estimated runtime. Items are sorted by weight descending and greedily
+assigned to the lightest bucket.
+
+The number of buckets is determined dynamically: ceil(total_weight / target_seconds).
+
+.PARAMETER InputArray
+Array of items to split. Each item should have a property matching WeightKey for weight lookup.
+
+.PARAMETER Weights
+Hashtable mapping item identifiers to their weight (in seconds).
+
+.PARAMETER WeightKey
+Property name on each item used to look up the weight. Default is "ArtifactName".
+
+.PARAMETER TargetSeconds
+Target maximum time per bucket in seconds. Default is 1800 (30 minutes).
+
+.PARAMETER DefaultWeight
+Weight assigned to items not found in the Weights hashtable. Default is 1.
+
+.EXAMPLE
+$batches = Split-ArrayByWeight -InputArray $packages -Weights $weights -TargetSeconds 1800
+#>
+function Split-ArrayByWeight {
+  param (
+    [Parameter(Mandatory = $true)]
+    [Object[]]$InputArray,
+
+    [Parameter(Mandatory = $true)]
+    [hashtable]$Weights,
+
+    [Parameter()]
+    [string]$WeightKey = "ArtifactName",
+
+    [Parameter()]
+    [int]$TargetSeconds = 1800,
+
+    [Parameter()]
+    [int]$DefaultWeight = 1
+  )
+
+  if ($InputArray.Count -eq 0) {
+    return , @()
+  }
+
+  # Build weighted items
+  $items = foreach ($item in $InputArray) {
+    $name = if ($item.PSObject -and $item.PSObject.Properties[$WeightKey]) {
+      $item.$WeightKey
+    } else {
+      "$item"
+    }
+    $weight = if ($Weights.ContainsKey($name)) { [int]$Weights[$name] } else { $DefaultWeight }
+    [PSCustomObject]@{ Item = $item; Weight = $weight; Name = $name }
+  }
+
+  # Sort by weight descending (LPT: largest first)
+  $items = $items | Sort-Object Weight -Descending
+
+  # Calculate number of buckets
+  $totalWeight = 0
+  foreach ($i in $items) { $totalWeight += $i.Weight }
+  $numBuckets = [math]::Max(1, [math]::Ceiling($totalWeight / $TargetSeconds))
+
+  Write-Host "Split-ArrayByWeight: $($InputArray.Count) items, total weight ${totalWeight}s, target ${TargetSeconds}s → $numBuckets buckets"
+
+  # Create buckets
+  $buckets = @()
+  for ($b = 0; $b -lt $numBuckets; $b++) {
+    $buckets += [PSCustomObject]@{
+      Items = [System.Collections.ArrayList]::new()
+      TotalWeight = [int]0
+    }
+  }
+
+  # Greedy LPT: assign each item to the lightest bucket
+  foreach ($item in $items) {
+    $lightest = $buckets | Sort-Object TotalWeight | Select-Object -First 1
+    [void]$lightest.Items.Add($item.Item)
+    $lightest.TotalWeight += $item.Weight
+  }
+
+  # Log bucket distribution
+  $bucketIdx = 1
+  foreach ($bucket in $buckets) {
+    Write-Host "  Bucket ${bucketIdx}: $($bucket.Items.Count) items, weight $($bucket.TotalWeight)s ($([math]::Round($bucket.TotalWeight / 60, 1))m)"
+    $bucketIdx++
+  }
+
+  # Return in the same format as Split-ArrayIntoBatches: array of arrays
+  $result = @()
+  foreach ($bucket in $buckets) {
+    $result += , @($bucket.Items)
+  }
+
+  return , $result
+}

@@ -47,6 +47,8 @@ param (
   [Parameter(Mandatory = $false)][string] $PRMatrixKey = "ArtifactName",
   [Parameter(Mandatory = $false)][bool] $SparseIndirect = $true,
   [Parameter(Mandatory = $false)][int] $PackagesPerPRJob = 10,
+  [Parameter(Mandatory = $false)][string] $WeightsFile = "",
+  [Parameter(Mandatory = $false)][int] $TargetBatchTimeSeconds = 1800,
   [Parameter()][switch] $CI = ($null -ne $env:SYSTEM_TEAMPROJECTID)
 )
 
@@ -55,6 +57,29 @@ Set-StrictMode -Version 4
 . $PSScriptRoot/../Helpers/Package-Helpers.ps1
 . $PSScriptRoot/../Package-Properties.ps1
 $BATCHSIZE = $PackagesPerPRJob
+
+# Load weights file if provided and valid
+$useWeightedBatching = $false
+$packageWeights = @{}
+if ($WeightsFile -and (Test-Path $WeightsFile)) {
+  try {
+    $weightsContent = Get-Content $WeightsFile -Raw | ConvertFrom-Json
+    $weightsContent.PSObject.Properties | ForEach-Object { $packageWeights[$_.Name] = [int]$_.Value }
+    if ($packageWeights.Count -gt 0) {
+      $useWeightedBatching = $true
+      Write-Host "Loaded $($packageWeights.Count) package weights from $WeightsFile (target: $($TargetBatchTimeSeconds)s per bucket)"
+    }
+    else {
+      Write-Host "Weights file is empty, falling back to count-based batching."
+    }
+  }
+  catch {
+    Write-Warning "Failed to load weights file '$WeightsFile': $($_.Exception.Message). Falling back to count-based batching."
+  }
+}
+elseif ($WeightsFile) {
+  Write-Host "Weights file '$WeightsFile' not found, falling back to count-based batching."
+}
 
 # this function takes an array of objects, takes a copy of the first item, and moves that item to the back of the array
 function QueuePop([ref]$queue) {
@@ -156,7 +181,13 @@ function GeneratePRMatrixForBatch {
       }
     }
 
-    $packageBatches = Split-ArrayIntoBatches -InputArray $matrixBatch -BatchSize $BATCHSIZE
+    if ($useWeightedBatching) {
+      $packageBatches = Split-ArrayByWeight -InputArray $matrixBatch -Weights $packageWeights `
+        -WeightKey $MatrixKey -TargetSeconds $TargetBatchTimeSeconds -DefaultWeight 1
+    }
+    else {
+      $packageBatches = Split-ArrayIntoBatches -InputArray $matrixBatch -BatchSize $BATCHSIZE
+    }
 
     # we only need to modify the generated job name if there is more than one matrix config + batch
     $matrixSuffixNecessary = $matrixBatchesByConfig.Keys.Count -gt 1
