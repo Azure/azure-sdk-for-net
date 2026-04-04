@@ -194,6 +194,8 @@ jobs:
           PRMatrixIndirectFilters:
             - 'AdditionalTestArguments=.*true'
             - 'Pool=.*LinuxPool$'
+          WeightsFile: $(Build.ArtifactStagingDirectory)/test-weights.json
+          TargetBatchTimeSeconds: 1800
           PreGenerationSteps:
             - template: /eng/pipelines/templates/steps/pr-matrix-presteps.yml
               parameters:
