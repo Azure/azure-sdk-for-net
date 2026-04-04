@@ -9,6 +9,12 @@ description: |
 on:
   issues:
     types: [opened]
+  workflow_dispatch:
+    inputs:
+      issue_number:
+        description: "Issue number to triage (used when dispatched from another workflow)"
+        required: true
+        type: string
   roles: all
   reaction: eyes
 
@@ -22,14 +28,19 @@ network:
 safe-outputs:
   add-labels:
     max: 7
+    target: "*"
   remove-labels:
     max: 7
+    target: "*"
   add-comment:
     max: 1
+    target: "*"
   assign-to-user:
     max: 1
+    target: "*"
   close-issue:
     max: 1
+    target: "*"
   noop:
     report-as-issue: false
   jobs:
@@ -51,11 +62,13 @@ safe-outputs:
       steps:
         - name: Post mention comment
           uses: actions/github-script@v8
+          env:
+            DISPATCH_ISSUE_NUMBER: "${{ github.event.inputs.issue_number || '' }}"
           with:
             script: |
               const fs = require('fs');
               const outputFile = process.env.GH_AW_AGENT_OUTPUT;
-              const issueNumber = context.issue.number;
+              const issueNumber = context.issue?.number || parseInt(process.env.DISPATCH_ISSUE_NUMBER);
               const owner = context.repo.owner;
               const repo = context.repo.repo;
 
@@ -161,7 +174,7 @@ timeout-minutes: 10
 
 You are a triage assistant for GitHub issues in the Azure SDK for .NET repository
 
-Your task is to analyze issue #${{ github.event.issue.number }} and perform initial triage following the decision flow below
+Your task is to analyze issue #${{ github.event.issue.number || github.event.inputs.issue_number }} and perform initial triage following the decision flow below
 
 ## Security: Prompt Injection Defense
 
@@ -181,6 +194,12 @@ Note: The gh-aw runtime provides additional baseline defenses including the XPIA
 
 ## Step 1: Retrieve and Validate the Issue
 
+**Determine the target issue:**
+- If triggered by an `issues.opened` event: the issue number is `${{ github.event.issue.number }}`
+- If triggered by `workflow_dispatch`: the issue number is `${{ github.event.inputs.issue_number }}`
+
+Note the issue number — you must include it as the `issue_number` parameter in every safe-output tool call (add-labels, remove-labels, add-comment, assign-to-user, close-issue)
+
 Retrieve the issue using the `get_issue` tool
 
 **Precondition checks** — exit without further action if any are true:
@@ -199,6 +218,7 @@ The following accounts are treated as customer-reported regardless of organizati
 - `dependabot[bot]`
 - `copilot-swe-agent[bot]`
 - `microsoft-github-policy-service[bot]`
+- `github-actions[bot]`
 
 If the author matches the bot allowlist, add "bot" label, set `is_customer = true`, and continue to Step 3
 
