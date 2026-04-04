@@ -62,3 +62,20 @@ steps:
     displayName: Only target direct packages for build and test
     condition: and(succeededOrFailed(), eq(${{ parameters.ForceDirect }}, true))
 
+  - pwsh: |
+      eng/scripts/Get-TestAssemblyWeights.ps1 `
+        -RepoRoot "$(Build.SourcesDirectory)" `
+        -OutputFile "$(Build.ArtifactStagingDirectory)/test-weights.json"
+    displayName: Query test assembly weights for balanced batching
+    condition: and(succeededOrFailed(), eq(variables['Build.Reason'], 'PullRequest'))
+    env:
+      SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+
+  - pwsh: |
+      eng/scripts/Apply-WeightedBatching.ps1 `
+        -PackageInfoFolder "$(Build.ArtifactStagingDirectory)/PackageInfo" `
+        -WeightsFile "$(Build.ArtifactStagingDirectory)/test-weights.json" `
+        -TargetSeconds 1800
+    displayName: Apply weighted batching to PackageInfo
+    condition: and(succeededOrFailed(), eq(variables['Build.Reason'], 'PullRequest'))
+

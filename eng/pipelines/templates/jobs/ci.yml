@@ -190,7 +190,7 @@ jobs:
             - "!SessionRecords"
           EnablePRGeneration: true
           PRMatrixSetting: ProjectNames
-          PRJobBatchSize: 10
+          PRJobBatchSize: 1
           PRMatrixIndirectFilters:
             - 'AdditionalTestArguments=.*true'
             - 'Pool=.*LinuxPool$'
