@@ -6,7 +6,7 @@ Applications which execute in a protected environment can authenticate using a c
 
 ## Loading certificates from disk
 
-Applications commonly need to load a client certificate from disk. One approach is for the application to construct the `ClientCertificateCredential` by specifying the applications tenant id, client id, and filesystem path to the certificate.
+Applications commonly need to load a client certificate from disk. One approach is for the application to construct the `ClientCertificateCredential` by specifying the application's tenant ID, client ID, and filesystem path to the certificate.
 
 ```C# Snippet:Identity_CertificateCredential_CreateWithPath_File
 var credential = new ClientCertificateCredential(tenantId, clientId, "./certs/cert.pfx");
