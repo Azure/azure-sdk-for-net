@@ -55,14 +55,14 @@ if ($weights.Count -eq 0) {
 
 # Load all PackageInfo files
 $packageFiles = Get-ChildItem -Path $PackageInfoFolder -Filter "*.json" -Recurse
-$packages = $packageFiles | ForEach-Object {
+$packages = @($packageFiles | ForEach-Object {
   $json = Get-Content $_.FullName | ConvertFrom-Json
   [PSCustomObject]@{
     FilePath = $_.FullName
     FileName = $_.Name
     Json     = $json
   }
-}
+})
 
 if ($packages.Count -eq 0) {
   Write-Host "No PackageInfo files found. Skipping weighted batching."
@@ -90,11 +90,11 @@ function Apply-LPTBatching {
   }
 
   # Build weighted items
-  $items = foreach ($pkg in $Packages) {
+  $items = @(foreach ($pkg in $Packages) {
     $name = $pkg.Json.ArtifactName
     $weight = if ($Weights.ContainsKey($name)) { [int]$Weights[$name] } else { $DefaultWeight }
     [PSCustomObject]@{ Package = $pkg; Weight = $weight; Name = $name }
-  }
+  })
 
   # Sort by weight descending (LPT: largest first)
   $items = @($items | Sort-Object Weight -Descending)
