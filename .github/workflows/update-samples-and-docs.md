@@ -26,11 +26,6 @@ safe-outputs:
       output: "Triage workflow dispatched"
       permissions:
         actions: write
-      inputs:
-        dispatch:
-          description: "Set to 'true' to dispatch triage on the created issue"
-          required: true
-          type: string
       steps:
         - name: Dispatch triage workflow
           uses: actions/github-script@v8
@@ -202,7 +197,7 @@ Run these commands in order. Each must succeed before proceeding to the next. Th
 
 #### Step 5: Dispatch Triage
 
-After the issue has been filed, use the `dispatch_triage` tool with dispatch set to "true" to trigger the issue triage workflow on the newly created issue
+After the issue has been filed, use the `dispatch_triage` tool to trigger the issue triage workflow on the newly created issue
 
 This dispatches full triage — including label prediction, CODEOWNERS owner lookup, and routing — on the created issue. The docs workflow does not apply labels or route to owners directly; triage handles that
 
@@ -214,4 +209,4 @@ This dispatches full triage — including label prediction, CODEOWNERS owner loo
 - Title must start with `[<Service>] Docs:`
 - Always include the PR/commit author who triggered the push using @mention
 - If multiple packages changed in the same push, prioritize the one with the largest documentation gap
-- After creating the issue, always call `dispatch_triage` with dispatch set to "true" to trigger full triage
+- After creating the issue, always call `dispatch_triage` to trigger full triage

@@ -68,9 +68,26 @@ safe-outputs:
             script: |
               const fs = require('fs');
               const outputFile = process.env.GH_AW_AGENT_OUTPUT;
-              const issueNumber = context.issue?.number || parseInt(process.env.DISPATCH_ISSUE_NUMBER);
+
+              function resolveIssueNumber() {
+                if (Number.isInteger(context.issue?.number) && context.issue.number > 0) {
+                  return context.issue.number;
+                }
+                const parsed = parseInt(process.env.DISPATCH_ISSUE_NUMBER, 10);
+                if (Number.isInteger(parsed) && parsed > 0) {
+                  return parsed;
+                }
+                return null;
+              }
+
+              const issueNumber = resolveIssueNumber();
               const owner = context.repo.owner;
               const repo = context.repo.repo;
+
+              if (issueNumber === null) {
+                core.setFailed(`Unable to determine a valid issue number. context.issue.number=${context.issue?.number ?? 'undefined'}, DISPATCH_ISSUE_NUMBER=${process.env.DISPATCH_ISSUE_NUMBER ?? 'undefined'}`);
+                return;
+              }
 
               async function failSafe(reason) {
                 core.error(`mention_owners failed: ${reason}`);
