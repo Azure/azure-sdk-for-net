@@ -167,5 +167,5 @@ if ($indirectPackages.Count -gt 0) {
 }
 
 # Verify
-$remaining = (Get-ChildItem -Path $PackageInfoFolder -Filter "*.json" -Recurse).Count
+$remaining = @(Get-ChildItem -Path $PackageInfoFolder -Filter "*.json" -Recurse).Count
 Write-Host "Weighted batching complete. $remaining consolidated PackageInfo files remain."
