@@ -9,4 +9,3 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.Logic
       safeName: AzureResourceManagerLogic
-    TestDependsOnDependency: Azure.ResourceManager.Logic

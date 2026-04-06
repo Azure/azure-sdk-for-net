@@ -34,4 +34,3 @@ extends:
       safeName: AzureSecurityKeyVaultSecrets
       triggeringPaths:
       - Azure.Security.Keyvault.Shared
-    TestDependsOnDependency: Azure.Security.KeyVault.Keys Azure.Security.KeyVault.Secrets
