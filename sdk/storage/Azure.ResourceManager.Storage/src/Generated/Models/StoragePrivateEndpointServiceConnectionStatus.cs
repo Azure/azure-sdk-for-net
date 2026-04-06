@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.Storage.Models
     public readonly partial struct StoragePrivateEndpointServiceConnectionStatus : IEquatable<StoragePrivateEndpointServiceConnectionStatus>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="StoragePrivateEndpointServiceConnectionStatus"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public StoragePrivateEndpointServiceConnectionStatus(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string PendingValue = "Pending";
         private const string ApprovedValue = "Approved";
         private const string RejectedValue = "Rejected";
 
-        /// <summary> Pending. </summary>
+        /// <summary> Initializes a new instance of <see cref="StoragePrivateEndpointServiceConnectionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public StoragePrivateEndpointServiceConnectionStatus(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Pending. </summary>
         public static StoragePrivateEndpointServiceConnectionStatus Pending { get; } = new StoragePrivateEndpointServiceConnectionStatus(PendingValue);
-        /// <summary> Approved. </summary>
+
+        /// <summary> Gets the Approved. </summary>
         public static StoragePrivateEndpointServiceConnectionStatus Approved { get; } = new StoragePrivateEndpointServiceConnectionStatus(ApprovedValue);
-        /// <summary> Rejected. </summary>
+
+        /// <summary> Gets the Rejected. </summary>
         public static StoragePrivateEndpointServiceConnectionStatus Rejected { get; } = new StoragePrivateEndpointServiceConnectionStatus(RejectedValue);
+
         /// <summary> Determines if two <see cref="StoragePrivateEndpointServiceConnectionStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(StoragePrivateEndpointServiceConnectionStatus left, StoragePrivateEndpointServiceConnectionStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="StoragePrivateEndpointServiceConnectionStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(StoragePrivateEndpointServiceConnectionStatus left, StoragePrivateEndpointServiceConnectionStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="StoragePrivateEndpointServiceConnectionStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="StoragePrivateEndpointServiceConnectionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator StoragePrivateEndpointServiceConnectionStatus(string value) => new StoragePrivateEndpointServiceConnectionStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="StoragePrivateEndpointServiceConnectionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator StoragePrivateEndpointServiceConnectionStatus?(string value) => value == null ? null : new StoragePrivateEndpointServiceConnectionStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is StoragePrivateEndpointServiceConnectionStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(StoragePrivateEndpointServiceConnectionStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

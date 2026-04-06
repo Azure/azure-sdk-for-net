@@ -27,7 +27,7 @@ DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         ),
     }
 };
-ProjectsAgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
+ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.CreateAgentVersion(
     agentName: "myAgent",
     options: new(agentDefinition));
 ```
@@ -45,7 +45,7 @@ DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         ),
     }
 };
-ProjectsAgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
     agentName: "myAgent",
     options: new(agentDefinition));
 ```
@@ -55,7 +55,7 @@ ProjectsAgentVersion agentVersion = await projectClient.Agents.CreateAgentVersio
 Synchronous sample:
 ```C# Snippet:Sample_CreateResponse_CodeInterpreter_Sync
 AgentReference agentReference = new(name: agentVersion.Name, version: agentVersion.Version);
-ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentReference);
+ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(agentReference);
 
 ResponseResult response = responseClient.CreateResponse("I need to solve the equation sin(x) + x^2 = 42");
 ```
@@ -63,7 +63,7 @@ ResponseResult response = responseClient.CreateResponse("I need to solve the equ
 Asynchronous sample:
 ```C# Snippet:Sample_CreateResponse_CodeInterpreter_Async
 AgentReference agentReference = new(name: agentVersion.Name, version: agentVersion.Version);
-ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentReference);
+ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(agentReference);
 
 ResponseResult response = await responseClient.CreateResponseAsync("I need to solve the equation sin(x) + x^2 = 42");
 ```
@@ -86,10 +86,10 @@ Console.WriteLine(response.GetOutputText());
 
 Synchronous sample:
 ```C# Snippet:Sample_Cleanup_CodeInterpreter_Sync
-projectClient.Agents.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_Cleanup_CodeInterpreter_Async
-await projectClient.Agents.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
 ```

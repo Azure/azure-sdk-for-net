@@ -4,8 +4,9 @@
 
 using System;
 using System.ComponentModel;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Schedule provisioning status. </summary>
     public readonly partial struct ScheduleProvisioningStatus : IEquatable<ScheduleProvisioningStatus>

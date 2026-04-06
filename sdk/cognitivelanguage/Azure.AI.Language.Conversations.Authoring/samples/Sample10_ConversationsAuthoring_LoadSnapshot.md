@@ -10,7 +10,7 @@ To create a `ConversationAnalysisAuthoringClient`, you will need the service end
 Uri endpoint = new Uri("{endpoint}");
 AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
 ConversationAnalysisAuthoringClientOptions options = new ConversationAnalysisAuthoringClientOptions(ConversationAnalysisAuthoringClientOptions.ServiceVersion.V2025_11_15_Preview);
-ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential, options);
+ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential, options);
 ```
 
 Or you can also create a `ConversationAnalysisAuthoringClient` using Azure Active Directory (AAD) authentication. Your user or service principal must be assigned the "Cognitive Services Language Reader" role.
@@ -23,11 +23,7 @@ To load a snapshot for a specific trained model, call LoadSnapshot on the `Conve
 ```C# Snippet:Sample10_ConversationsAuthoring_LoadSnapshot
 string projectName = "{projectName}";
 string trainedModelLabel = "{trainedModelLabel}";
-ConversationAuthoringTrainedModel trainedModelClient = client.GetTrainedModel(projectName, trainedModelLabel);
-
-Operation operation = trainedModelClient.LoadSnapshot(
-    waitUntil: WaitUntil.Completed
-);
+Operation operation = client.LoadSnapshot(WaitUntil.Completed, projectName, trainedModelLabel);
 
 // Extract the operation-location header
 string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out string location) ? location : null;
@@ -43,10 +39,7 @@ To load a snapshot for a specific trained model, call LoadSnapshotAsync on the `
 ```C# Snippet:Sample10_ConversationsAuthoring_LoadSnapshotAsync
 string projectName = "{projectName}";
 string trainedModelLabel = "{trainedModelLabel}";
-ConversationAuthoringTrainedModel trainedModelClient = client.GetTrainedModel(projectName, trainedModelLabel);
-
-Operation operation = await trainedModelClient.LoadSnapshotAsync(
-    waitUntil: WaitUntil.Completed);
+Operation operation = await client.LoadSnapshotAsync(WaitUntil.Completed, projectName, trainedModelLabel);
 
 // Extract the operation-location header
 string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out string location) ? location : null;

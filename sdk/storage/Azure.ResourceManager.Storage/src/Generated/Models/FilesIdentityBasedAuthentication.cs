@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> Settings for Azure Files identity based authentication. </summary>
     public partial class FilesIdentityBasedAuthentication
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FilesIdentityBasedAuthentication"/>. </summary>
         /// <param name="directoryServiceOptions"> Indicates the directory service used. Note that this enum may be extended in the future. </param>
@@ -57,41 +29,46 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="activeDirectoryProperties"> Additional information about the directory service. Required if directoryServiceOptions is AD (AD DS authentication). Optional for directoryServiceOptions AADDS (Entra DS authentication) and AADKERB (Entra authentication). </param>
         /// <param name="defaultSharePermission"> Default share permission for users using Kerberos authentication if RBAC role is not assigned. </param>
         /// <param name="smbOAuthSettings"> Required for Managed Identities access using OAuth over SMB. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FilesIdentityBasedAuthentication(DirectoryServiceOption directoryServiceOptions, StorageActiveDirectoryProperties activeDirectoryProperties, DefaultSharePermission? defaultSharePermission, SmbOAuthSettings smbOAuthSettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal FilesIdentityBasedAuthentication(DirectoryServiceOption directoryServiceOptions, StorageActiveDirectoryProperties activeDirectoryProperties, DefaultSharePermission? defaultSharePermission, SmbOAuthSettings smbOAuthSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DirectoryServiceOptions = directoryServiceOptions;
             ActiveDirectoryProperties = activeDirectoryProperties;
             DefaultSharePermission = defaultSharePermission;
             SmbOAuthSettings = smbOAuthSettings;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="FilesIdentityBasedAuthentication"/> for deserialization. </summary>
-        internal FilesIdentityBasedAuthentication()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Indicates the directory service used. Note that this enum may be extended in the future. </summary>
         [WirePath("directoryServiceOptions")]
         public DirectoryServiceOption DirectoryServiceOptions { get; set; }
+
         /// <summary> Additional information about the directory service. Required if directoryServiceOptions is AD (AD DS authentication). Optional for directoryServiceOptions AADDS (Entra DS authentication) and AADKERB (Entra authentication). </summary>
         [WirePath("activeDirectoryProperties")]
         public StorageActiveDirectoryProperties ActiveDirectoryProperties { get; set; }
+
         /// <summary> Default share permission for users using Kerberos authentication if RBAC role is not assigned. </summary>
         [WirePath("defaultSharePermission")]
         public DefaultSharePermission? DefaultSharePermission { get; set; }
+
         /// <summary> Required for Managed Identities access using OAuth over SMB. </summary>
+        [WirePath("smbOAuthSettings")]
         internal SmbOAuthSettings SmbOAuthSettings { get; set; }
+
         /// <summary> Specifies if managed identities can access SMB shares using OAuth. The default interpretation is false for this property. </summary>
         [WirePath("smbOAuthSettings.isSmbOAuthEnabled")]
         public bool? IsSmbOAuthEnabled
         {
-            get => SmbOAuthSettings is null ? default : SmbOAuthSettings.IsSmbOAuthEnabled;
+            get
+            {
+                return SmbOAuthSettings is null ? default : SmbOAuthSettings.IsSmbOAuthEnabled;
+            }
             set
             {
                 if (SmbOAuthSettings is null)
+                {
                     SmbOAuthSettings = new SmbOAuthSettings();
+                }
                 SmbOAuthSettings.IsSmbOAuthEnabled = value;
             }
         }
