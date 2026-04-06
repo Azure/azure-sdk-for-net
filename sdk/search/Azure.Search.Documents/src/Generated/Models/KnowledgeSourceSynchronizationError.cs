@@ -35,7 +35,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="details"> Additional contextual information about the failure. </param>
         /// <param name="documentationLink"> A link to relevant troubleshooting documentation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KnowledgeSourceSynchronizationError(string docId, int? statusCode, string name, string errorMessage, string details, string documentationLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KnowledgeSourceSynchronizationError(string docId, int? statusCode, string name, string errorMessage, string details, Uri documentationLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DocId = docId;
             StatusCode = statusCode;
@@ -62,6 +62,6 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         public string Details { get; set; }
 
         /// <summary> A link to relevant troubleshooting documentation. </summary>
-        public string DocumentationLink { get; set; }
+        public Uri DocumentationLink { get; set; }
     }
 }

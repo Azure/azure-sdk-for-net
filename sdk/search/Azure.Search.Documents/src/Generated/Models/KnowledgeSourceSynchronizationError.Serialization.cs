@@ -104,7 +104,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             if (Optional.IsDefined(DocumentationLink))
             {
                 writer.WritePropertyName("documentationLink"u8);
-                writer.WriteStringValue(DocumentationLink);
+                writer.WriteStringValue(DocumentationLink.AbsoluteUri);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -153,7 +153,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             string name = default;
             string errorMessage = default;
             string details = default;
-            string documentationLink = default;
+            Uri documentationLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -188,7 +188,11 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 }
                 if (prop.NameEquals("documentationLink"u8))
                 {
-                    documentationLink = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    documentationLink = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (options.Format != "W")

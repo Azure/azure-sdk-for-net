@@ -187,7 +187,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="weight"> Relative weight of the vector query when compared to other vector query and/or the text query within the same search request. This value is used when combining the results of multiple ranking lists produced by the different vector queries and/or the results retrieved through the text query. The higher the weight, the higher the documents that matched that query will be in the final ranking. Default is 1.0 and the value needs to be a positive number larger than zero. </param>
         /// <param name="url"> The URL of an image to be vectorized to perform a vector search query. </param>
         /// <returns> A new <see cref="Models.VectorizableImageUrlQuery"/> instance for mocking. </returns>
-        public static VectorizableImageUrlQuery VectorizableImageUrlQuery(int? kNearestNeighborsCount = default, string fieldsRaw = default, bool? exhaustive = default, double? oversampling = default, float? weight = default, string url = default)
+        public static VectorizableImageUrlQuery VectorizableImageUrlQuery(int? kNearestNeighborsCount = default, string fieldsRaw = default, bool? exhaustive = default, double? oversampling = default, float? weight = default, Uri url = default)
         {
             return new VectorizableImageUrlQuery(
                 kNearestNeighborsCount,
@@ -1518,7 +1518,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="vectorSearch"> Contains configuration options related to vector search. </param>
         /// <param name="eTag"> The ETag of the index. </param>
         /// <returns> A new <see cref="Indexes.Models.SearchIndexResponse"/> instance for mocking. </returns>
-        public static SearchIndexResponse SearchIndexResponse(string name = default, string description = default, IEnumerable<SearchField> fields = default, IEnumerable<ScoringProfile> scoringProfiles = default, string defaultScoringProfile = default, CorsOptions corsOptions = default, IEnumerable<SearchSuggester> suggesters = default, IEnumerable<LexicalAnalyzer> analyzers = default, IEnumerable<LexicalTokenizer> tokenizers = default, IEnumerable<TokenFilter> tokenFilters = default, IEnumerable<CharFilter> charFilters = default, IEnumerable<LexicalNormalizer> normalizers = default, SearchResourceEncryptionKey encryptionKey = default, SimilarityAlgorithm similarity = default, SemanticSearch semanticSearch = default, VectorSearch vectorSearch = default, string eTag = default)
+        public static SearchIndexResponse SearchIndexResponse(string name = default, string description = default, IEnumerable<SearchField> fields = default, IEnumerable<ScoringProfile> scoringProfiles = default, string defaultScoringProfile = default, CorsOptions corsOptions = default, IEnumerable<SearchSuggester> suggesters = default, IEnumerable<LexicalAnalyzer> analyzers = default, IEnumerable<LexicalTokenizer> tokenizers = default, IEnumerable<TokenFilter> tokenFilters = default, IEnumerable<CharFilter> charFilters = default, IEnumerable<LexicalNormalizer> normalizers = default, SearchResourceEncryptionKey encryptionKey = default, SimilarityAlgorithm similarity = default, SemanticSearch semanticSearch = default, VectorSearch vectorSearch = default, ETag? eTag = default)
         {
             fields ??= new ChangeTrackingList<SearchField>();
             scoringProfiles ??= new ChangeTrackingList<ScoringProfile>();
@@ -1952,7 +1952,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="details"> Additional contextual information about the failure. </param>
         /// <param name="documentationLink"> A link to relevant troubleshooting documentation. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeSourceSynchronizationError"/> instance for mocking. </returns>
-        public static KnowledgeSourceSynchronizationError KnowledgeSourceSynchronizationError(string docId = default, int? statusCode = default, string name = default, string errorMessage = default, string details = default, string documentationLink = default)
+        public static KnowledgeSourceSynchronizationError KnowledgeSourceSynchronizationError(string docId = default, int? statusCode = default, string name = default, string errorMessage = default, string details = default, Uri documentationLink = default)
         {
             return new KnowledgeSourceSynchronizationError(
                 docId,
@@ -3524,7 +3524,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="rerankerScore"> The reranker score for the document reference. </param>
         /// <param name="blobUrl"> The blob URL for the reference. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseAzureBlobReference"/> instance for mocking. </returns>
-        public static KnowledgeBaseAzureBlobReference KnowledgeBaseAzureBlobReference(string id = default, int activitySource = default, IDictionary<string, BinaryData> sourceData = default, float? rerankerScore = default, string blobUrl = default)
+        public static KnowledgeBaseAzureBlobReference KnowledgeBaseAzureBlobReference(string id = default, int activitySource = default, IDictionary<string, BinaryData> sourceData = default, float? rerankerScore = default, Uri blobUrl = default)
         {
             sourceData ??= new ChangeTrackingDictionary<string, BinaryData>();
 
@@ -3545,7 +3545,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="rerankerScore"> The reranker score for the document reference. </param>
         /// <param name="docUrl"> The document URL for the reference. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseIndexedOneLakeReference"/> instance for mocking. </returns>
-        public static KnowledgeBaseIndexedOneLakeReference KnowledgeBaseIndexedOneLakeReference(string id = default, int activitySource = default, IDictionary<string, BinaryData> sourceData = default, float? rerankerScore = default, string docUrl = default)
+        public static KnowledgeBaseIndexedOneLakeReference KnowledgeBaseIndexedOneLakeReference(string id = default, int activitySource = default, IDictionary<string, BinaryData> sourceData = default, float? rerankerScore = default, Uri docUrl = default)
         {
             sourceData ??= new ChangeTrackingDictionary<string, BinaryData>();
 
