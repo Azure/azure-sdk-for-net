@@ -115,10 +115,10 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests
             {
                 { "name", subnetName },
                 { "properties", new Dictionary<string, object>()
-                {
-                    { "addressPrefix", "10.0.2.0/24" },
-                    { "defaultOutboundAccess", false }
-                } }
+                    {
+                        { "addressPrefix", "10.0.2.0/24" }
+                    }
+                }
             };
             var subnets = new List<object>() { subnet };
             var input = new GenericResourceData(Location)
