@@ -2,10 +2,7 @@
 // Licensed under the MIT License.
 
 using Microsoft.TypeSpec.Generator.Customizations;
-using CodeGenTypeAttribute = Microsoft.TypeSpec.Generator.Customizations.CodeGenTypeAttribute;
-using CodeGenMemberAttribute = Microsoft.TypeSpec.Generator.Customizations.CodeGenMemberAttribute;
 using CodeGenSuppressAttribute = Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppressAttribute;
-using CodeGenSerializationAttribute = Microsoft.TypeSpec.Generator.Customizations.CodeGenSerializationAttribute;
 
 // Backward-compat shims: restore protected constructors that existed in the GA 1.0.0 contract.
 // The new emitter uses private protected constructors with a type discriminator parameter;

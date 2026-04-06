@@ -9,12 +9,8 @@ using Azure.AI.Agents.Persistent.Telemetry;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-using Microsoft.TypeSpec.Generator.Customizations;
-using CodeGenTypeAttribute = Microsoft.TypeSpec.Generator.Customizations.CodeGenTypeAttribute;
-using CodeGenMemberAttribute = Microsoft.TypeSpec.Generator.Customizations.CodeGenMemberAttribute;
-using CodeGenSuppressAttribute = Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppressAttribute;
-using CodeGenSerializationAttribute = Microsoft.TypeSpec.Generator.Customizations.CodeGenSerializationAttribute;
 using System.ClientModel.Primitives;
+using Microsoft.TypeSpec.Generator.Customizations;
 namespace Azure.AI.Agents.Persistent
 {
     [CodeGenType("RunSteps")]

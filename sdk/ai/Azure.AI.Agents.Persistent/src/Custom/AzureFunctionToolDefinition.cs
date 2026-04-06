@@ -6,13 +6,10 @@ using System;
 using Azure.Core;
 
 using Microsoft.TypeSpec.Generator.Customizations;
-using CodeGenTypeAttribute = Microsoft.TypeSpec.Generator.Customizations.CodeGenTypeAttribute;
-using CodeGenMemberAttribute = Microsoft.TypeSpec.Generator.Customizations.CodeGenMemberAttribute;
-using CodeGenSuppressAttribute = Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppressAttribute;
-using CodeGenSerializationAttribute = Microsoft.TypeSpec.Generator.Customizations.CodeGenSerializationAttribute;
 namespace Azure.AI.Agents.Persistent
 {
     [CodeGenSuppress("AzureFunctionToolDefinition", typeof(InternalAzureFunctionDefinition))]
+    [CodeGenSuppress("InternalAzureFunction")]
     public partial class AzureFunctionToolDefinition
     {
         /// <inheritdoc cref="InternalFunctionDefinition.Name"/>
