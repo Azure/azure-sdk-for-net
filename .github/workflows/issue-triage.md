@@ -33,7 +33,7 @@ safe-outputs:
     max: 7
     target: "*"
   add-comment:
-    max: 1
+    max: 2
     target: "*"
   assign-to-user:
     max: 1
@@ -232,14 +232,14 @@ Retrieve the author's login from the issue data
 
 ### Bot Allowlist
 
-The following accounts are treated as customer-reported regardless of organization membership or permissions (case-insensitive match):
+The following accounts bypass the normal customer evaluation; they are routed through label prediction and ownership but are not classified as customer-reported (case-insensitive match):
 - `azure-sdk`
 - `dependabot[bot]`
 - `copilot-swe-agent[bot]`
 - `microsoft-github-policy-service[bot]`
 - `github-actions[bot]`
 
-If the author matches the bot allowlist, add "bot" label, set `is_customer = true`, and continue to Step 3
+If the author matches the bot allowlist, add "bot" label and continue to Step 3
 
 ### Author Association Check
 
@@ -263,8 +263,7 @@ This returns a JSON array of the user's **public** organization memberships; if 
 
 ```
 IF the author matches the bot allowlist:
-    - Add "bot" label
-    - is_customer = true
+    - Add "bot" label only — do NOT add "customer-reported", "question", or any other labels in this step
     - Continue to Step 3
 
 IF author_association is OWNER, MEMBER, or COLLABORATOR
@@ -275,7 +274,6 @@ IF author_association is OWNER, MEMBER, or COLLABORATOR
 ELSE (external customer):
     - Add "customer-reported" label
     - Add "question" label
-    - is_customer = true
     - Continue to Step 3
 ```
 
@@ -283,7 +281,7 @@ Note: `author_association` of `MEMBER` indicates the author belongs to the organ
 
 ## Step 3: Predict Labels
 
-All issues reaching this step are treated as customer-reported (`is_customer = true`) for label prediction
+All issues reaching this step proceed through label prediction and ownership routing regardless of whether they are customer-reported or bot-filed
 
 Analyze the issue title and body to determine appropriate labels
 
@@ -397,7 +395,7 @@ The replacement is `<alternatePackage.id>`. Please consider re-filing your issue
 
 ## Step 5: Owner Lookup and Routing
 
-All issues reaching this step are customer-reported with predicted labels
+All issues reaching this step have predicted labels and proceed through ownership routing
 
 Read the `.github/CODEOWNERS` file to look up owners for the predicted label combination
 
@@ -477,12 +475,12 @@ IF a matching ServiceLabel entry is found in CODEOWNERS:
         ELSE (multiple AzureSdkOwners):
             - Pick one AzureSdkOwner at random and assign them using the `assign_to_user` tool
 
-        - Add the "needs-team-attention" label
+        - IF the issue has the "customer-reported" label: Add the "needs-team-attention" label
         - Record all AzureSdkOwners for Step 6
 
     ELSE IF only ServiceOwners are listed (no AzureSdkOwners):
         - Add the "Service Attention" label
-        - Add the "needs-team-attention" label
+        - IF the issue has the "customer-reported" label: Add the "needs-team-attention" label
         - Leave the issue unassigned
         - Record all ServiceOwners for Step 6
 
@@ -493,25 +491,29 @@ ELSE (no ServiceLabel entry matches any of the issue's predicted labels):
     - Add the "needs-team-triage" label
 ```
 
-## Step 6: Owner Mention Comment
+## Step 6: Owner Routing Comment
 
-If AzureSdkOwners or ServiceOwners were identified in Step 5, use the `mention_owners` tool to post a routing comment @mentioning them before the analysis comment
+Post a routing comment before the analysis comment. The comment type depends on who was identified in Step 5:
 
-**Important:** Use the `mention_owners` tool (NOT `add_comment`) for this step; `mention_owners` preserves @mentions as real pings while `add_comment` neutralizes them
+- For **multiple AzureSdkOwners** or **ServiceOwners**: use `mention_owners` to preserve @mentions as real pings
+- For a **single AzureSdkOwner**: use `add_comment` with just the routing message (no @mentions needed — the assignment already notifies them)
 
-**Critical:** Pass owner names in the `owners` field WITHOUT the @ prefix; the `mention_owners` job prepends @ on the server side to avoid safe-outputs sanitization. Never include @ symbols in any `mention_owners` tool parameter
+**When using `mention_owners`:** Pass owner names in the `owners` field WITHOUT the @ prefix; the `mention_owners` job prepends @ on the server side to avoid safe-outputs sanitization. Never include @ symbols in any `mention_owners` tool parameter
 
-This comment should be concise: a brief routing message and the @mentions only; no analysis or debugging detail
+This comment should be concise: a brief routing message only; no analysis or debugging detail
 
 ```
-IF AzureSdkOwners were identified in Step 5:
+IF a single AzureSdkOwner was identified in Step 5:
+    - Use `add_comment` with body: "Thank you for your feedback. Tagging and routing to the team member(s) best able to assist."
+
+ELSE IF multiple AzureSdkOwners were identified in Step 5:
     - Use `mention_owners` with:
-        message: "Thank you for your feedback. Tagging and routing to the team member best able to assist"
+        message: "Thank you for your feedback. Tagging and routing to the team member(s) best able to assist."
         owners: "owner1, owner2"
 
 ELSE IF ServiceOwners were identified in Step 5 (Service Attention path):
     - Use `mention_owners` with:
-        message: "Thank you for your feedback. Tagging and routing to the team member best able to assist"
+        message: "Thank you for your feedback. Tagging and routing to the team member(s) best able to assist."
         owners: "owner1, owner2"
 
 ELSE:
