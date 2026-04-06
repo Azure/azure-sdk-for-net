@@ -31,4 +31,3 @@ extends:
       directoryName: Azure.Messaging.EventHubs.Processor
       triggeringPaths:
       - Azure.Messaging.EventHubs.Shared
-    TestDependsOnDependency: Azure.Messaging.EventHubs

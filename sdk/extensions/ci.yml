@@ -32,4 +32,3 @@ extends:
       - sdk/keyvault/Azure.Security.KeyVault.Secrets/
     - name: Microsoft.Azure.WebJobs.Extensions.Clients
       safeName: MicrosoftAzureWebJobsExtensionsClients
-    TestDependsOnDependency: Microsoft.Extensions.Azure

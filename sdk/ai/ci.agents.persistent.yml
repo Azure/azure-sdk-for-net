@@ -19,4 +19,3 @@ extends:
     Artifacts:
     - name: Azure.AI.Agents.Persistent
       safeName: AzureAIAgentsPersistent
-    TestDependsOnDependency: Azure.AI.Agents.Persistent
