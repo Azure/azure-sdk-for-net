@@ -13,99 +13,147 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevCenter
 {
-    /// <summary>
-    /// A class representing the DevBoxDefinition data model.
-    /// Represents a definition for a Developer Machine.
-    /// </summary>
+    /// <summary> Represents a definition for a Developer Machine. </summary>
     public partial class DevBoxDefinitionData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DevBoxDefinitionData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public DevBoxDefinitionData(AzureLocation location) : base(location)
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="DevBoxDefinitionData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="imageReference"> Image reference information. </param>
-        /// <param name="sku"> The SKU for Dev Boxes created using this definition. </param>
-        /// <param name="osStorageType"> The storage type used for the Operating System disk of Dev Boxes created using this definition. </param>
-        /// <param name="hibernateSupport"> Indicates whether Dev Boxes created with this definition are capable of hibernation. Not all images are capable of supporting hibernation. To find out more see https://aka.ms/devbox/hibernate. </param>
-        /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        /// <param name="imageValidationStatus"> Validation status of the configured image. </param>
-        /// <param name="imageValidationErrorDetails"> Details for image validator error. Populated when the image validation is not successful. </param>
-        /// <param name="activeImageReference"> Image reference information for the currently active image (only populated during updates). </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DevBoxDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DevCenterImageReference imageReference, DevCenterSku sku, string osStorageType, DevCenterHibernateSupport? hibernateSupport, DevCenterProvisioningState? provisioningState, ImageValidationStatus? imageValidationStatus, ImageValidationErrorDetails imageValidationErrorDetails, DevCenterImageReference activeImageReference, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Dev Box definition properties. </param>
+        internal DevBoxDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, DevBoxDefinitionProperties properties) : base(id, name, resourceType, systemData, tags, location)
         {
-            ImageReference = imageReference;
-            Sku = sku;
-            OSStorageType = osStorageType;
-            HibernateSupport = hibernateSupport;
-            ProvisioningState = provisioningState;
-            ImageValidationStatus = imageValidationStatus;
-            ImageValidationErrorDetails = imageValidationErrorDetails;
-            ActiveImageReference = activeImageReference;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DevBoxDefinitionData"/> for deserialization. </summary>
-        internal DevBoxDefinitionData()
-        {
-        }
+        /// <summary> Dev Box definition properties. </summary>
+        internal DevBoxDefinitionProperties Properties { get; set; }
 
         /// <summary> Image reference information. </summary>
-        public DevCenterImageReference ImageReference { get; set; }
+        public DevCenterImageReference ImageReference
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ImageReference;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DevBoxDefinitionProperties();
+                }
+                Properties.ImageReference = value;
+            }
+        }
+
         /// <summary> The SKU for Dev Boxes created using this definition. </summary>
-        public DevCenterSku Sku { get; set; }
+        public DevCenterSku Sku
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Sku;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DevBoxDefinitionProperties();
+                }
+                Properties.Sku = value;
+            }
+        }
+
         /// <summary> The storage type used for the Operating System disk of Dev Boxes created using this definition. </summary>
-        public string OSStorageType { get; set; }
+        public string OSStorageType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OSStorageType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DevBoxDefinitionProperties();
+                }
+                Properties.OSStorageType = value;
+            }
+        }
+
         /// <summary> Indicates whether Dev Boxes created with this definition are capable of hibernation. Not all images are capable of supporting hibernation. To find out more see https://aka.ms/devbox/hibernate. </summary>
-        public DevCenterHibernateSupport? HibernateSupport { get; set; }
+        public DevCenterHibernateSupport? HibernateSupport
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HibernateSupport;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DevBoxDefinitionProperties();
+                }
+                Properties.HibernateSupport = value.Value;
+            }
+        }
+
         /// <summary> The provisioning state of the resource. </summary>
-        public DevCenterProvisioningState? ProvisioningState { get; }
+        public DevCenterProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> Validation status of the configured image. </summary>
-        public ImageValidationStatus? ImageValidationStatus { get; }
+        public ImageValidationStatus? ImageValidationStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ImageValidationStatus;
+            }
+        }
+
         /// <summary> Details for image validator error. Populated when the image validation is not successful. </summary>
-        public ImageValidationErrorDetails ImageValidationErrorDetails { get; }
+        public ImageValidationErrorDetails ImageValidationErrorDetails
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ImageValidationErrorDetails;
+            }
+        }
+
+        /// <summary> Validation status for the Dev Box Definition. </summary>
+        public DevCenterCatalogResourceValidationStatus? ValidationStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ValidationStatus;
+            }
+        }
+
         /// <summary> Image reference information for the currently active image (only populated during updates). </summary>
-        public DevCenterImageReference ActiveImageReference { get; }
+        public DevCenterImageReference ActiveImageReference
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ActiveImageReference;
+            }
+        }
     }
 }

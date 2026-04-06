@@ -60,3 +60,4 @@ extends:
       skipSmokeTests: true
     TestSetupSteps:
     - template: /sdk/storage/tests-install-azurite.yml
+    TestDependsOnDependency: Azure.Storage.Blobs Azure.Storage.Files.Shares Azure.Storage.Queues

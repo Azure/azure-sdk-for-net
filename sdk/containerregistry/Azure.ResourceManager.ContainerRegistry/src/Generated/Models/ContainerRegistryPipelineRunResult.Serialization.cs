@@ -8,17 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    public partial class ContainerRegistryPipelineRunResult : IUtf8JsonSerializable, IJsonModel<ContainerRegistryPipelineRunResult>
+    /// <summary> The response properties returned for a pipeline run. </summary>
+    public partial class ContainerRegistryPipelineRunResult : IJsonModel<ContainerRegistryPipelineRunResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerRegistryPipelineRunResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ContainerRegistryPipelineRunResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryPipelineRunResult>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeContainerRegistryPipelineRunResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ContainerRegistryPipelineRunResult)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryPipelineRunResult>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerRegistryContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ContainerRegistryPipelineRunResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ContainerRegistryPipelineRunResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ContainerRegistryPipelineRunResult IPersistableModel<ContainerRegistryPipelineRunResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ContainerRegistryPipelineRunResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ContainerRegistryPipelineRunResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,12 +69,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryPipelineRunResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryPipelineRunResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ContainerRegistryPipelineRunResult)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
@@ -45,8 +83,13 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 writer.WritePropertyName("importedArtifacts"u8);
                 writer.WriteStartArray();
-                foreach (var item in ImportedArtifacts)
+                foreach (string item in ImportedArtifacts)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -91,15 +134,15 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 writer.WritePropertyName("pipelineRunErrorMessage"u8);
                 writer.WriteStringValue(PipelineRunErrorMessage);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -108,394 +151,151 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
         }
 
-        ContainerRegistryPipelineRunResult IJsonModel<ContainerRegistryPipelineRunResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ContainerRegistryPipelineRunResult IJsonModel<ContainerRegistryPipelineRunResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ContainerRegistryPipelineRunResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryPipelineRunResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryPipelineRunResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ContainerRegistryPipelineRunResult)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeContainerRegistryPipelineRunResult(document.RootElement, options);
         }
 
-        internal static ContainerRegistryPipelineRunResult DeserializeContainerRegistryPipelineRunResult(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ContainerRegistryPipelineRunResult DeserializeContainerRegistryPipelineRunResult(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string status = default;
             IReadOnlyList<string> importedArtifacts = default;
-            ContainerRegistryProgressProperties progress = default;
-            DateTimeOffset? startTime = default;
-            DateTimeOffset? finishTime = default;
+            ProgressProperties progress = default;
+            DateTimeOffset? startOn = default;
+            DateTimeOffset? finishOn = default;
             ContainerRegistryImportPipelineSourceProperties source = default;
             ContainerRegistryExportPipelineTargetProperties target = default;
             string catalogDigest = default;
-            ContainerRegistryPipelineTriggerDescriptor trigger = default;
+            PipelineTriggerDescriptor trigger = default;
             string pipelineRunErrorMessage = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("status"u8))
+                if (prop.NameEquals("status"u8))
                 {
-                    status = property.Value.GetString();
+                    status = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("importedArtifacts"u8))
+                if (prop.NameEquals("importedArtifacts"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     importedArtifacts = array;
                     continue;
                 }
-                if (property.NameEquals("progress"u8))
+                if (prop.NameEquals("progress"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    progress = ContainerRegistryProgressProperties.DeserializeContainerRegistryProgressProperties(property.Value, options);
+                    progress = ProgressProperties.DeserializeProgressProperties(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("startTime"u8))
+                if (prop.NameEquals("startTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    startTime = property.Value.GetDateTimeOffset("O");
+                    startOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("finishTime"u8))
+                if (prop.NameEquals("finishTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    finishTime = property.Value.GetDateTimeOffset("O");
+                    finishOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("source"u8))
+                if (prop.NameEquals("source"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    source = ContainerRegistryImportPipelineSourceProperties.DeserializeContainerRegistryImportPipelineSourceProperties(property.Value, options);
+                    source = ContainerRegistryImportPipelineSourceProperties.DeserializeContainerRegistryImportPipelineSourceProperties(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("target"u8))
+                if (prop.NameEquals("target"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    target = ContainerRegistryExportPipelineTargetProperties.DeserializeContainerRegistryExportPipelineTargetProperties(property.Value, options);
+                    target = ContainerRegistryExportPipelineTargetProperties.DeserializeContainerRegistryExportPipelineTargetProperties(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("catalogDigest"u8))
+                if (prop.NameEquals("catalogDigest"u8))
                 {
-                    catalogDigest = property.Value.GetString();
+                    catalogDigest = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("trigger"u8))
+                if (prop.NameEquals("trigger"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    trigger = ContainerRegistryPipelineTriggerDescriptor.DeserializeContainerRegistryPipelineTriggerDescriptor(property.Value, options);
+                    trigger = PipelineTriggerDescriptor.DeserializePipelineTriggerDescriptor(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("pipelineRunErrorMessage"u8))
+                if (prop.NameEquals("pipelineRunErrorMessage"u8))
                 {
-                    pipelineRunErrorMessage = property.Value.GetString();
+                    pipelineRunErrorMessage = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ContainerRegistryPipelineRunResult(
                 status,
                 importedArtifacts ?? new ChangeTrackingList<string>(),
                 progress,
-                startTime,
-                finishTime,
+                startOn,
+                finishOn,
                 source,
                 target,
                 catalogDigest,
                 trigger,
                 pipelineRunErrorMessage,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Status), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  status: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Status))
-                {
-                    builder.Append("  status: ");
-                    if (Status.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Status}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Status}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ImportedArtifacts), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  importedArtifacts: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(ImportedArtifacts))
-                {
-                    if (ImportedArtifacts.Any())
-                    {
-                        builder.Append("  importedArtifacts: ");
-                        builder.AppendLine("[");
-                        foreach (var item in ImportedArtifacts)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("    '''");
-                                builder.AppendLine($"{item}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"    '{item}'");
-                            }
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("ProgressPercentage", out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  progress: ");
-                builder.AppendLine("{");
-                builder.Append("    percentage: ");
-                builder.AppendLine(propertyOverride);
-                builder.AppendLine("  }");
-            }
-            else
-            {
-                if (Optional.IsDefined(Progress))
-                {
-                    builder.Append("  progress: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Progress, options, 2, false, "  progress: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StartOn), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  startTime: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(StartOn))
-                {
-                    builder.Append("  startTime: ");
-                    var formattedDateTimeString = TypeFormatters.ToString(StartOn.Value, "o");
-                    builder.AppendLine($"'{formattedDateTimeString}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FinishOn), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  finishTime: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(FinishOn))
-                {
-                    builder.Append("  finishTime: ");
-                    var formattedDateTimeString = TypeFormatters.ToString(FinishOn.Value, "o");
-                    builder.AppendLine($"'{formattedDateTimeString}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Source), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  source: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Source))
-                {
-                    builder.Append("  source: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Source, options, 2, false, "  source: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Target), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  target: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Target))
-                {
-                    builder.Append("  target: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Target, options, 2, false, "  target: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CatalogDigest), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  catalogDigest: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CatalogDigest))
-                {
-                    builder.Append("  catalogDigest: ");
-                    if (CatalogDigest.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{CatalogDigest}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{CatalogDigest}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("SourceTriggerTimestamp", out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  trigger: ");
-                builder.AppendLine("{");
-                builder.AppendLine("    sourceTrigger: {");
-                builder.Append("      timestamp: ");
-                builder.AppendLine(propertyOverride);
-                builder.AppendLine("    }");
-                builder.AppendLine("  }");
-            }
-            else
-            {
-                if (Optional.IsDefined(Trigger))
-                {
-                    builder.Append("  trigger: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Trigger, options, 2, false, "  trigger: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PipelineRunErrorMessage), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  pipelineRunErrorMessage: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PipelineRunErrorMessage))
-                {
-                    builder.Append("  pipelineRunErrorMessage: ");
-                    if (PipelineRunErrorMessage.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{PipelineRunErrorMessage}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{PipelineRunErrorMessage}'");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<ContainerRegistryPipelineRunResult>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryPipelineRunResult>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerRegistryContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(ContainerRegistryPipelineRunResult)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ContainerRegistryPipelineRunResult IPersistableModel<ContainerRegistryPipelineRunResult>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryPipelineRunResult>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeContainerRegistryPipelineRunResult(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ContainerRegistryPipelineRunResult)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ContainerRegistryPipelineRunResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

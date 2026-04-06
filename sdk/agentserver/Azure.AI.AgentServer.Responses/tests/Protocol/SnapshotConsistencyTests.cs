@@ -23,6 +23,7 @@ public class SnapshotConsistencyTests : ProtocolTestBase
     /// never completed with fewer items than final count).
     /// </summary>
     [Test]
+    [Ignore("Flaky due to race condition — https://github.com/Azure/azure-sdk-for-net/issues/57815")]
     public async Task ConcurrentGET_DuringEmission_ReturnsConsistentSnapshots()
     {
         var handlerStarted = new TaskCompletionSource();

@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -21,26 +21,25 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
         {
             Uri sampleEndpoint = TestEnvironment.Endpoint;
             DefaultAzureCredential sampleCredential = new DefaultAzureCredential();
-            var sampleClient = new ConversationAnalysisAuthoringClient(sampleEndpoint, sampleCredential);
+            ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(sampleEndpoint, sampleCredential);
 
             #region Snippet:Sample17_ConversationsAuthoring_GetAssignProjectResourcesStatus
             string sampleProjectName = "{projectName}";
-            ConversationAuthoringProject sampleProjectClient = sampleClient.GetProject(sampleProjectName);
-
             var sampleResourceMetadata = new ConversationAuthoringResourceMetadata(
                 azureResourceId: "/subscriptions/{subscription}/resourceGroups/{resourcegroup}/providers/Microsoft.CognitiveServices/accounts/{sampleAccount}",
                 customDomain: "{customDomain}",
                 region: "{region}"
             );
 
-            var sampleAssignDetails = new ConversationAuthoringAssignProjectResourcesDetails(
+            var sampleAssignDetails = new ConversationAuthoringAssignDeploymentResourcesDetails(
                 new List<ConversationAuthoringResourceMetadata> { sampleResourceMetadata }
             );
 
             // Submit assignment operation
-            Operation sampleAssignOperation = sampleProjectClient.AssignProjectResources(
-                waitUntil: WaitUntil.Started,
-                details: sampleAssignDetails
+            Operation sampleAssignOperation = client.AssignProjectResources(
+                WaitUntil.Started,
+                sampleProjectName,
+                sampleAssignDetails
             );
 
             string sampleOperationLocation = sampleAssignOperation.GetRawResponse().Headers.TryGetValue("Operation-Location", out var location)
@@ -52,7 +51,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             Console.WriteLine($"Job ID: {sampleJobId}");
 
             // Call status API
-            Response<ConversationAuthoringProjectResourcesState> sampleStatusResponse = sampleProjectClient.GetAssignProjectResourcesStatus(sampleJobId);
+            Response<ConversationAuthoringDeploymentResourcesState> sampleStatusResponse = client.GetAssignProjectResourcesStatus(sampleProjectName, sampleJobId);
 
             Console.WriteLine($"Deployment assignment status: {sampleStatusResponse.Value.Status}");
             #endregion
@@ -64,12 +63,10 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
         {
             Uri sampleEndpoint = TestEnvironment.Endpoint;
             DefaultAzureCredential sampleCredential = new DefaultAzureCredential();
-            var sampleClient = new ConversationAnalysisAuthoringClient(sampleEndpoint, sampleCredential);
+            ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(sampleEndpoint, sampleCredential);
 
             #region Snippet:Sample17_ConversationsAuthoring_GetAssignProjectResourcesStatusAsync
             string sampleProjectName = "{projectName}";
-            ConversationAuthoringProject sampleProjectClient = sampleClient.GetProject(sampleProjectName);
-
             // Build resource metadata
             var sampleResourceMetadata = new ConversationAuthoringResourceMetadata(
                 azureResourceId: "/subscriptions/{subscription}/resourceGroups/{resourcegroup}/providers/Microsoft.CognitiveServices/accounts/{sampleAccount}",
@@ -77,14 +74,15 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
                 region: "{region}"
             );
 
-            var sampleAssignDetails = new ConversationAuthoringAssignProjectResourcesDetails(
+            var sampleAssignDetails = new ConversationAuthoringAssignDeploymentResourcesDetails(
                 new List<ConversationAuthoringResourceMetadata> { sampleResourceMetadata }
             );
 
             // Submit assignment operation
-            Operation sampleAssignOperation = await sampleProjectClient.AssignProjectResourcesAsync(
-                waitUntil: WaitUntil.Started,
-                details: sampleAssignDetails
+            Operation sampleAssignOperation = await client.AssignProjectResourcesAsync(
+                WaitUntil.Started,
+                sampleProjectName,
+                sampleAssignDetails
             );
 
             string sampleOperationLocation = sampleAssignOperation.GetRawResponse().Headers.TryGetValue("Operation-Location", out string location)
@@ -96,7 +94,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             Console.WriteLine($"Job ID: {sampleJobId}");
 
             // Call status API
-            Response<ConversationAuthoringProjectResourcesState> sampleStatusResponse = await sampleProjectClient.GetAssignProjectResourcesStatusAsync(sampleJobId);
+            Response<ConversationAuthoringDeploymentResourcesState> sampleStatusResponse = await client.GetAssignProjectResourcesStatusAsync(sampleProjectName, sampleJobId);
 
             Assert.IsNotNull(sampleStatusResponse);
             Console.WriteLine($"Deployment assignment status: {sampleStatusResponse.Value.Status}");
