@@ -41,9 +41,7 @@ public class Sample_Toolboxes_CRUD : SamplesBase
         var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
 #endif
-        AIProjectClientOptions options = new();
-        options.AddPolicy(GetDumpPolicy(), System.ClientModel.Primitives.PipelinePosition.PerCall);
-        AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
+        AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
         AgentToolboxes toolboxClient = projectClient.AgentAdministrationClient.GetAgentToolboxes();
         string toolboxName = "mcp";
         #endregion
@@ -54,7 +52,7 @@ public class Sample_Toolboxes_CRUD : SamplesBase
             serverUri: new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
             toolCallApprovalPolicy: new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
         ));
-        ToolboxRecord toolBox = await toolboxClient.CreateToolboxAsync(
+        ToolboxVersion toolBox = await toolboxClient.CreateToolboxVersionAsync(
             toolboxName: toolboxName,
             tools: [tool],
             description: "Example toolbox created by the azure-ai-projects sample.",
@@ -72,32 +70,10 @@ public class Sample_Toolboxes_CRUD : SamplesBase
         Console.WriteLine($"Retrieved toolbox: {toolBox.Name} ({toolBox.Id})");
         #endregion
 
-        #region Snippet:Sample_UpdateToolbox_ToolboxesCRUD_Async
-        BinaryData update = BinaryData.FromObjectAsJson(
-            new
-            {
-                description = "Updated description for the sample toolbox.",
-                metadata = new
-                {
-                    status = "updated"
-                }
-            }
-        );
-        using BinaryContent updateContent = BinaryContent.Create(update);
-        ClientResult data = await toolboxClient.UpdateToolboxAsync(
-            toolboxName: toolboxName,
-            content: updateContent
-        );
-        toolBox = ClientResult.FromValue((ToolboxVersion)data, data.GetRawResponse());
-        status = "unknown status";
-        toolBox.Metadata?.TryGetValue("status", out status);
-        Console.WriteLine($"Toolbox: {toolBox.Name}, (tools: {toolBox.Tools.Count}) (status: {status}");
-        #endregion
-
         #region Snippet:Sample_ListToolbox_ToolboxesCRUD_Async
-        List<ToolboxRecord> toolboxes = await toolboxClient.GetToolboxesAsync().ToListAsync();
+        List<ToolboxVersion> toolboxes = await toolboxClient.GetToolboxVersionsAsync(toolBox.Name).ToListAsync();
         Console.WriteLine($"Found {toolboxes.Count} toolsets");
-        foreach (ToolboxRecord item in toolboxes)
+        foreach (ToolboxVersion item in toolboxes)
         {
             Console.WriteLine($"  - {item.Name} ({item.Id})");
         }
@@ -147,32 +123,10 @@ public class Sample_Toolboxes_CRUD : SamplesBase
         Console.WriteLine($"Retrieved toolbox: {toolBox.Name} ({toolBox.Id})");
         #endregion
 
-        #region Snippet:Sample_UpdateToolbox_ToolboxesCRUD_Sync
-        BinaryData update = BinaryData.FromObjectAsJson(
-            new
-            {
-                description = "Updated description for the sample toolbox.",
-                metadata = new
-                {
-                    status = "updated"
-                }
-            }
-        );
-        using BinaryContent updateContent = BinaryContent.Create(update);
-        ClientResult data = toolboxClient.UpdateToolbox(
-            toolboxName: toolboxName,
-            content: updateContent
-        );
-        toolBox = ClientResult.FromValue((ToolboxVersion)data, data.GetRawResponse());
-        status = "unknown status";
-        toolBox.Metadata?.TryGetValue("status", out status);
-        Console.WriteLine($"Toolbox: {toolBox.Name}, (tools: {toolBox.Tools.Count}) (status: {status}");
-        #endregion
-
         #region Snippet:Sample_ListToolbox_ToolboxesCRUD_Sync
-        List<ToolboxRecord> toolboxes = [..toolboxClient.GetToolboxes()];
+        List<ToolboxVersion> toolboxes = [..toolboxClient.GetToolboxVersions(toolBox.Name)];
         Console.WriteLine($"Found {toolboxes.Count} toolsets");
-        foreach (ToolboxRecord item in toolboxes)
+        foreach (ToolboxVersion item in toolboxes)
         {
             Console.WriteLine($"  - {item.Name} ({item.Id})");
         }

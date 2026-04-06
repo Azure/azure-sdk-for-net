@@ -13,9 +13,6 @@
               "format": "uri",
               "description": "Gets or sets the Endpoint."
             },
-            "Settings": {
-              "type": "object"
-            },
             "Credential": {
               "$ref": "#/definitions/credential"
             },
