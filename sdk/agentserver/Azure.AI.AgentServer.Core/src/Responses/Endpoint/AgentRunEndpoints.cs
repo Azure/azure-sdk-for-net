@@ -1,6 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics;
+using System.Runtime.CompilerServices;
+
 using Azure.AI.AgentServer.Contracts.Generated.OpenAI;
 using Azure.AI.AgentServer.Contracts.Generated.Responses;
 using Azure.AI.AgentServer.Core.Common.Http.ServerSentEvent;
@@ -59,7 +62,8 @@ public static class AgentRunEndpoints
 
         UpdateContextBaggage(scopeAttrs);
         await using var _ = AgentInvocationContext.Setup(context).ConfigureAwait(false);
-        using var activity = context.StartActivity(logger, request);
+        IDisposable? activityScope = context.StartActivity(logger, request);
+        var activity = Activity.Current;
         try
         {
             logger.LogInformation($"Processing CreateResponse request: response_id={context.ResponseId}, "
@@ -69,10 +73,16 @@ public static class AgentRunEndpoints
             {
                 logger.LogInformation("Invoking agent to create streaming response.");
                 var updates = agentInvocation.InvokeStreamAsync(request, context, ct);
-                return updates.ToSseResult(
-                    e => SseFrame.Of(name: e.Type.ToString(), data: e),
-                    logger,
-                    ct);
+                // Transfer activity scope ownership to the streaming pipeline so that
+                // Activity.Current is restored during enumeration and child spans are
+                // properly parented under this activity instead of appearing as siblings.
+                var result = WithActivityScope(updates, activity, activityScope, ct)
+                    .ToSseResult(
+                        e => SseFrame.Of(name: e.Type.ToString(), data: e),
+                        logger,
+                        ct);
+                activityScope = null;
+                return result;
             }
 
             logger.LogInformation("Invoking agent to create response.");
@@ -87,6 +97,10 @@ public static class AgentRunEndpoints
             // Exceptions will be export to exceptions table in Application Insights.
             logger.LogError(ex, "Error when processing CreateResponse request.");
             throw;
+        }
+        finally
+        {
+            activityScope?.Dispose();
         }
     }
 
@@ -126,6 +140,33 @@ public static class AgentRunEndpoints
         foreach (var kv in scopeAttrs)
         {
             Baggage.SetBaggage(kv.Key, kv.Value);
+        }
+    }
+
+    /// <summary>
+    /// Wraps an async enumerable to restore the given <see cref="Activity"/> as
+    /// <see cref="Activity.Current"/> during enumeration and dispose the
+    /// <paramref name="scope"/> when enumeration completes. This ensures that
+    /// child spans created during deferred streaming execution are properly
+    /// parented under the original activity.
+    /// </summary>
+    private static async IAsyncEnumerable<T> WithActivityScope<T>(
+        IAsyncEnumerable<T> source,
+        Activity? activity,
+        IDisposable? scope,
+        [EnumeratorCancellation] CancellationToken ct = default)
+    {
+        Activity.Current = activity;
+        try
+        {
+            await foreach (var item in source.WithCancellation(ct).ConfigureAwait(false))
+            {
+                yield return item;
+            }
+        }
+        finally
+        {
+            scope?.Dispose();
         }
     }
 }
