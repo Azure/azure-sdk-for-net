@@ -40,7 +40,6 @@ if (Test-Path $WeightsFile) {
   try {
     $content = Get-Content $WeightsFile -Raw | ConvertFrom-Json
     $content.PSObject.Properties | ForEach-Object { $weights[$_.Name] = [int]$_.Value }
-    Write-Host "Loaded $($weights.Count) package weights from $WeightsFile"
   }
   catch {
     Write-Warning "Failed to load weights: $($_.Exception.Message). Skipping weighted batching."
@@ -73,7 +72,9 @@ if ($packages.Count -eq 0) {
 $directPackages = @($packages | Where-Object { $_.Json.IncludedForValidation -eq $false })
 $indirectPackages = @($packages | Where-Object { $_.Json.IncludedForValidation -eq $true })
 
-Write-Host "Packages: $($directPackages.Count) direct, $($indirectPackages.Count) indirect"
+$totalPkgs = $directPackages.Count + $indirectPackages.Count
+$matchedWeights = @($packages | Where-Object { $weights.ContainsKey($_.Json.ArtifactName) }).Count
+Write-Host "Packages: $($directPackages.Count) direct, $($indirectPackages.Count) indirect ($matchedWeights/$totalPkgs have weights)"
 
 function Apply-LPTBatching {
   param(
@@ -125,11 +126,15 @@ function Apply-LPTBatching {
     $lightest.TotalWeight += $item.Weight
   }
 
-  # Log bucket distribution
+  # Log bucket distribution with collapsible groups
   $bucketIdx = 1
   foreach ($bucket in $buckets) {
-    $names = ($bucket.Items | ForEach-Object { $_.Name }) -join ", "
-    Write-Host "    Bucket ${bucketIdx}: $($bucket.Items.Count) pkgs, weight $($bucket.TotalWeight)s ($([math]::Round($bucket.TotalWeight / 60, 1))m) [$names]"
+    $summary = "Bucket ${bucketIdx}: $($bucket.Items.Count) pkgs, weight $($bucket.TotalWeight)s ($([math]::Round($bucket.TotalWeight / 60, 1))m)"
+    Write-Host "##[group]$summary"
+    foreach ($item in ($bucket.Items | Sort-Object Name)) {
+      Write-Host "      $($item.Name) ($($item.Weight)s)"
+    }
+    Write-Host "##[endgroup]"
     $bucketIdx++
   }
 
