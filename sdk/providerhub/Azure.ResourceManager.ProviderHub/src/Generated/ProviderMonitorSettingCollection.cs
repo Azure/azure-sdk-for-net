@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ProviderHub
@@ -25,51 +26,49 @@ namespace Azure.ResourceManager.ProviderHub
     /// </summary>
     public partial class ProviderMonitorSettingCollection : ArmCollection, IEnumerable<ProviderMonitorSettingResource>, IAsyncEnumerable<ProviderMonitorSettingResource>
     {
-        private readonly ClientDiagnostics _providerMonitorSettingClientDiagnostics;
-        private readonly ProviderMonitorSettingsRestOperations _providerMonitorSettingRestClient;
+        private readonly ClientDiagnostics _providerMonitorSettingsClientDiagnostics;
+        private readonly ProviderMonitorSettings _providerMonitorSettingsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="ProviderMonitorSettingCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ProviderMonitorSettingCollection for mocking. </summary>
         protected ProviderMonitorSettingCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ProviderMonitorSettingCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProviderMonitorSettingCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ProviderMonitorSettingCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _providerMonitorSettingClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ProviderHub", ProviderMonitorSettingResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ProviderMonitorSettingResource.ResourceType, out string providerMonitorSettingApiVersion);
-            _providerMonitorSettingRestClient = new ProviderMonitorSettingsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, providerMonitorSettingApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _providerMonitorSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ProviderHub", ProviderMonitorSettingResource.ResourceType.Namespace, Diagnostics);
+            _providerMonitorSettingsRestClient = new ProviderMonitorSettings(_providerMonitorSettingsClientDiagnostics, Pipeline, Endpoint, providerMonitorSettingApiVersion ?? "2024-09-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Creates the provider monitor setting.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ProviderHub/providerMonitorSettings/{providerMonitorSettingName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ProviderHub/providerMonitorSettings/{providerMonitorSettingName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProviderMonitorSettings_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProviderMonitorSettings_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ProviderMonitorSettingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -77,21 +76,34 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="providerMonitorSettingName"> The name of the provider monitor setting. </param>
         /// <param name="data"> The provider monitor setting properties supplied to the create operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="providerMonitorSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="providerMonitorSettingName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="providerMonitorSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<ProviderMonitorSettingResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string providerMonitorSettingName, ProviderMonitorSettingData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(providerMonitorSettingName, nameof(providerMonitorSettingName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _providerMonitorSettingClientDiagnostics.CreateScope("ProviderMonitorSettingCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _providerMonitorSettingsClientDiagnostics.CreateScope("ProviderMonitorSettingCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _providerMonitorSettingRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, providerMonitorSettingName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ProviderHubArmOperation<ProviderMonitorSettingResource>(new ProviderMonitorSettingOperationSource(Client), _providerMonitorSettingClientDiagnostics, Pipeline, _providerMonitorSettingRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, providerMonitorSettingName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _providerMonitorSettingsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, providerMonitorSettingName, ProviderMonitorSettingData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                ProviderHubArmOperation<ProviderMonitorSettingResource> operation = new ProviderHubArmOperation<ProviderMonitorSettingResource>(
+                    new ProviderMonitorSettingOperationSource(Client),
+                    _providerMonitorSettingsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -105,20 +117,16 @@ namespace Azure.ResourceManager.ProviderHub
         /// Creates the provider monitor setting.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ProviderHub/providerMonitorSettings/{providerMonitorSettingName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ProviderHub/providerMonitorSettings/{providerMonitorSettingName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProviderMonitorSettings_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProviderMonitorSettings_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ProviderMonitorSettingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,21 +134,34 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="providerMonitorSettingName"> The name of the provider monitor setting. </param>
         /// <param name="data"> The provider monitor setting properties supplied to the create operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="providerMonitorSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="providerMonitorSettingName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="providerMonitorSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<ProviderMonitorSettingResource> CreateOrUpdate(WaitUntil waitUntil, string providerMonitorSettingName, ProviderMonitorSettingData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(providerMonitorSettingName, nameof(providerMonitorSettingName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _providerMonitorSettingClientDiagnostics.CreateScope("ProviderMonitorSettingCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _providerMonitorSettingsClientDiagnostics.CreateScope("ProviderMonitorSettingCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _providerMonitorSettingRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, providerMonitorSettingName, data, cancellationToken);
-                var operation = new ProviderHubArmOperation<ProviderMonitorSettingResource>(new ProviderMonitorSettingOperationSource(Client), _providerMonitorSettingClientDiagnostics, Pipeline, _providerMonitorSettingRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, providerMonitorSettingName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _providerMonitorSettingsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, providerMonitorSettingName, ProviderMonitorSettingData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ProviderHubArmOperation<ProviderMonitorSettingResource> operation = new ProviderHubArmOperation<ProviderMonitorSettingResource>(
+                    new ProviderMonitorSettingOperationSource(Client),
+                    _providerMonitorSettingsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -154,38 +175,42 @@ namespace Azure.ResourceManager.ProviderHub
         /// Gets the provider monitor setting details.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ProviderHub/providerMonitorSettings/{providerMonitorSettingName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ProviderHub/providerMonitorSettings/{providerMonitorSettingName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProviderMonitorSettings_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProviderMonitorSettings_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ProviderMonitorSettingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="providerMonitorSettingName"> The name of the provider monitor setting. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="providerMonitorSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="providerMonitorSettingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="providerMonitorSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<ProviderMonitorSettingResource>> GetAsync(string providerMonitorSettingName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(providerMonitorSettingName, nameof(providerMonitorSettingName));
 
-            using var scope = _providerMonitorSettingClientDiagnostics.CreateScope("ProviderMonitorSettingCollection.Get");
+            using DiagnosticScope scope = _providerMonitorSettingsClientDiagnostics.CreateScope("ProviderMonitorSettingCollection.Get");
             scope.Start();
             try
             {
-                var response = await _providerMonitorSettingRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, providerMonitorSettingName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _providerMonitorSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, providerMonitorSettingName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ProviderMonitorSettingData> response = Response.FromValue(ProviderMonitorSettingData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ProviderMonitorSettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -199,38 +224,42 @@ namespace Azure.ResourceManager.ProviderHub
         /// Gets the provider monitor setting details.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ProviderHub/providerMonitorSettings/{providerMonitorSettingName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ProviderHub/providerMonitorSettings/{providerMonitorSettingName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProviderMonitorSettings_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProviderMonitorSettings_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ProviderMonitorSettingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="providerMonitorSettingName"> The name of the provider monitor setting. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="providerMonitorSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="providerMonitorSettingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="providerMonitorSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<ProviderMonitorSettingResource> Get(string providerMonitorSettingName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(providerMonitorSettingName, nameof(providerMonitorSettingName));
 
-            using var scope = _providerMonitorSettingClientDiagnostics.CreateScope("ProviderMonitorSettingCollection.Get");
+            using DiagnosticScope scope = _providerMonitorSettingsClientDiagnostics.CreateScope("ProviderMonitorSettingCollection.Get");
             scope.Start();
             try
             {
-                var response = _providerMonitorSettingRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, providerMonitorSettingName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _providerMonitorSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, providerMonitorSettingName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ProviderMonitorSettingData> response = Response.FromValue(ProviderMonitorSettingData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ProviderMonitorSettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -244,50 +273,44 @@ namespace Azure.ResourceManager.ProviderHub
         /// Gets the list of the provider monitor settings in the resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ProviderHub/providerMonitorSettings</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ProviderHub/providerMonitorSettings. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProviderMonitorSettings_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProviderMonitorSettings_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ProviderMonitorSettingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ProviderMonitorSettingResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ProviderMonitorSettingResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ProviderMonitorSettingResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _providerMonitorSettingRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _providerMonitorSettingRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ProviderMonitorSettingResource(Client, ProviderMonitorSettingData.DeserializeProviderMonitorSettingData(e)), _providerMonitorSettingClientDiagnostics, Pipeline, "ProviderMonitorSettingCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ProviderMonitorSettingData, ProviderMonitorSettingResource>(new ProviderMonitorSettingsGetByResourceGroupAsyncCollectionResultOfT(_providerMonitorSettingsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new ProviderMonitorSettingResource(Client, data));
         }
 
         /// <summary>
         /// Gets the list of the provider monitor settings in the resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ProviderHub/providerMonitorSettings</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ProviderHub/providerMonitorSettings. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProviderMonitorSettings_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProviderMonitorSettings_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ProviderMonitorSettingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -295,45 +318,61 @@ namespace Azure.ResourceManager.ProviderHub
         /// <returns> A collection of <see cref="ProviderMonitorSettingResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ProviderMonitorSettingResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _providerMonitorSettingRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _providerMonitorSettingRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ProviderMonitorSettingResource(Client, ProviderMonitorSettingData.DeserializeProviderMonitorSettingData(e)), _providerMonitorSettingClientDiagnostics, Pipeline, "ProviderMonitorSettingCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ProviderMonitorSettingData, ProviderMonitorSettingResource>(new ProviderMonitorSettingsGetByResourceGroupCollectionResultOfT(_providerMonitorSettingsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new ProviderMonitorSettingResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ProviderHub/providerMonitorSettings/{providerMonitorSettingName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ProviderHub/providerMonitorSettings/{providerMonitorSettingName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProviderMonitorSettings_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProviderMonitorSettings_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ProviderMonitorSettingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="providerMonitorSettingName"> The name of the provider monitor setting. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="providerMonitorSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="providerMonitorSettingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="providerMonitorSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string providerMonitorSettingName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(providerMonitorSettingName, nameof(providerMonitorSettingName));
 
-            using var scope = _providerMonitorSettingClientDiagnostics.CreateScope("ProviderMonitorSettingCollection.Exists");
+            using DiagnosticScope scope = _providerMonitorSettingsClientDiagnostics.CreateScope("ProviderMonitorSettingCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _providerMonitorSettingRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, providerMonitorSettingName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _providerMonitorSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, providerMonitorSettingName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ProviderMonitorSettingData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ProviderMonitorSettingData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ProviderMonitorSettingData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -347,36 +386,50 @@ namespace Azure.ResourceManager.ProviderHub
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ProviderHub/providerMonitorSettings/{providerMonitorSettingName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ProviderHub/providerMonitorSettings/{providerMonitorSettingName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProviderMonitorSettings_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProviderMonitorSettings_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ProviderMonitorSettingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="providerMonitorSettingName"> The name of the provider monitor setting. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="providerMonitorSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="providerMonitorSettingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="providerMonitorSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string providerMonitorSettingName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(providerMonitorSettingName, nameof(providerMonitorSettingName));
 
-            using var scope = _providerMonitorSettingClientDiagnostics.CreateScope("ProviderMonitorSettingCollection.Exists");
+            using DiagnosticScope scope = _providerMonitorSettingsClientDiagnostics.CreateScope("ProviderMonitorSettingCollection.Exists");
             scope.Start();
             try
             {
-                var response = _providerMonitorSettingRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, providerMonitorSettingName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _providerMonitorSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, providerMonitorSettingName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ProviderMonitorSettingData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ProviderMonitorSettingData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ProviderMonitorSettingData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -390,38 +443,54 @@ namespace Azure.ResourceManager.ProviderHub
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ProviderHub/providerMonitorSettings/{providerMonitorSettingName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ProviderHub/providerMonitorSettings/{providerMonitorSettingName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProviderMonitorSettings_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProviderMonitorSettings_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ProviderMonitorSettingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="providerMonitorSettingName"> The name of the provider monitor setting. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="providerMonitorSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="providerMonitorSettingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="providerMonitorSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<ProviderMonitorSettingResource>> GetIfExistsAsync(string providerMonitorSettingName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(providerMonitorSettingName, nameof(providerMonitorSettingName));
 
-            using var scope = _providerMonitorSettingClientDiagnostics.CreateScope("ProviderMonitorSettingCollection.GetIfExists");
+            using DiagnosticScope scope = _providerMonitorSettingsClientDiagnostics.CreateScope("ProviderMonitorSettingCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _providerMonitorSettingRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, providerMonitorSettingName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _providerMonitorSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, providerMonitorSettingName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ProviderMonitorSettingData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ProviderMonitorSettingData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ProviderMonitorSettingData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ProviderMonitorSettingResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ProviderMonitorSettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -435,38 +504,54 @@ namespace Azure.ResourceManager.ProviderHub
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ProviderHub/providerMonitorSettings/{providerMonitorSettingName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ProviderHub/providerMonitorSettings/{providerMonitorSettingName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProviderMonitorSettings_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProviderMonitorSettings_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ProviderMonitorSettingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="providerMonitorSettingName"> The name of the provider monitor setting. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="providerMonitorSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="providerMonitorSettingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="providerMonitorSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<ProviderMonitorSettingResource> GetIfExists(string providerMonitorSettingName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(providerMonitorSettingName, nameof(providerMonitorSettingName));
 
-            using var scope = _providerMonitorSettingClientDiagnostics.CreateScope("ProviderMonitorSettingCollection.GetIfExists");
+            using DiagnosticScope scope = _providerMonitorSettingsClientDiagnostics.CreateScope("ProviderMonitorSettingCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _providerMonitorSettingRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, providerMonitorSettingName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _providerMonitorSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, providerMonitorSettingName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ProviderMonitorSettingData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ProviderMonitorSettingData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ProviderMonitorSettingData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ProviderMonitorSettingResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ProviderMonitorSettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -486,6 +571,7 @@ namespace Azure.ResourceManager.ProviderHub
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<ProviderMonitorSettingResource> IAsyncEnumerable<ProviderMonitorSettingResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

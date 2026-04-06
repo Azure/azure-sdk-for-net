@@ -1,4 +1,4 @@
 directory: specification/providerhub/ProviderHub.Management
-commit: 5fee475ab91d5d235f2ad372bef69d36def79fdb
+commit: 56b84434e7d7ffc88dccb55137a255383df4c5dc
 repo: Azure/azure-rest-api-specs
 emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json"
