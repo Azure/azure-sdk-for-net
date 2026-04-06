@@ -39,7 +39,7 @@ public partial class ResponsesTelemetryTests
         try
         {
             File.WriteAllText(filePath, FileSearchFileContent);
-            OpenAIFileClient fileClient = projectClient.OpenAI.GetOpenAIFileClient();
+            OpenAIFileClient fileClient = projectClient.ProjectOpenAIClient.GetOpenAIFileClient();
             uploadedFile = await fileClient.UploadFileAsync(filePath: filePath, purpose: FileUploadPurpose.Assistants);
         }
         finally
@@ -47,7 +47,7 @@ public partial class ResponsesTelemetryTests
             File.Delete(filePath);
         }
 
-        VectorStoreClient vectorStoreClient = projectClient.OpenAI.GetVectorStoreClient();
+        VectorStoreClient vectorStoreClient = projectClient.ProjectOpenAIClient.GetVectorStoreClient();
         VectorStore vectorStore = await vectorStoreClient.CreateVectorStoreAsync(new VectorStoreCreationOptions
         {
             Name = "TelemetryTestStore",
@@ -69,7 +69,7 @@ public partial class ResponsesTelemetryTests
             Tools = { ResponseTool.CreateFileSearchTool(vectorStoreIds: [vectorStoreId]) }
         };
 
-        return await projectClient.Agents.CreateAgentVersionAsync(
+        return await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             agentName,
             new ProjectsAgentVersionCreationOptions(agentDefinition));
     }
@@ -83,9 +83,9 @@ public partial class ResponsesTelemetryTests
         string vectorStoreId,
         string fileId)
     {
-        await projectClient.Agents.DeleteAgentAsync(agentName: agentName);
-        await projectClient.OpenAI.GetVectorStoreClient().DeleteVectorStoreAsync(vectorStoreId);
-        await projectClient.OpenAI.GetOpenAIFileClient().DeleteFileAsync(fileId);
+        await projectClient.AgentAdministrationClient.DeleteAgentAsync(agentName: agentName);
+        await projectClient.ProjectOpenAIClient.GetVectorStoreClient().DeleteVectorStoreAsync(vectorStoreId);
+        await projectClient.ProjectOpenAIClient.GetOpenAIFileClient().DeleteFileAsync(fileId);
     }
 
     /// <summary>
@@ -204,7 +204,7 @@ public partial class ResponsesTelemetryTests
         try
         {
             AgentReference agentRef = new(agentVersion.Name, agentVersion.Version);
-            ProjectResponsesClient client = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentRef);
+            ProjectResponsesClient client = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(agentRef);
 
             if (streaming)
             {

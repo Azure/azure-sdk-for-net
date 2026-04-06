@@ -42,7 +42,7 @@ public partial class ResponsesTelemetryTests
             }
         };
 
-        return await projectClient.Agents.CreateAgentVersionAsync(
+        return await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             agentName,
             new ProjectsAgentVersionCreationOptions(agentDefinition));
     }
@@ -163,7 +163,7 @@ public partial class ResponsesTelemetryTests
         try
         {
             AgentReference agentRef = new(agentVersion.Name, agentVersion.Version);
-            ProjectResponsesClient client = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentRef);
+            ProjectResponsesClient client = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(agentRef);
 
             if (streaming)
             {
@@ -178,7 +178,7 @@ public partial class ResponsesTelemetryTests
         }
         finally
         {
-            await projectClient.Agents.DeleteAgentAsync(agentName: agentName);
+            await projectClient.AgentAdministrationClient.DeleteAgentAsync(agentName: agentName);
         }
     }
 
