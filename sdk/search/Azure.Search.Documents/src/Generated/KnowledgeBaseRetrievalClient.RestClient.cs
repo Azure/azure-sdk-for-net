@@ -17,12 +17,12 @@ namespace Azure.Search.Documents.KnowledgeBases
 
         private static ResponseClassifier PipelineMessageClassifier200206 => _pipelineMessageClassifier200206 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 206 });
 
-        internal HttpMessage CreateRetrieveRequest(string knowledgeBaseName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateRetrieveRequest(RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/knowledgebases('", false);
-            uri.AppendPath(knowledgeBaseName, true);
+            uri.AppendPath(_knowledgeBaseName, true);
             uri.AppendPath("')/retrieve", false);
             if (_apiVersion != null)
             {

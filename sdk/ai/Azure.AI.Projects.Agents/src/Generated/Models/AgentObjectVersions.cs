@@ -15,7 +15,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Initializes a new instance of <see cref="AgentObjectVersions"/>. </summary>
         /// <param name="latest"></param>
-        internal AgentObjectVersions(AgentVersion latest)
+        internal AgentObjectVersions(ProjectsAgentVersion latest)
         {
             Latest = latest;
         }
@@ -23,13 +23,13 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Initializes a new instance of <see cref="AgentObjectVersions"/>. </summary>
         /// <param name="latest"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgentObjectVersions(AgentVersion latest, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AgentObjectVersions(ProjectsAgentVersion latest, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Latest = latest;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Gets the Latest. </summary>
-        public AgentVersion Latest { get; }
+        public ProjectsAgentVersion Latest { get; }
     }
 }

@@ -111,7 +111,7 @@ interface Employees2 {
     );
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
 
     // Build ARM provider schema and verify its structure
     const armProviderSchema = buildArmProviderSchema(sdkContext, root);
@@ -334,7 +334,7 @@ interface CurrentEmployees {
     );
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
     // Build ARM provider schema and verify its structure
     const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
     ok(armProviderSchemaResult);
@@ -476,7 +476,7 @@ interface Employees {
     );
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
 
     // Build ARM provider schema and verify its structure
     const armProviderSchema = buildArmProviderSchema(sdkContext, root);
@@ -653,7 +653,7 @@ interface Employees {
     );
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
 
     // Build ARM provider schema and verify its structure
     const armProviderSchema = buildArmProviderSchema(sdkContext, root);
@@ -830,7 +830,7 @@ interface Employees {
     );
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
     // Build ARM provider schema and verify its structure
     const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
     ok(armProviderSchemaResult);
@@ -958,7 +958,7 @@ interface Employees {
     );
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
     // Build ARM provider schema and verify its structure
     const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
     ok(armProviderSchemaResult);
@@ -1038,7 +1038,7 @@ interface Employees {
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
 
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
     // Build ARM provider schema and verify its structure
 
     const armProviderSchema = buildArmProviderSchema(sdkContext, root);
@@ -1117,7 +1117,7 @@ interface Employees {
     );
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
 
     // Build ARM provider schema and verify its structure
     const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
@@ -1197,7 +1197,7 @@ interface ScheduledActionExtension {
     );
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
 
     // Build ARM provider schema and verify its structure
     const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
@@ -1330,7 +1330,7 @@ interface BestPracticeVersions {
     );
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
 
     // Build ARM provider schema and verify its structure
     const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
@@ -1526,7 +1526,7 @@ interface BestPracticeVersionDetails {
     );
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
 
     const armProviderSchema = buildArmProviderSchema(sdkContext, root);
     ok(armProviderSchema);
@@ -1642,7 +1642,7 @@ interface NoGetResources {
     );
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
 
     // Build ARM provider schema and verify its structure
     // This uses the legacy buildArmProviderSchema which properly filters resources without Get
@@ -1770,7 +1770,7 @@ interface SitesByServiceGroup extends SiteOps<ServiceGroup> {}
     );
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
 
     // Build ARM provider schema using legacy detection
     const armProviderSchema = buildArmProviderSchema(sdkContext, root);
@@ -1921,7 +1921,7 @@ interface SharedConfigs {
     );
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
 
     const armProviderSchema = buildArmProviderSchema(sdkContext, root);
     ok(armProviderSchema);
@@ -2058,7 +2058,7 @@ interface ConfigOperations {
     );
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
 
     // Build ARM provider schema using legacy detection
     const armProviderSchema = buildArmProviderSchema(sdkContext, root);
@@ -2244,7 +2244,7 @@ interface TrafficEndpoints {
 
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
 
     // Build ARM provider schema and verify its structure
     const armProviderSchema = buildArmProviderSchema(sdkContext, root);
@@ -2388,7 +2388,7 @@ interface NetworkSecurityPerimeterConfigurations {
     );
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
 
     // Build ARM provider schema and verify its structure
     const armProviderSchema = buildArmProviderSchema(sdkContext, root);
@@ -2521,7 +2521,7 @@ interface MonitorResources {
     );
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
 
     const armProviderSchema = buildArmProviderSchema(sdkContext, root);
     ok(armProviderSchema);
@@ -2753,7 +2753,7 @@ interface TenantTranscripts {
     );
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
 
     // Build ARM provider schema
     const armProviderSchema = buildArmProviderSchema(sdkContext, root);
@@ -2866,7 +2866,7 @@ interface Employees {
     );
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
 
     const armProviderSchema = buildArmProviderSchema(sdkContext, root);
     ok(armProviderSchema);
@@ -2919,7 +2919,7 @@ interface Widgets {
     );
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
 
     const armProviderSchema = buildArmProviderSchema(sdkContext, root);
     ok(armProviderSchema);
@@ -2971,7 +2971,7 @@ interface Gadgets {
     );
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
 
     const armProviderSchema = buildArmProviderSchema(sdkContext, root);
     ok(armProviderSchema);
@@ -3024,7 +3024,7 @@ interface Items {
     );
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
 
     const armProviderSchema = buildArmProviderSchema(sdkContext, root);
     ok(armProviderSchema);
@@ -3072,7 +3072,7 @@ interface Employees {
     );
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
 
     const armProviderSchema = buildArmProviderSchema(sdkContext, root);
     ok(armProviderSchema);
@@ -3161,7 +3161,7 @@ interface Employees {
 
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
 
     // Test buildArmProviderSchema (legacy path)
     const armProviderSchema = buildArmProviderSchema(sdkContext, root);
@@ -3205,5 +3205,422 @@ interface Employees {
     );
     ok(resolvedGadget);
     deepStrictEqual(resolvedGadget.metadata.apiVersions, ["2024-05-01"]);
+  });
+
+  it("rbac roles from clientOption decorator", async () => {
+    const program = await typeSpecCompile(
+      `
+/** Widget properties */
+model WidgetProperties {
+  /** Color of widget */
+  color?: string;
+}
+
+/** A Widget resource with RBAC roles */
+#suppress "@azure-tools/typespec-client-generator-core/client-option" "RBAC roles"
+model Widget is TrackedResource<WidgetProperties> {
+  ...ResourceNameParameter<Widget>;
+}
+
+interface Operations extends Azure.ResourceManager.Operations {}
+
+@armResourceOperations
+interface Widgets {
+  get is ArmResourceRead<Widget>;
+  createOrUpdate is ArmResourceCreateOrReplaceAsync<Widget>;
+}
+
+@@clientOption(Widget, "resource-rbac-roles", #{
+  WidgetContributor: "00000000-0000-0000-0000-000000000001",
+  WidgetReader: "00000000-0000-0000-0000-000000000002",
+}, "csharp");
+`,
+      runner
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const [root] = createModel(sdkContext);
+
+    const armProviderSchema = buildArmProviderSchema(sdkContext, root);
+    ok(armProviderSchema);
+    strictEqual(armProviderSchema.resources.length, 1);
+
+    const widgetResource = armProviderSchema.resources[0];
+    ok(widgetResource);
+    deepStrictEqual(widgetResource.metadata.rbacRoles, [
+      {
+        name: "WidgetContributor",
+        value: "00000000-0000-0000-0000-000000000001"
+      },
+      { name: "WidgetReader", value: "00000000-0000-0000-0000-000000000002" }
+    ]);
+
+    // Also validate resolveArmResources produces the same roles
+    const resolvedSchema = resolveArmResources(program, sdkContext);
+    ok(resolvedSchema);
+    const resolvedResource = resolvedSchema.resources[0];
+    ok(resolvedResource);
+    deepStrictEqual(
+      resolvedResource.metadata.rbacRoles,
+      widgetResource.metadata.rbacRoles
+    );
+  });
+
+  it("rbac roles empty when no clientOption decorator", async () => {
+    const program = await typeSpecCompile(
+      `
+/** Gadget properties */
+model GadgetProperties {
+  /** Size of gadget */
+  size?: int32;
+}
+
+/** A Gadget resource without RBAC roles */
+model Gadget is TrackedResource<GadgetProperties> {
+  ...ResourceNameParameter<Gadget>;
+}
+
+interface Operations extends Azure.ResourceManager.Operations {}
+
+@armResourceOperations
+interface Gadgets {
+  get is ArmResourceRead<Gadget>;
+  createOrUpdate is ArmResourceCreateOrReplaceAsync<Gadget>;
+}
+`,
+      runner
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const [root] = createModel(sdkContext);
+
+    const armProviderSchema = buildArmProviderSchema(sdkContext, root);
+    ok(armProviderSchema);
+    strictEqual(armProviderSchema.resources.length, 1);
+
+    const gadgetResource = armProviderSchema.resources[0];
+    ok(gadgetResource);
+    deepStrictEqual(gadgetResource.metadata.rbacRoles, []);
+
+    // Also validate resolveArmResources produces empty roles
+    const resolvedSchema = resolveArmResources(program, sdkContext);
+    ok(resolvedSchema);
+    const resolvedResource = resolvedSchema.resources[0];
+    ok(resolvedResource);
+    deepStrictEqual(resolvedResource.metadata.rbacRoles, []);
+  });
+
+  it("action on parent singleton that lists child resources should be reassigned to child resource", async () => {
+    // This test reproduces the Storage SDK pattern where a list operation
+    // (e.g., blobContainersList) is modeled as an ArmResourceActionSync on a
+    // singleton parent (BlobService) rather than as ArmResourceListByParent on
+    // the child interface (BlobContainers).
+    //
+    // The emitter classifies it as kind=Action on the parent resource.
+    // The generator then routes it to the parent's Resource class instead of
+    // the child's Collection class, breaking backward compatibility.
+    //
+    // Expected behavior: the emitter should detect that this Action's operation
+    // path matches a child resource's collection path and reclassify it as a
+    // List on the child resource.
+
+    const program = await typeSpecCompile(
+      `
+/** Storage account resource */
+model StorageAccount is TrackedResource<StorageAccountProperties> {
+  ...ResourceNameParameter<StorageAccount>;
+}
+
+/** Storage account properties */
+model StorageAccountProperties {
+  /** Account description */
+  description?: string;
+}
+
+/** Blob service singleton resource */
+@singleton
+@parentResource(StorageAccount)
+model BlobService is ProxyResource<BlobServiceProperties> {
+  ...ResourceNameParameter<BlobService>;
+}
+
+/** Blob service properties */
+model BlobServiceProperties {
+  /** Whether versioning is enabled */
+  isVersioningEnabled?: boolean;
+}
+
+/** Container child resource */
+@parentResource(BlobService)
+model Container is ProxyResource<ContainerProperties> {
+  ...ResourceNameParameter<Container>;
+}
+
+/** Container properties */
+model ContainerProperties {
+  /** Public access level */
+  publicAccess?: string;
+}
+
+/** List of containers */
+model ListContainerItems {
+  /** The list of containers */
+  @pageItems
+  value?: Container[];
+
+  /** The next link */
+  @nextLink
+  nextLink?: string;
+}
+
+interface Operations extends Azure.ResourceManager.Operations {}
+
+@armResourceOperations
+interface StorageAccounts {
+  get is ArmResourceRead<StorageAccount>;
+  createOrUpdate is ArmResourceCreateOrReplaceAsync<StorageAccount>;
+}
+
+@armResourceOperations
+interface BlobServices {
+  get is ArmResourceRead<BlobService>;
+  setProperties is ArmResourceCreateOrReplaceSync<BlobService>;
+
+  /** Lists all containers in the blob service - modeled as action on parent */
+  @get
+  @list
+  containers is ArmResourceActionSync<
+    BlobService,
+    void,
+    ListContainerItems
+  >;
+}
+
+@armResourceOperations
+interface Containers {
+  get is ArmResourceRead<Container>;
+  createOrUpdate is ArmResourceCreateOrReplaceSync<Container>;
+  delete is ArmResourceDeleteSync<Container>;
+}
+`,
+      runner
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const [root] = createModel(sdkContext);
+
+    const armProviderSchema = buildArmProviderSchema(sdkContext, root);
+    ok(armProviderSchema);
+
+    // Find the resources
+    const storageAccountResource = armProviderSchema.resources.find(
+      (r) =>
+        r.metadata.resourceType ===
+        "Microsoft.ContosoProviderHub/storageAccounts"
+    );
+    ok(storageAccountResource, "StorageAccount resource should exist");
+
+    const blobServiceResource = armProviderSchema.resources.find(
+      (r) =>
+        r.metadata.resourceType ===
+        "Microsoft.ContosoProviderHub/storageAccounts/blobServices"
+    );
+    ok(blobServiceResource, "BlobService resource should exist");
+
+    const containerResource = armProviderSchema.resources.find(
+      (r) =>
+        r.metadata.resourceType ===
+        "Microsoft.ContosoProviderHub/storageAccounts/blobServices/containers"
+    );
+    ok(containerResource, "Container resource should exist");
+
+    // Verify BlobService is a singleton with correct parent
+    strictEqual(blobServiceResource.metadata.singletonResourceName, "default");
+    strictEqual(
+      blobServiceResource.metadata.parentResourceId,
+      storageAccountResource.metadata.resourceIdPattern
+    );
+
+    // Verify Container's parent is BlobService
+    strictEqual(
+      containerResource.metadata.parentResourceId,
+      blobServiceResource.metadata.resourceIdPattern
+    );
+
+    // After fix: listContainers should have been moved from BlobService to Container
+    const blobServiceMethods = blobServiceResource.metadata.methods;
+    const containerMethods = containerResource.metadata.methods;
+
+    // The listContainers method should be on Container as kind=List
+    const listOnContainer = containerMethods.find(
+      (m: any) => m.kind === "List"
+    );
+    ok(
+      listOnContainer,
+      "listContainers should be on Container as a List method"
+    );
+    strictEqual(listOnContainer!.kind, "List");
+    ok(
+      listOnContainer!.operationPath.includes("/containers"),
+      "The List method should be the relocated containers operation"
+    );
+
+    // BlobService should NOT have the listContainers action anymore
+    const listContainersOnService = blobServiceMethods.find(
+      (m: any) =>
+        m.kind === "Action" && m.operationPath?.includes("/containers")
+    );
+    strictEqual(
+      listContainersOnService,
+      undefined,
+      "listContainers should no longer be on BlobService"
+    );
+
+    // BlobService should still have its own methods (Read + Create)
+    ok(
+      blobServiceMethods.some((m: any) => m.kind === "Read"),
+      "BlobService should still have Read"
+    );
+    ok(
+      blobServiceMethods.some((m: any) => m.kind === "Create"),
+      "BlobService should still have Create"
+    );
+
+    // Validate using resolveArmResources API - use deep equality to ensure schemas match
+    const resolvedSchema = resolveArmResources(program, sdkContext);
+    ok(resolvedSchema);
+
+    deepStrictEqual(
+      normalizeSchemaForComparison(resolvedSchema),
+      normalizeSchemaForComparison(armProviderSchema)
+    );
+  });
+
+  it("ArmResourceListByParent in parent interface routes list to child resource", async () => {
+    // Validates the spec-level fix: using ArmResourceListByParent<Container>
+    // in the BlobServices interface (instead of ArmResourceActionSync) produces
+    // kind=List and correctly assigns it to the Container resource — even though
+    // the operation is defined in the parent's interface.
+
+    const program = await typeSpecCompile(
+      `
+/** Storage account resource */
+model StorageAccount is TrackedResource<StorageAccountProperties> {
+  ...ResourceNameParameter<StorageAccount>;
+}
+
+/** Storage account properties */
+model StorageAccountProperties {
+  /** Account description */
+  description?: string;
+}
+
+/** Blob service singleton resource */
+@singleton
+@parentResource(StorageAccount)
+model BlobService is ProxyResource<BlobServiceProperties> {
+  ...ResourceNameParameter<BlobService>;
+}
+
+/** Blob service properties */
+model BlobServiceProperties {
+  /** Whether versioning is enabled */
+  isVersioningEnabled?: boolean;
+}
+
+/** Container child resource */
+@parentResource(BlobService)
+model Container is ProxyResource<ContainerProperties> {
+  ...ResourceNameParameter<Container>;
+}
+
+/** Container properties */
+model ContainerProperties {
+  /** Public access level */
+  publicAccess?: string;
+}
+
+interface Operations extends Azure.ResourceManager.Operations {}
+
+@armResourceOperations
+interface StorageAccounts {
+  get is ArmResourceRead<StorageAccount>;
+  createOrUpdate is ArmResourceCreateOrReplaceAsync<StorageAccount>;
+}
+
+@armResourceOperations
+interface BlobServices {
+  get is ArmResourceRead<BlobService>;
+  setProperties is ArmResourceCreateOrReplaceSync<BlobService>;
+
+  /** Lists all containers - uses ArmResourceListByParent in parent interface */
+  listContainers is ArmResourceListByParent<Container>;
+}
+
+@armResourceOperations
+interface Containers {
+  get is ArmResourceRead<Container>;
+  createOrUpdate is ArmResourceCreateOrReplaceSync<Container>;
+  delete is ArmResourceDeleteSync<Container>;
+}
+`,
+      runner
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const [root] = createModel(sdkContext);
+
+    const armProviderSchema = buildArmProviderSchema(sdkContext, root);
+    ok(armProviderSchema);
+
+    const containerResource = armProviderSchema.resources.find(
+      (r) =>
+        r.metadata.resourceType ===
+        "Microsoft.ContosoProviderHub/storageAccounts/blobServices/containers"
+    );
+    ok(containerResource, "Container resource should exist");
+
+    const blobServiceResource = armProviderSchema.resources.find(
+      (r) =>
+        r.metadata.resourceType ===
+        "Microsoft.ContosoProviderHub/storageAccounts/blobServices"
+    );
+    ok(blobServiceResource, "BlobService resource should exist");
+
+    // Container should have the List method (routed from BlobServices interface)
+    const listOnContainer = containerResource.metadata.methods.find(
+      (m: any) => m.kind === "List"
+    );
+    ok(listOnContainer, "Container should have a List method");
+    strictEqual(listOnContainer!.kind, "List");
+
+    // BlobService should NOT have the list operation
+    const listOnService = blobServiceResource.metadata.methods.find(
+      (m: any) =>
+        m.kind === "List" ||
+        (m.kind === "Action" && m.operationPath?.includes("/containers"))
+    );
+    strictEqual(
+      listOnService,
+      undefined,
+      "BlobService should not have the list containers operation"
+    );
+
+    // BlobService should still have its own methods (Read + Create)
+    ok(
+      blobServiceResource.metadata.methods.some((m: any) => m.kind === "Read")
+    );
+    ok(
+      blobServiceResource.metadata.methods.some((m: any) => m.kind === "Create")
+    );
+
+    // Validate using resolveArmResources API - use deep equality to ensure schemas match
+    const resolvedSchema = resolveArmResources(program, sdkContext);
+    ok(resolvedSchema);
+
+    deepStrictEqual(
+      normalizeSchemaForComparison(resolvedSchema),
+      normalizeSchemaForComparison(armProviderSchema)
+    );
   });
 });

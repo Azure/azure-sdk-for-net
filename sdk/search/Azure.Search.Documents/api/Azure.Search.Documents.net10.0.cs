@@ -58,6 +58,8 @@ namespace Azure.Search.Documents
     public partial class SearchClient
     {
         protected SearchClient() { }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+        public SearchClient(Azure.Search.Documents.SearchClientSettings settings) { }
         public SearchClient(System.Uri endpoint, string indexName, Azure.AzureKeyCredential credential) { }
         public SearchClient(System.Uri endpoint, string indexName, Azure.AzureKeyCredential credential, Azure.Search.Documents.SearchClientOptions options) { }
         public SearchClient(System.Uri endpoint, string indexName, Azure.Core.TokenCredential tokenCredential) { }
@@ -113,6 +115,15 @@ namespace Azure.Search.Documents
             V2025_09_01 = 4,
             V2026_04_01 = 5,
         }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+    public partial class SearchClientSettings : System.ClientModel.Primitives.ClientSettings
+    {
+        public SearchClientSettings() { }
+        public System.Uri Endpoint { get { throw null; } set { } }
+        public string IndexName { get { throw null; } set { } }
+        public Azure.Search.Documents.SearchClientOptions Options { get { throw null; } set { } }
+        protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
     }
     public static partial class SearchExtensions
     {
@@ -256,6 +267,8 @@ namespace Azure.Search.Documents.Indexes
     public partial class SearchIndexClient
     {
         protected SearchIndexClient() { }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+        public SearchIndexClient(Azure.Search.Documents.Indexes.SearchIndexClientSettings settings) { }
         public SearchIndexClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
         public SearchIndexClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.Search.Documents.SearchClientOptions options) { }
         public SearchIndexClient(System.Uri endpoint, Azure.Core.TokenCredential tokenCredential) { }
@@ -391,9 +404,19 @@ namespace Azure.Search.Documents.Indexes
         public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Search.Documents.Indexes.Models.SynonymMap>> GetSynonymMaps(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Search.Documents.Indexes.Models.SynonymMap>>> GetSynonymMapsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+    public partial class SearchIndexClientSettings : System.ClientModel.Primitives.ClientSettings
+    {
+        public SearchIndexClientSettings() { }
+        public System.Uri Endpoint { get { throw null; } set { } }
+        public Azure.Search.Documents.SearchClientOptions Options { get { throw null; } set { } }
+        protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
+    }
     public partial class SearchIndexerClient
     {
         protected SearchIndexerClient() { }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+        public SearchIndexerClient(Azure.Search.Documents.Indexes.SearchIndexerClientSettings settings) { }
         public SearchIndexerClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
         public SearchIndexerClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.Search.Documents.SearchClientOptions options) { }
         public SearchIndexerClient(System.Uri endpoint, Azure.Core.TokenCredential tokenCredential) { }
@@ -479,6 +502,14 @@ namespace Azure.Search.Documents.Indexes
         public virtual Azure.Response RunIndexer(string indexerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> RunIndexerAsync(string indexerName, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> RunIndexerAsync(string indexerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+    public partial class SearchIndexerClientSettings : System.ClientModel.Primitives.ClientSettings
+    {
+        public SearchIndexerClientSettings() { }
+        public System.Uri Endpoint { get { throw null; } set { } }
+        public Azure.Search.Documents.SearchClientOptions Options { get { throw null; } set { } }
+        protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
     }
     [System.AttributeUsageAttribute(System.AttributeTargets.Field | System.AttributeTargets.Property, AllowMultiple=false, Inherited=true)]
     public partial class SimpleFieldAttribute : System.Attribute
@@ -5434,23 +5465,36 @@ namespace Azure.Search.Documents.KnowledgeBases
     public partial class KnowledgeBaseRetrievalClient
     {
         protected KnowledgeBaseRetrievalClient() { }
-        public KnowledgeBaseRetrievalClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
-        public KnowledgeBaseRetrievalClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.Search.Documents.SearchClientOptions options) { }
-        public KnowledgeBaseRetrievalClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
-        public KnowledgeBaseRetrievalClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Search.Documents.SearchClientOptions options) { }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+        public KnowledgeBaseRetrievalClient(Azure.Search.Documents.KnowledgeBases.KnowledgeBaseRetrievalClientSettings settings) { }
         public KnowledgeBaseRetrievalClient(System.Uri endpoint, string knowledgeBaseName, Azure.AzureKeyCredential credential) { }
-        public KnowledgeBaseRetrievalClient(System.Uri endpoint, string knowledgeBaseName, Azure.AzureKeyCredential credential, Azure.Search.Documents.SearchClientOptions options) { }
-        public KnowledgeBaseRetrievalClient(System.Uri endpoint, string knowledgeBaseName, Azure.Core.TokenCredential tokenCredential) { }
-        public KnowledgeBaseRetrievalClient(System.Uri endpoint, string knowledgeBaseName, Azure.Core.TokenCredential tokenCredential, Azure.Search.Documents.SearchClientOptions options) { }
+        public KnowledgeBaseRetrievalClient(System.Uri endpoint, string knowledgeBaseName, Azure.AzureKeyCredential credential, Azure.Search.Documents.KnowledgeBases.KnowledgeBaseRetrievalClientOptions options) { }
+        public KnowledgeBaseRetrievalClient(System.Uri endpoint, string knowledgeBaseName, Azure.Core.TokenCredential credential) { }
+        public KnowledgeBaseRetrievalClient(System.Uri endpoint, string knowledgeBaseName, Azure.Core.TokenCredential credential, Azure.Search.Documents.KnowledgeBases.KnowledgeBaseRetrievalClientOptions options) { }
         public virtual System.Uri Endpoint { get { throw null; } }
         public virtual string KnowledgeBaseName { get { throw null; } }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
+        public virtual Azure.Response Retrieve(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response<Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseRetrievalResponse> Retrieve(Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseRetrievalRequest retrievalRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response Retrieve(string knowledgeBaseName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response<Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseRetrievalResponse> Retrieve(string knowledgeBaseName, Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseRetrievalRequest retrievalRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> RetrieveAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseRetrievalResponse>> RetrieveAsync(Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseRetrievalRequest retrievalRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> RetrieveAsync(string knowledgeBaseName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseRetrievalResponse>> RetrieveAsync(string knowledgeBaseName, Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseRetrievalRequest retrievalRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class KnowledgeBaseRetrievalClientOptions : Azure.Core.ClientOptions
+    {
+        public KnowledgeBaseRetrievalClientOptions(Azure.Search.Documents.KnowledgeBases.KnowledgeBaseRetrievalClientOptions.ServiceVersion version = Azure.Search.Documents.KnowledgeBases.KnowledgeBaseRetrievalClientOptions.ServiceVersion.V2026_04_01) { }
+        public enum ServiceVersion
+        {
+            V2026_04_01 = 1,
+        }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+    public partial class KnowledgeBaseRetrievalClientSettings : System.ClientModel.Primitives.ClientSettings
+    {
+        public KnowledgeBaseRetrievalClientSettings() { }
+        public System.Uri Endpoint { get { throw null; } set { } }
+        public string KnowledgeBaseName { get { throw null; } set { } }
+        public Azure.Search.Documents.KnowledgeBases.KnowledgeBaseRetrievalClientOptions Options { get { throw null; } set { } }
+        protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
     }
 }
 namespace Azure.Search.Documents.KnowledgeBases.Models
@@ -6903,12 +6947,10 @@ namespace Microsoft.Extensions.Azure
 {
     public static partial class DocumentsClientBuilderExtensions
     {
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Search.Documents.KnowledgeBases.KnowledgeBaseRetrievalClient, Azure.Search.Documents.SearchClientOptions> AddKnowledgeBaseRetrievalClient<TBuilder>(this TBuilder builder, System.Uri endpoint) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Search.Documents.KnowledgeBases.KnowledgeBaseRetrievalClient, Azure.Search.Documents.SearchClientOptions> AddKnowledgeBaseRetrievalClient<TBuilder>(this TBuilder builder, System.Uri endpoint, Azure.AzureKeyCredential credential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Search.Documents.KnowledgeBases.KnowledgeBaseRetrievalClient, Azure.Search.Documents.SearchClientOptions> AddKnowledgeBaseRetrievalClient<TBuilder>(this TBuilder builder, System.Uri endpoint, string knowledgeBaseName) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Search.Documents.KnowledgeBases.KnowledgeBaseRetrievalClient, Azure.Search.Documents.SearchClientOptions> AddKnowledgeBaseRetrievalClient<TBuilder>(this TBuilder builder, System.Uri endpoint, string knowledgeBaseName, Azure.AzureKeyCredential credential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Search.Documents.KnowledgeBases.KnowledgeBaseRetrievalClient, Azure.Search.Documents.KnowledgeBases.KnowledgeBaseRetrievalClientOptions> AddKnowledgeBaseRetrievalClient<TBuilder>(this TBuilder builder, System.Uri endpoint, string knowledgeBaseName) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Search.Documents.KnowledgeBases.KnowledgeBaseRetrievalClient, Azure.Search.Documents.KnowledgeBases.KnowledgeBaseRetrievalClientOptions> AddKnowledgeBaseRetrievalClient<TBuilder>(this TBuilder builder, System.Uri endpoint, string knowledgeBaseName, Azure.AzureKeyCredential credential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
         [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Search.Documents.KnowledgeBases.KnowledgeBaseRetrievalClient, Azure.Search.Documents.SearchClientOptions> AddKnowledgeBaseRetrievalClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Search.Documents.KnowledgeBases.KnowledgeBaseRetrievalClient, Azure.Search.Documents.KnowledgeBases.KnowledgeBaseRetrievalClientOptions> AddKnowledgeBaseRetrievalClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Search.Documents.SearchClient, Azure.Search.Documents.SearchClientOptions> AddSearchClient<TBuilder>(this TBuilder builder, System.Uri endpoint, string indexName) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Search.Documents.SearchClient, Azure.Search.Documents.SearchClientOptions> AddSearchClient<TBuilder>(this TBuilder builder, System.Uri endpoint, string indexName, Azure.AzureKeyCredential credential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
         [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]

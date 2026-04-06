@@ -4,11 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Recurrence based trigger. </summary>
-    public partial class RecurrenceTrigger : Trigger
+    public partial class RecurrenceTrigger : ScheduleTrigger
     {
         /// <summary> Initializes a new instance of <see cref="RecurrenceTrigger"/>. </summary>
         /// <param name="interval"> Interval for the recurrence schedule. </param>
@@ -30,7 +31,7 @@ namespace Azure.AI.Projects
         /// <param name="timeZone"> Time zone for the recurrence schedule. </param>
         /// <param name="interval"> Interval for the recurrence schedule. </param>
         /// <param name="schedule"> Recurrence schedule for the recurrence trigger. </param>
-        internal RecurrenceTrigger(TriggerType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string startTime, string endTime, string timeZone, int interval, RecurrenceSchedule schedule) : base(@type, additionalBinaryDataProperties)
+        internal RecurrenceTrigger(TriggerType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, DateTimeOffset? startTime, DateTimeOffset? endTime, string timeZone, int interval, RecurrenceSchedule schedule) : base(@type, additionalBinaryDataProperties)
         {
             StartTime = startTime;
             EndTime = endTime;
@@ -40,10 +41,10 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> Start time for the recurrence schedule in ISO 8601 format. </summary>
-        public string StartTime { get; set; }
+        public DateTimeOffset? StartTime { get; set; }
 
         /// <summary> End time for the recurrence schedule in ISO 8601 format. </summary>
-        public string EndTime { get; set; }
+        public DateTimeOffset? EndTime { get; set; }
 
         /// <summary> Time zone for the recurrence schedule. </summary>
         public string TimeZone { get; set; }

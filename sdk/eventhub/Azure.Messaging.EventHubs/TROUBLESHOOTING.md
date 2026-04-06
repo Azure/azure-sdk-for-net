@@ -449,7 +449,7 @@ For more information on ways to request support, please see: [Support][SUPPORT].
 [EventSourceListenerSample]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample10_AzureEventSourceListener.md
 [FunctionExtensionsReadMe]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Microsoft.Azure.WebJobs.Extensions.EventHubs
 [IdentitySample]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample06_IdentityAndSharedAccessCredentials.md#identity-authorization
-[IoTConnectionStringSample]: https://github.com/Azure/azure-sdk-for-net/tree/main/samples/iothub-connect-to-eventhubs
+[IoTConnectionStringSample]: https://github.com/Azure/azure-sdk-for-net/tree/main/samples/eventhubs/iothub-connect-to-eventhubs
 [MigrationGuideT0]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventhub/Azure.Messaging.EventHubs/MigrationGuide_WindowsAzureServiceBus.md
 [MigrationGuideT1]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventhub/Azure.Messaging.EventHubs/MigrationGuide.md
 [SUPPORT]: https://github.com/Azure/azure-sdk-for-net/blob/main/SUPPORT.md

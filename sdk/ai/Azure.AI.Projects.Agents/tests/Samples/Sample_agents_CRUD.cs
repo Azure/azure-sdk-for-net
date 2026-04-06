@@ -24,31 +24,31 @@ public class Sample_agents_CRUD : SamplesBase
         var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
 #endif
-        AgentsClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
+        AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
         #endregion
 
         #region Snippet:Sample_Agents_CreateAgentVersionCRUD_Async
-        PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+        DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a prompt agent."
         };
-        AgentVersion agentVersion1 = await agentsClient.CreateAgentVersionAsync(
+        ProjectsAgentVersion agentVersion1 = await agentsClient.CreateAgentVersionAsync(
             agentName: "myAgent1",
             options: new(agentDefinition));
         Console.WriteLine($"Agent created (id: {agentVersion1.Id}, name: {agentVersion1.Name}, version: {agentVersion1.Version})");
-        AgentVersion agentVersion2 = await agentsClient.CreateAgentVersionAsync(
+        ProjectsAgentVersion agentVersion2 = await agentsClient.CreateAgentVersionAsync(
             agentName: "myAgent2",
             options: new(agentDefinition));
         Console.WriteLine($"Agent created (id: {agentVersion2.Id}, name: {agentVersion2.Name}, version: {agentVersion2.Version})");
         #endregion
 
         #region Snippet:Sample_Agents_GetAgentCRUD_Async
-        AgentRecord result = await agentsClient.GetAgentAsync(agentVersion1.Name);
+        ProjectsAgentRecord result = await agentsClient.GetAgentAsync(agentVersion1.Name);
         Console.WriteLine($"Agent created (id: {result.Id}, name: {result.Name})");
         #endregion
 
         #region Snippet:Sample_Agents_ListAgentsCRUD_Async
-        await foreach (AgentRecord agent in agentsClient.GetAgentsAsync())
+        await foreach (ProjectsAgentRecord agent in agentsClient.GetAgentsAsync())
         {
             Console.WriteLine($"Listed Agent: id: {agent.Id}, name: {agent.Name}");
         }
@@ -73,30 +73,30 @@ public class Sample_agents_CRUD : SamplesBase
         var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
 #endif
-        AgentsClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
+        AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 
         #region Snippet:Sample_Agents_CreateAgentVersionCRUD_Sync
-        PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+        DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a prompt agent."
         };
-        AgentVersion agentVersion1 = agentsClient.CreateAgentVersion(
+        ProjectsAgentVersion agentVersion1 = agentsClient.CreateAgentVersion(
             agentName: "myAgent1",
             options: new(agentDefinition));
         Console.WriteLine($"Agent created (id: {agentVersion1.Id}, name: {agentVersion1.Name}, version: {agentVersion1.Version})");
-        AgentVersion agentVersion2 = agentsClient.CreateAgentVersion(
+        ProjectsAgentVersion agentVersion2 = agentsClient.CreateAgentVersion(
             agentName: "myAgent2",
             options: new(agentDefinition));
         Console.WriteLine($"Agent created (id: {agentVersion2.Id}, name: {agentVersion2.Name}, version: {agentVersion2.Version})");
         #endregion
 
         #region Snippet:Sample_Agents_GetAgentCRUD_Sync
-        AgentRecord result = agentsClient.GetAgent(agentVersion1.Name);
+        ProjectsAgentRecord result = agentsClient.GetAgent(agentVersion1.Name);
         Console.WriteLine($"Agent created (id: {result.Id}, name: {result.Name})");
         #endregion
 
         #region Snippet:Sample_Agents_ListAgentsCRUD_Sync
-        foreach (AgentRecord agent in agentsClient.GetAgents())
+        foreach (ProjectsAgentRecord agent in agentsClient.GetAgents())
         {
             Console.WriteLine($"Listed Agent: id: {agent.Id}, name: {agent.Name}");
         }
@@ -121,8 +121,8 @@ public class Sample_agents_CRUD : SamplesBase
         var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
 #endif
         #region Snippet:Sample_Agents_API_version
-        AgentsClientOptions options = new(version: AgentsClientOptions.ServiceVersion.V1);
-        AgentsClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
+        AgentAdministrationClientOptions options = new(version: AgentAdministrationClientOptions.ServiceVersion.V1);
+        AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
         #endregion
     }
 
@@ -137,11 +137,11 @@ public class Sample_agents_CRUD : SamplesBase
         var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
 #endif
-        AgentsClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
+        AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
         #region Snippet:Sample_Agent_ErrorHandling
         try
         {
-            AgentVersion agent = await agentsClient.GetAgentVersionAsync(
+            ProjectsAgentVersion agent = await agentsClient.GetAgentVersionAsync(
                 agentName: "agent_which_dies_not_exist", agentVersion: "1");
         }
         catch (ClientResultException e) when (e.Status == 404)

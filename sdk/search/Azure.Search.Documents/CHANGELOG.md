@@ -25,6 +25,10 @@
 - Added `LookupDocument` model for document lookup responses.
 - Added nullable implicit conversion operators for `SemanticErrorMode`, `SemanticErrorReason`, `SemanticSearchResultsType`, and `VectorFilterMode`.
 - Added `AIServicesAccountIdentity` and `AIServicesAccountKey` for AI services authentication.
+- Added `SearchClientSettings` to support creating a `SearchClient` from `IConfiguration`, including configuration-based credential resolution and dependency injection registration.
+- Added `SearchIndexClientSettings` to support creating a `SearchIndexClient` from `IConfiguration`, including configuration-based credential resolution and dependency injection registration.
+- Added `SearchIndexerClientSettings` to support creating a `SearchIndexerClient` from `IConfiguration`, including configuration-based credential resolution and dependency injection registration.
+- Added `KnowledgeBaseRetrievalClientSettings` to support creating a `KnowledgeBaseRetrievalClient` from `IConfiguration`, including configuration-based credential resolution and dependency injection registration.
 
 ### Breaking Changes
 - Deprecated `EntityRecognitionSkill.SkillVersion.V1` is now obsolete. Use V3 instead. 

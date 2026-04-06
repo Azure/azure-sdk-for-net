@@ -14,7 +14,7 @@ var connectionName = System.Environment.GetEnvironmentVariable("BING_CONNECTION_
 AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 ```
 
-2. `BingGroundingAgentTool` requires an ID of Bing connection. In this example we will use the name of a Bing project connection as found in the "Connections" tab in your Microsoft Foundry project to get connection ID from `AIProjectConnection`. We will use created tool in the constructor of a `PromptAgentDefinition` object.
+2. `BingGroundingAgentTool` requires an ID of Bing connection. In this example we will use the name of a Bing project connection as found in the "Connections" tab in your Microsoft Foundry project to get connection ID from `AIProjectConnection`. We will use created tool in the constructor of a `DeclarativeAgentDefinition` object.
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateAgent_BingGrounding_Sync
@@ -23,12 +23,12 @@ BingGroundingTool bingGroundingAgentTool = new(new BingGroundingSearchToolOption
     searchConfigurations: [new BingGroundingSearchConfiguration(projectConnectionId: bingConnectionName.Id)]
     )
 );
-PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a helpful agent.",
     Tools = { bingGroundingAgentTool, }
 };
-AgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
+ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.CreateAgentVersion(
     agentName: "myAgent",
     options: new(agentDefinition));
 ```
@@ -40,12 +40,12 @@ BingGroundingTool bingGroundingAgentTool = new(new BingGroundingSearchToolOption
     searchConfigurations: [new BingGroundingSearchConfiguration(projectConnectionId: bingConnectionName.Id)]
     )
 );
-PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a helpful agent.",
     Tools = { bingGroundingAgentTool, }
 };
-AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
     agentName: "myAgent",
     options: new(agentDefinition));
 ```
@@ -54,14 +54,14 @@ AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateResponse_BingGrounding_Sync
-ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
+ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(agentVersion.Name);
 
 ResponseResult response = responseClient.CreateResponse("How does wikipedia explain Euler's Identity?");
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_CreateResponse_BingGrounding_Async
-ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
+ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(agentVersion.Name);
 
 ResponseResult response = await responseClient.CreateResponseAsync("How does wikipedia explain Euler's Identity?");
 ```
@@ -102,10 +102,10 @@ Console.WriteLine($"{response.GetOutputText()}{GetFormattedAnnotation(response)}
 
 Synchronous sample:
 ```C# Snippet:Sample_Cleanup_BingGrounding_Sync
-projectClient.Agents.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_Cleanup_BingGrounding_Async
-await projectClient.Agents.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
 ```

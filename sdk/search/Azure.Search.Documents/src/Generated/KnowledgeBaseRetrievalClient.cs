@@ -20,27 +20,81 @@ namespace Azure.Search.Documents.KnowledgeBases
     public partial class KnowledgeBaseRetrievalClient
     {
         private readonly Uri _endpoint;
-        /// <summary> A credential used to authenticate to the service. </summary>
-        private readonly AzureKeyCredential _keyCredential;
         private const string AuthorizationHeader = "api-key";
-        /// <summary> A credential used to authenticate to the service. </summary>
-        private readonly TokenCredential _tokenCredential;
         private static readonly string[] AuthorizationScopes = new string[] { "https://search.azure.com/.default" };
         private readonly string _apiVersion;
+        private readonly string _knowledgeBaseName;
 
-        /// <summary> Initializes a new instance of KnowledgeBaseRetrievalClient. </summary>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="credential"> A credential used to authenticate to the service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public KnowledgeBaseRetrievalClient(Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, new SearchClientOptions())
+        /// <summary> Initializes a new instance of KnowledgeBaseRetrievalClient for mocking. </summary>
+        protected KnowledgeBaseRetrievalClient()
         {
         }
 
         /// <summary> Initializes a new instance of KnowledgeBaseRetrievalClient. </summary>
         /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="knowledgeBaseName"> The name of the knowledge base. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public KnowledgeBaseRetrievalClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new SearchClientOptions())
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="knowledgeBaseName"/> or <paramref name="credential"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="knowledgeBaseName"/> is an empty string, and was expected to be non-empty. </exception>
+        public KnowledgeBaseRetrievalClient(Uri endpoint, string knowledgeBaseName, AzureKeyCredential credential) : this(endpoint, knowledgeBaseName, credential, new KnowledgeBaseRetrievalClientOptions())
+        {
+        }
+
+        /// <summary> Initializes a new instance of KnowledgeBaseRetrievalClient. </summary>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="knowledgeBaseName"> The name of the knowledge base. </param>
+        /// <param name="credential"> A credential used to authenticate to the service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="knowledgeBaseName"/> or <paramref name="credential"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="knowledgeBaseName"/> is an empty string, and was expected to be non-empty. </exception>
+        public KnowledgeBaseRetrievalClient(Uri endpoint, string knowledgeBaseName, TokenCredential credential) : this(endpoint, knowledgeBaseName, credential, new KnowledgeBaseRetrievalClientOptions())
+        {
+        }
+
+        /// <summary> Initializes a new instance of KnowledgeBaseRetrievalClient. </summary>
+        /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="knowledgeBaseName"> The name of the knowledge base. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        internal KnowledgeBaseRetrievalClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, string knowledgeBaseName, KnowledgeBaseRetrievalClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNullOrEmpty(knowledgeBaseName, nameof(knowledgeBaseName));
+
+            options ??= new KnowledgeBaseRetrievalClientOptions();
+
+            _endpoint = endpoint;
+            _knowledgeBaseName = knowledgeBaseName;
+            if (authenticationPolicy != null)
+            {
+                Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
+            }
+            else
+            {
+                Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
+            }
+            _apiVersion = options.Version;
+            ClientDiagnostics = new ClientDiagnostics(options, true);
+        }
+
+        /// <summary> Initializes a new instance of KnowledgeBaseRetrievalClient. </summary>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="knowledgeBaseName"> The name of the knowledge base. </param>
+        /// <param name="credential"> A credential used to authenticate to the service. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="knowledgeBaseName"/> or <paramref name="credential"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="knowledgeBaseName"/> is an empty string, and was expected to be non-empty. </exception>
+        public KnowledgeBaseRetrievalClient(Uri endpoint, string knowledgeBaseName, AzureKeyCredential credential, KnowledgeBaseRetrievalClientOptions options) : this(new AzureKeyCredentialPolicy(credential, AuthorizationHeader), endpoint, knowledgeBaseName, options)
+        {
+        }
+
+        /// <summary> Initializes a new instance of KnowledgeBaseRetrievalClient. </summary>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="knowledgeBaseName"> The name of the knowledge base. </param>
+        /// <param name="credential"> A credential used to authenticate to the service. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="knowledgeBaseName"/> or <paramref name="credential"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="knowledgeBaseName"/> is an empty string, and was expected to be non-empty. </exception>
+        public KnowledgeBaseRetrievalClient(Uri endpoint, string knowledgeBaseName, TokenCredential credential, KnowledgeBaseRetrievalClientOptions options) : this(new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes), endpoint, knowledgeBaseName, options)
         {
         }
 
@@ -58,23 +112,20 @@ namespace Azure.Search.Documents.KnowledgeBases
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="knowledgeBaseName"> The name of the knowledge base. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="knowledgeBaseName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="knowledgeBaseName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response Retrieve(string knowledgeBaseName, RequestContent content, RequestContext context = null)
+        public virtual Response Retrieve(RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("KnowledgeBaseRetrievalClient.Retrieve");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(knowledgeBaseName, nameof(knowledgeBaseName));
                 Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateRetrieveRequest(knowledgeBaseName, content, context);
+                using HttpMessage message = CreateRetrieveRequest(content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -92,23 +143,20 @@ namespace Azure.Search.Documents.KnowledgeBases
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="knowledgeBaseName"> The name of the knowledge base. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="knowledgeBaseName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="knowledgeBaseName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> RetrieveAsync(string knowledgeBaseName, RequestContent content, RequestContext context = null)
+        public virtual async Task<Response> RetrieveAsync(RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("KnowledgeBaseRetrievalClient.Retrieve");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(knowledgeBaseName, nameof(knowledgeBaseName));
                 Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateRetrieveRequest(knowledgeBaseName, content, context);
+                using HttpMessage message = CreateRetrieveRequest(content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -119,34 +167,28 @@ namespace Azure.Search.Documents.KnowledgeBases
         }
 
         /// <summary> KnowledgeBase retrieves relevant data from backing stores. </summary>
-        /// <param name="knowledgeBaseName"> The name of the knowledge base. </param>
         /// <param name="retrievalRequest"> The retrieval request to process. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="knowledgeBaseName"/> or <paramref name="retrievalRequest"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="knowledgeBaseName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="retrievalRequest"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<KnowledgeBaseRetrievalResponse> Retrieve(string knowledgeBaseName, KnowledgeBaseRetrievalRequest retrievalRequest, CancellationToken cancellationToken = default)
+        public virtual Response<KnowledgeBaseRetrievalResponse> Retrieve(KnowledgeBaseRetrievalRequest retrievalRequest, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(knowledgeBaseName, nameof(knowledgeBaseName));
             Argument.AssertNotNull(retrievalRequest, nameof(retrievalRequest));
 
-            Response result = Retrieve(knowledgeBaseName, retrievalRequest, cancellationToken.ToRequestContext());
+            Response result = Retrieve(retrievalRequest, cancellationToken.ToRequestContext());
             return Response.FromValue((KnowledgeBaseRetrievalResponse)result, result);
         }
 
         /// <summary> KnowledgeBase retrieves relevant data from backing stores. </summary>
-        /// <param name="knowledgeBaseName"> The name of the knowledge base. </param>
         /// <param name="retrievalRequest"> The retrieval request to process. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="knowledgeBaseName"/> or <paramref name="retrievalRequest"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="knowledgeBaseName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="retrievalRequest"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<KnowledgeBaseRetrievalResponse>> RetrieveAsync(string knowledgeBaseName, KnowledgeBaseRetrievalRequest retrievalRequest, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<KnowledgeBaseRetrievalResponse>> RetrieveAsync(KnowledgeBaseRetrievalRequest retrievalRequest, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(knowledgeBaseName, nameof(knowledgeBaseName));
             Argument.AssertNotNull(retrievalRequest, nameof(retrievalRequest));
 
-            Response result = await RetrieveAsync(knowledgeBaseName, retrievalRequest, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await RetrieveAsync(retrievalRequest, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((KnowledgeBaseRetrievalResponse)result, result);
         }
     }

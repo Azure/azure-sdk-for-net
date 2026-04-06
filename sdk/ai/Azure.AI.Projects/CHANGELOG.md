@@ -1,5 +1,47 @@
 # Release History
 
+## 2.1.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 2.0.0 (2026-04-01)
+
+### Breaking Changes
+- `Insights` were renamed to `ProjectInsights`.
+- `Insight` was renamed to `ProjectsInsight`.
+- `Schedules` were renamed to `ProjectSchedules`.
+- `Schedule` was renamed to `ProjectsSchedule`.
+- `Target` was renamed to `EvaluationTarget`.
+- `Trigger` was renamed to `ScheduleTrigger`.
+- `ScheduleTask` was renamed to `ProjectsScheduleTask`.
+- `Evaluators` client was renamed to `ProjectEvaluators`.
+- `DetailEnum` was renamed to `InternalImageDetailLevel` and made internal.
+- `InputImageContentParamAutoParam` was renamed to `InternalInputImageContentParamAutoParam` and made internal.
+- `Azure.AI.Projects` evaluations and memory operations were moved to `Azure.AI.Projects.Evaluation` and `Azure.AI.Projects.Memory` namespaces respectively.
+- `AIProjectMemoryStoresOperations` were renamed to `AIProjectMemoryStores`.
+- `AgentManifestOptions` class was removed.
+- `EvalResult.Passed` property was renamed to `EvalResult.IsPassed`.
+- `EvalRunResultComparison.Evaluator` property was renamed to `EvalRunResultComparison.EvaluatorName`.
+- `EvalRunResultComparison.Metric` property was renamed to `EvalRunResultComparison.MetricName`.
+- `InsightSummary.Method` property was renamed to `InsightSummary.MethodName`.
+- `RedTeam.NumTurns` property was renamed to `RedTeam.TurnCount`.
+- `RedTeam.SimulationOnly` property was renamed to `RedTeam.IsSimulationOnly`.
+- `TaxonomySubCategory.Enabled` property was renamed to `TaxonomySubCategory.IsEnabled`.
+- `DeleteMemoryStoreResponse.Deleted` property was renamed to `DeleteMemoryStoreResponse.IsDeleted`.
+- `MemoryStoreDefaultOptions.ChatSummaryEnabled` property was renamed to `MemoryStoreDefaultOptions.IsChatSummaryEnabled`.
+- `MemoryStoreDefaultOptions.UserProfileEnabled` property was renamed to `MemoryStoreDefaultOptions.IsUserProfileEnabled`.
+- `MemoryStoreDeleteScopeResponse.Deleted` property was renamed to `MemoryStoreDeleteScopeResponse.IsDeleted`.
+- `AIProjectClient.OpenAI` property was renamed to `AIProjectClient.ProjectOpenAIClient`.
+- `AIProjectClient.Agents` property was renamed to `AIProjectClient.AgentAdministrationClient`.
+- `RecurrenceTrigger.StartTime`, `RecurrenceTrigger.EndTime`, `OneTimeTrigger.TriggerAt`, `CronTrigger.StartTime`, `CronTrigger.EndTime` and `ScheduleRun.TriggerTime` properties type was changed from `string` to `DateTimeOffset`.
+- Remove the `EvaluationScheduleTaskEvalRun` class.
+
 ## 2.0.0-beta.2 (2026-03-12)
 
 ### Breaking Changes

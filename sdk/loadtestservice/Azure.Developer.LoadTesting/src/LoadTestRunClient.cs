@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -36,8 +36,7 @@ namespace Azure.Developer.LoadTesting
             options ??= new LoadTestingClientOptions();
 
             _endpoint = endpoint;
-            _tokenCredential = credential;
-            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) });
+            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes) });
             _apiVersion = options.Version;
             ClientDiagnostics = new ClientDiagnostics(options, true);
         }
@@ -228,7 +227,7 @@ namespace Azure.Developer.LoadTesting
                 null,
                 [],
                 [],
-                context);
+                context, "LoadTestRunClient.GetTestRuns");
         }
 
         /// <summary> Get all test runs with given filters. </summary>
@@ -255,7 +254,7 @@ namespace Azure.Developer.LoadTesting
                 null,
                 [],
                 [],
-                context);
+                context, "LoadTestRunClient.GetTestRuns");
         }
 
         /// <summary> Get all test runs for the given filters. </summary>
@@ -289,7 +288,7 @@ namespace Azure.Developer.LoadTesting
                 null,
                 [],
                 [],
-                cancellationToken.ToRequestContext());
+                cancellationToken.ToRequestContext(), "LoadTestRunClient.GetTestRuns");
         }
 
         /// <summary> Get all test runs for the given filters. </summary>
@@ -323,7 +322,7 @@ namespace Azure.Developer.LoadTesting
                 null,
                 [],
                 [],
-                cancellationToken.ToRequestContext());
+                cancellationToken.ToRequestContext(), "LoadTestRunClient.GetTestRuns");
         }
 
         /// <summary> List test profile runs. </summary>
@@ -352,7 +351,7 @@ namespace Azure.Developer.LoadTesting
                 testProfileRunIds,
                 testProfileIds,
                 statuses,
-                cancellationToken.ToRequestContext());
+                cancellationToken.ToRequestContext(), "LoadTestRunClient.GetTestProfileRuns");
         }
 
         /// <summary> List test profile runs. </summary>
@@ -381,7 +380,7 @@ namespace Azure.Developer.LoadTesting
                 testProfileRunIds,
                 testProfileIds,
                 statuses,
-                cancellationToken.ToRequestContext());
+                cancellationToken.ToRequestContext(), "LoadTestRunClient.GetTestProfileRuns");
         }
 
         /// <summary>
@@ -425,7 +424,7 @@ namespace Azure.Developer.LoadTesting
                 testProfileRunIds,
                 testProfileIds,
                 statuses,
-                context);
+                context, "LoadTestRunClient.GetTestProfileRuns");
         }
 
         /// <summary>
@@ -469,7 +468,7 @@ namespace Azure.Developer.LoadTesting
                 testProfileRunIds,
                 testProfileIds,
                 statuses,
-                context);
+                context, "LoadTestRunClient.GetTestProfileRuns");
         }
     }
 }

@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Memory
 {
     /// <summary> A memory item containing a summary extracted from conversations. </summary>
     public partial class ChatSummaryMemoryItem : MemoryItem

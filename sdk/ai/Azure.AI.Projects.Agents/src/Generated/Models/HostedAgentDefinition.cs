@@ -9,20 +9,20 @@ using System.Linq;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The hosted agent definition. </summary>
-    public partial class HostedAgentDefinition : AgentDefinition
+    public partial class HostedAgentDefinition : ProjectsAgentDefinition
     {
         /// <summary> Initializes a new instance of <see cref="HostedAgentDefinition"/>. </summary>
         /// <param name="versions"> The protocols that the agent supports for ingress communication of the containers. </param>
         /// <param name="cpu"> The CPU configuration for the hosted agent. </param>
         /// <param name="memory"> The memory configuration for the hosted agent. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="versions"/>, <paramref name="cpu"/> or <paramref name="memory"/> is null. </exception>
-        public HostedAgentDefinition(IEnumerable<ProtocolVersionRecord> versions, string cpu, string memory) : base(AgentKind.Hosted)
+        public HostedAgentDefinition(IEnumerable<ProtocolVersionRecord> versions, string cpu, string memory) : base(ProjectsAgentKind.Hosted)
         {
             Argument.AssertNotNull(versions, nameof(versions));
             Argument.AssertNotNull(cpu, nameof(cpu));
             Argument.AssertNotNull(memory, nameof(memory));
 
-            Tools = new ChangeTrackingList<AgentTool>();
+            Tools = new ChangeTrackingList<ProjectsAgentTool>();
             Versions = versions.ToList();
             Cpu = cpu;
             Memory = memory;
@@ -42,7 +42,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="memory"> The memory configuration for the hosted agent. </param>
         /// <param name="environmentVariables"> Environment variables to set in the hosted agent container. </param>
         /// <param name="image"> The image ID for the agent, applicable to image-based hosted agents. </param>
-        internal HostedAgentDefinition(AgentKind kind, ContentFilterConfiguration contentFilterConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<AgentTool> tools, IList<ProtocolVersionRecord> versions, string cpu, string memory, IDictionary<string, string> environmentVariables, string image) : base(kind, contentFilterConfiguration, additionalBinaryDataProperties)
+        internal HostedAgentDefinition(ProjectsAgentKind kind, ContentFilterConfiguration contentFilterConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<ProjectsAgentTool> tools, IList<ProtocolVersionRecord> versions, string cpu, string memory, IDictionary<string, string> environmentVariables, string image) : base(kind, contentFilterConfiguration, additionalBinaryDataProperties)
         {
             Tools = tools;
             Versions = versions;
@@ -56,7 +56,7 @@ namespace Azure.AI.Projects.Agents
         /// An array of tools the hosted agent's model may call while generating a response. You
         /// can specify which tool to use by setting the `tool_choice` parameter.
         /// </summary>
-        public IList<AgentTool> Tools { get; }
+        public IList<ProjectsAgentTool> Tools { get; }
 
         /// <summary> The protocols that the agent supports for ingress communication of the containers. </summary>
         public IList<ProtocolVersionRecord> Versions { get; }

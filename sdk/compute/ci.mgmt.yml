@@ -10,3 +10,6 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.Compute
       safeName: AzureResourceManagerCompute
+    - name: Azure.Provisioning.Compute
+      safeName: AzureProvisioningCompute
+    TestDependsOnDependency: Azure.ResourceManager.Compute

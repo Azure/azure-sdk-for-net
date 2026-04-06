@@ -10,3 +10,6 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.Network
       safeName: AzureResourceManagerNetwork
+    - name: Azure.Provisioning.Network
+      safeName: AzureProvisioningNetwork
+    TestDependsOnDependency: Azure.Provisioning.Network Azure.ResourceManager.Network

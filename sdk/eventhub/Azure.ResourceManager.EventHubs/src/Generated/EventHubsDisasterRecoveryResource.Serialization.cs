@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.EventHubs
 {
+    /// <summary></summary>
     public partial class EventHubsDisasterRecoveryResource : IJsonModel<EventHubsDisasterRecoveryData>
     {
-        private static EventHubsDisasterRecoveryData s_dataDeserializationInstance;
-        private static EventHubsDisasterRecoveryData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<EventHubsDisasterRecoveryData> s_dataDeserializationInstance;
 
+        private static IJsonModel<EventHubsDisasterRecoveryData> DataDeserializationInstance => s_dataDeserializationInstance ??= new EventHubsDisasterRecoveryData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<EventHubsDisasterRecoveryData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<EventHubsDisasterRecoveryData>)Data).Write(writer, options);
 
-        EventHubsDisasterRecoveryData IJsonModel<EventHubsDisasterRecoveryData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<EventHubsDisasterRecoveryData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        EventHubsDisasterRecoveryData IJsonModel<EventHubsDisasterRecoveryData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<EventHubsDisasterRecoveryData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<EventHubsDisasterRecoveryData>(Data, options, AzureResourceManagerEventHubsContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         EventHubsDisasterRecoveryData IPersistableModel<EventHubsDisasterRecoveryData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<EventHubsDisasterRecoveryData>(data, options, AzureResourceManagerEventHubsContext.Default);
 
-        string IPersistableModel<EventHubsDisasterRecoveryData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<EventHubsDisasterRecoveryData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<EventHubsDisasterRecoveryData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

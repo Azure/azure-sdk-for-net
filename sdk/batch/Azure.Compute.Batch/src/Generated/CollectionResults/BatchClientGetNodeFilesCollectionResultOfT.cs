@@ -24,6 +24,7 @@ namespace Azure.Compute.Batch
         private readonly string _filter;
         private readonly bool? _recursive;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of BatchClientGetNodeFilesCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The BatchClient client used to send requests. </param>
@@ -45,7 +46,8 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="recursive"> Whether to list children of a directory. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public BatchClientGetNodeFilesCollectionResultOfT(BatchClient client, string poolId, string nodeId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, string filter, bool? recursive, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public BatchClientGetNodeFilesCollectionResultOfT(BatchClient client, string poolId, string nodeId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, string filter, bool? recursive, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _poolId = poolId;
@@ -56,6 +58,7 @@ namespace Azure.Compute.Batch
             _filter = filter;
             _recursive = recursive;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of BatchClientGetNodeFilesCollectionResultOfT as an enumerable collection. </summary>
@@ -88,7 +91,7 @@ namespace Azure.Compute.Batch
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetNodeFilesRequest(nextLink, _poolId, _nodeId, _timeOutInSeconds, _ocpDate, _maxresults, _filter, _recursive, _context) : _client.CreateGetNodeFilesRequest(_poolId, _nodeId, _timeOutInSeconds, _ocpDate, _maxresults, _filter, _recursive, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("BatchClient.GetNodeFiles");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

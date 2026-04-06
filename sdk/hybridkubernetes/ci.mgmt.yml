@@ -9,3 +9,6 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.Kubernetes
       safeName: AzureResourceManagerKubernetes
+    - name: Azure.Provisioning.Kubernetes
+      safeName: AzureProvisioningKubernetes
+    TestDependsOnDependency: Azure.ResourceManager.Kubernetes

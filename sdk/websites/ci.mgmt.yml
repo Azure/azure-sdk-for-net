@@ -9,3 +9,6 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.AppService
       safeName: AzureResourceManagerAppService
+    - name: Azure.Provisioning.AppService
+      safeName: AzureProvisioningAppService
+    TestDependsOnDependency: Azure.ResourceManager.AppService

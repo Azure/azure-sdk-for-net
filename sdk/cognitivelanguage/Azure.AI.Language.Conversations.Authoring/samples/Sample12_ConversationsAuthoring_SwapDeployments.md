@@ -10,7 +10,7 @@ To create a `ConversationAnalysisAuthoringClient`, you will need the service end
 Uri endpoint = new Uri("{endpoint}");
 AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
 ConversationAnalysisAuthoringClientOptions options = new ConversationAnalysisAuthoringClientOptions(ConversationAnalysisAuthoringClientOptions.ServiceVersion.V2025_11_15_Preview);
-ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential, options);
+ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential, options);
 ```
 
 Or you can also create a `ConversationAnalysisAuthoringClient` using Azure Active Directory (AAD) authentication. Your user or service principal must be assigned the "Cognitive Services Language Reader" role.
@@ -25,11 +25,7 @@ string projectName = "{projectName}";
 string deploymentName1 = "{deploymentName1}";
 string deploymentName2 = "{deploymentName2}";
 ConversationAuthoringSwapDeploymentsDetails swapDetails = new ConversationAuthoringSwapDeploymentsDetails(deploymentName1, deploymentName2);
-ConversationAuthoringProject projectClient = client.GetProject(projectName);
-Operation operation = projectClient.SwapDeployments(
-    waitUntil: WaitUntil.Completed,
-    details: swapDetails
-);
+Operation operation = client.SwapDeployments(WaitUntil.Completed, projectName, swapDetails);
 
 // Extract operation-location from response headers
 string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out string location) ? location : "Not found";
@@ -45,14 +41,9 @@ To swap two deployments asynchronously, call SwapDeploymentsAsync on the `Conver
 string projectName = "{projectName}";
 string deploymentName1 = "{deploymentName1}";
 string deploymentName2 = "{deploymentName2}";
-ConversationAuthoringProject projectClient = client.GetProject(projectName);
-
 ConversationAuthoringSwapDeploymentsDetails swapDetails = new ConversationAuthoringSwapDeploymentsDetails(deploymentName1, deploymentName2);
 
-Operation operation = await projectClient.SwapDeploymentsAsync(
-    waitUntil: WaitUntil.Completed,
-    details: swapDetails
-);
+Operation operation = await client.SwapDeploymentsAsync(WaitUntil.Completed, projectName, swapDetails);
 
 // Extract operation-location from response headers
 string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out string location) ? location : "Not found";

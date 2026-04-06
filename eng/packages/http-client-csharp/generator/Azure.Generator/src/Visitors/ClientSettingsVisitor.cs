@@ -40,6 +40,7 @@ namespace Azure.Generator.Visitors
         private static readonly CSharpType AzureKeyCredentialType = typeof(AzureKeyCredential);
         private static readonly CSharpType HttpPipelinePolicyType = typeof(HttpPipelinePolicy);
         private readonly HashSet<ClientOptionsProvider> _visitedOptions = new();
+        private readonly HashSet<InputClient> _inProgressClients = new();
 
         protected override ClientProvider? Visit(InputClient client, ClientProvider? clientProvider)
         {
@@ -53,7 +54,21 @@ namespace Azure.Generator.Visitors
                 UpdateClientOptions(clientProvider.ClientOptions);
             }
 
-            UpdateClientConstructors(clientProvider);
+            // Guard against re-entrant recursion when accessing .Constructors triggers
+            // GetRootClient/GetSubClients → CreateClient → Visit cycles for parent/child
+            // hierarchies. Remove from the set after completion so that subsequent visits
+            // for the same InputClient (on new ClientProvider instances) are also processed.
+            if (_inProgressClients.Add(client))
+            {
+                try
+                {
+                    UpdateClientConstructors(clientProvider);
+                }
+                finally
+                {
+                    _inProgressClients.Remove(client);
+                }
+            }
 
             return clientProvider;
         }

@@ -9,3 +9,6 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.ContainerService
       safeName: AzureResourceManagerContainerService
+    - name: Azure.Provisioning.ContainerService
+      safeName: AzureProvisioningContainerService
+    TestDependsOnDependency: Azure.ResourceManager.ContainerService
