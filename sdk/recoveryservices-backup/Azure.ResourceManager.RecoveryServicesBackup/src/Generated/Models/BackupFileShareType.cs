@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public readonly partial struct BackupFileShareType : IEquatable<BackupFileShareType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="BackupFileShareType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public BackupFileShareType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string InvalidValue = "Invalid";
         private const string XsmbValue = "XSMB";
         private const string XSyncValue = "XSync";
 
-        /// <summary> Invalid. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupFileShareType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public BackupFileShareType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Invalid. </summary>
         public static BackupFileShareType Invalid { get; } = new BackupFileShareType(InvalidValue);
-        /// <summary> XSMB. </summary>
+
+        /// <summary> Gets the Xsmb. </summary>
         public static BackupFileShareType Xsmb { get; } = new BackupFileShareType(XsmbValue);
-        /// <summary> XSync. </summary>
+
+        /// <summary> Gets the XSync. </summary>
         public static BackupFileShareType XSync { get; } = new BackupFileShareType(XSyncValue);
+
         /// <summary> Determines if two <see cref="BackupFileShareType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BackupFileShareType left, BackupFileShareType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BackupFileShareType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BackupFileShareType left, BackupFileShareType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BackupFileShareType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BackupFileShareType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BackupFileShareType(string value) => new BackupFileShareType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BackupFileShareType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BackupFileShareType?(string value) => value == null ? null : new BackupFileShareType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BackupFileShareType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BackupFileShareType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

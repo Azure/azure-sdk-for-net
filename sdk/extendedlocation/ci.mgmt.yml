@@ -9,3 +9,4 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.ExtendedLocations
       safeName: AzureResourceManagerExtendedLocations
+    TestDependsOnDependency: Azure.ResourceManager.ExtendedLocations

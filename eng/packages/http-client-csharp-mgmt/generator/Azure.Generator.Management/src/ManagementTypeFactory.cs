@@ -117,21 +117,22 @@ namespace Azure.Generator.Management
             // First check for standard ARM types that map to system types
             if (KnownManagementTypes.TryGetInheritableSystemType(model.CrossLanguageDefinitionId, out var replacedType))
             {
-                return new InheritableSystemObjectModelProvider(replacedType.FrameworkType, model);
+                return InheritableSystemObjectModelProvider.CreateSystemBase(replacedType.FrameworkType, model);
             }
             if (KnownManagementTypes.TryGetSystemType(model.CrossLanguageDefinitionId, out _))
             {
                 return null;
             }
 
-            // Ensure base models that map to inheritable system types (e.g., TrackedResource → TrackedResourceData)
-            // are created BEFORE derived models. The framework caches the CSharpType (including BaseType) eagerly
-            // during model construction. If the base model hasn't been created yet when BuildBaseType() runs,
-            // it returns a stale/incorrect value that gets permanently cached.
+            // For models whose base is an inheritable system type (e.g., TrackedResource → TrackedResourceData),
+            // use a derived InheritableSystemObjectModelProvider which overrides BuildBaseType() to return the
+            // correct framework CSharpType. The default ModelProvider.BuildBaseType() returns
+            // BaseModelProvider.Type, which produces a non-framework CSharpType that gets eagerly cached.
             if (model.BaseModel is { } baseModel &&
-                KnownManagementTypes.TryGetInheritableSystemType(baseModel.CrossLanguageDefinitionId, out _))
+                KnownManagementTypes.TryGetInheritableSystemType(baseModel.CrossLanguageDefinitionId, out var inheritableType))
             {
                 CreateModel(baseModel);
+                return InheritableSystemObjectModelProvider.CreateDerived(model, inheritableType);
             }
 
             // For custom Azure resource models (root, intermediate, and resource data models),

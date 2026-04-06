@@ -11,3 +11,4 @@ extends:
       safeName: AzureResourceManagerApplicationInsights
     - name: Azure.Provisioning.ApplicationInsights
       safeName: AzureProvisioningApplicationInsights
+    TestDependsOnDependency: Azure.Provisioning.ApplicationInsights

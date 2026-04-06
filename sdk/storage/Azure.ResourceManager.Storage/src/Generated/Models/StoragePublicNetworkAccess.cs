@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.Storage.Models
     public readonly partial struct StoragePublicNetworkAccess : IEquatable<StoragePublicNetworkAccess>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="StoragePublicNetworkAccess"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public StoragePublicNetworkAccess(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
         private const string SecuredByPerimeterValue = "SecuredByPerimeter";
 
-        /// <summary> Enabled. </summary>
+        /// <summary> Initializes a new instance of <see cref="StoragePublicNetworkAccess"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public StoragePublicNetworkAccess(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Enabled. </summary>
         public static StoragePublicNetworkAccess Enabled { get; } = new StoragePublicNetworkAccess(EnabledValue);
-        /// <summary> Disabled. </summary>
+
+        /// <summary> Gets the Disabled. </summary>
         public static StoragePublicNetworkAccess Disabled { get; } = new StoragePublicNetworkAccess(DisabledValue);
-        /// <summary> SecuredByPerimeter. </summary>
+
+        /// <summary> Gets the SecuredByPerimeter. </summary>
         public static StoragePublicNetworkAccess SecuredByPerimeter { get; } = new StoragePublicNetworkAccess(SecuredByPerimeterValue);
+
         /// <summary> Determines if two <see cref="StoragePublicNetworkAccess"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(StoragePublicNetworkAccess left, StoragePublicNetworkAccess right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="StoragePublicNetworkAccess"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(StoragePublicNetworkAccess left, StoragePublicNetworkAccess right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="StoragePublicNetworkAccess"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="StoragePublicNetworkAccess"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator StoragePublicNetworkAccess(string value) => new StoragePublicNetworkAccess(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="StoragePublicNetworkAccess"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator StoragePublicNetworkAccess?(string value) => value == null ? null : new StoragePublicNetworkAccess(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is StoragePublicNetworkAccess other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(StoragePublicNetworkAccess other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

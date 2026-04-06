@@ -20,15 +20,14 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
+            ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential);
 
             #region Snippet:Sample7_ConversationsAuthoring_CancelTrainingJob
             string projectName = "{projectName}";
             string jobId = "{jobId}";
-            ConversationAuthoringProject projectClient = client.GetProject(projectName);
-
-            Operation<ConversationAuthoringTrainingJobResult> cancelOperation = projectClient.CancelTrainingJob(
+            Operation<ConversationAuthoringTrainingJobResult> cancelOperation = client.CancelTrainingJob(
                 waitUntil: WaitUntil.Completed,
+                projectName: projectName,
                 jobId: jobId
             );
 
@@ -46,15 +45,14 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
+            ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential);
 
             #region Snippet:Sample7_ConversationsAuthoring_CancelTrainingJobAsync
             string projectName = "{projectName}";
             string jobId = "{jobId}";
-            ConversationAuthoringProject projectClient = client.GetProject(projectName);
-
-            Operation<ConversationAuthoringTrainingJobResult> cancelOperation = await projectClient.CancelTrainingJobAsync(
+            Operation<ConversationAuthoringTrainingJobResult> cancelOperation = await client.CancelTrainingJobAsync(
                 waitUntil: WaitUntil.Completed,
+                projectName: projectName,
                 jobId: jobId
             );
 
