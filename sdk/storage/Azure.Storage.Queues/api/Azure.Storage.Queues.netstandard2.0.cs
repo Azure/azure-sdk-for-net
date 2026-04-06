@@ -128,7 +128,9 @@ namespace Azure.Storage.Queues
     public partial class QueueClientSettings : System.ClientModel.Primitives.ClientSettings
     {
         public QueueClientSettings() { }
+        public string ConnectionString { get { throw null; } set { } }
         public Azure.Storage.Queues.QueueClientOptions Options { get { throw null; } set { } }
+        public string QueueName { get { throw null; } set { } }
         public System.Uri Url { get { throw null; } set { } }
         protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
     }

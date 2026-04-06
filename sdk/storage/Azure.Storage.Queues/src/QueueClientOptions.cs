@@ -242,6 +242,23 @@ namespace Azure.Storage.Queues
             {
                 Version = serviceVersion;
             }
+            if (Uri.TryCreate(section["GeoRedundantSecondaryUri"], UriKind.Absolute, out Uri geoRedundantSecondaryUri))
+            {
+                GeoRedundantSecondaryUri = geoRedundantSecondaryUri;
+            }
+            if (Enum.TryParse(section["MessageEncoding"], out QueueMessageEncoding messageEncoding))
+            {
+                MessageEncoding = messageEncoding;
+            }
+            if (bool.TryParse(section["EnableTenantDiscovery"], out bool enableTenantDiscovery))
+            {
+                EnableTenantDiscovery = enableTenantDiscovery;
+            }
+            if (section["Audience"] is string audience)
+            {
+                Audience = new QueueAudience(audience);
+            }
+
             this.Initialize();
             AddHeadersAndQueryParameters();
         }

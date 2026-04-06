@@ -1,4 +1,4 @@
 repo: Azure/azure-rest-api-specs
 directory: "specification/storage/Microsoft.QueueStorage"
-commit: 4d706bfe097383baa50a6ac195805c2605f75dd2
+commit: e9a0cadfa32401a574bd64319aebb5d710301c65
 emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-emitter-package.json"

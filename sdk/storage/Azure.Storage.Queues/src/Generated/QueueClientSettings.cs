@@ -19,6 +19,12 @@ namespace Azure.Storage.Queues
         /// <summary> Gets or sets the Url. </summary>
         public Uri Url { get; set; }
 
+        /// <summary> Gets or sets the ConnectionString. </summary>
+        public string ConnectionString { get; set; }
+
+        /// <summary> Gets or sets the QueueName. </summary>
+        public string QueueName { get; set; }
+
         /// <summary> Gets or sets the Options. </summary>
         public QueueClientOptions Options { get; set; }
 
@@ -29,6 +35,16 @@ namespace Azure.Storage.Queues
             if (Uri.TryCreate(section["Url"], UriKind.Absolute, out Uri url))
             {
                 Url = url;
+            }
+            string connectionString = section["ConnectionString"];
+            if (!string.IsNullOrEmpty(connectionString))
+            {
+                ConnectionString = connectionString;
+            }
+            string queueName = section["QueueName"];
+            if (!string.IsNullOrEmpty(queueName))
+            {
+                QueueName = queueName;
             }
             IConfigurationSection optionsSection = section.GetSection("Options");
             if (optionsSection.Exists())
