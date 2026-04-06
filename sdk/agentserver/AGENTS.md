@@ -102,7 +102,7 @@ principles conflict, resolve in this priority order:
 | Protocol | Location | Notes |
 |---|---|---|
 | Core / Invocations | This file | — |
-| Responses | `Azure.AI.AgentServer.Responses/AGENTS.md` | Contract compliance (B1–B37, S-001–S-046) |
+| Responses | `Azure.AI.AgentServer.Responses/AGENTS.md` | Contract compliance (B1–B39, S-001–S-052) |
 
 > When adding a new protocol, create an `AGENTS.md` in the protocol directory.
 

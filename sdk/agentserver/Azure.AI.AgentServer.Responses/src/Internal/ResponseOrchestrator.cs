@@ -133,7 +133,7 @@ internal sealed class ResponseOrchestrator
         // If the response is in-flight, apply in-flight guards and return a snapshot.
         if (_tracker.TryGet(responseId, out var execution) && execution is not null)
         {
-            // Guard: store=false responses are not retrievable (FR-014)
+            // Guard: store=false responses are not retrievable (B14)
             if (!execution.Store)
             {
                 throw new ResourceNotFoundException($"Response '{responseId}' not found.");
@@ -261,27 +261,27 @@ internal sealed class ResponseOrchestrator
 
                 if (evt is not ResponseCreatedEvent createdEvt)
                 {
-                    // FR-006: Wrong first event — bad handler
+                    // S-031: Wrong first event — bad handler
                     ThrowBadHandler(execution,
                         $"Handler did not yield response.created as its first event. Received: {evt.EventType}. Handler type: {_handler.GetType().Name}.");
                     yield break; // unreachable — satisfies compiler definite-assignment
                 }
 
-                // FR-006: Response.Id must match ResponseContext.ResponseId
+                // S-031: Response.Id must match ResponseContext.ResponseId
                 if (createdEvt.Response.Id != context.ResponseId)
                 {
                     ThrowBadHandler(execution,
                         $"Handler emitted response.created with id '{createdEvt.Response.Id}' but expected '{context.ResponseId}'. Handler type: {_handler.GetType().Name}.");
                 }
 
-                // FR-007: Response.Status must be non-terminal on response.created
+                // B6/B8: Response.Status must be non-terminal on response.created
                 if (IsTerminalStatus(createdEvt.Response.Status))
                 {
                     ThrowBadHandler(execution,
                         $"Handler emitted response.created with terminal status '{createdEvt.Response.Status}'. Expected a non-terminal status. Handler type: {_handler.GetType().Name}.");
                 }
 
-                // FR-008a: Output manipulation detection on response.created
+                // B30/S-033: Output manipulation detection on response.created
                 if (createdEvt.Response.Output.Count != 0)
                 {
                     ThrowBadHandler(execution,
@@ -292,7 +292,7 @@ internal sealed class ResponseOrchestrator
                 // handler omitted it so that GET never returns a statusless response.
                 createdEvt.Response.Status ??= ResponseStatus.InProgress;
 
-                // For bg=true: persist immediately when response.created is yielded (FR-003)
+                // For bg=true: persist immediately when response.created is yielded (S-035)
                 if (execution.IsBackground && execution.Store)
                 {
                     ResponseMutations.ApplyOutputItemAutoStamps(evt, execution.ResponseId, request.AgentReference);
@@ -317,13 +317,13 @@ internal sealed class ResponseOrchestrator
                 }
             }
 
-            // Track output items for FR-008a output manipulation detection
+            // Track output items for B30/S-033 output manipulation detection
             if (evt is ResponseOutputItemAddedEvent)
             {
                 outputItemCount++;
             }
 
-            // FR-008a: Detect direct Output manipulation on response.* events (after response.created)
+            // B30/S-033: Detect direct Output manipulation on response.* events (after response.created)
             {
                 Models.ResponseObject? eventResponse = evt switch
                 {
@@ -357,7 +357,7 @@ internal sealed class ResponseOrchestrator
             // Stamp AgentReference — the only SDK-managed property on Response
             ResponseMutations.StampAgentReference(execution, request);
 
-            // Stamp AgentSessionId — resolved during request processing (S-048)
+            // Stamp AgentSessionId — resolved during request processing (B39)
             ResponseMutations.StampAgentSessionId(execution, request);
 
             // Validate terminal event status consistency — handler must set the
@@ -394,7 +394,7 @@ internal sealed class ResponseOrchestrator
             yield return evt;
         }
 
-        // FR-007: Empty enumerable — bad handler
+        // S-015: Empty enumerable — bad handler
         if (firstEvent)
         {
             ThrowBadHandler(execution,
@@ -452,7 +452,7 @@ internal sealed class ResponseOrchestrator
 
             await EnsureTerminalOrFailAsync(execution, publisher);
 
-            // Yield terminal event emitted by error recovery or FR-009 that wasn't
+            // Yield terminal event emitted by error recovery or S-015 that wasn't
             // yielded in the while loop (because C# disallows yield inside catch blocks).
             // The SDK only sets Failed or Cancelled (never Incomplete — that's handler-driven),
             // so this always emits ResponseFailedEvent.
@@ -498,7 +498,7 @@ internal sealed class ResponseOrchestrator
     }
 
     /// <summary>
-    /// FR-009: if the handler ended without a terminal event, emits
+    /// S-015: if the handler ended without a terminal event, emits
     /// <see cref="ResponseFailedEvent"/>.
     /// </summary>
     private async Task EnsureTerminalOrFailAsync(

@@ -10,7 +10,7 @@ using Azure.AI.AgentServer.Responses.Tests.Helpers;
 namespace Azure.AI.AgentServer.Responses.Tests.Protocol;
 
 /// <summary>
-/// Protocol conformance tests for the <c>x-agent-response-id</c> request header (S-047).
+/// Protocol conformance tests for the <c>x-agent-response-id</c> request header (B38).
 /// When the header is present, the library MUST use its value as the response ID
 /// instead of generating one.
 /// </summary>

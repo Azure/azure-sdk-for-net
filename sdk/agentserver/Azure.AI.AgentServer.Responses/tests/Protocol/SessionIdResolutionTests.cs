@@ -11,7 +11,7 @@ using Azure.AI.AgentServer.Responses.Tests.Helpers;
 namespace Azure.AI.AgentServer.Responses.Tests.Protocol;
 
 /// <summary>
-/// Protocol conformance tests for session ID resolution (S-048).
+/// Protocol conformance tests for session ID resolution (B39).
 /// Priority: request payload <c>agent_session_id</c> → <c>FOUNDRY_AGENT_SESSION_ID</c> env var → generated UUID.
 /// The resolved session ID MUST be auto-stamped on the <c>ResponseObject.AgentSessionId</c>.
 /// </summary>

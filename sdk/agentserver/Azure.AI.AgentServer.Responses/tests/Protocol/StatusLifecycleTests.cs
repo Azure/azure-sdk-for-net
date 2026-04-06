@@ -94,7 +94,7 @@ public class StatusLifecycleTests : ProtocolTestBase
     [Test]
     public async Task ZeroOutputEvents_Completed_WithEmptyOutput()
     {
-        // Empty handler (no events) → FR-007 bad handler → 500 error
+        // Empty handler (no events) → S-015 bad handler → 500 error
         Handler.EventFactory = (req, ctx, ct) => EmptyStream();
 
         var response = await PostResponsesAsync(new { model = "test" });

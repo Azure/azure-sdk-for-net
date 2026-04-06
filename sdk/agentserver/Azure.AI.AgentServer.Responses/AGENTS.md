@@ -1,6 +1,6 @@
 # AGENTS.md — Azure.AI.AgentServer.Responses
 
-> This file contains **Responses-protocol-specific** rules.
+> This file contains **protocol-specific** rules.
 > For core principles, build commands, and governance, see the parent [AGENTS.md](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/AGENTS.md).
 
 ---
@@ -13,8 +13,8 @@ The Responses library has three **authoritative contract documents** that define
 
 | Document | Path | Defines |
 |----------|------|---------|
-| **API Behaviour Contract** | `docs/api-behaviour-contract.md` | Observable HTTP behaviour, endpoint matrices, error shapes, SSE contract, behavioural rules (B1–B37) |
-| **Library Behaviour Spec** | `docs/library-behaviour-spec.md` | Language-agnostic library requirements: event processing, state management, terminal authority, cancellation, persistence, observability (S-001–S-046) |
+| **API Behaviour Contract** | `docs/api-behaviour-contract.md` | Observable HTTP behaviour, endpoint matrices, error shapes, SSE contract, behavioural rules (B1–B39) |
+| **Library Behaviour Spec** | `docs/library-behaviour-spec.md` | Language-agnostic library requirements: event processing, state management, terminal authority, cancellation, persistence, observability (S-001–S-052) |
 | **Handler Implementation Guide** | `docs/handler-implementation-guide.md` | Handler contract, builder pattern, cancellation, error handling, configuration |
 
 ### Supporting docs
@@ -26,7 +26,7 @@ The Responses library has three **authoritative contract documents** that define
 ### Compliance workflow
 
 1. **Before implementing**: Read the relevant sections of the authoritative trio for the feature/endpoint being changed.
-2. **Key rules to check**: Endpoint behaviour matrices (B1–B37), library processing rules (S-001–S-046), terminal event authority (S-018–S-022), cancellation categories (S-023–S-026), persistence timing (S-034–S-036).
+2. **Key rules to check**: Endpoint behaviour matrices (B1–B39), library processing rules (S-001–S-052), terminal event authority (S-018–S-022), cancellation categories (S-023–S-026), persistence timing (S-034–S-036).
 3. **After implementing**: Audit the change against the contracts. Pay special attention to:
    - **B16**: Non-background in-flight responses are NOT findable (GET/DELETE/Cancel → 404).
    - **B2**: SSE replay requires `background=true` AND `stream=true` AND `store=true`.

@@ -187,7 +187,7 @@ internal static class ResponseMutations
     /// <summary>
     /// Stamps the resolved <c>AgentSessionId</c> on the response after a
     /// <see cref="ReplaceResponse"/> call. The session ID is resolved during
-    /// request processing (S-048): request payload → environment variable → generated UUID.
+    /// request processing (B39): request payload → environment variable → generated UUID.
     /// </summary>
     internal static void StampAgentSessionId(ResponseExecution execution, CreateResponse request)
     {
