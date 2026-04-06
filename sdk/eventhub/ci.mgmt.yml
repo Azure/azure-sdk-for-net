@@ -12,4 +12,3 @@ extends:
       safeName: AzureResourceManagerEventHubs
     - name: Azure.Provisioning.EventHubs
       safeName: AzureProvisioningEventHubs
-    TestDependsOnDependency: Azure.Provisioning.EventHubs Azure.ResourceManager.EventHubs
