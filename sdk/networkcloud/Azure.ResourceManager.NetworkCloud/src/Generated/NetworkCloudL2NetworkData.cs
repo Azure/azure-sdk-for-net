@@ -7,132 +7,182 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NetworkCloud.Models;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
-    /// <summary>
-    /// A class representing the NetworkCloudL2Network data model.
-    /// L2Network represents a network that utilizes a single isolation domain set up for layer-2 resources.
-    /// </summary>
+    /// <summary> L2Network represents a network that utilizes a single isolation domain set up for layer-2 resources. </summary>
     public partial class NetworkCloudL2NetworkData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloudL2NetworkData"/>. </summary>
-        /// <param name="location"> The location. </param>
-        /// <param name="extendedLocation"> The extended location of the cluster associated with the resource. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="l2IsolationDomainId"> The resource ID of the Network Fabric l2IsolationDomain. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="extendedLocation"/> or <paramref name="l2IsolationDomainId"/> is null. </exception>
-        public NetworkCloudL2NetworkData(AzureLocation location, ExtendedLocation extendedLocation, ResourceIdentifier l2IsolationDomainId) : base(location)
+        /// <param name="extendedLocation"> The extended location of the resource. This property is required when creating the resource. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="l2IsolationDomainId"/> or <paramref name="extendedLocation"/> is null. </exception>
+        public NetworkCloudL2NetworkData(AzureLocation location, ResourceIdentifier l2IsolationDomainId, ExtendedLocation extendedLocation) : base(location)
         {
-            Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
             Argument.AssertNotNull(l2IsolationDomainId, nameof(l2IsolationDomainId));
+            Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
 
+            Properties = new L2NetworkProperties(l2IsolationDomainId);
             ExtendedLocation = extendedLocation;
-            AssociatedResourceIds = new ChangeTrackingList<ResourceIdentifier>();
-            HybridAksClustersAssociatedIds = new ChangeTrackingList<ResourceIdentifier>();
-            L2IsolationDomainId = l2IsolationDomainId;
-            VirtualMachinesAssociatedIds = new ChangeTrackingList<ResourceIdentifier>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloudL2NetworkData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="etag"> Resource ETag. </param>
-        /// <param name="extendedLocation"> The extended location of the cluster associated with the resource. </param>
-        /// <param name="associatedResourceIds"> The list of resource IDs for the other Microsoft.NetworkCloud resources that have attached this network. </param>
-        /// <param name="clusterId"> The resource ID of the Network Cloud cluster this L2 network is associated with. </param>
-        /// <param name="detailedStatus"> The more detailed status of the L2 network. </param>
-        /// <param name="detailedStatusMessage"> The descriptive message about the current detailed status. </param>
-        /// <param name="hybridAksClustersAssociatedIds"> Field Deprecated. These fields will be empty/omitted. The list of Hybrid AKS cluster resource ID(s) that are associated with this L2 network. </param>
-        /// <param name="hybridAksPluginType"> Field Deprecated. The field was previously optional, now it will have no defined behavior and will be ignored. The network plugin type for Hybrid AKS. </param>
-        /// <param name="interfaceName"> The default interface name for this L2 network in the virtual machine. This name can be overridden by the name supplied in the network attachment configuration of that virtual machine. </param>
-        /// <param name="l2IsolationDomainId"> The resource ID of the Network Fabric l2IsolationDomain. </param>
-        /// <param name="provisioningState"> The provisioning state of the L2 network. </param>
-        /// <param name="virtualMachinesAssociatedIds"> Field Deprecated. These fields will be empty/omitted. The list of virtual machine resource ID(s), excluding any Hybrid AKS virtual machines, that are currently using this L2 network. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkCloudL2NetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ExtendedLocation extendedLocation, IReadOnlyList<ResourceIdentifier> associatedResourceIds, ResourceIdentifier clusterId, L2NetworkDetailedStatus? detailedStatus, string detailedStatusMessage, IReadOnlyList<ResourceIdentifier> hybridAksClustersAssociatedIds, HybridAksPluginType? hybridAksPluginType, string interfaceName, ResourceIdentifier l2IsolationDomainId, L2NetworkProvisioningState? provisioningState, IReadOnlyList<ResourceIdentifier> virtualMachinesAssociatedIds, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The list of the resource properties. </param>
+        /// <param name="eTag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
+        /// <param name="extendedLocation"> The extended location of the resource. This property is required when creating the resource. </param>
+        internal NetworkCloudL2NetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, L2NetworkProperties properties, ETag? eTag, ExtendedLocation extendedLocation) : base(id, name, resourceType, systemData, tags, location)
         {
-            ETag = etag;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
+            ETag = eTag;
             ExtendedLocation = extendedLocation;
-            AssociatedResourceIds = associatedResourceIds;
-            ClusterId = clusterId;
-            DetailedStatus = detailedStatus;
-            DetailedStatusMessage = detailedStatusMessage;
-            HybridAksClustersAssociatedIds = hybridAksClustersAssociatedIds;
-            HybridAksPluginType = hybridAksPluginType;
-            InterfaceName = interfaceName;
-            L2IsolationDomainId = l2IsolationDomainId;
-            ProvisioningState = provisioningState;
-            VirtualMachinesAssociatedIds = virtualMachinesAssociatedIds;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetworkCloudL2NetworkData"/> for deserialization. </summary>
-        internal NetworkCloudL2NetworkData()
-        {
-        }
+        /// <summary> The list of the resource properties. </summary>
+        internal L2NetworkProperties Properties { get; set; }
 
-        /// <summary> Resource ETag. </summary>
+        /// <summary> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </summary>
         public ETag? ETag { get; }
-        /// <summary> The extended location of the cluster associated with the resource. </summary>
-        public ExtendedLocation ExtendedLocation { get; set; }
-        /// <summary> The list of resource IDs for the other Microsoft.NetworkCloud resources that have attached this network. </summary>
-        public IReadOnlyList<ResourceIdentifier> AssociatedResourceIds { get; }
-        /// <summary> The resource ID of the Network Cloud cluster this L2 network is associated with. </summary>
-        public ResourceIdentifier ClusterId { get; }
-        /// <summary> The more detailed status of the L2 network. </summary>
-        public L2NetworkDetailedStatus? DetailedStatus { get; }
-        /// <summary> The descriptive message about the current detailed status. </summary>
-        public string DetailedStatusMessage { get; }
-        /// <summary> Field Deprecated. These fields will be empty/omitted. The list of Hybrid AKS cluster resource ID(s) that are associated with this L2 network. </summary>
-        public IReadOnlyList<ResourceIdentifier> HybridAksClustersAssociatedIds { get; }
+
         /// <summary> Field Deprecated. The field was previously optional, now it will have no defined behavior and will be ignored. The network plugin type for Hybrid AKS. </summary>
-        public HybridAksPluginType? HybridAksPluginType { get; set; }
+        public HybridAksPluginType? HybridAksPluginType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HybridAksPluginType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new L2NetworkProperties();
+                }
+                Properties.HybridAksPluginType = value.Value;
+            }
+        }
+
         /// <summary> The default interface name for this L2 network in the virtual machine. This name can be overridden by the name supplied in the network attachment configuration of that virtual machine. </summary>
-        public string InterfaceName { get; set; }
+        public string InterfaceName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.InterfaceName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new L2NetworkProperties();
+                }
+                Properties.InterfaceName = value;
+            }
+        }
+
         /// <summary> The resource ID of the Network Fabric l2IsolationDomain. </summary>
-        public ResourceIdentifier L2IsolationDomainId { get; set; }
-        /// <summary> The provisioning state of the L2 network. </summary>
-        public L2NetworkProvisioningState? ProvisioningState { get; }
+        public ResourceIdentifier L2IsolationDomainId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.L2IsolationDomainId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new L2NetworkProperties();
+                }
+                Properties.L2IsolationDomainId = value;
+            }
+        }
+
+        /// <summary> The list of resource IDs for the other Microsoft.NetworkCloud resources that have attached this network. </summary>
+        public IReadOnlyList<ResourceIdentifier> AssociatedResourceIds
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new L2NetworkProperties();
+                }
+                return Properties.AssociatedResourceIds;
+            }
+        }
+
+        /// <summary> The resource ID of the Network Cloud cluster this L2 network is associated with. </summary>
+        public ResourceIdentifier ClusterId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ClusterId;
+            }
+        }
+
+        /// <summary> The more detailed status of the L2 network. </summary>
+        public L2NetworkDetailedStatus? DetailedStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DetailedStatus;
+            }
+        }
+
+        /// <summary> The descriptive message about the current detailed status. </summary>
+        public string DetailedStatusMessage
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DetailedStatusMessage;
+            }
+        }
+
+        /// <summary> Field Deprecated. These fields will be empty/omitted. The list of Hybrid AKS cluster resource ID(s) that are associated with this L2 network. </summary>
+        public IReadOnlyList<ResourceIdentifier> HybridAksClustersAssociatedIds
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new L2NetworkProperties();
+                }
+                return Properties.HybridAksClustersAssociatedIds;
+            }
+        }
+
         /// <summary> Field Deprecated. These fields will be empty/omitted. The list of virtual machine resource ID(s), excluding any Hybrid AKS virtual machines, that are currently using this L2 network. </summary>
-        public IReadOnlyList<ResourceIdentifier> VirtualMachinesAssociatedIds { get; }
+        public IReadOnlyList<ResourceIdentifier> VirtualMachinesAssociatedIds
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new L2NetworkProperties();
+                }
+                return Properties.VirtualMachinesAssociatedIds;
+            }
+        }
+
+        /// <summary> The provisioning state of the L2 network. </summary>
+        public L2NetworkProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
     }
 }

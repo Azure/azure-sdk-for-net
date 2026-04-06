@@ -5,13 +5,11 @@
   <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory).., Directory.Build.props))\Directory.Build.props"/>
 
   <PropertyGroup>
-    <Version>1.0.0-beta.1</Version>
+    <Version>1.0.0-beta.21</Version>
     <Nullable>enable</Nullable>
 
     <ImplicitUsings>enable</ImplicitUsings>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <EnableClientSdkAnalyzers>true</EnableClientSdkAnalyzers>
-    <EnableBannedApiAnalyzers>false</EnableBannedApiAnalyzers>
+    <EnableClientSdkAnalyzers Condition="'$(IsTestProject)' != 'true'">true</EnableClientSdkAnalyzers>
     <AotCompatOptOut>true</AotCompatOptOut>
   </PropertyGroup>
 </Project>

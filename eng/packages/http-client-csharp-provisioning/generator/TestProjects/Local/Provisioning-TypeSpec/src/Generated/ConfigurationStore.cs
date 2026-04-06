@@ -21,13 +21,13 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
     /// <summary> A configuration store. </summary>
     public partial class ConfigurationStore : ProvisionableResource
     {
-        private ConfigurationStoreProperties _properties;
+        private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
-        private BicepValue<string> _eTag;
+        private SystemData _systemData;
         private BicepDictionary<string> _tags;
         private BicepValue<AzureLocation> _location;
-        private BicepValue<ResourceIdentifier> _id;
-        private SystemData _systemData;
+        private ConfigurationStoreProperties _properties;
+        private BicepValue<string> _eTag;
 
         /// <summary> Creates a new ConfigurationStore. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -36,18 +36,13 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
         {
         }
 
-        /// <summary> Gets or sets the Properties. </summary>
-        public ConfigurationStoreProperties Properties
+        /// <summary> Gets the Id. </summary>
+        public BicepValue<ResourceIdentifier> Id
         {
             get
             {
                 Initialize();
-                return _properties;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _properties, value);
+                return _id;
             }
         }
 
@@ -66,13 +61,13 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
             }
         }
 
-        /// <summary> Gets the ETag. </summary>
-        public BicepValue<string> ETag
+        /// <summary> Gets the SystemData. </summary>
+        public SystemData SystemData
         {
             get
             {
                 Initialize();
-                return _eTag;
+                return _systemData;
             }
         }
 
@@ -106,23 +101,28 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
             }
         }
 
-        /// <summary> Gets the Id. </summary>
-        public BicepValue<ResourceIdentifier> Id
+        /// <summary> Gets or sets the Properties. </summary>
+        public ConfigurationStoreProperties Properties
         {
             get
             {
                 Initialize();
-                return _id;
+                return _properties;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _properties, value);
             }
         }
 
-        /// <summary> Gets the SystemData. </summary>
-        public SystemData SystemData
+        /// <summary> Gets the ETag. </summary>
+        public BicepValue<string> ETag
         {
             get
             {
                 Initialize();
-                return _systemData;
+                return _eTag;
             }
         }
 
@@ -130,13 +130,13 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _properties = DefineModelProperty<ConfigurationStoreProperties>(nameof(Properties), new string[] { "properties" });
+            _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
-            _eTag = DefineProperty<string>(nameof(ETag), new string[] { "eTag" }, isOutput: true);
+            _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
-            _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
-            _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
+            _properties = DefineModelProperty<ConfigurationStoreProperties>(nameof(Properties), new string[] { "properties" });
+            _eTag = DefineProperty<string>(nameof(ETag), new string[] { "eTag" }, isOutput: true);
             DefineAdditionalProperties();
         }
 

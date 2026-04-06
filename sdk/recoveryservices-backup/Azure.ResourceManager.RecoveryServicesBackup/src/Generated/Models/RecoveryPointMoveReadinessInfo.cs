@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> The RecoveryPointMoveReadinessInfo. </summary>
     public partial class RecoveryPointMoveReadinessInfo
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RecoveryPointMoveReadinessInfo"/>. </summary>
         public RecoveryPointMoveReadinessInfo()
@@ -53,17 +24,18 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of <see cref="RecoveryPointMoveReadinessInfo"/>. </summary>
         /// <param name="isReadyForMove"></param>
         /// <param name="additionalInfo"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RecoveryPointMoveReadinessInfo(bool? isReadyForMove, string additionalInfo, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal RecoveryPointMoveReadinessInfo(bool? isReadyForMove, string additionalInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsReadyForMove = isReadyForMove;
             AdditionalInfo = additionalInfo;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets or sets the is ready for move. </summary>
+        /// <summary> Gets or sets the IsReadyForMove. </summary>
         public bool? IsReadyForMove { get; set; }
-        /// <summary> Gets or sets the additional info. </summary>
+
+        /// <summary> Gets or sets the AdditionalInfo. </summary>
         public string AdditionalInfo { get; set; }
     }
 }

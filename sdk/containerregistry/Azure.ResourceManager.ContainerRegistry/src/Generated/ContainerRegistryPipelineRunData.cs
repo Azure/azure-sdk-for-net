@@ -13,43 +13,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerRegistry
 {
-    /// <summary>
-    /// A class representing the ContainerRegistryPipelineRun data model.
-    /// An object that represents a pipeline run for a container registry.
-    /// </summary>
+    /// <summary> An object that represents a pipeline run for a container registry. </summary>
     public partial class ContainerRegistryPipelineRunData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerRegistryPipelineRunData"/>. </summary>
         public ContainerRegistryPipelineRunData()
@@ -57,35 +25,76 @@ namespace Azure.ResourceManager.ContainerRegistry
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerRegistryPipelineRunData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="provisioningState"> The provisioning state of a pipeline run. </param>
-        /// <param name="request"> The request parameters for a pipeline run. </param>
-        /// <param name="response"> The response of a pipeline run. </param>
-        /// <param name="forceUpdateTag"> How the pipeline run should be forced to recreate even if the pipeline run configuration has not changed. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerRegistryPipelineRunData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ContainerRegistryProvisioningState? provisioningState, ContainerRegistryPipelineRunContent request, ContainerRegistryPipelineRunResult response, string forceUpdateTag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the private link resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The properties of a pipeline run. </param>
+        internal ContainerRegistryPipelineRunData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, PipelineRunProperties properties) : base(id, name, resourceType, systemData)
         {
-            ProvisioningState = provisioningState;
-            Request = request;
-            Response = response;
-            ForceUpdateTag = forceUpdateTag;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
+
+        /// <summary> The properties of a pipeline run. </summary>
+        [WirePath("properties")]
+        internal PipelineRunProperties Properties { get; set; }
 
         /// <summary> The provisioning state of a pipeline run. </summary>
         [WirePath("properties.provisioningState")]
-        public ContainerRegistryProvisioningState? ProvisioningState { get; }
+        public ContainerRegistryProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> The request parameters for a pipeline run. </summary>
         [WirePath("properties.request")]
-        public ContainerRegistryPipelineRunContent Request { get; set; }
+        public ContainerRegistryPipelineRunContent Request
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Request;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PipelineRunProperties();
+                }
+                Properties.Request = value;
+            }
+        }
+
         /// <summary> The response of a pipeline run. </summary>
         [WirePath("properties.response")]
-        public ContainerRegistryPipelineRunResult Response { get; }
+        public ContainerRegistryPipelineRunResult Response
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Response;
+            }
+        }
+
         /// <summary> How the pipeline run should be forced to recreate even if the pipeline run configuration has not changed. </summary>
         [WirePath("properties.forceUpdateTag")]
-        public string ForceUpdateTag { get; set; }
+        public string ForceUpdateTag
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ForceUpdateTag;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PipelineRunProperties();
+                }
+                Properties.ForceUpdateTag = value;
+            }
+        }
     }
 }

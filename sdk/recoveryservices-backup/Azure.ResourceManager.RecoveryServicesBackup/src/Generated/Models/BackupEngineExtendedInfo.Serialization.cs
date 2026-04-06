@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class BackupEngineExtendedInfo : IUtf8JsonSerializable, IJsonModel<BackupEngineExtendedInfo>
+    /// <summary> Additional information on backup engine. </summary>
+    public partial class BackupEngineExtendedInfo : IJsonModel<BackupEngineExtendedInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BackupEngineExtendedInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BackupEngineExtendedInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BackupEngineExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeBackupEngineExtendedInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BackupEngineExtendedInfo)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BackupEngineExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(BackupEngineExtendedInfo)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<BackupEngineExtendedInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BackupEngineExtendedInfo IPersistableModel<BackupEngineExtendedInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<BackupEngineExtendedInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BackupEngineExtendedInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +69,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BackupEngineExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BackupEngineExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BackupEngineExtendedInfo)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(DatabaseName))
             {
                 writer.WritePropertyName("databaseName"u8);
@@ -74,15 +114,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("azureProtectedInstances"u8);
                 writer.WriteNumberValue(AzureProtectedInstances.Value);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -91,22 +131,27 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
         }
 
-        BackupEngineExtendedInfo IJsonModel<BackupEngineExtendedInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BackupEngineExtendedInfo IJsonModel<BackupEngineExtendedInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BackupEngineExtendedInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BackupEngineExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BackupEngineExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BackupEngineExtendedInfo)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeBackupEngineExtendedInfo(document.RootElement, options);
         }
 
-        internal static BackupEngineExtendedInfo DeserializeBackupEngineExtendedInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static BackupEngineExtendedInfo DeserializeBackupEngineExtendedInfo(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -117,86 +162,84 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             int? diskCount = default;
             double? usedDiskSpace = default;
             double? availableDiskSpace = default;
-            DateTimeOffset? refreshedAt = default;
+            DateTimeOffset? refreshedOn = default;
             int? azureProtectedInstances = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("databaseName"u8))
+                if (prop.NameEquals("databaseName"u8))
                 {
-                    databaseName = property.Value.GetString();
+                    databaseName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("protectedItemsCount"u8))
+                if (prop.NameEquals("protectedItemsCount"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    protectedItemsCount = property.Value.GetInt32();
+                    protectedItemsCount = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("protectedServersCount"u8))
+                if (prop.NameEquals("protectedServersCount"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    protectedServersCount = property.Value.GetInt32();
+                    protectedServersCount = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("diskCount"u8))
+                if (prop.NameEquals("diskCount"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    diskCount = property.Value.GetInt32();
+                    diskCount = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("usedDiskSpace"u8))
+                if (prop.NameEquals("usedDiskSpace"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    usedDiskSpace = property.Value.GetDouble();
+                    usedDiskSpace = prop.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("availableDiskSpace"u8))
+                if (prop.NameEquals("availableDiskSpace"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    availableDiskSpace = property.Value.GetDouble();
+                    availableDiskSpace = prop.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("refreshedAt"u8))
+                if (prop.NameEquals("refreshedAt"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    refreshedAt = property.Value.GetDateTimeOffset("O");
+                    refreshedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("azureProtectedInstances"u8))
+                if (prop.NameEquals("azureProtectedInstances"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    azureProtectedInstances = property.Value.GetInt32();
+                    azureProtectedInstances = prop.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new BackupEngineExtendedInfo(
                 databaseName,
                 protectedItemsCount,
@@ -204,40 +247,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 diskCount,
                 usedDiskSpace,
                 availableDiskSpace,
-                refreshedAt,
+                refreshedOn,
                 azureProtectedInstances,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<BackupEngineExtendedInfo>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<BackupEngineExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(BackupEngineExtendedInfo)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        BackupEngineExtendedInfo IPersistableModel<BackupEngineExtendedInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<BackupEngineExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeBackupEngineExtendedInfo(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(BackupEngineExtendedInfo)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<BackupEngineExtendedInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

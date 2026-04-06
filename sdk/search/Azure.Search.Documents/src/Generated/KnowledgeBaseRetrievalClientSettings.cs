@@ -20,6 +20,9 @@ namespace Azure.Search.Documents.KnowledgeBases
         /// <summary> Gets or sets the Endpoint. </summary>
         public Uri Endpoint { get; set; }
 
+        /// <summary> Gets or sets the KnowledgeBaseName. </summary>
+        public string KnowledgeBaseName { get; set; }
+
         /// <summary> Gets or sets the Options. </summary>
         public SearchClientOptions Options { get; set; }
 
@@ -30,6 +33,11 @@ namespace Azure.Search.Documents.KnowledgeBases
             if (Uri.TryCreate(section["Endpoint"], UriKind.Absolute, out Uri endpoint))
             {
                 Endpoint = endpoint;
+            }
+            string knowledgeBaseName = section["KnowledgeBaseName"];
+            if (!string.IsNullOrEmpty(knowledgeBaseName))
+            {
+                KnowledgeBaseName = knowledgeBaseName;
             }
             IConfigurationSection optionsSection = section.GetSection("Options");
             if (optionsSection.Exists())

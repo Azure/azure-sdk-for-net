@@ -11,6 +11,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.Azure.WebPubSub.Common;
@@ -25,6 +26,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
     public class ServiceRequestHandlerTests
     {
         private const string TestEndpoint = "https://my-host.webpubsub.net";
+        private const string TestConnectionId = "0f9c97a2f0bf4706afe87a14e0797b11";
         private readonly ServiceRequestHandlerAdapter _adaptor;
 
         public ServiceRequestHandlerTests()
@@ -204,6 +206,52 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
         }
 
         [Test]
+        public async Task TestHandleJoinedGroupEvent()
+        {
+            var groupName = "group1";
+            var body = JsonSerializer.Serialize(new { group = groupName });
+            var hubName = "testgrouphub";
+            var context = PrepareHttpContext(type: WebPubSubEventType.GroupPresence,
+                eventName: Constants.Events.JoinedGroupEvent,
+                body: body,
+                contentType: Constants.ContentTypes.JsonContentType,
+                hub: hubName);
+            var hubMock = new Mock<WebPubSubHub>();
+            hubMock.Setup(h => h.OnGroupJoinedAsync(It.IsAny<JoinedGroupEventRequest>())).Callback<JoinedGroupEventRequest>(request =>
+            {
+                AssertJoinedGroupEventRequest(request, context, groupName, TestConnectionId, hubName);
+            }).Returns(Task.CompletedTask);
+            _adaptor.RegisterHub(hubName, hubMock.Object);
+
+            await _adaptor.HandleRequest(context);
+
+            hubMock.Verify(h => h.OnGroupJoinedAsync(It.IsAny<JoinedGroupEventRequest>()), Times.Once);
+        }
+
+        [Test]
+        public async Task TestHandleLeftGroupEvent()
+        {
+            var groupName = "group1";
+            var body = JsonSerializer.Serialize(new { group = groupName });
+            var hubName = "testgrouphub";
+            var context = PrepareHttpContext(type: WebPubSubEventType.GroupPresence,
+                eventName: Constants.Events.LeftGroupEvent,
+                body: body,
+                contentType: Constants.ContentTypes.JsonContentType,
+                hub: hubName);
+            var hubMock = new Mock<WebPubSubHub>();
+            hubMock.Setup(h => h.OnGroupLeftAsync(It.IsAny<LeftGroupEventRequest>())).Callback<LeftGroupEventRequest>(request =>
+            {
+                AssertLeftGroupEventRequest(request, context, groupName, TestConnectionId, hubName);
+            }).Returns(Task.CompletedTask);
+            _adaptor.RegisterHub(hubName, hubMock.Object);
+
+            await _adaptor.HandleRequest(context);
+
+            hubMock.Verify(h => h.OnGroupLeftAsync(It.IsAny<LeftGroupEventRequest>()), Times.Once);
+        }
+
+        [Test]
         public async Task TestStateChanges()
         {
             _adaptor.RegisterHub<TestHub>();
@@ -328,7 +376,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
             WebPubSubEventType type = WebPubSubEventType.System,
             string eventName = "connect",
             string uriStr = TestEndpoint,
-            string connectionId = "0f9c97a2f0bf4706afe87a14e0797b11",
+            string connectionId = TestConnectionId,
             string signatures = "sha256=7767effcb3946f3e1de039df4b986ef02c110b1469d02c0a06f41b3b727ab561",
             string hub = "testhub",
             string httpMethod = "POST",
@@ -403,9 +451,12 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
 
         private static string GetFormedType(WebPubSubEventType type, string eventName)
         {
-            return type == WebPubSubEventType.User ?
-                $"{Constants.Headers.CloudEvents.TypeUserPrefix}{eventName}" :
-                $"{Constants.Headers.CloudEvents.TypeSystemPrefix}{eventName}";
+            return type switch
+            {
+                WebPubSubEventType.User => $"{Constants.Headers.CloudEvents.TypeUserPrefix}{eventName}",
+                WebPubSubEventType.GroupPresence => $"{Constants.Headers.CloudEvents.TypeGroupPresencePrefix}{eventName}",
+                _ => $"{Constants.Headers.CloudEvents.TypeSystemPrefix}{eventName}"
+            };
         }
 
         private sealed class TestHub : WebPubSubHub
@@ -467,6 +518,44 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
         // Test default return correct
         private sealed class TestDefaultHub : WebPubSubHub
         {
+        }
+
+        private static void AssertJoinedGroupEventRequest(JoinedGroupEventRequest request, HttpContext context, string expectedGroup, string expectedConnectionId, string expectedHub)
+        {
+            Assert.NotNull(request);
+            Assert.AreEqual(expectedGroup, request.Group);
+            AssertConnectionContext(request.ConnectionContext, context, WebPubSubEventType.GroupPresence, Constants.Events.JoinedGroupEvent, expectedConnectionId, expectedHub);
+        }
+
+        private static void AssertLeftGroupEventRequest(LeftGroupEventRequest request, HttpContext context, string expectedGroup, string expectedConnectionId, string expectedHub)
+        {
+            Assert.NotNull(request);
+            Assert.AreEqual(expectedGroup, request.Group);
+            AssertConnectionContext(request.ConnectionContext, context, WebPubSubEventType.GroupPresence, Constants.Events.LeftGroupEvent, expectedConnectionId, expectedHub);
+        }
+
+        private static void AssertConnectionContext(WebPubSubConnectionContext context, HttpContext expectedContext, WebPubSubEventType expectedEventType, string expectedEventName, string expectedConnectionId, string expectedHub)
+        {
+            Assert.NotNull(context);
+            Assert.AreEqual(expectedEventType, context.EventType);
+            Assert.AreEqual(expectedEventName, context.EventName);
+            Assert.AreEqual(expectedHub, context.Hub);
+            Assert.AreEqual(expectedConnectionId, context.ConnectionId);
+            Assert.AreEqual("testuser", context.UserId);
+            Assert.AreEqual("sha256=7767effcb3946f3e1de039df4b986ef02c110b1469d02c0a06f41b3b727ab561", context.Signature);
+            Assert.AreEqual("my-host.webpubsub.net", context.Origin);
+            Assert.NotNull(context.ConnectionStates);
+            Assert.AreEqual(0, context.ConnectionStates.Count);
+            Assert.NotNull(context.States);
+            Assert.AreEqual(0, context.States.Count);
+            var expectedHeaders = expectedContext.Request.Headers.ToDictionary(x => x.Key, v => v.Value.ToArray(), StringComparer.OrdinalIgnoreCase);
+            Assert.NotNull(context.Headers);
+            Assert.AreEqual(expectedHeaders.Count, context.Headers.Count);
+            foreach (var header in expectedHeaders)
+            {
+                Assert.True(context.Headers.TryGetValue(header.Key, out var values));
+                CollectionAssert.AreEqual(header.Value, values);
+            }
         }
 
         // Test error cases.

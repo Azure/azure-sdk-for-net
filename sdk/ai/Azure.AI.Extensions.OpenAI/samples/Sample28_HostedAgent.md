@@ -102,7 +102,7 @@ HostedAgentDefinition agentDefinition = GetAgentDefinition(
     applicationInsightConnectionString: projectName,
     projectEndpoint: projectEndpoint
 );
-ProjectsAgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
+ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.CreateAgentVersion(
     agentName: "myHostedAgent",
     options: new(agentDefinition));
 ```
@@ -116,7 +116,7 @@ HostedAgentDefinition agentDefinition = GetAgentDefinition(
     applicationInsightConnectionString: projectName,
     projectEndpoint: projectEndpoint
 );
-ProjectsAgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
     agentName: "myHostedAgent",
     options: new(agentDefinition));
 ```
@@ -141,13 +141,13 @@ az cognitiveservices agent start --account-name ACCOUNTNAME --project-name PROJE
 
 Synchronous sample:
 ```C# Snippet:Sample_GetAgent_HostedAgent_Sync
-ProjectsAgentVersion agentVersion = projectClient.Agents.GetAgentVersion(
+ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.GetAgentVersion(
     agentName: "myHostedAgent", agentVersion: "1");
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_GetAgent_HostedAgent_Async
-ProjectsAgentVersion agentVersion = await projectClient.Agents.GetAgentVersionAsync(
+ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.GetAgentVersionAsync(
     agentName: "myHostedAgent", agentVersion: "1");
 ```
 
@@ -155,13 +155,13 @@ ProjectsAgentVersion agentVersion = await projectClient.Agents.GetAgentVersionAs
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateResponse_HostedAgent_Sync
-ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
+ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(agentVersion.Name);
 ResponseResult response = responseClient.CreateResponse("Describe the of Contoso VR glasses release process.");
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_CreateResponse_HostedAgent_Async
-ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
+ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(agentVersion.Name);
 ResponseResult response = await responseClient.CreateResponseAsync("Describe the of Contoso VR glasses release process.");
 ```
 

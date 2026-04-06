@@ -11,3 +11,4 @@ extends:
       safeName: AzureResourceManagerAppContainers
     - name: Azure.Provisioning.AppContainers
       safeName: AzureProvisioningAppContainers
+    TestDependsOnDependency: Azure.Provisioning.AppContainers
