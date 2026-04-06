@@ -39,6 +39,10 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             Debug.WriteLine($"Secret is returned with name {bankSecret.Name} and value {bankSecret.Value}");
             #endregion
 
+            // For certificate-backed secrets, you can retrieve the value in a different format using outContentType.
+            // For example, to get a PFX-backed secret as PEM:
+            // KeyVaultSecret pemSecret = client.GetSecret(secretName, version: null, outContentType: SecretContentType.Pem);
+
             #region Snippet:SecretsSample1UpdateSecretProperties
             bankSecret.Properties.ExpiresOn = bankSecret.Properties.ExpiresOn.Value.AddYears(1);
             SecretProperties updatedSecret = client.UpdateSecretProperties(bankSecret.Properties);
@@ -51,6 +55,13 @@ namespace Azure.Security.KeyVault.Secrets.Samples
 
             client.SetSecret(secretNewValue);
             #endregion
+
+            // For secrets created after June 1, 2025, PreviousVersion tracks version history.
+            KeyVaultSecret latestSecret = client.GetSecret(secretName);
+            if (latestSecret.Properties.PreviousVersion != null)
+            {
+                Debug.WriteLine($"Secret's previous version is {latestSecret.Properties.PreviousVersion}");
+            }
 
             #region Snippet:SecretsSample1DeleteSecret
             DeleteSecretOperation operation = client.StartDeleteSecret(secretName);
