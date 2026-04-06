@@ -124,3 +124,5 @@ namespace Azure.Core
         }
     }
 }
+
+// Test comment for dependency validation - DO NOT MERGE
