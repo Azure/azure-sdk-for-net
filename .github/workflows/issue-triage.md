@@ -215,7 +215,9 @@ Note: The gh-aw runtime provides additional baseline defenses including the XPIA
 - If triggered by an `issues.opened` event: the issue number is `${{ github.event.issue.number }}`
 - If triggered by `workflow_dispatch`: the issue number is `${{ github.event.inputs.issue_number }}`
 
-Note the issue number — you must include it as the `issue_number` parameter in every safe-output tool call (add-labels, remove-labels, add-comment, assign-to-user, close-issue)
+Note the issue number — you must include it in every safe-output tool call:
+- For `add-labels`, `remove-labels`, and `add-comment`: pass it as `item_number`
+- For `assign-to-user` and `close-issue`: pass it as `issue_number`
 
 Retrieve the issue using the `get_issue` tool
 
