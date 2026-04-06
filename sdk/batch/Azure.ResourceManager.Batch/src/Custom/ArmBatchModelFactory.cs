@@ -212,3 +212,5 @@ namespace Azure.ResourceManager.Batch.Models
         }
     }
 }
+
+// Test comment for dependency validation - DO NOT MERGE

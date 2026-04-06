@@ -377,3 +377,5 @@ namespace Azure.ResourceManager.Storage.Models
         }
     }
 }
+
+// Test comment for dependency validation - DO NOT MERGE
