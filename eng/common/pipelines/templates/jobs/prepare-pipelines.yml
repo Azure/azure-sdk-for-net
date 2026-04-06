@@ -127,6 +127,11 @@ jobs:
             $internalVariableGroups = '$(Release_Secrets_for_GitHub) $(APIReview_AutoCreate_Configurations) $(Secrets_for_Resource_Provisioner)'
             $generateUnifiedWeekly = 'true'
           }
+          "rust" { 
+            $generatePublicCIPipeline = 'false'
+            $generateUnifiedWeekly = 'true'
+            $internalVariableGroups = '$(Release_Secrets_for_GitHub) $(APIReview_AutoCreate_Configurations)'
+          }
           default {
             Write-Error "Language '$lang' is not recognized."
             exit 1
