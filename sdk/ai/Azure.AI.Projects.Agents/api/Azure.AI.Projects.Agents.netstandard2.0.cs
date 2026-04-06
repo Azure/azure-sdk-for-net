@@ -749,6 +749,7 @@ namespace Azure.AI.Projects.Agents
         private readonly int _dummyPrimitive;
         public ProjectsAgentProtocol(string value) { throw null; }
         public static Azure.AI.Projects.Agents.ProjectsAgentProtocol ActivityProtocol { get { throw null; } }
+        public static Azure.AI.Projects.Agents.ProjectsAgentProtocol Invocations { get { throw null; } }
         public static Azure.AI.Projects.Agents.ProjectsAgentProtocol Responses { get { throw null; } }
         public bool Equals(Azure.AI.Projects.Agents.ProjectsAgentProtocol other) { throw null; }
         public override bool Equals(object obj) { throw null; }
