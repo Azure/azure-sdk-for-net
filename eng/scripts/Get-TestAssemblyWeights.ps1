@@ -163,43 +163,24 @@ function Process-Results {
 $stopwatch = [Diagnostics.Stopwatch]::StartNew()
 $assemblyWeights = @{}
 
-# Pass 1: 24-hour window
+# Single 7-day query — covers weekdays even if run on weekends
 $now = [datetime]::UtcNow
-$start24h = $now.AddHours(-24).ToString("yyyy-MM-ddTHH:mm:ssZ")
-$end24h = $now.ToString("yyyy-MM-ddTHH:mm:ssZ")
+$start7d = $now.AddDays(-7).ToString("yyyy-MM-ddTHH:mm:ssZ")
+$end7d = $now.ToString("yyyy-MM-ddTHH:mm:ssZ")
 
-$urls1 = Build-QueryUrls -Assemblies $allAssemblies -StartDate $start24h -EndDate $end24h
-Write-Host "Pass 1: Querying 24h window ($($urls1.Count) batches, $($allAssemblies.Count) assemblies)..."
+$urls = Build-QueryUrls -Assemblies $allAssemblies -StartDate $start7d -EndDate $end7d
+Write-Host "Querying 7-day window ($($urls.Count) batches, $($allAssemblies.Count) assemblies)..."
 
 try {
-  $results1 = Invoke-ParallelQueries -Urls $urls1 -Token $AccessToken
-  Process-Results -Rows $results1 -Target $assemblyWeights
+  $results = Invoke-ParallelQueries -Urls $urls -Token $AccessToken
+  Process-Results -Rows $results -Target $assemblyWeights
 }
 catch {
-  Write-Warning "Pass 1 failed: $($_.Exception.Message)"
+  Write-Warning "Query failed: $($_.Exception.Message)"
 }
 
-$found1 = $assemblyWeights.Count
 $missing = @($allAssemblies | Where-Object { -not $assemblyWeights[$_] })
-Write-Host "  Found $found1 assemblies, $($missing.Count) missing."
-
-# Pass 2: 30-day fallback for missing assemblies
-if ($missing.Count -gt 0) {
-  $start30d = $now.AddDays(-30).ToString("yyyy-MM-ddTHH:mm:ssZ")
-  $urls2 = Build-QueryUrls -Assemblies $missing -StartDate $start30d -EndDate $null
-  Write-Host "Pass 2: Querying 30d fallback ($($urls2.Count) batches, $($missing.Count) assemblies)..."
-
-  try {
-    $results2 = Invoke-ParallelQueries -Urls $urls2 -Token $AccessToken
-    Process-Results -Rows $results2 -Target $assemblyWeights
-  }
-  catch {
-    Write-Warning "Pass 2 failed: $($_.Exception.Message)"
-  }
-
-  $stillMissing = @($missing | Where-Object { -not $assemblyWeights[$_] })
-  Write-Host "  Now found $($assemblyWeights.Count) assemblies, $($stillMissing.Count) still missing."
-}
+Write-Host "  Found $($assemblyWeights.Count) assemblies, $($missing.Count) missing (will default to ${DefaultWeight}s)."
 
 $stopwatch.Stop()
 Write-Host "Total query time: $([math]::Round($stopwatch.ElapsedMilliseconds / 1000, 1))s"
