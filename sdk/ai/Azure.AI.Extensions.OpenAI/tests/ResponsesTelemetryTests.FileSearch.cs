@@ -4,8 +4,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -32,8 +30,7 @@ public partial class ResponsesTelemetryTests
     /// </summary>
     private async Task<(string VectorStoreId, string FileId)> CreateFileSearchResourcesAsync(AIProjectClient projectClient)
     {
-        string filePath = Path.Combine(Path.GetTempPath(), "telemetry-test-filesearch.txt");
-        Assert.That(File.Exists(filePath), Is.False, $"Temp file already exists: {filePath}");
+        string filePath = Path.Combine(Path.GetTempPath(), $"telemetry-test-filesearch-{Guid.NewGuid():N}.txt");
 
         OpenAIFile uploadedFile;
         try

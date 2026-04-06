@@ -822,7 +822,7 @@ namespace Azure.AI.Extensions.OpenAI.Telemetry
                         w.WriteStartObject();
                         foreach (var prop in computerOutput.EnumerateObject())
                         {
-                            // Skip image_url — binary screenshot data, potential PII/large payload.
+                            // Skip image_url - binary screenshot data, potential PII/large payload.
                             if (prop.Name == "image_url")
                             {
                                 continue;
