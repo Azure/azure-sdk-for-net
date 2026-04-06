@@ -79,28 +79,10 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             {
                 throw new FormatException($"The model {nameof(ResourceProvisionPayload)} does not support writing '{format}' format.");
             }
-            if (Optional.IsCollectionDefined(BaseProfile))
+            if (Optional.IsDefined(BaseProfile))
             {
                 writer.WritePropertyName("baseProfile"u8);
-                writer.WriteStartObject();
-                foreach (var item in BaseProfile)
-                {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-                writer.WriteEndObject();
+                writer.WriteObjectValue(BaseProfile, options);
             }
             if (Optional.IsCollectionDefined(ResourceOverrides))
             {
@@ -184,7 +166,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             {
                 return null;
             }
-            IDictionary<string, BinaryData> baseProfile = default;
+            BulkVMConfiguration baseProfile = default;
             IList<IDictionary<string, BinaryData>> resourceOverrides = default;
             int resourceCount = default;
             string resourcePrefix = default;
@@ -197,19 +179,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     {
                         continue;
                     }
-                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
-                    foreach (var prop0 in prop.Value.EnumerateObject())
-                    {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(prop0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
-                        }
-                    }
-                    baseProfile = dictionary;
+                    baseProfile = BulkVMConfiguration.DeserializeBulkVMConfiguration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("resourceOverrides"u8))
@@ -260,7 +230,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ResourceProvisionPayload(baseProfile ?? new ChangeTrackingDictionary<string, BinaryData>(), resourceOverrides ?? new ChangeTrackingList<IDictionary<string, BinaryData>>(), resourceCount, resourcePrefix, additionalBinaryDataProperties);
+            return new ResourceProvisionPayload(baseProfile, resourceOverrides ?? new ChangeTrackingList<IDictionary<string, BinaryData>>(), resourceCount, resourcePrefix, additionalBinaryDataProperties);
         }
     }
 }
