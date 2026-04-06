@@ -105,7 +105,7 @@ jobs:
             $internalVariableGroups = '$(Release_Secrets_for_GitHub) $(APIReview_AutoCreate_Configurations)'
             $testVariableGroups = '$(Secrets_for_Resource_Provisioner)'
           }
-          "rust" { 
+          "rust" {
             $generatePublicCIPipeline = 'false'
             $generateUnifiedWeekly = 'true'
             $internalVariableGroups = '$(Release_Secrets_for_GitHub) $(APIReview_AutoCreate_Configurations)'
