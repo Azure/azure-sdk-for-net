@@ -500,7 +500,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
                         createOption = "FromImage",
                         caching = "ReadWrite",
                         managedDisk = new { storageAccountType = "Standard_LRS" },
-                        deleteOption = "Detach",
+                        deleteOption = "Delete",
                         diskSizeGB = 127
                     },
                     diskControllerType = "SCSI"
