@@ -1,0 +1,82 @@
+{
+  "type": "object",
+  "properties": {
+    "AzureClients": {
+      "type": "object",
+      "properties": {
+        "BlobClient": {
+          "type": "object",
+          "description": "Configuration for BlobClient.",
+          "properties": {
+            "Url": {
+              "type": "string",
+              "format": "uri",
+              "description": "Gets or sets the Url."
+            },
+            "ConnectionString": {
+              "type": "string"
+            },
+            "BlobContainerName": {
+              "type": "string"
+            },
+            "BlobName": {
+              "type": "string"
+            },
+            "Credential": {
+              "$ref": "#/definitions/credential"
+            },
+            "Options": {
+              "$ref": "#/definitions/blobClientOptions"
+            }
+          }
+        }
+      },
+      "additionalProperties": {
+        "type": "object",
+        "description": "Configuration for a named client instance."
+      }
+    }
+  },
+  "definitions": {
+    "blobClientOptions": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/azureOptions"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "Version": {
+              "type": "string"
+            },
+            "CustomerProvidedKey": {
+              "type": "string"
+            },
+            "EncryptionScope": {
+              "type": "string"
+            },
+            "GeoRedundantSecondaryUri": {
+              "type": "string",
+              "format": "uri"
+            },
+            "TransferValidation": {
+              "type": "object"
+            },
+            "TrimBlobNameSlashes": {
+              "type": "boolean"
+            },
+            "Request100ContinueOptions": {
+              "type": "object"
+            },
+            "EnableTenantDiscovery": {
+              "type": "boolean"
+            },
+            "Audience": {
+              "type": "string"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

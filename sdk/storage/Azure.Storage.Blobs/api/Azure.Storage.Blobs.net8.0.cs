@@ -104,6 +104,9 @@ namespace Azure.Storage.Blobs
     public partial class BlobClientSettings : System.ClientModel.Primitives.ClientSettings
     {
         public BlobClientSettings() { }
+        public string BlobContainerName { get { throw null; } set { } }
+        public string BlobName { get { throw null; } set { } }
+        public string ConnectionString { get { throw null; } set { } }
         public Azure.Storage.Blobs.BlobClientOptions Options { get { throw null; } set { } }
         public System.Uri Url { get { throw null; } set { } }
         protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }

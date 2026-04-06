@@ -19,6 +19,15 @@ namespace Azure.Storage.Blobs
         /// <summary> Gets or sets the Url. </summary>
         public Uri Url { get; set; }
 
+        /// <summary> Gets or sets the ConnectionString. </summary>
+        public string ConnectionString { get; set; }
+
+        /// <summary> Gets or sets the BlobContainerName. </summary>
+        public string BlobContainerName { get; set; }
+
+        /// <summary> Gets or sets the BlobName. </summary>
+        public string BlobName { get; set; }
+
         /// <summary> Gets or sets the Options. </summary>
         public BlobClientOptions Options { get; set; }
 
@@ -29,6 +38,21 @@ namespace Azure.Storage.Blobs
             if (Uri.TryCreate(section["Url"], UriKind.Absolute, out Uri url))
             {
                 Url = url;
+            }
+            string connectionString = section["ConnectionString"];
+            if (!string.IsNullOrEmpty(connectionString))
+            {
+                ConnectionString = connectionString;
+            }
+            string blobContainerName = section["BlobContainerName"];
+            if (!string.IsNullOrEmpty(blobContainerName))
+            {
+                BlobContainerName = blobContainerName;
+            }
+            string blobName = section["BlobName"];
+            if (!string.IsNullOrEmpty(blobName))
+            {
+                BlobName = blobName;
             }
             IConfigurationSection optionsSection = section.GetSection("Options");
             if (optionsSection.Exists())

@@ -282,6 +282,31 @@ namespace Azure.Storage.Blobs
             {
                 Version = serviceVersion;
             }
+            if (section["CustomerProvidedKey"] is string customerProvidedKey)
+            {
+                CustomerProvidedKey = new CustomerProvidedKey(customerProvidedKey);
+            }
+            string encryptionScope = section["EncryptionScope"];
+            if (!string.IsNullOrEmpty(encryptionScope))
+            {
+                EncryptionScope = encryptionScope;
+            }
+            if (Uri.TryCreate(section["GeoRedundantSecondaryUri"], UriKind.Absolute, out Uri geoRedundantSecondaryUri))
+            {
+                GeoRedundantSecondaryUri = geoRedundantSecondaryUri;
+            }
+            if (bool.TryParse(section["TrimBlobNameSlashes"], out bool trimBlobNameSlashes))
+            {
+                TrimBlobNameSlashes = trimBlobNameSlashes;
+            }
+            if (bool.TryParse(section["EnableTenantDiscovery"], out bool enableTenantDiscovery))
+            {
+                EnableTenantDiscovery = enableTenantDiscovery;
+            }
+            if (section["Audience"] is string audience)
+            {
+                Audience = new BlobAudience(audience);
+            }
             this.Initialize();
             AddHeadersAndQueryParameters();
         }
