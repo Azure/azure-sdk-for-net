@@ -12,6 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager.ComputeSchedule;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
@@ -207,6 +208,516 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             return new ExecuteStartContent(executionParameters, resourcesIds is null ? default : new UserRequestResources((resourcesIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), null), correlationId, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> The ExecuteCreateFlexRequest request for executeCreateFlex operations. </summary>
+        /// <param name="resourceConfigParameters"> Resource creation payload with flex properties. </param>
+        /// <param name="executionParameters"> The execution parameters for the request. </param>
+        /// <param name="correlationId"> Correlationid item. </param>
+        /// <returns> A new <see cref="Models.ExecuteCreateFlexContent"/> instance for mocking. </returns>
+        public static ExecuteCreateFlexContent ExecuteCreateFlexContent(ResourceProvisionFlexPayload resourceConfigParameters = default, ScheduledActionExecutionParameterDetail executionParameters = default, string correlationId = default)
+        {
+            return new ExecuteCreateFlexContent(resourceConfigParameters, executionParameters, correlationId, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Resource creation data model for flex VM provisioning. </summary>
+        /// <param name="baseProfile"> JSON object that contains VM properties that are common across all VMs in this batch. </param>
+        /// <param name="resourceOverrides"> JSON array that contains VM properties that should be overridden for each VM in the batch. </param>
+        /// <param name="resourceCount"> Number of VMs to be created. </param>
+        /// <param name="resourcePrefix"> If resourceOverrides doesn't contain name, service will create name based on prefix and resourceCount. </param>
+        /// <param name="flexProperties"> The flex properties for flexible VM creation. </param>
+        /// <returns> A new <see cref="Models.ResourceProvisionFlexPayload"/> instance for mocking. </returns>
+        public static ResourceProvisionFlexPayload ResourceProvisionFlexPayload(BulkVMConfiguration baseProfile = default, IEnumerable<BulkVMConfiguration> resourceOverrides = default, int resourceCount = default, string resourcePrefix = default, ComputeScheduleFlexProperties flexProperties = default)
+        {
+            resourceOverrides ??= new ChangeTrackingList<BulkVMConfiguration>();
+
+            return new ResourceProvisionFlexPayload(
+                baseProfile,
+                resourceOverrides.ToList(),
+                resourceCount,
+                resourcePrefix,
+                flexProperties,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Specifies the configuration for a virtual machine operation. </summary>
+        /// <param name="vmProperties"> Virtual Machine Profile to configure Virtual Machines - mirrors Microsoft.Compute VirtualMachine structure. </param>
+        /// <param name="extensions"> Virtual Machine Extensions Array to be applied to the Virtual Machines. </param>
+        /// <param name="computeApiVersion"> Specifies the Microsoft.Compute API version to use when creating underlying Virtual Machines. </param>
+        /// <param name="name"> identifier for created virtual machine, if not passed it will create one from resource prefix. </param>
+        /// <returns> A new <see cref="Models.BulkVMConfiguration"/> instance for mocking. </returns>
+        public static BulkVMConfiguration BulkVMConfiguration(BulkActionVMSpec vmProperties = default, IEnumerable<BulkActionVMExtension> extensions = default, string computeApiVersion = default, string name = default)
+        {
+            extensions ??= new ChangeTrackingList<BulkActionVMExtension>();
+
+            return new BulkVMConfiguration(vmProperties, extensions.ToList(), computeApiVersion, name, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Specifies the properties of a Virtual Machine. </summary>
+        /// <param name="plan"> The marketplace image plan used for the virtual machine. </param>
+        /// <param name="zones"> The availability zones. </param>
+        /// <param name="identity"> The identity of the virtual machine, if configured. </param>
+        /// <param name="extendedLocation"> The extended location of the Virtual Machine. </param>
+        /// <param name="placement"> Placement constraints for virtual machine hardware placement - see specification/compute/Compute.Management/models.tsp#Placement. </param>
+        /// <param name="tags"> Resource tags to apply to the virtual machines created by this bulk action. </param>
+        /// <param name="vmProperties"> Describes the properties of a Virtual Machine. </param>
+        /// <returns> A new <see cref="Models.BulkActionVMSpec"/> instance for mocking. </returns>
+        public static BulkActionVMSpec BulkActionVMSpec(ArmPlan plan = default, IEnumerable<string> zones = default, VirtualMachineIdentity identity = default, ExtendedLocation extendedLocation = default, Placement placement = default, IDictionary<string, string> tags = default, BulkActionVMProfile vmProperties = default)
+        {
+            zones ??= new ChangeTrackingList<string>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new BulkActionVMSpec(
+                plan,
+                zones.ToList(),
+                identity,
+                extendedLocation,
+                placement,
+                tags,
+                vmProperties,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Identity for the virtual machine. </summary>
+        /// <param name="principalId"> The principal id of virtual machine identity. This property will only be provided for a system assigned identity. </param>
+        /// <param name="tenantId"> The tenant id associated with the virtual machine. This property will only be provided for a system assigned identity. </param>
+        /// <param name="type"> The type of identity used for the virtual machine. The type 'SystemAssigned, UserAssigned' includes both an implicitly created identity and a set of user assigned identities. The type 'None' will remove any identities from the virtual machine. </param>
+        /// <param name="userAssignedIdentities"> The list of user identities associated with the Virtual Machine. The user identity dictionary key references will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'. </param>
+        /// <returns> A new <see cref="Models.VirtualMachineIdentity"/> instance for mocking. </returns>
+        public static VirtualMachineIdentity VirtualMachineIdentity(string principalId = default, string tenantId = default, ResourceIdentityType? @type = default, IDictionary<string, UserAssignedIdentitiesValue> userAssignedIdentities = default)
+        {
+            userAssignedIdentities ??= new ChangeTrackingDictionary<string, UserAssignedIdentitiesValue>();
+
+            return new VirtualMachineIdentity(principalId, tenantId, @type, userAssignedIdentities, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The UserAssignedIdentitiesValue. </summary>
+        /// <param name="principalId"> The principal id of user assigned identity. </param>
+        /// <param name="clientId"> The client id of user assigned identity. </param>
+        /// <returns> A new <see cref="Models.UserAssignedIdentitiesValue"/> instance for mocking. </returns>
+        public static UserAssignedIdentitiesValue UserAssignedIdentitiesValue(string principalId = default, string clientId = default)
+        {
+            return new UserAssignedIdentitiesValue(principalId, clientId, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Describes the user-defined constraints for resource hardware placement. </summary>
+        /// <param name="zonePlacementPolicy"> Specifies the policy for resource's placement in availability zone. Possible values are: <b>Any</b> (used for Virtual Machines), <b>Auto</b> (used for Virtual Machine Scale Sets) - An availability zone will be automatically picked by system as part of resource creation. </param>
+        /// <param name="includeZones"> This property supplements the 'zonePlacementPolicy' property. If 'zonePlacementPolicy' is set to 'Any'/'Auto', availability zone selected by the system must be present in the list of availability zones passed with 'includeZones'. If 'includeZones' is not provided, all availability zones in region will be considered for selection. </param>
+        /// <param name="excludeZones"> This property supplements the 'zonePlacementPolicy' property. If 'zonePlacementPolicy' is set to 'Any'/'Auto', availability zone selected by the system must not be present in the list of availability zones passed with 'excludeZones'. If 'excludeZones' is not provided, all availability zones in region will be considered for selection. </param>
+        /// <returns> A new <see cref="Models.Placement"/> instance for mocking. </returns>
+        public static Placement Placement(ZonePlacementPolicyType? zonePlacementPolicy = default, IEnumerable<string> includeZones = default, IEnumerable<string> excludeZones = default)
+        {
+            includeZones ??= new ChangeTrackingList<string>();
+            excludeZones ??= new ChangeTrackingList<string>();
+
+            return new Placement(zonePlacementPolicy, includeZones.ToList(), excludeZones.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Specifies the storage settings for the virtual machine disks. </summary>
+        /// <param name="imageReference"> Specifies information about the image to use. You can specify information about platform images, marketplace images, or virtual machine images. This element is required when you want to use a platform image, marketplace image, or virtual machine image, but is not used in other creation operations. </param>
+        /// <param name="osDisk"> Specifies information about the operating system disk used by the virtual machine. For more information about disks, see [About disks and VHDs for Azure virtual machines](https://docs.microsoft.com/azure/virtual-machines/managed-disks-overview). </param>
+        /// <param name="dataDisks"> Specifies the parameters that are used to add a data disk to a virtual machine. For more information about disks, see [About disks and VHDs for Azure virtual machines](https://docs.microsoft.com/azure/virtual-machines/managed-disks-overview). </param>
+        /// <param name="diskControllerType"> Specifies the disk controller type configured for the VM. <b>Note:</b> This property will be set to the default disk controller type if not specified provided virtual machine is being created with 'hyperVGeneration' set to V2 based on the capabilities of the operating system disk and VM size from the the specified minimum api version. You need to deallocate the VM before updating its disk controller type unless you are updating the VM size in the VM configuration which implicitly deallocates and reallocates the VM. Minimum api-version: 2022-08-01. </param>
+        /// <returns> A new <see cref="Models.StorageProfile"/> instance for mocking. </returns>
+        public static StorageProfile StorageProfile(ImageReference imageReference = default, OSDisk osDisk = default, IEnumerable<DataDisk> dataDisks = default, DiskControllerTypes? diskControllerType = default)
+        {
+            dataDisks ??= new ChangeTrackingList<DataDisk>();
+
+            return new StorageProfile(imageReference, osDisk, dataDisks.ToList(), diskControllerType, additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="osType"> This property allows you to specify the type of the OS that is included in the disk if creating a VM from user-image or a specialized VHD. Possible values are: Windows, Linux. </param>
+        /// <param name="encryptionSettings"> Specifies the encryption settings for the OS Disk. Minimum compute api-version: 2015-06-15. </param>
+        /// <param name="name"> The disk name. </param>
+        /// <param name="vhdUri"> Specifies the virtual hard disk's uri. </param>
+        /// <param name="imageUri"> Specifies the virtual hard disk's uri. </param>
+        /// <param name="caching"> Specifies the caching requirements. Possible values are: None, ReadOnly, ReadWrite. The defaulting behavior is: None for Standard storage. ReadOnly for Premium storage. </param>
+        /// <param name="writeAcceleratorEnabled"> Specifies whether writeAccelerator should be enabled or disabled on the disk. </param>
+        /// <param name="diffDiskSettings"> Specifies the ephemeral Disk Settings for the operating system disk used by the virtual machine. </param>
+        /// <param name="createOption"> Specifies how the virtual machine disk should be created. Possible values are Attach, FromImage. If you are using a platform image, you should also use the imageReference element described above. If you are using a marketplace image, you should also use the plan element previously described. </param>
+        /// <param name="diskSizeGB"> Specifies the size of an empty data disk in gigabytes. This element can be used to overwrite the size of the disk in a virtual machine image. The property 'diskSizeGB' is the number of bytes x 1024^3 for the disk and the value cannot be larger than 1023. </param>
+        /// <param name="managedDisk"> The managed disk parameters. </param>
+        /// <param name="deleteOption"> Specifies whether OS Disk should be deleted or detached upon VM deletion. Possible values are: Delete, Detach. The default value is set to Detach. For an ephemeral OS Disk, the default value is set to Delete. The user cannot change the delete option for an ephemeral OS Disk. </param>
+        /// <returns> A new <see cref="Models.OSDisk"/> instance for mocking. </returns>
+        public static OSDisk OSDisk(OperatingSystemTypes? osType = default, DiskEncryptionSettings encryptionSettings = default, string name = default, string vhdUri = default, string imageUri = default, CachingTypes? caching = default, bool? writeAcceleratorEnabled = default, DiffDiskSettings diffDiskSettings = default, DiskCreateOptionTypes createOption = default, int? diskSizeGB = default, ManagedDiskParameters managedDisk = default, DiskDeleteOptionTypes? deleteOption = default)
+        {
+            return new OSDisk(
+                osType,
+                encryptionSettings,
+                name,
+                vhdUri is null ? default : new VirtualHardDisk(vhdUri, null),
+                imageUri is null ? default : new VirtualHardDisk(imageUri, null),
+                caching,
+                writeAcceleratorEnabled,
+                diffDiskSettings,
+                createOption,
+                diskSizeGB,
+                managedDisk,
+                deleteOption,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="secretUri"> The URL referencing a secret in a Key Vault. </param>
+        /// <param name="sourceVaultId"> The ID of the sub-resource. </param>
+        /// <returns> A new <see cref="Models.KeyVaultSecretReference"/> instance for mocking. </returns>
+        public static KeyVaultSecretReference KeyVaultSecretReference(string secretUri = default, string sourceVaultId = default)
+        {
+            return new KeyVaultSecretReference(secretUri, sourceVaultId is null ? default : new SubResource(sourceVaultId, null), additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="keyUri"> The URL referencing a key encryption key in Key Vault. </param>
+        /// <param name="sourceVaultId"> The ID of the sub-resource. </param>
+        /// <returns> A new <see cref="Models.KeyVaultKeyReference"/> instance for mocking. </returns>
+        public static KeyVaultKeyReference KeyVaultKeyReference(string keyUri = default, string sourceVaultId = default)
+        {
+            return new KeyVaultKeyReference(keyUri, sourceVaultId is null ? default : new SubResource(sourceVaultId, null), additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="lun"> Specifies the logical unit number of the data disk. This value is used to identify data disks within the VM and therefore must be unique for each data disk attached to a VM. </param>
+        /// <param name="name"> The disk name. </param>
+        /// <param name="vhdUri"> Specifies the virtual hard disk's uri. </param>
+        /// <param name="imageUri"> Specifies the virtual hard disk's uri. </param>
+        /// <param name="caching"> Specifies the caching requirements. Possible values are: None, ReadOnly, ReadWrite. The defaulting behavior is: None for Standard storage. ReadOnly for Premium storage. </param>
+        /// <param name="writeAcceleratorEnabled"> Specifies whether writeAccelerator should be enabled or disabled on the disk. </param>
+        /// <param name="createOption"> Specifies how the virtual machine disk should be created. Possible values are Attach, FromImage, Empty, Copy, Restore. </param>
+        /// <param name="diskSizeGB"> Specifies the size of an empty data disk in gigabytes. This element can be used to overwrite the size of the disk in a virtual machine image. The property 'diskSizeGB' is the number of bytes x 1024^3 for the disk and the value cannot be larger than 1023. </param>
+        /// <param name="managedDisk"> The managed disk parameters. </param>
+        /// <param name="sourceResourceId"> The ARM resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/... </param>
+        /// <param name="toBeDetached"> Specifies whether the data disk is in process of detachment from the VirtualMachine/VirtualMachineScaleset. </param>
+        /// <param name="detachOption"> Specifies the detach behavior to be used while detaching a disk or which is already in the process of detachment from the virtual machine. Supported values: ForceDetach. This feature is still in preview. To force-detach a data disk update toBeDetached to 'true' along with setting detachOption: 'ForceDetach'. </param>
+        /// <param name="deleteOption"> Specifies whether data disk should be deleted or detached upon VM deletion. Possible values are: Delete, Detach. The default value is set to Detach. </param>
+        /// <returns> A new <see cref="Models.DataDisk"/> instance for mocking. </returns>
+        public static DataDisk DataDisk(int lun = default, string name = default, string vhdUri = default, string imageUri = default, CachingTypes? caching = default, bool? writeAcceleratorEnabled = default, DiskCreateOptionTypes createOption = default, int? diskSizeGB = default, ManagedDiskParameters managedDisk = default, string sourceResourceId = default, bool? toBeDetached = default, DiskDetachOptionTypes? detachOption = default, DiskDeleteOptionTypes? deleteOption = default)
+        {
+            return new DataDisk(
+                lun,
+                name,
+                vhdUri is null ? default : new VirtualHardDisk(vhdUri, null),
+                imageUri is null ? default : new VirtualHardDisk(imageUri, null),
+                caching,
+                writeAcceleratorEnabled,
+                createOption,
+                diskSizeGB,
+                managedDisk,
+                sourceResourceId is null ? default : new ApiEntityReference(sourceResourceId, null),
+                toBeDetached,
+                detachOption,
+                deleteOption,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Specifies the operating system settings for the virtual machine. Some of the settings cannot be changed once VM is provisioned. </summary>
+        /// <param name="computerName"> Specifies the host OS name of the virtual machine. This name cannot be updated after the VM is created. <b>Max-length (Windows):</b> 15 characters. <b>Max-length (Linux):</b> 64 characters. For naming conventions and restrictions see [Azure infrastructure services implementation guidelines](https://docs.microsoft.com/azure/azure-resource-manager/management/resource-name-rules). </param>
+        /// <param name="adminUsername"> Specifies the name of the administrator account. &lt;br&gt;&lt;br&gt; This property cannot be updated after the VM is created. &lt;br&gt;&lt;br&gt; <b>Windows-only restriction:</b> Cannot end in "." &lt;br&gt;&lt;br&gt; <b>Disallowed values:</b> "administrator", "admin", "user", "user1", "test", "user2", "test1", "user3", "admin1", "1", "123", "a", "actuser", "adm", "admin2", "aspnet", "backup", "console", "david", "guest", "john", "owner", "root", "server", "sql", "support", "support_388945a0", "sys", "test2", "test3", "user4", "user5". &lt;br&gt;&lt;br&gt; <b>Minimum-length (Linux):</b> 1  character &lt;br&gt;&lt;br&gt; <b>Max-length (Linux):</b> 64 characters &lt;br&gt;&lt;br&gt; <b>Max-length (Windows):</b> 20 characters. </param>
+        /// <param name="adminPassword"> Specifies the password of the administrator account. &lt;br&gt;&lt;br&gt; <b>Minimum-length (Windows):</b> 8 characters &lt;br&gt;&lt;br&gt; <b>Minimum-length (Linux):</b> 6 characters &lt;br&gt;&lt;br&gt; <b>Max-length (Windows):</b> 123 characters &lt;br&gt;&lt;br&gt; <b>Max-length (Linux):</b> 72 characters &lt;br&gt;&lt;br&gt; <b>Complexity requirements:</b> 3 out of 4 conditions below need to be fulfilled &lt;br&gt; Has lower characters &lt;br&gt;Has upper characters &lt;br&gt; Has a digit &lt;br&gt; Has a special character (Regex match [\W_]) &lt;br&gt;&lt;br&gt; <b>Disallowed values:</b> "abc@123", "P@$$w0rd", "P@ssw0rd", "P@ssword123", "Pa$$word", "pass@word1", "Password!", "Password1", "Password22", "iloveyou!" &lt;br&gt;&lt;br&gt; For resetting the password, see [How to reset the Remote Desktop service or its login password in a Windows VM](https://docs.microsoft.com/troubleshoot/azure/virtual-machines/reset-rdp) &lt;br&gt;&lt;br&gt; For resetting root password, see [Manage users, SSH, and check or repair disks on Azure Linux VMs using the VMAccess Extension](https://docs.microsoft.com/troubleshoot/azure/virtual-machines/troubleshoot-ssh-connection). </param>
+        /// <param name="customData"> Specifies a base-64 encoded string of custom data. The base-64 encoded string is decoded to a binary array that is saved as a file on the Virtual Machine. The maximum length of the binary array is 65535 bytes. <b>Note: Do not pass any secrets or passwords in customData property.</b> This property cannot be updated after the VM is created. The property 'customData' is passed to the VM to be saved as a file, for more information see [Custom Data on Azure VMs](https://azure.microsoft.com/blog/custom-data-and-cloud-init-on-windows-azure/). For using cloud-init for your Linux VM, see [Using cloud-init to customize a Linux VM during creation](https://docs.microsoft.com/azure/virtual-machines/linux/using-cloud-init). </param>
+        /// <param name="windowsConfiguration"> Specifies Windows operating system settings on the virtual machine. </param>
+        /// <param name="linuxConfiguration"> Specifies the Linux operating system settings on the virtual machine. For a list of supported Linux distributions, see [Linux on Azure-Endorsed Distributions](https://docs.microsoft.com/azure/virtual-machines/linux/endorsed-distros). </param>
+        /// <param name="secrets"> Specifies set of certificates that should be installed onto the virtual machine. To install certificates on a virtual machine it is recommended to use the [Azure Key Vault virtual machine extension for Linux](https://docs.microsoft.com/azure/virtual-machines/extensions/key-vault-linux) or the [Azure Key Vault virtual machine extension for Windows](https://docs.microsoft.com/azure/virtual-machines/extensions/key-vault-windows). </param>
+        /// <param name="allowExtensionOperations"> Specifies whether extension operations should be allowed on the virtual machine. This may only be set to False when no extensions are present on the virtual machine. </param>
+        /// <param name="requireGuestProvisionSignal"> Optional property which must either be set to True or omitted. </param>
+        /// <returns> A new <see cref="Models.OSProfile"/> instance for mocking. </returns>
+        public static OSProfile OSProfile(string computerName = default, string adminUsername = default, string adminPassword = default, string customData = default, WindowsConfiguration windowsConfiguration = default, LinuxConfiguration linuxConfiguration = default, IEnumerable<VaultSecretGroup> secrets = default, bool? allowExtensionOperations = default, bool? requireGuestProvisionSignal = default)
+        {
+            secrets ??= new ChangeTrackingList<VaultSecretGroup>();
+
+            return new OSProfile(
+                computerName,
+                adminUsername,
+                adminPassword,
+                customData,
+                windowsConfiguration,
+                linuxConfiguration,
+                secrets.ToList(),
+                allowExtensionOperations,
+                requireGuestProvisionSignal,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="provisionVMAgent"> Indicates whether virtual machine agent should be provisioned on the virtual machine. When this property is not specified in the request body, it is set to true by default. This will ensure that VM Agent is installed on the VM so that extensions can be added to the VM later. </param>
+        /// <param name="enableAutomaticUpdates"> Indicates whether Automatic Updates is enabled for the Windows virtual machine. Default value is true. For virtual machine scale sets, this property can be updated and updates will take effect on OS reprovisioning. </param>
+        /// <param name="timeZone"> Specifies the time zone of the virtual machine. e.g. "Pacific Standard Time". Possible values can be [TimeZoneInfo.Id](https://docs.microsoft.com/dotnet/api/system.timezoneinfo.id?#System_TimeZoneInfo_Id) value from time zones returned by [TimeZoneInfo.GetSystemTimeZones](https://docs.microsoft.com/dotnet/api/system.timezoneinfo.getsystemtimezones). </param>
+        /// <param name="additionalUnattendContent"> Specifies additional base-64 encoded XML formatted information that can be included in the Unattend.xml file, which is used by Windows Setup. </param>
+        /// <param name="patchSettings"> [Preview Feature] Specifies settings related to VM Guest Patching on Windows. </param>
+        /// <param name="winRMListeners"> The list of Windows Remote Management listeners. </param>
+        /// <returns> A new <see cref="Models.WindowsConfiguration"/> instance for mocking. </returns>
+        public static WindowsConfiguration WindowsConfiguration(bool? provisionVMAgent = default, bool? enableAutomaticUpdates = default, string timeZone = default, IEnumerable<AdditionalUnattendContent> additionalUnattendContent = default, PatchSettings patchSettings = default, IEnumerable<WinRMListener> winRMListeners = default)
+        {
+            additionalUnattendContent ??= new ChangeTrackingList<AdditionalUnattendContent>();
+
+            return new WindowsConfiguration(
+                provisionVMAgent,
+                enableAutomaticUpdates,
+                timeZone,
+                additionalUnattendContent.ToList(),
+                patchSettings,
+                winRMListeners is null ? default : new WinRMConfiguration((winRMListeners ?? new ChangeTrackingList<WinRMListener>()).ToList(), null),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="sourceVaultId"> The ID of the sub-resource. </param>
+        /// <param name="vaultCertificates"> The list of key vault references in SourceVault which contain certificates. </param>
+        /// <returns> A new <see cref="Models.VaultSecretGroup"/> instance for mocking. </returns>
+        public static VaultSecretGroup VaultSecretGroup(string sourceVaultId = default, IEnumerable<VaultCertificate> vaultCertificates = default)
+        {
+            vaultCertificates ??= new ChangeTrackingList<VaultCertificate>();
+
+            return new VaultSecretGroup(sourceVaultId is null ? default : new SubResource(sourceVaultId, null), vaultCertificates.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Specifies the network interfaces or the networking configuration of the virtual machine. </summary>
+        /// <param name="networkInterfaces"> Specifies the list of resource Ids for the network interfaces associated with the virtual machine. </param>
+        /// <param name="networkApiVersion"> specifies the Microsoft.Network API version used when creating networking resources in the Network Interface Configurations. </param>
+        /// <param name="networkInterfaceConfigurations"> Specifies the networking configurations that will be used to create the virtual machine networking resources. </param>
+        /// <returns> A new <see cref="Models.NetworkProfile"/> instance for mocking. </returns>
+        public static NetworkProfile NetworkProfile(IEnumerable<NetworkInterfaceReference> networkInterfaces = default, NetworkApiVersion? networkApiVersion = default, IEnumerable<VirtualMachineNetworkInterfaceConfiguration> networkInterfaceConfigurations = default)
+        {
+            networkInterfaces ??= new ChangeTrackingList<NetworkInterfaceReference>();
+            networkInterfaceConfigurations ??= new ChangeTrackingList<VirtualMachineNetworkInterfaceConfiguration>();
+
+            return new NetworkProfile(networkInterfaces.ToList(), networkApiVersion, networkInterfaceConfigurations.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Describes a virtual machine network interface configurations. </summary>
+        /// <param name="name"> The network interface configuration name. </param>
+        /// <param name="properties"> Describes a virtual machine network profile's IP configuration. </param>
+        /// <param name="tags"> Resource tags applied to the networkInterface address created by this NetworkInterfaceConfiguration. </param>
+        /// <returns> A new <see cref="Models.VirtualMachineNetworkInterfaceConfiguration"/> instance for mocking. </returns>
+        public static VirtualMachineNetworkInterfaceConfiguration VirtualMachineNetworkInterfaceConfiguration(string name = default, VirtualMachineNetworkInterfaceConfigurationProperties properties = default, IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new VirtualMachineNetworkInterfaceConfiguration(name, properties, tags, additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="primary"> Specifies the primary network interface in case the virtual machine has more than 1 network interface. </param>
+        /// <param name="deleteOption"> Specify what happens to the network interface when the VM is deleted. </param>
+        /// <param name="enableAcceleratedNetworking"> Specifies whether the network interface is accelerated networking-enabled. </param>
+        /// <param name="disableTcpStateTracking"> Specifies whether the network interface is disabled for tcp state tracking. </param>
+        /// <param name="enableFpga"> Specifies whether the network interface is FPGA networking-enabled. </param>
+        /// <param name="enableIPForwarding"> Whether IP forwarding enabled on this NIC. </param>
+        /// <param name="networkSecurityGroupId"> The ID of the sub-resource. </param>
+        /// <param name="dnsServers"> List of DNS servers IP addresses. </param>
+        /// <param name="ipConfigurations"> Specifies the IP configurations of the network interface. </param>
+        /// <param name="dscpConfigurationId"> The ID of the sub-resource. </param>
+        /// <param name="auxiliaryMode"> Specifies whether the Auxiliary mode is enabled for the Network Interface resource. </param>
+        /// <param name="auxiliarySku"> Specifies whether the Auxiliary sku is enabled for the Network Interface resource. </param>
+        /// <returns> A new <see cref="Models.VirtualMachineNetworkInterfaceConfigurationProperties"/> instance for mocking. </returns>
+        public static VirtualMachineNetworkInterfaceConfigurationProperties VirtualMachineNetworkInterfaceConfigurationProperties(bool? primary = default, DeleteOptions? deleteOption = default, bool? enableAcceleratedNetworking = default, bool? disableTcpStateTracking = default, bool? enableFpga = default, bool? enableIPForwarding = default, string networkSecurityGroupId = default, IEnumerable<string> dnsServers = default, IEnumerable<VirtualMachineNetworkInterfaceIPConfiguration> ipConfigurations = default, string dscpConfigurationId = default, NetworkInterfaceAuxiliaryMode? auxiliaryMode = default, NetworkInterfaceAuxiliarySku? auxiliarySku = default)
+        {
+            ipConfigurations ??= new ChangeTrackingList<VirtualMachineNetworkInterfaceIPConfiguration>();
+
+            return new VirtualMachineNetworkInterfaceConfigurationProperties(
+                primary,
+                deleteOption,
+                enableAcceleratedNetworking,
+                disableTcpStateTracking,
+                enableFpga,
+                enableIPForwarding,
+                networkSecurityGroupId is null ? default : new SubResource(networkSecurityGroupId, null),
+                dnsServers is null ? default : new VirtualMachineNetworkInterfaceDnsSettingsConfiguration((dnsServers ?? new ChangeTrackingList<string>()).ToList(), null),
+                ipConfigurations.ToList(),
+                dscpConfigurationId is null ? default : new SubResource(dscpConfigurationId, null),
+                auxiliaryMode,
+                auxiliarySku,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Describes a virtual machine network profile's IP configuration. </summary>
+        /// <param name="name"> The IP configuration name. </param>
+        /// <param name="properties"> Describes a virtual machine network interface IP configuration properties. </param>
+        /// <returns> A new <see cref="Models.VirtualMachineNetworkInterfaceIPConfiguration"/> instance for mocking. </returns>
+        public static VirtualMachineNetworkInterfaceIPConfiguration VirtualMachineNetworkInterfaceIPConfiguration(string name = default, VirtualMachineNetworkInterfaceIPConfigurationProperties properties = default)
+        {
+            return new VirtualMachineNetworkInterfaceIPConfiguration(name, properties, additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="subnetId"> The ID of the sub-resource. </param>
+        /// <param name="primary"> Specifies the primary network interface in case the virtual machine has more than 1 network interface. </param>
+        /// <param name="publicIPAddressConfiguration"> The publicIPAddressConfiguration. </param>
+        /// <param name="privateIPAddressVersion"> Available from Api-Version 2017-03-30 onwards, it represents whether the specific ipconfiguration is IPv4 or IPv6. Default is taken as IPv4.  Possible values are: 'IPv4' and 'IPv6'. </param>
+        /// <param name="applicationSecurityGroups"> Specifies an array of references to application security group. </param>
+        /// <param name="applicationGatewayBackendAddressPools"> Specifies an array of references to backend address pools of application gateways. A virtual machine can reference backend address pools of multiple application gateways. Multiple virtual machines cannot use the same application gateway. </param>
+        /// <param name="loadBalancerBackendAddressPools"> Specifies an array of references to backend address pools of load balancers. A virtual machine can reference backend address pools of one public and one internal load balancer. [Multiple virtual machines cannot use the same basic sku load balancer]. </param>
+        /// <returns> A new <see cref="Models.VirtualMachineNetworkInterfaceIPConfigurationProperties"/> instance for mocking. </returns>
+        public static VirtualMachineNetworkInterfaceIPConfigurationProperties VirtualMachineNetworkInterfaceIPConfigurationProperties(string subnetId = default, bool? primary = default, VirtualMachinePublicIPAddressConfiguration publicIPAddressConfiguration = default, IPVersions? privateIPAddressVersion = default, IEnumerable<SubResource> applicationSecurityGroups = default, IEnumerable<SubResource> applicationGatewayBackendAddressPools = default, IEnumerable<SubResource> loadBalancerBackendAddressPools = default)
+        {
+            applicationSecurityGroups ??= new ChangeTrackingList<SubResource>();
+            applicationGatewayBackendAddressPools ??= new ChangeTrackingList<SubResource>();
+            loadBalancerBackendAddressPools ??= new ChangeTrackingList<SubResource>();
+
+            return new VirtualMachineNetworkInterfaceIPConfigurationProperties(
+                subnetId is null ? default : new SubResource(subnetId, null),
+                primary,
+                publicIPAddressConfiguration,
+                privateIPAddressVersion,
+                applicationSecurityGroups.ToList(),
+                applicationGatewayBackendAddressPools.ToList(),
+                loadBalancerBackendAddressPools.ToList(),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Describes a virtual machines IP Configuration's PublicIPAddress configuration. </summary>
+        /// <param name="name"> The publicIP address configuration name. </param>
+        /// <param name="properties"> Describes a virtual machines IP Configuration's PublicIPAddress configuration. </param>
+        /// <param name="sku"> Describes the public IP Sku. It can only be set with OrchestrationMode as Flexible. </param>
+        /// <param name="tags"> Resource tags applied to the publicIP address created by this PublicIPAddressConfiguration. </param>
+        /// <returns> A new <see cref="Models.VirtualMachinePublicIPAddressConfiguration"/> instance for mocking. </returns>
+        public static VirtualMachinePublicIPAddressConfiguration VirtualMachinePublicIPAddressConfiguration(string name = default, VirtualMachinePublicIPAddressConfigurationProperties properties = default, PublicIPAddressSku sku = default, IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new VirtualMachinePublicIPAddressConfiguration(name, properties, sku, tags, additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="idleTimeoutInMinutes"> The idle timeout of the public IP address. </param>
+        /// <param name="deleteOption"> Specify what happens to the public IP address when the VM is deleted. </param>
+        /// <param name="dnsSettings"> The dns settings to be applied on the publicIP addresses . </param>
+        /// <param name="ipTags"> The list of IP tags associated with the public IP address. </param>
+        /// <param name="publicIPPrefixId"> The ID of the sub-resource. </param>
+        /// <param name="publicIPAddressVersion"> Available from Api-Version 2019-07-01 onwards, it represents whether the specific ipconfiguration is IPv4 or IPv6. Default is taken as IPv4. Possible values are: 'IPv4' and 'IPv6'. </param>
+        /// <param name="publicIPAllocationMethod"> Specify the public IP allocation type. </param>
+        /// <returns> A new <see cref="Models.VirtualMachinePublicIPAddressConfigurationProperties"/> instance for mocking. </returns>
+        public static VirtualMachinePublicIPAddressConfigurationProperties VirtualMachinePublicIPAddressConfigurationProperties(int? idleTimeoutInMinutes = default, DeleteOptions? deleteOption = default, VirtualMachinePublicIPAddressDnsSettingsConfiguration dnsSettings = default, IEnumerable<VirtualMachineIpTag> ipTags = default, string publicIPPrefixId = default, IPVersions? publicIPAddressVersion = default, PublicIPAllocationMethod? publicIPAllocationMethod = default)
+        {
+            ipTags ??= new ChangeTrackingList<VirtualMachineIpTag>();
+
+            return new VirtualMachinePublicIPAddressConfigurationProperties(
+                idleTimeoutInMinutes,
+                deleteOption,
+                dnsSettings,
+                ipTags.ToList(),
+                publicIPPrefixId is null ? default : new SubResource(publicIPPrefixId, null),
+                publicIPAddressVersion,
+                publicIPAllocationMethod,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Describes a virtual machines network configuration's DNS settings. </summary>
+        /// <param name="domainNameLabel"> The Domain name label prefix of the PublicIPAddress resources that will be created. The generated name label is the concatenation of the domain name label and vm network profile unique ID. </param>
+        /// <param name="domainNameLabelScope"> The Domain name label scope of the PublicIPAddress resources that will be created. The generated name label is the concatenation of the hashed domain name label with policy according to the domain name label scope and vm network profile unique ID. </param>
+        /// <returns> A new <see cref="Models.VirtualMachinePublicIPAddressDnsSettingsConfiguration"/> instance for mocking. </returns>
+        public static VirtualMachinePublicIPAddressDnsSettingsConfiguration VirtualMachinePublicIPAddressDnsSettingsConfiguration(string domainNameLabel = default, DomainNameLabelScopeTypes? domainNameLabelScope = default)
+        {
+            return new VirtualMachinePublicIPAddressDnsSettingsConfiguration(domainNameLabel, domainNameLabelScope, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Specifies the required information to reference a compute gallery application version. </summary>
+        /// <param name="tags"> Optional, Specifies a passthrough value for more generic context. </param>
+        /// <param name="order"> Optional, Specifies the order in which the packages have to be installed. </param>
+        /// <param name="packageReferenceId"> Specifies the GalleryApplicationVersion resource id on the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/applications/{application}/versions/{version}. </param>
+        /// <param name="configurationReference"> Optional, Specifies the uri to an azure blob that will replace the default configuration for the package if provided. </param>
+        /// <param name="treatFailureAsDeploymentFailure"> Optional, If true, any failure for any operation in the VmApplication will fail the deployment. </param>
+        /// <param name="enableAutomaticUpgrade"> If set to true, when a new Gallery Application version is available in PIR/SIG, it will be automatically updated for the VM/VMSS. </param>
+        /// <returns> A new <see cref="Models.VMGalleryApplication"/> instance for mocking. </returns>
+        public static VMGalleryApplication VMGalleryApplication(string tags = default, int? order = default, string packageReferenceId = default, string configurationReference = default, bool? treatFailureAsDeploymentFailure = default, bool? enableAutomaticUpgrade = default)
+        {
+            return new VMGalleryApplication(
+                tags,
+                order,
+                packageReferenceId,
+                configurationReference,
+                treatFailureAsDeploymentFailure,
+                enableAutomaticUpgrade,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Defines a virtual machine extension. </summary>
+        /// <param name="name"> The name of the virtual machine extension. </param>
+        /// <param name="properties"> Properties of the virtual machine extension. </param>
+        /// <returns> A new <see cref="Models.BulkActionVMExtension"/> instance for mocking. </returns>
+        public static BulkActionVMExtension BulkActionVMExtension(string name = default, BulkActionVmExtensionProperties properties = default)
+        {
+            return new BulkActionVMExtension(name, properties, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Describes the properties of a Virtual Machine Extension. </summary>
+        /// <param name="forceUpdateTag"> How the extension handler should be forced to update even if the extension configuration has not changed. </param>
+        /// <param name="publisher"> The name of the extension handler publisher. </param>
+        /// <param name="type"> Specifies the type of the extension; an example is 'CustomScriptExtension'. </param>
+        /// <param name="typeHandlerVersion"> Specifies the version of the script handler. </param>
+        /// <param name="autoUpgradeMinorVersion"> Indicates whether the extension should use a newer minor version if one is available at deployment time. Once deployed, however, the extension will not upgrade minor versions unless redeployed, even with this property set to true. </param>
+        /// <param name="enableAutomaticUpgrade"> Indicates whether the extension should be automatically upgraded by the platform if there is a newer version of the extension available. </param>
+        /// <param name="settings"> JSON formatted public settings for the extension. </param>
+        /// <param name="protectedSettings"> The extension can contain either protectedSettings or protectedSettingsFromKeyVault or no protected settings at all. </param>
+        /// <param name="suppressFailures"> Indicates whether failures stemming from the extension will be suppressed (Operational failures such as not connecting to the VM will not be suppressed regardless of this value). The default is false. </param>
+        /// <param name="protectedSettingsFromKeyVault"> The extensions protected settings that are passed by reference, and consumed from key vault. </param>
+        /// <param name="provisionAfterExtensions"> Collection of extension names after which this extension needs to be provisioned. </param>
+        /// <returns> A new <see cref="Models.BulkActionVmExtensionProperties"/> instance for mocking. </returns>
+        public static BulkActionVmExtensionProperties BulkActionVmExtensionProperties(string forceUpdateTag = default, string publisher = default, string @type = default, string typeHandlerVersion = default, bool? autoUpgradeMinorVersion = default, bool? enableAutomaticUpgrade = default, IDictionary<string, BinaryData> settings = default, IDictionary<string, BinaryData> protectedSettings = default, bool? suppressFailures = default, KeyVaultSecretReference protectedSettingsFromKeyVault = default, IEnumerable<string> provisionAfterExtensions = default)
+        {
+            settings ??= new ChangeTrackingDictionary<string, BinaryData>();
+            protectedSettings ??= new ChangeTrackingDictionary<string, BinaryData>();
+            provisionAfterExtensions ??= new ChangeTrackingList<string>();
+
+            return new BulkActionVmExtensionProperties(
+                forceUpdateTag,
+                publisher,
+                @type,
+                typeHandlerVersion,
+                autoUpgradeMinorVersion,
+                enableAutomaticUpgrade,
+                settings,
+                protectedSettings,
+                suppressFailures,
+                protectedSettingsFromKeyVault,
+                provisionAfterExtensions.ToList(),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The flex properties for flexible VM creation. </summary>
+        /// <param name="vmSizeProfiles"> The list of VM size profiles to use for flex creation. </param>
+        /// <param name="osType"> The operating system type for the VMs. </param>
+        /// <param name="priorityProfile"> The priority profile for VM allocation. </param>
+        /// <param name="zoneAllocationPolicy"> The zone allocation policy for distributing VMs across availability zones. </param>
+        /// <returns> A new <see cref="Models.ComputeScheduleFlexProperties"/> instance for mocking. </returns>
+        public static ComputeScheduleFlexProperties ComputeScheduleFlexProperties(IEnumerable<ComputeScheduleVmSizeProfile> vmSizeProfiles = default, ComputeScheduleOSType osType = default, ComputeSchedulePriorityProfile priorityProfile = default, ComputeScheduleZoneAllocationPolicy zoneAllocationPolicy = default)
+        {
+            vmSizeProfiles ??= new ChangeTrackingList<ComputeScheduleVmSizeProfile>();
+
+            return new ComputeScheduleFlexProperties(vmSizeProfiles.ToList(), osType, priorityProfile, zoneAllocationPolicy, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A VM size profile with a name and rank for flex VM creation. </summary>
+        /// <param name="name"> The name of the VM size, eg Standard_D2ads_v5. </param>
+        /// <param name="rank"> The rank of this VM size in the priority order. </param>
+        /// <returns> A new <see cref="Models.ComputeScheduleVmSizeProfile"/> instance for mocking. </returns>
+        public static ComputeScheduleVmSizeProfile ComputeScheduleVmSizeProfile(string name = default, int rank = default)
+        {
+            return new ComputeScheduleVmSizeProfile(name, rank, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The zone allocation policy for distributing VMs across availability zones. </summary>
+        /// <param name="distributionStrategy"> The distribution strategy for zone allocation. </param>
+        /// <param name="zonePreferences"> The zone preferences for allocation priority. </param>
+        /// <returns> A new <see cref="Models.ComputeScheduleZoneAllocationPolicy"/> instance for mocking. </returns>
+        public static ComputeScheduleZoneAllocationPolicy ComputeScheduleZoneAllocationPolicy(ComputeScheduleDistributionStrategy? distributionStrategy = default, IEnumerable<ComputeScheduleZonePreference> zonePreferences = default)
+        {
+            zonePreferences ??= new ChangeTrackingList<ComputeScheduleZonePreference>();
+
+            return new ComputeScheduleZoneAllocationPolicy(distributionStrategy, zonePreferences.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A zone preference with a zone identifier and rank. </summary>
+        /// <param name="zone"> The zone identifier. </param>
+        /// <param name="rank"> The rank of this zone in the priority order. </param>
+        /// <returns> A new <see cref="Models.ComputeScheduleZonePreference"/> instance for mocking. </returns>
+        public static ComputeScheduleZonePreference ComputeScheduleZonePreference(string zone = default, int rank = default)
+        {
+            return new ComputeScheduleZonePreference(zone, rank, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The response from a create flex request. </summary>
+        /// <param name="description"> The description of the operation response. </param>
+        /// <param name="resourceType"> The type of resources used in the create flex request eg virtual machines. </param>
+        /// <param name="location"> The location of the create flex request eg westus. </param>
+        /// <param name="results"> The results from the create flex request if no errors exist. </param>
+        /// <returns> A new <see cref="Models.CreateFlexResourceOperationResult"/> instance for mocking. </returns>
+        public static CreateFlexResourceOperationResult CreateFlexResourceOperationResult(string description = default, string resourceType = default, AzureLocation location = default, IEnumerable<ResourceOperationResult> results = default)
+        {
+            results ??= new ChangeTrackingList<ResourceOperationResult>();
+
+            return new CreateFlexResourceOperationResult(description, resourceType, location, results.ToList(), additionalBinaryDataProperties: null);
+        }
+
         /// <summary> The ExecuteCreateRequest request for create operations. </summary>
         /// <param name="resourceConfigParameters"> resource creation payload. </param>
         /// <param name="executionParameters"> The execution parameters for the request. </param>
@@ -218,14 +729,13 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         }
 
         /// <summary> Resource creation data model. </summary>
-        /// <param name="baseProfile"> JSON object that contains VM properties that are common across all VMs in this batch (if you want to create 100 VMs in this request, and they all have same vmSize, then include vmSize in baseProfile). </param>
-        /// <param name="resourceOverrides"> JSON array, that contains VM properties that should to be overridden for each VM in the batch (if you want to create 100 VMs, they all need a distinct computerName property, you pass computerNames for each VM in batch in this array), service will merge baseProfile with VM specific overrides and create a merged VMProfile. </param>
+        /// <param name="baseProfile"> Virtual machine profile object that contains VM properties that are common across all VMs in this batch  (if you want to create 100 VMs in this request, and they all have same vmSize, then include vmSize in baseProfile). </param>
+        /// <param name="resourceOverrides"> Virtual machine profile array that contains VM properties that needs to be overridden for each VM in the batch (if you want to create 100 VMs, they all need a distinct computerName property, you pass computerNames for each VM in batch in this array), service will merge baseProfile with VM specific overrides and create a merged VMProfile. </param>
         /// <param name="resourceCount"> Number of VMs to be created. </param>
         /// <param name="resourcePrefix"> if resourceOverrides doesn't contain "name", service will create name based of prefix and ResourceCount e.g. resourceprefix-0,resourceprefix-1.. </param>
         /// <returns> A new <see cref="Models.ResourceProvisionPayload"/> instance for mocking. </returns>
-        public static ResourceProvisionPayload ResourceProvisionPayload(IDictionary<string, BinaryData> baseProfile = default, IEnumerable<IDictionary<string, BinaryData>> resourceOverrides = default, int resourceCount = default, string resourcePrefix = default)
+        public static ResourceProvisionPayload ResourceProvisionPayload(BulkVMConfiguration baseProfile = default, IEnumerable<IDictionary<string, BinaryData>> resourceOverrides = default, int resourceCount = default, string resourcePrefix = default)
         {
-            baseProfile ??= new ChangeTrackingDictionary<string, BinaryData>();
             resourceOverrides ??= new ChangeTrackingList<IDictionary<string, BinaryData>>();
 
             return new ResourceProvisionPayload(baseProfile, resourceOverrides.ToList(), resourceCount, resourcePrefix, additionalBinaryDataProperties: null);
