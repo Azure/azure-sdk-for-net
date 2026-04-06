@@ -23,6 +23,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         private readonly int? _skip;
         private readonly int? _maxPageSize;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of ConversationAnalysisAuthoringGetTrainedModelsAsyncCollectionResult, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The ConversationAnalysisAuthoring client used to send requests. </param>
@@ -31,7 +32,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public ConversationAnalysisAuthoringGetTrainedModelsAsyncCollectionResult(ConversationAnalysisAuthoring client, string projectName, int? maxCount, int? skip, int? maxPageSize, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public ConversationAnalysisAuthoringGetTrainedModelsAsyncCollectionResult(ConversationAnalysisAuthoring client, string projectName, int? maxCount, int? skip, int? maxPageSize, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _projectName = projectName;
@@ -39,6 +41,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             _skip = skip;
             _maxPageSize = maxPageSize;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of ConversationAnalysisAuthoringGetTrainedModelsAsyncCollectionResult as an enumerable collection. </summary>
@@ -77,7 +80,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         {
             int? pageSize = pageSizeHint.HasValue ? pageSizeHint.Value : _maxPageSize;
             HttpMessage message = nextLink != null ? _client.CreateNextGetTrainedModelsRequest(nextLink, pageSize, _context) : _client.CreateGetTrainedModelsRequest(_projectName, _maxCount, _skip, pageSize, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ConversationAnalysisAuthoring.GetTrainedModels");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

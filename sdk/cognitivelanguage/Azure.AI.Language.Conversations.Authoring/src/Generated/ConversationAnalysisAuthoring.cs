@@ -114,7 +114,13 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetProjects(int? maxCount, int? skip, int? maxPageSize, RequestContext context)
         {
-            return new ConversationAnalysisAuthoringGetProjectsCollectionResult(this, maxCount, skip, maxPageSize, context);
+            return new ConversationAnalysisAuthoringGetProjectsCollectionResult(
+                this,
+                maxCount,
+                skip,
+                maxPageSize,
+                context,
+                "ConversationAnalysisAuthoring.GetProjects");
         }
 
         /// <summary>
@@ -133,7 +139,13 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetProjectsAsync(int? maxCount, int? skip, int? maxPageSize, RequestContext context)
         {
-            return new ConversationAnalysisAuthoringGetProjectsAsyncCollectionResult(this, maxCount, skip, maxPageSize, context);
+            return new ConversationAnalysisAuthoringGetProjectsAsyncCollectionResult(
+                this,
+                maxCount,
+                skip,
+                maxPageSize,
+                context,
+                "ConversationAnalysisAuthoring.GetProjects");
         }
 
         /// <summary> Lists the existing projects. </summary>
@@ -144,7 +156,13 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<ConversationAuthoringProjectMetadata> GetProjects(int? maxCount = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
-            return new ConversationAnalysisAuthoringGetProjectsCollectionResultOfT(this, maxCount, skip, maxPageSize, cancellationToken.ToRequestContext());
+            return new ConversationAnalysisAuthoringGetProjectsCollectionResultOfT(
+                this,
+                maxCount,
+                skip,
+                maxPageSize,
+                cancellationToken.ToRequestContext(),
+                "ConversationAnalysisAuthoring.GetProjects");
         }
 
         /// <summary> Lists the existing projects. </summary>
@@ -155,7 +173,13 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<ConversationAuthoringProjectMetadata> GetProjectsAsync(int? maxCount = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
-            return new ConversationAnalysisAuthoringGetProjectsAsyncCollectionResultOfT(this, maxCount, skip, maxPageSize, cancellationToken.ToRequestContext());
+            return new ConversationAnalysisAuthoringGetProjectsAsyncCollectionResultOfT(
+                this,
+                maxCount,
+                skip,
+                maxPageSize,
+                cancellationToken.ToRequestContext(),
+                "ConversationAnalysisAuthoring.GetProjects");
         }
 
         /// <summary>
@@ -181,7 +205,8 @@ namespace Azure.AI.Language.Conversations.Authoring
                 maxCount,
                 skip,
                 maxPageSize,
-                context);
+                context,
+                "ConversationAnalysisAuthoring.GetSupportedLanguages");
         }
 
         /// <summary>
@@ -207,7 +232,8 @@ namespace Azure.AI.Language.Conversations.Authoring
                 maxCount,
                 skip,
                 maxPageSize,
-                context);
+                context,
+                "ConversationAnalysisAuthoring.GetSupportedLanguages");
         }
 
         /// <summary> Lists the supported languages for the given project type. </summary>
@@ -225,7 +251,8 @@ namespace Azure.AI.Language.Conversations.Authoring
                 maxCount,
                 skip,
                 maxPageSize,
-                cancellationToken.ToRequestContext());
+                cancellationToken.ToRequestContext(),
+                "ConversationAnalysisAuthoring.GetSupportedLanguages");
         }
 
         /// <summary> Lists the supported languages for the given project type. </summary>
@@ -243,7 +270,8 @@ namespace Azure.AI.Language.Conversations.Authoring
                 maxCount,
                 skip,
                 maxPageSize,
-                cancellationToken.ToRequestContext());
+                cancellationToken.ToRequestContext(),
+                "ConversationAnalysisAuthoring.GetSupportedLanguages");
         }
 
         /// <summary>
@@ -262,7 +290,13 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetAssignedResourceDeployments(int? maxCount, int? skip, int? maxPageSize, RequestContext context)
         {
-            return new ConversationAnalysisAuthoringGetAssignedResourceDeploymentsCollectionResult(this, maxCount, skip, maxPageSize, context);
+            return new ConversationAnalysisAuthoringGetAssignedResourceDeploymentsCollectionResult(
+                this,
+                maxCount,
+                skip,
+                maxPageSize,
+                context,
+                "ConversationAnalysisAuthoring.GetAssignedResourceDeployments");
         }
 
         /// <summary>
@@ -281,7 +315,13 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetAssignedResourceDeploymentsAsync(int? maxCount, int? skip, int? maxPageSize, RequestContext context)
         {
-            return new ConversationAnalysisAuthoringGetAssignedResourceDeploymentsAsyncCollectionResult(this, maxCount, skip, maxPageSize, context);
+            return new ConversationAnalysisAuthoringGetAssignedResourceDeploymentsAsyncCollectionResult(
+                this,
+                maxCount,
+                skip,
+                maxPageSize,
+                context,
+                "ConversationAnalysisAuthoring.GetAssignedResourceDeployments");
         }
 
         /// <summary> Lists the deployments to which an Azure resource is assigned. This doesn't return deployments belonging to projects owned by this resource. It only returns deployments belonging to projects owned by other resources. </summary>
@@ -292,7 +332,13 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<ConversationAuthoringAssignedProjectDeploymentsMetadata> GetAssignedResourceDeployments(int? maxCount = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
-            return new ConversationAnalysisAuthoringGetAssignedResourceDeploymentsCollectionResultOfT(this, maxCount, skip, maxPageSize, cancellationToken.ToRequestContext());
+            return new ConversationAnalysisAuthoringGetAssignedResourceDeploymentsCollectionResultOfT(
+                this,
+                maxCount,
+                skip,
+                maxPageSize,
+                cancellationToken.ToRequestContext(),
+                "ConversationAnalysisAuthoring.GetAssignedResourceDeployments");
         }
 
         /// <summary> Lists the deployments to which an Azure resource is assigned. This doesn't return deployments belonging to projects owned by this resource. It only returns deployments belonging to projects owned by other resources. </summary>
@@ -303,7 +349,13 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<ConversationAuthoringAssignedProjectDeploymentsMetadata> GetAssignedResourceDeploymentsAsync(int? maxCount = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
-            return new ConversationAnalysisAuthoringGetAssignedResourceDeploymentsAsyncCollectionResultOfT(this, maxCount, skip, maxPageSize, cancellationToken.ToRequestContext());
+            return new ConversationAnalysisAuthoringGetAssignedResourceDeploymentsAsyncCollectionResultOfT(
+                this,
+                maxCount,
+                skip,
+                maxPageSize,
+                cancellationToken.ToRequestContext(),
+                "ConversationAnalysisAuthoring.GetAssignedResourceDeployments");
         }
 
         /// <summary>
@@ -331,7 +383,8 @@ namespace Azure.AI.Language.Conversations.Authoring
                 maxPageSize,
                 language,
                 multilingual,
-                context);
+                context,
+                "ConversationAnalysisAuthoring.GetSupportedPrebuiltEntities");
         }
 
         /// <summary>
@@ -359,7 +412,8 @@ namespace Azure.AI.Language.Conversations.Authoring
                 maxPageSize,
                 language,
                 multilingual,
-                context);
+                context,
+                "ConversationAnalysisAuthoring.GetSupportedPrebuiltEntities");
         }
 
         /// <summary> Lists the supported prebuilt entities that can be used while creating composed entities. </summary>
@@ -379,7 +433,8 @@ namespace Azure.AI.Language.Conversations.Authoring
                 maxPageSize,
                 language,
                 multilingual,
-                cancellationToken.ToRequestContext());
+                cancellationToken.ToRequestContext(),
+                "ConversationAnalysisAuthoring.GetSupportedPrebuiltEntities");
         }
 
         /// <summary> Lists the supported prebuilt entities that can be used while creating composed entities. </summary>
@@ -399,7 +454,8 @@ namespace Azure.AI.Language.Conversations.Authoring
                 maxPageSize,
                 language,
                 multilingual,
-                cancellationToken.ToRequestContext());
+                cancellationToken.ToRequestContext(),
+                "ConversationAnalysisAuthoring.GetSupportedPrebuiltEntities");
         }
 
         /// <summary>
@@ -425,7 +481,8 @@ namespace Azure.AI.Language.Conversations.Authoring
                 maxCount,
                 skip,
                 maxPageSize,
-                context);
+                context,
+                "ConversationAnalysisAuthoring.GetTrainingConfigVersions");
         }
 
         /// <summary>
@@ -451,7 +508,8 @@ namespace Azure.AI.Language.Conversations.Authoring
                 maxCount,
                 skip,
                 maxPageSize,
-                context);
+                context,
+                "ConversationAnalysisAuthoring.GetTrainingConfigVersions");
         }
 
         /// <summary> Lists the support training config version for a given project type. </summary>
@@ -469,7 +527,8 @@ namespace Azure.AI.Language.Conversations.Authoring
                 maxCount,
                 skip,
                 maxPageSize,
-                cancellationToken.ToRequestContext());
+                cancellationToken.ToRequestContext(),
+                "ConversationAnalysisAuthoring.GetTrainingConfigVersions");
         }
 
         /// <summary> Lists the support training config version for a given project type. </summary>
@@ -487,7 +546,8 @@ namespace Azure.AI.Language.Conversations.Authoring
                 maxCount,
                 skip,
                 maxPageSize,
-                cancellationToken.ToRequestContext());
+                cancellationToken.ToRequestContext(),
+                "ConversationAnalysisAuthoring.GetTrainingConfigVersions");
         }
 
         /// <summary>
@@ -517,7 +577,8 @@ namespace Azure.AI.Language.Conversations.Authoring
                 maxCount,
                 skip,
                 maxPageSize,
-                context);
+                context,
+                "ConversationAnalysisAuthoring.GetTrainedModels");
         }
 
         /// <summary>
@@ -547,7 +608,8 @@ namespace Azure.AI.Language.Conversations.Authoring
                 maxCount,
                 skip,
                 maxPageSize,
-                context);
+                context,
+                "ConversationAnalysisAuthoring.GetTrainedModels");
         }
 
         /// <summary> Lists the trained models belonging to a project. </summary>
@@ -569,7 +631,8 @@ namespace Azure.AI.Language.Conversations.Authoring
                 maxCount,
                 skip,
                 maxPageSize,
-                cancellationToken.ToRequestContext());
+                cancellationToken.ToRequestContext(),
+                "ConversationAnalysisAuthoring.GetTrainedModels");
         }
 
         /// <summary> Lists the trained models belonging to a project. </summary>
@@ -591,7 +654,8 @@ namespace Azure.AI.Language.Conversations.Authoring
                 maxCount,
                 skip,
                 maxPageSize,
-                cancellationToken.ToRequestContext());
+                cancellationToken.ToRequestContext(),
+                "ConversationAnalysisAuthoring.GetTrainedModels");
         }
 
         /// <summary>
@@ -621,7 +685,8 @@ namespace Azure.AI.Language.Conversations.Authoring
                 maxCount,
                 skip,
                 maxPageSize,
-                context);
+                context,
+                "ConversationAnalysisAuthoring.GetTrainingJobs");
         }
 
         /// <summary>
@@ -651,7 +716,8 @@ namespace Azure.AI.Language.Conversations.Authoring
                 maxCount,
                 skip,
                 maxPageSize,
-                context);
+                context,
+                "ConversationAnalysisAuthoring.GetTrainingJobs");
         }
 
         /// <summary> Lists the non-expired training jobs created for a project. </summary>
@@ -673,7 +739,8 @@ namespace Azure.AI.Language.Conversations.Authoring
                 maxCount,
                 skip,
                 maxPageSize,
-                cancellationToken.ToRequestContext());
+                cancellationToken.ToRequestContext(),
+                "ConversationAnalysisAuthoring.GetTrainingJobs");
         }
 
         /// <summary> Lists the non-expired training jobs created for a project. </summary>
@@ -695,7 +762,8 @@ namespace Azure.AI.Language.Conversations.Authoring
                 maxCount,
                 skip,
                 maxPageSize,
-                cancellationToken.ToRequestContext());
+                cancellationToken.ToRequestContext(),
+                "ConversationAnalysisAuthoring.GetTrainingJobs");
         }
 
         /// <summary>
@@ -725,7 +793,8 @@ namespace Azure.AI.Language.Conversations.Authoring
                 maxCount,
                 skip,
                 maxPageSize,
-                context);
+                context,
+                "ConversationAnalysisAuthoring.GetDeploymentResources");
         }
 
         /// <summary>
@@ -755,7 +824,8 @@ namespace Azure.AI.Language.Conversations.Authoring
                 maxCount,
                 skip,
                 maxPageSize,
-                context);
+                context,
+                "ConversationAnalysisAuthoring.GetDeploymentResources");
         }
 
         /// <summary> Lists the Language or AIService resources assigned to the project. </summary>
@@ -777,7 +847,8 @@ namespace Azure.AI.Language.Conversations.Authoring
                 maxCount,
                 skip,
                 maxPageSize,
-                cancellationToken.ToRequestContext());
+                cancellationToken.ToRequestContext(),
+                "ConversationAnalysisAuthoring.GetDeploymentResources");
         }
 
         /// <summary> Lists the Language or AIService resources assigned to the project. </summary>
@@ -799,7 +870,8 @@ namespace Azure.AI.Language.Conversations.Authoring
                 maxCount,
                 skip,
                 maxPageSize,
-                cancellationToken.ToRequestContext());
+                cancellationToken.ToRequestContext(),
+                "ConversationAnalysisAuthoring.GetDeploymentResources");
         }
 
         /// <summary>
@@ -829,7 +901,8 @@ namespace Azure.AI.Language.Conversations.Authoring
                 maxCount,
                 skip,
                 maxPageSize,
-                context);
+                context,
+                "ConversationAnalysisAuthoring.GetDeployments");
         }
 
         /// <summary>
@@ -859,7 +932,8 @@ namespace Azure.AI.Language.Conversations.Authoring
                 maxCount,
                 skip,
                 maxPageSize,
-                context);
+                context,
+                "ConversationAnalysisAuthoring.GetDeployments");
         }
 
         /// <summary> Lists the deployments belonging to a project. </summary>
@@ -881,7 +955,8 @@ namespace Azure.AI.Language.Conversations.Authoring
                 maxCount,
                 skip,
                 maxPageSize,
-                cancellationToken.ToRequestContext());
+                cancellationToken.ToRequestContext(),
+                "ConversationAnalysisAuthoring.GetDeployments");
         }
 
         /// <summary> Lists the deployments belonging to a project. </summary>
@@ -903,7 +978,8 @@ namespace Azure.AI.Language.Conversations.Authoring
                 maxCount,
                 skip,
                 maxPageSize,
-                cancellationToken.ToRequestContext());
+                cancellationToken.ToRequestContext(),
+                "ConversationAnalysisAuthoring.GetDeployments");
         }
 
         /// <summary>
@@ -933,7 +1009,8 @@ namespace Azure.AI.Language.Conversations.Authoring
                 maxCount,
                 skip,
                 maxPageSize,
-                context);
+                context,
+                "ConversationAnalysisAuthoring.GetExportedModels");
         }
 
         /// <summary>
@@ -963,7 +1040,8 @@ namespace Azure.AI.Language.Conversations.Authoring
                 maxCount,
                 skip,
                 maxPageSize,
-                context);
+                context,
+                "ConversationAnalysisAuthoring.GetExportedModels");
         }
 
         /// <summary> Lists the exported models belonging to a project. </summary>
@@ -985,7 +1063,8 @@ namespace Azure.AI.Language.Conversations.Authoring
                 maxCount,
                 skip,
                 maxPageSize,
-                cancellationToken.ToRequestContext());
+                cancellationToken.ToRequestContext(),
+                "ConversationAnalysisAuthoring.GetExportedModels");
         }
 
         /// <summary> Lists the exported models belonging to a project. </summary>
@@ -1007,7 +1086,8 @@ namespace Azure.AI.Language.Conversations.Authoring
                 maxCount,
                 skip,
                 maxPageSize,
-                cancellationToken.ToRequestContext());
+                cancellationToken.ToRequestContext(),
+                "ConversationAnalysisAuthoring.GetExportedModels");
         }
 
         /// <summary> Assign new Language or AIService Azure resources to a project to allowing deployment to them. This API is available only via AAD authentication and not supported via subscription key authentication. For more details about AAD authentication, check here: https://learn.microsoft.com/en-us/azure/cognitive-services/authentication?tabs=powershell#authenticate-with-azure-active-directory. </summary>
@@ -4308,7 +4388,8 @@ namespace Azure.AI.Language.Conversations.Authoring
                 maxCount,
                 skip,
                 maxPageSize,
-                context);
+                context,
+                "ConversationAnalysisAuthoring.GetModelEvaluationResults");
         }
 
         /// <summary>
@@ -4343,7 +4424,8 @@ namespace Azure.AI.Language.Conversations.Authoring
                 maxCount,
                 skip,
                 maxPageSize,
-                context);
+                context,
+                "ConversationAnalysisAuthoring.GetModelEvaluationResults");
         }
 
         /// <summary> Gets the detailed results of the evaluation for a trained model. This includes the raw inference results for the data included in the evaluation process. </summary>
@@ -4370,7 +4452,8 @@ namespace Azure.AI.Language.Conversations.Authoring
                 maxCount,
                 skip,
                 maxPageSize,
-                cancellationToken.ToRequestContext());
+                cancellationToken.ToRequestContext(),
+                "ConversationAnalysisAuthoring.GetModelEvaluationResults");
         }
 
         /// <summary> Gets the detailed results of the evaluation for a trained model. This includes the raw inference results for the data included in the evaluation process. </summary>
@@ -4397,7 +4480,8 @@ namespace Azure.AI.Language.Conversations.Authoring
                 maxCount,
                 skip,
                 maxPageSize,
-                cancellationToken.ToRequestContext());
+                cancellationToken.ToRequestContext(),
+                "ConversationAnalysisAuthoring.GetModelEvaluationResults");
         }
 
         /// <summary>

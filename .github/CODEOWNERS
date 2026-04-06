@@ -190,9 +190,6 @@
 # ServiceLabel: %Cognitive - Language
 # ServiceOwners: @quentinRobinson
 
-# ServiceLabel: %Cognitive - Metrics Advisor
-# ServiceOwners: @bowgong
-
 # PRLabel: %Cognitive - Personalizer
 /sdk/personalizer/    @orenmichaely @tyclintw
 
@@ -296,9 +293,6 @@
 # ServiceLabel: %Event Hubs
 # ServiceOwners: @axisc @hmlam @j7nw4r @sjkwak
 
-# ServiceLabel: %Extension - WCF
-# ServiceOwners: @mconnew
-
 # PRLabel: %Functions %Service Bus
 /sdk/servicebus/Microsoft.Azure.WebJobs.Extensions.ServiceBus/    @EldertGrootenboer @j7nw4r @jsquire @skarri-microsoft
 
@@ -369,9 +363,6 @@
 # ServiceLabel: %Monitor - Exporter
 # ServiceOwners: @harsimar @mattsains-msft @rajkumar-rangaraj @xiang17
 
-# ServiceLabel: %Monitor - LiveMetrics
-# ServiceOwners: @harsimar @mattsains-msft @rajkumar-rangaraj @xiang17
-
 # PRLabel: %Monitor - Query
 /sdk/monitor/Azure.Monitor.Query.Logs/    @Azure/azure-sdk-write-monitor-query-logs
 
@@ -411,14 +402,17 @@
 # ServiceLabel: %Planetary Computer
 # ServiceOwners: @chahibi @karthick-rn @mandarinamdar
 
+# PRLabel: %PostgreSQL Auth
+/sdk/postgresql/Microsoft.Azure.PostgreSQL.Auth/    @alxhghs @carlovi81 @mattboentoro @nasc17 @nehrao1 @rmendiza
+
+# ServiceLabel: %PostgreSQL Auth
+# ServiceOwners: @alxhghs @carlovi81 @mattboentoro @nasc17 @nehrao1 @rmendiza
+
 # PRLabel: %Provisioning
 /sdk/provisioning/    @ArcturusZhang @ArthurMa1978 @m-nash
 
 # AzureSdkOwners: @ArthurMa1978
 # ServiceLabel: %Provisioning
-
-# ServiceLabel: %Quantum
-# ServiceOwners: @xfield
 
 # PRLabel: %Schema Registry
 /sdk/schemaregistry/    @axisc @hmlam @sjkwak
@@ -518,9 +512,6 @@
 # ServiceLabel: %TimeseriesInsights
 # ServiceOwners: @dmdenmsft @rasidhan @Shipra1Mishra @yeskarthik
 
-# ServiceLabel: %VideoAnalyzer
-# ServiceOwners: @giakas
-
 # PRLabel: %Voice Live
 /sdk/voicelive/Azure.AI.VoiceLive/    @amber-yujueWang @emilyjiji @pankopon @rhurey @xitzhang
 
@@ -592,6 +583,9 @@
 
 # ServiceLabel: %Cognitive - Ink Recognizer
 # ServiceOwners: @olduroja
+
+# ServiceLabel: %Cognitive - Metrics Advisor
+# ServiceOwners: @bowgong
 
 # ServiceLabel: %Cognitive - Mgmt
 # ServiceOwners: @yangyuan
@@ -713,6 +707,9 @@
 # ServiceLabel: %Devtestlab
 # ServiceOwners: @Tanmayeekamath
 
+# ServiceLabel: %Extension - WCF
+# ServiceOwners: @mconnew
+
 # ServiceLabel: %Graph.Microsoft
 # ServiceOwners: @baywet @dkershaw10
 
@@ -773,6 +770,9 @@
 # ServiceLabel: %Monitor - ApplicationInsights
 # ServiceOwners: @anatse @azmonapplicationinsights @danhadari @ischrei @omziv @raronen
 
+# ServiceLabel: %Monitor - LiveMetrics
+# ServiceOwners: @harsimar @mattsains-msft @rajkumar-rangaraj @xiang17
+
 # ServiceLabel: %MySQL
 # ServiceOwners: @ajlam @ambhatna @kummanish
 
@@ -830,11 +830,8 @@
 # ServiceLabel: %PostgreSQL
 # ServiceOwners: @lfittl-msft @niklarin @sr-msft @sunilagarwal
 
-# PRLabel: %PostgreSQL Auth
-/sdk/postgresql/Microsoft.Azure.PostgreSQL.Auth/    @alxhghs @nasc17 @rmendiza @carlovi81 @mattboentoro
-
-# ServiceLabel: %PostgreSQL Auth
-# ServiceOwners:    @alxhghs @nasc17 @rmendiza @carlovi81 @mattboentoro
+# ServiceLabel: %Quantum
+# ServiceOwners: @xfield
 
 # ServiceLabel: %Recovery Services Backup
 # ServiceOwners: @Daya-Patil
@@ -874,6 +871,9 @@
 
 # ServiceLabel: %Support
 # ServiceOwners: @aygoya @ganganarayanan @mit2nil @shahbj79
+
+# ServiceLabel: %VideoAnalyzer
+# ServiceOwners: @giakas
 
 # ServiceLabel: %Web Apps
 # ServiceOwners: @antcp @AzureAppServiceCLI
