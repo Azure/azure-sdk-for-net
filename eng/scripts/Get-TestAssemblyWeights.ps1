@@ -42,6 +42,7 @@ Optional list of specific assembly names to query. If not provided, discovers al
 param (
   [Parameter(Mandatory = $true)][string]$RepoRoot,
   [Parameter(Mandatory = $true)][string]$OutputFile,
+  [Parameter()][string]$PackageInfoFolder = "",
   [Parameter()][int]$PipelineId = 7327,
   [Parameter()][string]$OrgUrl = "https://analytics.dev.azure.com/azure-sdk",
   [Parameter()][string]$ProjectId = "29ec6040-b234-4e31-b139-33dc4287b756",
@@ -78,7 +79,25 @@ foreach ($serviceDir in (Get-ChildItem (Join-Path $RepoRoot "sdk") -Directory)) 
 }
 Write-Host "Found $($assemblyToPackage.Count) test assemblies mapped to packages."
 
-$allAssemblies = @($assemblyToPackage.Keys | Sort-Object)
+# Scope to packages in PackageInfo folder if provided
+$targetPackages = $null
+if ($PackageInfoFolder -and (Test-Path $PackageInfoFolder)) {
+  $packageInfoFiles = @(Get-ChildItem -Path $PackageInfoFolder -Filter "*.json" -Recurse)
+  if ($packageInfoFiles.Count -gt 0) {
+    $targetPackages = [System.Collections.Generic.HashSet[string]]::new()
+    foreach ($f in $packageInfoFiles) {
+      $json = Get-Content $f.FullName | ConvertFrom-Json
+      if ($json.ArtifactName) { [void]$targetPackages.Add($json.ArtifactName) }
+    }
+    Write-Host "Scoping to $($targetPackages.Count) packages from PackageInfo folder."
+
+    # Filter assemblies to only those belonging to target packages
+    $scopedAssemblies = @($assemblyToPackage.GetEnumerator() | Where-Object { $targetPackages.Contains($_.Value) } | ForEach-Object { $_.Key } | Sort-Object)
+    Write-Host "Scoped to $($scopedAssemblies.Count) assemblies (from $($assemblyToPackage.Count) total)."
+  }
+}
+
+$allAssemblies = if ($scopedAssemblies) { $scopedAssemblies } else { @($assemblyToPackage.Keys | Sort-Object) }
 if ($allAssemblies.Count -eq 0) {
   Write-Warning "No test assemblies found. Writing empty weights file."
   "{}" | Set-Content $OutputFile

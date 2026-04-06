@@ -69,6 +69,7 @@ steps:
     - pwsh: |
         eng/scripts/Get-TestAssemblyWeights.ps1 `
           -RepoRoot "$(Build.SourcesDirectory)" `
+          -PackageInfoFolder "$(Build.ArtifactStagingDirectory)/PackageInfo" `
           -OutputFile "$(Build.ArtifactStagingDirectory)/test-weights.json"
       displayName: Query test assembly weights for balanced batching
       condition: and(succeededOrFailed(), eq(variables['Build.Reason'], 'PullRequest'))
@@ -79,7 +80,7 @@ steps:
         eng/scripts/Apply-WeightedBatching.ps1 `
           -PackageInfoFolder "$(Build.ArtifactStagingDirectory)/PackageInfo" `
           -WeightsFile "$(Build.ArtifactStagingDirectory)/test-weights.json" `
-          -TargetSeconds 900
+          -TargetSeconds 720
       displayName: Apply weighted batching to PackageInfo
       condition: and(succeededOrFailed(), eq(variables['Build.Reason'], 'PullRequest'))
 
