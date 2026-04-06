@@ -20,6 +20,12 @@ var certificate = new X509Certificate2("./certs/cert-password-protected.pfx", "p
 var credential = new ClientCertificateCredential(tenantId, clientId, certificate);
 ```
 
+> **Note:** On .NET 9 and later, the `X509Certificate2` file path constructor is obsolete. Use [`X509CertificateLoader.LoadPkcs12FromFile`](https://learn.microsoft.com/dotnet/api/system.security.cryptography.x509certificates.x509certificateloader.loadpkcs12fromfile) instead:
+>
+> ```csharp
+> var certificate = X509CertificateLoader.LoadPkcs12FromFile("./certs/cert-password-protected.pfx", "password");
+> ```
+
 ## Loading certificates from an X509Store
 
 Applications running on platforms which provide a secure certificate store, such as the Windows Certificate Store on Windows, and the KeyChain on macOS, might prefer to store and retrieve certificates from there.
@@ -47,6 +53,8 @@ var certificate = store.Certificates
 
 var credential = new ClientCertificateCredential(tenantId, clientId, certificate);
 ```
+
+> **Note:** `CertificateNotFoundException` used in the example above is a user-defined exception type. You can replace it with any exception type appropriate for your application's error handling strategy.
 
 See the [X509Store section in Cross-platform cryptography in .NET](https://learn.microsoft.com/dotnet/standard/security/cross-platform-cryptography#x509store).
 
@@ -146,5 +154,11 @@ public class RotatingCertificateCredential : TokenCredential
     }
 }
 ```
+
+> **Note:** On .NET 9 and later, the `X509Certificate2` file path constructor is obsolete. In the `RefreshCertificate` method above, use [`X509CertificateLoader.LoadCertificateFromFile`](https://learn.microsoft.com/dotnet/api/system.security.cryptography.x509certificates.x509certificateloader.loadcertificatefromfile) instead:
+>
+> ```csharp
+> var certificate = X509CertificateLoader.LoadCertificateFromFile(_path);
+> ```
 
 In this example the custom credential type `RotatingCertificateCredential` again uses a `ClientCertificateCredential` instance `_credential` to retrieve tokens. However, in this case it will attempt to refresh the certificate prior to obtaining the token. The method `RefreshCertificate` will query to see if the certificate has changed, and if so it will replace the instance `_credential` with a new instance using the new certificate.
