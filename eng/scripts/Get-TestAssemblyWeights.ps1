@@ -186,8 +186,10 @@ $stopwatch.Stop()
 Write-Host "Total query time: $([math]::Round($stopwatch.ElapsedMilliseconds / 1000, 1))s"
 
 # Aggregate: average wall-clock per assembly, then sum per package
+# Only output weights for packages in the target set (or all if no scoping)
+$outputPackages = if ($targetPackages) { $targetPackages } else { $assemblyToPackage.Values | Sort-Object -Unique }
 $packageWeights = @{}
-foreach ($pkg in ($assemblyToPackage.Values | Sort-Object -Unique)) {
+foreach ($pkg in $outputPackages) {
   [int]$totalWeight = 0
   $assemblyToPackage.GetEnumerator() | Where-Object { $_.Value -eq $pkg } | ForEach-Object {
     $runs = $assemblyWeights[$_.Key]
