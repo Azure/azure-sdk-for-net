@@ -105,10 +105,10 @@ jobs:
             $internalVariableGroups = '$(Release_Secrets_for_GitHub) $(APIReview_AutoCreate_Configurations)'
             $testVariableGroups = '$(Secrets_for_Resource_Provisioner)'
           }
-          "rust" {
+          "rust" { 
             $generatePublicCIPipeline = 'false'
-            $internalVariableGroups = '$(AzureSDK_CratesIo_Release_Pipeline_Secrets) $(Release_Secrets_for_GitHub) $(APIReview_AutoCreate_Configurations) $(Secrets_for_Resource_Provisioner)'
             $generateUnifiedWeekly = 'true'
+            $internalVariableGroups = '$(Release_Secrets_for_GitHub) $(APIReview_AutoCreate_Configurations)'
           }
           "net" {
             $generatePublicCIPipeline = 'false'
@@ -126,11 +126,6 @@ jobs:
             $generatePublicCIPipeline = 'false'
             $internalVariableGroups = '$(Release_Secrets_for_GitHub) $(APIReview_AutoCreate_Configurations) $(Secrets_for_Resource_Provisioner)'
             $generateUnifiedWeekly = 'true'
-          }
-          "rust" { 
-            $generatePublicCIPipeline = 'false'
-            $generateUnifiedWeekly = 'true'
-            $internalVariableGroups = '$(Release_Secrets_for_GitHub) $(APIReview_AutoCreate_Configurations)'
           }
           default {
             Write-Error "Language '$lang' is not recognized."
