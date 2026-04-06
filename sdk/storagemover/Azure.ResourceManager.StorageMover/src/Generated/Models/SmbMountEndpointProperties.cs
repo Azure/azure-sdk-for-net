@@ -30,12 +30,13 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <summary> Initializes a new instance of <see cref="SmbMountEndpointProperties"/>. </summary>
         /// <param name="endpointType"> The Endpoint resource type. </param>
         /// <param name="description"> A description for the Endpoint. </param>
+        /// <param name="endpointKind"> The Endpoint resource kind source or target. </param>
         /// <param name="provisioningState"> The provisioning state of this resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="host"> The host name or IP address of the server exporting the file system. </param>
         /// <param name="shareName"> The name of the SMB share being exported from the server. </param>
         /// <param name="credentials"> The Azure Key Vault secret URIs which store the required credentials to access the SMB share. </param>
-        internal SmbMountEndpointProperties(EndpointType endpointType, string description, StorageMoverProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties, string host, string shareName, AzureKeyVaultSmbCredentials credentials) : base(endpointType, description, provisioningState, additionalBinaryDataProperties)
+        internal SmbMountEndpointProperties(EndpointType endpointType, string description, EndpointKind? endpointKind, StorageMoverProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties, string host, string shareName, AzureKeyVaultSmbCredentials credentials) : base(endpointType, description, endpointKind, provisioningState, additionalBinaryDataProperties)
         {
             Host = host;
             ShareName = shareName;

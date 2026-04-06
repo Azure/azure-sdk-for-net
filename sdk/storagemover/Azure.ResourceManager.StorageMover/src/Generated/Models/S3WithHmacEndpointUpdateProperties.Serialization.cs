@@ -13,56 +13,52 @@ using Azure.ResourceManager.StorageMover;
 
 namespace Azure.ResourceManager.StorageMover.Models
 {
-    internal partial class UnknownEndpointBaseProperties : EndpointBaseProperties, IJsonModel<EndpointBaseProperties>
+    /// <summary> The S3WithHmacEndpointUpdateProperties. </summary>
+    public partial class S3WithHmacEndpointUpdateProperties : EndpointBaseUpdateProperties, IJsonModel<S3WithHmacEndpointUpdateProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownEndpointBaseProperties"/> for deserialization. </summary>
-        internal UnknownEndpointBaseProperties()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override EndpointBaseProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override EndpointBaseUpdateProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EndpointBaseProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<S3WithHmacEndpointUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeEndpointBaseProperties(document.RootElement, options);
+                        return DeserializeS3WithHmacEndpointUpdateProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EndpointBaseProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(S3WithHmacEndpointUpdateProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EndpointBaseProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<S3WithHmacEndpointUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageMoverContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(EndpointBaseProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(S3WithHmacEndpointUpdateProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<EndpointBaseProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<S3WithHmacEndpointUpdateProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        EndpointBaseProperties IPersistableModel<EndpointBaseProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        S3WithHmacEndpointUpdateProperties IPersistableModel<S3WithHmacEndpointUpdateProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => (S3WithHmacEndpointUpdateProperties)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<EndpointBaseProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<S3WithHmacEndpointUpdateProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<EndpointBaseProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<S3WithHmacEndpointUpdateProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -73,34 +69,39 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EndpointBaseProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<S3WithHmacEndpointUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EndpointBaseProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(S3WithHmacEndpointUpdateProperties)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Credentials))
+            {
+                writer.WritePropertyName("credentials"u8);
+                writer.WriteObjectValue(Credentials, options);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        EndpointBaseProperties IJsonModel<EndpointBaseProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        S3WithHmacEndpointUpdateProperties IJsonModel<S3WithHmacEndpointUpdateProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (S3WithHmacEndpointUpdateProperties)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override EndpointBaseProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override EndpointBaseUpdateProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EndpointBaseProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<S3WithHmacEndpointUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EndpointBaseProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(S3WithHmacEndpointUpdateProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeEndpointBaseProperties(document.RootElement, options);
+            return DeserializeS3WithHmacEndpointUpdateProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static UnknownEndpointBaseProperties DeserializeUnknownEndpointBaseProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static S3WithHmacEndpointUpdateProperties DeserializeS3WithHmacEndpointUpdateProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -108,9 +109,8 @@ namespace Azure.ResourceManager.StorageMover.Models
             }
             EndpointType endpointType = default;
             string description = default;
-            EndpointKind? endpointKind = default;
-            StorageMoverProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            AzureKeyVaultS3WithHmacCredentials credentials = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("endpointType"u8))
@@ -123,22 +123,13 @@ namespace Azure.ResourceManager.StorageMover.Models
                     description = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("endpointKind"u8))
+                if (prop.NameEquals("credentials"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    endpointKind = new EndpointKind(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("provisioningState"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    provisioningState = new StorageMoverProvisioningState(prop.Value.GetString());
+                    credentials = AzureKeyVaultS3WithHmacCredentials.DeserializeAzureKeyVaultS3WithHmacCredentials(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -146,7 +137,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new UnknownEndpointBaseProperties(endpointType, description, endpointKind, provisioningState, additionalBinaryDataProperties);
+            return new S3WithHmacEndpointUpdateProperties(endpointType, description, additionalBinaryDataProperties, credentials);
         }
     }
 }

@@ -9,62 +9,56 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 using Azure.ResourceManager.StorageMover;
 
 namespace Azure.ResourceManager.StorageMover.Models
 {
-    /// <summary> The properties of Azure MultiCloudConnector endpoint. </summary>
-    public partial class AzureMultiCloudConnectorEndpointProperties : EndpointBaseProperties, IJsonModel<AzureMultiCloudConnectorEndpointProperties>
+    /// <summary> The properties of S3WithHmac share endpoint. </summary>
+    public partial class S3WithHmacEndpointProperties : EndpointBaseProperties, IJsonModel<S3WithHmacEndpointProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="AzureMultiCloudConnectorEndpointProperties"/> for deserialization. </summary>
-        internal AzureMultiCloudConnectorEndpointProperties()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override EndpointBaseProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureMultiCloudConnectorEndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<S3WithHmacEndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAzureMultiCloudConnectorEndpointProperties(document.RootElement, options);
+                        return DeserializeS3WithHmacEndpointProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureMultiCloudConnectorEndpointProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(S3WithHmacEndpointProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureMultiCloudConnectorEndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<S3WithHmacEndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageMoverContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AzureMultiCloudConnectorEndpointProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(S3WithHmacEndpointProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AzureMultiCloudConnectorEndpointProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<S3WithHmacEndpointProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AzureMultiCloudConnectorEndpointProperties IPersistableModel<AzureMultiCloudConnectorEndpointProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => (AzureMultiCloudConnectorEndpointProperties)PersistableModelCreateCore(data, options);
+        S3WithHmacEndpointProperties IPersistableModel<S3WithHmacEndpointProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => (S3WithHmacEndpointProperties)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AzureMultiCloudConnectorEndpointProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<S3WithHmacEndpointProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AzureMultiCloudConnectorEndpointProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<S3WithHmacEndpointProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -75,38 +69,54 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureMultiCloudConnectorEndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<S3WithHmacEndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureMultiCloudConnectorEndpointProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(S3WithHmacEndpointProperties)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("multiCloudConnectorId"u8);
-            writer.WriteStringValue(MultiCloudConnectorId);
-            writer.WritePropertyName("awsS3BucketId"u8);
-            writer.WriteStringValue(AwsS3BucketId);
+            if (Optional.IsDefined(Credentials))
+            {
+                writer.WritePropertyName("credentials"u8);
+                writer.WriteObjectValue(Credentials, options);
+            }
+            if (Optional.IsDefined(SourceUri))
+            {
+                writer.WritePropertyName("sourceUri"u8);
+                writer.WriteStringValue(SourceUri);
+            }
+            if (Optional.IsDefined(SourceType))
+            {
+                writer.WritePropertyName("sourceType"u8);
+                writer.WriteStringValue(SourceType.Value.ToString());
+            }
+            if (Optional.IsDefined(OtherSourceTypeDescription))
+            {
+                writer.WritePropertyName("otherSourceTypeDescription"u8);
+                writer.WriteStringValue(OtherSourceTypeDescription);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AzureMultiCloudConnectorEndpointProperties IJsonModel<AzureMultiCloudConnectorEndpointProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AzureMultiCloudConnectorEndpointProperties)JsonModelCreateCore(ref reader, options);
+        S3WithHmacEndpointProperties IJsonModel<S3WithHmacEndpointProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (S3WithHmacEndpointProperties)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override EndpointBaseProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureMultiCloudConnectorEndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<S3WithHmacEndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureMultiCloudConnectorEndpointProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(S3WithHmacEndpointProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAzureMultiCloudConnectorEndpointProperties(document.RootElement, options);
+            return DeserializeS3WithHmacEndpointProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AzureMultiCloudConnectorEndpointProperties DeserializeAzureMultiCloudConnectorEndpointProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static S3WithHmacEndpointProperties DeserializeS3WithHmacEndpointProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -117,8 +127,10 @@ namespace Azure.ResourceManager.StorageMover.Models
             EndpointKind? endpointKind = default;
             StorageMoverProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            ResourceIdentifier multiCloudConnectorId = default;
-            ResourceIdentifier awsS3BucketId = default;
+            AzureKeyVaultS3WithHmacCredentials credentials = default;
+            string sourceUri = default;
+            S3WithHmacSourceType? sourceType = default;
+            string otherSourceTypeDescription = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("endpointType"u8))
@@ -149,14 +161,32 @@ namespace Azure.ResourceManager.StorageMover.Models
                     provisioningState = new StorageMoverProvisioningState(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("multiCloudConnectorId"u8))
+                if (prop.NameEquals("credentials"u8))
                 {
-                    multiCloudConnectorId = new ResourceIdentifier(prop.Value.GetString());
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    credentials = AzureKeyVaultS3WithHmacCredentials.DeserializeAzureKeyVaultS3WithHmacCredentials(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("awsS3BucketId"u8))
+                if (prop.NameEquals("sourceUri"u8))
                 {
-                    awsS3BucketId = new ResourceIdentifier(prop.Value.GetString());
+                    sourceUri = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("sourceType"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sourceType = new S3WithHmacSourceType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("otherSourceTypeDescription"u8))
+                {
+                    otherSourceTypeDescription = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -164,14 +194,16 @@ namespace Azure.ResourceManager.StorageMover.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AzureMultiCloudConnectorEndpointProperties(
+            return new S3WithHmacEndpointProperties(
                 endpointType,
                 description,
                 endpointKind,
                 provisioningState,
                 additionalBinaryDataProperties,
-                multiCloudConnectorId,
-                awsS3BucketId);
+                credentials,
+                sourceUri,
+                sourceType,
+                otherSourceTypeDescription);
         }
     }
 }

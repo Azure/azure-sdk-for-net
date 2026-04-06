@@ -30,11 +30,12 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <summary> Initializes a new instance of <see cref="AzureStorageBlobContainerEndpointProperties"/>. </summary>
         /// <param name="endpointType"> The Endpoint resource type. </param>
         /// <param name="description"> A description for the Endpoint. </param>
+        /// <param name="endpointKind"> The Endpoint resource kind source or target. </param>
         /// <param name="provisioningState"> The provisioning state of this resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="storageAccountResourceId"> The Azure Resource ID of the storage account that is the target destination. </param>
         /// <param name="blobContainerName"> The name of the Storage blob container that is the target destination. </param>
-        internal AzureStorageBlobContainerEndpointProperties(EndpointType endpointType, string description, StorageMoverProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties, string storageAccountResourceId, string blobContainerName) : base(endpointType, description, provisioningState, additionalBinaryDataProperties)
+        internal AzureStorageBlobContainerEndpointProperties(EndpointType endpointType, string description, EndpointKind? endpointKind, StorageMoverProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties, string storageAccountResourceId, string blobContainerName) : base(endpointType, description, endpointKind, provisioningState, additionalBinaryDataProperties)
         {
             StorageAccountResourceId = storageAccountResourceId;
             BlobContainerName = blobContainerName;

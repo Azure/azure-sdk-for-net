@@ -30,12 +30,13 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <summary> Initializes a new instance of <see cref="NfsMountEndpointProperties"/>. </summary>
         /// <param name="endpointType"> The Endpoint resource type. </param>
         /// <param name="description"> A description for the Endpoint. </param>
+        /// <param name="endpointKind"> The Endpoint resource kind source or target. </param>
         /// <param name="provisioningState"> The provisioning state of this resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="host"> The host name or IP address of the server exporting the file system. </param>
         /// <param name="nfsVersion"> The NFS protocol version. </param>
         /// <param name="export"> The directory being exported from the server. </param>
-        internal NfsMountEndpointProperties(EndpointType endpointType, string description, StorageMoverProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties, string host, NfsVersion? nfsVersion, string export) : base(endpointType, description, provisioningState, additionalBinaryDataProperties)
+        internal NfsMountEndpointProperties(EndpointType endpointType, string description, EndpointKind? endpointKind, StorageMoverProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties, string host, NfsVersion? nfsVersion, string export) : base(endpointType, description, endpointKind, provisioningState, additionalBinaryDataProperties)
         {
             Host = host;
             NfsVersion = nfsVersion;

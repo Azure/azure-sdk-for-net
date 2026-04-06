@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.StorageMover
         {
             TryGetApiVersion(ResourceType, out string jobRunApiVersion);
             _jobRunsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageMover", ResourceType.Namespace, Diagnostics);
-            _jobRunsRestClient = new JobRuns(_jobRunsClientDiagnostics, Pipeline, Endpoint, jobRunApiVersion ?? "2025-08-01");
+            _jobRunsRestClient = new JobRuns(_jobRunsClientDiagnostics, Pipeline, Endpoint, jobRunApiVersion ?? "2025-12-01");
             ValidateResourceId(id);
         }
 
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.StorageMover
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <description> 2025-12-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.StorageMover
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <description> 2025-12-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
