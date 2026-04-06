@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     public readonly partial struct ClusterScanRuntimeParametersScanActivity : IEquatable<ClusterScanRuntimeParametersScanActivity>
     {
         private readonly string _value;
+        /// <summary> Scan the cluster. </summary>
+        private const string ScanValue = "Scan";
+        /// <summary> Do not scan the cluster. </summary>
+        private const string SkipValue = "Skip";
 
         /// <summary> Initializes a new instance of <see cref="ClusterScanRuntimeParametersScanActivity"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ClusterScanRuntimeParametersScanActivity(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string ScanValue = "Scan";
-        private const string SkipValue = "Skip";
-
-        /// <summary> Scan. </summary>
+        /// <summary> Scan the cluster. </summary>
         public static ClusterScanRuntimeParametersScanActivity Scan { get; } = new ClusterScanRuntimeParametersScanActivity(ScanValue);
-        /// <summary> Skip. </summary>
+
+        /// <summary> Do not scan the cluster. </summary>
         public static ClusterScanRuntimeParametersScanActivity Skip { get; } = new ClusterScanRuntimeParametersScanActivity(SkipValue);
+
         /// <summary> Determines if two <see cref="ClusterScanRuntimeParametersScanActivity"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ClusterScanRuntimeParametersScanActivity left, ClusterScanRuntimeParametersScanActivity right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ClusterScanRuntimeParametersScanActivity"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ClusterScanRuntimeParametersScanActivity left, ClusterScanRuntimeParametersScanActivity right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ClusterScanRuntimeParametersScanActivity"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ClusterScanRuntimeParametersScanActivity"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ClusterScanRuntimeParametersScanActivity(string value) => new ClusterScanRuntimeParametersScanActivity(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ClusterScanRuntimeParametersScanActivity"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ClusterScanRuntimeParametersScanActivity?(string value) => value == null ? null : new ClusterScanRuntimeParametersScanActivity(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ClusterScanRuntimeParametersScanActivity other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ClusterScanRuntimeParametersScanActivity other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

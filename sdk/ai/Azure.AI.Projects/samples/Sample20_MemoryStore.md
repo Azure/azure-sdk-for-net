@@ -25,7 +25,7 @@ MemoryStoreDefaultDefinition memoryStoreDefinition = new(
     chatModel: modelDeploymentName,
     embeddingModel: embeddingDeploymentName
 );
-memoryStoreDefinition.Options = new(userProfileEnabled: true, chatSummaryEnabled: true);
+memoryStoreDefinition.Options = new(isUserProfileEnabled: true, isChatSummaryEnabled: true);
 MemoryStore memoryStore = projectClient.MemoryStores.CreateMemoryStore(
     name: "testMemoryStore",
     definition: memoryStoreDefinition,
@@ -40,7 +40,7 @@ MemoryStoreDefaultDefinition memoryStoreDefinition = new(
     chatModel: modelDeploymentName,
     embeddingModel: embeddingDeploymentName
 );
-memoryStoreDefinition.Options = new(userProfileEnabled: true, chatSummaryEnabled: true);
+memoryStoreDefinition.Options = new(isUserProfileEnabled: true, isChatSummaryEnabled: true);
 MemoryStore memoryStore = await projectClient.MemoryStores.CreateMemoryStoreAsync(
     name: "testMemoryStore",
     definition: memoryStoreDefinition,
@@ -166,14 +166,14 @@ Console.WriteLine("==End of memory tool output.==");
 Synchronous sample:
 ```C# Snippet:Sample_DeleteScope_MemoryStore_Sync
 MemoryStoreDeleteScopeResponse deleteScopeResponse = projectClient.MemoryStores.DeleteScope(name: memoryStore.Name, scope: "Flower");
-string status = deleteScopeResponse.Deleted ? "" : " not";
+string status = deleteScopeResponse.IsDeleted ? "" : " not";
 Console.WriteLine($"The scope {deleteScopeResponse.Name} was{status} deleted.");
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_DeleteScope_MemoryStore_Async
 MemoryStoreDeleteScopeResponse deleteScopeResponse = await projectClient.MemoryStores.DeleteScopeAsync(name: memoryStore.Name, scope: "Flower");
-string status = deleteScopeResponse.Deleted ? "" : " not";
+string status = deleteScopeResponse.IsDeleted ? "" : " not";
 Console.WriteLine($"The scope {deleteScopeResponse.Name} was{status} deleted.");
 ```
 
@@ -182,13 +182,13 @@ Console.WriteLine($"The scope {deleteScopeResponse.Name} was{status} deleted.");
 Synchronous sample:
 ```C# Snippet:Sample_Cleanup_MemoryStore_Sync
 DeleteMemoryStoreResponse deleteResponse = projectClient.MemoryStores.DeleteMemoryStore(name: memoryStore.Name);
-status = deleteResponse.Deleted ? "" : " not";
+status = deleteResponse.IsDeleted ? "" : " not";
 Console.WriteLine($"The memory store {deleteResponse.Name} was{status} deleted.");
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_Cleanup_MemoryStore_Async
 DeleteMemoryStoreResponse deleteResponse = await projectClient.MemoryStores.DeleteMemoryStoreAsync(name: memoryStore.Name);
-status = deleteResponse.Deleted ? "" : " not";
+status = deleteResponse.IsDeleted ? "" : " not";
 Console.WriteLine($"The memory store {deleteResponse.Name} was{status} deleted.");
 ```

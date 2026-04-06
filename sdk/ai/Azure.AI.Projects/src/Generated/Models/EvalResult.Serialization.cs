@@ -83,7 +83,7 @@ namespace Azure.AI.Projects.Evaluation
             writer.WritePropertyName("score"u8);
             writer.WriteNumberValue(Score);
             writer.WritePropertyName("passed"u8);
-            writer.WriteBooleanValue(Passed);
+            writer.WriteBooleanValue(IsPassed);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -129,7 +129,7 @@ namespace Azure.AI.Projects.Evaluation
             string name = default;
             string @type = default;
             float score = default;
-            bool passed = default;
+            bool isPassed = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -150,7 +150,7 @@ namespace Azure.AI.Projects.Evaluation
                 }
                 if (prop.NameEquals("passed"u8))
                 {
-                    passed = prop.Value.GetBoolean();
+                    isPassed = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -158,7 +158,7 @@ namespace Azure.AI.Projects.Evaluation
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new EvalResult(name, @type, score, passed, additionalBinaryDataProperties);
+            return new EvalResult(name, @type, score, isPassed, additionalBinaryDataProperties);
         }
     }
 }

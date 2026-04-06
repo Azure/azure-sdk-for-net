@@ -41,7 +41,7 @@ public class PromptAgentSamples : ProjectsOpenAITestBase
             Instructions = "You are a foo bar agent. In EVERY response you give, ALWAYS include both `foo` and `bar` strings somewhere in the response.",
         };
 
-        ProjectsAgentVersion newAgentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+        ProjectsAgentVersion newAgentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             agentName: FOUNDRY_AGENT_NAME,
             options: new(agentDefinition));
         Console.WriteLine($"Created new agent version: {newAgentVersion.Name}");
@@ -69,7 +69,7 @@ public class PromptAgentSamples : ProjectsOpenAITestBase
         {
             Instructions = "You are a physics teacher with a sense of humor.",
         };
-        ProjectsAgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+        ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             agentName: "myAgent",
             options: new(agentDefinition)
         );
@@ -94,7 +94,7 @@ public class PromptAgentSamples : ProjectsOpenAITestBase
         Console.WriteLine(response.GetOutputText());
         #endregion
         #region Snippet:CleanUp_Basic_Async
-        await projectClient.Agents.DeleteAgentAsync(agentName: "myAgent");
+        await projectClient.AgentAdministrationClient.DeleteAgentAsync(agentName: "myAgent");
         #endregion
     }
 
@@ -118,7 +118,7 @@ public class PromptAgentSamples : ProjectsOpenAITestBase
         {
             Instructions = "You are a physics teacher with a sense of humor.",
         };
-        ProjectsAgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
+        ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.CreateAgentVersion(
             agentName: "myAgent",
             options: new(agentDefinition)
         );
@@ -135,7 +135,7 @@ public class PromptAgentSamples : ProjectsOpenAITestBase
         responseOptions.PreviousResponseId = response.Id;
         response = responseClient.CreateResponse(responseOptions);
         Console.WriteLine(response.GetOutputText());
-        projectClient.Agents.DeleteAgent(agentName: "myAgent");
+        projectClient.AgentAdministrationClient.DeleteAgent(agentName: "myAgent");
     }
 
     [Test]
@@ -159,8 +159,8 @@ public class PromptAgentSamples : ProjectsOpenAITestBase
         #region Snippet:ConversationClient
         CreateResponseOptions CreateResponseOptions = new();
         // Optionally, use a conversation to automatically maintain state between calls.
-        ProjectConversation conversation = await projectClient.OpenAI.GetProjectConversationsClient().CreateProjectConversationAsync();
-        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(FOUNDRY_AGENT_NAME, conversation);
+        ProjectConversation conversation = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationAsync();
+        ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(FOUNDRY_AGENT_NAME, conversation);
         #endregion
         List<ResponseItem> items = [ResponseItem.CreateUserMessageItem("Tell me a one-line story.")];
         ResponseResult response = await responseClient.CreateResponseAsync("Tell me a one-line story.");
@@ -198,7 +198,7 @@ public class PromptAgentSamples : ProjectsOpenAITestBase
         {
             Instructions = "You are a foo bar agent. In EVERY response you give, ALWAYS include both `foo` and `bar` strings somewhere in the response.",
         };
-        ProjectsAgentVersion newAgentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+        ProjectsAgentVersion newAgentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             agentName: FOUNDRY_AGENT_NAME,
             options: new(agentDefinition));
 
@@ -211,20 +211,20 @@ public class PromptAgentSamples : ProjectsOpenAITestBase
             Items = { ResponseItem.CreateSystemMessageItem("Your preferred genre of story today is: horror.") },
             Metadata = { ["foo"] = "bar" },
         };
-        ProjectConversation conversation = await projectClient.OpenAI.GetProjectConversationsClient().CreateProjectConversationAsync(conversationOptions);
+        ProjectConversation conversation = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationAsync(conversationOptions);
 
         //
         // Add items to an existing conversation to supplement the interaction state
         //
         string EXISTING_CONVERSATION_ID = conversation.Id;
 
-        _ = await projectClient.OpenAI.GetProjectConversationsClient().CreateProjectConversationItemsAsync(
+        _ = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationItemsAsync(
             EXISTING_CONVERSATION_ID,
             [ResponseItem.CreateSystemMessageItem(inputTextContent: "Story theme to use: department of licensing.")]);
         //
         // Use the agent and conversation in a response
         //
-        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(FOUNDRY_AGENT_NAME);
+        ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(FOUNDRY_AGENT_NAME);
         CreateResponseOptions responseOptions = new()
         {
             AgentConversationId = EXISTING_CONVERSATION_ID,
@@ -261,7 +261,7 @@ public class PromptAgentSamples : ProjectsOpenAITestBase
         #region Snippet:ErrorHandling
         try
         {
-            ProjectsAgentVersion agent = await projectClient.Agents.GetAgentVersionAsync(
+            ProjectsAgentVersion agent = await projectClient.AgentAdministrationClient.GetAgentVersionAsync(
                 agentName: "agent_which_dies_not_exist", agentVersion: "1");
         }
         catch (ClientResultException e) when (e.Status == 404)

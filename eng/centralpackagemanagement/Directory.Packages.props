@@ -103,7 +103,7 @@
     <!-- Azure SDK packages -->
     <PackageVersion Include="Azure.AI.Inference" Version="1.0.0-beta.5" />
     <PackageVersion Include="Azure.AI.OpenAI" Version="2.0.0" />
-    <PackageVersion Include="Azure.AI.Projects" Version="1.1.0" />
+    <PackageVersion Include="Azure.AI.Projects" Version="2.0.0" />
     <PackageVersion Include="Azure.Communication.Common" Version="1.4.0" />
     <PackageVersion Include="Azure.Core" Version="1.52.0" />
     <PackageVersion Include="Azure.Core.Amqp" Version="1.3.1" />
@@ -117,7 +117,7 @@
     <PackageVersion Include="Azure.Messaging.EventHubs" Version="5.12.2" />
     <PackageVersion Include="Azure.Messaging.ServiceBus" Version="7.20.1" />
     <PackageVersion Include="Azure.Messaging.WebPubSub" Version="1.6.0" />
-    <PackageVersion Include="Azure.Monitor.OpenTelemetry.Exporter" Version="1.5.0" />
+    <PackageVersion Include="Azure.Monitor.OpenTelemetry.Exporter" Version="1.7.0" />
     <PackageVersion Include="Azure.Monitor.Query.Logs" Version="1.0.0" />
     <PackageVersion Include="Azure.ResourceManager" Version="1.14.0" />
     <PackageVersion Include="Azure.ResourceManager.ApiManagement" Version="1.3.0" />
@@ -145,6 +145,7 @@
     <PackageVersion Include="Azure.ResourceManager.Kusto" Version="1.6.2" />
     <PackageVersion Include="Azure.ResourceManager.Logic" Version="1.1.0" />
     <PackageVersion Include="Azure.ResourceManager.ManagedServiceIdentities" Version="1.4.0" />
+    <PackageVersion Include="Azure.ResourceManager.Monitor" Version="1.3.1" />
     <PackageVersion Include="Azure.ResourceManager.Network" Version="1.15.0" />
     <PackageVersion Include="Azure.ResourceManager.OperationalInsights" Version="1.3.1" />
     <PackageVersion Include="Azure.ResourceManager.PostgreSql" Version="1.4.1" />
@@ -154,9 +155,10 @@
     <PackageVersion Include="Azure.ResourceManager.Search" Version="1.3.0" />
     <PackageVersion Include="Azure.ResourceManager.SecurityCenter" Version="1.1.0" />
     <PackageVersion Include="Azure.ResourceManager.ServiceBus" Version="1.1.0" />
+    <PackageVersion Include="Azure.ResourceManager.ServiceGroups" Version="1.0.0-beta.1" />
     <PackageVersion Include="Azure.ResourceManager.SignalR" Version="1.1.4" />
     <PackageVersion Include="Azure.ResourceManager.Sql" Version="1.3.0" />
-    <PackageVersion Include="Azure.ResourceManager.Storage" Version="1.6.1" />
+    <PackageVersion Include="Azure.ResourceManager.Storage" Version="1.6.2" />
     <PackageVersion Include="Azure.ResourceManager.WebPubSub" Version="1.2.0" />
     <PackageVersion Include="Azure.Search.Documents" Version="11.7.0" />
     <PackageVersion Include="Azure.Security.KeyVault.Certificates" Version="4.8.0" />
@@ -185,7 +187,7 @@
     <PackageVersion Include="Microsoft.Azure.WebPubSub.Common" Version="1.5.0" />
     <PackageVersion Include="Microsoft.Identity.Client" Version="4.83.1" />
     <PackageVersion Include="Microsoft.Identity.Client.Extensions.Msal" Version="4.83.1" />
-    <PackageVersion Include="Microsoft.Identity.Client.Broker" Version="4.83.1" />
+    <PackageVersion Include="Microsoft.Identity.Client.Broker" Version="4.83.3" />
     <PackageVersion Include="Microsoft.IdentityModel.Protocols.OpenIdConnect" Version="8.15.0" />
     <PackageVersion Include="Microsoft.IdentityModel.Tokens" Version="8.15.0" />
     <PackageVersion Include="System.IdentityModel.Tokens.Jwt" Version="8.15.0" />

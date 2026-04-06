@@ -370,12 +370,10 @@ export function buildArmProviderSchema(
 
     // Emit diagnostic for resources without resourceIdPattern
     if (metadata.resourceIdPattern === "" && model) {
-      sdkContext.logger.reportDiagnostic({
+      sdkContext.program.reportDiagnostic({
         code: "general-warning",
-        messageId: "default",
-        format: {
-          message: `Cannot figure out resourceIdPattern from model ${model.name}.`
-        },
+        severity: "warning",
+        message: `Cannot figure out resourceIdPattern from model ${model.name}.`,
         target: NoTarget
       });
     }
@@ -478,12 +476,10 @@ export function buildArmProviderSchema(
     if (!resourcesAfterFiltering.has(resource)) {
       const model = resourceModelMap.get(resource.resourceModelId);
       if (model) {
-        sdkContext.logger.reportDiagnostic({
+        sdkContext.program.reportDiagnostic({
           code: "general-warning",
-          messageId: "default",
-          format: {
-            message: `Resource ${model.name} does not have a Get/Read operation and is not a singleton. All operations will be added to parent resource if available, otherwise treated as non-resource methods.`
-          },
+          severity: "warning",
+          message: `Resource ${model.name} does not have a Get/Read operation and is not a singleton. All operations will be added to parent resource if available, otherwise treated as non-resource methods.`,
           target: NoTarget
         });
       }
@@ -914,7 +910,10 @@ function getPagingItemModelId(
 ): string | undefined {
   if (method.kind !== "paging" && method.kind !== "lropaging") return undefined;
   const responseType = method.response?.type;
-  if (responseType?.kind === "array" && responseType.valueType.kind === "model") {
+  if (
+    responseType?.kind === "array" &&
+    responseType.valueType.kind === "model"
+  ) {
     return (responseType.valueType as SdkModelType).crossLanguageDefinitionId;
   }
   return undefined;
@@ -945,12 +944,10 @@ function getResourceModelIdCore(
   if (model) {
     return model.crossLanguageDefinitionId;
   } else {
-    sdkContext.logger.reportDiagnostic({
+    sdkContext.program.reportDiagnostic({
       code: "general-error",
-      messageId: "default",
-      format: {
-        message: `Resource model not found for decorator ${decoratorName}`
-      },
+      severity: "error",
+      message: `Resource model not found for decorator ${decoratorName}`,
       target: NoTarget
     });
     return undefined;

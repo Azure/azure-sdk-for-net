@@ -71,7 +71,6 @@ namespace Azure.AI.Projects
     [ModelReaderWriterBuildable(typeof(EvaluationRunClusterInsightRequest))]
     [ModelReaderWriterBuildable(typeof(EvaluationRunClusterInsightResult))]
     [ModelReaderWriterBuildable(typeof(EvaluationScheduleTask))]
-    [ModelReaderWriterBuildable(typeof(EvaluationScheduleTaskEvalRun))]
     [ModelReaderWriterBuildable(typeof(EvaluationTarget))]
     [ModelReaderWriterBuildable(typeof(EvaluationTaxonomy))]
     [ModelReaderWriterBuildable(typeof(EvaluationTaxonomyInput))]

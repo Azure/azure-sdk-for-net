@@ -79,9 +79,9 @@ namespace Azure.AI.Projects.Evaluation
             writer.WritePropertyName("testingCriteria"u8);
             writer.WriteStringValue(TestingCriteria);
             writer.WritePropertyName("metric"u8);
-            writer.WriteStringValue(Metric);
+            writer.WriteStringValue(MetricName);
             writer.WritePropertyName("evaluator"u8);
-            writer.WriteStringValue(Evaluator);
+            writer.WriteStringValue(EvaluatorName);
             writer.WritePropertyName("baselineRunSummary"u8);
             writer.WriteObjectValue(BaselineRunSummary, options);
             writer.WritePropertyName("compareItems"u8);
@@ -134,8 +134,8 @@ namespace Azure.AI.Projects.Evaluation
                 return null;
             }
             string testingCriteria = default;
-            string metric = default;
-            string evaluator = default;
+            string metricName = default;
+            string evaluatorName = default;
             EvalRunResultSummary baselineRunSummary = default;
             IList<EvalRunResultCompareItem> compareItems = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -148,12 +148,12 @@ namespace Azure.AI.Projects.Evaluation
                 }
                 if (prop.NameEquals("metric"u8))
                 {
-                    metric = prop.Value.GetString();
+                    metricName = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("evaluator"u8))
                 {
-                    evaluator = prop.Value.GetString();
+                    evaluatorName = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("baselineRunSummary"u8))
@@ -178,8 +178,8 @@ namespace Azure.AI.Projects.Evaluation
             }
             return new EvalRunResultComparison(
                 testingCriteria,
-                metric,
-                evaluator,
+                metricName,
+                evaluatorName,
                 baselineRunSummary,
                 compareItems,
                 additionalBinaryDataProperties);

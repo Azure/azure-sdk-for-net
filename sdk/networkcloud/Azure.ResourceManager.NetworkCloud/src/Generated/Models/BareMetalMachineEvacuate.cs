@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     public readonly partial struct BareMetalMachineEvacuate : IEquatable<BareMetalMachineEvacuate>
     {
         private readonly string _value;
+        /// <summary> Evacuate workloads from the node when the bare metal machine is cordoned. </summary>
+        private const string TrueValue = "True";
+        /// <summary> Do not evacuate workloads from the node when the bare metal machine is cordoned. </summary>
+        private const string FalseValue = "False";
 
         /// <summary> Initializes a new instance of <see cref="BareMetalMachineEvacuate"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BareMetalMachineEvacuate(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string TrueValue = "True";
-        private const string FalseValue = "False";
-
-        /// <summary> True. </summary>
+        /// <summary> Evacuate workloads from the node when the bare metal machine is cordoned. </summary>
         public static BareMetalMachineEvacuate True { get; } = new BareMetalMachineEvacuate(TrueValue);
-        /// <summary> False. </summary>
+
+        /// <summary> Do not evacuate workloads from the node when the bare metal machine is cordoned. </summary>
         public static BareMetalMachineEvacuate False { get; } = new BareMetalMachineEvacuate(FalseValue);
+
         /// <summary> Determines if two <see cref="BareMetalMachineEvacuate"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BareMetalMachineEvacuate left, BareMetalMachineEvacuate right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BareMetalMachineEvacuate"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BareMetalMachineEvacuate left, BareMetalMachineEvacuate right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BareMetalMachineEvacuate"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BareMetalMachineEvacuate"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BareMetalMachineEvacuate(string value) => new BareMetalMachineEvacuate(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BareMetalMachineEvacuate"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BareMetalMachineEvacuate?(string value) => value == null ? null : new BareMetalMachineEvacuate(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BareMetalMachineEvacuate other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BareMetalMachineEvacuate other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

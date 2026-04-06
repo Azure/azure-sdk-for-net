@@ -116,7 +116,7 @@ public class Sample_ComputerUse : ProjectsOpenAITestBase
         var modelDeploymentName = TestEnvironment.COMPUTER_USE_DEPLOYMENT_NAME;
 #endif
         AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
-        OpenAIFileClient fileClient = projectClient.OpenAI.GetOpenAIFileClient();
+        OpenAIFileClient fileClient = projectClient.ProjectOpenAIClient.GetOpenAIFileClient();
         #endregion
         #region Snippet:Sample_ReadImageFilesToDictionaries_ComputerUse_Async
         Dictionary<string, string> screenshots = new() {
@@ -138,13 +138,13 @@ public class Sample_ComputerUse : ProjectsOpenAITestBase
                 ),
             }
         };
-        ProjectsAgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+        ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             agentName: "myAgent",
             options: new(agentDefinition)
         );
         #endregion
         #region Snippet:Sample_CreateResponse_ComputerUse_Async
-        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
+        ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(agentVersion.Name);
         CreateResponseOptions responseOptions = new()
         {
             TruncationMode = ResponseTruncationMode.Auto,
@@ -181,7 +181,7 @@ public class Sample_ComputerUse : ProjectsOpenAITestBase
         Console.WriteLine(response.GetOutputText());
         #endregion
         #region Snippet:Sample_Cleanup_ComputerUse_Async
-        await projectClient.Agents.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+        await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         foreach (string fileId in screenshots.Values)
         {
             await fileClient.DeleteFileAsync(fileId);
@@ -220,7 +220,7 @@ public class Sample_ComputerUse : ProjectsOpenAITestBase
         var modelDeploymentName = TestEnvironment.COMPUTER_USE_DEPLOYMENT_NAME;
 #endif
         AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
-        OpenAIFileClient fileClient = projectClient.OpenAI.GetOpenAIFileClient();
+        OpenAIFileClient fileClient = projectClient.ProjectOpenAIClient.GetOpenAIFileClient();
         #region Snippet:Sample_ReadImageFilesToDictionaries_ComputerUse_Sync
         Dictionary<string, string> screenshots = new() {
             { "browser_search", UploadImageFile(fileClient, "Assets/cua_browser_search.png")},
@@ -241,13 +241,13 @@ public class Sample_ComputerUse : ProjectsOpenAITestBase
                 ),
             }
         };
-        ProjectsAgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
+        ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.CreateAgentVersion(
             agentName: "myAgent",
             options: new(agentDefinition)
         );
         #endregion
         #region Snippet:Sample_CreateResponse_ComputerUse_Sync
-        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
+        ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(agentVersion.Name);
         CreateResponseOptions responseOptions = new()
         {
             TruncationMode = ResponseTruncationMode.Auto,
@@ -281,7 +281,7 @@ public class Sample_ComputerUse : ProjectsOpenAITestBase
         Console.WriteLine(response.GetOutputText());
         #endregion
         #region Snippet:Sample_Cleanup_ComputerUse_Sync
-        projectClient.Agents.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+        projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         foreach (string fileId in screenshots.Values)
         {
             fileClient.DeleteFile(fileId);

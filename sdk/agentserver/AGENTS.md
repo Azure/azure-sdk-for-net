@@ -84,12 +84,11 @@ principles conflict, resolve in this priority order:
 
 | Project | Path | Description |
 |---|---|---|
-| **Core** | `Azure.AI.AgentServer.Core/src/` | Shared hosting foundation: `AgentHost`, `AgentHostBuilder`, OpenTelemetry, user-agent header, health endpoint |
+| **Core** | `Azure.AI.AgentServer.Core/src/` | Shared foundation: `AgentHost`, `AgentHostBuilder`, OpenTelemetry, user-agent header, health endpoint |
 | **Core Tests** | `Azure.AI.AgentServer.Core/tests/` | NUnit tests for Core |
 | **Invocations** | `Azure.AI.AgentServer.Invocations/src/` | Invocations protocol: `InvocationHandler`, session resolution, client header forwarding |
 | **Invocations Tests** | `Azure.AI.AgentServer.Invocations/tests/` | NUnit tests for Invocations |
-| **Responses.Contracts** | `Azure.AI.AgentServer.Responses.Contracts/src/` | TypeSpec-generated model contracts for Responses protocol |
-| **Responses** | `Azure.AI.AgentServer.Responses/src/` | Responses protocol: hosting extensions, SSE streaming, handlers |
+| **Responses** | `Azure.AI.AgentServer.Responses/src/` | Responses protocol: TypeSpec-generated models, hosting extensions, SSE streaming, handlers |
 | **Responses Tests** | `Azure.AI.AgentServer.Responses/tests/` | NUnit tests for Responses |
 
 > **Removed**: The legacy `Azure.AI.AgentServer.Contracts` and
@@ -128,7 +127,6 @@ merge requirements enforced by CI, code review, and the Azure SDK architects.
 
 | Project type | Property to use | Example |
 |---|---|---|
-| Class libraries (Contracts) | `$(RequiredTargetFrameworks)` | `netstandard2.0;net8.0;net10.0` |
 | ASP.NET libraries (Core, Responses, Invocations) | `$(RequiredRunnableTargetFrameworks)` | `net8.0;net10.0` |
 | Test projects | Inherited from repo defaults | — |
 
@@ -145,9 +143,9 @@ string comparisons like `$(TargetFramework) != 'net462'`.
 
 | Mechanism | When to use | Example |
 |---|---|---|
-| `[assembly: SuppressMessage]` in `Suppression.cs` | Type-scoped rules (AZC0012) | `Responses.Contracts/src/Suppression.cs` |
+| `[assembly: SuppressMessage]` in `Suppression.cs` | Type-scoped rules (AZC0012) | `Responses/src/Suppression.cs` |
 | `#pragma warning disable` in file header | Generated file rules (AZC0014) | Emitted by `generate-validators.py` |
-| `<DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>` | Projects that are 90%+ generated code | `Responses.Contracts` csproj |
+| `<DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>` | Projects that are 90%+ generated code | `Responses` csproj |
 | `Generated/Directory.Build.props` | Suppress rules for entire `Generated/` folder | StyleCop, CS1591 in generated code |
 
 **Test `.csproj` NoWarn** — match the repo template exactly: `<NoWarn>$(NoWarn);CS1591</NoWarn>`. No extra codes. If a test triggers an analyzer, fix the code rather than suppressing.
@@ -345,8 +343,32 @@ must include `<ProjectReference>` entries for all packages used.
 | Test Project | Extra References Needed |
 |---|---|
 | Responses.Tests | Core (`AgentHost.CreateBuilder`) |
+
+### E2E tests for sample handlers (mandatory)
+
+Compiled snippet tests only verify that sample code **compiles** — they do not
+run the handler or send HTTP requests. Every sample handler **must** also have
+a matching end-to-end test in `<Package>/tests/SampleEndToEndTests.cs` that:
+
+1. Registers the actual handler class from the snippet file into an in-memory
+   test server (via `TestWebApplicationFactory` or `WebApplication.CreateBuilder()`
+   + `UseTestServer()`).
+2. Sends a real HTTP request to the handler endpoint.
+3. Asserts on response status, content, headers, or SSE event structure.
+
+| Package | E2E test file | Pattern |
+|---|---|---|
+| Responses | `tests/SampleEndToEndTests.cs` | `TestWebApplicationFactory` with `configureTestServices` to register the snippet handler |
+| Invocations | `tests/SampleEndToEndTests.cs` | `WebApplication.CreateBuilder()` + `UseTestServer()` + `AddScoped<InvocationHandler, T>` |
+| Core | `tests/SampleEndToEndTests.cs` | `AgentHost.CreateBuilder()` + `UseTestServer()` + `RegisterProtocol` |
+
+**When adding or modifying a sample:**
+- Add/update the snippet test (compilation guard) **and** the E2E test (behavioral guard).
+- Run `dotnet test --filter SampleEndToEndTests` on the relevant test project before committing.
+- If a sample handler uses DI (e.g., `IKnowledgeBase`), register the mock/test
+  implementation in the E2E test's service configuration.
 | Invocations.Tests | Core (`AgentHost.CreateBuilder`) |
-| Core.Tests | Responses (`IResponseHandler`, `ResponseEventStream`), Invocations |
+| Core.Tests | Responses (`ResponseHandler`, `ResponseEventStream`), Invocations |
 
 ---
 
@@ -382,7 +404,7 @@ avoid repeating them.
 
 | Mistake | Fix |
 |---|---|
-| `InternalsVisibleTo` from Contracts → Responses | Eliminate by adding `@@usage(..., Usage.input \| Usage.output)` in `client.tsp` or using public model factory |
+| `InternalsVisibleTo` from library → tests only | Ensure internal types use `@@usage(..., Usage.input \| Usage.output)` in `client.tsp` or public model factory for external consumers |
 
 ### 5.5 Documentation mistakes
 
@@ -417,6 +439,15 @@ avoid repeating them.
 | `build/` directory not committed (root `.gitignore`) | Use `git add -f` for `build/` and `buildTransitive/` props |
 | Not testing CI snippet build locally | Always run `dotnet build /p:BuildSnippets=true` before pushing |
 | CI "Analyze PRBatch" / "Set diagnostic arguments" flake | Repo-wide infrastructure issue; not caused by our changes; retry |
+| Using `git rebase` | **Always use `git merge`**, never rebase. This is a strict project rule. |
+| Running piecemeal generation steps (`tsp compile`, `npx` individually) | **Always use the full pipeline script** (e.g., `Generate-Contracts.ps1`). Never execute individual steps — the script handles sequencing, cleanup, and copyright headers. |
+
+### 5.9 External SDK verification
+
+| Mistake | Fix |
+|---|---|
+| Guessing external SDK API names (method names, property names, enum values) | **Decompile the actual SDK assembly** to verify names before writing code. Use `ilspycmd` or equivalent. Never guess — the OpenAI SDK renames and reshapes types from the spec. |
+| Trusting TypeSpec-generated type names without investigation when interop issues arise | Azure TypeSpec is intentionally a superset of OpenAI \u2014 extra types are expected. But when a type causes **interop issues or contradicts the spec description**, investigate whether it is an intentional extension or an authoring mistake. See Responses `AGENTS.md` \u00a75 for the `output_message` case study. || Assuming the correct resolution for OpenAI compat conflicts | **Always confirm with the user** before making TypeSpec (`client.tsp`), service-layer, or wire-format changes to resolve an OpenAI compat conflict. Present findings and proposed actions for approval — do not assume correctness. The user has domain knowledge about intentional vs. unintentional Azure TypeSpec deviations. || Bulk `sed` renames without verification | After any bulk text replacement, **always run a second-pass grep sweep** to verify zero remaining old references. Build immediately after to catch type/parameter mismatches that text replacement cannot detect. |
 
 ---
 
@@ -457,6 +488,10 @@ Do **not** duplicate repo-wide rules here. Consult these canonical sources:
 - Hard-code target framework monikers in `.csproj` (see §2.2).
 - Use `#if SNIPPET` blocks in snippet test files (see §4).
 - Add alpha/preview packages to global package management (see §2.4).
+- Use `git rebase` — always use `git merge` (see §5.8).
+- Run generation steps individually — always use the full pipeline script (see §5.8).
+- Guess external SDK API names — decompile and verify (see §5.9).
+- Assume the correct fix for OpenAI compat conflicts — always confirm with the user first (see §5.9).
 
 ---
 
@@ -469,3 +504,14 @@ Do **not** duplicate repo-wide rules here. Consult these canonical sources:
 - All PRs and code reviews must verify compliance with these principles.
 - Amendments require: (1) written proposal with rationale, (2) update to any affected
   docs for consistency.
+
+### 8.1 Continuous learning (MANDATORY)
+
+This `AGENTS.md` (and its per-protocol children) should be a **living document** that captures generalized patterns discovered during development sessions. When the user corrects the agent or suggests a reusable pattern:
+
+1. **Recognize** generalized lessons that would benefit future sessions (not one-off fixes).
+2. **Do NOT update AGENTS.md automatically.** At the end of the session, propose the specific additions to the user — explain what you learned, where you would add it, and why it is generalizable.
+3. **Seek explicit confirmation** from the user before making any edits. Ask clarifying questions if the scope or framing is unclear.
+4. **Only after user approval**, add the rule to the appropriate `AGENTS.md` file(s) with clear context.
+
+This ensures AGENTS.md stays accurate and reflects the user's intent, not the agent's assumptions.

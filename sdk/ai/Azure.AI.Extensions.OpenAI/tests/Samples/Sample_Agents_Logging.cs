@@ -142,14 +142,14 @@ public class SampleAgentsLogging : ProjectsOpenAITestBase
         {
             Instructions = "You are a physics teacher with a sense of humor.",
         };
-        ProjectsAgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+        ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             agentName: "myAgent",
             options: new(agentDefinition)
         );
         #endregion
         #region Snippet:Sample_CreateResponseBasic_AgentsLogging_Async
         var agentReference = new AgentReference(name: agentVersion.Name);
-        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentReference);
+        ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(agentReference);
         CreateResponseOptions responseOptions = new()
         {
             InputItems = { ResponseItem.CreateUserMessageItem("Write the proof of the intermediate value theorem.") }
@@ -158,7 +158,7 @@ public class SampleAgentsLogging : ProjectsOpenAITestBase
         Console.WriteLine(response.GetOutputText());
         #endregion
         #region Snippet:CleanUp_AgentsLogging_Async
-        await projectClient.Agents.DeleteAgentAsync(agentName: "myAgent");
+        await projectClient.AgentAdministrationClient.DeleteAgentAsync(agentName: "myAgent");
         #endregion
     }
 
@@ -184,14 +184,14 @@ public class SampleAgentsLogging : ProjectsOpenAITestBase
         {
             Instructions = "You are a physics teacher with a sense of humor.",
         };
-        ProjectsAgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
+        ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.CreateAgentVersion(
             agentName: "myAgent",
             options: new(agentDefinition)
         );
         #endregion
         #region Snippet:Sample_CreateResponseBasic_AgentsLogging_Sync
         var agentReference = new AgentReference(name: agentVersion.Name);
-        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentReference);
+        ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(agentReference);
         CreateResponseOptions responseOptions = new()
         {
             InputItems = { ResponseItem.CreateUserMessageItem("Write the proof of the intermediate value theorem.") }
@@ -200,7 +200,7 @@ public class SampleAgentsLogging : ProjectsOpenAITestBase
         Console.WriteLine(response.GetOutputText());
         #endregion
         #region Snippet:CleanUp_AgentsLogging_Sync
-        projectClient.Agents.DeleteAgent(agentName: "myAgent");
+        projectClient.AgentAdministrationClient.DeleteAgent(agentName: "myAgent");
         #endregion
     }
 
