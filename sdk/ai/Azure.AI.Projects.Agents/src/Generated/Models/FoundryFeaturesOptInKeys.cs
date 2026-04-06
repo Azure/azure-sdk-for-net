@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Agents
 {
     /// <summary></summary>
     public enum FoundryFeaturesOptInKeys

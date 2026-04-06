@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects
 {
     /// <summary> The LocalSkillParam. </summary>
-    public partial class LocalSkillParam
+    internal partial class LocalSkillParam
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -43,12 +43,12 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> The name of the skill. </summary>
-        public string Name { get; set; }
+        public string Name { get; }
 
         /// <summary> The description of the skill. </summary>
-        public string Description { get; set; }
+        public string Description { get; }
 
         /// <summary> The path to the directory containing the skill. </summary>
-        public string Path { get; set; }
+        public string Path { get; }
     }
 }

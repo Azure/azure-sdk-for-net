@@ -4,7 +4,7 @@
 
 using System;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Agents
 {
     internal static partial class FoundryFeaturesOptInKeysExtensions
     {

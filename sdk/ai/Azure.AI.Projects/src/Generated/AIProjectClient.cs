@@ -36,7 +36,6 @@ namespace Azure.AI.Projects
         private ProjectInsights _cachedProjectInsights;
         private ProjectSchedules _cachedProjectSchedules;
         private AIProjectMemoryStores _cachedAIProjectMemoryStores;
-        private ProjectToolboxes _cachedProjectToolboxes;
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public ClientPipeline Pipeline { get; }
@@ -45,12 +44,6 @@ namespace Azure.AI.Projects
         public virtual AIProjectMemoryStores GetAIProjectMemoryStoresClient()
         {
             return Volatile.Read(ref _cachedAIProjectMemoryStores) ?? Interlocked.CompareExchange(ref _cachedAIProjectMemoryStores, new AIProjectMemoryStores(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAIProjectMemoryStores;
-        }
-
-        /// <summary> Initializes a new instance of ProjectToolboxes. </summary>
-        public virtual ProjectToolboxes GetProjectToolboxesClient()
-        {
-            return Volatile.Read(ref _cachedProjectToolboxes) ?? Interlocked.CompareExchange(ref _cachedProjectToolboxes, new ProjectToolboxes(Pipeline, _endpoint, _apiVersion), null) ?? _cachedProjectToolboxes;
         }
     }
 }

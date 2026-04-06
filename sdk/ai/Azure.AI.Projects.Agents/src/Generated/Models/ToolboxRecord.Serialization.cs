@@ -3,63 +3,72 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Agents
 {
-    /// <summary> The LocalSkillParam. </summary>
-    internal partial class LocalSkillParam : IJsonModel<LocalSkillParam>
+    /// <summary> A toolbox that stores reusable tool definitions for agents. </summary>
+    public partial class ToolboxRecord : IJsonModel<ToolboxRecord>
     {
-        /// <summary> Initializes a new instance of <see cref="LocalSkillParam"/> for deserialization. </summary>
-        internal LocalSkillParam()
+        /// <summary> Initializes a new instance of <see cref="ToolboxRecord"/> for deserialization. </summary>
+        internal ToolboxRecord()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual LocalSkillParam PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ToolboxRecord PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LocalSkillParam>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ToolboxRecord>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeLocalSkillParam(document.RootElement, options);
+                        return DeserializeToolboxRecord(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LocalSkillParam)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ToolboxRecord)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LocalSkillParam>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ToolboxRecord>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureAIProjectsAgentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(LocalSkillParam)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ToolboxRecord)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<LocalSkillParam>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ToolboxRecord>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        LocalSkillParam IPersistableModel<LocalSkillParam>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ToolboxRecord IPersistableModel<ToolboxRecord>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<LocalSkillParam>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ToolboxRecord>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="ToolboxRecord"/> from. </param>
+        public static explicit operator ToolboxRecord(ClientResult result)
+        {
+            PipelineResponse response = result.GetRawResponse();
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeToolboxRecord(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<LocalSkillParam>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ToolboxRecord>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -70,17 +79,17 @@ namespace Azure.AI.Projects
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LocalSkillParam>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ToolboxRecord>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LocalSkillParam)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ToolboxRecord)} does not support writing '{format}' format.");
             }
+            writer.WritePropertyName("id"u8);
+            writer.WriteStringValue(Id);
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("description"u8);
-            writer.WriteStringValue(Description);
-            writer.WritePropertyName("path"u8);
-            writer.WriteStringValue(Path);
+            writer.WritePropertyName("default_version"u8);
+            writer.WriteStringValue(DefaultVersion);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -100,48 +109,48 @@ namespace Azure.AI.Projects
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        LocalSkillParam IJsonModel<LocalSkillParam>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ToolboxRecord IJsonModel<ToolboxRecord>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual LocalSkillParam JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ToolboxRecord JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LocalSkillParam>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ToolboxRecord>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LocalSkillParam)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ToolboxRecord)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeLocalSkillParam(document.RootElement, options);
+            return DeserializeToolboxRecord(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static LocalSkillParam DeserializeLocalSkillParam(JsonElement element, ModelReaderWriterOptions options)
+        internal static ToolboxRecord DeserializeToolboxRecord(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            string id = default;
             string name = default;
-            string description = default;
-            string path = default;
+            string defaultVersion = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
+                if (prop.NameEquals("id"u8))
+                {
+                    id = prop.Value.GetString();
+                    continue;
+                }
                 if (prop.NameEquals("name"u8))
                 {
                     name = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("description"u8))
+                if (prop.NameEquals("default_version"u8))
                 {
-                    description = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("path"u8))
-                {
-                    path = prop.Value.GetString();
+                    defaultVersion = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -149,7 +158,7 @@ namespace Azure.AI.Projects
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new LocalSkillParam(name, description, path, additionalBinaryDataProperties);
+            return new ToolboxRecord(id, name, defaultVersion, additionalBinaryDataProperties);
         }
     }
 }

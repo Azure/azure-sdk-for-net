@@ -10,13 +10,14 @@ using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 using OpenAI.Responses;
+using Azure.AI.Projects.Agents;
 
 namespace Azure.AI.Projects.Tests.Samples;
 #pragma warning disable AAIP001
 
 public class Sample_Toolboxes_CRUD : SamplesBase
 {
-    private void DeleteToolboxMayBe(ProjectToolboxes client, string name)
+    private void DeleteToolboxMayBe(AgentToolboxes client, string name)
     {
         try
         {
@@ -40,13 +41,15 @@ public class Sample_Toolboxes_CRUD : SamplesBase
         var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
 #endif
-        AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
-        ProjectToolboxes toolboxClient = projectClient.GetProjectToolboxesClient();
+        AIProjectClientOptions options = new();
+        options.AddPolicy(GetDumpPolicy(), System.ClientModel.Primitives.PipelinePosition.PerCall);
+        AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
+        AgentToolboxes toolboxClient = projectClient.AgentAdministrationClient.GetAgentToolboxes();
         string toolboxName = "mcp";
         #endregion
         DeleteToolboxMayBe(toolboxClient, toolboxName);
         #region Snippet:Sample_CreateToolbox_ToolboxesCRUD_Async
-        ProjectTool tool = ProjectTool.AsProjectTool(ResponseTool.CreateMcpTool(
+        ProjectsAgentTool tool = ProjectsAgentTool.AsProjectTool(ResponseTool.CreateMcpTool(
             serverLabel: "api-specs",
             serverUri: new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
             toolCallApprovalPolicy: new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
@@ -54,26 +57,26 @@ public class Sample_Toolboxes_CRUD : SamplesBase
         ToolboxRecord toolBox = await toolboxClient.CreateToolboxAsync(
             toolboxName: toolboxName,
             tools: [tool],
-            description: "Example toolset created by the azure-ai-projects sample.",
+            description: "Example toolbox created by the azure-ai-projects sample.",
             metadata: new Dictionary<string, string> {
                 {"status", "created"}
             }
         );
         string status = "unknown status";
-        toolBox.Versions.Latest.Metadata?.TryGetValue("status", out status);
-        Console.WriteLine($"Toolbox: {toolBox.Name}, (tools: {toolBox.Versions.Latest.Tools.Count}) (status: {status}");
+        toolBox.Metadata?.TryGetValue("status", out status);
+        Console.WriteLine($"Toolbox: {toolBox.Name}, (tools: {toolBox.Tools.Count}) (status: {status}");
         #endregion
 
-        #region Sample_GetToolbox_ToolboxesCRUD_Async
-        toolBox = await toolboxClient.GetToolboxAsync(toolBox.Name);
+        #region Snippet:Sample_GetToolbox_ToolboxesCRUD_Async
+        toolBox = await toolboxClient.GetToolboxVersionAsync(toolBox.Name, toolBox.Version);
         Console.WriteLine($"Retrieved toolbox: {toolBox.Name} ({toolBox.Id})");
         #endregion
 
-        #region Sample_UpdateToolbox_ToolboxesCRUD_Async
+        #region Snippet:Sample_UpdateToolbox_ToolboxesCRUD_Async
         BinaryData update = BinaryData.FromObjectAsJson(
             new
             {
-                description = "Updated description for the sample toolset.",
+                description = "Updated description for the sample toolbox.",
                 metadata = new
                 {
                     status = "updated"
@@ -85,10 +88,10 @@ public class Sample_Toolboxes_CRUD : SamplesBase
             toolboxName: toolboxName,
             content: updateContent
         );
-        toolBox = ClientResult.FromValue((ToolboxRecord)data, data.GetRawResponse());
+        toolBox = ClientResult.FromValue((ToolboxVersion)data, data.GetRawResponse());
         status = "unknown status";
-        toolBox.Versions.Latest.Metadata?.TryGetValue("status", out status);
-        Console.WriteLine($"Toolbox: {toolBox.Name}, (tools: {toolBox.Versions.Latest.Tools.Count}) (status: {status}");
+        toolBox.Metadata?.TryGetValue("status", out status);
+        Console.WriteLine($"Toolbox: {toolBox.Name}, (tools: {toolBox.Tools.Count}) (status: {status}");
         #endregion
 
         #region Snippet:Sample_ListToolbox_ToolboxesCRUD_Async
@@ -101,8 +104,82 @@ public class Sample_Toolboxes_CRUD : SamplesBase
         #endregion
 
         #region Snippet:Sample_DeleteToolbox_ToolboxesCRUD_Async
-        DeleteToolboxResponse deletionResult = await toolboxClient.DeleteToolboxAsync(toolBox.Name);
-        Console.WriteLine($"The toolbox {deletionResult.Name} was {(deletionResult.Deleted ? "" : "not ")} deleted.");
+        await toolboxClient.DeleteToolboxAsync(toolBox.Name);
+        #endregion
+    }
+
+    [Test]
+    [SyncOnly]
+    public void ToolboxesCRUDSync()
+    {
+#if SNIPPET
+        var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+        var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
+#else
+        var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
+        var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
+#endif
+        AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
+        AgentToolboxes toolboxClient = projectClient.AgentAdministrationClient.GetAgentToolboxes();
+        string toolboxName = "mcp";
+        DeleteToolboxMayBe(toolboxClient, toolboxName);
+        #region Snippet:Sample_CreateToolbox_ToolboxesCRUD_Sync
+        ProjectsAgentTool tool = ProjectsAgentTool.AsProjectTool(ResponseTool.CreateMcpTool(
+            serverLabel: "api-specs",
+            serverUri: new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
+            toolCallApprovalPolicy: new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
+        ));
+        ToolboxVersion toolBox = toolboxClient.CreateToolboxVersion(
+            toolboxName: toolboxName,
+            tools: [tool],
+            description: "Example toolbox created by the azure-ai-projects sample.",
+            metadata: new Dictionary<string, string> {
+                {"status", "created"}
+            }
+        );
+        string status = "unknown status";
+        toolBox.Metadata?.TryGetValue("status", out status);
+        Console.WriteLine($"Toolbox: {toolBox.Name}, (tools: {toolBox.Tools.Count}) (status: {status}");
+        #endregion
+
+        #region Snippet:Sample_GetToolbox_ToolboxesCRUD_Sync
+        toolBox = toolboxClient.GetToolboxVersion(toolBox.Name, toolBox.Version);
+        Console.WriteLine($"Retrieved toolbox: {toolBox.Name} ({toolBox.Id})");
+        #endregion
+
+        #region Snippet:Sample_UpdateToolbox_ToolboxesCRUD_Sync
+        BinaryData update = BinaryData.FromObjectAsJson(
+            new
+            {
+                description = "Updated description for the sample toolbox.",
+                metadata = new
+                {
+                    status = "updated"
+                }
+            }
+        );
+        using BinaryContent updateContent = BinaryContent.Create(update);
+        ClientResult data = toolboxClient.UpdateToolbox(
+            toolboxName: toolboxName,
+            content: updateContent
+        );
+        toolBox = ClientResult.FromValue((ToolboxVersion)data, data.GetRawResponse());
+        status = "unknown status";
+        toolBox.Metadata?.TryGetValue("status", out status);
+        Console.WriteLine($"Toolbox: {toolBox.Name}, (tools: {toolBox.Tools.Count}) (status: {status}");
+        #endregion
+
+        #region Snippet:Sample_ListToolbox_ToolboxesCRUD_Sync
+        List<ToolboxRecord> toolboxes = [..toolboxClient.GetToolboxes()];
+        Console.WriteLine($"Found {toolboxes.Count} toolsets");
+        foreach (ToolboxRecord item in toolboxes)
+        {
+            Console.WriteLine($"  - {item.Name} ({item.Id})");
+        }
+        #endregion
+
+        #region Snippet:Sample_DeleteToolbox_ToolboxesCRUD_Sync
+        toolboxClient.DeleteToolbox(toolBox.Name);
         #endregion
     }
     public Sample_Toolboxes_CRUD(bool isAsync) : base(isAsync)
