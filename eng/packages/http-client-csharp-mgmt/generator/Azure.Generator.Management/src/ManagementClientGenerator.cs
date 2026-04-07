@@ -93,9 +93,9 @@ namespace Azure.Generator.Management
             return false;
         }
 
-        /// <summary>
-        /// Management plane SDKs do not need ConfigurationSchema.json generation.
-        /// </summary>
-        public override Task WriteAdditionalFiles(string outputPath) => Task.CompletedTask;
+        // /// <summary>
+        // /// Management plane SDKs do not need ConfigurationSchema.json generation.
+        // /// </summary>
+        // public override Task WriteAdditionalFiles(string outputPath) => Task.CompletedTask;
     }
 }
