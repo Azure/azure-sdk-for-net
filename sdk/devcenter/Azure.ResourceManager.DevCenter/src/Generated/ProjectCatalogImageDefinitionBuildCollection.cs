@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             if (id.ResourceType != ProjectCatalogImageDefinitionResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ProjectCatalogImageDefinitionResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ProjectCatalogImageDefinitionResource.ResourceType), nameof(id));
             }
         }
 

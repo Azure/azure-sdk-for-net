@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DurableTask
         {
             if (id.ResourceType != DurableTaskSchedulerResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DurableTaskSchedulerResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DurableTaskSchedulerResource.ResourceType), nameof(id));
             }
         }
 

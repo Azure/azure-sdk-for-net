@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Playwright
         {
             if (id.ResourceType != PlaywrightWorkspaceResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, PlaywrightWorkspaceResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, PlaywrightWorkspaceResource.ResourceType), nameof(id));
             }
         }
 

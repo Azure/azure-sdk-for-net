@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             if (id.ResourceType != DevCenterPoolResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DevCenterPoolResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DevCenterPoolResource.ResourceType), nameof(id));
             }
         }
 
