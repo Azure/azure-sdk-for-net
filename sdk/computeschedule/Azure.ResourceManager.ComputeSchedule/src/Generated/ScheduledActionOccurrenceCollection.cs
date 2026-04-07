@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         {
             if (id.ResourceType != ScheduledActionResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ScheduledActionResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ScheduledActionResource.ResourceType), nameof(id));
             }
         }
 

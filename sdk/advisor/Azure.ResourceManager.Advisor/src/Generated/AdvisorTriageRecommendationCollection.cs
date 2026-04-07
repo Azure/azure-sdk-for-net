@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Advisor
         {
             if (id.ResourceType != AdvisorResiliencyReviewResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, AdvisorResiliencyReviewResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, AdvisorResiliencyReviewResource.ResourceType), nameof(id));
             }
         }
 

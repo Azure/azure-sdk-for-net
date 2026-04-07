@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             if (id.ResourceType != NetworkCloudVirtualMachineResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, NetworkCloudVirtualMachineResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, NetworkCloudVirtualMachineResource.ResourceType), nameof(id));
             }
         }
 

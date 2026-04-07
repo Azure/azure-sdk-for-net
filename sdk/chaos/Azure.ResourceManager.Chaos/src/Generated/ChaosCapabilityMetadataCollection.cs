@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Chaos
         {
             if (id.ResourceType != ChaosTargetMetadataResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ChaosTargetMetadataResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ChaosTargetMetadataResource.ResourceType), nameof(id));
             }
         }
 

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MongoCluster
         {
             if (id.ResourceType != MongoClusterResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, MongoClusterResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, MongoClusterResource.ResourceType), nameof(id));
             }
         }
 

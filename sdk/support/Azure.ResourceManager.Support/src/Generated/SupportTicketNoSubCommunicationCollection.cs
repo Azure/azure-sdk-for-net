@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Support
         {
             if (id.ResourceType != TenantSupportTicketResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, TenantSupportTicketResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, TenantSupportTicketResource.ResourceType), nameof(id));
             }
         }
 

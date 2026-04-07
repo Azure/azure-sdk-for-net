@@ -6003,6 +6003,7 @@ namespace Azure.Search.Documents.KnowledgeBases
     {
         public KnowledgeBaseRetrievalClientSettings() { }
         public System.Uri Endpoint { get { throw null; } set { } }
+        public string KnowledgeBaseName { get { throw null; } set { } }
         public Azure.Search.Documents.SearchClientOptions Options { get { throw null; } set { } }
         protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
     }

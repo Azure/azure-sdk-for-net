@@ -777,7 +777,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ScheduledActionExtensionGetByVmsAsyncCollectionResultOfT(ScheduledActionExtensionRestClient, scope.ToString(), context);
+            return new ScheduledActionExtensionGetByVmsAsyncCollectionResultOfT(ScheduledActionExtensionRestClient, scope.ToString(), context, "MockableAzureGeneratorMgmtTypeSpecTestsArmClient.GetByVms");
         }
 
         /// <summary>
@@ -810,7 +810,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ScheduledActionExtensionGetByVmsCollectionResultOfT(ScheduledActionExtensionRestClient, scope.ToString(), context);
+            return new ScheduledActionExtensionGetByVmsCollectionResultOfT(ScheduledActionExtensionRestClient, scope.ToString(), context, "MockableAzureGeneratorMgmtTypeSpecTestsArmClient.GetByVms");
         }
     }
 }

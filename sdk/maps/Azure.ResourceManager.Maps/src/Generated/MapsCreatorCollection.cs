@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Maps
         {
             if (id.ResourceType != MapsAccountResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, MapsAccountResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, MapsAccountResource.ResourceType), nameof(id));
             }
         }
 

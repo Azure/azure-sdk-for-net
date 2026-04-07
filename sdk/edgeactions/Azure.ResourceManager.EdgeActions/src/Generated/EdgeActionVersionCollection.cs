@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.EdgeActions
         {
             if (id.ResourceType != EdgeActionResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, EdgeActionResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, EdgeActionResource.ResourceType), nameof(id));
             }
         }
 

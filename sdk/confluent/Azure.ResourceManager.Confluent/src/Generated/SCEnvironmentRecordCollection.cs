@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Confluent
         {
             if (id.ResourceType != ConfluentOrganizationResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ConfluentOrganizationResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ConfluentOrganizationResource.ResourceType), nameof(id));
             }
         }
 
