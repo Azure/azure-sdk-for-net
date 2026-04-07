@@ -234,12 +234,14 @@ export function buildArmProviderSchema(
           // by looking for the resource model name in the path
           const model = resourceModelMap.get(modelId);
           const resourceTypeName = model?.name?.toLowerCase();
-          const pathLower = operationPath.toLowerCase();
 
           // If the path doesn't include the resource type segment (e.g., "scheduledactions"),
           // it's a provider operation, not a resource action
-          if (resourceTypeName && !pathLower.includes(resourceTypeName)) {
-            const opPath = new RequestPath(method.operation.path);
+          const opPath = new RequestPath(operationPath);
+          const hasResourceTypeSegment =
+            resourceTypeName &&
+            opPath.segments.some((s) => s.toLowerCase() === resourceTypeName);
+          if (resourceTypeName && !hasResourceTypeSegment) {
             nonResourceMethods.set(method.crossLanguageDefinitionId, {
               methodId: method.crossLanguageDefinitionId,
               operationPath: opPath,
