@@ -173,3 +173,5 @@ namespace Azure.ResourceManager.StorageSync.Models
             => StorageSyncServiceData(id, name, resourceType, systemData, tags, location, incomingTrafficPolicy, storageSyncServiceStatus, storageSyncServiceUid, provisioningState, useIdentity, lastWorkflowId, lastOperationName, privateEndpointConnections, identity);
     }
 }
+
+// Test comment for batching validation - DO NOT MERGE

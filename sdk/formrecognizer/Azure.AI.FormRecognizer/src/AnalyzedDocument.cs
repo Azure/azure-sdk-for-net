@@ -15,3 +15,5 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         public string DocumentType { get; }
     }
 }
+
+// Test comment for batching validation - DO NOT MERGE

@@ -66,3 +66,5 @@ namespace Azure.ResourceManager.Nginx.Models
             => NginxDeploymentProperties(provisioningState, nginxVersion, networkProfile, ipAddress, enableDiagnosticsSupport, loggingStorageAccount, null, null, userPreferredEmail, null, null);
     }
 }
+
+// Test comment for batching validation - DO NOT MERGE

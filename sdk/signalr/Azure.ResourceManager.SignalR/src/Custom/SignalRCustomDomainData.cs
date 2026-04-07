@@ -26,3 +26,5 @@ namespace Azure.ResourceManager.SignalR
         }
     }
 }
+
+// Test comment for batching validation - DO NOT MERGE
