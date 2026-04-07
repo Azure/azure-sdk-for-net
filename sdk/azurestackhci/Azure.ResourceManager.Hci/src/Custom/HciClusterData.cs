@@ -22,7 +22,8 @@ namespace Azure.ResourceManager.Hci
             get => _typeIdentityType ??= (Identity?.ManagedServiceIdentityType == null ? null : new HciManagedServiceIdentityType(Identity.ManagedServiceIdentityType.ToString()));
             set
             {
-                if (value == null) return;
+                if (value == null)
+                    return;
                 var newType = new ManagedServiceIdentityType(value.ToString());
                 if (Identity == null)
                 {
