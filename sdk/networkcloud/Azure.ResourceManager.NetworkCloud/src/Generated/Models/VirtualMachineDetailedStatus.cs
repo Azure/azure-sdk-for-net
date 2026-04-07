@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -15,87 +14,56 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     public readonly partial struct VirtualMachineDetailedStatus : IEquatable<VirtualMachineDetailedStatus>
     {
         private readonly string _value;
-        /// <summary> The Available status. </summary>
-        private const string AvailableValue = "Available";
-        /// <summary> The Error status. </summary>
-        private const string ErrorValue = "Error";
-        /// <summary> The Provisioning status. </summary>
-        private const string ProvisioningValue = "Provisioning";
-        /// <summary> The Running status. </summary>
-        private const string RunningValue = "Running";
-        /// <summary> The Scheduling status. </summary>
-        private const string SchedulingValue = "Scheduling";
-        /// <summary> The Stopped status. </summary>
-        private const string StoppedValue = "Stopped";
-        /// <summary> The Terminating status. </summary>
-        private const string TerminatingValue = "Terminating";
-        /// <summary> The Unknown status. </summary>
-        private const string UnknownValue = "Unknown";
 
         /// <summary> Initializes a new instance of <see cref="VirtualMachineDetailedStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public VirtualMachineDetailedStatus(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> The Available status. </summary>
+        private const string AvailableValue = "Available";
+        private const string ErrorValue = "Error";
+        private const string ProvisioningValue = "Provisioning";
+        private const string RunningValue = "Running";
+        private const string SchedulingValue = "Scheduling";
+        private const string StoppedValue = "Stopped";
+        private const string TerminatingValue = "Terminating";
+        private const string UnknownValue = "Unknown";
+
+        /// <summary> Available. </summary>
         public static VirtualMachineDetailedStatus Available { get; } = new VirtualMachineDetailedStatus(AvailableValue);
-
-        /// <summary> The Error status. </summary>
+        /// <summary> Error. </summary>
         public static VirtualMachineDetailedStatus Error { get; } = new VirtualMachineDetailedStatus(ErrorValue);
-
-        /// <summary> The Provisioning status. </summary>
+        /// <summary> Provisioning. </summary>
         public static VirtualMachineDetailedStatus Provisioning { get; } = new VirtualMachineDetailedStatus(ProvisioningValue);
-
-        /// <summary> The Running status. </summary>
+        /// <summary> Running. </summary>
         public static VirtualMachineDetailedStatus Running { get; } = new VirtualMachineDetailedStatus(RunningValue);
-
-        /// <summary> The Scheduling status. </summary>
+        /// <summary> Scheduling. </summary>
         public static VirtualMachineDetailedStatus Scheduling { get; } = new VirtualMachineDetailedStatus(SchedulingValue);
-
-        /// <summary> The Stopped status. </summary>
+        /// <summary> Stopped. </summary>
         public static VirtualMachineDetailedStatus Stopped { get; } = new VirtualMachineDetailedStatus(StoppedValue);
-
-        /// <summary> The Terminating status. </summary>
+        /// <summary> Terminating. </summary>
         public static VirtualMachineDetailedStatus Terminating { get; } = new VirtualMachineDetailedStatus(TerminatingValue);
-
-        /// <summary> The Unknown status. </summary>
+        /// <summary> Unknown. </summary>
         public static VirtualMachineDetailedStatus Unknown { get; } = new VirtualMachineDetailedStatus(UnknownValue);
-
         /// <summary> Determines if two <see cref="VirtualMachineDetailedStatus"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(VirtualMachineDetailedStatus left, VirtualMachineDetailedStatus right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="VirtualMachineDetailedStatus"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(VirtualMachineDetailedStatus left, VirtualMachineDetailedStatus right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="VirtualMachineDetailedStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="VirtualMachineDetailedStatus"/>. </summary>
         public static implicit operator VirtualMachineDetailedStatus(string value) => new VirtualMachineDetailedStatus(value);
 
-        /// <summary> Converts a string to a <see cref="VirtualMachineDetailedStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator VirtualMachineDetailedStatus?(string value) => value == null ? null : new VirtualMachineDetailedStatus(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is VirtualMachineDetailedStatus other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(VirtualMachineDetailedStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

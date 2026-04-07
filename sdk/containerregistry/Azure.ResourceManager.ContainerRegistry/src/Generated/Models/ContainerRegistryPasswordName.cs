@@ -10,9 +10,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The password name. </summary>
     public enum ContainerRegistryPasswordName
     {
-        /// <summary> Password. </summary>
+        /// <summary> password. </summary>
         Password,
-        /// <summary> Password2. </summary>
+        /// <summary> password2. </summary>
         Password2
     }
 }

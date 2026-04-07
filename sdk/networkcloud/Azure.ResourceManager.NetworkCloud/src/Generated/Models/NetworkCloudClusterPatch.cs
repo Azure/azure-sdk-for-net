@@ -8,241 +8,135 @@
 using System;
 using System.Collections.Generic;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
     /// <summary> ClusterPatchParameters represents the body of the request to patch the cluster properties. </summary>
     public partial class NetworkCloudClusterPatch
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloudClusterPatch"/>. </summary>
         public NetworkCloudClusterPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+            ComputeRackDefinitions = new ChangeTrackingList<NetworkCloudRackDefinition>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloudClusterPatch"/>. </summary>
         /// <param name="identity"> The identity for the resource. </param>
-        /// <param name="properties"> The list of the resource properties. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkCloudClusterPatch(ManagedServiceIdentity identity, ClusterPatchProperties properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="tags"> The Azure resource tags that will replace the existing ones. </param>
+        /// <param name="aggregatorOrSingleRackDefinition"> The rack definition that is intended to reflect only a single rack in a single rack cluster, or an aggregator rack in a multi-rack cluster. </param>
+        /// <param name="analyticsOutputSettings"> The settings for the log analytics workspace used for output of logs from this cluster. </param>
+        /// <param name="clusterLocation"> The customer-provided location information to identify where the cluster resides. </param>
+        /// <param name="clusterServicePrincipal"> Field Deprecated: Use managed identity to provide cluster privileges. The service principal to be used by the cluster during Arc Appliance installation. </param>
+        /// <param name="commandOutputSettings"> The settings for commands run in this cluster, such as bare metal machine run read only commands and data extracts. </param>
+        /// <param name="computeDeploymentThreshold"> The validation threshold indicating the allowable failures of compute machines during environment validation and deployment. </param>
+        /// <param name="computeRackDefinitions"> The list of rack definitions for the compute racks in a multi-rack cluster, or an empty list in a single-rack cluster. </param>
+        /// <param name="runtimeProtectionConfiguration"> The settings for cluster runtime protection. </param>
+        /// <param name="secretArchive"> The configuration for use of a key vault to store secrets for later retrieval by the operator. </param>
+        /// <param name="secretArchiveSettings"> The settings for the secret archive used to hold credentials for the cluster. </param>
+        /// <param name="updateStrategy"> The strategy for updating the cluster. </param>
+        /// <param name="vulnerabilityScanningSettings"> The settings for how security vulnerability scanning is applied to the cluster. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkCloudClusterPatch(ManagedServiceIdentity identity, IDictionary<string, string> tags, NetworkCloudRackDefinition aggregatorOrSingleRackDefinition, AnalyticsOutputSettings analyticsOutputSettings, string clusterLocation, ServicePrincipalInformation clusterServicePrincipal, CommandOutputSettings commandOutputSettings, ValidationThreshold computeDeploymentThreshold, IList<NetworkCloudRackDefinition> computeRackDefinitions, RuntimeProtectionConfiguration runtimeProtectionConfiguration, ClusterSecretArchive secretArchive, SecretArchiveSettings secretArchiveSettings, ClusterUpdateStrategy updateStrategy, VulnerabilityScanningSettingsPatch vulnerabilityScanningSettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Identity = identity;
-            Properties = properties;
             Tags = tags;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            AggregatorOrSingleRackDefinition = aggregatorOrSingleRackDefinition;
+            AnalyticsOutputSettings = analyticsOutputSettings;
+            ClusterLocation = clusterLocation;
+            ClusterServicePrincipal = clusterServicePrincipal;
+            CommandOutputSettings = commandOutputSettings;
+            ComputeDeploymentThreshold = computeDeploymentThreshold;
+            ComputeRackDefinitions = computeRackDefinitions;
+            RuntimeProtectionConfiguration = runtimeProtectionConfiguration;
+            SecretArchive = secretArchive;
+            SecretArchiveSettings = secretArchiveSettings;
+            UpdateStrategy = updateStrategy;
+            VulnerabilityScanningSettings = vulnerabilityScanningSettings;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The identity for the resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
-
-        /// <summary> The list of the resource properties. </summary>
-        internal ClusterPatchProperties Properties { get; set; }
-
-        /// <summary> Resource tags. </summary>
+        /// <summary> The Azure resource tags that will replace the existing ones. </summary>
         public IDictionary<string, string> Tags { get; }
-
         /// <summary> The rack definition that is intended to reflect only a single rack in a single rack cluster, or an aggregator rack in a multi-rack cluster. </summary>
-        public NetworkCloudRackDefinition AggregatorOrSingleRackDefinition
-        {
-            get
-            {
-                return Properties is null ? default : Properties.AggregatorOrSingleRackDefinition;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ClusterPatchProperties();
-                }
-                Properties.AggregatorOrSingleRackDefinition = value;
-            }
-        }
-
+        public NetworkCloudRackDefinition AggregatorOrSingleRackDefinition { get; set; }
         /// <summary> The settings for the log analytics workspace used for output of logs from this cluster. </summary>
-        public AnalyticsOutputSettings AnalyticsOutputSettings
-        {
-            get
-            {
-                return Properties is null ? default : Properties.AnalyticsOutputSettings;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ClusterPatchProperties();
-                }
-                Properties.AnalyticsOutputSettings = value;
-            }
-        }
-
+        public AnalyticsOutputSettings AnalyticsOutputSettings { get; set; }
         /// <summary> The customer-provided location information to identify where the cluster resides. </summary>
-        public string ClusterLocation
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ClusterLocation;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ClusterPatchProperties();
-                }
-                Properties.ClusterLocation = value;
-            }
-        }
-
+        public string ClusterLocation { get; set; }
         /// <summary> Field Deprecated: Use managed identity to provide cluster privileges. The service principal to be used by the cluster during Arc Appliance installation. </summary>
-        public ServicePrincipalInformation ClusterServicePrincipal
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ClusterServicePrincipal;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ClusterPatchProperties();
-                }
-                Properties.ClusterServicePrincipal = value;
-            }
-        }
-
+        public ServicePrincipalInformation ClusterServicePrincipal { get; set; }
         /// <summary> The settings for commands run in this cluster, such as bare metal machine run read only commands and data extracts. </summary>
-        public CommandOutputSettings CommandOutputSettings
-        {
-            get
-            {
-                return Properties is null ? default : Properties.CommandOutputSettings;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ClusterPatchProperties();
-                }
-                Properties.CommandOutputSettings = value;
-            }
-        }
-
+        public CommandOutputSettings CommandOutputSettings { get; set; }
         /// <summary> The validation threshold indicating the allowable failures of compute machines during environment validation and deployment. </summary>
-        public ValidationThreshold ComputeDeploymentThreshold
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ComputeDeploymentThreshold;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ClusterPatchProperties();
-                }
-                Properties.ComputeDeploymentThreshold = value;
-            }
-        }
-
+        public ValidationThreshold ComputeDeploymentThreshold { get; set; }
         /// <summary> The list of rack definitions for the compute racks in a multi-rack cluster, or an empty list in a single-rack cluster. </summary>
-        public IList<NetworkCloudRackDefinition> ComputeRackDefinitions
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new ClusterPatchProperties();
-                }
-                return Properties.ComputeRackDefinitions;
-            }
-        }
-
+        public IList<NetworkCloudRackDefinition> ComputeRackDefinitions { get; }
         /// <summary> The settings for cluster runtime protection. </summary>
-        public RuntimeProtectionConfiguration RuntimeProtectionConfiguration
+        internal RuntimeProtectionConfiguration RuntimeProtectionConfiguration { get; set; }
+        /// <summary> The mode of operation for runtime protection. </summary>
+        public RuntimeProtectionEnforcementLevel? RuntimeProtectionEnforcementLevel
         {
-            get
-            {
-                return Properties is null ? default : Properties.RuntimeProtectionConfiguration;
-            }
+            get => RuntimeProtectionConfiguration is null ? default : RuntimeProtectionConfiguration.EnforcementLevel;
             set
             {
-                if (Properties is null)
-                {
-                    Properties = new ClusterPatchProperties();
-                }
-                Properties.RuntimeProtectionConfiguration = value;
+                if (RuntimeProtectionConfiguration is null)
+                    RuntimeProtectionConfiguration = new RuntimeProtectionConfiguration();
+                RuntimeProtectionConfiguration.EnforcementLevel = value;
             }
         }
 
         /// <summary> The configuration for use of a key vault to store secrets for later retrieval by the operator. </summary>
-        public ClusterSecretArchive SecretArchive
-        {
-            get
-            {
-                return Properties is null ? default : Properties.SecretArchive;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ClusterPatchProperties();
-                }
-                Properties.SecretArchive = value;
-            }
-        }
-
+        public ClusterSecretArchive SecretArchive { get; set; }
         /// <summary> The settings for the secret archive used to hold credentials for the cluster. </summary>
-        public SecretArchiveSettings SecretArchiveSettings
-        {
-            get
-            {
-                return Properties is null ? default : Properties.SecretArchiveSettings;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ClusterPatchProperties();
-                }
-                Properties.SecretArchiveSettings = value;
-            }
-        }
-
+        public SecretArchiveSettings SecretArchiveSettings { get; set; }
         /// <summary> The strategy for updating the cluster. </summary>
-        public ClusterUpdateStrategy UpdateStrategy
-        {
-            get
-            {
-                return Properties is null ? default : Properties.UpdateStrategy;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ClusterPatchProperties();
-                }
-                Properties.UpdateStrategy = value;
-            }
-        }
-
+        public ClusterUpdateStrategy UpdateStrategy { get; set; }
+        /// <summary> The settings for how security vulnerability scanning is applied to the cluster. </summary>
+        internal VulnerabilityScanningSettingsPatch VulnerabilityScanningSettings { get; set; }
         /// <summary> The mode selection for container vulnerability scanning. </summary>
         public VulnerabilityScanningSettingsContainerScan? VulnerabilityScanningContainerScan
         {
-            get
-            {
-                return Properties is null ? default : Properties.VulnerabilityScanningContainerScan;
-            }
+            get => VulnerabilityScanningSettings is null ? default : VulnerabilityScanningSettings.ContainerScan;
             set
             {
-                if (Properties is null)
-                {
-                    Properties = new ClusterPatchProperties();
-                }
-                Properties.VulnerabilityScanningContainerScan = value.Value;
+                if (VulnerabilityScanningSettings is null)
+                    VulnerabilityScanningSettings = new VulnerabilityScanningSettingsPatch();
+                VulnerabilityScanningSettings.ContainerScan = value;
             }
         }
     }

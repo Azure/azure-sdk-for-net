@@ -10,7 +10,7 @@ To create a `ConversationAnalysisAuthoringClient`, you will need the service end
 Uri endpoint = new Uri("{endpoint}");
 AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
 ConversationAnalysisAuthoringClientOptions options = new ConversationAnalysisAuthoringClientOptions(ConversationAnalysisAuthoringClientOptions.ServiceVersion.V2025_11_15_Preview);
-ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential, options);
+ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential, options);
 ```
 
 The values of the endpoint and apiKey variables can be retrieved from environment variables, configuration settings, or any other secure approach that works for your application. The method returns a ProjectMetadata object that contains detailed information about the project, such as its creation date, last modification date, description, and more.
@@ -24,7 +24,9 @@ To retrieve metadata of a project, call GetProject on the `ConversationAuthoring
 
 ```C# Snippet:Sample4_ConversationsAuthoring_GetProject
 string projectName = "{projectName}";
-Response<ConversationAuthoringProjectMetadata> response = client.GetProject(projectName);
+ConversationAuthoringProject projectClient = client.GetProject(projectName);
+
+Response<ConversationAuthoringProjectMetadata> response = projectClient.GetProject();
 ConversationAuthoringProjectMetadata projectMetadata = response.Value;
 
 Console.WriteLine($"Created DateTime: {projectMetadata.CreatedOn}");
@@ -44,7 +46,9 @@ To retrieve metadata of a project, call GetProjectAsync on the `ConversationAuth
 
 ```C# Snippet:Sample4_ConversationsAuthoring_GetProjectAsync
 string projectName = "{projectName}";
-Response<ConversationAuthoringProjectMetadata> response = await client.GetProjectAsync(projectName);
+ConversationAuthoringProject projectClient = client.GetProject(projectName);
+
+Response<ConversationAuthoringProjectMetadata> response = await projectClient.GetProjectAsync();
 ConversationAuthoringProjectMetadata projectMetadata = response.Value;
 
 Console.WriteLine($"Created DateTime: {projectMetadata.CreatedOn}");

@@ -5,45 +5,32 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
-    /// <summary></summary>
-    internal partial class NetworkCloudKubernetesClusterFeatureOperationSource : IOperationSource<NetworkCloudKubernetesClusterFeatureResource>
+    internal class NetworkCloudKubernetesClusterFeatureOperationSource : IOperationSource<NetworkCloudKubernetesClusterFeatureResource>
     {
         private readonly ArmClient _client;
 
-        /// <summary></summary>
-        /// <param name="client"></param>
         internal NetworkCloudKubernetesClusterFeatureOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         NetworkCloudKubernetesClusterFeatureResource IOperationSource<NetworkCloudKubernetesClusterFeatureResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            NetworkCloudKubernetesClusterFeatureData data = NetworkCloudKubernetesClusterFeatureData.DeserializeNetworkCloudKubernetesClusterFeatureData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            var data = ModelReaderWriter.Read<NetworkCloudKubernetesClusterFeatureData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkCloudContext.Default);
             return new NetworkCloudKubernetesClusterFeatureResource(_client, data);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<NetworkCloudKubernetesClusterFeatureResource> IOperationSource<NetworkCloudKubernetesClusterFeatureResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            NetworkCloudKubernetesClusterFeatureData data = NetworkCloudKubernetesClusterFeatureData.DeserializeNetworkCloudKubernetesClusterFeatureData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new NetworkCloudKubernetesClusterFeatureResource(_client, data);
+            var data = ModelReaderWriter.Read<NetworkCloudKubernetesClusterFeatureData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkCloudContext.Default);
+            return await Task.FromResult(new NetworkCloudKubernetesClusterFeatureResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

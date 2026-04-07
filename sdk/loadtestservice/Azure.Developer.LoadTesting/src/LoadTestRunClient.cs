@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -227,7 +227,7 @@ namespace Azure.Developer.LoadTesting
                 null,
                 [],
                 [],
-                context, "LoadTestRunClient.GetTestRuns");
+                context);
         }
 
         /// <summary> Get all test runs with given filters. </summary>
@@ -254,7 +254,7 @@ namespace Azure.Developer.LoadTesting
                 null,
                 [],
                 [],
-                context, "LoadTestRunClient.GetTestRuns");
+                context);
         }
 
         /// <summary> Get all test runs for the given filters. </summary>
@@ -288,7 +288,7 @@ namespace Azure.Developer.LoadTesting
                 null,
                 [],
                 [],
-                cancellationToken.ToRequestContext(), "LoadTestRunClient.GetTestRuns");
+                cancellationToken.ToRequestContext());
         }
 
         /// <summary> Get all test runs for the given filters. </summary>
@@ -322,7 +322,7 @@ namespace Azure.Developer.LoadTesting
                 null,
                 [],
                 [],
-                cancellationToken.ToRequestContext(), "LoadTestRunClient.GetTestRuns");
+                cancellationToken.ToRequestContext());
         }
 
         /// <summary> List test profile runs. </summary>
@@ -351,7 +351,7 @@ namespace Azure.Developer.LoadTesting
                 testProfileRunIds,
                 testProfileIds,
                 statuses,
-                cancellationToken.ToRequestContext(), "LoadTestRunClient.GetTestProfileRuns");
+                cancellationToken.ToRequestContext());
         }
 
         /// <summary> List test profile runs. </summary>
@@ -380,7 +380,7 @@ namespace Azure.Developer.LoadTesting
                 testProfileRunIds,
                 testProfileIds,
                 statuses,
-                cancellationToken.ToRequestContext(), "LoadTestRunClient.GetTestProfileRuns");
+                cancellationToken.ToRequestContext());
         }
 
         /// <summary>
@@ -424,7 +424,7 @@ namespace Azure.Developer.LoadTesting
                 testProfileRunIds,
                 testProfileIds,
                 statuses,
-                context, "LoadTestRunClient.GetTestProfileRuns");
+                context);
         }
 
         /// <summary>
@@ -468,7 +468,7 @@ namespace Azure.Developer.LoadTesting
                 testProfileRunIds,
                 testProfileIds,
                 statuses,
-                context, "LoadTestRunClient.GetTestProfileRuns");
+                context);
         }
     }
 }

@@ -1001,7 +1001,7 @@ namespace Azure.AI.ContentUnderstanding
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetAnalyzers(RequestContext context)
         {
-            return new ContentUnderstandingClientGetAnalyzersCollectionResult(this, context, "ContentUnderstandingClient.GetAnalyzers");
+            return new ContentUnderstandingClientGetAnalyzersCollectionResult(this, context);
         }
 
         /// <summary>
@@ -1017,7 +1017,7 @@ namespace Azure.AI.ContentUnderstanding
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetAnalyzersAsync(RequestContext context)
         {
-            return new ContentUnderstandingClientGetAnalyzersAsyncCollectionResult(this, context, "ContentUnderstandingClient.GetAnalyzers");
+            return new ContentUnderstandingClientGetAnalyzersAsyncCollectionResult(this, context);
         }
 
         /// <summary> List analyzers. </summary>
@@ -1025,7 +1025,7 @@ namespace Azure.AI.ContentUnderstanding
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<ContentAnalyzer> GetAnalyzers(CancellationToken cancellationToken = default)
         {
-            return new ContentUnderstandingClientGetAnalyzersCollectionResultOfT(this, cancellationToken.ToRequestContext(), "ContentUnderstandingClient.GetAnalyzers");
+            return new ContentUnderstandingClientGetAnalyzersCollectionResultOfT(this, cancellationToken.ToRequestContext());
         }
 
         /// <summary> List analyzers. </summary>
@@ -1033,7 +1033,7 @@ namespace Azure.AI.ContentUnderstanding
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<ContentAnalyzer> GetAnalyzersAsync(CancellationToken cancellationToken = default)
         {
-            return new ContentUnderstandingClientGetAnalyzersAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext(), "ContentUnderstandingClient.GetAnalyzers");
+            return new ContentUnderstandingClientGetAnalyzersAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext());
         }
 
         /// <summary>

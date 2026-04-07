@@ -14,23 +14,13 @@ namespace Azure.Identity.Tests.samples
 {
     public class CertificateCredentialSnippets
     {
-        public void CreateWithPath_File()
+        public void CreateWithPath()
         {
             string tenantId = "00000000-0000-0000-0000-00000000";
             string clientId = "00000000-0000-0000-0000-00000000";
 
-            #region Snippet:Identity_CertificateCredential_CreateWithPath_File
+            #region Snippet:Identity_CertificateCredenetial_CreateWithPath
             var credential = new ClientCertificateCredential(tenantId, clientId, "./certs/cert.pfx");
-            #endregion
-        }
-
-        public void CreateWithPath_Store()
-        {
-            string tenantId = "00000000-0000-0000-0000-00000000";
-            string clientId = "00000000-0000-0000-0000-00000000";
-
-            #region Snippet:Identity_CertificateCredential_CreateWithPath_Store
-            var credential = new ClientCertificateCredential(tenantId, clientId, "cert:/CurrentUser/My/E661583E8FABEF4C0BEF694CBC41C28FB81CD870");
             #endregion
         }
 
@@ -39,7 +29,7 @@ namespace Azure.Identity.Tests.samples
             string tenantId = "00000000-0000-0000-0000-00000000";
             string clientId = "00000000-0000-0000-0000-00000000";
 
-            #region Snippet:Identity_CertificateCredential_CreateWithX509Cert
+            #region Snippet:Identity_CertificateCredenetial_CreateWithX509Cert
 #if NET9_0_OR_GREATER
             var certificate = X509CertificateLoader.LoadPkcs12FromFile("./certs/cert-password-protected.pfx", "password");
 #else
@@ -50,31 +40,23 @@ namespace Azure.Identity.Tests.samples
             #endregion
         }
 
-        public sealed class CertificateNotFoundException(string message) : Exception(message) { }
-
         public void CreateFromStore()
         {
             string tenantId = "00000000-0000-0000-0000-00000000";
             string clientId = "00000000-0000-0000-0000-00000000";
-            string friendlyName = "";
-
-            #region Snippet:Identity_CertificateCredential_CreateFromStore
+            string thumbprint = "";
+            #region Snippet:Identity_CertificateCredenetial_CreateFromStore
             using var store = new X509Store(StoreName.My, StoreLocation.LocalMachine);
 
-            store.Open(OpenFlags.ReadOnly | OpenFlags.OpenExistingOnly);
+            store.Open(OpenFlags.ReadOnly);
 
-            var certificate = store.Certificates
-                .OfType<X509Certificate2>()
-                .Where(static cert => DateTime.UtcNow > cert.NotBefore && DateTime.UtcNow < cert.NotAfter)
-                .OrderByDescending(static cert => cert.NotAfter)
-                .FirstOrDefault(cert => cert.FriendlyName == friendlyName)
-                ?? throw new CertificateNotFoundException($"Valid certificate with friendly name '{friendlyName}' could not be found in the local machine personal certificate store");
+            var certificate = store.Certificates.Cast<X509Certificate2>().FirstOrDefault(cert => cert.Thumbprint == thumbprint);
 
             var credential = new ClientCertificateCredential(tenantId, clientId, certificate);
             #endregion
         }
 
-        #region Snippet:Identity_CertificateCredential_RotatableCredential
+        #region Snippet:Identity_CertificateCredenetial_RotatableCredential
         public class RotatableCertificateCredential : TokenCredential
         {
             private readonly string _tenantId;
@@ -105,7 +87,7 @@ namespace Azure.Identity.Tests.samples
         }
         #endregion
 
-        #region Snippet:Identity_CertificateCredential_RotatingCredential
+        #region Snippet:Identity_CertificateCredenetial_RotatingCredential
         public class RotatingCertificateCredential : TokenCredential
         {
             private readonly string _tenantId;

@@ -7,71 +7,51 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    /// <summary></summary>
+    /// <summary> The PipelineOption. </summary>
     public readonly partial struct PipelineOption : IEquatable<PipelineOption>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="PipelineOption"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public PipelineOption(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string OverwriteTagsValue = "OverwriteTags";
         private const string OverwriteBlobsValue = "OverwriteBlobs";
         private const string DeleteSourceBlobOnSuccessValue = "DeleteSourceBlobOnSuccess";
         private const string ContinueOnErrorsValue = "ContinueOnErrors";
 
-        /// <summary> Initializes a new instance of <see cref="PipelineOption"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public PipelineOption(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the OverwriteTags. </summary>
+        /// <summary> OverwriteTags. </summary>
         public static PipelineOption OverwriteTags { get; } = new PipelineOption(OverwriteTagsValue);
-
-        /// <summary> Gets the OverwriteBlobs. </summary>
+        /// <summary> OverwriteBlobs. </summary>
         public static PipelineOption OverwriteBlobs { get; } = new PipelineOption(OverwriteBlobsValue);
-
-        /// <summary> Gets the DeleteSourceBlobOnSuccess. </summary>
+        /// <summary> DeleteSourceBlobOnSuccess. </summary>
         public static PipelineOption DeleteSourceBlobOnSuccess { get; } = new PipelineOption(DeleteSourceBlobOnSuccessValue);
-
-        /// <summary> Gets the ContinueOnErrors. </summary>
+        /// <summary> ContinueOnErrors. </summary>
         public static PipelineOption ContinueOnErrors { get; } = new PipelineOption(ContinueOnErrorsValue);
-
         /// <summary> Determines if two <see cref="PipelineOption"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PipelineOption left, PipelineOption right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="PipelineOption"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PipelineOption left, PipelineOption right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="PipelineOption"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PipelineOption"/>. </summary>
         public static implicit operator PipelineOption(string value) => new PipelineOption(value);
 
-        /// <summary> Converts a string to a <see cref="PipelineOption"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator PipelineOption?(string value) => value == null ? null : new PipelineOption(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PipelineOption other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(PipelineOption other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

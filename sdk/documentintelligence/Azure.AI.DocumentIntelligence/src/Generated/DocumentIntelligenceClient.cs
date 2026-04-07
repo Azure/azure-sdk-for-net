@@ -115,7 +115,7 @@ namespace Azure.AI.DocumentIntelligence
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
 
-            return new DocumentIntelligenceClientGetAnalyzeBatchResultsCollectionResult(this, modelId, context, "DocumentIntelligenceClient.GetAnalyzeBatchResults");
+            return new DocumentIntelligenceClientGetAnalyzeBatchResultsCollectionResult(this, modelId, context);
         }
 
         /// <summary>
@@ -136,7 +136,7 @@ namespace Azure.AI.DocumentIntelligence
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
 
-            return new DocumentIntelligenceClientGetAnalyzeBatchResultsAsyncCollectionResult(this, modelId, context, "DocumentIntelligenceClient.GetAnalyzeBatchResults");
+            return new DocumentIntelligenceClientGetAnalyzeBatchResultsAsyncCollectionResult(this, modelId, context);
         }
 
         /// <summary> List batch document analysis results. </summary>
@@ -149,7 +149,7 @@ namespace Azure.AI.DocumentIntelligence
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
 
-            return new DocumentIntelligenceClientGetAnalyzeBatchResultsCollectionResultOfT(this, modelId, cancellationToken.ToRequestContext(), "DocumentIntelligenceClient.GetAnalyzeBatchResults");
+            return new DocumentIntelligenceClientGetAnalyzeBatchResultsCollectionResultOfT(this, modelId, cancellationToken.ToRequestContext());
         }
 
         /// <summary> List batch document analysis results. </summary>
@@ -162,7 +162,7 @@ namespace Azure.AI.DocumentIntelligence
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
 
-            return new DocumentIntelligenceClientGetAnalyzeBatchResultsAsyncCollectionResultOfT(this, modelId, cancellationToken.ToRequestContext(), "DocumentIntelligenceClient.GetAnalyzeBatchResults");
+            return new DocumentIntelligenceClientGetAnalyzeBatchResultsAsyncCollectionResultOfT(this, modelId, cancellationToken.ToRequestContext());
         }
     }
 }

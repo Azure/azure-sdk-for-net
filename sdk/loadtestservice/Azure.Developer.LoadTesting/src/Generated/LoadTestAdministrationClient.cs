@@ -697,7 +697,7 @@ namespace Azure.Developer.LoadTesting
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
 
-            return new LoadTestAdministrationClientGetTestFilesCollectionResult(this, testId, context, "LoadTestAdministrationClient.GetTestFiles");
+            return new LoadTestAdministrationClientGetTestFilesCollectionResult(this, testId, context);
         }
 
         /// <summary>
@@ -718,7 +718,7 @@ namespace Azure.Developer.LoadTesting
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
 
-            return new LoadTestAdministrationClientGetTestFilesAsyncCollectionResult(this, testId, context, "LoadTestAdministrationClient.GetTestFiles");
+            return new LoadTestAdministrationClientGetTestFilesAsyncCollectionResult(this, testId, context);
         }
 
         /// <summary> Get all test files. </summary>
@@ -731,7 +731,7 @@ namespace Azure.Developer.LoadTesting
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
 
-            return new LoadTestAdministrationClientGetTestFilesCollectionResultOfT(this, testId, cancellationToken.ToRequestContext(), "LoadTestAdministrationClient.GetTestFiles");
+            return new LoadTestAdministrationClientGetTestFilesCollectionResultOfT(this, testId, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Get all test files. </summary>
@@ -744,7 +744,7 @@ namespace Azure.Developer.LoadTesting
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
 
-            return new LoadTestAdministrationClientGetTestFilesAsyncCollectionResultOfT(this, testId, cancellationToken.ToRequestContext(), "LoadTestAdministrationClient.GetTestFiles");
+            return new LoadTestAdministrationClientGetTestFilesAsyncCollectionResultOfT(this, testId, cancellationToken.ToRequestContext());
         }
 
         /// <summary>
@@ -1572,8 +1572,7 @@ namespace Azure.Developer.LoadTesting
                 lastModifiedStartTime,
                 lastModifiedEndTime,
                 maxpagesize,
-                context,
-                "LoadTestAdministrationClient.GetTriggers");
+                context);
         }
 
         /// <summary>
@@ -1601,8 +1600,7 @@ namespace Azure.Developer.LoadTesting
                 lastModifiedStartTime,
                 lastModifiedEndTime,
                 maxpagesize,
-                context,
-                "LoadTestAdministrationClient.GetTriggers");
+                context);
         }
 
         /// <summary> Resource list operation template. </summary>
@@ -1622,8 +1620,7 @@ namespace Azure.Developer.LoadTesting
                 lastModifiedStartTime,
                 lastModifiedEndTime,
                 maxpagesize,
-                cancellationToken.ToRequestContext(),
-                "LoadTestAdministrationClient.GetTriggers");
+                cancellationToken.ToRequestContext());
         }
 
         /// <summary> Resource list operation template. </summary>
@@ -1643,8 +1640,7 @@ namespace Azure.Developer.LoadTesting
                 lastModifiedStartTime,
                 lastModifiedEndTime,
                 maxpagesize,
-                cancellationToken.ToRequestContext(),
-                "LoadTestAdministrationClient.GetTriggers");
+                cancellationToken.ToRequestContext());
         }
 
         /// <summary>
@@ -1922,8 +1918,7 @@ namespace Azure.Developer.LoadTesting
                 lastModifiedStartTime,
                 lastModifiedEndTime,
                 maxpagesize,
-                context,
-                "LoadTestAdministrationClient.GetNotificationRules");
+                context);
         }
 
         /// <summary>
@@ -1951,8 +1946,7 @@ namespace Azure.Developer.LoadTesting
                 lastModifiedStartTime,
                 lastModifiedEndTime,
                 maxpagesize,
-                context,
-                "LoadTestAdministrationClient.GetNotificationRules");
+                context);
         }
 
         /// <summary> Resource list operation template. </summary>
@@ -1972,8 +1966,7 @@ namespace Azure.Developer.LoadTesting
                 lastModifiedStartTime,
                 lastModifiedEndTime,
                 maxpagesize,
-                cancellationToken.ToRequestContext(),
-                "LoadTestAdministrationClient.GetNotificationRules");
+                cancellationToken.ToRequestContext());
         }
 
         /// <summary> Resource list operation template. </summary>
@@ -1993,8 +1986,7 @@ namespace Azure.Developer.LoadTesting
                 lastModifiedStartTime,
                 lastModifiedEndTime,
                 maxpagesize,
-                cancellationToken.ToRequestContext(),
-                "LoadTestAdministrationClient.GetNotificationRules");
+                cancellationToken.ToRequestContext());
         }
 
         /// <summary> Clone the given test with optional overrides applied to the clone test. </summary>

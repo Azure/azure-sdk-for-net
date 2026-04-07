@@ -6,46 +6,46 @@
       "properties": {
         "ConfigurationClient": {
           "type": "object",
-          "description": "Configuration for ConfigurationClient.",
+          "description": "Configuration for Azure App Configuration client.",
           "properties": {
             "Endpoint": {
               "type": "string",
               "format": "uri",
-              "description": "Gets or sets the Endpoint."
-            },
-            "ConnectionString": {
-              "type": "string"
+              "description": "The URI of the App Configuration store (e.g. 'https://{name}.azconfig.io')."
             },
             "Credential": {
               "$ref": "#/definitions/credential"
             },
             "Options": {
-              "$ref": "#/definitions/configurationClientOptions"
+              "allOf": [
+                { "$ref": "#/definitions/azureOptions" },
+                {
+                  "type": "object",
+                  "properties": {
+                    "Audience": {
+                      "description": "The audience to use for authentication with Microsoft Entra. Not used when authenticating with a connection string.",
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "enum": [
+                            "https://appconfig.azure.com",
+                            "https://appconfig.azure.us",
+                            "https://appconfig.azure.cn"
+                          ]
+                        },
+                        {
+                          "type": "string"
+                        }
+                      ]
+                    }
+                  }
+                }
+              ]
             }
-          }
+          },
+          "additionalProperties": true
         }
-      },
-      "additionalProperties": {
-        "type": "object",
-        "description": "Configuration for a named client instance."
       }
-    }
-  },
-  "definitions": {
-    "configurationClientOptions": {
-      "allOf": [
-        {
-          "$ref": "#/definitions/azureOptions"
-        },
-        {
-          "type": "object",
-          "properties": {
-            "Audience": {
-              "type": "string"
-            }
-          }
-        }
-      ]
     }
   }
 }

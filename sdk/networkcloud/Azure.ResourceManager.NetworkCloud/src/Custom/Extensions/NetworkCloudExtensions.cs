@@ -9,9 +9,9 @@ using System.Threading;
 using Azure.ResourceManager.NetworkCloud.Mocking;
 using Azure.ResourceManager.Resources;
 
-// NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.NetworkCloud
 {
+    /// <summary> A class to add extension methods to Azure.ResourceManager.NetworkCloud. </summary>
     public static partial class NetworkCloudExtensions
     {
         /// <summary>
@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BareMetalMachines_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -59,6 +63,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <description>BareMetalMachines_ListBySubscription</description>
         /// </item>
         /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
+        /// </item>
+        /// <item>
         /// <term>Resource</term>
         /// <description><see cref="NetworkCloudBareMetalMachineResource"/></description>
         /// </item>
@@ -90,6 +98,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CloudServicesNetworks_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -125,6 +137,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <description>CloudServicesNetworks_ListBySubscription</description>
         /// </item>
         /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
+        /// </item>
+        /// <item>
         /// <term>Resource</term>
         /// <description><see cref="NetworkCloudCloudServicesNetworkResource"/></description>
         /// </item>
@@ -156,6 +172,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ClusterManagers_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -191,6 +211,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <description>ClusterManagers_ListBySubscription</description>
         /// </item>
         /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
+        /// </item>
+        /// <item>
         /// <term>Resource</term>
         /// <description><see cref="NetworkCloudClusterManagerResource"/></description>
         /// </item>
@@ -222,6 +246,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clusters_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -257,6 +285,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <description>Clusters_ListBySubscription</description>
         /// </item>
         /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
+        /// </item>
+        /// <item>
         /// <term>Resource</term>
         /// <description><see cref="NetworkCloudClusterResource"/></description>
         /// </item>
@@ -288,6 +320,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <item>
         /// <term>Operation Id</term>
         /// <description>KubernetesClusters_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -323,6 +359,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <description>KubernetesClusters_ListBySubscription</description>
         /// </item>
         /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
+        /// </item>
+        /// <item>
         /// <term>Resource</term>
         /// <description><see cref="NetworkCloudKubernetesClusterResource"/></description>
         /// </item>
@@ -354,6 +394,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <item>
         /// <term>Operation Id</term>
         /// <description>L2Networks_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -389,6 +433,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <description>L2Networks_ListBySubscription</description>
         /// </item>
         /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
+        /// </item>
+        /// <item>
         /// <term>Resource</term>
         /// <description><see cref="NetworkCloudL2NetworkResource"/></description>
         /// </item>
@@ -420,6 +468,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <item>
         /// <term>Operation Id</term>
         /// <description>L3Networks_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -455,6 +507,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <description>L3Networks_ListBySubscription</description>
         /// </item>
         /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
+        /// </item>
+        /// <item>
         /// <term>Resource</term>
         /// <description><see cref="NetworkCloudL3NetworkResource"/></description>
         /// </item>
@@ -486,6 +542,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Racks_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -521,6 +581,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <description>Racks_ListBySubscription</description>
         /// </item>
         /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
+        /// </item>
+        /// <item>
         /// <term>Resource</term>
         /// <description><see cref="NetworkCloudRackResource"/></description>
         /// </item>
@@ -552,6 +616,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StorageAppliances_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -587,6 +655,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <description>StorageAppliances_ListBySubscription</description>
         /// </item>
         /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
+        /// </item>
+        /// <item>
         /// <term>Resource</term>
         /// <description><see cref="NetworkCloudStorageApplianceResource"/></description>
         /// </item>
@@ -618,6 +690,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <item>
         /// <term>Operation Id</term>
         /// <description>TrunkedNetworks_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -653,6 +729,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <description>TrunkedNetworks_ListBySubscription</description>
         /// </item>
         /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
+        /// </item>
+        /// <item>
         /// <term>Resource</term>
         /// <description><see cref="NetworkCloudTrunkedNetworkResource"/></description>
         /// </item>
@@ -684,6 +764,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualMachines_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -719,6 +803,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <description>VirtualMachines_ListBySubscription</description>
         /// </item>
         /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
+        /// </item>
+        /// <item>
         /// <term>Resource</term>
         /// <description><see cref="NetworkCloudVirtualMachineResource"/></description>
         /// </item>
@@ -752,6 +840,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <description>Volumes_ListBySubscription</description>
         /// </item>
         /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
+        /// </item>
+        /// <item>
         /// <term>Resource</term>
         /// <description><see cref="NetworkCloudVolumeResource"/></description>
         /// </item>
@@ -783,6 +875,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Volumes_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

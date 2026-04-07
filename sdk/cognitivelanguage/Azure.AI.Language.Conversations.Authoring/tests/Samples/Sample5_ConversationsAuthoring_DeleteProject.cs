@@ -20,13 +20,13 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential);
+            ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
 
             #region Snippet:Sample5_ConversationsAuthoring_DeleteProject
             string projectName = "{projectName}";
-            Operation operation = client.DeleteProject(
-                waitUntil: WaitUntil.Completed,
-                projectName: projectName
+            ConversationAuthoringProject projectClient = client.GetProject(projectName);
+            Operation operation = projectClient.DeleteProject(
+                waitUntil: WaitUntil.Completed
             );
 
             // Extract the operation-location header
@@ -43,13 +43,13 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential);
+            ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
 
             #region Snippet:Sample5_ConversationsAuthoring_DeleteProjectAsync
             string projectName = "{projectName}";
-            Operation operation = await client.DeleteProjectAsync(
-                waitUntil: WaitUntil.Completed,
-                projectName: projectName
+            ConversationAuthoringProject projectClient = client.GetProject(projectName);
+            Operation operation = await projectClient.DeleteProjectAsync(
+                waitUntil: WaitUntil.Completed
             );
 
             // Extract the operation-location header

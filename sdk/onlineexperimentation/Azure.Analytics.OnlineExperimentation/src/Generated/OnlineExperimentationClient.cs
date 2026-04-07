@@ -444,13 +444,7 @@ namespace Azure.Analytics.OnlineExperimentation
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetMetrics(int? maxCount, int? skip, int? maxPageSize, RequestContext context)
         {
-            return new OnlineExperimentationClientGetMetricsCollectionResult(
-                this,
-                maxCount,
-                skip,
-                maxPageSize,
-                context,
-                "OnlineExperimentationClient.GetMetrics");
+            return new OnlineExperimentationClientGetMetricsCollectionResult(this, maxCount, skip, maxPageSize, context);
         }
 
         /// <summary>
@@ -469,13 +463,7 @@ namespace Azure.Analytics.OnlineExperimentation
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetMetricsAsync(int? maxCount, int? skip, int? maxPageSize, RequestContext context)
         {
-            return new OnlineExperimentationClientGetMetricsAsyncCollectionResult(
-                this,
-                maxCount,
-                skip,
-                maxPageSize,
-                context,
-                "OnlineExperimentationClient.GetMetrics");
+            return new OnlineExperimentationClientGetMetricsAsyncCollectionResult(this, maxCount, skip, maxPageSize, context);
         }
 
         /// <summary> Lists experiment metrics. </summary>
@@ -486,13 +474,7 @@ namespace Azure.Analytics.OnlineExperimentation
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<ExperimentMetric> GetMetrics(int? maxCount = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
-            return new OnlineExperimentationClientGetMetricsCollectionResultOfT(
-                this,
-                maxCount,
-                skip,
-                maxPageSize,
-                cancellationToken.ToRequestContext(),
-                "OnlineExperimentationClient.GetMetrics");
+            return new OnlineExperimentationClientGetMetricsCollectionResultOfT(this, maxCount, skip, maxPageSize, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Lists experiment metrics. </summary>
@@ -503,13 +485,7 @@ namespace Azure.Analytics.OnlineExperimentation
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<ExperimentMetric> GetMetricsAsync(int? maxCount = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
-            return new OnlineExperimentationClientGetMetricsAsyncCollectionResultOfT(
-                this,
-                maxCount,
-                skip,
-                maxPageSize,
-                cancellationToken.ToRequestContext(),
-                "OnlineExperimentationClient.GetMetrics");
+            return new OnlineExperimentationClientGetMetricsAsyncCollectionResultOfT(this, maxCount, skip, maxPageSize, cancellationToken.ToRequestContext());
         }
     }
 }

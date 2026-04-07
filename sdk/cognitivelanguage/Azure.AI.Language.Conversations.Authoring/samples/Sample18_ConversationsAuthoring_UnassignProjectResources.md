@@ -15,20 +15,21 @@ To unassign project resources, call `UnassignProjectResources` on the `Conversat
 ```C# Snippet:Sample18_ConversationsAuthoring_UnassignProjectResources
 // Set project name and create client for the project
 string sampleProjectName = "{projectName}";
+ConversationAuthoringProject sampleProjectClient = sampleClient.GetProject(sampleProjectName);
+
 // Define assigned resource ID to be unassigned
-var sampleUnassignIds = new ConversationAuthoringDeleteDeploymentDetails
+var sampleUnassignIds = new ConversationAuthoringProjectResourceIds
 {
-    AssignedResourceIds =
+    AzureResourceIds =
     {
         "/subscriptions/{subscription}/resourceGroups/{resourcegroup}/providers/Microsoft.CognitiveServices/accounts/{sampleAccount}"
     }
 };
 
 // Start the operation
-Operation sampleOperation = client.UnassignProjectResources(
-    WaitUntil.Started,
-    sampleProjectName,
-    sampleUnassignIds
+Operation sampleOperation = sampleProjectClient.UnassignProjectResources(
+    waitUntil: WaitUntil.Started,
+    details: sampleUnassignIds
 );
 
 Console.WriteLine($"UnassignProjectResources initiated. Status: {sampleOperation.GetRawResponse().Status}");
@@ -52,20 +53,21 @@ To unassign project resources asynchronously, call `UnassignProjectResourcesAsyn
 ```C# Snippet:Sample18_ConversationsAuthoring_UnassignProjectResourcesAsync
 // Set project name and create client for the project
 string sampleProjectName = "{projectName}";
+ConversationAuthoringProject sampleProjectClient = sampleClient.GetProject(sampleProjectName);
+
 // Define assigned resource ID to be unassigned
-var sampleUnassignIds = new ConversationAuthoringDeleteDeploymentDetails
+var sampleUnassignIds = new ConversationAuthoringProjectResourceIds
 {
-    AssignedResourceIds =
+    AzureResourceIds =
     {
         "/subscriptions/{subscription}/resourceGroups/{resourcegroup}/providers/Microsoft.CognitiveServices/accounts/{sampleAccount}"
     }
 };
 
 // Call the operation
-Operation sampleOperation = await client.UnassignProjectResourcesAsync(
-    WaitUntil.Started,
-    sampleProjectName,
-    sampleUnassignIds
+Operation sampleOperation = await sampleProjectClient.UnassignProjectResourcesAsync(
+    waitUntil: WaitUntil.Started,
+    details: sampleUnassignIds
 );
 
 Console.WriteLine($"UnassignProjectResourcesAsync initiated. Status: {sampleOperation.GetRawResponse().Status}");

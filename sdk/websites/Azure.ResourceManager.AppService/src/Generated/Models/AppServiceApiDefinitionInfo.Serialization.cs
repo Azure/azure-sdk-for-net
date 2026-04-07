@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.AppService.Models
                 throw new FormatException($"The model {nameof(AppServiceApiDefinitionInfo)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(ApiDefinitionUriStringValue))
+            if (Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("url"u8);
-                writer.WriteStringValue(ApiDefinitionUriStringValue);
+                writer.WriteStringValue(Uri.AbsoluteUri);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -77,14 +77,18 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            string url = default;
+            Uri url = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("url"u8))
                 {
-                    url = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null || property.Value.ValueKind == JsonValueKind.String && property.Value.GetString().Length == 0)
+                    {
+                        continue;
+                    }
+                    url = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -107,7 +111,7 @@ namespace Azure.ResourceManager.AppService.Models
 
             builder.AppendLine("{");
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ApiDefinitionUriStringValue), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Uri), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  url: ");
@@ -115,18 +119,10 @@ namespace Azure.ResourceManager.AppService.Models
             }
             else
             {
-                if (Optional.IsDefined(ApiDefinitionUriStringValue))
+                if (Optional.IsDefined(Uri))
                 {
                     builder.Append("  url: ");
-                    if (ApiDefinitionUriStringValue.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ApiDefinitionUriStringValue}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ApiDefinitionUriStringValue}'");
-                    }
+                    builder.AppendLine($"'{Uri.AbsoluteUri}'");
                 }
             }
 

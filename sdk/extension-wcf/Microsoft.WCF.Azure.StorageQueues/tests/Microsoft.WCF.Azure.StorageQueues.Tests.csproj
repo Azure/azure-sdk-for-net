@@ -1,0 +1,44 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup Condition="$(TargetFramework.StartsWith('net4'))">
+    <Compile Remove="**\*.cs" />
+    <None Include="**\*.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.Identity" />
+    <PackageReference Include="Azure.Storage.Files.Shares" />
+    <PackageReference Include="Azure.Storage.Queues" />
+    <PackageReference Include="Microsoft.Extensions.Azure" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" />
+    <PackageReference Include="NUnit" />
+    <PackageReference Include="NUnit3TestAdapter" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+  </ItemGroup>
+
+  <ItemGroup Condition="!$(TargetFramework.StartsWith('net4'))">
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="System.ServiceModel.Primitives" />
+    <PackageReference Include="System.Formats.Asn1" />
+    <PackageReference Include="System.Security.Cryptography.Pkcs" />
+    <ProjectReference Include="..\src\Microsoft.WCF.Azure.StorageQueues.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\..\storage\Azure.Storage.Common\tests\Shared\AzuriteNUnitFixture.cs" LinkBase="Shared" />
+    <Compile Include="..\..\..\storage\Azure.Storage.Common\tests\Shared\AzuriteFixture.cs" LinkBase="Shared" />
+    <None Include="..\..\..\storage\Azure.Storage.Common\tests\Shared\*.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="..\..\..\storage\Azure.Storage.Common\tests\Shared\azurite_cert.pem" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="..\..\..\storage\Azure.Storage.Common\tests\Shared\TestConfigurations.xml" />
+    <None Remove="..\..\..\storage\Azure.Storage.Common\tests\Shared\TestConfigurationsTemplate.xml" />
+  </ItemGroup>
+
+</Project>

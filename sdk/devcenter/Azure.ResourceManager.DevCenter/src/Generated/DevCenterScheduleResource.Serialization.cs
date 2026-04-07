@@ -11,29 +11,19 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.DevCenter
 {
-    /// <summary></summary>
     public partial class DevCenterScheduleResource : IJsonModel<DevCenterScheduleData>
     {
-        private static IJsonModel<DevCenterScheduleData> s_dataDeserializationInstance;
+        private static DevCenterScheduleData s_dataDeserializationInstance;
+        private static DevCenterScheduleData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
 
-        private static IJsonModel<DevCenterScheduleData> DataDeserializationInstance => s_dataDeserializationInstance ??= new DevCenterScheduleData();
-
-        /// <param name="writer"> The writer to serialize the model to. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DevCenterScheduleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DevCenterScheduleData>)Data).Write(writer, options);
 
-        /// <param name="reader"> The reader for deserializing the model. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DevCenterScheduleData IJsonModel<DevCenterScheduleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        DevCenterScheduleData IJsonModel<DevCenterScheduleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DevCenterScheduleData>)DataDeserializationInstance).Create(ref reader, options);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<DevCenterScheduleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DevCenterScheduleData>(Data, options, AzureResourceManagerDevCenterContext.Default);
 
-        /// <param name="data"> The binary data to be processed. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         DevCenterScheduleData IPersistableModel<DevCenterScheduleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DevCenterScheduleData>(data, options, AzureResourceManagerDevCenterContext.Default);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DevCenterScheduleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<DevCenterScheduleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DevCenterScheduleData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

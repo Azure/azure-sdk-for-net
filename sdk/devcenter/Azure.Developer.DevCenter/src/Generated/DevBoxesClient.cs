@@ -99,7 +99,7 @@ namespace Azure.Developer.DevCenter
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return new DevBoxesClientGetPoolsCollectionResult(this, projectName, context, "DevBoxesClient.GetPools");
+            return new DevBoxesClientGetPoolsCollectionResult(this, projectName, context);
         }
 
         /// <summary>
@@ -120,7 +120,7 @@ namespace Azure.Developer.DevCenter
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return new DevBoxesClientGetPoolsAsyncCollectionResult(this, projectName, context, "DevBoxesClient.GetPools");
+            return new DevBoxesClientGetPoolsAsyncCollectionResult(this, projectName, context);
         }
 
         /// <summary> Lists available pools. </summary>
@@ -133,7 +133,7 @@ namespace Azure.Developer.DevCenter
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return new DevBoxesClientGetPoolsCollectionResultOfT(this, projectName, cancellationToken.ToRequestContext(), "DevBoxesClient.GetPools");
+            return new DevBoxesClientGetPoolsCollectionResultOfT(this, projectName, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Lists available pools. </summary>
@@ -146,7 +146,7 @@ namespace Azure.Developer.DevCenter
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return new DevBoxesClientGetPoolsAsyncCollectionResultOfT(this, projectName, cancellationToken.ToRequestContext(), "DevBoxesClient.GetPools");
+            return new DevBoxesClientGetPoolsAsyncCollectionResultOfT(this, projectName, cancellationToken.ToRequestContext());
         }
 
         /// <summary>
@@ -269,7 +269,7 @@ namespace Azure.Developer.DevCenter
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
 
-            return new DevBoxesClientGetSchedulesCollectionResult(this, projectName, poolName, context, "DevBoxesClient.GetSchedules");
+            return new DevBoxesClientGetSchedulesCollectionResult(this, projectName, poolName, context);
         }
 
         /// <summary>
@@ -292,7 +292,7 @@ namespace Azure.Developer.DevCenter
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
 
-            return new DevBoxesClientGetSchedulesAsyncCollectionResult(this, projectName, poolName, context, "DevBoxesClient.GetSchedules");
+            return new DevBoxesClientGetSchedulesAsyncCollectionResult(this, projectName, poolName, context);
         }
 
         /// <summary> Lists all schedules within a pool that are configured by your project administrator. </summary>
@@ -307,7 +307,7 @@ namespace Azure.Developer.DevCenter
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
 
-            return new DevBoxesClientGetSchedulesCollectionResultOfT(this, projectName, poolName, cancellationToken.ToRequestContext(), "DevBoxesClient.GetSchedules");
+            return new DevBoxesClientGetSchedulesCollectionResultOfT(this, projectName, poolName, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Lists all schedules within a pool that are configured by your project administrator. </summary>
@@ -322,7 +322,7 @@ namespace Azure.Developer.DevCenter
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
 
-            return new DevBoxesClientGetSchedulesAsyncCollectionResultOfT(this, projectName, poolName, cancellationToken.ToRequestContext(), "DevBoxesClient.GetSchedules");
+            return new DevBoxesClientGetSchedulesAsyncCollectionResultOfT(this, projectName, poolName, cancellationToken.ToRequestContext());
         }
 
         /// <summary>
@@ -446,7 +446,7 @@ namespace Azure.Developer.DevCenter
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetAllDevBoxes(RequestContext context)
         {
-            return new DevBoxesClientGetAllDevBoxesCollectionResult(this, context, "DevBoxesClient.GetAllDevBoxes");
+            return new DevBoxesClientGetAllDevBoxesCollectionResult(this, context);
         }
 
         /// <summary>
@@ -462,7 +462,7 @@ namespace Azure.Developer.DevCenter
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetAllDevBoxesAsync(RequestContext context)
         {
-            return new DevBoxesClientGetAllDevBoxesAsyncCollectionResult(this, context, "DevBoxesClient.GetAllDevBoxes");
+            return new DevBoxesClientGetAllDevBoxesAsyncCollectionResult(this, context);
         }
 
         /// <summary> Lists Dev Boxes that the caller has access to in the DevCenter. </summary>
@@ -470,7 +470,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<DevBox> GetAllDevBoxes(CancellationToken cancellationToken = default)
         {
-            return new DevBoxesClientGetAllDevBoxesCollectionResultOfT(this, cancellationToken.ToRequestContext(), "DevBoxesClient.GetAllDevBoxes");
+            return new DevBoxesClientGetAllDevBoxesCollectionResultOfT(this, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Lists Dev Boxes that the caller has access to in the DevCenter. </summary>
@@ -478,7 +478,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<DevBox> GetAllDevBoxesAsync(CancellationToken cancellationToken = default)
         {
-            return new DevBoxesClientGetAllDevBoxesAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext(), "DevBoxesClient.GetAllDevBoxes");
+            return new DevBoxesClientGetAllDevBoxesAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext());
         }
 
         /// <summary>
@@ -499,7 +499,7 @@ namespace Azure.Developer.DevCenter
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
-            return new DevBoxesClientGetAllDevBoxesByUserCollectionResult(this, userId, context, "DevBoxesClient.GetAllDevBoxesByUser");
+            return new DevBoxesClientGetAllDevBoxesByUserCollectionResult(this, userId, context);
         }
 
         /// <summary>
@@ -520,7 +520,7 @@ namespace Azure.Developer.DevCenter
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
-            return new DevBoxesClientGetAllDevBoxesByUserAsyncCollectionResult(this, userId, context, "DevBoxesClient.GetAllDevBoxesByUser");
+            return new DevBoxesClientGetAllDevBoxesByUserAsyncCollectionResult(this, userId, context);
         }
 
         /// <summary> Lists Dev Boxes in the Dev Center for a particular user. </summary>
@@ -533,7 +533,7 @@ namespace Azure.Developer.DevCenter
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
-            return new DevBoxesClientGetAllDevBoxesByUserCollectionResultOfT(this, userId, cancellationToken.ToRequestContext(), "DevBoxesClient.GetAllDevBoxesByUser");
+            return new DevBoxesClientGetAllDevBoxesByUserCollectionResultOfT(this, userId, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Lists Dev Boxes in the Dev Center for a particular user. </summary>
@@ -546,7 +546,7 @@ namespace Azure.Developer.DevCenter
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
-            return new DevBoxesClientGetAllDevBoxesByUserAsyncCollectionResultOfT(this, userId, cancellationToken.ToRequestContext(), "DevBoxesClient.GetAllDevBoxesByUser");
+            return new DevBoxesClientGetAllDevBoxesByUserAsyncCollectionResultOfT(this, userId, cancellationToken.ToRequestContext());
         }
 
         /// <summary>
@@ -569,7 +569,7 @@ namespace Azure.Developer.DevCenter
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
-            return new DevBoxesClientGetDevBoxesCollectionResult(this, projectName, userId, context, "DevBoxesClient.GetDevBoxes");
+            return new DevBoxesClientGetDevBoxesCollectionResult(this, projectName, userId, context);
         }
 
         /// <summary>
@@ -592,7 +592,7 @@ namespace Azure.Developer.DevCenter
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
-            return new DevBoxesClientGetDevBoxesAsyncCollectionResult(this, projectName, userId, context, "DevBoxesClient.GetDevBoxes");
+            return new DevBoxesClientGetDevBoxesAsyncCollectionResult(this, projectName, userId, context);
         }
 
         /// <summary> Lists Dev Boxes in the project for a particular user. </summary>
@@ -607,7 +607,7 @@ namespace Azure.Developer.DevCenter
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
-            return new DevBoxesClientGetDevBoxesCollectionResultOfT(this, projectName, userId, cancellationToken.ToRequestContext(), "DevBoxesClient.GetDevBoxes");
+            return new DevBoxesClientGetDevBoxesCollectionResultOfT(this, projectName, userId, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Lists Dev Boxes in the project for a particular user. </summary>
@@ -622,7 +622,7 @@ namespace Azure.Developer.DevCenter
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
-            return new DevBoxesClientGetDevBoxesAsyncCollectionResultOfT(this, projectName, userId, cancellationToken.ToRequestContext(), "DevBoxesClient.GetDevBoxes");
+            return new DevBoxesClientGetDevBoxesAsyncCollectionResultOfT(this, projectName, userId, cancellationToken.ToRequestContext());
         }
 
         /// <summary>
@@ -1297,13 +1297,7 @@ namespace Azure.Developer.DevCenter
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
             Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
 
-            return new DevBoxesClientGetDevBoxActionsCollectionResult(
-                this,
-                projectName,
-                userId,
-                devBoxName,
-                context,
-                "DevBoxesClient.GetDevBoxActions");
+            return new DevBoxesClientGetDevBoxActionsCollectionResult(this, projectName, userId, devBoxName, context);
         }
 
         /// <summary>
@@ -1328,13 +1322,7 @@ namespace Azure.Developer.DevCenter
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
             Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
 
-            return new DevBoxesClientGetDevBoxActionsAsyncCollectionResult(
-                this,
-                projectName,
-                userId,
-                devBoxName,
-                context,
-                "DevBoxesClient.GetDevBoxActions");
+            return new DevBoxesClientGetDevBoxActionsAsyncCollectionResult(this, projectName, userId, devBoxName, context);
         }
 
         /// <summary> Lists actions on a Dev Box. </summary>
@@ -1351,13 +1339,7 @@ namespace Azure.Developer.DevCenter
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
             Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
 
-            return new DevBoxesClientGetDevBoxActionsCollectionResultOfT(
-                this,
-                projectName,
-                userId,
-                devBoxName,
-                cancellationToken.ToRequestContext(),
-                "DevBoxesClient.GetDevBoxActions");
+            return new DevBoxesClientGetDevBoxActionsCollectionResultOfT(this, projectName, userId, devBoxName, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Lists actions on a Dev Box. </summary>
@@ -1374,13 +1356,7 @@ namespace Azure.Developer.DevCenter
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
             Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
 
-            return new DevBoxesClientGetDevBoxActionsAsyncCollectionResultOfT(
-                this,
-                projectName,
-                userId,
-                devBoxName,
-                cancellationToken.ToRequestContext(),
-                "DevBoxesClient.GetDevBoxActions");
+            return new DevBoxesClientGetDevBoxActionsAsyncCollectionResultOfT(this, projectName, userId, devBoxName, cancellationToken.ToRequestContext());
         }
 
         /// <summary>
@@ -1762,8 +1738,7 @@ namespace Azure.Developer.DevCenter
                 userId,
                 devBoxName,
                 delayUntil,
-                context,
-                "DevBoxesClient.DelayAllActions");
+                context);
         }
 
         /// <summary>
@@ -1795,8 +1770,7 @@ namespace Azure.Developer.DevCenter
                 userId,
                 devBoxName,
                 delayUntil,
-                context,
-                "DevBoxesClient.DelayAllActions");
+                context);
         }
 
         /// <summary> Delays all actions. </summary>
@@ -1820,8 +1794,7 @@ namespace Azure.Developer.DevCenter
                 userId,
                 devBoxName,
                 delayUntil,
-                cancellationToken.ToRequestContext(),
-                "DevBoxesClient.DelayAllActions");
+                cancellationToken.ToRequestContext());
         }
 
         /// <summary> Delays all actions. </summary>
@@ -1845,8 +1818,7 @@ namespace Azure.Developer.DevCenter
                 userId,
                 devBoxName,
                 delayUntil,
-                cancellationToken.ToRequestContext(),
-                "DevBoxesClient.DelayAllActions");
+                cancellationToken.ToRequestContext());
         }
     }
 }

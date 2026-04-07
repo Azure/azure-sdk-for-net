@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -19,16 +19,21 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new AzureKeyCredential(TestEnvironment.ApiKey);
-            ConversationAnalysisAuthoring client =
-                new ConversationAnalysisAuthoring(endpoint, credential);
+            ConversationAnalysisAuthoringClient client =
+                new ConversationAnalysisAuthoringClient(endpoint, credential);
 
             #region Snippet:Sample23_ConversationsAuthoring_GetDeploymentDeleteFromResourcesStatus
             string projectName = "{projectName}";
             string deploymentName = "{deploymentName}";
             string jobId = "{jobId}";
+
+            // Get the deployment-scoped client
+            ConversationAuthoringDeployment deploymentClient =
+                client.GetDeployment(projectName, deploymentName);
+
             // Retrieve the job status
             Response<ConversationAuthoringDeploymentDeleteFromResourcesState> response =
-                client.GetDeploymentDeleteFromResourcesStatus(projectName, deploymentName, jobId);
+                deploymentClient.GetDeploymentDeleteFromResourcesStatus(jobId);
 
             ConversationAuthoringDeploymentDeleteFromResourcesState state = response.Value;
 
@@ -46,16 +51,21 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new AzureKeyCredential(TestEnvironment.ApiKey);
-            ConversationAnalysisAuthoring client =
-                new ConversationAnalysisAuthoring(endpoint, credential);
+            ConversationAnalysisAuthoringClient client =
+                new ConversationAnalysisAuthoringClient(endpoint, credential);
 
             #region Snippet:Sample23_ConversationsAuthoring_GetDeploymentDeleteFromResourcesStatusAsync
             string projectName = "{projectName}";
             string deploymentName = "{deploymentName}";
             string jobId = "{jobId}";
+
+            // Get the deployment-scoped client
+            ConversationAuthoringDeployment deploymentClient =
+                client.GetDeployment(projectName, deploymentName);
+
             // Retrieve the job status asynchronously
             Response<ConversationAuthoringDeploymentDeleteFromResourcesState> response =
-                await client.GetDeploymentDeleteFromResourcesStatusAsync(projectName, deploymentName, jobId);
+                await deploymentClient.GetDeploymentDeleteFromResourcesStatusAsync(jobId);
 
             ConversationAuthoringDeploymentDeleteFromResourcesState state = response.Value;
 

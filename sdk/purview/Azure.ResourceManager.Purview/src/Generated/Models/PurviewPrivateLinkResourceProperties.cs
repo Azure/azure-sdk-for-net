@@ -41,9 +41,9 @@ namespace Azure.ResourceManager.Purview.Models
         public string GroupId { get; }
 
         /// <summary> This translates to how many Private IPs should be created for each privately linkable resource. </summary>
-        public IReadOnlyList<string> RequiredMembers { get; } = new ChangeTrackingList<string>();
+        public IReadOnlyList<string> RequiredMembers { get; }
 
         /// <summary> The required zone names for private link resource. </summary>
-        public IReadOnlyList<string> RequiredZoneNames { get; } = new ChangeTrackingList<string>();
+        public IReadOnlyList<string> RequiredZoneNames { get; }
     }
 }

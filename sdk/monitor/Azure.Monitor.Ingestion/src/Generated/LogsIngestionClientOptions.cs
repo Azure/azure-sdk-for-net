@@ -43,10 +43,6 @@ namespace Azure.Monitor.Ingestion
             {
                 Version = version;
             }
-            if (section["Audience"] is string audience)
-            {
-                Audience = new LogsIngestionAudience(audience);
-            }
             ConfigureLogging();
         }
 

@@ -381,7 +381,7 @@ namespace Azure.Template
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetWidgets(RequestContext context)
         {
-            return new AzureWidgetsGetWidgetsCollectionResult(this, context, "AzureWidgets.GetWidgets");
+            return new AzureWidgetsGetWidgetsCollectionResult(this, context);
         }
 
         /// <summary>
@@ -397,7 +397,7 @@ namespace Azure.Template
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetWidgetsAsync(RequestContext context)
         {
-            return new AzureWidgetsGetWidgetsAsyncCollectionResult(this, context, "AzureWidgets.GetWidgets");
+            return new AzureWidgetsGetWidgetsAsyncCollectionResult(this, context);
         }
 
         /// <summary> List Widget resources. </summary>
@@ -405,7 +405,7 @@ namespace Azure.Template
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<WidgetSuite> GetWidgets(CancellationToken cancellationToken = default)
         {
-            return new AzureWidgetsGetWidgetsCollectionResultOfT(this, cancellationToken.ToRequestContext(), "AzureWidgets.GetWidgets");
+            return new AzureWidgetsGetWidgetsCollectionResultOfT(this, cancellationToken.ToRequestContext());
         }
 
         /// <summary> List Widget resources. </summary>
@@ -413,7 +413,7 @@ namespace Azure.Template
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<WidgetSuite> GetWidgetsAsync(CancellationToken cancellationToken = default)
         {
-            return new AzureWidgetsGetWidgetsAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext(), "AzureWidgets.GetWidgets");
+            return new AzureWidgetsGetWidgetsAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext());
         }
     }
 }

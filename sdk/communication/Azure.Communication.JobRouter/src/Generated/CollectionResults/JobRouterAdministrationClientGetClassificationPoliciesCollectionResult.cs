@@ -19,19 +19,16 @@ namespace Azure.Communication.JobRouter
         private readonly JobRouterAdministrationClient _client;
         private readonly int? _maxpagesize;
         private readonly RequestContext _context;
-        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of JobRouterAdministrationClientGetClassificationPoliciesCollectionResult, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The JobRouterAdministrationClient client used to send requests. </param>
         /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public JobRouterAdministrationClientGetClassificationPoliciesCollectionResult(JobRouterAdministrationClient client, int? maxpagesize, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public JobRouterAdministrationClientGetClassificationPoliciesCollectionResult(JobRouterAdministrationClient client, int? maxpagesize, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _maxpagesize = maxpagesize;
             _context = context;
-            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of JobRouterAdministrationClientGetClassificationPoliciesCollectionResult as an enumerable collection. </summary>
@@ -70,7 +67,7 @@ namespace Azure.Communication.JobRouter
         {
             int? pageSize = pageSizeHint.HasValue ? pageSizeHint.Value : _maxpagesize;
             HttpMessage message = nextLink != null ? _client.CreateNextGetClassificationPoliciesRequest(nextLink, pageSize, _context) : _client.CreateGetClassificationPoliciesRequest(pageSize, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("JobRouterAdministrationClient.GetClassificationPolicies");
             scope.Start();
             try
             {

@@ -8,33 +8,22 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
-    /// <summary></summary>
-    public partial class NetworkCloudKubernetesClusterFeatureResource : ArmResource, IJsonModel<NetworkCloudKubernetesClusterFeatureData>
+    public partial class NetworkCloudKubernetesClusterFeatureResource : IJsonModel<NetworkCloudKubernetesClusterFeatureData>
     {
-        private static IJsonModel<NetworkCloudKubernetesClusterFeatureData> s_dataDeserializationInstance;
+        private static NetworkCloudKubernetesClusterFeatureData s_dataDeserializationInstance;
+        private static NetworkCloudKubernetesClusterFeatureData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
 
-        private static IJsonModel<NetworkCloudKubernetesClusterFeatureData> DataDeserializationInstance => s_dataDeserializationInstance ??= new NetworkCloudKubernetesClusterFeatureData();
-
-        /// <param name="writer"> The writer to serialize the model to. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NetworkCloudKubernetesClusterFeatureData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetworkCloudKubernetesClusterFeatureData>)Data).Write(writer, options);
 
-        /// <param name="reader"> The reader for deserializing the model. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        NetworkCloudKubernetesClusterFeatureData IJsonModel<NetworkCloudKubernetesClusterFeatureData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        NetworkCloudKubernetesClusterFeatureData IJsonModel<NetworkCloudKubernetesClusterFeatureData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkCloudKubernetesClusterFeatureData>)DataDeserializationInstance).Create(ref reader, options);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<NetworkCloudKubernetesClusterFeatureData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkCloudKubernetesClusterFeatureData>(Data, options, AzureResourceManagerNetworkCloudContext.Default);
 
-        /// <param name="data"> The binary data to be processed. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         NetworkCloudKubernetesClusterFeatureData IPersistableModel<NetworkCloudKubernetesClusterFeatureData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkCloudKubernetesClusterFeatureData>(data, options, AzureResourceManagerNetworkCloudContext.Default);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<NetworkCloudKubernetesClusterFeatureData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<NetworkCloudKubernetesClusterFeatureData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkCloudKubernetesClusterFeatureData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

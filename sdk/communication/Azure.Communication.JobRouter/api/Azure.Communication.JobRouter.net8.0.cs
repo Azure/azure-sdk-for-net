@@ -583,7 +583,6 @@ namespace Azure.Communication.JobRouter
     public partial class JobRouterAdministrationClientSettings : System.ClientModel.Primitives.ClientSettings
     {
         public JobRouterAdministrationClientSettings() { }
-        public string ConnectionString { get { throw null; } set { } }
         public System.Uri Endpoint { get { throw null; } set { } }
         public Azure.Communication.JobRouter.JobRouterClientOptions Options { get { throw null; } set { } }
         protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
@@ -699,7 +698,6 @@ namespace Azure.Communication.JobRouter
     public partial class JobRouterClientSettings : System.ClientModel.Primitives.ClientSettings
     {
         public JobRouterClientSettings() { }
-        public string ConnectionString { get { throw null; } set { } }
         public System.Uri Endpoint { get { throw null; } set { } }
         public Azure.Communication.JobRouter.JobRouterClientOptions Options { get { throw null; } set { } }
         protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }

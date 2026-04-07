@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             )
             {
                 AnalyticsWorkspaceId = new ResourceIdentifier(TestEnvironment.LawId),
-                ClusterServicePrincipal = new ServicePrincipalInformation("12345678-1234-1234-1234-123456789012", "00000008-0004-0004-0004-000000000012", "80000000-4000-4000-4000-120000000000", "00000000-0000-0000-0000-000000000000")
+                ClusterServicePrincipal = new ServicePrincipalInformation("12345678-1234-1234-1234-123456789012", "00000008-0004-0004-0004-000000000012", "80000000-4000-4000-4000-120000000000")
                 {
                     Password = "password"
                 },
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                     ["key1"] = "myvalue1",
                 },
             };
-            var createResult = await clusterCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, data, matchConditions: null);
+            var createResult = await clusterCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, data);
             Assert.AreEqual(clusterName, createResult.Value.Data.Name);
 
             // Get
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                     ["key2"] = "myvalue2",
                 },
             };
-            var patchResult = await clusterResource.UpdateAsync(WaitUntil.Completed, patch, matchConditions: null);
+            var patchResult = await clusterResource.UpdateAsync(WaitUntil.Completed, patch);
             Assert.AreEqual(patch.Tags, patchResult.Value.Data.Tags);
             Assert.AreEqual("Foo floor", patchResult.Value.Data.ClusterLocation);
 
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                     WaitTimeMinutes = 0,
                 },
             };
-            var strategyResult = await clusterResource.UpdateAsync(WaitUntil.Completed, patch2, matchConditions: null);
+            var strategyResult = await clusterResource.UpdateAsync(WaitUntil.Completed, patch2);
             Assert.IsNotNull(strategyResult.Value);
 
             // Patch Secret Archive Settings
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                     VaultUri = new Uri(TestEnvironment.VaultUri),
                 }
             };
-            var secretArchiveResult = await clusterResource.UpdateAsync(WaitUntil.Completed, patch3, matchConditions: null);
+            var secretArchiveResult = await clusterResource.UpdateAsync(WaitUntil.Completed, patch3);
             Assert.IsNotNull(secretArchiveResult.Value);
 
             // Patch VulnerabilityScanningContainerScan
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                 {
                     VulnerabilityScanningContainerScan = VulnerabilityScanningSettingsContainerScan.Enabled
                 };
-                var vulnerabilityScanResult = await clusterResource.UpdateAsync(WaitUntil.Completed, patch4, matchConditions: null);
+                var vulnerabilityScanResult = await clusterResource.UpdateAsync(WaitUntil.Completed, patch4);
                 Assert.IsNotNull(vulnerabilityScanResult.Value);
             }
             catch (Exception ex)

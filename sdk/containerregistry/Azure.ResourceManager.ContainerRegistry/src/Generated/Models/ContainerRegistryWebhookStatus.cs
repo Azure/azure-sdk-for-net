@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -15,55 +14,38 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     public readonly partial struct ContainerRegistryWebhookStatus : IEquatable<ContainerRegistryWebhookStatus>
     {
         private readonly string _value;
-        private const string EnabledValue = "enabled";
-        private const string DisabledValue = "disabled";
 
         /// <summary> Initializes a new instance of <see cref="ContainerRegistryWebhookStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ContainerRegistryWebhookStatus(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> Gets the Enabled. </summary>
+        private const string EnabledValue = "enabled";
+        private const string DisabledValue = "disabled";
+
+        /// <summary> enabled. </summary>
         public static ContainerRegistryWebhookStatus Enabled { get; } = new ContainerRegistryWebhookStatus(EnabledValue);
-
-        /// <summary> Gets the Disabled. </summary>
+        /// <summary> disabled. </summary>
         public static ContainerRegistryWebhookStatus Disabled { get; } = new ContainerRegistryWebhookStatus(DisabledValue);
-
         /// <summary> Determines if two <see cref="ContainerRegistryWebhookStatus"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ContainerRegistryWebhookStatus left, ContainerRegistryWebhookStatus right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="ContainerRegistryWebhookStatus"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ContainerRegistryWebhookStatus left, ContainerRegistryWebhookStatus right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="ContainerRegistryWebhookStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerRegistryWebhookStatus"/>. </summary>
         public static implicit operator ContainerRegistryWebhookStatus(string value) => new ContainerRegistryWebhookStatus(value);
 
-        /// <summary> Converts a string to a <see cref="ContainerRegistryWebhookStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator ContainerRegistryWebhookStatus?(string value) => value == null ? null : new ContainerRegistryWebhookStatus(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ContainerRegistryWebhookStatus other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(ContainerRegistryWebhookStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

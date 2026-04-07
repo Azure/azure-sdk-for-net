@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -20,17 +20,18 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential);
+            ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
 
             #region Snippet:Sample14_ConversationsAuthoring_DeployProject
             string projectName = "{projectName}";
             string deploymentName = "{deploymentName}";
+
+            ConversationAuthoringDeployment deploymentClient = client.GetDeployment(projectName, deploymentName);
+
             ConversationAuthoringCreateDeploymentDetails trainedModeDetails = new ConversationAuthoringCreateDeploymentDetails("m1");
 
-            Operation operation = client.DeployProject(
-                WaitUntil.Completed,
-                projectName,
-                deploymentName,
+            Operation operation = deploymentClient.DeployProject(
+                waitUntil: WaitUntil.Completed,
                 trainedModeDetails
             );
 
@@ -47,7 +48,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new AzureKeyCredential(TestEnvironment.ApiKey);
-            ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential);
+            ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
 
             #region Snippet:Sample14_ConversationsAuthoring_DeployProjectWithAssignedResources
             string projectName = "{projectName}";
@@ -63,8 +64,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
                 };
 
             // Create Cognitive Services resource with AOAI linkage
-            ConversationAuthoringDeploymentResource assignedResource =
-                new ConversationAuthoringDeploymentResource(
+            ConversationAuthoringAssignedProjectResource assignedResource =
+                new ConversationAuthoringAssignedProjectResource(
                     resourceId: "/subscriptions/{subscription}/resourceGroups/{resourcegroup}/providers/Microsoft.CognitiveServices/accounts/{sampleAccount}",
                     region: "{region}")
                 {
@@ -74,9 +75,13 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             // Set up deployment details with assigned resources
             ConversationAuthoringCreateDeploymentDetails deploymentDetails =
                 new ConversationAuthoringCreateDeploymentDetails("ModelWithDG");
-            deploymentDetails.AssignedResources.Add(assignedResource);
+            deploymentDetails.AzureResourceIds.Add(assignedResource);
+
+            // Get deployment client
+            ConversationAuthoringDeployment deploymentClient = client.GetDeployment(projectName, deploymentName);
+
             // Start deployment
-            Operation operation = client.DeployProject(WaitUntil.Started, projectName, deploymentName, deploymentDetails);
+            Operation operation = deploymentClient.DeployProject(WaitUntil.Started, deploymentDetails);
 
             // Output result
             Console.WriteLine($"Deployment started with status: {operation.GetRawResponse().Status}");
@@ -98,17 +103,27 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             // Use the 2025-11-01 GA version of the service
             ConversationAnalysisAuthoringClientOptions options = new ConversationAnalysisAuthoringClientOptions(ConversationAnalysisAuthoringClientOptions.ServiceVersion.V2025_11_01);
 
-            ConversationAnalysisAuthoring client =
-                new ConversationAnalysisAuthoring(endpoint, credential, options);
+            ConversationAnalysisAuthoringClient client =
+                new ConversationAnalysisAuthoringClient(endpoint, credential, options);
 
             string projectName = "{projectName}";
             string deploymentName = "{deploymentName}";
 
-            // Set up deployment details
+            // For 2025-11-01, the service expects azureResourceIds as an array of strings.
+            List<string> azureResourceIds = new List<string>
+    {
+        "/subscriptions/{subscription}/resourceGroups/{resourcegroup}/providers/Microsoft.CognitiveServices/accounts/{sampleAccount}"
+    };
+
+            // Set up deployment details with resource ID strings
             ConversationAuthoringCreateDeploymentDetails deploymentDetails =
-                new ConversationAuthoringCreateDeploymentDetails("ModelWithDG");
+                new ConversationAuthoringCreateDeploymentDetails("ModelWithDG", azureResourceIds);
+
+            // Get deployment client
+            ConversationAuthoringDeployment deploymentClient = client.GetDeployment(projectName, deploymentName);
+
             // Start deployment
-            Operation operation = client.DeployProject(WaitUntil.Started, projectName, deploymentName, deploymentDetails);
+            Operation operation = deploymentClient.DeployProject(WaitUntil.Started, deploymentDetails);
             #endregion
 
             // Output result
@@ -125,17 +140,18 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential);
+            ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
 
             #region Snippet:Sample14_ConversationsAuthoring_DeployProjectAsync
             string projectName = "{projectName}";
             string deploymentName = "{deploymentName}";
+
+            ConversationAuthoringDeployment deploymentClient = client.GetDeployment(projectName, deploymentName);
+
             ConversationAuthoringCreateDeploymentDetails trainedModeDetails = new ConversationAuthoringCreateDeploymentDetails("m1");
 
-            Operation operation = await client.DeployProjectAsync(
-                WaitUntil.Completed,
-                projectName,
-                deploymentName,
+            Operation operation = await deploymentClient.DeployProjectAsync(
+                waitUntil: WaitUntil.Completed,
                 trainedModeDetails
             );
 
@@ -152,7 +168,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new AzureKeyCredential(TestEnvironment.ApiKey);
-            ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential);
+            ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
 
             #region Snippet:Sample14_ConversationsAuthoring_DeployProjectAsyncWithAssignedResources
             string projectName = "{projectName}";
@@ -168,8 +184,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
                 };
 
             // Create Cognitive Services resource with AOAI linkage
-            ConversationAuthoringDeploymentResource assignedResource =
-                new ConversationAuthoringDeploymentResource(
+            ConversationAuthoringAssignedProjectResource assignedResource =
+                new ConversationAuthoringAssignedProjectResource(
                     resourceId: "/subscriptions/{subscription}/resourceGroups/{resourcegroup}/providers/Microsoft.CognitiveServices/accounts/{sampleAccount}",
                     region: "{region}")
                 {
@@ -179,9 +195,13 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             // Set up deployment details with assigned resources
             ConversationAuthoringCreateDeploymentDetails deploymentDetails =
                 new ConversationAuthoringCreateDeploymentDetails("ModelWithDG");
-            deploymentDetails.AssignedResources.Add(assignedResource);
+            deploymentDetails.AzureResourceIds.Add(assignedResource);
+
+            // Get deployment client
+            ConversationAuthoringDeployment deploymentClient = client.GetDeployment(projectName, deploymentName);
+
             // Start deployment
-            Operation operation = await client.DeployProjectAsync(WaitUntil.Started, projectName, deploymentName, deploymentDetails);
+            Operation operation = await deploymentClient.DeployProjectAsync(WaitUntil.Started, deploymentDetails);
 
             // Output result
             Console.WriteLine($"Deployment started with status: {operation.GetRawResponse().Status}");
@@ -201,17 +221,27 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             // Use the 2025-11-01 GA version of the service
             ConversationAnalysisAuthoringClientOptions options = new ConversationAnalysisAuthoringClientOptions(ConversationAnalysisAuthoringClientOptions.ServiceVersion.V2025_11_01);
 
-            ConversationAnalysisAuthoring client =
-                new ConversationAnalysisAuthoring(endpoint, credential, options);
+            ConversationAnalysisAuthoringClient client =
+                new ConversationAnalysisAuthoringClient(endpoint, credential, options);
 
             string projectName = "{projectName}";
             string deploymentName = "{deploymentName}";
 
-            // Set up deployment details
+            // For 2025-11-01, the service expects azureResourceIds as an array of strings.
+            List<string> azureResourceIds = new List<string>
+    {
+        "/subscriptions/{subscription}/resourceGroups/{resourcegroup}/providers/Microsoft.CognitiveServices/accounts/{sampleAccount}"
+    };
+
+            // Set up deployment details with resource ID strings
             ConversationAuthoringCreateDeploymentDetails deploymentDetails =
-                new ConversationAuthoringCreateDeploymentDetails("ModelWithDG");
+                new ConversationAuthoringCreateDeploymentDetails("ModelWithDG", azureResourceIds);
+
+            // Get deployment client
+            ConversationAuthoringDeployment deploymentClient = client.GetDeployment(projectName, deploymentName);
+
             // Start deployment asynchronously
-            Operation operation = await client.DeployProjectAsync(WaitUntil.Started, projectName, deploymentName, deploymentDetails);
+            Operation operation = await deploymentClient.DeployProjectAsync(WaitUntil.Started, deploymentDetails);
             #endregion
             // Output result
             Console.WriteLine($"Deployment started with status: {operation.GetRawResponse().Status}");

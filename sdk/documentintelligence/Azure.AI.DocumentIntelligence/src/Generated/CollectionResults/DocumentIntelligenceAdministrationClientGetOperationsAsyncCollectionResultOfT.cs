@@ -18,17 +18,14 @@ namespace Azure.AI.DocumentIntelligence
     {
         private readonly DocumentIntelligenceAdministrationClient _client;
         private readonly RequestContext _context;
-        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of DocumentIntelligenceAdministrationClientGetOperationsAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The DocumentIntelligenceAdministrationClient client used to send requests. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public DocumentIntelligenceAdministrationClientGetOperationsAsyncCollectionResultOfT(DocumentIntelligenceAdministrationClient client, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public DocumentIntelligenceAdministrationClientGetOperationsAsyncCollectionResultOfT(DocumentIntelligenceAdministrationClient client, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _context = context;
-            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of DocumentIntelligenceAdministrationClientGetOperationsAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -61,7 +58,7 @@ namespace Azure.AI.DocumentIntelligence
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetOperationsRequest(nextLink, _context) : _client.CreateGetOperationsRequest(_context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("DocumentIntelligenceAdministrationClient.GetOperations");
             scope.Start();
             try
             {

@@ -23,7 +23,6 @@ namespace Azure.Developer.DevCenter
         private readonly string _devBoxName;
         private readonly DateTimeOffset _delayUntil;
         private readonly RequestContext _context;
-        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of DevBoxesClientDelayAllActionsCollectionResult, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The DevBoxesClient client used to send requests. </param>
@@ -32,8 +31,7 @@ namespace Azure.Developer.DevCenter
         /// <param name="devBoxName"> Display name for the Dev Box. </param>
         /// <param name="delayUntil"> The time to delay the Dev Box action or actions until, in RFC3339 format. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public DevBoxesClientDelayAllActionsCollectionResult(DevBoxesClient client, string projectName, string userId, string devBoxName, DateTimeOffset delayUntil, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public DevBoxesClientDelayAllActionsCollectionResult(DevBoxesClient client, string projectName, string userId, string devBoxName, DateTimeOffset delayUntil, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _projectName = projectName;
@@ -41,7 +39,6 @@ namespace Azure.Developer.DevCenter
             _devBoxName = devBoxName;
             _delayUntil = delayUntil;
             _context = context;
-            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of DevBoxesClientDelayAllActionsCollectionResult as an enumerable collection. </summary>
@@ -79,7 +76,7 @@ namespace Azure.Developer.DevCenter
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextDelayAllActionsRequest(nextLink, _projectName, _userId, _devBoxName, _delayUntil, _context) : _client.CreateDelayAllActionsRequest(_projectName, _userId, _devBoxName, _delayUntil, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("DevBoxesClient.DelayAllActions");
             scope.Start();
             try
             {

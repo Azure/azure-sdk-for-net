@@ -22,99 +22,30 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <summary> Initializes a new instance of <see cref="DevCenterSchedulePatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="properties"> Properties of a schedule resource to be updated. </param>
-        internal DevCenterSchedulePatch(IDictionary<string, string> tags, AzureLocation? location, IDictionary<string, BinaryData> additionalBinaryDataProperties, ScheduleUpdatePropertiesReplacement properties) : base(tags, location, additionalBinaryDataProperties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="scheduledType"> Supported type this scheduled task represents. </param>
+        /// <param name="frequency"> The frequency of this scheduled task. </param>
+        /// <param name="time"> The target time to trigger the action. The format is HH:MM. </param>
+        /// <param name="timeZone"> The IANA timezone id at which the schedule should execute. </param>
+        /// <param name="state"> Indicates whether or not this scheduled task is enabled. </param>
+        internal DevCenterSchedulePatch(IDictionary<string, string> tags, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData, DevCenterScheduledType? scheduledType, DevCenterScheduledFrequency? frequency, string time, string timeZone, DevCenterScheduleEnableStatus? state) : base(tags, location, serializedAdditionalRawData)
         {
-            Properties = properties;
+            ScheduledType = scheduledType;
+            Frequency = frequency;
+            Time = time;
+            TimeZone = timeZone;
+            State = state;
         }
-
-        /// <summary> Properties of a schedule resource to be updated. </summary>
-        internal ScheduleUpdatePropertiesReplacement Properties { get; set; }
 
         /// <summary> Supported type this scheduled task represents. </summary>
-        public DevCenterScheduledType? ScheduledType
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ScheduledType;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ScheduleUpdatePropertiesReplacement();
-                }
-                Properties.ScheduledType = value.Value;
-            }
-        }
-
+        public DevCenterScheduledType? ScheduledType { get; set; }
         /// <summary> The frequency of this scheduled task. </summary>
-        public DevCenterScheduledFrequency? Frequency
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Frequency;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ScheduleUpdatePropertiesReplacement();
-                }
-                Properties.Frequency = value.Value;
-            }
-        }
-
+        public DevCenterScheduledFrequency? Frequency { get; set; }
         /// <summary> The target time to trigger the action. The format is HH:MM. </summary>
-        public string Time
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Time;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ScheduleUpdatePropertiesReplacement();
-                }
-                Properties.Time = value;
-            }
-        }
-
+        public string Time { get; set; }
         /// <summary> The IANA timezone id at which the schedule should execute. </summary>
-        public string TimeZone
-        {
-            get
-            {
-                return Properties is null ? default : Properties.TimeZone;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ScheduleUpdatePropertiesReplacement();
-                }
-                Properties.TimeZone = value;
-            }
-        }
-
+        public string TimeZone { get; set; }
         /// <summary> Indicates whether or not this scheduled task is enabled. </summary>
-        public DevCenterScheduleEnableStatus? State
-        {
-            get
-            {
-                return Properties is null ? default : Properties.State;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ScheduleUpdatePropertiesReplacement();
-                }
-                Properties.State = value.Value;
-            }
-        }
+        public DevCenterScheduleEnableStatus? State { get; set; }
     }
 }

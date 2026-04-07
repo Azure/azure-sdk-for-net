@@ -21,17 +21,14 @@ namespace Azure.Search.Documents.Indexes
     {
         private readonly SearchIndexClient _client;
         private readonly RequestContext _context;
-        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of SearchIndexClientGetKnowledgeSourcesAsyncCollectionResult, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The SearchIndexClient client used to send requests. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public SearchIndexClientGetKnowledgeSourcesAsyncCollectionResult(SearchIndexClient client, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public SearchIndexClientGetKnowledgeSourcesAsyncCollectionResult(SearchIndexClient client, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _context = context;
-            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of SearchIndexClientGetKnowledgeSourcesAsyncCollectionResult as an enumerable collection. </summary>
@@ -56,7 +53,7 @@ namespace Azure.Search.Documents.Indexes
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, string continuationToken)
         {
             HttpMessage message = _client.CreateGetKnowledgeSourcesRequest(_context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("SearchIndexClient.GetKnowledgeSources");
             scope.Start();
             try
             {

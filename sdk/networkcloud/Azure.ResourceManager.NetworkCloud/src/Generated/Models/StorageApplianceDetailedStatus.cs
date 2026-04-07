@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -15,67 +14,44 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     public readonly partial struct StorageApplianceDetailedStatus : IEquatable<StorageApplianceDetailedStatus>
     {
         private readonly string _value;
-        /// <summary> The Available status. </summary>
-        private const string AvailableValue = "Available";
-        /// <summary> The Degraded status. </summary>
-        private const string DegradedValue = "Degraded";
-        /// <summary> The Error status. </summary>
-        private const string ErrorValue = "Error";
-        /// <summary> The Provisioning status. </summary>
-        private const string ProvisioningValue = "Provisioning";
 
         /// <summary> Initializes a new instance of <see cref="StorageApplianceDetailedStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public StorageApplianceDetailedStatus(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> The Available status. </summary>
+        private const string AvailableValue = "Available";
+        private const string DegradedValue = "Degraded";
+        private const string ErrorValue = "Error";
+        private const string ProvisioningValue = "Provisioning";
+
+        /// <summary> Available. </summary>
         public static StorageApplianceDetailedStatus Available { get; } = new StorageApplianceDetailedStatus(AvailableValue);
-
-        /// <summary> The Degraded status. </summary>
+        /// <summary> Degraded. </summary>
         public static StorageApplianceDetailedStatus Degraded { get; } = new StorageApplianceDetailedStatus(DegradedValue);
-
-        /// <summary> The Error status. </summary>
+        /// <summary> Error. </summary>
         public static StorageApplianceDetailedStatus Error { get; } = new StorageApplianceDetailedStatus(ErrorValue);
-
-        /// <summary> The Provisioning status. </summary>
+        /// <summary> Provisioning. </summary>
         public static StorageApplianceDetailedStatus Provisioning { get; } = new StorageApplianceDetailedStatus(ProvisioningValue);
-
         /// <summary> Determines if two <see cref="StorageApplianceDetailedStatus"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(StorageApplianceDetailedStatus left, StorageApplianceDetailedStatus right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="StorageApplianceDetailedStatus"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(StorageApplianceDetailedStatus left, StorageApplianceDetailedStatus right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="StorageApplianceDetailedStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="StorageApplianceDetailedStatus"/>. </summary>
         public static implicit operator StorageApplianceDetailedStatus(string value) => new StorageApplianceDetailedStatus(value);
 
-        /// <summary> Converts a string to a <see cref="StorageApplianceDetailedStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator StorageApplianceDetailedStatus?(string value) => value == null ? null : new StorageApplianceDetailedStatus(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is StorageApplianceDetailedStatus other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(StorageApplianceDetailedStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

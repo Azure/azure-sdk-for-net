@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                     ["key1"] = "myvalue1",
                 },
             };
-            ArmOperation<NetworkCloudTrunkedNetworkResource> createResult = await collection.CreateOrUpdateAsync(WaitUntil.Completed, trunkedNetworkName, createData, matchConditions: null);
+            ArmOperation<NetworkCloudTrunkedNetworkResource> createResult = await collection.CreateOrUpdateAsync(WaitUntil.Completed, trunkedNetworkName, createData);
             Assert.AreEqual(trunkedNetworkName, createResult.Value.Data.Name);
 
             // Get
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                     ["key2"] = "myvalue2",
                 },
             };
-            NetworkCloudTrunkedNetworkResource updateResult = await trunkedNetwork.UpdateAsync(patch, matchConditions: null);
+            NetworkCloudTrunkedNetworkResource updateResult = await trunkedNetwork.UpdateAsync(patch);
             Assert.AreEqual(patch.Tags, updateResult.Data.Tags);
 
             // List by Resource Group

@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -15,67 +14,44 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     public readonly partial struct NetworkCloudStepStateStatus : IEquatable<NetworkCloudStepStateStatus>
     {
         private readonly string _value;
-        /// <summary> The completed status. </summary>
-        private const string CompletedValue = "Completed";
-        /// <summary> The in-progress status. </summary>
-        private const string InProgressValue = "InProgress";
-        /// <summary> The failed status. </summary>
-        private const string FailedValue = "Failed";
-        /// <summary> The not started status. </summary>
-        private const string NotStartedValue = "NotStarted";
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloudStepStateStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NetworkCloudStepStateStatus(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> The completed status. </summary>
+        private const string CompletedValue = "Completed";
+        private const string InProgressValue = "InProgress";
+        private const string FailedValue = "Failed";
+        private const string NotStartedValue = "NotStarted";
+
+        /// <summary> Completed. </summary>
         public static NetworkCloudStepStateStatus Completed { get; } = new NetworkCloudStepStateStatus(CompletedValue);
-
-        /// <summary> The in-progress status. </summary>
+        /// <summary> InProgress. </summary>
         public static NetworkCloudStepStateStatus InProgress { get; } = new NetworkCloudStepStateStatus(InProgressValue);
-
-        /// <summary> The failed status. </summary>
+        /// <summary> Failed. </summary>
         public static NetworkCloudStepStateStatus Failed { get; } = new NetworkCloudStepStateStatus(FailedValue);
-
-        /// <summary> The not started status. </summary>
+        /// <summary> NotStarted. </summary>
         public static NetworkCloudStepStateStatus NotStarted { get; } = new NetworkCloudStepStateStatus(NotStartedValue);
-
         /// <summary> Determines if two <see cref="NetworkCloudStepStateStatus"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NetworkCloudStepStateStatus left, NetworkCloudStepStateStatus right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="NetworkCloudStepStateStatus"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NetworkCloudStepStateStatus left, NetworkCloudStepStateStatus right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="NetworkCloudStepStateStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NetworkCloudStepStateStatus"/>. </summary>
         public static implicit operator NetworkCloudStepStateStatus(string value) => new NetworkCloudStepStateStatus(value);
 
-        /// <summary> Converts a string to a <see cref="NetworkCloudStepStateStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator NetworkCloudStepStateStatus?(string value) => value == null ? null : new NetworkCloudStepStateStatus(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NetworkCloudStepStateStatus other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(NetworkCloudStepStateStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

@@ -22,7 +22,6 @@ namespace Azure.Analytics.PlanetaryComputer
         private readonly string _collectionId;
         private readonly string _status;
         private readonly RequestContext _context;
-        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of IngestionClientGetOperationsCollectionResult, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The IngestionClient client used to send requests. </param>
@@ -31,8 +30,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="collectionId"> Operation id used to filter the results. </param>
         /// <param name="status"> Operation status used to filter the results. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public IngestionClientGetOperationsCollectionResult(IngestionClient client, int? maxCount, int? skip, string collectionId, string status, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public IngestionClientGetOperationsCollectionResult(IngestionClient client, int? maxCount, int? skip, string collectionId, string status, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _maxCount = maxCount;
@@ -40,7 +38,6 @@ namespace Azure.Analytics.PlanetaryComputer
             _collectionId = collectionId;
             _status = status;
             _context = context;
-            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of IngestionClientGetOperationsCollectionResult as an enumerable collection. </summary>
@@ -78,7 +75,7 @@ namespace Azure.Analytics.PlanetaryComputer
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetOperationsRequest(nextLink, _maxCount, _skip, _collectionId, _status, _context) : _client.CreateGetOperationsRequest(_maxCount, _skip, _collectionId, _status, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("IngestionClient.GetOperations");
             scope.Start();
             try
             {

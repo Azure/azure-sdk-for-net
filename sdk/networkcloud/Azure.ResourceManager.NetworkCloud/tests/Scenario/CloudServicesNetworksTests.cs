@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                     })
                 }
             };
-            var cloudServicesNetworkToCreate = await cloudServicesNetworkCollection.CreateOrUpdateAsync(WaitUntil.Completed, cloudServicesNetworkName, data, matchConditions: null);
+            var cloudServicesNetworkToCreate = await cloudServicesNetworkCollection.CreateOrUpdateAsync(WaitUntil.Completed, cloudServicesNetworkName, data);
             Assert.AreEqual(cloudServicesNetworkToCreate.Value.Data.Name, cloudServicesNetworkName);
 
             // Get
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                     ["key1"] = "myvalue1"
                 }
             };
-            var patchedCloudServicesNetwork = await cloudServicesNetwork.UpdateAsync(WaitUntil.Completed, patchData, matchConditions: null);
+            var patchedCloudServicesNetwork = await cloudServicesNetwork.UpdateAsync(WaitUntil.Completed, patchData);
             Assert.AreEqual(patchedCloudServicesNetwork.Value.Data.Tags["key1"], "myvalue1");
 
             // List by Resource Group

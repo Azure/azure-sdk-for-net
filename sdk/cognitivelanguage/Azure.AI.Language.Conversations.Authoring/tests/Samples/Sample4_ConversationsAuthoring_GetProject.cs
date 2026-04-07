@@ -20,11 +20,13 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential);
+            ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
 
             #region Snippet:Sample4_ConversationsAuthoring_GetProject
             string projectName = "{projectName}";
-            Response<ConversationAuthoringProjectMetadata> response = client.GetProject(projectName);
+            ConversationAuthoringProject projectClient = client.GetProject(projectName);
+
+            Response<ConversationAuthoringProjectMetadata> response = projectClient.GetProject();
             ConversationAuthoringProjectMetadata projectMetadata = response.Value;
 
             Console.WriteLine($"Created DateTime: {projectMetadata.CreatedOn}");
@@ -45,11 +47,13 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential);
+            ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
 
             #region Snippet:Sample4_ConversationsAuthoring_GetProjectAsync
             string projectName = "{projectName}";
-            Response<ConversationAuthoringProjectMetadata> response = await client.GetProjectAsync(projectName);
+            ConversationAuthoringProject projectClient = client.GetProject(projectName);
+
+            Response<ConversationAuthoringProjectMetadata> response = await projectClient.GetProjectAsync();
             ConversationAuthoringProjectMetadata projectMetadata = response.Value;
 
             Console.WriteLine($"Created DateTime: {projectMetadata.CreatedOn}");

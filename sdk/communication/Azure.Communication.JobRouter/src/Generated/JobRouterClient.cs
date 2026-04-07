@@ -447,8 +447,7 @@ namespace Azure.Communication.JobRouter
                 classificationPolicyId,
                 scheduledBefore,
                 scheduledAfter,
-                context,
-                "JobRouterClient.GetJobs");
+                context);
         }
 
         /// <summary>
@@ -480,8 +479,7 @@ namespace Azure.Communication.JobRouter
                 classificationPolicyId,
                 scheduledBefore,
                 scheduledAfter,
-                context,
-                "JobRouterClient.GetJobs");
+                context);
         }
 
         /// <summary> Retrieves list of jobs based on filter parameters. </summary>
@@ -505,8 +503,7 @@ namespace Azure.Communication.JobRouter
                 classificationPolicyId,
                 scheduledBefore,
                 scheduledAfter,
-                cancellationToken.ToRequestContext(),
-                "JobRouterClient.GetJobs");
+                cancellationToken.ToRequestContext());
         }
 
         /// <summary> Retrieves list of jobs based on filter parameters. </summary>
@@ -530,8 +527,7 @@ namespace Azure.Communication.JobRouter
                 classificationPolicyId,
                 scheduledBefore,
                 scheduledAfter,
-                cancellationToken.ToRequestContext(),
-                "JobRouterClient.GetJobs");
+                cancellationToken.ToRequestContext());
         }
 
         /// <summary>
@@ -1151,8 +1147,7 @@ namespace Azure.Communication.JobRouter
                 channelId,
                 queueId,
                 hasCapacity,
-                context,
-                "JobRouterClient.GetWorkers");
+                context);
         }
 
         /// <summary>
@@ -1180,8 +1175,7 @@ namespace Azure.Communication.JobRouter
                 channelId,
                 queueId,
                 hasCapacity,
-                context,
-                "JobRouterClient.GetWorkers");
+                context);
         }
 
         /// <summary> Retrieves existing workers. </summary>
@@ -1201,8 +1195,7 @@ namespace Azure.Communication.JobRouter
                 channelId,
                 queueId,
                 hasCapacity,
-                cancellationToken.ToRequestContext(),
-                "JobRouterClient.GetWorkers");
+                cancellationToken.ToRequestContext());
         }
 
         /// <summary> Retrieves existing workers. </summary>
@@ -1222,8 +1215,7 @@ namespace Azure.Communication.JobRouter
                 channelId,
                 queueId,
                 hasCapacity,
-                cancellationToken.ToRequestContext(),
-                "JobRouterClient.GetWorkers");
+                cancellationToken.ToRequestContext());
         }
     }
 }

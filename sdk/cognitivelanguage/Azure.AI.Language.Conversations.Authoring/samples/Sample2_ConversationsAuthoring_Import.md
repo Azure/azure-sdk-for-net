@@ -10,7 +10,7 @@ To create a `ConversationAnalysisAuthoringClient`, you will need the service end
 Uri endpoint = new Uri("{endpoint}");
 AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
 ConversationAnalysisAuthoringClientOptions options = new ConversationAnalysisAuthoringClientOptions(ConversationAnalysisAuthoringClientOptions.ServiceVersion.V2025_11_15_Preview);
-ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential, options);
+ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential, options);
 ```
 
 The values of the endpoint and apiKey variables can be retrieved from: Environment variables, configuration settings, or any other secure approach that works for your application.
@@ -24,6 +24,8 @@ To import a project synchronously, call Import on the `ConversationAuthoringProj
 
 ```C# Snippet:Sample2_ConversationsAuthoring_Import
 string projectName = "{projectName}";
+ConversationAuthoringProject projectClient = client.GetProject(projectName);
+
 ConversationAuthoringCreateProjectDetails projectMetadata = new ConversationAuthoringCreateProjectDetails(
     projectKind: "Conversation",
     projectName: projectName,
@@ -75,11 +77,10 @@ ConversationAuthoringExportedProject exportedProject = new ConversationAuthoring
     Assets = projectAssets
 };
 
-Operation operation = client.Import(
+Operation operation = projectClient.Import(
     waitUntil: WaitUntil.Completed,
-    projectName: projectName,
     exportedProject: exportedProject,
-    exportedProjectFormat: ConversationAuthoringExportedProjectFormat.Conversation
+    projectFormat: ConversationAuthoringExportedProjectFormat.Conversation
 );
 
 // Extract the operation-location header
@@ -145,12 +146,13 @@ string rawJson = """
   }
 }
 """;
-using RequestContent content = RequestContent.Create(rawJson);
-Operation operation = client.Import(
+
+ConversationAuthoringProject projectClient = client.GetProject(projectName);
+
+Operation operation = projectClient.Import(
     waitUntil: WaitUntil.Started,
-    projectName: projectName,
-    content: content,
-    exportedProjectFormat: ConversationAuthoringExportedProjectFormat.Conversation.ToString()
+    projectJson: rawJson,
+    projectFormat: ConversationAuthoringExportedProjectFormat.Conversation
 );
 
 string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out string location) ? location : null;
@@ -232,10 +234,13 @@ ConversationAuthoringExportedProject exportedProject = new ConversationAuthoring
 {
     Assets = projectAssets
 };
+
+// Get project authoring client
+ConversationAuthoringProject projectClient = client.GetProject(projectName);
+
 // Start import operation
-Operation operation = client.Import(
+Operation operation = projectClient.Import(
     WaitUntil.Started,
-    projectName,
     exportedProject,
     ConversationAuthoringExportedProjectFormat.Conversation
 );
@@ -253,6 +258,8 @@ To import a project, call ImportAsync on the ConversationAuthoringProject client
 
 ```C# Snippet:Sample2_ConversationsAuthoring_ImportAsync
 string projectName = "{projectName}";
+ConversationAuthoringProject projectClient = client.GetProject(projectName);
+
 ConversationAuthoringCreateProjectDetails projectMetadata = new ConversationAuthoringCreateProjectDetails(
     projectKind: "Conversation",
     projectName: projectName,
@@ -304,11 +311,10 @@ ConversationAuthoringExportedProject exportedProject = new ConversationAuthoring
     Assets = projectAssets
 };
 
-Operation operation = await client.ImportAsync(
+Operation operation = await projectClient.ImportAsync(
     waitUntil: WaitUntil.Completed,
-    projectName: projectName,
     exportedProject: exportedProject,
-    exportedProjectFormat: ConversationAuthoringExportedProjectFormat.Conversation
+    projectFormat: ConversationAuthoringExportedProjectFormat.Conversation
 );
 
 // Extract the operation-location header
@@ -325,6 +331,8 @@ To import a project using raw JSON asynchronously, define the JSON string matchi
 
 ```C# Snippet:Sample2_ConversationsAuthoring_ImportProjectAsRawJsonAsync
 string projectName = "{projectName}";
+ConversationAuthoringProject projectClient = client.GetProject(projectName);
+
 string rawJson = """
 {
   "projectFileVersion": "2025-05-15-preview",
@@ -375,12 +383,10 @@ string rawJson = """
 }
 """;
 
-using RequestContent content = RequestContent.Create(rawJson);
-Operation operation = await client.ImportAsync(
+Operation operation = await projectClient.ImportAsync(
     waitUntil: WaitUntil.Started,
-    projectName: projectName,
-    content: content,
-    exportedProjectFormat: ConversationAuthoringExportedProjectFormat.Conversation.ToString()
+    projectJson: rawJson,
+    projectFormat: ConversationAuthoringExportedProjectFormat.Conversation
 );
 
 string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out string location) ? location : null;
@@ -461,10 +467,13 @@ ConversationAuthoringExportedProject exportedProject = new ConversationAuthoring
 {
     Assets = projectAssets
 };
+
+// Get project client
+ConversationAuthoringProject projectClient = client.GetProject(projectName);
+
 // Start import
-Operation operation = await client.ImportAsync(
+Operation operation = await projectClient.ImportAsync(
     waitUntil: WaitUntil.Started,
-    projectName,
     exportedProject,
     ConversationAuthoringExportedProjectFormat.Conversation
 );

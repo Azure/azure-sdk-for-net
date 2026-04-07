@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -15,57 +14,38 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     public readonly partial struct KubernetesNodeRole : IEquatable<KubernetesNodeRole>
     {
         private readonly string _value;
-        /// <summary> Control plane role. </summary>
-        private const string ControlPlaneValue = "ControlPlane";
-        /// <summary> Worker role. </summary>
-        private const string WorkerValue = "Worker";
 
         /// <summary> Initializes a new instance of <see cref="KubernetesNodeRole"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public KubernetesNodeRole(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> Control plane role. </summary>
+        private const string ControlPlaneValue = "ControlPlane";
+        private const string WorkerValue = "Worker";
+
+        /// <summary> ControlPlane. </summary>
         public static KubernetesNodeRole ControlPlane { get; } = new KubernetesNodeRole(ControlPlaneValue);
-
-        /// <summary> Worker role. </summary>
+        /// <summary> Worker. </summary>
         public static KubernetesNodeRole Worker { get; } = new KubernetesNodeRole(WorkerValue);
-
         /// <summary> Determines if two <see cref="KubernetesNodeRole"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(KubernetesNodeRole left, KubernetesNodeRole right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="KubernetesNodeRole"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(KubernetesNodeRole left, KubernetesNodeRole right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="KubernetesNodeRole"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="KubernetesNodeRole"/>. </summary>
         public static implicit operator KubernetesNodeRole(string value) => new KubernetesNodeRole(value);
 
-        /// <summary> Converts a string to a <see cref="KubernetesNodeRole"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator KubernetesNodeRole?(string value) => value == null ? null : new KubernetesNodeRole(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is KubernetesNodeRole other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(KubernetesNodeRole other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

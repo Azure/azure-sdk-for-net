@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -19,20 +19,28 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new AzureKeyCredential(TestEnvironment.ApiKey);
-            ConversationAnalysisAuthoring client =
-                new ConversationAnalysisAuthoring(endpoint, credential);
+            ConversationAnalysisAuthoringClient client =
+                new ConversationAnalysisAuthoringClient(endpoint, credential);
 
             #region Snippet:Sample21_ConversationsAuthoring_ListProjectResources
             string projectName = "{projectName}";
 
             // Retrieve resources assigned to this project
-            Pageable<ConversationAuthoringAssignedDeploymentResource> pageable =
-                client.GetDeploymentResources(projectName);
+            Pageable<ConversationAuthoringAssignedProjectResource> pageable =
+                client.GetProjectResources(projectName);
 
-            foreach (ConversationAuthoringAssignedDeploymentResource resource in pageable)
+            foreach (ConversationAuthoringAssignedProjectResource resource in pageable)
             {
                 Console.WriteLine($"Resource ID: {resource.ResourceId}");
                 Console.WriteLine($"Region: {resource.Region}");
+
+                if (resource.AssignedAoaiResource != null)
+                {
+                    Console.WriteLine($"AOAI Kind: {resource.AssignedAoaiResource.Kind}");
+                    Console.WriteLine($"AOAI Resource ID: {resource.AssignedAoaiResource.ResourceId}");
+                    Console.WriteLine($"AOAI Deployment Name: {resource.AssignedAoaiResource.DeploymentName}");
+                }
+
                 Console.WriteLine();
             }
             #endregion
@@ -44,20 +52,28 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new AzureKeyCredential(TestEnvironment.ApiKey);
-            ConversationAnalysisAuthoring client =
-                new ConversationAnalysisAuthoring(endpoint, credential);
+            ConversationAnalysisAuthoringClient client =
+                new ConversationAnalysisAuthoringClient(endpoint, credential);
 
             #region Snippet:Sample21_ConversationsAuthoring_ListProjectResourcesAsync
             string projectName = "{projectName}";
 
             // Retrieve resources assigned to this project (async)
-            AsyncPageable<ConversationAuthoringAssignedDeploymentResource> pageable =
-                client.GetDeploymentResourcesAsync(projectName);
+            AsyncPageable<ConversationAuthoringAssignedProjectResource> pageable =
+                client.GetProjectResourcesAsync(projectName);
 
-            await foreach (ConversationAuthoringAssignedDeploymentResource resource in pageable)
+            await foreach (ConversationAuthoringAssignedProjectResource resource in pageable)
             {
                 Console.WriteLine($"Resource ID: {resource.ResourceId}");
                 Console.WriteLine($"Region: {resource.Region}");
+
+                if (resource.AssignedAoaiResource != null)
+                {
+                    Console.WriteLine($"AOAI Kind: {resource.AssignedAoaiResource.Kind}");
+                    Console.WriteLine($"AOAI Resource ID: {resource.AssignedAoaiResource.ResourceId}");
+                    Console.WriteLine($"AOAI Deployment Name: {resource.AssignedAoaiResource.DeploymentName}");
+                }
+
                 Console.WriteLine();
             }
             #endregion

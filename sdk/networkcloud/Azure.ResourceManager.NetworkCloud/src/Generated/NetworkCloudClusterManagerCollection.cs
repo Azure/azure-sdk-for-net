@@ -8,13 +8,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.NetworkCloud
@@ -26,85 +25,75 @@ namespace Azure.ResourceManager.NetworkCloud
     /// </summary>
     public partial class NetworkCloudClusterManagerCollection : ArmCollection, IEnumerable<NetworkCloudClusterManagerResource>, IAsyncEnumerable<NetworkCloudClusterManagerResource>
     {
-        private readonly ClientDiagnostics _clusterManagersClientDiagnostics;
-        private readonly ClusterManagers _clusterManagersRestClient;
+        private readonly ClientDiagnostics _networkCloudClusterManagerClusterManagersClientDiagnostics;
+        private readonly ClusterManagersRestOperations _networkCloudClusterManagerClusterManagersRestClient;
 
-        /// <summary> Initializes a new instance of NetworkCloudClusterManagerCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NetworkCloudClusterManagerCollection"/> class for mocking. </summary>
         protected NetworkCloudClusterManagerCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetworkCloudClusterManagerCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NetworkCloudClusterManagerCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal NetworkCloudClusterManagerCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(NetworkCloudClusterManagerResource.ResourceType, out string networkCloudClusterManagerApiVersion);
-            _clusterManagersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetworkCloud", NetworkCloudClusterManagerResource.ResourceType.Namespace, Diagnostics);
-            _clusterManagersRestClient = new ClusterManagers(_clusterManagersClientDiagnostics, Pipeline, Endpoint, networkCloudClusterManagerApiVersion ?? "2026-01-01-preview");
-            ValidateResourceId(id);
+            _networkCloudClusterManagerClusterManagersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetworkCloud", NetworkCloudClusterManagerResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(NetworkCloudClusterManagerResource.ResourceType, out string networkCloudClusterManagerClusterManagersApiVersion);
+            _networkCloudClusterManagerClusterManagersRestClient = new ClusterManagersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, networkCloudClusterManagerClusterManagersApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Create a new cluster manager or update properties of the cluster manager if it exists.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusterManagers/{clusterManagerName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusterManagers/{clusterManagerName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ClusterManagers_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>ClusterManagers_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudClusterManagerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="clusterManagerName"> The name of the cluster manager. </param>
         /// <param name="data"> The request body. </param>
-        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="ifMatch"> The ETag of the transformation. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting concurrent changes. </param>
+        /// <param name="ifNoneMatch"> Set to '*' to allow a new record set to be created, but to prevent updating an existing resource. Other values will result in error from server as they are not supported. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="clusterManagerName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="clusterManagerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<NetworkCloudClusterManagerResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string clusterManagerName, NetworkCloudClusterManagerData data, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="clusterManagerName"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<NetworkCloudClusterManagerResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string clusterManagerName, NetworkCloudClusterManagerData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(clusterManagerName, nameof(clusterManagerName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _clusterManagersClientDiagnostics.CreateScope("NetworkCloudClusterManagerCollection.CreateOrUpdate");
+            using var scope = _networkCloudClusterManagerClusterManagersClientDiagnostics.CreateScope("NetworkCloudClusterManagerCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _clusterManagersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, clusterManagerName, NetworkCloudClusterManagerData.ToRequestContent(data), matchConditions, context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                NetworkCloudArmOperation<NetworkCloudClusterManagerResource> operation = new NetworkCloudArmOperation<NetworkCloudClusterManagerResource>(
-                    new NetworkCloudClusterManagerOperationSource(Client),
-                    _clusterManagersClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _networkCloudClusterManagerClusterManagersRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, clusterManagerName, data, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkCloudArmOperation<NetworkCloudClusterManagerResource>(new NetworkCloudClusterManagerOperationSource(Client), _networkCloudClusterManagerClusterManagersClientDiagnostics, Pipeline, _networkCloudClusterManagerClusterManagersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterManagerName, data, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -118,52 +107,44 @@ namespace Azure.ResourceManager.NetworkCloud
         /// Create a new cluster manager or update properties of the cluster manager if it exists.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusterManagers/{clusterManagerName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusterManagers/{clusterManagerName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ClusterManagers_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>ClusterManagers_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudClusterManagerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="clusterManagerName"> The name of the cluster manager. </param>
         /// <param name="data"> The request body. </param>
-        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="ifMatch"> The ETag of the transformation. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting concurrent changes. </param>
+        /// <param name="ifNoneMatch"> Set to '*' to allow a new record set to be created, but to prevent updating an existing resource. Other values will result in error from server as they are not supported. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="clusterManagerName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="clusterManagerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<NetworkCloudClusterManagerResource> CreateOrUpdate(WaitUntil waitUntil, string clusterManagerName, NetworkCloudClusterManagerData data, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="clusterManagerName"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<NetworkCloudClusterManagerResource> CreateOrUpdate(WaitUntil waitUntil, string clusterManagerName, NetworkCloudClusterManagerData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(clusterManagerName, nameof(clusterManagerName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _clusterManagersClientDiagnostics.CreateScope("NetworkCloudClusterManagerCollection.CreateOrUpdate");
+            using var scope = _networkCloudClusterManagerClusterManagersClientDiagnostics.CreateScope("NetworkCloudClusterManagerCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _clusterManagersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, clusterManagerName, NetworkCloudClusterManagerData.ToRequestContent(data), matchConditions, context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                NetworkCloudArmOperation<NetworkCloudClusterManagerResource> operation = new NetworkCloudArmOperation<NetworkCloudClusterManagerResource>(
-                    new NetworkCloudClusterManagerOperationSource(Client),
-                    _clusterManagersClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = _networkCloudClusterManagerClusterManagersRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, clusterManagerName, data, ifMatch, ifNoneMatch, cancellationToken);
+                var operation = new NetworkCloudArmOperation<NetworkCloudClusterManagerResource>(new NetworkCloudClusterManagerOperationSource(Client), _networkCloudClusterManagerClusterManagersClientDiagnostics, Pipeline, _networkCloudClusterManagerClusterManagersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterManagerName, data, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -177,42 +158,38 @@ namespace Azure.ResourceManager.NetworkCloud
         /// Get the properties of the provided cluster manager.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusterManagers/{clusterManagerName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusterManagers/{clusterManagerName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ClusterManagers_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ClusterManagers_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudClusterManagerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="clusterManagerName"> The name of the cluster manager. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="clusterManagerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="clusterManagerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="clusterManagerName"/> is null. </exception>
         public virtual async Task<Response<NetworkCloudClusterManagerResource>> GetAsync(string clusterManagerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(clusterManagerName, nameof(clusterManagerName));
 
-            using DiagnosticScope scope = _clusterManagersClientDiagnostics.CreateScope("NetworkCloudClusterManagerCollection.Get");
+            using var scope = _networkCloudClusterManagerClusterManagersClientDiagnostics.CreateScope("NetworkCloudClusterManagerCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _clusterManagersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, clusterManagerName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<NetworkCloudClusterManagerData> response = Response.FromValue(NetworkCloudClusterManagerData.FromResponse(result), result);
+                var response = await _networkCloudClusterManagerClusterManagersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, clusterManagerName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new NetworkCloudClusterManagerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -226,42 +203,38 @@ namespace Azure.ResourceManager.NetworkCloud
         /// Get the properties of the provided cluster manager.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusterManagers/{clusterManagerName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusterManagers/{clusterManagerName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ClusterManagers_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ClusterManagers_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudClusterManagerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="clusterManagerName"> The name of the cluster manager. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="clusterManagerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="clusterManagerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="clusterManagerName"/> is null. </exception>
         public virtual Response<NetworkCloudClusterManagerResource> Get(string clusterManagerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(clusterManagerName, nameof(clusterManagerName));
 
-            using DiagnosticScope scope = _clusterManagersClientDiagnostics.CreateScope("NetworkCloudClusterManagerCollection.Get");
+            using var scope = _networkCloudClusterManagerClusterManagersClientDiagnostics.CreateScope("NetworkCloudClusterManagerCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _clusterManagersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, clusterManagerName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<NetworkCloudClusterManagerData> response = Response.FromValue(NetworkCloudClusterManagerData.FromResponse(result), result);
+                var response = _networkCloudClusterManagerClusterManagersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, clusterManagerName, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new NetworkCloudClusterManagerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -275,52 +248,52 @@ namespace Azure.ResourceManager.NetworkCloud
         /// Get a list of cluster managers in the provided resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusterManagers. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusterManagers</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ClusterManagers_ListByResourceGroup. </description>
+        /// <term>Operation Id</term>
+        /// <description>ClusterManagers_ListByResourceGroup</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudClusterManagerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="skipToken"> The opaque token that the server returns to indicate where to continue listing resources from. This is used for paging through large result sets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkCloudClusterManagerResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<NetworkCloudClusterManagerResource> GetAllAsync(int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="NetworkCloudClusterManagerResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NetworkCloudClusterManagerResource> GetAllAsync(int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<NetworkCloudClusterManagerData, NetworkCloudClusterManagerResource>(new ClusterManagersGetByResourceGroupAsyncCollectionResultOfT(
-                _clusterManagersRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                top,
-                skipToken,
-                context), data => new NetworkCloudClusterManagerResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkCloudClusterManagerClusterManagersRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, top, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkCloudClusterManagerClusterManagersRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, top, skipToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudClusterManagerResource(Client, NetworkCloudClusterManagerData.DeserializeNetworkCloudClusterManagerData(e)), _networkCloudClusterManagerClusterManagersClientDiagnostics, Pipeline, "NetworkCloudClusterManagerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Get a list of cluster managers in the provided resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusterManagers. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusterManagers</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ClusterManagers_ListByResourceGroup. </description>
+        /// <term>Operation Id</term>
+        /// <description>ClusterManagers_ListByResourceGroup</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudClusterManagerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -328,69 +301,47 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="skipToken"> The opaque token that the server returns to indicate where to continue listing resources from. This is used for paging through large result sets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="NetworkCloudClusterManagerResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<NetworkCloudClusterManagerResource> GetAll(int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<NetworkCloudClusterManagerResource> GetAll(int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<NetworkCloudClusterManagerData, NetworkCloudClusterManagerResource>(new ClusterManagersGetByResourceGroupCollectionResultOfT(
-                _clusterManagersRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                top,
-                skipToken,
-                context), data => new NetworkCloudClusterManagerResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkCloudClusterManagerClusterManagersRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, top, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkCloudClusterManagerClusterManagersRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, top, skipToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudClusterManagerResource(Client, NetworkCloudClusterManagerData.DeserializeNetworkCloudClusterManagerData(e)), _networkCloudClusterManagerClusterManagersClientDiagnostics, Pipeline, "NetworkCloudClusterManagerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusterManagers/{clusterManagerName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusterManagers/{clusterManagerName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ClusterManagers_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ClusterManagers_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudClusterManagerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="clusterManagerName"> The name of the cluster manager. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="clusterManagerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="clusterManagerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="clusterManagerName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string clusterManagerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(clusterManagerName, nameof(clusterManagerName));
 
-            using DiagnosticScope scope = _clusterManagersClientDiagnostics.CreateScope("NetworkCloudClusterManagerCollection.Exists");
+            using var scope = _networkCloudClusterManagerClusterManagersClientDiagnostics.CreateScope("NetworkCloudClusterManagerCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _clusterManagersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, clusterManagerName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<NetworkCloudClusterManagerData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(NetworkCloudClusterManagerData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((NetworkCloudClusterManagerData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _networkCloudClusterManagerClusterManagersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, clusterManagerName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -404,50 +355,36 @@ namespace Azure.ResourceManager.NetworkCloud
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusterManagers/{clusterManagerName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusterManagers/{clusterManagerName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ClusterManagers_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ClusterManagers_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudClusterManagerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="clusterManagerName"> The name of the cluster manager. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="clusterManagerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="clusterManagerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="clusterManagerName"/> is null. </exception>
         public virtual Response<bool> Exists(string clusterManagerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(clusterManagerName, nameof(clusterManagerName));
 
-            using DiagnosticScope scope = _clusterManagersClientDiagnostics.CreateScope("NetworkCloudClusterManagerCollection.Exists");
+            using var scope = _networkCloudClusterManagerClusterManagersClientDiagnostics.CreateScope("NetworkCloudClusterManagerCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _clusterManagersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, clusterManagerName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<NetworkCloudClusterManagerData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(NetworkCloudClusterManagerData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((NetworkCloudClusterManagerData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _networkCloudClusterManagerClusterManagersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, clusterManagerName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -461,54 +398,38 @@ namespace Azure.ResourceManager.NetworkCloud
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusterManagers/{clusterManagerName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusterManagers/{clusterManagerName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ClusterManagers_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ClusterManagers_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudClusterManagerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="clusterManagerName"> The name of the cluster manager. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="clusterManagerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="clusterManagerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="clusterManagerName"/> is null. </exception>
         public virtual async Task<NullableResponse<NetworkCloudClusterManagerResource>> GetIfExistsAsync(string clusterManagerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(clusterManagerName, nameof(clusterManagerName));
 
-            using DiagnosticScope scope = _clusterManagersClientDiagnostics.CreateScope("NetworkCloudClusterManagerCollection.GetIfExists");
+            using var scope = _networkCloudClusterManagerClusterManagersClientDiagnostics.CreateScope("NetworkCloudClusterManagerCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _clusterManagersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, clusterManagerName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<NetworkCloudClusterManagerData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(NetworkCloudClusterManagerData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((NetworkCloudClusterManagerData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _networkCloudClusterManagerClusterManagersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, clusterManagerName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<NetworkCloudClusterManagerResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new NetworkCloudClusterManagerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -522,54 +443,38 @@ namespace Azure.ResourceManager.NetworkCloud
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusterManagers/{clusterManagerName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusterManagers/{clusterManagerName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ClusterManagers_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ClusterManagers_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudClusterManagerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="clusterManagerName"> The name of the cluster manager. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="clusterManagerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="clusterManagerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="clusterManagerName"/> is null. </exception>
         public virtual NullableResponse<NetworkCloudClusterManagerResource> GetIfExists(string clusterManagerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(clusterManagerName, nameof(clusterManagerName));
 
-            using DiagnosticScope scope = _clusterManagersClientDiagnostics.CreateScope("NetworkCloudClusterManagerCollection.GetIfExists");
+            using var scope = _networkCloudClusterManagerClusterManagersClientDiagnostics.CreateScope("NetworkCloudClusterManagerCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _clusterManagersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, clusterManagerName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<NetworkCloudClusterManagerData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(NetworkCloudClusterManagerData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((NetworkCloudClusterManagerData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _networkCloudClusterManagerClusterManagersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, clusterManagerName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<NetworkCloudClusterManagerResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new NetworkCloudClusterManagerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -589,7 +494,6 @@ namespace Azure.ResourceManager.NetworkCloud
             return GetAll().GetEnumerator();
         }
 
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<NetworkCloudClusterManagerResource> IAsyncEnumerable<NetworkCloudClusterManagerResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

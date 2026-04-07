@@ -43,15 +43,6 @@ namespace Azure.Security.CodeTransparency
             {
                 Version = version;
             }
-            if (double.TryParse(section["CacheTTLSeconds"], out double cacheTTLSeconds))
-            {
-                CacheTTLSeconds = cacheTTLSeconds;
-            }
-            string identityClientEndpoint = section["IdentityClientEndpoint"];
-            if (!string.IsNullOrEmpty(identityClientEndpoint))
-            {
-                IdentityClientEndpoint = identityClientEndpoint;
-            }
             ConfigureLogging();
         }
 

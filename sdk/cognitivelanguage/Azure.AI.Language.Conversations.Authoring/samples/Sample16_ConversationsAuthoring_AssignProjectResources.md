@@ -15,21 +15,22 @@ To assign project resources, call `AssignProjectResources` on the `ConversationA
 ```C# Snippet:Sample16_ConversationsAuthoring_AssignProjectResources
 // Arrange
 string sampleProjectName = "{projectName}";
+ConversationAuthoringProject sampleProjectClient = client.GetProject(sampleProjectName);
+
 var sampleResourceMetadata = new ConversationAuthoringResourceMetadata(
     azureResourceId: "/subscriptions/{subscription}/resourceGroups/{resourcegroup}/providers/Microsoft.CognitiveServices/accounts/{sampleAccount}",
     customDomain: "{customDomain}",
     region: "{region}"
 );
 
-var sampleAssignDetails = new ConversationAuthoringAssignDeploymentResourcesDetails(
+var sampleAssignDetails = new ConversationAuthoringAssignProjectResourcesDetails(
     new List<ConversationAuthoringResourceMetadata> { sampleResourceMetadata }
 );
 
 // Act
-Operation sampleOperation = client.AssignProjectResources(
-    WaitUntil.Started,
-    sampleProjectName,
-    sampleAssignDetails
+Operation sampleOperation = sampleProjectClient.AssignProjectResources(
+    waitUntil: WaitUntil.Started,
+    details: sampleAssignDetails
 );
 
 // Output operation details
@@ -60,21 +61,22 @@ To assign project resources asynchronously, call `AssignProjectResourcesAsync` o
 ```C# Snippet:Sample16_ConversationsAuthoring_AssignProjectResourcesAsync
 // Arrange
 string sampleProjectName = "{projectName}";
+ConversationAuthoringProject sampleProjectClient = client.GetProject(sampleProjectName);
+
 var sampleResourceMetadata = new ConversationAuthoringResourceMetadata(
     azureResourceId: "/subscriptions/{subscription}/resourceGroups/{resourcegroup}/providers/Microsoft.CognitiveServices/accounts/{sampleAccount}",
     customDomain: "{customDomain}",
     region: "{region}"
 );
 
-var sampleAssignDetails = new ConversationAuthoringAssignDeploymentResourcesDetails(
+var sampleAssignDetails = new ConversationAuthoringAssignProjectResourcesDetails(
     new List<ConversationAuthoringResourceMetadata> { sampleResourceMetadata }
 );
 
 // Act
-Operation sampleOperation = await client.AssignProjectResourcesAsync(
-    WaitUntil.Started,
-    sampleProjectName,
-    sampleAssignDetails
+Operation sampleOperation = await sampleProjectClient.AssignProjectResourcesAsync(
+    waitUntil: WaitUntil.Started,
+    details: sampleAssignDetails
 );
 
 // Output operation details

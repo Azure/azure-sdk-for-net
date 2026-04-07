@@ -52,7 +52,6 @@ internal static class Program
             new KubernetesSpecification(),
             new KubernetesConfigurationSpecification(),
             new KustoSpecification(),
-            new MonitorSpecification(),
             new NetworkSpecification(),
             new OperationalInsightsSpecification(),
             new PostgreSqlSpecification(),

@@ -8,13 +8,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ContainerRegistry
 {
@@ -25,49 +24,51 @@ namespace Azure.ResourceManager.ContainerRegistry
     /// </summary>
     public partial class ConnectedRegistryCollection : ArmCollection, IEnumerable<ConnectedRegistryResource>, IAsyncEnumerable<ConnectedRegistryResource>
     {
-        private readonly ClientDiagnostics _connectedRegistriesClientDiagnostics;
-        private readonly ConnectedRegistries _connectedRegistriesRestClient;
+        private readonly ClientDiagnostics _connectedRegistryClientDiagnostics;
+        private readonly ConnectedRegistriesRestOperations _connectedRegistryRestClient;
 
-        /// <summary> Initializes a new instance of ConnectedRegistryCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ConnectedRegistryCollection"/> class for mocking. </summary>
         protected ConnectedRegistryCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConnectedRegistryCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ConnectedRegistryCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal ConnectedRegistryCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
+            _connectedRegistryClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerRegistry", ConnectedRegistryResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ConnectedRegistryResource.ResourceType, out string connectedRegistryApiVersion);
-            _connectedRegistriesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerRegistry", ConnectedRegistryResource.ResourceType.Namespace, Diagnostics);
-            _connectedRegistriesRestClient = new ConnectedRegistries(_connectedRegistriesClientDiagnostics, Pipeline, Endpoint, connectedRegistryApiVersion ?? "2026-01-01-preview");
-            ValidateResourceId(id);
+            _connectedRegistryRestClient = new ConnectedRegistriesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, connectedRegistryApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ContainerRegistryResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ContainerRegistryResource.ResourceType), id);
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ContainerRegistryResource.ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Creates a connected registry for a container registry with the specified parameters.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/connectedRegistries/{connectedRegistryName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/connectedRegistries/{connectedRegistryName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ConnectedRegistries_Create. </description>
+        /// <term>Operation Id</term>
+        /// <description>ConnectedRegistries_Create</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2026-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConnectedRegistryResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -75,34 +76,21 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="connectedRegistryName"> The name of the connected registry. </param>
         /// <param name="data"> The parameters for creating a connectedRegistry. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectedRegistryName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectedRegistryName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectedRegistryName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ConnectedRegistryResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string connectedRegistryName, ConnectedRegistryData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectedRegistryName, nameof(connectedRegistryName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _connectedRegistriesClientDiagnostics.CreateScope("ConnectedRegistryCollection.CreateOrUpdate");
+            using var scope = _connectedRegistryClientDiagnostics.CreateScope("ConnectedRegistryCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _connectedRegistriesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectedRegistryName, ConnectedRegistryData.ToRequestContent(data), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ContainerRegistryArmOperation<ConnectedRegistryResource> operation = new ContainerRegistryArmOperation<ConnectedRegistryResource>(
-                    new ConnectedRegistryOperationSource(Client),
-                    _connectedRegistriesClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _connectedRegistryRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectedRegistryName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new ContainerRegistryArmOperation<ConnectedRegistryResource>(new ConnectedRegistryOperationSource(Client), _connectedRegistryClientDiagnostics, Pipeline, _connectedRegistryRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectedRegistryName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -116,16 +104,20 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// Creates a connected registry for a container registry with the specified parameters.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/connectedRegistries/{connectedRegistryName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/connectedRegistries/{connectedRegistryName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ConnectedRegistries_Create. </description>
+        /// <term>Operation Id</term>
+        /// <description>ConnectedRegistries_Create</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2026-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConnectedRegistryResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -133,34 +125,21 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="connectedRegistryName"> The name of the connected registry. </param>
         /// <param name="data"> The parameters for creating a connectedRegistry. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectedRegistryName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectedRegistryName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectedRegistryName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ConnectedRegistryResource> CreateOrUpdate(WaitUntil waitUntil, string connectedRegistryName, ConnectedRegistryData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectedRegistryName, nameof(connectedRegistryName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _connectedRegistriesClientDiagnostics.CreateScope("ConnectedRegistryCollection.CreateOrUpdate");
+            using var scope = _connectedRegistryClientDiagnostics.CreateScope("ConnectedRegistryCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _connectedRegistriesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectedRegistryName, ConnectedRegistryData.ToRequestContent(data), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                ContainerRegistryArmOperation<ConnectedRegistryResource> operation = new ContainerRegistryArmOperation<ConnectedRegistryResource>(
-                    new ConnectedRegistryOperationSource(Client),
-                    _connectedRegistriesClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = _connectedRegistryRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectedRegistryName, data, cancellationToken);
+                var operation = new ContainerRegistryArmOperation<ConnectedRegistryResource>(new ConnectedRegistryOperationSource(Client), _connectedRegistryClientDiagnostics, Pipeline, _connectedRegistryRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectedRegistryName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -174,42 +153,38 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// Gets the properties of the connected registry.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/connectedRegistries/{connectedRegistryName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/connectedRegistries/{connectedRegistryName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ConnectedRegistries_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ConnectedRegistries_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2026-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConnectedRegistryResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="connectedRegistryName"> The name of the connected registry. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectedRegistryName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectedRegistryName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectedRegistryName"/> is null. </exception>
         public virtual async Task<Response<ConnectedRegistryResource>> GetAsync(string connectedRegistryName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectedRegistryName, nameof(connectedRegistryName));
 
-            using DiagnosticScope scope = _connectedRegistriesClientDiagnostics.CreateScope("ConnectedRegistryCollection.Get");
+            using var scope = _connectedRegistryClientDiagnostics.CreateScope("ConnectedRegistryCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _connectedRegistriesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectedRegistryName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ConnectedRegistryData> response = Response.FromValue(ConnectedRegistryData.FromResponse(result), result);
+                var response = await _connectedRegistryRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectedRegistryName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new ConnectedRegistryResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -223,42 +198,38 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// Gets the properties of the connected registry.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/connectedRegistries/{connectedRegistryName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/connectedRegistries/{connectedRegistryName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ConnectedRegistries_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ConnectedRegistries_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2026-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConnectedRegistryResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="connectedRegistryName"> The name of the connected registry. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectedRegistryName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectedRegistryName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectedRegistryName"/> is null. </exception>
         public virtual Response<ConnectedRegistryResource> Get(string connectedRegistryName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectedRegistryName, nameof(connectedRegistryName));
 
-            using DiagnosticScope scope = _connectedRegistriesClientDiagnostics.CreateScope("ConnectedRegistryCollection.Get");
+            using var scope = _connectedRegistryClientDiagnostics.CreateScope("ConnectedRegistryCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _connectedRegistriesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectedRegistryName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<ConnectedRegistryData> response = Response.FromValue(ConnectedRegistryData.FromResponse(result), result);
+                var response = _connectedRegistryRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectedRegistryName, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new ConnectedRegistryResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -272,120 +243,98 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// Lists all connected registries for the specified container registry.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/connectedRegistries. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/connectedRegistries</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ConnectedRegistries_List. </description>
+        /// <term>Operation Id</term>
+        /// <description>ConnectedRegistries_List</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2026-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConnectedRegistryResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> An OData filter expression that describes a subset of connectedRegistries to return. The parameters that can be filtered are parent.id (the resource id of the connectedRegistry parent), mode, and connectionState. The supported operator is eq. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ConnectedRegistryResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ConnectedRegistryResource> GetAllAsync(string filter = default, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ConnectedRegistryResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ConnectedRegistryResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<ConnectedRegistryData, ConnectedRegistryResource>(new ConnectedRegistriesGetAllAsyncCollectionResultOfT(
-                _connectedRegistriesRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Name,
-                filter,
-                context), data => new ConnectedRegistryResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _connectedRegistryRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _connectedRegistryRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ConnectedRegistryResource(Client, ConnectedRegistryData.DeserializeConnectedRegistryData(e)), _connectedRegistryClientDiagnostics, Pipeline, "ConnectedRegistryCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Lists all connected registries for the specified container registry.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/connectedRegistries. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/connectedRegistries</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ConnectedRegistries_List. </description>
+        /// <term>Operation Id</term>
+        /// <description>ConnectedRegistries_List</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2026-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConnectedRegistryResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> An OData filter expression that describes a subset of connectedRegistries to return. The parameters that can be filtered are parent.id (the resource id of the connectedRegistry parent), mode, and connectionState. The supported operator is eq. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ConnectedRegistryResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ConnectedRegistryResource> GetAll(string filter = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<ConnectedRegistryResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<ConnectedRegistryData, ConnectedRegistryResource>(new ConnectedRegistriesGetAllCollectionResultOfT(
-                _connectedRegistriesRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Name,
-                filter,
-                context), data => new ConnectedRegistryResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _connectedRegistryRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _connectedRegistryRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ConnectedRegistryResource(Client, ConnectedRegistryData.DeserializeConnectedRegistryData(e)), _connectedRegistryClientDiagnostics, Pipeline, "ConnectedRegistryCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/connectedRegistries/{connectedRegistryName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/connectedRegistries/{connectedRegistryName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ConnectedRegistries_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ConnectedRegistries_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2026-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConnectedRegistryResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="connectedRegistryName"> The name of the connected registry. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectedRegistryName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectedRegistryName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectedRegistryName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string connectedRegistryName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectedRegistryName, nameof(connectedRegistryName));
 
-            using DiagnosticScope scope = _connectedRegistriesClientDiagnostics.CreateScope("ConnectedRegistryCollection.Exists");
+            using var scope = _connectedRegistryClientDiagnostics.CreateScope("ConnectedRegistryCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _connectedRegistriesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectedRegistryName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<ConnectedRegistryData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(ConnectedRegistryData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((ConnectedRegistryData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _connectedRegistryRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectedRegistryName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -399,50 +348,36 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/connectedRegistries/{connectedRegistryName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/connectedRegistries/{connectedRegistryName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ConnectedRegistries_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ConnectedRegistries_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2026-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConnectedRegistryResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="connectedRegistryName"> The name of the connected registry. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectedRegistryName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectedRegistryName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectedRegistryName"/> is null. </exception>
         public virtual Response<bool> Exists(string connectedRegistryName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectedRegistryName, nameof(connectedRegistryName));
 
-            using DiagnosticScope scope = _connectedRegistriesClientDiagnostics.CreateScope("ConnectedRegistryCollection.Exists");
+            using var scope = _connectedRegistryClientDiagnostics.CreateScope("ConnectedRegistryCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _connectedRegistriesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectedRegistryName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<ConnectedRegistryData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(ConnectedRegistryData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((ConnectedRegistryData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _connectedRegistryRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectedRegistryName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -456,54 +391,38 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/connectedRegistries/{connectedRegistryName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/connectedRegistries/{connectedRegistryName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ConnectedRegistries_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ConnectedRegistries_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2026-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConnectedRegistryResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="connectedRegistryName"> The name of the connected registry. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectedRegistryName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectedRegistryName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectedRegistryName"/> is null. </exception>
         public virtual async Task<NullableResponse<ConnectedRegistryResource>> GetIfExistsAsync(string connectedRegistryName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectedRegistryName, nameof(connectedRegistryName));
 
-            using DiagnosticScope scope = _connectedRegistriesClientDiagnostics.CreateScope("ConnectedRegistryCollection.GetIfExists");
+            using var scope = _connectedRegistryClientDiagnostics.CreateScope("ConnectedRegistryCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _connectedRegistriesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectedRegistryName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<ConnectedRegistryData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(ConnectedRegistryData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((ConnectedRegistryData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _connectedRegistryRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectedRegistryName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<ConnectedRegistryResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new ConnectedRegistryResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -517,54 +436,38 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/connectedRegistries/{connectedRegistryName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/connectedRegistries/{connectedRegistryName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ConnectedRegistries_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ConnectedRegistries_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2026-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConnectedRegistryResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="connectedRegistryName"> The name of the connected registry. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectedRegistryName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectedRegistryName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectedRegistryName"/> is null. </exception>
         public virtual NullableResponse<ConnectedRegistryResource> GetIfExists(string connectedRegistryName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectedRegistryName, nameof(connectedRegistryName));
 
-            using DiagnosticScope scope = _connectedRegistriesClientDiagnostics.CreateScope("ConnectedRegistryCollection.GetIfExists");
+            using var scope = _connectedRegistryClientDiagnostics.CreateScope("ConnectedRegistryCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _connectedRegistriesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectedRegistryName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<ConnectedRegistryData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(ConnectedRegistryData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((ConnectedRegistryData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _connectedRegistryRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectedRegistryName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<ConnectedRegistryResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new ConnectedRegistryResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -584,7 +487,6 @@ namespace Azure.ResourceManager.ContainerRegistry
             return GetAll().GetEnumerator();
         }
 
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<ConnectedRegistryResource> IAsyncEnumerable<ConnectedRegistryResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

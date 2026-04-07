@@ -10,7 +10,7 @@ To create a `ConversationAnalysisAuthoringClient`, you will need the service end
 Uri endpoint = new Uri("{endpoint}");
 AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
 ConversationAnalysisAuthoringClientOptions options = new ConversationAnalysisAuthoringClientOptions(ConversationAnalysisAuthoringClientOptions.ServiceVersion.V2025_11_15_Preview);
-ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential, options);
+ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential, options);
 ```
 
 The values of the endpoint and apiKey variables can be retrieved from environment variables, configuration settings, or any other secure approach that works for your application.
@@ -24,6 +24,7 @@ To train a model, call Train on the `ConversationAuthoringProject` client. The m
 
 ```C# Snippet:Sample6_ConversationsAuthoring_Train
 string projectName = "{projectName}";
+ConversationAuthoringProject projectClient = client.GetProject(projectName);
 ConversationAuthoringTrainingJobDetails trainingJobDetails = new ConversationAuthoringTrainingJobDetails(
     modelLabel: "{modelLabel}",
     trainingMode: ConversationAuthoringTrainingMode.Standard
@@ -38,9 +39,8 @@ ConversationAuthoringTrainingJobDetails trainingJobDetails = new ConversationAut
     }
 };
 
-Operation<ConversationAuthoringTrainingJobResult> operation = client.Train(
+Operation<ConversationAuthoringTrainingJobResult> operation = projectClient.Train(
     waitUntil: WaitUntil.Completed,
-    projectName: projectName,
     details: trainingJobDetails
 );
 
@@ -84,9 +84,9 @@ var trainingJobDetails = new ConversationAuthoringTrainingJobDetails(
 };
 
 // Start the training operation
-Operation<ConversationAuthoringTrainingJobResult> operation = client.Train(
+ConversationAuthoringProject projectClient = client.GetProject(projectName);
+Operation<ConversationAuthoringTrainingJobResult> operation = projectClient.Train(
     waitUntil: WaitUntil.Completed,
-    projectName: projectName,
     details: trainingJobDetails);
 
 // Extract operation location header and print status
@@ -101,6 +101,8 @@ To train a model asynchronously, call TrainAsync on the `ConversationAuthoringPr
 
 ```C# Snippet:Sample6_ConversationsAuthoring_TrainAsync
 string projectName = "{projectName}";
+ConversationAuthoringProject projectClient = client.GetProject(projectName);
+
 ConversationAuthoringTrainingJobDetails trainingJobDetails = new ConversationAuthoringTrainingJobDetails(
     modelLabel: "{modelLabel}",
     trainingMode: ConversationAuthoringTrainingMode.Standard
@@ -115,9 +117,8 @@ ConversationAuthoringTrainingJobDetails trainingJobDetails = new ConversationAut
     }
 };
 
-Operation<ConversationAuthoringTrainingJobResult> operation = await client.TrainAsync(
+Operation<ConversationAuthoringTrainingJobResult> operation = await projectClient.TrainAsync(
     waitUntil: WaitUntil.Completed,
-    projectName: projectName,
     details: trainingJobDetails
 );
 
@@ -163,9 +164,9 @@ var trainingJobDetails = new ConversationAuthoringTrainingJobDetails(
 };
 
 // Start training
-Operation<ConversationAuthoringTrainingJobResult> operation = await client.TrainAsync(
+ConversationAuthoringProject projectClient = client.GetProject(projectName);
+Operation<ConversationAuthoringTrainingJobResult> operation = await projectClient.TrainAsync(
     waitUntil: WaitUntil.Completed,
-    projectName: projectName,
     details: trainingJobDetails);
 
 // Extract and print operation location and status

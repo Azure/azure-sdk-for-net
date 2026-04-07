@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -15,57 +14,38 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     public readonly partial struct ContainerRegistryStorageAccessMode : IEquatable<ContainerRegistryStorageAccessMode>
     {
         private readonly string _value;
-        /// <summary> Managed Identity access mode. </summary>
-        private const string ManagedIdentityValue = "ManagedIdentity";
-        /// <summary> SAS Token access mode. </summary>
-        private const string SasTokenValue = "SasToken";
 
         /// <summary> Initializes a new instance of <see cref="ContainerRegistryStorageAccessMode"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ContainerRegistryStorageAccessMode(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
+
+        private const string ManagedIdentityValue = "ManagedIdentity";
+        private const string SasTokenValue = "SasToken";
 
         /// <summary> Managed Identity access mode. </summary>
         public static ContainerRegistryStorageAccessMode ManagedIdentity { get; } = new ContainerRegistryStorageAccessMode(ManagedIdentityValue);
-
         /// <summary> SAS Token access mode. </summary>
         public static ContainerRegistryStorageAccessMode SasToken { get; } = new ContainerRegistryStorageAccessMode(SasTokenValue);
-
         /// <summary> Determines if two <see cref="ContainerRegistryStorageAccessMode"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ContainerRegistryStorageAccessMode left, ContainerRegistryStorageAccessMode right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="ContainerRegistryStorageAccessMode"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ContainerRegistryStorageAccessMode left, ContainerRegistryStorageAccessMode right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="ContainerRegistryStorageAccessMode"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerRegistryStorageAccessMode"/>. </summary>
         public static implicit operator ContainerRegistryStorageAccessMode(string value) => new ContainerRegistryStorageAccessMode(value);
 
-        /// <summary> Converts a string to a <see cref="ContainerRegistryStorageAccessMode"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator ContainerRegistryStorageAccessMode?(string value) => value == null ? null : new ContainerRegistryStorageAccessMode(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ContainerRegistryStorageAccessMode other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(ContainerRegistryStorageAccessMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

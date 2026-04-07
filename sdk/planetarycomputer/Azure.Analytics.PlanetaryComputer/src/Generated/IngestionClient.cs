@@ -287,8 +287,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 skip,
                 collectionId,
                 status,
-                context,
-                "IngestionClient.GetOperations");
+                context);
         }
 
         /// <summary>
@@ -314,8 +313,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 skip,
                 collectionId,
                 status,
-                context,
-                "IngestionClient.GetOperations");
+                context);
         }
 
         /// <summary> Get operations of a geo-catalog collection. </summary>
@@ -333,8 +331,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 skip,
                 collectionId,
                 status?.ToString(),
-                cancellationToken.ToRequestContext(),
-                "IngestionClient.GetOperations");
+                cancellationToken.ToRequestContext());
         }
 
         /// <summary> Get operations of a geo-catalog collection. </summary>
@@ -352,8 +349,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 skip,
                 collectionId,
                 status?.ToString(),
-                cancellationToken.ToRequestContext(),
-                "IngestionClient.GetOperations");
+                cancellationToken.ToRequestContext());
         }
 
         /// <summary>
@@ -579,8 +575,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 ingestionId,
                 maxCount,
                 skip,
-                context,
-                "IngestionClient.GetRuns");
+                context);
         }
 
         /// <summary>
@@ -610,8 +605,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 ingestionId,
                 maxCount,
                 skip,
-                context,
-                "IngestionClient.GetRuns");
+                context);
         }
 
         /// <summary> Get the runs of an ingestion. </summary>
@@ -633,8 +627,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 ingestionId,
                 maxCount,
                 skip,
-                cancellationToken.ToRequestContext(),
-                "IngestionClient.GetRuns");
+                cancellationToken.ToRequestContext());
         }
 
         /// <summary> Get the runs of an ingestion. </summary>
@@ -656,8 +649,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 ingestionId,
                 maxCount,
                 skip,
-                cancellationToken.ToRequestContext(),
-                "IngestionClient.GetRuns");
+                cancellationToken.ToRequestContext());
         }
 
         /// <summary>
@@ -956,13 +948,7 @@ namespace Azure.Analytics.PlanetaryComputer
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
-            return new IngestionClientGetAllCollectionResult(
-                this,
-                collectionId,
-                maxCount,
-                skip,
-                context,
-                "IngestionClient.GetAll");
+            return new IngestionClientGetAllCollectionResult(this, collectionId, maxCount, skip, context);
         }
 
         /// <summary>
@@ -985,13 +971,7 @@ namespace Azure.Analytics.PlanetaryComputer
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
-            return new IngestionClientGetAllAsyncCollectionResult(
-                this,
-                collectionId,
-                maxCount,
-                skip,
-                context,
-                "IngestionClient.GetAll");
+            return new IngestionClientGetAllAsyncCollectionResult(this, collectionId, maxCount, skip, context);
         }
 
         /// <summary> Get ingestions of a catalog. </summary>
@@ -1006,13 +986,7 @@ namespace Azure.Analytics.PlanetaryComputer
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
-            return new IngestionClientGetAllCollectionResultOfT(
-                this,
-                collectionId,
-                maxCount,
-                skip,
-                cancellationToken.ToRequestContext(),
-                "IngestionClient.GetAll");
+            return new IngestionClientGetAllCollectionResultOfT(this, collectionId, maxCount, skip, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Get ingestions of a catalog. </summary>
@@ -1027,13 +1001,7 @@ namespace Azure.Analytics.PlanetaryComputer
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
-            return new IngestionClientGetAllAsyncCollectionResultOfT(
-                this,
-                collectionId,
-                maxCount,
-                skip,
-                cancellationToken.ToRequestContext(),
-                "IngestionClient.GetAll");
+            return new IngestionClientGetAllAsyncCollectionResultOfT(this, collectionId, maxCount, skip, cancellationToken.ToRequestContext());
         }
 
         /// <summary>
@@ -1451,7 +1419,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetSources(int? maxCount, int? skip, RequestContext context)
         {
-            return new IngestionClientGetSourcesCollectionResult(this, maxCount, skip, context, "IngestionClient.GetSources");
+            return new IngestionClientGetSourcesCollectionResult(this, maxCount, skip, context);
         }
 
         /// <summary>
@@ -1469,7 +1437,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetSourcesAsync(int? maxCount, int? skip, RequestContext context)
         {
-            return new IngestionClientGetSourcesAsyncCollectionResult(this, maxCount, skip, context, "IngestionClient.GetSources");
+            return new IngestionClientGetSourcesAsyncCollectionResult(this, maxCount, skip, context);
         }
 
         /// <summary> Get ingestion sources in a geo-catalog. </summary>
@@ -1479,7 +1447,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<IngestionSourceSummary> GetSources(int? maxCount = default, int? skip = default, CancellationToken cancellationToken = default)
         {
-            return new IngestionClientGetSourcesCollectionResultOfT(this, maxCount, skip, cancellationToken.ToRequestContext(), "IngestionClient.GetSources");
+            return new IngestionClientGetSourcesCollectionResultOfT(this, maxCount, skip, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Get ingestion sources in a geo-catalog. </summary>
@@ -1489,7 +1457,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<IngestionSourceSummary> GetSourcesAsync(int? maxCount = default, int? skip = default, CancellationToken cancellationToken = default)
         {
-            return new IngestionClientGetSourcesAsyncCollectionResultOfT(this, maxCount, skip, cancellationToken.ToRequestContext(), "IngestionClient.GetSources");
+            return new IngestionClientGetSourcesAsyncCollectionResultOfT(this, maxCount, skip, cancellationToken.ToRequestContext());
         }
 
         /// <summary>
@@ -1505,7 +1473,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetManagedIdentities(RequestContext context)
         {
-            return new IngestionClientGetManagedIdentitiesCollectionResult(this, context, "IngestionClient.GetManagedIdentities");
+            return new IngestionClientGetManagedIdentitiesCollectionResult(this, context);
         }
 
         /// <summary>
@@ -1521,7 +1489,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetManagedIdentitiesAsync(RequestContext context)
         {
-            return new IngestionClientGetManagedIdentitiesAsyncCollectionResult(this, context, "IngestionClient.GetManagedIdentities");
+            return new IngestionClientGetManagedIdentitiesAsyncCollectionResult(this, context);
         }
 
         /// <summary> Get all managed identities with access to storage accounts configured for a geo-catalog. </summary>
@@ -1529,7 +1497,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<ManagedIdentityMetadata> GetManagedIdentities(CancellationToken cancellationToken = default)
         {
-            return new IngestionClientGetManagedIdentitiesCollectionResultOfT(this, cancellationToken.ToRequestContext(), "IngestionClient.GetManagedIdentities");
+            return new IngestionClientGetManagedIdentitiesCollectionResultOfT(this, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Get all managed identities with access to storage accounts configured for a geo-catalog. </summary>
@@ -1537,7 +1505,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<ManagedIdentityMetadata> GetManagedIdentitiesAsync(CancellationToken cancellationToken = default)
         {
-            return new IngestionClientGetManagedIdentitiesAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext(), "IngestionClient.GetManagedIdentities");
+            return new IngestionClientGetManagedIdentitiesAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext());
         }
     }
 }

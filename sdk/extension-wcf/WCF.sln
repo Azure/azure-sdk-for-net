@@ -1,0 +1,79 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34221.43
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{A8861001-CA29-4FCE-81FB-93A0B3725C40}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{F44B9E86-431A-454B-AB2E-AC2154813FE3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.CoreWCF.Azure.StorageQueues", "Microsoft.CoreWCF.Azure.StorageQueues\src\Microsoft.CoreWCF.Azure.StorageQueues.csproj", "{190C23E4-DA1C-424C-A672-78DB9D171671}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.WCF.Azure.StorageQueues", "Microsoft.WCF.Azure.StorageQueues\src\Microsoft.WCF.Azure.StorageQueues.csproj", "{CCB3DDE6-1A1E-4B7D-89FB-43371202CEEB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.CoreWCF.Azure.StorageQueues.Tests", "Microsoft.CoreWCF.Azure.StorageQueues\tests\Microsoft.CoreWCF.Azure.StorageQueues.Tests.csproj", "{F77BE7C6-7D8B-4CBE-9A94-C0B32FA71D5A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.WCF.Azure.StorageQueues.Tests", "Microsoft.WCF.Azure.StorageQueues\tests\Microsoft.WCF.Azure.StorageQueues.Tests.csproj", "{C0A027EC-8F73-4C98-9817-D9A0CE318744}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{722B7AA2-F05E-45A3-9BAD-3279B18F549C}"
+	ProjectSection(SolutionItems) = preProject
+		Directory.Build.Props = Directory.Build.Props
+		Directory.Build.targets = Directory.Build.targets
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{D1AAA1FA-6052-45C6-87AC-314FE1E961A9}"
+	ProjectSection(SolutionItems) = preProject
+		samples\Directory.Build.props = samples\Directory.Build.props
+		samples\Directory.Build.targets = samples\Directory.Build.targets
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.CoreWCF.Azure.StorageQueues.Samples", "samples\Microsoft.CoreWCF.Azure.StorageQueues.Samples\Microsoft.CoreWCF.Azure.StorageQueues.Samples.csproj", "{7DFAC4DF-1AEC-47E9-AC2E-191799D2667D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.WCF.Azure.StorageQueues.Samples", "samples\Microsoft.WCF.Azure.StorageQueues.Samples\Microsoft.WCF.Azure.StorageQueues.Samples.csproj", "{249D8A2B-BAEA-482A-8364-38A5E12FB6D1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{190C23E4-DA1C-424C-A672-78DB9D171671}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{190C23E4-DA1C-424C-A672-78DB9D171671}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{190C23E4-DA1C-424C-A672-78DB9D171671}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{190C23E4-DA1C-424C-A672-78DB9D171671}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CCB3DDE6-1A1E-4B7D-89FB-43371202CEEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CCB3DDE6-1A1E-4B7D-89FB-43371202CEEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CCB3DDE6-1A1E-4B7D-89FB-43371202CEEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CCB3DDE6-1A1E-4B7D-89FB-43371202CEEB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F77BE7C6-7D8B-4CBE-9A94-C0B32FA71D5A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F77BE7C6-7D8B-4CBE-9A94-C0B32FA71D5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F77BE7C6-7D8B-4CBE-9A94-C0B32FA71D5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F77BE7C6-7D8B-4CBE-9A94-C0B32FA71D5A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C0A027EC-8F73-4C98-9817-D9A0CE318744}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C0A027EC-8F73-4C98-9817-D9A0CE318744}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C0A027EC-8F73-4C98-9817-D9A0CE318744}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C0A027EC-8F73-4C98-9817-D9A0CE318744}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7DFAC4DF-1AEC-47E9-AC2E-191799D2667D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7DFAC4DF-1AEC-47E9-AC2E-191799D2667D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7DFAC4DF-1AEC-47E9-AC2E-191799D2667D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7DFAC4DF-1AEC-47E9-AC2E-191799D2667D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{249D8A2B-BAEA-482A-8364-38A5E12FB6D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{249D8A2B-BAEA-482A-8364-38A5E12FB6D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{249D8A2B-BAEA-482A-8364-38A5E12FB6D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{249D8A2B-BAEA-482A-8364-38A5E12FB6D1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{190C23E4-DA1C-424C-A672-78DB9D171671} = {A8861001-CA29-4FCE-81FB-93A0B3725C40}
+		{CCB3DDE6-1A1E-4B7D-89FB-43371202CEEB} = {A8861001-CA29-4FCE-81FB-93A0B3725C40}
+		{F77BE7C6-7D8B-4CBE-9A94-C0B32FA71D5A} = {F44B9E86-431A-454B-AB2E-AC2154813FE3}
+		{C0A027EC-8F73-4C98-9817-D9A0CE318744} = {F44B9E86-431A-454B-AB2E-AC2154813FE3}
+		{7DFAC4DF-1AEC-47E9-AC2E-191799D2667D} = {D1AAA1FA-6052-45C6-87AC-314FE1E961A9}
+		{249D8A2B-BAEA-482A-8364-38A5E12FB6D1} = {D1AAA1FA-6052-45C6-87AC-314FE1E961A9}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {64495885-88F4-4409-830C-C28B36E5402C}
+	EndGlobalSection
+EndGlobal

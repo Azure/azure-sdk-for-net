@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -19,12 +19,15 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new AzureKeyCredential(TestEnvironment.ApiKey);
-            ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential);
+            ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
 
             #region Snippet:Sample15_ConversationsAuthoring_GetDeployment
             string projectName = "{projectName}";
             string deploymentName = "{deploymentName}";
-            Response<ConversationAuthoringProjectDeployment> response = client.GetDeployment(projectName, deploymentName);
+
+            ConversationAuthoringDeployment deploymentClient = client.GetDeployment(projectName, deploymentName);
+
+            Response<ConversationAuthoringProjectDeployment> response = deploymentClient.GetDeployment();
 
             ConversationAuthoringProjectDeployment deployment = response.Value;
 
@@ -42,6 +45,13 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
                 {
                     Console.WriteLine($"Resource ID: {assignedResource.ResourceId}");
                     Console.WriteLine($"Region: {assignedResource.Region}");
+
+                    if (assignedResource.AssignedAoaiResource != null)
+                    {
+                        Console.WriteLine($"AOAI Kind: {assignedResource.AssignedAoaiResource.Kind}");
+                        Console.WriteLine($"AOAI Resource ID: {assignedResource.AssignedAoaiResource.ResourceId}");
+                        Console.WriteLine($"AOAI Deployment Name: {assignedResource.AssignedAoaiResource.DeploymentName}");
+                    }
                 }
             }
             #endregion
@@ -53,12 +63,15 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new AzureKeyCredential(TestEnvironment.ApiKey);
-            ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential);
+            ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
 
             #region Snippet:Sample15_ConversationsAuthoring_GetDeploymentAsync
             string projectName = "{projectName}";
             string deploymentName = "{deploymentName}";
-            Response<ConversationAuthoringProjectDeployment> response = await client.GetDeploymentAsync(projectName, deploymentName);
+
+            ConversationAuthoringDeployment deploymentClient = client.GetDeployment(projectName, deploymentName);
+
+            Response<ConversationAuthoringProjectDeployment> response = await deploymentClient.GetDeploymentAsync();
 
             ConversationAuthoringProjectDeployment deployment = response.Value;
 
@@ -76,6 +89,13 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
                 {
                     Console.WriteLine($"Resource ID: {assignedResource.ResourceId}");
                     Console.WriteLine($"Region: {assignedResource.Region}");
+
+                    if (assignedResource.AssignedAoaiResource != null)
+                    {
+                        Console.WriteLine($"AOAI Kind: {assignedResource.AssignedAoaiResource.Kind}");
+                        Console.WriteLine($"AOAI Resource ID: {assignedResource.AssignedAoaiResource.ResourceId}");
+                        Console.WriteLine($"AOAI Deployment Name: {assignedResource.AssignedAoaiResource.DeploymentName}");
+                    }
                 }
             }
             #endregion

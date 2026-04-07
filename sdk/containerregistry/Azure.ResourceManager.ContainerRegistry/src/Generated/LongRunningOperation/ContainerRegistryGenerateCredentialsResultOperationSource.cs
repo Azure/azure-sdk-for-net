@@ -8,38 +8,23 @@
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.ContainerRegistry.Models;
 
 namespace Azure.ResourceManager.ContainerRegistry
 {
-    /// <summary></summary>
-    internal partial class ContainerRegistryGenerateCredentialsResultOperationSource : IOperationSource<ContainerRegistryGenerateCredentialsResult>
+    internal class ContainerRegistryGenerateCredentialsResultOperationSource : IOperationSource<ContainerRegistryGenerateCredentialsResult>
     {
-        /// <summary></summary>
-        internal ContainerRegistryGenerateCredentialsResultOperationSource()
-        {
-        }
-
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         ContainerRegistryGenerateCredentialsResult IOperationSource<ContainerRegistryGenerateCredentialsResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            ContainerRegistryGenerateCredentialsResult result = ContainerRegistryGenerateCredentialsResult.DeserializeContainerRegistryGenerateCredentialsResult(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return result;
+            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+            return ContainerRegistryGenerateCredentialsResult.DeserializeContainerRegistryGenerateCredentialsResult(document.RootElement);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<ContainerRegistryGenerateCredentialsResult> IOperationSource<ContainerRegistryGenerateCredentialsResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            ContainerRegistryGenerateCredentialsResult result = ContainerRegistryGenerateCredentialsResult.DeserializeContainerRegistryGenerateCredentialsResult(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return result;
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+            return ContainerRegistryGenerateCredentialsResult.DeserializeContainerRegistryGenerateCredentialsResult(document.RootElement);
         }
     }
 }

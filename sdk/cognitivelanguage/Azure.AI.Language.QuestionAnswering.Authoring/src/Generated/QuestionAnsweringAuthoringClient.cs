@@ -97,13 +97,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetProjects(int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
-            return new QuestionAnsweringAuthoringClientGetProjectsCollectionResult(
-                this,
-                maxCount,
-                skip,
-                maxpagesize,
-                context,
-                "QuestionAnsweringAuthoringClient.GetProjects");
+            return new QuestionAnsweringAuthoringClientGetProjectsCollectionResult(this, maxCount, skip, maxpagesize, context);
         }
 
         /// <summary>
@@ -122,13 +116,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetProjectsAsync(int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
-            return new QuestionAnsweringAuthoringClientGetProjectsAsyncCollectionResult(
-                this,
-                maxCount,
-                skip,
-                maxpagesize,
-                context,
-                "QuestionAnsweringAuthoringClient.GetProjects");
+            return new QuestionAnsweringAuthoringClientGetProjectsAsyncCollectionResult(this, maxCount, skip, maxpagesize, context);
         }
 
         /// <summary> Gets all projects for a user. </summary>
@@ -139,13 +127,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<QuestionAnsweringProject> GetProjects(int? maxCount = default, int? skip = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
         {
-            return new QuestionAnsweringAuthoringClientGetProjectsCollectionResultOfT(
-                this,
-                maxCount,
-                skip,
-                maxpagesize,
-                cancellationToken.ToRequestContext(),
-                "QuestionAnsweringAuthoringClient.GetProjects");
+            return new QuestionAnsweringAuthoringClientGetProjectsCollectionResultOfT(this, maxCount, skip, maxpagesize, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Gets all projects for a user. </summary>
@@ -156,13 +138,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<QuestionAnsweringProject> GetProjectsAsync(int? maxCount = default, int? skip = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
         {
-            return new QuestionAnsweringAuthoringClientGetProjectsAsyncCollectionResultOfT(
-                this,
-                maxCount,
-                skip,
-                maxpagesize,
-                cancellationToken.ToRequestContext(),
-                "QuestionAnsweringAuthoringClient.GetProjects");
+            return new QuestionAnsweringAuthoringClientGetProjectsAsyncCollectionResultOfT(this, maxCount, skip, maxpagesize, cancellationToken.ToRequestContext());
         }
 
         /// <summary>
@@ -1150,8 +1126,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 maxCount,
                 skip,
                 maxpagesize,
-                context,
-                "QuestionAnsweringAuthoringClient.GetDeployments");
+                context);
         }
 
         /// <summary>
@@ -1181,8 +1156,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 maxCount,
                 skip,
                 maxpagesize,
-                context,
-                "QuestionAnsweringAuthoringClient.GetDeployments");
+                context);
         }
 
         /// <summary> List all deployments of a project. </summary>
@@ -1204,8 +1178,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 maxCount,
                 skip,
                 maxpagesize,
-                cancellationToken.ToRequestContext(),
-                "QuestionAnsweringAuthoringClient.GetDeployments");
+                cancellationToken.ToRequestContext());
         }
 
         /// <summary> List all deployments of a project. </summary>
@@ -1227,8 +1200,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 maxCount,
                 skip,
                 maxpagesize,
-                cancellationToken.ToRequestContext(),
-                "QuestionAnsweringAuthoringClient.GetDeployments");
+                cancellationToken.ToRequestContext());
         }
 
         /// <summary>
@@ -1258,8 +1230,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 maxCount,
                 skip,
                 maxpagesize,
-                context,
-                "QuestionAnsweringAuthoringClient.GetSynonyms");
+                context);
         }
 
         /// <summary>
@@ -1289,8 +1260,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 maxCount,
                 skip,
                 maxpagesize,
-                context,
-                "QuestionAnsweringAuthoringClient.GetSynonyms");
+                context);
         }
 
         /// <summary> Gets all the synonyms of a project. </summary>
@@ -1312,8 +1282,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 maxCount,
                 skip,
                 maxpagesize,
-                cancellationToken.ToRequestContext(),
-                "QuestionAnsweringAuthoringClient.GetSynonyms");
+                cancellationToken.ToRequestContext());
         }
 
         /// <summary> Gets all the synonyms of a project. </summary>
@@ -1335,8 +1304,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 maxCount,
                 skip,
                 maxpagesize,
-                cancellationToken.ToRequestContext(),
-                "QuestionAnsweringAuthoringClient.GetSynonyms");
+                cancellationToken.ToRequestContext());
         }
 
         /// <summary>
@@ -1464,8 +1432,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 maxCount,
                 skip,
                 maxpagesize,
-                context,
-                "QuestionAnsweringAuthoringClient.GetSources");
+                context);
         }
 
         /// <summary>
@@ -1495,8 +1462,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 maxCount,
                 skip,
                 maxpagesize,
-                context,
-                "QuestionAnsweringAuthoringClient.GetSources");
+                context);
         }
 
         /// <summary> Gets all the sources of a project. </summary>
@@ -1518,8 +1484,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 maxCount,
                 skip,
                 maxpagesize,
-                cancellationToken.ToRequestContext(),
-                "QuestionAnsweringAuthoringClient.GetSources");
+                cancellationToken.ToRequestContext());
         }
 
         /// <summary> Gets all the sources of a project. </summary>
@@ -1541,8 +1506,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 maxCount,
                 skip,
                 maxpagesize,
-                cancellationToken.ToRequestContext(),
-                "QuestionAnsweringAuthoringClient.GetSources");
+                cancellationToken.ToRequestContext());
         }
 
         /// <summary> Updates the sources of a project. </summary>
@@ -1784,8 +1748,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 skip,
                 maxpagesize,
                 source,
-                context,
-                "QuestionAnsweringAuthoringClient.GetQnas");
+                context);
         }
 
         /// <summary>
@@ -1817,8 +1780,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 skip,
                 maxpagesize,
                 source,
-                context,
-                "QuestionAnsweringAuthoringClient.GetQnas");
+                context);
         }
 
         /// <summary> Gets all the QnAs of a project. </summary>
@@ -1842,8 +1804,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 skip,
                 maxpagesize,
                 source,
-                cancellationToken.ToRequestContext(),
-                "QuestionAnsweringAuthoringClient.GetQnas");
+                cancellationToken.ToRequestContext());
         }
 
         /// <summary> Gets all the QnAs of a project. </summary>
@@ -1867,8 +1828,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 skip,
                 maxpagesize,
                 source,
-                cancellationToken.ToRequestContext(),
-                "QuestionAnsweringAuthoringClient.GetQnas");
+                cancellationToken.ToRequestContext());
         }
 
         /// <summary> Updates the QnAs of a project. </summary>

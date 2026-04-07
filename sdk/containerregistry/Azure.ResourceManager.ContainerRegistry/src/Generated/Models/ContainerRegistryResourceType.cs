@@ -7,59 +7,42 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    /// <summary> Extensible union for ContainerRegistryResourceType to accept both known enum values and arbitrary strings. </summary>
+    /// <summary> The resource type for Container Registry. </summary>
     public readonly partial struct ContainerRegistryResourceType : IEquatable<ContainerRegistryResourceType>
     {
         private readonly string _value;
-        private const string MicrosoftContainerRegistryRegistriesValue = "Microsoft.ContainerRegistry/registries";
 
         /// <summary> Initializes a new instance of <see cref="ContainerRegistryResourceType"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ContainerRegistryResourceType(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> Gets the MicrosoftContainerRegistryRegistries. </summary>
+        private const string MicrosoftContainerRegistryRegistriesValue = "Microsoft.ContainerRegistry/registries";
+
+        /// <summary> Microsoft.ContainerRegistry/registries. </summary>
         public static ContainerRegistryResourceType MicrosoftContainerRegistryRegistries { get; } = new ContainerRegistryResourceType(MicrosoftContainerRegistryRegistriesValue);
-
         /// <summary> Determines if two <see cref="ContainerRegistryResourceType"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ContainerRegistryResourceType left, ContainerRegistryResourceType right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="ContainerRegistryResourceType"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ContainerRegistryResourceType left, ContainerRegistryResourceType right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="ContainerRegistryResourceType"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerRegistryResourceType"/>. </summary>
         public static implicit operator ContainerRegistryResourceType(string value) => new ContainerRegistryResourceType(value);
 
-        /// <summary> Converts a string to a <see cref="ContainerRegistryResourceType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator ContainerRegistryResourceType?(string value) => value == null ? null : new ContainerRegistryResourceType(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ContainerRegistryResourceType other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(ContainerRegistryResourceType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -15,63 +14,44 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     public readonly partial struct ConnectedRegistryConnectionState : IEquatable<ConnectedRegistryConnectionState>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="ConnectedRegistryConnectionState"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ConnectedRegistryConnectionState(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string OnlineValue = "Online";
         private const string OfflineValue = "Offline";
         private const string SyncingValue = "Syncing";
         private const string UnhealthyValue = "Unhealthy";
 
-        /// <summary> Initializes a new instance of <see cref="ConnectedRegistryConnectionState"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ConnectedRegistryConnectionState(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the Online. </summary>
+        /// <summary> Online. </summary>
         public static ConnectedRegistryConnectionState Online { get; } = new ConnectedRegistryConnectionState(OnlineValue);
-
-        /// <summary> Gets the Offline. </summary>
+        /// <summary> Offline. </summary>
         public static ConnectedRegistryConnectionState Offline { get; } = new ConnectedRegistryConnectionState(OfflineValue);
-
-        /// <summary> Gets the Syncing. </summary>
+        /// <summary> Syncing. </summary>
         public static ConnectedRegistryConnectionState Syncing { get; } = new ConnectedRegistryConnectionState(SyncingValue);
-
-        /// <summary> Gets the Unhealthy. </summary>
+        /// <summary> Unhealthy. </summary>
         public static ConnectedRegistryConnectionState Unhealthy { get; } = new ConnectedRegistryConnectionState(UnhealthyValue);
-
         /// <summary> Determines if two <see cref="ConnectedRegistryConnectionState"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ConnectedRegistryConnectionState left, ConnectedRegistryConnectionState right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="ConnectedRegistryConnectionState"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ConnectedRegistryConnectionState left, ConnectedRegistryConnectionState right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="ConnectedRegistryConnectionState"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ConnectedRegistryConnectionState"/>. </summary>
         public static implicit operator ConnectedRegistryConnectionState(string value) => new ConnectedRegistryConnectionState(value);
 
-        /// <summary> Converts a string to a <see cref="ConnectedRegistryConnectionState"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator ConnectedRegistryConnectionState?(string value) => value == null ? null : new ConnectedRegistryConnectionState(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ConnectedRegistryConnectionState other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(ConnectedRegistryConnectionState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -21,10 +20,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         /// <summary> Initializes a new instance of <see cref="ContainerRegistryWebhookEvent"/>. </summary>
         /// <param name="id"> The event ID. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="eventRequestMessage"> The event request message sent to the service URI. </param>
         /// <param name="eventResponseMessage"> The event response message received from the service URI. </param>
-        internal ContainerRegistryWebhookEvent(Guid? id, IDictionary<string, BinaryData> additionalBinaryDataProperties, ContainerRegistryWebhookEventRequestMessage eventRequestMessage, ContainerRegistryWebhookEventResponseMessage eventResponseMessage) : base(id, additionalBinaryDataProperties)
+        internal ContainerRegistryWebhookEvent(Guid? id, IDictionary<string, BinaryData> serializedAdditionalRawData, ContainerRegistryWebhookEventRequestMessage eventRequestMessage, ContainerRegistryWebhookEventResponseMessage eventResponseMessage) : base(id, serializedAdditionalRawData)
         {
             EventRequestMessage = eventRequestMessage;
             EventResponseMessage = eventResponseMessage;
@@ -33,7 +32,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <summary> The event request message sent to the service URI. </summary>
         [WirePath("eventRequestMessage")]
         public ContainerRegistryWebhookEventRequestMessage EventRequestMessage { get; }
-
         /// <summary> The event response message received from the service URI. </summary>
         [WirePath("eventResponseMessage")]
         public ContainerRegistryWebhookEventResponseMessage EventResponseMessage { get; }

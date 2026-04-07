@@ -273,7 +273,7 @@ namespace Azure.Health.Deidentification
         /// <returns> The response returned from the service. </returns>
         internal virtual Pageable<BinaryData> GetJobsInternal(int? maxpagesize, string continuationToken, RequestContext context)
         {
-            return new DeidentificationClientGetJobsInternalCollectionResult(this, maxpagesize, continuationToken, context, "DeidentificationClient.GetJobsInternal");
+            return new DeidentificationClientGetJobsInternalCollectionResult(this, maxpagesize, continuationToken, context);
         }
 
         /// <summary>
@@ -291,7 +291,7 @@ namespace Azure.Health.Deidentification
         /// <returns> The response returned from the service. </returns>
         internal virtual AsyncPageable<BinaryData> GetJobsInternalAsync(int? maxpagesize, string continuationToken, RequestContext context)
         {
-            return new DeidentificationClientGetJobsInternalAsyncCollectionResult(this, maxpagesize, continuationToken, context, "DeidentificationClient.GetJobsInternal");
+            return new DeidentificationClientGetJobsInternalAsyncCollectionResult(this, maxpagesize, continuationToken, context);
         }
 
         /// <summary> Resource list operation template. </summary>
@@ -301,7 +301,7 @@ namespace Azure.Health.Deidentification
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual Pageable<DeidentificationJob> GetJobsInternal(int? maxpagesize = default, string continuationToken = default, CancellationToken cancellationToken = default)
         {
-            return new DeidentificationClientGetJobsInternalCollectionResultOfT(this, maxpagesize, continuationToken, cancellationToken.ToRequestContext(), "DeidentificationClient.GetJobsInternal");
+            return new DeidentificationClientGetJobsInternalCollectionResultOfT(this, maxpagesize, continuationToken, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Resource list operation template. </summary>
@@ -311,7 +311,7 @@ namespace Azure.Health.Deidentification
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual AsyncPageable<DeidentificationJob> GetJobsInternalAsync(int? maxpagesize = default, string continuationToken = default, CancellationToken cancellationToken = default)
         {
-            return new DeidentificationClientGetJobsInternalAsyncCollectionResultOfT(this, maxpagesize, continuationToken, cancellationToken.ToRequestContext(), "DeidentificationClient.GetJobsInternal");
+            return new DeidentificationClientGetJobsInternalAsyncCollectionResultOfT(this, maxpagesize, continuationToken, cancellationToken.ToRequestContext());
         }
 
         /// <summary>
@@ -330,13 +330,7 @@ namespace Azure.Health.Deidentification
         /// <returns> The response returned from the service. </returns>
         internal virtual Pageable<BinaryData> GetJobDocumentsInternal(string jobName, int? maxpagesize, string continuationToken, RequestContext context)
         {
-            return new DeidentificationClientGetJobDocumentsInternalCollectionResult(
-                this,
-                jobName,
-                maxpagesize,
-                continuationToken,
-                context,
-                "DeidentificationClient.GetJobDocumentsInternal");
+            return new DeidentificationClientGetJobDocumentsInternalCollectionResult(this, jobName, maxpagesize, continuationToken, context);
         }
 
         /// <summary>
@@ -355,13 +349,7 @@ namespace Azure.Health.Deidentification
         /// <returns> The response returned from the service. </returns>
         internal virtual AsyncPageable<BinaryData> GetJobDocumentsInternalAsync(string jobName, int? maxpagesize, string continuationToken, RequestContext context)
         {
-            return new DeidentificationClientGetJobDocumentsInternalAsyncCollectionResult(
-                this,
-                jobName,
-                maxpagesize,
-                continuationToken,
-                context,
-                "DeidentificationClient.GetJobDocumentsInternal");
+            return new DeidentificationClientGetJobDocumentsInternalAsyncCollectionResult(this, jobName, maxpagesize, continuationToken, context);
         }
 
         /// <summary> Resource list operation template. </summary>
@@ -372,13 +360,7 @@ namespace Azure.Health.Deidentification
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual Pageable<DeidentificationDocumentDetails> GetJobDocumentsInternal(string jobName, int? maxpagesize = default, string continuationToken = default, CancellationToken cancellationToken = default)
         {
-            return new DeidentificationClientGetJobDocumentsInternalCollectionResultOfT(
-                this,
-                jobName,
-                maxpagesize,
-                continuationToken,
-                cancellationToken.ToRequestContext(),
-                "DeidentificationClient.GetJobDocumentsInternal");
+            return new DeidentificationClientGetJobDocumentsInternalCollectionResultOfT(this, jobName, maxpagesize, continuationToken, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Resource list operation template. </summary>
@@ -389,13 +371,7 @@ namespace Azure.Health.Deidentification
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual AsyncPageable<DeidentificationDocumentDetails> GetJobDocumentsInternalAsync(string jobName, int? maxpagesize = default, string continuationToken = default, CancellationToken cancellationToken = default)
         {
-            return new DeidentificationClientGetJobDocumentsInternalAsyncCollectionResultOfT(
-                this,
-                jobName,
-                maxpagesize,
-                continuationToken,
-                cancellationToken.ToRequestContext(),
-                "DeidentificationClient.GetJobDocumentsInternal");
+            return new DeidentificationClientGetJobDocumentsInternalAsyncCollectionResultOfT(this, jobName, maxpagesize, continuationToken, cancellationToken.ToRequestContext());
         }
 
         /// <summary>

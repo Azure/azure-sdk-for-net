@@ -9,60 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.NetworkCloud;
+using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    /// <summary> ClusterUpdateStrategy represents the strategy for updating the cluster. </summary>
-    public partial class ClusterUpdateStrategy : IJsonModel<ClusterUpdateStrategy>
+    public partial class ClusterUpdateStrategy : IUtf8JsonSerializable, IJsonModel<ClusterUpdateStrategy>
     {
-        /// <summary> Initializes a new instance of <see cref="ClusterUpdateStrategy"/> for deserialization. </summary>
-        internal ClusterUpdateStrategy()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClusterUpdateStrategy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ClusterUpdateStrategy PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ClusterUpdateStrategy>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeClusterUpdateStrategy(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ClusterUpdateStrategy)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ClusterUpdateStrategy>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkCloudContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ClusterUpdateStrategy)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ClusterUpdateStrategy>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ClusterUpdateStrategy IPersistableModel<ClusterUpdateStrategy>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ClusterUpdateStrategy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ClusterUpdateStrategy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -74,11 +28,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ClusterUpdateStrategy>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ClusterUpdateStrategy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ClusterUpdateStrategy)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsDefined(MaxUnavailable))
             {
                 writer.WritePropertyName("maxUnavailable"u8);
@@ -95,15 +50,15 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WritePropertyName("waitTimeMinutes"u8);
                 writer.WriteNumberValue(WaitTimeMinutes.Value);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -112,27 +67,22 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ClusterUpdateStrategy IJsonModel<ClusterUpdateStrategy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ClusterUpdateStrategy JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ClusterUpdateStrategy IJsonModel<ClusterUpdateStrategy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ClusterUpdateStrategy>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ClusterUpdateStrategy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ClusterUpdateStrategy)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeClusterUpdateStrategy(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ClusterUpdateStrategy DeserializeClusterUpdateStrategy(JsonElement element, ModelReaderWriterOptions options)
+        internal static ClusterUpdateStrategy DeserializeClusterUpdateStrategy(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -142,54 +92,87 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             ValidationThresholdType thresholdType = default;
             long thresholdValue = default;
             long? waitTimeMinutes = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("maxUnavailable"u8))
+                if (property.NameEquals("maxUnavailable"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    maxUnavailable = prop.Value.GetInt64();
+                    maxUnavailable = property.Value.GetInt64();
                     continue;
                 }
-                if (prop.NameEquals("strategyType"u8))
+                if (property.NameEquals("strategyType"u8))
                 {
-                    strategyType = new ClusterUpdateStrategyType(prop.Value.GetString());
+                    strategyType = new ClusterUpdateStrategyType(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("thresholdType"u8))
+                if (property.NameEquals("thresholdType"u8))
                 {
-                    thresholdType = new ValidationThresholdType(prop.Value.GetString());
+                    thresholdType = new ValidationThresholdType(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("thresholdValue"u8))
+                if (property.NameEquals("thresholdValue"u8))
                 {
-                    thresholdValue = prop.Value.GetInt64();
+                    thresholdValue = property.Value.GetInt64();
                     continue;
                 }
-                if (prop.NameEquals("waitTimeMinutes"u8))
+                if (property.NameEquals("waitTimeMinutes"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    waitTimeMinutes = prop.Value.GetInt64();
+                    waitTimeMinutes = property.Value.GetInt64();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new ClusterUpdateStrategy(
                 maxUnavailable,
                 strategyType,
                 thresholdType,
                 thresholdValue,
                 waitTimeMinutes,
-                additionalBinaryDataProperties);
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ClusterUpdateStrategy>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ClusterUpdateStrategy>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkCloudContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ClusterUpdateStrategy)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ClusterUpdateStrategy IPersistableModel<ClusterUpdateStrategy>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ClusterUpdateStrategy>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeClusterUpdateStrategy(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ClusterUpdateStrategy)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ClusterUpdateStrategy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

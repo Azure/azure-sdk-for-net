@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -15,57 +14,38 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     public readonly partial struct RegionalEndpoint : IEquatable<RegionalEndpoint>
     {
         private readonly string _value;
-        /// <summary> Regional endpoints are enabled. </summary>
-        private const string EnabledValue = "Enabled";
-        /// <summary> Regional endpoints are disabled. </summary>
-        private const string DisabledValue = "Disabled";
 
         /// <summary> Initializes a new instance of <see cref="RegionalEndpoint"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RegionalEndpoint(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
+
+        private const string EnabledValue = "Enabled";
+        private const string DisabledValue = "Disabled";
 
         /// <summary> Regional endpoints are enabled. </summary>
         public static RegionalEndpoint Enabled { get; } = new RegionalEndpoint(EnabledValue);
-
         /// <summary> Regional endpoints are disabled. </summary>
         public static RegionalEndpoint Disabled { get; } = new RegionalEndpoint(DisabledValue);
-
         /// <summary> Determines if two <see cref="RegionalEndpoint"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RegionalEndpoint left, RegionalEndpoint right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="RegionalEndpoint"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RegionalEndpoint left, RegionalEndpoint right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="RegionalEndpoint"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RegionalEndpoint"/>. </summary>
         public static implicit operator RegionalEndpoint(string value) => new RegionalEndpoint(value);
 
-        /// <summary> Converts a string to a <see cref="RegionalEndpoint"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator RegionalEndpoint?(string value) => value == null ? null : new RegionalEndpoint(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RegionalEndpoint other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(RegionalEndpoint other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

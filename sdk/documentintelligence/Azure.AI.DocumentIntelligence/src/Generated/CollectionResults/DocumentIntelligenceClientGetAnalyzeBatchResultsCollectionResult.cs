@@ -19,19 +19,16 @@ namespace Azure.AI.DocumentIntelligence
         private readonly DocumentIntelligenceClient _client;
         private readonly string _modelId;
         private readonly RequestContext _context;
-        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of DocumentIntelligenceClientGetAnalyzeBatchResultsCollectionResult, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The DocumentIntelligenceClient client used to send requests. </param>
         /// <param name="modelId"> Unique document model name. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public DocumentIntelligenceClientGetAnalyzeBatchResultsCollectionResult(DocumentIntelligenceClient client, string modelId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public DocumentIntelligenceClientGetAnalyzeBatchResultsCollectionResult(DocumentIntelligenceClient client, string modelId, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _modelId = modelId;
             _context = context;
-            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of DocumentIntelligenceClientGetAnalyzeBatchResultsCollectionResult as an enumerable collection. </summary>
@@ -69,7 +66,7 @@ namespace Azure.AI.DocumentIntelligence
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAnalyzeBatchResultsRequest(nextLink, _modelId, _context) : _client.CreateGetAnalyzeBatchResultsRequest(_modelId, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("DocumentIntelligenceClient.GetAnalyzeBatchResults");
             scope.Start();
             try
             {

@@ -24,7 +24,6 @@ namespace Azure.Developer.LoadTesting
         private readonly string _timespan;
         private readonly string _interval;
         private readonly RequestContext _context;
-        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of LoadTestRunClientGetMetricDimensionValuesCollectionResult, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The LoadTestRunClient client used to send requests. </param>
@@ -38,8 +37,7 @@ namespace Azure.Developer.LoadTesting
         /// <param name="timespan"> The timespan of the query. It is a string with the following format 'startDateTime_ISO/endDateTime_ISO'. </param>
         /// <param name="interval"> The interval (i.e. timegrain) of the query. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public LoadTestRunClientGetMetricDimensionValuesCollectionResult(LoadTestRunClient client, string testRunId, string name, string metricname, string metricNamespace, string timespan, string interval, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public LoadTestRunClientGetMetricDimensionValuesCollectionResult(LoadTestRunClient client, string testRunId, string name, string metricname, string metricNamespace, string timespan, string interval, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _testRunId = testRunId;
@@ -49,7 +47,6 @@ namespace Azure.Developer.LoadTesting
             _timespan = timespan;
             _interval = interval;
             _context = context;
-            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of LoadTestRunClientGetMetricDimensionValuesCollectionResult as an enumerable collection. </summary>
@@ -87,7 +84,7 @@ namespace Azure.Developer.LoadTesting
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetMetricDimensionValuesRequest(nextLink, _testRunId, _name, _metricname, _metricNamespace, _timespan, _interval, _context) : _client.CreateGetMetricDimensionValuesRequest(_testRunId, _name, _metricname, _metricNamespace, _timespan, _interval, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("LoadTestRunClient.GetMetricDimensionValues");
             scope.Start();
             try
             {

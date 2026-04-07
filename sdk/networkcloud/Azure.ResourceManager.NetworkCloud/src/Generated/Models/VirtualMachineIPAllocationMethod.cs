@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -15,62 +14,41 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     public readonly partial struct VirtualMachineIPAllocationMethod : IEquatable<VirtualMachineIPAllocationMethod>
     {
         private readonly string _value;
-        /// <summary> Dynamic VM IP allocation. </summary>
-        private const string DynamicValue = "Dynamic";
-        /// <summary> Static VM IP allocation. </summary>
-        private const string StaticValue = "Static";
-        /// <summary> No VM IP allocation. </summary>
-        private const string DisabledValue = "Disabled";
 
         /// <summary> Initializes a new instance of <see cref="VirtualMachineIPAllocationMethod"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public VirtualMachineIPAllocationMethod(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> Dynamic VM IP allocation. </summary>
+        private const string DynamicValue = "Dynamic";
+        private const string StaticValue = "Static";
+        private const string DisabledValue = "Disabled";
+
+        /// <summary> Dynamic. </summary>
         public static VirtualMachineIPAllocationMethod Dynamic { get; } = new VirtualMachineIPAllocationMethod(DynamicValue);
-
-        /// <summary> Static VM IP allocation. </summary>
+        /// <summary> Static. </summary>
         public static VirtualMachineIPAllocationMethod Static { get; } = new VirtualMachineIPAllocationMethod(StaticValue);
-
-        /// <summary> No VM IP allocation. </summary>
+        /// <summary> Disabled. </summary>
         public static VirtualMachineIPAllocationMethod Disabled { get; } = new VirtualMachineIPAllocationMethod(DisabledValue);
-
         /// <summary> Determines if two <see cref="VirtualMachineIPAllocationMethod"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(VirtualMachineIPAllocationMethod left, VirtualMachineIPAllocationMethod right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="VirtualMachineIPAllocationMethod"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(VirtualMachineIPAllocationMethod left, VirtualMachineIPAllocationMethod right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="VirtualMachineIPAllocationMethod"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="VirtualMachineIPAllocationMethod"/>. </summary>
         public static implicit operator VirtualMachineIPAllocationMethod(string value) => new VirtualMachineIPAllocationMethod(value);
 
-        /// <summary> Converts a string to a <see cref="VirtualMachineIPAllocationMethod"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator VirtualMachineIPAllocationMethod?(string value) => value == null ? null : new VirtualMachineIPAllocationMethod(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is VirtualMachineIPAllocationMethod other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(VirtualMachineIPAllocationMethod other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

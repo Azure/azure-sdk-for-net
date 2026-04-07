@@ -19,9 +19,6 @@ namespace Azure.Communication.JobRouter
         /// <summary> Gets or sets the Endpoint. </summary>
         public Uri Endpoint { get; set; }
 
-        /// <summary> Gets or sets the ConnectionString. </summary>
-        public string ConnectionString { get; set; }
-
         /// <summary> Gets or sets the Options. </summary>
         public JobRouterClientOptions Options { get; set; }
 
@@ -32,11 +29,6 @@ namespace Azure.Communication.JobRouter
             if (Uri.TryCreate(section["Endpoint"], UriKind.Absolute, out Uri endpoint))
             {
                 Endpoint = endpoint;
-            }
-            string connectionString = section["ConnectionString"];
-            if (!string.IsNullOrEmpty(connectionString))
-            {
-                ConnectionString = connectionString;
             }
             IConfigurationSection optionsSection = section.GetSection("Options");
             if (optionsSection.Exists())

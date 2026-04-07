@@ -6,9 +6,9 @@
 using System.ComponentModel;
 using System.Threading;
 
-// NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.NetworkCloud.Mocking
 {
+    /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     public partial class MockableNetworkCloudSubscriptionResource : ArmResource
     {
         /// <summary>
@@ -21,6 +21,10 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BareMetalMachines_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -45,6 +49,10 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// <description>BareMetalMachines_List</description>
         /// </item>
         /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
+        /// </item>
+        /// <item>
         /// <term>Resource</term>
         /// <description><see cref="NetworkCloudBareMetalMachineResource"/></description>
         /// </item>
@@ -65,6 +73,10 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CloudServicesNetworks_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -89,6 +101,10 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// <description>CloudServicesNetworks_List</description>
         /// </item>
         /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
+        /// </item>
+        /// <item>
         /// <term>Resource</term>
         /// <description><see cref="NetworkCloudCloudServicesNetworkResource"/></description>
         /// </item>
@@ -109,6 +125,10 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ClusterManagers_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -133,6 +153,10 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// <description>ClusterManagers_List</description>
         /// </item>
         /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
+        /// </item>
+        /// <item>
         /// <term>Resource</term>
         /// <description><see cref="NetworkCloudClusterManagerResource"/></description>
         /// </item>
@@ -153,6 +177,10 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clusters_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -177,6 +205,10 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// <description>Clusters_List</description>
         /// </item>
         /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
+        /// </item>
+        /// <item>
         /// <term>Resource</term>
         /// <description><see cref="NetworkCloudClusterResource"/></description>
         /// </item>
@@ -197,6 +229,10 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>KubernetesClusters_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -221,6 +257,10 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// <description>KubernetesClusters_List</description>
         /// </item>
         /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
+        /// </item>
+        /// <item>
         /// <term>Resource</term>
         /// <description><see cref="NetworkCloudKubernetesClusterResource"/></description>
         /// </item>
@@ -241,6 +281,10 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>L2Networks_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -265,6 +309,10 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// <description>L2Networks_List</description>
         /// </item>
         /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
+        /// </item>
+        /// <item>
         /// <term>Resource</term>
         /// <description><see cref="NetworkCloudL2NetworkResource"/></description>
         /// </item>
@@ -285,6 +333,10 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>L3Networks_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -309,6 +361,10 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// <description>L3Networks_List</description>
         /// </item>
         /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
+        /// </item>
+        /// <item>
         /// <term>Resource</term>
         /// <description><see cref="NetworkCloudL3NetworkResource"/></description>
         /// </item>
@@ -329,6 +385,10 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Racks_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -353,6 +413,10 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// <description>Racks_List</description>
         /// </item>
         /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
+        /// </item>
+        /// <item>
         /// <term>Resource</term>
         /// <description><see cref="NetworkCloudRackResource"/></description>
         /// </item>
@@ -373,6 +437,10 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StorageAppliances_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -397,6 +465,10 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// <description>StorageAppliances_List</description>
         /// </item>
         /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
+        /// </item>
+        /// <item>
         /// <term>Resource</term>
         /// <description><see cref="NetworkCloudStorageApplianceResource"/></description>
         /// </item>
@@ -417,6 +489,10 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>TrunkedNetworks_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -441,6 +517,10 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// <description>TrunkedNetworks_List</description>
         /// </item>
         /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
+        /// </item>
+        /// <item>
         /// <term>Resource</term>
         /// <description><see cref="NetworkCloudTrunkedNetworkResource"/></description>
         /// </item>
@@ -461,6 +541,10 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualMachines_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -485,6 +569,10 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// <description>VirtualMachines_List</description>
         /// </item>
         /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
+        /// </item>
+        /// <item>
         /// <term>Resource</term>
         /// <description><see cref="NetworkCloudVirtualMachineResource"/></description>
         /// </item>
@@ -507,6 +595,10 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// <description>Volumes_List</description>
         /// </item>
         /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
+        /// </item>
+        /// <item>
         /// <term>Resource</term>
         /// <description><see cref="NetworkCloudVolumeResource"/></description>
         /// </item>
@@ -527,6 +619,10 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Volumes_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

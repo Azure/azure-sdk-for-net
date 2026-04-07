@@ -7,63 +7,45 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    /// <summary></summary>
+    /// <summary> The ContainerRegistryTokenCertificateName. </summary>
     public readonly partial struct ContainerRegistryTokenCertificateName : IEquatable<ContainerRegistryTokenCertificateName>
     {
         private readonly string _value;
-        private const string Certificate1Value = "certificate1";
-        private const string Certificate2Value = "certificate2";
 
         /// <summary> Initializes a new instance of <see cref="ContainerRegistryTokenCertificateName"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ContainerRegistryTokenCertificateName(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> Gets the Certificate1. </summary>
+        private const string Certificate1Value = "certificate1";
+        private const string Certificate2Value = "certificate2";
+
+        /// <summary> certificate1. </summary>
         public static ContainerRegistryTokenCertificateName Certificate1 { get; } = new ContainerRegistryTokenCertificateName(Certificate1Value);
-
-        /// <summary> Gets the Certificate2. </summary>
+        /// <summary> certificate2. </summary>
         public static ContainerRegistryTokenCertificateName Certificate2 { get; } = new ContainerRegistryTokenCertificateName(Certificate2Value);
-
         /// <summary> Determines if two <see cref="ContainerRegistryTokenCertificateName"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ContainerRegistryTokenCertificateName left, ContainerRegistryTokenCertificateName right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="ContainerRegistryTokenCertificateName"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ContainerRegistryTokenCertificateName left, ContainerRegistryTokenCertificateName right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="ContainerRegistryTokenCertificateName"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerRegistryTokenCertificateName"/>. </summary>
         public static implicit operator ContainerRegistryTokenCertificateName(string value) => new ContainerRegistryTokenCertificateName(value);
 
-        /// <summary> Converts a string to a <see cref="ContainerRegistryTokenCertificateName"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator ContainerRegistryTokenCertificateName?(string value) => value == null ? null : new ContainerRegistryTokenCertificateName(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ContainerRegistryTokenCertificateName other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(ContainerRegistryTokenCertificateName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

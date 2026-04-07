@@ -13,44 +13,37 @@ using Azure.Core.Extensions;
 
 namespace Microsoft.Extensions.Azure
 {
-    /// <summary> Extension methods to add clients to <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
+    /// <summary> Extension methods to add <see cref="ConversationAnalysisAuthoringClient"/> to client builder. </summary>
     public static partial class ConversationsAuthoringClientBuilderExtensions
     {
-        /// <summary> Registers a <see cref="ConversationAnalysisAuthoring"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
+        /// <summary> Registers a <see cref="ConversationAnalysisAuthoringClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="credential"> A credential used to authenticate to the service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public static IAzureClientBuilder<ConversationAnalysisAuthoring, ConversationAnalysisAuthoringClientOptions> AddConversationAnalysisAuthoring<TBuilder>(this TBuilder builder, Uri endpoint, AzureKeyCredential credential)
-            where TBuilder : IAzureClientFactoryBuilder
+        /// <param name="endpoint"> Supported Cognitive Services endpoint e.g., https://&lt;resource-name&gt;.api.cognitiveservices.azure.com. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        public static IAzureClientBuilder<ConversationAnalysisAuthoringClient, ConversationAnalysisAuthoringClientOptions> AddConversationAnalysisAuthoringClient<TBuilder>(this TBuilder builder, Uri endpoint, AzureKeyCredential credential)
+        where TBuilder : IAzureClientFactoryBuilder
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(credential, nameof(credential));
-
-            return builder.RegisterClientFactory<ConversationAnalysisAuthoring, ConversationAnalysisAuthoringClientOptions>(options => new ConversationAnalysisAuthoring(endpoint, credential, options));
+            return builder.RegisterClientFactory<ConversationAnalysisAuthoringClient, ConversationAnalysisAuthoringClientOptions>((options) => new ConversationAnalysisAuthoringClient(endpoint, credential, options));
         }
 
-        /// <summary> Registers a <see cref="ConversationAnalysisAuthoring"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
+        /// <summary> Registers a <see cref="ConversationAnalysisAuthoringClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        public static IAzureClientBuilder<ConversationAnalysisAuthoring, ConversationAnalysisAuthoringClientOptions> AddConversationAnalysisAuthoring<TBuilder>(this TBuilder builder, Uri endpoint)
-            where TBuilder : IAzureClientFactoryBuilderWithCredential
+        /// <param name="endpoint"> Supported Cognitive Services endpoint e.g., https://&lt;resource-name&gt;.api.cognitiveservices.azure.com. </param>
+        public static IAzureClientBuilder<ConversationAnalysisAuthoringClient, ConversationAnalysisAuthoringClientOptions> AddConversationAnalysisAuthoringClient<TBuilder>(this TBuilder builder, Uri endpoint)
+        where TBuilder : IAzureClientFactoryBuilderWithCredential
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-
-            return builder.RegisterClientFactory<ConversationAnalysisAuthoring, ConversationAnalysisAuthoringClientOptions>((options, credential) => new ConversationAnalysisAuthoring(endpoint, credential, options));
+            return builder.RegisterClientFactory<ConversationAnalysisAuthoringClient, ConversationAnalysisAuthoringClientOptions>((options, cred) => new ConversationAnalysisAuthoringClient(endpoint, cred, options));
         }
 
-        /// <summary> Registers a <see cref="ConversationAnalysisAuthoring"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
+        /// <summary> Registers a <see cref="ConversationAnalysisAuthoringClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
-        /// <param name="configuration"> The configuration to use for the client. </param>
+        /// <param name="configuration"> The configuration values. </param>
         [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         [RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
-        public static IAzureClientBuilder<ConversationAnalysisAuthoring, ConversationAnalysisAuthoringClientOptions> AddConversationAnalysisAuthoring<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
-            where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
+        public static IAzureClientBuilder<ConversationAnalysisAuthoringClient, ConversationAnalysisAuthoringClientOptions> AddConversationAnalysisAuthoringClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
         {
-            return builder.RegisterClientFactory<ConversationAnalysisAuthoring, ConversationAnalysisAuthoringClientOptions>(configuration);
+            return builder.RegisterClientFactory<ConversationAnalysisAuthoringClient, ConversationAnalysisAuthoringClientOptions>(configuration);
         }
     }
 }

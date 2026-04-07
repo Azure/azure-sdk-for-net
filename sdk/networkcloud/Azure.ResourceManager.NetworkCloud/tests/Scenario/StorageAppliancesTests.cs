@@ -52,11 +52,11 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             {
                 patch.Tags.Add(key, originalTags[key]);
             }
-            ArmOperation<NetworkCloudStorageApplianceResource> updateResult = await storageAppliance.UpdateAsync(WaitUntil.Completed, patch, matchConditions: null);
+            ArmOperation<NetworkCloudStorageApplianceResource> updateResult = await storageAppliance.UpdateAsync(WaitUntil.Completed, patch);
             Assert.AreEqual(patch.Tags, updateResult.Value.Data.Tags);
 
             patch.Tags.Remove(testKey);
-            updateResult = await storageAppliance.UpdateAsync(WaitUntil.Completed, patch, matchConditions: null);
+            updateResult = await storageAppliance.UpdateAsync(WaitUntil.Completed, patch);
             Assert.AreEqual(patch.Tags, updateResult.Value.Data.Tags, "tag reversion failed");
 
             // List by Subscription

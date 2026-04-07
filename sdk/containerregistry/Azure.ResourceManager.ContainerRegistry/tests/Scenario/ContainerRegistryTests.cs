@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tests
 
             // Check valid name
             string registryName = Recording.GenerateAssetName("acrregistry");
-            ContainerRegistryNameAvailabilityContent content = new ContainerRegistryNameAvailabilityContent(registryName, ContainerRegistryResourceType.MicrosoftContainerRegistryRegistries);
+            ContainerRegistryNameAvailabilityContent content = new ContainerRegistryNameAvailabilityContent(registryName);
             ContainerRegistryNameAvailableResult result = await Subscription.CheckContainerRegistryNameAvailabilityAsync(content);
             Assert.True(result.IsNameAvailable);
             Assert.Null(result.Reason);
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tests
 
             // Check disallowed name
             registryName = "Microsoft";
-            content = new ContainerRegistryNameAvailabilityContent(registryName, ContainerRegistryResourceType.MicrosoftContainerRegistryRegistries);
+            content = new ContainerRegistryNameAvailabilityContent(registryName);
             result = await Subscription.CheckContainerRegistryNameAvailabilityAsync(content);
             Assert.False(result.IsNameAvailable);
             Assert.AreEqual("Invalid", result.Reason);
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tests
             // Check name of container registry that already exists
             registryName = Recording.GenerateAssetName("acrregistry");
             ContainerRegistryResource registry = await CreateContainerRegistryAsync(rg, registryName);
-            content = new ContainerRegistryNameAvailabilityContent(registryName, ContainerRegistryResourceType.MicrosoftContainerRegistryRegistries);
+            content = new ContainerRegistryNameAvailabilityContent(registryName);
             result = await Subscription.CheckContainerRegistryNameAvailabilityAsync(content);
             Assert.False(result.IsNameAvailable);
             Assert.AreEqual("AlreadyExists", result.Reason);
@@ -296,8 +296,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Tests
             await registry.DeleteAsync(WaitUntil.Completed);
         }
 
-        // This test references deprecated task types that have been moved to Azure.ResourceManager.ContainerRegistryTasks
-        /*
         [TestCase]
         [RecordedTest]
         public async Task ContainerRegistryTask()
@@ -429,10 +427,7 @@ key2: value2
             // Delete the registry
             await registry.DeleteAsync(WaitUntil.Completed);
         }
-        */
 
-        // This test references deprecated agent pool types that have been moved to Azure.ResourceManager.ContainerRegistryTasks
-        /*
         [TestCase]
         [RecordedTest]
         public async Task ContainerRegistryAgentPool()
@@ -493,10 +488,7 @@ steps:
             // Delete the registry
             await registry.DeleteAsync(WaitUntil.Completed);
         }
-        */
 
-        // This test references deprecated task run types that have been moved to Azure.ResourceManager.ContainerRegistryTasks
-        /*
         [TestCase]
         [RecordedTest]
         public async Task ContainerRegistryTaskRun()
@@ -559,10 +551,7 @@ steps:
             // Delete the registry
             await registry.DeleteAsync(WaitUntil.Completed);
         }
-        */
 
-        // PrivateLinkResource is no longer a separate ARM resource - it's now returned as a model from GetPrivateLinkResources()
-        /*
         [TestCase]
         [RecordedTest]
         public async Task ContainerRegistryPrivateLinkResources()
@@ -587,7 +576,6 @@ steps:
             ContainerRegistryPrivateLinkResource privateLink = await privateLinkCollection.GetAsync(privateLinkName);
             Assert.AreEqual(privateLinkName, privateLink.Data.Name);
         }
-        */
 
         [TestCase]
         [RecordedTest]

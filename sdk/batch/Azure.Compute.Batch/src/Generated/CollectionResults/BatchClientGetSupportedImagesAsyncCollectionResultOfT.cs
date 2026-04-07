@@ -22,7 +22,6 @@ namespace Azure.Compute.Batch
         private readonly int? _maxresults;
         private readonly string _filter;
         private readonly RequestContext _context;
-        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of BatchClientGetSupportedImagesAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The BatchClient client used to send requests. </param>
@@ -41,8 +40,7 @@ namespace Azure.Compute.Batch
         /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-support-images.
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public BatchClientGetSupportedImagesAsyncCollectionResultOfT(BatchClient client, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, string filter, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public BatchClientGetSupportedImagesAsyncCollectionResultOfT(BatchClient client, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, string filter, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _timeOutInSeconds = timeOutInSeconds;
@@ -50,7 +48,6 @@ namespace Azure.Compute.Batch
             _maxresults = maxresults;
             _filter = filter;
             _context = context;
-            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of BatchClientGetSupportedImagesAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -83,7 +80,7 @@ namespace Azure.Compute.Batch
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetSupportedImagesRequest(nextLink, _timeOutInSeconds, _ocpDate, _maxresults, _filter, _context) : _client.CreateGetSupportedImagesRequest(_timeOutInSeconds, _ocpDate, _maxresults, _filter, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("BatchClient.GetSupportedImages");
             scope.Start();
             try
             {

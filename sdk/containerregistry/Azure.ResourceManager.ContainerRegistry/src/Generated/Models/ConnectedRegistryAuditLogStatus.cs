@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -15,55 +14,38 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     public readonly partial struct ConnectedRegistryAuditLogStatus : IEquatable<ConnectedRegistryAuditLogStatus>
     {
         private readonly string _value;
-        private const string EnabledValue = "Enabled";
-        private const string DisabledValue = "Disabled";
 
         /// <summary> Initializes a new instance of <see cref="ConnectedRegistryAuditLogStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ConnectedRegistryAuditLogStatus(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> Gets the Enabled. </summary>
+        private const string EnabledValue = "Enabled";
+        private const string DisabledValue = "Disabled";
+
+        /// <summary> Enabled. </summary>
         public static ConnectedRegistryAuditLogStatus Enabled { get; } = new ConnectedRegistryAuditLogStatus(EnabledValue);
-
-        /// <summary> Gets the Disabled. </summary>
+        /// <summary> Disabled. </summary>
         public static ConnectedRegistryAuditLogStatus Disabled { get; } = new ConnectedRegistryAuditLogStatus(DisabledValue);
-
         /// <summary> Determines if two <see cref="ConnectedRegistryAuditLogStatus"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ConnectedRegistryAuditLogStatus left, ConnectedRegistryAuditLogStatus right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="ConnectedRegistryAuditLogStatus"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ConnectedRegistryAuditLogStatus left, ConnectedRegistryAuditLogStatus right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="ConnectedRegistryAuditLogStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ConnectedRegistryAuditLogStatus"/>. </summary>
         public static implicit operator ConnectedRegistryAuditLogStatus(string value) => new ConnectedRegistryAuditLogStatus(value);
 
-        /// <summary> Converts a string to a <see cref="ConnectedRegistryAuditLogStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator ConnectedRegistryAuditLogStatus?(string value) => value == null ? null : new ConnectedRegistryAuditLogStatus(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ConnectedRegistryAuditLogStatus other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(ConnectedRegistryAuditLogStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

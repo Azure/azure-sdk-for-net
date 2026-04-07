@@ -33,14 +33,6 @@
       "allOf": [
         {
           "$ref": "#/definitions/azureOptions"
-        },
-        {
-          "type": "object",
-          "properties": {
-            "UserAgentApplicationId": {
-              "type": "string"
-            }
-          }
         }
       ]
     }

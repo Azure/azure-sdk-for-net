@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -15,77 +14,50 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     public readonly partial struct BareMetalMachineDetailedStatus : IEquatable<BareMetalMachineDetailedStatus>
     {
         private readonly string _value;
-        /// <summary> The Preparing status. </summary>
-        private const string PreparingValue = "Preparing";
-        /// <summary> The Error status. </summary>
-        private const string ErrorValue = "Error";
-        /// <summary> The Available status. </summary>
-        private const string AvailableValue = "Available";
-        /// <summary> The Provisioning status. </summary>
-        private const string ProvisioningValue = "Provisioning";
-        /// <summary> The Provisioned status. </summary>
-        private const string ProvisionedValue = "Provisioned";
-        /// <summary> The Deprovisioning status. </summary>
-        private const string DeprovisioningValue = "Deprovisioning";
 
         /// <summary> Initializes a new instance of <see cref="BareMetalMachineDetailedStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BareMetalMachineDetailedStatus(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> The Preparing status. </summary>
+        private const string PreparingValue = "Preparing";
+        private const string ErrorValue = "Error";
+        private const string AvailableValue = "Available";
+        private const string ProvisioningValue = "Provisioning";
+        private const string ProvisionedValue = "Provisioned";
+        private const string DeprovisioningValue = "Deprovisioning";
+
+        /// <summary> Preparing. </summary>
         public static BareMetalMachineDetailedStatus Preparing { get; } = new BareMetalMachineDetailedStatus(PreparingValue);
-
-        /// <summary> The Error status. </summary>
+        /// <summary> Error. </summary>
         public static BareMetalMachineDetailedStatus Error { get; } = new BareMetalMachineDetailedStatus(ErrorValue);
-
-        /// <summary> The Available status. </summary>
+        /// <summary> Available. </summary>
         public static BareMetalMachineDetailedStatus Available { get; } = new BareMetalMachineDetailedStatus(AvailableValue);
-
-        /// <summary> The Provisioning status. </summary>
+        /// <summary> Provisioning. </summary>
         public static BareMetalMachineDetailedStatus Provisioning { get; } = new BareMetalMachineDetailedStatus(ProvisioningValue);
-
-        /// <summary> The Provisioned status. </summary>
+        /// <summary> Provisioned. </summary>
         public static BareMetalMachineDetailedStatus Provisioned { get; } = new BareMetalMachineDetailedStatus(ProvisionedValue);
-
-        /// <summary> The Deprovisioning status. </summary>
+        /// <summary> Deprovisioning. </summary>
         public static BareMetalMachineDetailedStatus Deprovisioning { get; } = new BareMetalMachineDetailedStatus(DeprovisioningValue);
-
         /// <summary> Determines if two <see cref="BareMetalMachineDetailedStatus"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BareMetalMachineDetailedStatus left, BareMetalMachineDetailedStatus right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="BareMetalMachineDetailedStatus"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BareMetalMachineDetailedStatus left, BareMetalMachineDetailedStatus right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="BareMetalMachineDetailedStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="BareMetalMachineDetailedStatus"/>. </summary>
         public static implicit operator BareMetalMachineDetailedStatus(string value) => new BareMetalMachineDetailedStatus(value);
 
-        /// <summary> Converts a string to a <see cref="BareMetalMachineDetailedStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator BareMetalMachineDetailedStatus?(string value) => value == null ? null : new BareMetalMachineDetailedStatus(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BareMetalMachineDetailedStatus other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(BareMetalMachineDetailedStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

@@ -6,7 +6,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using OpenAI.Responses;
+using OpenAI;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -97,15 +97,15 @@ namespace Azure.AI.Projects.Agents
             if (Optional.IsDefined(ReasoningOptions))
             {
                 writer.WritePropertyName("reasoning"u8);
-                writer.WriteObjectValue(ReasoningOptions, options);
+                writer.WriteObjectValue<OpenAI.Responses.ResponseReasoningOptions>(ReasoningOptions, options);
             }
             if (Optional.IsCollectionDefined(Tools))
             {
                 writer.WritePropertyName("tools"u8);
                 writer.WriteStartArray();
-                foreach (ResponseTool item in Tools)
+                foreach (OpenAI.Responses.ResponseTool item in Tools)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<OpenAI.Responses.ResponseTool>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -124,7 +124,7 @@ namespace Azure.AI.Projects.Agents
             if (Optional.IsDefined(TextOptions))
             {
                 writer.WritePropertyName("text"u8);
-                writer.WriteObjectValue(TextOptions, options);
+                writer.WriteObjectValue<OpenAI.Responses.ResponseTextOptions>(TextOptions, options);
             }
             if (Optional.IsCollectionDefined(StructuredInputs))
             {
@@ -171,10 +171,10 @@ namespace Azure.AI.Projects.Agents
             string instructions = default;
             float? temperature = default;
             float? topP = default;
-            ResponseReasoningOptions reasoningOptions = default;
-            IList<ResponseTool> tools = default;
+            OpenAI.Responses.ResponseReasoningOptions reasoningOptions = default;
+            IList<OpenAI.Responses.ResponseTool> tools = default;
             BinaryData toolChoice = default;
-            ResponseTextOptions textOptions = default;
+            OpenAI.Responses.ResponseTextOptions textOptions = default;
             IDictionary<string, StructuredInputDefinition> structuredInputs = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -279,7 +279,7 @@ namespace Azure.AI.Projects.Agents
                 temperature,
                 topP,
                 reasoningOptions,
-                tools ?? new ChangeTrackingList<ResponseTool>(),
+                tools ?? new ChangeTrackingList<OpenAI.Responses.ResponseTool>(),
                 toolChoice,
                 textOptions,
                 structuredInputs ?? new ChangeTrackingDictionary<string, StructuredInputDefinition>());

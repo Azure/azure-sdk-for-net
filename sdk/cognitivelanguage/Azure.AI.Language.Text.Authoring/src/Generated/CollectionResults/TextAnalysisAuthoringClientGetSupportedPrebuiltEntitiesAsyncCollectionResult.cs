@@ -19,17 +19,14 @@ namespace Azure.AI.Language.Text.Authoring
     {
         private readonly TextAnalysisAuthoringClient _client;
         private readonly RequestContext _context;
-        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of TextAnalysisAuthoringClientGetSupportedPrebuiltEntitiesAsyncCollectionResult, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The TextAnalysisAuthoringClient client used to send requests. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public TextAnalysisAuthoringClientGetSupportedPrebuiltEntitiesAsyncCollectionResult(TextAnalysisAuthoringClient client, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public TextAnalysisAuthoringClientGetSupportedPrebuiltEntitiesAsyncCollectionResult(TextAnalysisAuthoringClient client, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _context = context;
-            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of TextAnalysisAuthoringClientGetSupportedPrebuiltEntitiesAsyncCollectionResult as an enumerable collection. </summary>
@@ -67,7 +64,7 @@ namespace Azure.AI.Language.Text.Authoring
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetSupportedPrebuiltEntitiesRequest(nextLink, _context) : _client.CreateGetSupportedPrebuiltEntitiesRequest(_context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("TextAnalysisAuthoringClient.GetSupportedPrebuiltEntities");
             scope.Start();
             try
             {

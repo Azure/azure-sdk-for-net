@@ -11,29 +11,19 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.ContainerRegistry
 {
-    /// <summary></summary>
     public partial class ContainerRegistryPrivateLinkResource : IJsonModel<ContainerRegistryPrivateLinkResourceData>
     {
-        private static IJsonModel<ContainerRegistryPrivateLinkResourceData> s_dataDeserializationInstance;
+        private static ContainerRegistryPrivateLinkResourceData s_dataDeserializationInstance;
+        private static ContainerRegistryPrivateLinkResourceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
 
-        private static IJsonModel<ContainerRegistryPrivateLinkResourceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ContainerRegistryPrivateLinkResourceData();
-
-        /// <param name="writer"> The writer to serialize the model to. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ContainerRegistryPrivateLinkResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ContainerRegistryPrivateLinkResourceData>)Data).Write(writer, options);
 
-        /// <param name="reader"> The reader for deserializing the model. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ContainerRegistryPrivateLinkResourceData IJsonModel<ContainerRegistryPrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        ContainerRegistryPrivateLinkResourceData IJsonModel<ContainerRegistryPrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ContainerRegistryPrivateLinkResourceData>)DataDeserializationInstance).Create(ref reader, options);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ContainerRegistryPrivateLinkResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ContainerRegistryPrivateLinkResourceData>(Data, options, AzureResourceManagerContainerRegistryContext.Default);
 
-        /// <param name="data"> The binary data to be processed. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         ContainerRegistryPrivateLinkResourceData IPersistableModel<ContainerRegistryPrivateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ContainerRegistryPrivateLinkResourceData>(data, options, AzureResourceManagerContainerRegistryContext.Default);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ContainerRegistryPrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<ContainerRegistryPrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ContainerRegistryPrivateLinkResourceData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }
