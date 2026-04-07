@@ -38,15 +38,21 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             => throw new InvalidOperationException("Use InitContainerDefinition for deserialization.");
 
         void IJsonModel<InitContainerDefinitionContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-            => ((IJsonModel<InitContainerDefinition>)this).Write(writer, options);
+        {
+            // Write directly instead of delegating to IJsonModel<InitContainerDefinition>.Write
+            // to avoid infinite recursion via WriteObjectValue generic dispatch.
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
 
         InitContainerDefinitionContent IPersistableModel<InitContainerDefinitionContent>.Create(BinaryData data, ModelReaderWriterOptions options)
             => throw new InvalidOperationException("Use InitContainerDefinition for deserialization.");
 
         string IPersistableModel<InitContainerDefinitionContent>.GetFormatFromOptions(ModelReaderWriterOptions options)
-            => ((IPersistableModel<InitContainerDefinition>)this).GetFormatFromOptions(options);
+            => "J";
 
         BinaryData IPersistableModel<InitContainerDefinitionContent>.Write(ModelReaderWriterOptions options)
-            => ((IPersistableModel<InitContainerDefinition>)this).Write(options);
+            => PersistableModelWriteCore(options);
     }
 }
