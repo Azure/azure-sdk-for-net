@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.BillingBenefits
         {
             if (id.ResourceType != CreditResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, CreditResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, CreditResource.ResourceType), nameof(id));
             }
         }
 

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.BillingBenefits
         {
             if (id.ResourceType != MaccResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, MaccResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, MaccResource.ResourceType), nameof(id));
             }
         }
 
