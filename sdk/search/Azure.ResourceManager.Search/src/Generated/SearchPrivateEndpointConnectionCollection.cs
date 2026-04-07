@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Search
         {
             if (id.ResourceType != SearchServiceResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SearchServiceResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SearchServiceResource.ResourceType), nameof(id));
             }
         }
 

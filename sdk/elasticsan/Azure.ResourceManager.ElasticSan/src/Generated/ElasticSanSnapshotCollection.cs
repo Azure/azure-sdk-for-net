@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ElasticSan
         {
             if (id.ResourceType != ElasticSanVolumeGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ElasticSanVolumeGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ElasticSanVolumeGroupResource.ResourceType), nameof(id));
             }
         }
 

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Grafana
         {
             if (id.ResourceType != ManagedDashboardResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ManagedDashboardResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ManagedDashboardResource.ResourceType), nameof(id));
             }
         }
 
