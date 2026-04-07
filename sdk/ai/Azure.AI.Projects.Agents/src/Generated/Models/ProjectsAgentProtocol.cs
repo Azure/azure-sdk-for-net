@@ -13,6 +13,7 @@ namespace Azure.AI.Projects.Agents
         private readonly string _value;
         private const string ActivityProtocolValue = "activity_protocol";
         private const string ResponsesValue = "responses";
+        private const string InvocationsValue = "invocations";
 
         /// <summary> Initializes a new instance of <see cref="ProjectsAgentProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -29,6 +30,9 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Gets the Responses. </summary>
         public static ProjectsAgentProtocol Responses { get; } = new ProjectsAgentProtocol(ResponsesValue);
+
+        /// <summary> Gets the Invocations. </summary>
+        public static ProjectsAgentProtocol Invocations { get; } = new ProjectsAgentProtocol(InvocationsValue);
 
         /// <summary> Determines if two <see cref="ProjectsAgentProtocol"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
