@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="deploymentMode"> Deployment mode to trigger job. </param>
         /// <param name="provisioningState"> Job provisioning state. </param>
         /// <param name="jobId"> Unique, immutable job id. </param>
-        /// <param name="startTimeUtc"> The UTC date and time at which the job started. </param>
-        /// <param name="endTimeUtc"> The UTC date and time at which the job completed. </param>
+        /// <param name="startOn"> The UTC date and time at which the job started. </param>
+        /// <param name="endOn"> The UTC date and time at which the job completed. </param>
         /// <param name="status"> Status of Cluster job. </param>
         /// <param name="reportedProperties"> Reported properties for job. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="sdnIntegrationIntent"> Defines the customer's intent for configuring SDN integration. </param>
         /// <param name="sdnPrefix"> A string identifier used to construct the Network Controller (NC) REST resource name. This prefix helps group and distinguish SDN-managed network components and must follow specific formatting rules. </param>
-        internal HciConfigureSdnIntegrationJobProperties(HciJobType jobType, EceDeploymentMode? deploymentMode, HciProvisioningState? provisioningState, string jobId, DateTimeOffset? startTimeUtc, DateTimeOffset? endTimeUtc, HciJobStatus? status, JobReportedProperties reportedProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties, SdnIntegrationIntent sdnIntegrationIntent, string sdnPrefix) : base(jobType, deploymentMode, provisioningState, jobId, startTimeUtc, endTimeUtc, status, reportedProperties, additionalBinaryDataProperties)
+        internal HciConfigureSdnIntegrationJobProperties(HciJobType jobType, EceDeploymentMode? deploymentMode, HciProvisioningState? provisioningState, string jobId, DateTimeOffset? startOn, DateTimeOffset? endOn, HciJobStatus? status, JobReportedProperties reportedProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties, SdnIntegrationIntent sdnIntegrationIntent, string sdnPrefix) : base(jobType, deploymentMode, provisioningState, jobId, startOn, endOn, status, reportedProperties, additionalBinaryDataProperties)
         {
             SdnIntegrationIntent = sdnIntegrationIntent;
             SdnPrefix = sdnPrefix;

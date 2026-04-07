@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="EdgeMachineReportedProperties"/>. </summary>
-        /// <param name="lastUpdated"> Last time data reported. </param>
+        /// <param name="lastUpdatedOn"> Last time data reported. </param>
         /// <param name="networkProfile"> Network details for edge machine. </param>
         /// <param name="osProfile"> OS Properties for edge machine. </param>
         /// <param name="hardwareProfile"> Hardware related information for edge machine. </param>
@@ -31,9 +31,9 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="sbeDeploymentPackageInfo"> Solution builder extension (SBE) deployment package information. </param>
         /// <param name="extensionProfile"> Extension details for edge machine. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EdgeMachineReportedProperties(DateTimeOffset? lastUpdated, EdgeMachineNetworkProfile networkProfile, HciDeploymentOSProfile osProfile, HciDeploymentHardwareProfile hardwareProfile, StorageProfile storageProfile, SbeDeploymentPackageInfo sbeDeploymentPackageInfo, ExtensionProfile extensionProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EdgeMachineReportedProperties(DateTimeOffset? lastUpdatedOn, EdgeMachineNetworkProfile networkProfile, HciDeploymentOSProfile osProfile, HciDeploymentHardwareProfile hardwareProfile, StorageProfile storageProfile, SbeDeploymentPackageInfo sbeDeploymentPackageInfo, ExtensionProfile extensionProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            LastUpdated = lastUpdated;
+            LastUpdatedOn = lastUpdatedOn;
             NetworkProfile = networkProfile;
             OsProfile = osProfile;
             HardwareProfile = hardwareProfile;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Last time data reported. </summary>
         [WirePath("lastUpdated")]
-        public DateTimeOffset? LastUpdated { get; }
+        public DateTimeOffset? LastUpdatedOn { get; }
 
         /// <summary> Network details for edge machine. </summary>
         [WirePath("networkProfile")]

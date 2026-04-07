@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Hci.Models
     {
         /// <summary> Initializes a new instance of <see cref="EdgeMachineRemoteSupportJobProperties"/>. </summary>
         /// <param name="accessLevel"> Remote support access level. </param>
-        /// <param name="expirationTimestamp"> Remote support expiration timestamp. </param>
+        /// <param name="expireOn"> Remote support expiration timestamp. </param>
         /// <param name="type"> Remote support type. </param>
-        public EdgeMachineRemoteSupportJobProperties(RemoteSupportAccessLevel accessLevel, DateTimeOffset expirationTimestamp, RemoteSupportType @type) : base(EdgeMachineJobType.RemoteSupport)
+        public EdgeMachineRemoteSupportJobProperties(RemoteSupportAccessLevel accessLevel, DateTimeOffset expireOn, RemoteSupportType @type) : base(EdgeMachineJobType.RemoteSupport)
         {
             AccessLevel = accessLevel;
-            ExpirationTimestamp = expirationTimestamp;
+            ExpireOn = expireOn;
             Type = @type;
         }
 
@@ -31,19 +31,19 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="deploymentMode"> Deployment mode to trigger job. </param>
         /// <param name="provisioningState"> Job provisioning state. </param>
         /// <param name="jobId"> Unique, immutable job id. </param>
-        /// <param name="startTimeUtc"> The UTC date and time at which the job started. </param>
-        /// <param name="endTimeUtc"> The UTC date and time at which the job completed. </param>
+        /// <param name="startOn"> The UTC date and time at which the job started. </param>
+        /// <param name="endOn"> The UTC date and time at which the job completed. </param>
         /// <param name="status"> Status of Edge device job. </param>
         /// <param name="error"> error details. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="accessLevel"> Remote support access level. </param>
-        /// <param name="expirationTimestamp"> Remote support expiration timestamp. </param>
+        /// <param name="expireOn"> Remote support expiration timestamp. </param>
         /// <param name="type"> Remote support type. </param>
         /// <param name="reportedProperties"> log collection job reported properties. </param>
-        internal EdgeMachineRemoteSupportJobProperties(EdgeMachineJobType jobType, EceDeploymentMode? deploymentMode, HciProvisioningState? provisioningState, string jobId, DateTimeOffset? startTimeUtc, DateTimeOffset? endTimeUtc, HciJobStatus? status, ResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties, RemoteSupportAccessLevel accessLevel, DateTimeOffset expirationTimestamp, RemoteSupportType @type, EdgeMachineRemoteSupportJobReportedProperties reportedProperties) : base(jobType, deploymentMode, provisioningState, jobId, startTimeUtc, endTimeUtc, status, error, additionalBinaryDataProperties)
+        internal EdgeMachineRemoteSupportJobProperties(EdgeMachineJobType jobType, EceDeploymentMode? deploymentMode, HciProvisioningState? provisioningState, string jobId, DateTimeOffset? startOn, DateTimeOffset? endOn, HciJobStatus? status, ResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties, RemoteSupportAccessLevel accessLevel, DateTimeOffset expireOn, RemoteSupportType @type, EdgeMachineRemoteSupportJobReportedProperties reportedProperties) : base(jobType, deploymentMode, provisioningState, jobId, startOn, endOn, status, error, additionalBinaryDataProperties)
         {
             AccessLevel = accessLevel;
-            ExpirationTimestamp = expirationTimestamp;
+            ExpireOn = expireOn;
             Type = @type;
             ReportedProperties = reportedProperties;
         }
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Remote support expiration timestamp. </summary>
         [WirePath("expirationTimestamp")]
-        public DateTimeOffset ExpirationTimestamp { get; set; }
+        public DateTimeOffset ExpireOn { get; set; }
 
         /// <summary> Remote support type. </summary>
         [WirePath("type")]

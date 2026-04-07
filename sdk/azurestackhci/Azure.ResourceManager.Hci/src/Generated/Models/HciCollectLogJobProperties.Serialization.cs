@@ -81,13 +81,13 @@ namespace Azure.ResourceManager.Hci.Models
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("fromDate"u8);
-            writer.WriteStringValue(FromDate, "O");
+            writer.WriteStringValue(CollectionStartOn, "O");
             writer.WritePropertyName("toDate"u8);
-            writer.WriteStringValue(ToDate, "O");
-            if (options.Format != "W" && Optional.IsDefined(LastLogGenerated))
+            writer.WriteStringValue(CollectionEndOn, "O");
+            if (options.Format != "W" && Optional.IsDefined(LastLogGeneratedOn))
             {
                 writer.WritePropertyName("lastLogGenerated"u8);
-                writer.WriteStringValue(LastLogGenerated.Value, "O");
+                writer.WriteStringValue(LastLogGeneratedOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(ReportedProperties))
             {
@@ -124,14 +124,14 @@ namespace Azure.ResourceManager.Hci.Models
             EceDeploymentMode? deploymentMode = default;
             HciProvisioningState? provisioningState = default;
             string jobId = default;
-            DateTimeOffset? startTimeUtc = default;
-            DateTimeOffset? endTimeUtc = default;
+            DateTimeOffset? startOn = default;
+            DateTimeOffset? endOn = default;
             HciJobStatus? status = default;
             HciEdgeDeviceJobType jobType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            DateTimeOffset fromDate = default;
-            DateTimeOffset toDate = default;
-            DateTimeOffset? lastLogGenerated = default;
+            DateTimeOffset collectionStartOn = default;
+            DateTimeOffset collectionEndOn = default;
+            DateTimeOffset? lastLogGeneratedOn = default;
             LogCollectionReportedProperties reportedProperties = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    startTimeUtc = prop.Value.GetDateTimeOffset("O");
+                    startOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("endTimeUtc"u8))
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    endTimeUtc = prop.Value.GetDateTimeOffset("O");
+                    endOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("status"u8))
@@ -192,12 +192,12 @@ namespace Azure.ResourceManager.Hci.Models
                 }
                 if (prop.NameEquals("fromDate"u8))
                 {
-                    fromDate = prop.Value.GetDateTimeOffset("O");
+                    collectionStartOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("toDate"u8))
                 {
-                    toDate = prop.Value.GetDateTimeOffset("O");
+                    collectionEndOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("lastLogGenerated"u8))
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    lastLogGenerated = prop.Value.GetDateTimeOffset("O");
+                    lastLogGeneratedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("reportedProperties"u8))
@@ -227,14 +227,14 @@ namespace Azure.ResourceManager.Hci.Models
                 deploymentMode,
                 provisioningState,
                 jobId,
-                startTimeUtc,
-                endTimeUtc,
+                startOn,
+                endOn,
                 status,
                 jobType,
                 additionalBinaryDataProperties,
-                fromDate,
-                toDate,
-                lastLogGenerated,
+                collectionStartOn,
+                collectionEndOn,
+                lastLogGeneratedOn,
                 reportedProperties);
         }
     }

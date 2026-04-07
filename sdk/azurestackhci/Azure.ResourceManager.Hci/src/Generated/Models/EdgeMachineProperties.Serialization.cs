@@ -155,10 +155,10 @@ namespace Azure.ResourceManager.Hci.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(LastSyncTimestamp))
+            if (options.Format != "W" && Optional.IsDefined(LastSyncedOn))
             {
                 writer.WritePropertyName("lastSyncTimestamp"u8);
-                writer.WriteStringValue(LastSyncTimestamp.Value, "O");
+                writer.WriteStringValue(LastSyncedOn.Value, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Hci.Models
             string claimedBy = default;
             EdgeMachineReportedProperties reportedProperties = default;
             IReadOnlyList<HciOperationDetail> operationDetails = default;
-            DateTimeOffset? lastSyncTimestamp = default;
+            DateTimeOffset? lastSyncedOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    lastSyncTimestamp = prop.Value.GetDateTimeOffset("O");
+                    lastSyncedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.Hci.Models
                 claimedBy,
                 reportedProperties,
                 operationDetails ?? new ChangeTrackingList<HciOperationDetail>(),
-                lastSyncTimestamp,
+                lastSyncedOn,
                 additionalBinaryDataProperties);
         }
     }

@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 throw new FormatException($"The model {nameof(EdgeMachineReportedProperties)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(LastUpdated))
+            if (options.Format != "W" && Optional.IsDefined(LastUpdatedOn))
             {
                 writer.WritePropertyName("lastUpdated"u8);
-                writer.WriteStringValue(LastUpdated.Value, "O");
+                writer.WriteStringValue(LastUpdatedOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(NetworkProfile))
             {
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            DateTimeOffset? lastUpdated = default;
+            DateTimeOffset? lastUpdatedOn = default;
             EdgeMachineNetworkProfile networkProfile = default;
             HciDeploymentOSProfile osProfile = default;
             HciDeploymentHardwareProfile hardwareProfile = default;
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    lastUpdated = prop.Value.GetDateTimeOffset("O");
+                    lastUpdatedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("networkProfile"u8))
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             return new EdgeMachineReportedProperties(
-                lastUpdated,
+                lastUpdatedOn,
                 networkProfile,
                 osProfile,
                 hardwareProfile,

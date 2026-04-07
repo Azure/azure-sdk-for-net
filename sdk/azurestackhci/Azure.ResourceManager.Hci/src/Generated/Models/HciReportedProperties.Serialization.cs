@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Hci.Models
             }
             HciEdgeDeviceState? deviceState = default;
             ExtensionProfile extensionProfile = default;
-            DateTimeOffset? lastSyncTimestamp = default;
+            DateTimeOffset? lastSyncedOn = default;
             ConfidentialVmProfile confidentialVmProfile = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             HciNetworkProfile networkProfile = default;
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    lastSyncTimestamp = prop.Value.GetDateTimeOffset("O");
+                    lastSyncedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("confidentialVmProfile"u8))
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Hci.Models
             return new HciReportedProperties(
                 deviceState,
                 extensionProfile,
-                lastSyncTimestamp,
+                lastSyncedOn,
                 confidentialVmProfile,
                 additionalBinaryDataProperties,
                 networkProfile,

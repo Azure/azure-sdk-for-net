@@ -40,9 +40,9 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="claimedBy"> Tracks the ID of the consuming resource, setting the machine as in-use. </param>
         /// <param name="reportedProperties"> Reported properties for edge machine. </param>
         /// <param name="operationDetails"> operation status details for edge machine. </param>
-        /// <param name="lastSyncTimestamp"> Last time data updated to service. </param>
+        /// <param name="lastSyncedOn"> Last time data updated to service. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EdgeMachineProperties(EdgeMachineKind? edgeMachineKind, HciProvisioningState? provisioningState, string cloudId, ResourceIdentifier arcMachineResourceGroupId, ResourceIdentifier arcMachineResourceId, ResourceIdentifier arcGatewayResourceId, HciSiteDetails siteDetails, OwnershipVoucherDetails ownershipVoucherDetails, HciProvisioningDetails provisioningDetails, string devicePoolResourceId, EdgeMachineState? machineState, EdgeMachineConnectivityStatus? connectivityStatus, string claimedBy, EdgeMachineReportedProperties reportedProperties, IReadOnlyList<HciOperationDetail> operationDetails, DateTimeOffset? lastSyncTimestamp, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EdgeMachineProperties(EdgeMachineKind? edgeMachineKind, HciProvisioningState? provisioningState, string cloudId, ResourceIdentifier arcMachineResourceGroupId, ResourceIdentifier arcMachineResourceId, ResourceIdentifier arcGatewayResourceId, HciSiteDetails siteDetails, OwnershipVoucherDetails ownershipVoucherDetails, HciProvisioningDetails provisioningDetails, string devicePoolResourceId, EdgeMachineState? machineState, EdgeMachineConnectivityStatus? connectivityStatus, string claimedBy, EdgeMachineReportedProperties reportedProperties, IReadOnlyList<HciOperationDetail> operationDetails, DateTimeOffset? lastSyncedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EdgeMachineKind = edgeMachineKind;
             ProvisioningState = provisioningState;
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Hci.Models
             ClaimedBy = claimedBy;
             ReportedProperties = reportedProperties;
             OperationDetails = operationDetails;
-            LastSyncTimestamp = lastSyncTimestamp;
+            LastSyncedOn = lastSyncedOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -125,6 +125,6 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Last time data updated to service. </summary>
         [WirePath("lastSyncTimestamp")]
-        public DateTimeOffset? LastSyncTimestamp { get; }
+        public DateTimeOffset? LastSyncedOn { get; }
     }
 }

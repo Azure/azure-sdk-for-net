@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Initializes a new instance of <see cref="HciReportedProperties"/>. </summary>
         /// <param name="deviceState"> edge device state. </param>
         /// <param name="extensionProfile"> Extensions details for edge device. </param>
-        /// <param name="lastSyncTimestamp"> Most recent edge device sync timestamp in UTC. </param>
+        /// <param name="lastSyncedOn"> Most recent edge device sync timestamp in UTC. </param>
         /// <param name="confidentialVmProfile"> CVM support details for edge device. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="networkProfile"> HCI device network information. </param>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="sbeDeploymentPackageInfo"> Solution builder extension (SBE) deployment package information. </param>
         /// <param name="storageProfile"> Hci device storage specific information. </param>
         /// <param name="hardwareProfile"> Hci device hardware specific information. </param>
-        internal HciReportedProperties(HciEdgeDeviceState? deviceState, ExtensionProfile extensionProfile, DateTimeOffset? lastSyncTimestamp, ConfidentialVmProfile confidentialVmProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties, HciNetworkProfile networkProfile, HciOSProfile osProfile, SbeDeploymentPackageInfo sbeDeploymentPackageInfo, HciStorageProfile storageProfile, HciHardwareProfile hardwareProfile) : base(deviceState, extensionProfile, lastSyncTimestamp, confidentialVmProfile, additionalBinaryDataProperties)
+        internal HciReportedProperties(HciEdgeDeviceState? deviceState, ExtensionProfile extensionProfile, DateTimeOffset? lastSyncedOn, ConfidentialVmProfile confidentialVmProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties, HciNetworkProfile networkProfile, HciOSProfile osProfile, SbeDeploymentPackageInfo sbeDeploymentPackageInfo, HciStorageProfile storageProfile, HciHardwareProfile hardwareProfile) : base(deviceState, extensionProfile, lastSyncedOn, confidentialVmProfile, additionalBinaryDataProperties)
         {
             NetworkProfile = networkProfile;
             OSProfile = osProfile;

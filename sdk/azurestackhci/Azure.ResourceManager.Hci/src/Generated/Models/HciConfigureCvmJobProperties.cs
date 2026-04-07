@@ -26,13 +26,13 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="deploymentMode"> Deployment mode to trigger job. </param>
         /// <param name="provisioningState"> Job provisioning state. </param>
         /// <param name="jobId"> Unique, immutable job id. </param>
-        /// <param name="startTimeUtc"> The UTC date and time at which the job started. </param>
-        /// <param name="endTimeUtc"> The UTC date and time at which the job completed. </param>
+        /// <param name="startOn"> The UTC date and time at which the job started. </param>
+        /// <param name="endOn"> The UTC date and time at which the job completed. </param>
         /// <param name="status"> Status of Cluster job. </param>
         /// <param name="reportedProperties"> Reported properties for job. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="confidentialVmIntent"> Defines the customer's intent for updating confidential VM properties. </param>
-        internal HciConfigureCvmJobProperties(HciJobType jobType, EceDeploymentMode? deploymentMode, HciProvisioningState? provisioningState, string jobId, DateTimeOffset? startTimeUtc, DateTimeOffset? endTimeUtc, HciJobStatus? status, JobReportedProperties reportedProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties, ConfidentialVmIntent confidentialVmIntent) : base(jobType, deploymentMode, provisioningState, jobId, startTimeUtc, endTimeUtc, status, reportedProperties, additionalBinaryDataProperties)
+        internal HciConfigureCvmJobProperties(HciJobType jobType, EceDeploymentMode? deploymentMode, HciProvisioningState? provisioningState, string jobId, DateTimeOffset? startOn, DateTimeOffset? endOn, HciJobStatus? status, JobReportedProperties reportedProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties, ConfidentialVmIntent confidentialVmIntent) : base(jobType, deploymentMode, provisioningState, jobId, startOn, endOn, status, reportedProperties, additionalBinaryDataProperties)
         {
             ConfidentialVmIntent = confidentialVmIntent;
         }

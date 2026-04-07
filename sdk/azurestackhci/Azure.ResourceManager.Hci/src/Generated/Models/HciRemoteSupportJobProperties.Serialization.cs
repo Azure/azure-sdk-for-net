@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Hci.Models
             writer.WritePropertyName("accessLevel"u8);
             writer.WriteStringValue(AccessLevel.ToString());
             writer.WritePropertyName("expirationTimestamp"u8);
-            writer.WriteStringValue(ExpirationTimestamp, "O");
+            writer.WriteStringValue(ExpireOn, "O");
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
             if (options.Format != "W" && Optional.IsDefined(ReportedProperties))
@@ -121,13 +121,13 @@ namespace Azure.ResourceManager.Hci.Models
             EceDeploymentMode? deploymentMode = default;
             HciProvisioningState? provisioningState = default;
             string jobId = default;
-            DateTimeOffset? startTimeUtc = default;
-            DateTimeOffset? endTimeUtc = default;
+            DateTimeOffset? startOn = default;
+            DateTimeOffset? endOn = default;
             HciJobStatus? status = default;
             HciEdgeDeviceJobType jobType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             RemoteSupportAccessLevel accessLevel = default;
-            DateTimeOffset expirationTimestamp = default;
+            DateTimeOffset expireOn = default;
             RemoteSupportType @type = default;
             RemoteSupportJobReportedProperties reportedProperties = default;
             foreach (var prop in element.EnumerateObject())
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    startTimeUtc = prop.Value.GetDateTimeOffset("O");
+                    startOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("endTimeUtc"u8))
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    endTimeUtc = prop.Value.GetDateTimeOffset("O");
+                    endOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("status"u8))
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
                 if (prop.NameEquals("expirationTimestamp"u8))
                 {
-                    expirationTimestamp = prop.Value.GetDateTimeOffset("O");
+                    expireOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("type"u8))
@@ -220,13 +220,13 @@ namespace Azure.ResourceManager.Hci.Models
                 deploymentMode,
                 provisioningState,
                 jobId,
-                startTimeUtc,
-                endTimeUtc,
+                startOn,
+                endOn,
                 status,
                 jobType,
                 additionalBinaryDataProperties,
                 accessLevel,
-                expirationTimestamp,
+                expireOn,
                 @type,
                 reportedProperties);
         }
