@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             // Create
             NetworkCloudL2NetworkData data = new NetworkCloudL2NetworkData(new AzureLocation(TestEnvironment.Location), new ExtendedLocation(TestEnvironment.ClusterExtendedLocation, "CustomLocation"), new ResourceIdentifier(TestEnvironment.L2IsolationDomainId))
             { };
-            ArmOperation<NetworkCloudL2NetworkResource> l2NetworkResourceOp = await l2NetworkCollection.CreateOrUpdateAsync(WaitUntil.Completed, l2NetworkName, data);
+            ArmOperation<NetworkCloudL2NetworkResource> l2NetworkResourceOp = await l2NetworkCollection.CreateOrUpdateAsync(WaitUntil.Completed, l2NetworkName, data, matchConditions: null);
             Assert.AreEqual(l2NetworkResourceOp.Value.Data.Name, l2NetworkName);
 
             // Get
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                         ["key1"] = "myvalue1",
                     },
             };
-            NetworkCloudL2NetworkResource updateResult = await l2Network.UpdateAsync(patch);
+            NetworkCloudL2NetworkResource updateResult = await l2Network.UpdateAsync(patch, matchConditions: null);
             Assert.AreEqual(updateResult.Data.Tags, patch.Tags);
 
             // Delete

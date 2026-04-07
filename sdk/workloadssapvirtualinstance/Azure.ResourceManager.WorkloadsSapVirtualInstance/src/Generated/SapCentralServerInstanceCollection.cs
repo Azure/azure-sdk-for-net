@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
         {
             if (id.ResourceType != SapVirtualInstanceResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SapVirtualInstanceResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SapVirtualInstanceResource.ResourceType), nameof(id));
             }
         }
 

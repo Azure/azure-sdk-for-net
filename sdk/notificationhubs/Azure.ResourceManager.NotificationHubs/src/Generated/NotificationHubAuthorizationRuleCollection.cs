@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.NotificationHubs
         {
             if (id.ResourceType != NotificationHubResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, NotificationHubResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, NotificationHubResource.ResourceType), nameof(id));
             }
         }
 

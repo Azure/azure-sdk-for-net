@@ -544,8 +544,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="createdOn"> The creation date of the lab. </param>
         /// <param name="premiumDataDisks">
         /// The setting to enable usage of premium data disks.
-        ///             When its value is 'Enabled', creation of standard or premium data disks is allowed.
-        ///             When its value is 'Disabled', only creation of standard data disks is allowed.
+        ///                         When its value is 'Enabled', creation of standard or premium data disks is allowed.
+        ///                         When its value is 'Disabled', only creation of standard data disks is allowed.
         /// </param>
         /// <param name="environmentPermission"> The access rights to be granted to the user when provisioning an environment. </param>
         /// <param name="announcement"> The properties of any lab announcement associated with this lab. </param>

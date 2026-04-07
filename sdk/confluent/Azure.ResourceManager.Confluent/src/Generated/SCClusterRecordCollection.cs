@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Confluent
         {
             if (id.ResourceType != SCEnvironmentRecordResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SCEnvironmentRecordResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SCEnvironmentRecordResource.ResourceType), nameof(id));
             }
         }
 

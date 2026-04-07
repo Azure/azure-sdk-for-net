@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Storage
         {
             if (id.ResourceType != BlobServiceResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, BlobServiceResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, BlobServiceResource.ResourceType), nameof(id));
             }
         }
 

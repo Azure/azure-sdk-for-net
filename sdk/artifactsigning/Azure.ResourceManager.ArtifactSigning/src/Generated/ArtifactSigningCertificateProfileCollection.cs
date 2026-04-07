@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ArtifactSigning
         {
             if (id.ResourceType != ArtifactSigningAccountResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ArtifactSigningAccountResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ArtifactSigningAccountResource.ResourceType), nameof(id));
             }
         }
 

@@ -55,7 +55,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -292,7 +292,13 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PolicyAssignmentData, PolicyVmAssignmentResource>(new PolicyVmAssignmentsGetAllAsyncCollectionResultOfT(_policyVmAssignmentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _vmName, context), data => new PolicyVmAssignmentResource(Client, data));
+            return new AsyncPageableWrapper<PolicyAssignmentData, PolicyVmAssignmentResource>(new PolicyVmAssignmentsGetAllAsyncCollectionResultOfT(
+                _policyVmAssignmentsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                _vmName,
+                context,
+                "PolicyVmAssignmentCollection.GetAll"), data => new PolicyVmAssignmentResource(Client, data));
         }
 
         /// <summary>
@@ -320,7 +326,13 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PolicyAssignmentData, PolicyVmAssignmentResource>(new PolicyVmAssignmentsGetAllCollectionResultOfT(_policyVmAssignmentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _vmName, context), data => new PolicyVmAssignmentResource(Client, data));
+            return new PageableWrapper<PolicyAssignmentData, PolicyVmAssignmentResource>(new PolicyVmAssignmentsGetAllCollectionResultOfT(
+                _policyVmAssignmentsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                _vmName,
+                context,
+                "PolicyVmAssignmentCollection.GetAll"), data => new PolicyVmAssignmentResource(Client, data));
         }
 
         /// <summary>
